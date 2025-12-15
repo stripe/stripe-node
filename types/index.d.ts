@@ -138,6 +138,11 @@
 ///<reference path='./V2/Billing/MeterEventSessionResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventStreamResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
+///<reference path='./V2/Core/AccountLinksResource.d.ts' />
+///<reference path='./V2/Core/AccountTokensResource.d.ts' />
+///<reference path='./V2/Core/Accounts/PersonTokensResource.d.ts' />
+///<reference path='./V2/Core/Accounts/PersonsResource.d.ts' />
+///<reference path='./V2/Core/AccountsResource.d.ts' />
 ///<reference path='./V2/Core/EventDestinationsResource.d.ts' />
 ///<reference path='./V2/Core/EventsResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
@@ -289,6 +294,11 @@
 ///<reference path='./V2/Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
+///<reference path='./V2/Core/AccountLinks.d.ts' />
+///<reference path='./V2/Core/AccountPersonTokens.d.ts' />
+///<reference path='./V2/Core/AccountPersons.d.ts' />
+///<reference path='./V2/Core/AccountTokens.d.ts' />
+///<reference path='./V2/Core/Accounts.d.ts' />
 ///<reference path='./V2/Core/EventDestinations.d.ts' />
 ///<reference path='./V2/Core/Events.d.ts' />
 ///<reference path='./V2/DeletedObject.d.ts' />
@@ -486,6 +496,9 @@ declare module 'stripe' {
         meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
       };
       core: {
+        accounts: Stripe.V2.Core.AccountsResource;
+        accountLinks: Stripe.V2.Core.AccountLinksResource;
+        accountTokens: Stripe.V2.Core.AccountTokensResource;
         events: Stripe.V2.Core.EventsResource;
         eventDestinations: Stripe.V2.Core.EventDestinationsResource;
       };

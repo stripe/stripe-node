@@ -11,12 +11,12 @@ declare module 'stripe' {
           card: string;
 
           /**
-           * The total amount to attempt to authorize. This amount is in the provided currency, or defaults to the card's currency, and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * The total amount to attempt to authorize. This amount is in the provided currency, or defaults to the card's currency, and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           amount?: number;
 
           /**
-           * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           amount_details?: AuthorizationCreateParams.AmountDetails;
 
@@ -51,12 +51,12 @@ declare module 'stripe' {
           fuel?: AuthorizationCreateParams.Fuel;
 
           /**
-           * If set `true`, you may provide [amount](https://stripe.com/docs/api/issuing/authorizations/approve#approve_issuing_authorization-amount) to control how much to hold for the authorization.
+           * If set `true`, you may provide [amount](https://docs.stripe.com/api/issuing/authorizations/approve#approve_issuing_authorization-amount) to control how much to hold for the authorization.
            */
           is_amount_controllable?: boolean;
 
           /**
-           * The total amount to attempt to authorize. This amount is in the provided merchant currency, and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * The total amount to attempt to authorize. This amount is in the provided merchant currency, and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           merchant_amount?: number;
 
@@ -271,7 +271,7 @@ declare module 'stripe' {
 
           interface MerchantData {
             /**
-             * A categorization of the seller's type of business. See our [merchant categories guide](https://stripe.com/docs/issuing/merchant-categories) for a list of possible values.
+             * A categorization of the seller's type of business. See our [merchant categories guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
              */
             category?: MerchantData.Category;
 
@@ -796,7 +796,7 @@ declare module 'stripe' {
       namespace Issuing {
         interface AuthorizationCaptureParams {
           /**
-           * The amount to capture from the authorization. If not provided, the full amount of the authorization will be captured. This amount is in the authorization currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * The amount to capture from the authorization. If not provided, the full amount of the authorization will be captured. This amount is in the authorization currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           capture_amount?: number;
 
@@ -1100,7 +1100,7 @@ declare module 'stripe' {
       namespace Issuing {
         interface AuthorizationFinalizeAmountParams {
           /**
-           * The final authorization amount that will be captured by the merchant. This amount is in the authorization currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * The final authorization amount that will be captured by the merchant. This amount is in the authorization currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           final_amount: number;
 
@@ -1278,7 +1278,7 @@ declare module 'stripe' {
       namespace Issuing {
         interface AuthorizationIncrementParams {
           /**
-           * The amount to increment the authorization by. This amount is in the authorization currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * The amount to increment the authorization by. This amount is in the authorization currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           increment_amount: number;
 
@@ -1288,7 +1288,7 @@ declare module 'stripe' {
           expand?: Array<string>;
 
           /**
-           * If set `true`, you may provide [amount](https://stripe.com/docs/api/issuing/authorizations/approve#approve_issuing_authorization-amount) to control how much to hold for the authorization.
+           * If set `true`, you may provide [amount](https://docs.stripe.com/api/issuing/authorizations/approve#approve_issuing_authorization-amount) to control how much to hold for the authorization.
            */
           is_amount_controllable?: boolean;
         }
@@ -1316,7 +1316,7 @@ declare module 'stripe' {
           expand?: Array<string>;
 
           /**
-           * The amount to reverse from the authorization. If not provided, the full amount of the authorization will be reversed. This amount is in the authorization currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * The amount to reverse from the authorization. If not provided, the full amount of the authorization will be reversed. This amount is in the authorization currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           reverse_amount?: number;
         }

@@ -111,7 +111,7 @@ declare module 'stripe' {
         subscriptions: Array<'transactions'> | null;
 
         /**
-         * The [PaymentMethod type](https://stripe.com/docs/api/payment_methods/object#payment_method_object-type)(s) that can be created from this account.
+         * The [PaymentMethod type](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type)(s) that can be created from this account.
          */
         supported_payment_method_types: Array<
           Account.SupportedPaymentMethodType
@@ -126,14 +126,16 @@ declare module 'stripe' {
       namespace Account {
         interface AccountHolder {
           /**
-           * The ID of the Stripe account this account belongs to. Should only be present if `account_holder.type` is `account`.
+           * The ID of the Stripe account that this account belongs to. Only available when `account_holder.type` is `account`.
            */
           account?: string | Stripe.Account;
 
           /**
-           * ID of the Stripe customer this account belongs to. Present if and only if `account_holder.type` is `customer`.
+           * The ID for an Account representing a customer that this account belongs to. Only available when `account_holder.type` is `customer`.
            */
           customer?: string | Stripe.Customer;
+
+          customer_account?: string;
 
           /**
            * Type of account holder that this account belongs to.

@@ -169,7 +169,7 @@ declare module 'stripe' {
       mb_way?: PaymentMethodCreateParams.MbWay;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.MetadataParam;
 
@@ -229,6 +229,11 @@ declare module 'stripe' {
       paypal?: PaymentMethodCreateParams.Paypal;
 
       /**
+       * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+       */
+      payto?: PaymentMethodCreateParams.Payto;
+
+      /**
        * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
        */
       pix?: PaymentMethodCreateParams.Pix;
@@ -239,7 +244,7 @@ declare module 'stripe' {
       promptpay?: PaymentMethodCreateParams.Promptpay;
 
       /**
-       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+       * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
        */
       radar_options?: PaymentMethodCreateParams.RadarOptions;
 
@@ -551,6 +556,7 @@ declare module 'stripe' {
           | 'handelsbanken'
           | 'ing'
           | 'knab'
+          | 'mollie'
           | 'moneyou'
           | 'n26'
           | 'nn'
@@ -692,13 +698,30 @@ declare module 'stripe' {
 
       interface Paypal {}
 
+      interface Payto {
+        /**
+         * The account number for the bank account.
+         */
+        account_number?: string;
+
+        /**
+         * Bank-State-Branch number of the bank account.
+         */
+        bsb_number?: string;
+
+        /**
+         * The PayID alias for the bank account.
+         */
+        pay_id?: string;
+      }
+
       interface Pix {}
 
       interface Promptpay {}
 
       interface RadarOptions {
         /**
-         * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+         * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
          */
         session?: string;
       }
@@ -770,6 +793,7 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'payto'
         | 'pix'
         | 'promptpay'
         | 'revolut_pay'
@@ -850,9 +874,14 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+      /**
+       * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+       */
+      payto?: PaymentMethodUpdateParams.Payto;
 
       /**
        * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
@@ -920,6 +949,23 @@ declare module 'stripe' {
         }
       }
 
+      interface Payto {
+        /**
+         * The account number for the bank account.
+         */
+        account_number?: string;
+
+        /**
+         * Bank-State-Branch number of the bank account.
+         */
+        bsb_number?: string;
+
+        /**
+         * The PayID alias for the bank account.
+         */
+        pay_id?: string;
+      }
+
       interface UsBankAccount {
         /**
          * Bank account holder type.
@@ -941,9 +987,19 @@ declare module 'stripe' {
 
     interface PaymentMethodListParams extends PaginationParams {
       /**
+       * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow.
+       */
+      allow_redisplay?: PaymentMethodListParams.AllowRedisplay;
+
+      /**
        * The ID of the customer whose PaymentMethods will be retrieved.
        */
       customer?: string;
+
+      /**
+       * The ID of the Account whose PaymentMethods will be retrieved.
+       */
+      customer_account?: string;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -957,6 +1013,8 @@ declare module 'stripe' {
     }
 
     namespace PaymentMethodListParams {
+      type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
       type Type =
         | 'acss_debit'
         | 'affirm'
@@ -996,6 +1054,7 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'payto'
         | 'pix'
         | 'promptpay'
         | 'revolut_pay'
@@ -1014,7 +1073,12 @@ declare module 'stripe' {
       /**
        * The ID of the customer to which to attach the PaymentMethod.
        */
-      customer: string;
+      customer?: string;
+
+      /**
+       * The ID of the Account representing the customer to which to attach the PaymentMethod.
+       */
+      customer_account?: string;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -1066,7 +1130,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 
       /**
-       * Returns a list of PaymentMethods for Treasury flows. If you want to list the PaymentMethods attached to a Customer for payments, you should use the [List a Customer's PaymentMethods](https://docs.stripe.com/docs/api/payment_methods/customer_list) API instead.
+       * Returns a list of all PaymentMethods.
        */
       list(
         params?: PaymentMethodListParams,
@@ -1091,7 +1155,11 @@ declare module 'stripe' {
        */
       attach(
         id: string,
-        params: PaymentMethodAttachParams,
+        params?: PaymentMethodAttachParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
+      attach(
+        id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 

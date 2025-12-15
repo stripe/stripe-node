@@ -6,7 +6,7 @@ declare module 'stripe' {
       /**
        * A Tax Calculation allows you to calculate the tax to collect from your customer.
        *
-       * Related guide: [Calculate tax in your custom payment flow](https://stripe.com/docs/tax/custom)
+       * Related guide: [Calculate tax in your custom payment flow](https://docs.stripe.com/tax/custom)
        */
       interface Calculation {
         /**
@@ -20,7 +20,7 @@ declare module 'stripe' {
         object: 'tax.calculation';
 
         /**
-         * Total amount after taxes in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+         * Total amount after taxes in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
          */
         amount_total: number;
 
@@ -30,7 +30,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * The ID of an existing [Customer](https://stripe.com/docs/api/customers/object) used for the resource.
+         * The ID of an existing [Customer](https://docs.stripe.com/api/customers/object) used for the resource.
          */
         customer: string | null;
 
@@ -252,17 +252,17 @@ declare module 'stripe' {
 
         interface ShippingCost {
           /**
-           * The shipping amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes were calculated on top of this amount.
+           * The shipping amount in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes were calculated on top of this amount.
            */
           amount: number;
 
           /**
-           * The amount of tax calculated for shipping, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * The amount of tax calculated for shipping, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           amount_tax: number;
 
           /**
-           * The ID of an existing [ShippingRate](https://stripe.com/docs/api/shipping_rates/object).
+           * The ID of an existing [ShippingRate](https://docs.stripe.com/api/shipping_rates/object).
            */
           shipping_rate?: string;
 
@@ -277,7 +277,7 @@ declare module 'stripe' {
           tax_breakdown?: Array<ShippingCost.TaxBreakdown>;
 
           /**
-           * The [tax code](https://stripe.com/docs/tax/tax-categories) ID used for shipping.
+           * The [tax code](https://docs.stripe.com/tax/tax-categories) ID used for shipping.
            */
           tax_code: string;
         }
@@ -287,7 +287,7 @@ declare module 'stripe' {
 
           interface TaxBreakdown {
             /**
-             * The amount of tax, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The amount of tax, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             amount: number;
 
@@ -309,7 +309,7 @@ declare module 'stripe' {
             taxability_reason: TaxBreakdown.TaxabilityReason;
 
             /**
-             * The amount on which tax is calculated, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The amount on which tax is calculated, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             taxable_amount: number;
           }
@@ -399,7 +399,7 @@ declare module 'stripe' {
 
         interface TaxBreakdown {
           /**
-           * The amount of tax, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * The amount of tax, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           amount: number;
 
@@ -416,7 +416,7 @@ declare module 'stripe' {
           taxability_reason: TaxBreakdown.TaxabilityReason;
 
           /**
-           * The amount on which tax is calculated, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * The amount on which tax is calculated, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           taxable_amount: number;
         }
@@ -461,7 +461,7 @@ declare module 'stripe' {
             rate_type: TaxRateDetails.RateType | null;
 
             /**
-             * State, county, province, or region.
+             * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
              */
             state: string | null;
 

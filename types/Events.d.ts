@@ -5,7 +5,7 @@ declare module 'stripe' {
     namespace Event {
       interface Data {
         /**
-         * Object containing the API resource relevant to the event. For example, an `invoice.created` event will have a full [invoice object](https://stripe.com/docs/api#invoice_object) as the value of the object key.
+         * Object containing the API resource relevant to the event. For example, an `invoice.created` event will have a full [invoice object](https://api.stripe.com#invoice_object) as the value of the object key.
          */
         object: Data.Object;
 
