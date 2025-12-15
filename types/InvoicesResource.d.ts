@@ -2989,7 +2989,7 @@ declare module 'stripe' {
           discount_actions?: Array<Amendment.DiscountAction>;
 
           /**
-           * Configures how the subscription schedule handles billing for phase transitions. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+           * Configures how the subscription schedule handles billing for phase transitions.
            */
           effective_at?: Amendment.EffectiveAt;
 
@@ -3768,7 +3768,7 @@ declare module 'stripe' {
           duration?: Phase.Duration;
 
           /**
-           * Configures how the subscription schedule handles billing for phase transitions. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+           * Configures how the subscription schedule handles billing for phase transitions.
            */
           effective_at?: Phase.EffectiveAt;
 
