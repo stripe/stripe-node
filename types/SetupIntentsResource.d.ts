@@ -66,12 +66,12 @@ declare module 'stripe' {
       flow_directions?: Array<SetupIntentCreateParams.FlowDirection>;
 
       /**
-       * This hash contains details about the mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
+       * This hash contains details about the mandate to create. This parameter can only be used with [`confirm=true`](https://docs.stripe.com/api/setup_intents/create#create_setup_intent-confirm).
        */
       mandate_data?: Stripe.Emptyable<SetupIntentCreateParams.MandateData>;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.MetadataParam;
 
@@ -86,12 +86,12 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
-       * The ID of the [payment method configuration](https://stripe.com/docs/api/payment_method_configurations) to use with this SetupIntent.
+       * The ID of the [payment method configuration](https://docs.stripe.com/api/payment_method_configurations) to use with this SetupIntent.
        */
       payment_method_configuration?: string;
 
       /**
-       * When included, this hash creates a PaymentMethod that is set as the [`payment_method`](https://stripe.com/docs/api/setup_intents/object#setup_intent_object-payment_method)
+       * When included, this hash creates a PaymentMethod that is set as the [`payment_method`](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-payment_method)
        * value in the SetupIntent.
        */
       payment_method_data?: SetupIntentCreateParams.PaymentMethodData;
@@ -107,7 +107,7 @@ declare module 'stripe' {
       payment_method_types?: Array<string>;
 
       /**
-       * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site. To redirect to a mobile application, you can alternatively supply an application URI scheme. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
+       * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site. To redirect to a mobile application, you can alternatively supply an application URI scheme. This parameter can only be used with [`confirm=true`](https://docs.stripe.com/api/setup_intents/create#create_setup_intent-confirm).
        */
       return_url?: string;
 
@@ -134,7 +134,7 @@ declare module 'stripe' {
         /**
          * Controls whether this SetupIntent will accept redirect-based payment methods.
          *
-         * Redirect-based payment methods may require your customer to be redirected to a payment method's app or site for authentication or additional steps. To [confirm](https://stripe.com/docs/api/setup_intents/confirm) this SetupIntent, you may be required to provide a `return_url` to redirect customers back to your site after they authenticate or complete the setup.
+         * Redirect-based payment methods may require your customer to be redirected to a payment method's app or site for authentication or additional steps. To [confirm](https://docs.stripe.com/api/setup_intents/confirm) this SetupIntent, you may be required to provide a `return_url` to redirect customers back to your site after they authenticate or complete the setup.
          */
         allow_redirects?: AutomaticPaymentMethods.AllowRedirects;
 
@@ -414,7 +414,7 @@ declare module 'stripe' {
         mb_way?: PaymentMethodData.MbWay;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
 
@@ -494,7 +494,7 @@ declare module 'stripe' {
         qris?: PaymentMethodData.Qris;
 
         /**
-         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
 
@@ -782,6 +782,7 @@ declare module 'stripe' {
             | 'handelsbanken'
             | 'ing'
             | 'knab'
+            | 'mollie'
             | 'moneyou'
             | 'n26'
             | 'nn'
@@ -950,7 +951,7 @@ declare module 'stripe' {
 
         interface RadarOptions {
           /**
-           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
            */
           session?: string;
         }
@@ -1283,7 +1284,7 @@ declare module 'stripe' {
           network?: Card.Network;
 
           /**
-           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
 
@@ -1642,37 +1643,37 @@ declare module 'stripe' {
             /**
              * Amount that will be collected. It is required when `amount_type` is `fixed`.
              */
-            amount?: number;
+            amount?: Stripe.Emptyable<number>;
 
             /**
              * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
              */
-            amount_type?: MandateOptions.AmountType;
+            amount_type?: Stripe.Emptyable<MandateOptions.AmountType>;
 
             /**
              * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
              */
-            end_date?: string;
+            end_date?: Stripe.Emptyable<string>;
 
             /**
              * The periodicity at which payments will be collected. Defaults to `adhoc`.
              */
-            payment_schedule?: MandateOptions.PaymentSchedule;
+            payment_schedule?: Stripe.Emptyable<MandateOptions.PaymentSchedule>;
 
             /**
              * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
              */
-            payments_per_period?: number;
+            payments_per_period?: Stripe.Emptyable<number>;
 
             /**
              * The purpose for which payments are made. Has a default value based on your merchant category code.
              */
-            purpose?: MandateOptions.Purpose;
+            purpose?: Stripe.Emptyable<MandateOptions.Purpose>;
 
             /**
              * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
              */
-            start_date?: string;
+            start_date?: Stripe.Emptyable<string>;
           }
 
           namespace MandateOptions {
@@ -1898,7 +1899,7 @@ declare module 'stripe' {
 
       interface SingleUse {
         /**
-         * Amount the customer is granting permission to collect later. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
+         * Amount the customer is granting permission to collect later. A positive integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://docs.stripe.com/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
          */
         amount: number;
 
@@ -1970,7 +1971,7 @@ declare module 'stripe' {
       flow_directions?: Array<SetupIntentUpdateParams.FlowDirection>;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
@@ -1980,12 +1981,12 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
-       * The ID of the [payment method configuration](https://stripe.com/docs/api/payment_method_configurations) to use with this SetupIntent.
+       * The ID of the [payment method configuration](https://docs.stripe.com/api/payment_method_configurations) to use with this SetupIntent.
        */
       payment_method_configuration?: string;
 
       /**
-       * When included, this hash creates a PaymentMethod that is set as the [`payment_method`](https://stripe.com/docs/api/setup_intents/object#setup_intent_object-payment_method)
+       * When included, this hash creates a PaymentMethod that is set as the [`payment_method`](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-payment_method)
        * value in the SetupIntent.
        */
       payment_method_data?: SetupIntentUpdateParams.PaymentMethodData;
@@ -2219,7 +2220,7 @@ declare module 'stripe' {
         mb_way?: PaymentMethodData.MbWay;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
 
@@ -2299,7 +2300,7 @@ declare module 'stripe' {
         qris?: PaymentMethodData.Qris;
 
         /**
-         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
 
@@ -2587,6 +2588,7 @@ declare module 'stripe' {
             | 'handelsbanken'
             | 'ing'
             | 'knab'
+            | 'mollie'
             | 'moneyou'
             | 'n26'
             | 'nn'
@@ -2755,7 +2757,7 @@ declare module 'stripe' {
 
         interface RadarOptions {
           /**
-           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
            */
           session?: string;
         }
@@ -3088,7 +3090,7 @@ declare module 'stripe' {
           network?: Card.Network;
 
           /**
-           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
 
@@ -3447,37 +3449,37 @@ declare module 'stripe' {
             /**
              * Amount that will be collected. It is required when `amount_type` is `fixed`.
              */
-            amount?: number;
+            amount?: Stripe.Emptyable<number>;
 
             /**
              * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
              */
-            amount_type?: MandateOptions.AmountType;
+            amount_type?: Stripe.Emptyable<MandateOptions.AmountType>;
 
             /**
              * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
              */
-            end_date?: string;
+            end_date?: Stripe.Emptyable<string>;
 
             /**
              * The periodicity at which payments will be collected. Defaults to `adhoc`.
              */
-            payment_schedule?: MandateOptions.PaymentSchedule;
+            payment_schedule?: Stripe.Emptyable<MandateOptions.PaymentSchedule>;
 
             /**
              * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
              */
-            payments_per_period?: number;
+            payments_per_period?: Stripe.Emptyable<number>;
 
             /**
              * The purpose for which payments are made. Has a default value based on your merchant category code.
              */
-            purpose?: MandateOptions.Purpose;
+            purpose?: Stripe.Emptyable<MandateOptions.Purpose>;
 
             /**
              * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
              */
-            start_date?: string;
+            start_date?: Stripe.Emptyable<string>;
           }
 
           namespace MandateOptions {
@@ -3776,7 +3778,7 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
-       * When included, this hash creates a PaymentMethod that is set as the [`payment_method`](https://stripe.com/docs/api/setup_intents/object#setup_intent_object-payment_method)
+       * When included, this hash creates a PaymentMethod that is set as the [`payment_method`](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-payment_method)
        * value in the SetupIntent.
        */
       payment_method_data?: SetupIntentConfirmParams.PaymentMethodData;
@@ -4006,7 +4008,7 @@ declare module 'stripe' {
         mb_way?: PaymentMethodData.MbWay;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
 
@@ -4086,7 +4088,7 @@ declare module 'stripe' {
         qris?: PaymentMethodData.Qris;
 
         /**
-         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
 
@@ -4374,6 +4376,7 @@ declare module 'stripe' {
             | 'handelsbanken'
             | 'ing'
             | 'knab'
+            | 'mollie'
             | 'moneyou'
             | 'n26'
             | 'nn'
@@ -4542,7 +4545,7 @@ declare module 'stripe' {
 
         interface RadarOptions {
           /**
-           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
            */
           session?: string;
         }
@@ -4875,7 +4878,7 @@ declare module 'stripe' {
           network?: Card.Network;
 
           /**
-           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
 
@@ -5234,37 +5237,37 @@ declare module 'stripe' {
             /**
              * Amount that will be collected. It is required when `amount_type` is `fixed`.
              */
-            amount?: number;
+            amount?: Stripe.Emptyable<number>;
 
             /**
              * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
              */
-            amount_type?: MandateOptions.AmountType;
+            amount_type?: Stripe.Emptyable<MandateOptions.AmountType>;
 
             /**
              * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
              */
-            end_date?: string;
+            end_date?: Stripe.Emptyable<string>;
 
             /**
              * The periodicity at which payments will be collected. Defaults to `adhoc`.
              */
-            payment_schedule?: MandateOptions.PaymentSchedule;
+            payment_schedule?: Stripe.Emptyable<MandateOptions.PaymentSchedule>;
 
             /**
              * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
              */
-            payments_per_period?: number;
+            payments_per_period?: Stripe.Emptyable<number>;
 
             /**
              * The purpose for which payments are made. Has a default value based on your merchant category code.
              */
-            purpose?: MandateOptions.Purpose;
+            purpose?: Stripe.Emptyable<MandateOptions.Purpose>;
 
             /**
              * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
              */
-            start_date?: string;
+            start_date?: Stripe.Emptyable<string>;
           }
 
           namespace MandateOptions {

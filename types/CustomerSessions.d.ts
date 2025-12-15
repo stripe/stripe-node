@@ -41,7 +41,7 @@ declare module 'stripe' {
       /**
        * The Account that the Customer Session was created for.
        */
-      customer_account?: string | null;
+      customer_account: string | null;
 
       /**
        * The timestamp at which this Customer Session will expire.

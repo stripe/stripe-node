@@ -39,6 +39,8 @@ export const generateV2Error = (
       return new AlreadyExistsError(rawStripeError);
     case 'blocked_by_stripe':
       return new BlockedByStripeError(rawStripeError);
+    case 'controlled_by_alternate_resource':
+      return new ControlledByAlternateResourceError(rawStripeError);
     case 'controlled_by_dashboard':
       return new ControlledByDashboardError(rawStripeError);
     case 'feature_not_enabled':
@@ -57,8 +59,6 @@ export const generateV2Error = (
       return new NotCancelableError(rawStripeError);
     case 'quota_exceeded':
       return new QuotaExceededError(rawStripeError);
-    case 'rate_limit':
-      return new RateLimitError(rawStripeError);
     case 'recipient_not_notifiable':
       return new RecipientNotNotifiableError(rawStripeError);
     case 'temporary_session_expired':
@@ -275,6 +275,11 @@ export class BlockedByStripeError extends StripeError {
     super(rawStripeError, 'BlockedByStripeError');
   }
 }
+export class ControlledByAlternateResourceError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'ControlledByAlternateResourceError');
+  }
+}
 export class ControlledByDashboardError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'ControlledByDashboardError');
@@ -321,11 +326,6 @@ export class NotCancelableError extends StripeError {
 export class QuotaExceededError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'QuotaExceededError');
-  }
-}
-export class RateLimitError extends StripeError {
-  constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'RateLimitError');
   }
 }
 export class RecipientNotNotifiableError extends StripeError {

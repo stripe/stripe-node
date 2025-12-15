@@ -12,7 +12,7 @@ declare module 'stripe' {
 
       class FinancingSummaryResource {
         /**
-         * Retrieve the financing state for the account that was authenticated in the request.
+         * Retrieve the financing summary object for the account.
          */
         retrieve(
           params?: FinancingSummaryRetrieveParams,

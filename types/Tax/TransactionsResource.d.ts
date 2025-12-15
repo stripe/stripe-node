@@ -27,7 +27,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
 
@@ -49,7 +49,7 @@ declare module 'stripe' {
         original_transaction: string;
 
         /**
-         * A custom identifier for this reversal, such as `myOrder_123-refund_1`, which must be unique across all transactions. The reference helps identify this reversal transaction in exported [tax reports](https://stripe.com/docs/tax/reports).
+         * A custom identifier for this reversal, such as `myOrder_123-refund_1`, which must be unique across all transactions. The reference helps identify this reversal transaction in exported [tax reports](https://docs.stripe.com/tax/reports).
          */
         reference: string;
 
@@ -59,7 +59,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * A flat amount to reverse across the entire transaction, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) in negative. This value represents the total amount to refund from the transaction, including taxes.
+         * A flat amount to reverse across the entire transaction, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) in negative. This value represents the total amount to refund from the transaction, including taxes.
          */
         flat_amount?: number;
 
@@ -69,7 +69,7 @@ declare module 'stripe' {
         line_items?: Array<TransactionCreateReversalParams.LineItem>;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
 
@@ -82,17 +82,17 @@ declare module 'stripe' {
       namespace TransactionCreateReversalParams {
         interface LineItem {
           /**
-           * The amount to reverse, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) in negative.
+           * The amount to reverse, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) in negative.
            */
           amount: number;
 
           /**
-           * The amount of tax to reverse, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) in negative.
+           * The amount of tax to reverse, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) in negative.
            */
           amount_tax: number;
 
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata?: Stripe.MetadataParam;
 
@@ -102,7 +102,7 @@ declare module 'stripe' {
           original_line_item: string;
 
           /**
-           * The quantity reversed. Appears in [tax exports](https://stripe.com/docs/tax/reports), but does not affect the amount of tax reversed.
+           * The quantity reversed. Appears in [tax exports](https://docs.stripe.com/tax/reports), but does not affect the amount of tax reversed.
            */
           quantity?: number;
 
@@ -116,12 +116,12 @@ declare module 'stripe' {
 
         interface ShippingCost {
           /**
-           * The amount to reverse, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) in negative.
+           * The amount to reverse, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) in negative.
            */
           amount: number;
 
           /**
-           * The amount of tax to reverse, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) in negative.
+           * The amount of tax to reverse, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) in negative.
            */
           amount_tax: number;
         }

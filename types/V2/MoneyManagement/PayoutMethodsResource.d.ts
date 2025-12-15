@@ -81,6 +81,7 @@ declare module 'stripe' {
            * and will not appear in the payout method list.
            * @throws Stripe.ControlledByDashboardError
            * @throws Stripe.InvalidPayoutMethodError
+           * @throws Stripe.ControlledByAlternateResourceError
            */
           archive(
             id: string,
@@ -96,6 +97,7 @@ declare module 'stripe' {
            * Unarchive an PayoutMethod object.
            * @throws Stripe.ControlledByDashboardError
            * @throws Stripe.InvalidPayoutMethodError
+           * @throws Stripe.ControlledByAlternateResourceError
            */
           unarchive(
             id: string,

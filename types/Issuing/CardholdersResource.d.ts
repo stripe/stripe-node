@@ -35,24 +35,24 @@ declare module 'stripe' {
         individual?: CardholderCreateParams.Individual;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
 
         /**
          * The cardholder's phone number. This will be transformed to [E.164](https://en.wikipedia.org/wiki/E.164) if it is not provided in that format already. This is required for all cardholders who will be creating EU cards.
-         *  While phone number is optional if the cardholder will not be creating EU cards, note that this cardholder will not be eligible for 3DS without a phone number. See the [3D Secure documentation](https://stripe.com/docs/issuing/3d-secure#when-is-3d-secure-applied) for more details.
+         *  While phone number is optional if the cardholder will not be creating EU cards, note that this cardholder will not be eligible for 3DS without a phone number. See the [3D Secure documentation](https://docs.stripe.com/issuing/3d-secure#when-is-3d-secure-applied) for more details.
          */
         phone_number?: string;
 
         /**
          * The cardholder's preferred locales (languages), ordered by preference. Locales can be `de`, `en`, `es`, `fr`, or `it`.
-         *  This changes the language of the [3D Secure flow](https://stripe.com/docs/issuing/3d-secure) and one-time password messages sent to the cardholder.
+         *  This changes the language of the [3D Secure flow](https://docs.stripe.com/issuing/3d-secure) and one-time password messages sent to the cardholder.
          */
         preferred_locales?: Array<CardholderCreateParams.PreferredLocale>;
 
         /**
-         * Rules that control spending across this cardholder's cards. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
+         * Rules that control spending across this cardholder's cards. Refer to our [documentation](https://docs.stripe.com/issuing/controls/spending-controls) for more details.
          */
         spending_controls?: CardholderCreateParams.SpendingControls;
 
@@ -62,7 +62,7 @@ declare module 'stripe' {
         status?: CardholderCreateParams.Status;
 
         /**
-         * One of `individual` or `company`. See [Choose a cardholder type](https://stripe.com/docs/issuing/other/choose-cardholder) for more details.
+         * One of `individual` or `company`. See [Choose a cardholder type](https://docs.stripe.com/issuing/other/choose-cardholder) for more details.
          */
         type?: CardholderCreateParams.Type;
       }
@@ -103,7 +103,7 @@ declare module 'stripe' {
             postal_code: string;
 
             /**
-             * State, county, province, or region.
+             * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
              */
             state?: string;
           }
@@ -197,12 +197,12 @@ declare module 'stripe' {
           namespace Verification {
             interface Document {
               /**
-               * The back of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`.
+               * The back of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
                */
               back?: string;
 
               /**
-               * The front of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`.
+               * The front of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
                */
               front?: string;
             }
@@ -213,7 +213,7 @@ declare module 'stripe' {
 
         interface SpendingControls {
           /**
-           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
+           * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
            */
           allowed_categories?: Array<SpendingControls.AllowedCategory>;
 
@@ -223,7 +223,7 @@ declare module 'stripe' {
           allowed_merchant_countries?: Array<string>;
 
           /**
-           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
+           * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
            */
           blocked_categories?: Array<SpendingControls.BlockedCategory>;
 
@@ -845,7 +845,7 @@ declare module 'stripe' {
             amount: number;
 
             /**
-             * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) this limit applies to. Omitting this field will apply the limit to all categories.
+             * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) this limit applies to. Omitting this field will apply the limit to all categories.
              */
             categories?: Array<SpendingLimit.Category>;
 
@@ -1202,23 +1202,23 @@ declare module 'stripe' {
         individual?: CardholderUpdateParams.Individual;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
 
         /**
-         * The cardholder's phone number. This is required for all cardholders who will be creating EU cards. See the [3D Secure documentation](https://stripe.com/docs/issuing/3d-secure) for more details.
+         * The cardholder's phone number. This is required for all cardholders who will be creating EU cards. See the [3D Secure documentation](https://docs.stripe.com/issuing/3d-secure) for more details.
          */
         phone_number?: string;
 
         /**
          * The cardholder's preferred locales (languages), ordered by preference. Locales can be `de`, `en`, `es`, `fr`, or `it`.
-         *  This changes the language of the [3D Secure flow](https://stripe.com/docs/issuing/3d-secure) and one-time password messages sent to the cardholder.
+         *  This changes the language of the [3D Secure flow](https://docs.stripe.com/issuing/3d-secure) and one-time password messages sent to the cardholder.
          */
         preferred_locales?: Array<CardholderUpdateParams.PreferredLocale>;
 
         /**
-         * Rules that control spending across this cardholder's cards. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
+         * Rules that control spending across this cardholder's cards. Refer to our [documentation](https://docs.stripe.com/issuing/controls/spending-controls) for more details.
          */
         spending_controls?: CardholderUpdateParams.SpendingControls;
 
@@ -1264,7 +1264,7 @@ declare module 'stripe' {
             postal_code: string;
 
             /**
-             * State, county, province, or region.
+             * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
              */
             state?: string;
           }
@@ -1358,12 +1358,12 @@ declare module 'stripe' {
           namespace Verification {
             interface Document {
               /**
-               * The back of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`.
+               * The back of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
                */
               back?: string;
 
               /**
-               * The front of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`.
+               * The front of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
                */
               front?: string;
             }
@@ -1374,7 +1374,7 @@ declare module 'stripe' {
 
         interface SpendingControls {
           /**
-           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
+           * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
            */
           allowed_categories?: Array<SpendingControls.AllowedCategory>;
 
@@ -1384,7 +1384,7 @@ declare module 'stripe' {
           allowed_merchant_countries?: Array<string>;
 
           /**
-           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
+           * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
            */
           blocked_categories?: Array<SpendingControls.BlockedCategory>;
 
@@ -2006,7 +2006,7 @@ declare module 'stripe' {
             amount: number;
 
             /**
-             * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) this limit applies to. Omitting this field will apply the limit to all categories.
+             * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) this limit applies to. Omitting this field will apply the limit to all categories.
              */
             categories?: Array<SpendingLimit.Category>;
 

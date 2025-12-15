@@ -21,7 +21,7 @@ declare module 'stripe' {
           /**
            * The amount and currency of the ReceivedCredit.
            */
-          amount: Amount;
+          amount: ReceivedCredit.Amount;
 
           /**
            * This object stores details about the originating Stripe transaction that resulted in the ReceivedCredit. Present if `type` field value is `balance_transfer`.
@@ -81,6 +81,18 @@ declare module 'stripe' {
         }
 
         namespace ReceivedCredit {
+          interface Amount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value?: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency?: string;
+          }
+
           interface BalanceTransfer {
             /**
              * The ID of the account that owns the source object originated the ReceivedCredit.
@@ -106,10 +118,19 @@ declare module 'stripe' {
              * The ID of the payout object that originated the ReceivedCredit.
              */
             payout_v1?: string;
+
+            /**
+             * The ID of the v1 transfer object that originated the ReceivedCredit.
+             */
+            transfer?: string;
           }
 
           namespace BalanceTransfer {
-            type Type = 'outbound_payment' | 'outbound_transfer' | 'payout_v1';
+            type Type =
+              | 'outbound_payment'
+              | 'outbound_transfer'
+              | 'transfer'
+              | 'payout_v1';
           }
 
           interface BankTransfer {

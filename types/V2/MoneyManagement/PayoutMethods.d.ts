@@ -91,6 +91,11 @@ declare module 'stripe' {
             enabled_delivery_options: Array<string>;
 
             /**
+             * The ID of the Financial Connections Account used to create the bank account.
+             */
+            financial_connections_account?: string;
+
+            /**
              * The last 4 digits of the account number.
              */
             last4: string;

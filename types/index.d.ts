@@ -99,6 +99,9 @@
 ///<reference path='./RefundsResource.d.ts' />
 ///<reference path='./Reporting/ReportRunsResource.d.ts' />
 ///<reference path='./Reporting/ReportTypesResource.d.ts' />
+///<reference path='./Reserve/HoldsResource.d.ts' />
+///<reference path='./Reserve/PlansResource.d.ts' />
+///<reference path='./Reserve/ReleasesResource.d.ts' />
 ///<reference path='./ReviewsResource.d.ts' />
 ///<reference path='./SetupAttemptsResource.d.ts' />
 ///<reference path='./SetupIntentsResource.d.ts' />
@@ -306,6 +309,9 @@
 ///<reference path='./Refunds.d.ts' />
 ///<reference path='./Reporting/ReportRuns.d.ts' />
 ///<reference path='./Reporting/ReportTypes.d.ts' />
+///<reference path='./Reserve/Holds.d.ts' />
+///<reference path='./Reserve/Plans.d.ts' />
+///<reference path='./Reserve/Releases.d.ts' />
 ///<reference path='./ReserveTransactions.d.ts' />
 ///<reference path='./Reviews.d.ts' />
 ///<reference path='./SetupAttempts.d.ts' />
@@ -541,6 +547,11 @@ declare module 'stripe' {
     reporting: {
       reportRuns: Stripe.Reporting.ReportRunsResource;
       reportTypes: Stripe.Reporting.ReportTypesResource;
+    };
+    reserve: {
+      holds: Stripe.Reserve.HoldsResource;
+      plans: Stripe.Reserve.PlansResource;
+      releases: Stripe.Reserve.ReleasesResource;
     };
     sigma: {
       scheduledQueryRuns: Stripe.Sigma.ScheduledQueryRunsResource;

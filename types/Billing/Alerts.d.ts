@@ -38,7 +38,7 @@ declare module 'stripe' {
         title: string;
 
         /**
-         * Encapsulates configuration of the alert to monitor usage on a specific [Billing Meter](https://stripe.com/docs/api/billing/meter).
+         * Encapsulates configuration of the alert to monitor usage on a specific [Billing Meter](https://docs.stripe.com/api/billing/meter).
          */
         usage_threshold: Alert.UsageThreshold | null;
       }

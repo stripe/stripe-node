@@ -10,12 +10,12 @@ declare module 'stripe' {
         filter: CreditBalanceSummaryRetrieveParams.Filter;
 
         /**
-         * The customer for which to fetch credit balance summary.
+         * The customer whose credit balance summary you're retrieving.
          */
         customer?: string;
 
         /**
-         * The account for which to fetch credit balance summary.
+         * The account representing the customer whose credit balance summary you're retrieving.
          */
         customer_account?: string;
 

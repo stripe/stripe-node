@@ -45,6 +45,7 @@ import {FinancingTransactions as CapitalFinancingTransactions} from './resources
 import {Forms as TaxForms} from './resources/Tax/Forms.js';
 import {FraudLiabilityDebits as IssuingFraudLiabilityDebits} from './resources/Issuing/FraudLiabilityDebits.js';
 import {GbBankAccounts as V2CoreVaultGbBankAccounts} from './resources/V2/Core/Vault/GbBankAccounts.js';
+import {Holds as ReserveHolds} from './resources/Reserve/Holds.js';
 import {InboundTransfers as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {InboundTransfers as V2MoneyManagementInboundTransfers} from './resources/V2/MoneyManagement/InboundTransfers.js';
@@ -73,6 +74,7 @@ import {PayoutMethodsBankAccountSpec as V2MoneyManagementPayoutMethodsBankAccoun
 import {PersonalizationDesigns as IssuingPersonalizationDesigns} from './resources/Issuing/PersonalizationDesigns.js';
 import {PersonalizationDesigns as TestHelpersIssuingPersonalizationDesigns} from './resources/TestHelpers/Issuing/PersonalizationDesigns.js';
 import {PhysicalBundles as IssuingPhysicalBundles} from './resources/Issuing/PhysicalBundles.js';
+import {Plans as ReservePlans} from './resources/Reserve/Plans.js';
 import {Products as ClimateProducts} from './resources/Climate/Products.js';
 import {Profiles as V2BillingProfiles} from './resources/V2/Billing/Profiles.js';
 import {ReaderCollectedData as TerminalReaderCollectedData} from './resources/Terminal/ReaderCollectedData.js';
@@ -87,6 +89,7 @@ import {ReceivedDebits as V2MoneyManagementReceivedDebits} from './resources/V2/
 import {RedactionJobs as PrivacyRedactionJobs} from './resources/Privacy/RedactionJobs.js';
 import {Refunds as TestHelpersRefunds} from './resources/TestHelpers/Refunds.js';
 import {Registrations as TaxRegistrations} from './resources/Tax/Registrations.js';
+import {Releases as ReserveReleases} from './resources/Reserve/Releases.js';
 import {ReportRuns as ReportingReportRuns} from './resources/Reporting/ReportRuns.js';
 import {ReportTypes as ReportingReportTypes} from './resources/Reporting/ReportTypes.js';
 import {Requests as ForwardingRequests} from './resources/Forwarding/Requests.js';
@@ -245,6 +248,11 @@ export const Radar = resourceNamespace('radar', {
 export const Reporting = resourceNamespace('reporting', {
   ReportRuns: ReportingReportRuns,
   ReportTypes: ReportingReportTypes,
+});
+export const Reserve = resourceNamespace('reserve', {
+  Holds: ReserveHolds,
+  Plans: ReservePlans,
+  Releases: ReserveReleases,
 });
 export const Sigma = resourceNamespace('sigma', {
   ScheduledQueryRuns: SigmaScheduledQueryRuns,

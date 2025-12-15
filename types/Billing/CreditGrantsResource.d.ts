@@ -20,12 +20,12 @@ declare module 'stripe' {
         category?: CreditGrantCreateParams.Category;
 
         /**
-         * ID of the customer to receive the billing credits.
+         * ID of the customer receiving the billing credits.
          */
         customer?: string;
 
         /**
-         * ID of the account to receive the billing credits.
+         * ID of the account representing the customer receiving the billing credits.
          */
         customer_account?: string;
 
@@ -151,7 +151,7 @@ declare module 'stripe' {
         customer?: string;
 
         /**
-         * Only return credit grants for this account.
+         * Only return credit grants for this account representing the customer.
          */
         customer_account?: string;
 
