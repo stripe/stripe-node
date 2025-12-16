@@ -22,6 +22,7 @@ import {
   pascalToCamelCase,
   validateInteger,
 } from './utils.js';
+import {StripeEventNotificationHandler} from './StripeEventNotificationHandler.js';
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -542,6 +543,13 @@ export function createStripe(
       };
 
       return eventNotification;
+    },
+    notificationHandler(webhookSecret: string, fallbackCallback: any) {
+      return new StripeEventNotificationHandler(
+        this,
+        webhookSecret,
+        fallbackCallback
+      );
     },
   } as StripeObject;
 

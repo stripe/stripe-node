@@ -26,6 +26,43 @@ declare module 'stripe' {
       static parse(contextStr?: string | null): StripeContext;
     }
 
+    interface UnhandledNotificationDetails {
+      isKnownEventType: boolean;
+    }
+
+    type FallbackCallback = (
+      event: V2.Core.EventNotificationBase,
+      client: Stripe,
+      details: UnhandledNotificationDetails
+    ) => Promise<void>;
+
+    class EventNotificationHandler {
+      constructor(
+        client: Stripe,
+        webhookSecret: string,
+        fallbackCallback: FallbackCallback
+      );
+
+      on<T extends Stripe.V2.Core.EventNotification['type']>(
+        eventType: T,
+        callback: (
+          eventNotification: Extract<
+            Stripe.V2.Core.EventNotification,
+            {type: T}
+          >,
+          client: Stripe
+        ) => void
+        // a very cool thing would be if the whole class was generic and `on` returned all of the event types, but omitting the one we just used.
+        // So `.on('a').on('a') would be a type error.
+        // but, the event types aren't accessible from the runtime code, so we can't (yet)
+      ): this;
+
+      handle(
+        rawBody: string | Uint8Array,
+        signature: string | Uint8Array
+      ): Promise<void>;
+    }
+
     namespace Events {
       /**
        * Represents the shape of an EventNotification that the SDK didn't know about when it was generated.
