@@ -52,6 +52,7 @@ const KNOWN_EVENT_TYPES = new Set([
   'v2.money_management.outbound_transfer.posted',
   'v2.money_management.outbound_transfer.returned',
   'v2.money_management.outbound_transfer.updated',
+  'v2.money_management.payout_method.created',
   'v2.money_management.payout_method.updated',
   'v2.money_management.received_credit.available',
   'v2.money_management.received_credit.failed',
