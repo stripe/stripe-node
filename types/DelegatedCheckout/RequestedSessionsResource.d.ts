@@ -262,7 +262,7 @@ declare module 'stripe' {
         /**
          * The metadata for this requested session.
          */
-        metadata?: Stripe.MetadataParam;
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
          * The payment method for this requested session.
@@ -272,14 +272,16 @@ declare module 'stripe' {
         /**
          * The payment method data for this requested session.
          */
-        payment_method_data?: RequestedSessionUpdateParams.PaymentMethodData;
+        payment_method_data?: Stripe.Emptyable<
+          RequestedSessionUpdateParams.PaymentMethodData
+        >;
 
         /**
          * The shared metadata for this requested session.
          */
-        shared_metadata?: {
+        shared_metadata?: Stripe.Emptyable<{
           [key: string]: string;
-        };
+        }>;
       }
 
       namespace RequestedSessionUpdateParams {
