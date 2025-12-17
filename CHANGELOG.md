@@ -4,6 +4,7 @@
 This release changes the pinned API version to `2025-12-15.preview`.
 
 * [#2498](https://github.com/stripe/stripe-node/pull/2498) Add EventNotificationHandler
+  * This is a new, simplified way to handle event notifications (AKA thin event webhooks). Learn more in the docs: https://docs.stripe.com/webhooks/event-notification-handlers?lang=node
 * [#2509](https://github.com/stripe/stripe-node/pull/2509) Update generated code for beta
   * Add support for new resources `Reserve.Hold`, `Reserve.Plan`, and `Reserve.Release`
   * Add support for `list` and `retrieve` methods on resources `Reserve.Hold` and `Reserve.Release`
