@@ -1,0 +1,26 @@
+"use strict";
+// File generated from our OpenAPI spec
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EphemeralKeyResource = void 0;
+const StripeResource_js_1 = require("../StripeResource.js");
+const stripeMethod = StripeResource_js_1.StripeResource.method;
+class EphemeralKeyResource extends StripeResource_js_1.StripeResource {
+    del(...args) {
+        return stripeMethod({
+            method: 'DELETE',
+            fullPath: '/v1/ephemeral_keys/{key}',
+        }).call(this, ...args);
+    }
+    create(...args) {
+        return stripeMethod({
+            method: 'POST',
+            fullPath: '/v1/ephemeral_keys',
+            validator: (data, options) => {
+                if (!options.headers || !options.headers['Stripe-Version']) {
+                    throw new Error('Passing apiVersion in a separate options hash is required to create an ephemeral key. See https://stripe.com/docs/api/versioning?lang=node');
+                }
+            },
+        }).call(this, ...args);
+    }
+}
+exports.EphemeralKeyResource = EphemeralKeyResource;
