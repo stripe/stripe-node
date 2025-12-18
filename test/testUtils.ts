@@ -6,7 +6,7 @@ import http = require('http');
 import {CryptoProvider} from '../src/crypto/CryptoProvider.js';
 import {NodePlatformFunctions} from '../src/platform/NodePlatformFunctions.js';
 import {RequestSender} from '../src/RequestSender.js';
-import {createStripe} from '../src/stripe.core.js';
+import {Stripe} from '../src/stripe.core.js';
 import {
   RequestAuthenticator,
   RequestCallback,
@@ -142,7 +142,8 @@ export const getMockStripe = (
 
   // Provide a testable stripe instance
   // That is, with mock-requests built in and hookable
-  const stripeFactory: any = createStripe(
+  // Initialize Stripe with platform functions and custom request sender
+  Stripe.initialize(
     new NodePlatformFunctions(),
     (stripeInstance) =>
       new MockRequestSender(
@@ -150,7 +151,7 @@ export const getMockStripe = (
         (stripe as any).StripeResource.MAX_BUFFERED_REQUEST_METRICS
       )
   );
-  return stripeFactory(FAKE_API_KEY, config);
+  return new Stripe(FAKE_API_KEY, config) as any;
 };
 
 export const createMockClient = (
@@ -244,7 +245,6 @@ export const getSpyableStripe = (
 
   // Provide a testable stripe instance
   // That is, with mock-requests built in and hookable
-  const stripe = require('../src/stripe.cjs.node.js');
   const stripeInstance = stripe(FAKE_API_KEY, config);
 
   stripeInstance.REQUESTS = [];
