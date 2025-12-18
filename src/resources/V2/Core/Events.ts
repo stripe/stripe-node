@@ -3,7 +3,7 @@ import {StripeResource} from '../../../StripeResource.js';
 
 const stripeMethod = StripeResource.method;
 
-export const Events = StripeResource.extend({
+export const Event = StripeResource.extend({
   retrieve(...args: any[]) {
     const transformResponseData = (response: any): any => {
       return this.addFetchRelatedObjectIfNeeded(response);

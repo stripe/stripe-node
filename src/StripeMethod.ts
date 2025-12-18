@@ -1,6 +1,7 @@
 import {callbackifyPromiseWithTimeout, extractUrlParams} from './utils.js';
 import {makeAutoPaginationMethods} from './autoPagination.js';
-import {MethodSpec, StripeResourceObject} from './Types.js';
+import {MethodSpec} from './Types.js';
+import {StripeResource} from './StripeResource.js';
 
 /**
  * Create an API method from the declared spec.
@@ -28,7 +29,7 @@ export function stripeMethod(
       `Method spec specified both a 'path' (${spec.path}) and a 'fullPath' (${spec.fullPath}).`
     );
   }
-  return function(this: StripeResourceObject, ...args: any[]): Promise<any> {
+  return function(this: StripeResource, ...args: any[]): Promise<any> {
     const callback = typeof args[args.length - 1] == 'function' && args.pop();
 
     spec.urlParams = extractUrlParams(
