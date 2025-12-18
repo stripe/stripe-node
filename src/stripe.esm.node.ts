@@ -1,5 +1,8 @@
 import {NodePlatformFunctions} from './platform/NodePlatformFunctions.js';
-import {createStripe} from './stripe.core.js';
+import {Stripe as StripeClass} from './stripe.core.js';
 
-export const Stripe = createStripe(new NodePlatformFunctions());
+// Initialize the Stripe class with Node platform functions
+StripeClass.initialize(new NodePlatformFunctions());
+
+export const Stripe = StripeClass;
 export default Stripe;

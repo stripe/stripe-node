@@ -238,22 +238,27 @@ export function protoExtend(
 ): {new (...args: any[]): StripeResourceObject} {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const Super = this;
-  const Constructor = Object.prototype.hasOwnProperty.call(sub, 'constructor')
-    ? sub.constructor
-    : function(this: StripeResourceObject, ...args: any[]): void {
-        Super.apply(this, args);
-      };
 
-  // This initialization logic is somewhat sensitive to be compatible with
-  // divergent JS implementations like the one found in Qt. See here for more
-  // context:
-  //
-  // https://github.com/stripe/stripe-node/pull/334
+  // Create a subclass that properly extends the parent class (works with ES6 classes)
+  const Constructor = class extends Super {
+    constructor(...args: any[]) {
+      super(...args);
+      // Apply any custom constructor logic from sub
+      if (
+        Object.prototype.hasOwnProperty.call(sub, 'constructor') &&
+        typeof sub.constructor === 'function'
+      ) {
+        sub.constructor.apply(this, args);
+      }
+    }
+  };
+
+  // Copy static properties from Super to Constructor
   Object.assign(Constructor, Super);
-  Constructor.prototype = Object.create(Super.prototype);
+  // Copy prototype methods from sub to Constructor.prototype
   Object.assign(Constructor.prototype, sub);
 
-  return Constructor;
+  return Constructor as {new (...args: any[]): StripeResourceObject};
 }
 
 /**

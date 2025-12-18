@@ -1,5 +1,8 @@
 import {WebPlatformFunctions} from './platform/WebPlatformFunctions.js';
-import {createStripe} from './stripe.core.js';
+import {Stripe as StripeClass} from './stripe.core.js';
 
-export const Stripe = createStripe(new WebPlatformFunctions());
+// Initialize the Stripe class with Web platform functions
+StripeClass.initialize(new WebPlatformFunctions());
+
+export const Stripe = StripeClass;
 export default Stripe;

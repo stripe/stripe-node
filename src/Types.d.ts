@@ -5,8 +5,9 @@ import {
   HttpClientResponseInterface,
 } from './net/HttpClient.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
-import {HttpClientResponseError} from './RequestSender.js';
+import {HttpClientResponseError, RequestSender} from './RequestSender.js';
 import {StripeContext} from './StripeContext.js';
+import {Stripe} from './stripe.core.js';
 
 export type AppInfo = {name?: string} & Record<string, unknown>;
 export type ApiMode = 'v1' | 'v2';
@@ -112,96 +113,96 @@ export type StreamingFile = {
   type: string;
   file: {data: EventEmitter};
 };
-export type StripeConstructor = {
-  new (key: string, config: Record<string, unknown>): StripeObject;
-};
-declare const Stripe: StripeConstructor;
-export type StripeObject = {
-  getClientUserAgentSeeded: (
-    seed: Record<string, string | boolean | null>,
-    callback: (userAgent: string) => void
-  ) => void;
-  getClientUserAgent: (callback: (clientUserAgent: string) => void) => void;
-  getTelemetryEnabled: () => boolean;
-  getAppInfoAsString: () => string;
-  getInitialNetworkRetryDelay: () => number;
-  getMaxNetworkRetryDelay: () => number;
-  getMaxNetworkRetries: () => number;
-  getConstant: <T = string>(name: string) => T;
-  _setApiField: <K extends keyof StripeObject['_api']>(
-    name: K,
-    value: StripeObject['_api'][K]
-  ) => void;
-  getApiField: <K extends keyof StripeObject['_api']>(
-    key: K
-  ) => StripeObject['_api'][K];
-  _setApiNumberField: (name: string, value: number) => unknown;
-  _appInfo: any;
-  on: any;
-  off: any;
-  once: any;
-  VERSION: string;
-  StripeResource: StripeResourceConstructor;
-  errors: any;
-  webhooks: any;
-  _prepResources: () => void;
-  _setAppInfo: (appInfo: AppInfo) => void;
-  _prevRequestMetrics: Array<{
-    request_id: string;
-    request_duration_ms: number;
-  }>;
-  _api: {
-    host: string;
-    port: string | number;
-    protocol: string;
-    basePath: string;
-    version: string;
-    timeout: number;
-    maxNetworkRetries: number;
-    agent: string;
-    httpClient: HttpClientInterface;
-    dev: boolean;
-    stripeAccount: string | null;
-    stripeContext: string | StripeContext | null;
-  };
-  _authenticator?: RequestAuthenticator;
-  _emitter: EventEmitter;
-  _enableTelemetry: boolean;
-  _requestSender: RequestSender;
-  _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
-  _clientId?: string;
-  _platformFunctions: PlatformFunctions;
-  _setAuthenticator: (
-    key: string,
-    authenticator: RequestAuthenticator | undefined
-  ) => void;
-  rawRequest: (
-    method: string,
-    path: string,
-    data: RequestData,
-    options: RequestOptions
-  ) => Promise<any>;
-};
-export type RequestSender = {
-  _rawRequest(
-    method: string,
-    path: string,
-    params?: RequestData,
-    options?: RequestOptions,
-    usage?: Array<string>
-  ): Promise<any>;
-  _request(
-    method: string,
-    host: string | null,
-    path: string,
-    data: RequestData | null,
-    authenticator: RequestAuthenticator | null,
-    options: RequestOptions,
-    usage: Array<string>,
-    callback: RequestCallback,
-    requestDataProcessor: RequestDataProcessor | undefined
-  ): void;
-};
+// export type StripeConstructor = {
+//   new (key: string, config: Record<string, unknown>): StripeObject;
+// };
+// declare const Stripe: StripeConstructor;
+// export type StripeObject = {
+//   getClientUserAgentSeeded: (
+//     seed: Record<string, string | boolean | null>,
+//     callback: (userAgent: string) => void
+//   ) => void;
+//   getClientUserAgent: (callback: (clientUserAgent: string) => void) => void;
+//   getTelemetryEnabled: () => boolean;
+//   getAppInfoAsString: () => string;
+//   getInitialNetworkRetryDelay: () => number;
+//   getMaxNetworkRetryDelay: () => number;
+//   getMaxNetworkRetries: () => number;
+//   getConstant: <T = string>(name: string) => T;
+//   _setApiField: <K extends keyof StripeObject['_api']>(
+//     name: K,
+//     value: StripeObject['_api'][K]
+//   ) => void;
+//   getApiField: <K extends keyof StripeObject['_api']>(
+//     key: K
+//   ) => StripeObject['_api'][K];
+//   _setApiNumberField: (name: string, value: number) => unknown;
+//   _appInfo: any;
+//   on: any;
+//   off: any;
+//   once: any;
+//   VERSION: string;
+//   StripeResource: StripeResourceConstructor;
+//   errors: any;
+//   webhooks: any;
+//   _prepResources: () => void;
+//   _setAppInfo: (appInfo: AppInfo) => void;
+//   _prevRequestMetrics: Array<{
+//     request_id: string;
+//     request_duration_ms: number;
+//   }>;
+//   _api: {
+//     host: string;
+//     port: string | number;
+//     protocol: string;
+//     basePath: string;
+//     version: string;
+//     timeout: number;
+//     maxNetworkRetries: number;
+//     agent: string;
+//     httpClient: HttpClientInterface;
+//     dev: boolean;
+//     stripeAccount: string | null;
+//     stripeContext: string | StripeContext | null;
+//   };
+//   _authenticator: RequestAuthenticator | null;
+//   _emitter: EventEmitter;
+//   _enableTelemetry: boolean;
+//   _requestSender: RequestSender;
+//   _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
+//   _clientId?: string;
+//   _platformFunctions: PlatformFunctions;
+//   _setAuthenticator: (
+//     key: string,
+//     authenticator: RequestAuthenticator | undefined
+//   ) => void;
+//   rawRequest: (
+//     method: string,
+//     path: string,
+//     data: RequestData,
+//     options: RequestOptions
+//   ) => Promise<any>;
+// };
+// export type RequestSender = {
+//   _rawRequest(
+//     method: string,
+//     path: string,
+//     params?: RequestData,
+//     options?: RequestOptions,
+//     usage?: Array<string>
+//   ): Promise<any>;
+//   _request(
+//     method: string,
+//     host: string | null,
+//     path: string,
+//     data: RequestData | null,
+//     authenticator: RequestAuthenticator | null,
+//     options: RequestOptions,
+//     usage: Array<string>,
+//     callback: RequestCallback,
+//     requestDataProcessor: RequestDataProcessor | undefined
+//   ): void;
+// };
 export type StripeRawError = {
   message?: string;
   user_message?: string;
@@ -222,11 +223,11 @@ export type StripeRawError = {
   source?: any;
   exception?: any;
 };
-export type StripeResourceConstructor = {
-  new (stripe: StripeObject, deprecatedUrlData?: never): StripeResourceObject;
-};
+// export type StripeResourceConstructor = {
+//   new (stripe: StripeObject, deprecatedUrlData?: never): StripeResourceObject;
+// };
 export type StripeResourceObject = {
-  _stripe: StripeObject;
+  _stripe: Stripe;
   basePath: UrlInterpolator;
   path: UrlInterpolator;
   resourcePath: string;

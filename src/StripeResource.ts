@@ -9,7 +9,6 @@ import {
 import {stripeMethod} from './StripeMethod.js';
 import {
   StripeResourceObject,
-  StripeObject,
   RequestArgs,
   MethodSpec,
   RequestData,
@@ -17,62 +16,57 @@ import {
   UrlInterpolator,
 } from './Types.js';
 import {HttpClientResponseInterface} from './net/HttpClient.js';
-
-// Provide extension mechanism for Stripe Resource Sub-Classes
-StripeResource.extend = protoExtend;
-
-// Expose method-creator
-StripeResource.method = stripeMethod;
-
-StripeResource.MAX_BUFFERED_REQUEST_METRICS = 100;
+import {Stripe} from './stripe.core.js';
 
 /**
  * Encapsulates request logic for a Stripe Resource
  */
-function StripeResource(
-  this: StripeResourceObject,
-  stripe: StripeObject,
-  deprecatedUrlData?: never
-): void {
-  this._stripe = stripe;
-  if (deprecatedUrlData) {
-    throw new Error(
-      'Support for curried url params was dropped in stripe-node v7.0.0. Instead, pass two ids.'
-    );
-  }
+class StripeResource implements StripeResourceObject {
+  // Static properties
+  static extend = protoExtend;
+  static method = stripeMethod;
+  static MAX_BUFFERED_REQUEST_METRICS = 100;
 
-  this.basePath = makeURLInterpolator(
-    // @ts-ignore changing type of basePath
-    this.basePath || stripe.getApiField('basePath')
-  );
-  // @ts-ignore changing type of path
-  this.resourcePath = this.path;
-  // @ts-ignore changing type of path
-  this.path = makeURLInterpolator(this.path);
-
-  this.initialize(...arguments);
-}
-
-StripeResource.prototype = {
-  _stripe: null as StripeObject | null,
-  // @ts-ignore the type of path changes in ctor
-  path: '' as UrlInterpolator,
-  resourcePath: '',
-
+  // Instance properties
+  _stripe!: Stripe;
+  // Note: path is declared without an initializer so that subclasses created via
+  // protoExtend can set it on the prototype and it won't be shadowed by an instance property
+  path!: UrlInterpolator;
+  resourcePath = '';
   // Methods that don't use the API's default '/v1' path can override it with this setting.
-  basePath: null!,
-
-  initialize(): void {},
+  basePath!: UrlInterpolator;
 
   // Function to override the default data processor. This allows full control
   // over how a StripeResource's request data will get converted into an HTTP
   // body. This is useful for non-standard HTTP requests. The function should
   // take method name, data, and headers as arguments.
-  requestDataProcessor: null,
+  requestDataProcessor: any = null;
 
   // Function to add a validation checks before sending the request, errors should
   // be thrown, and they will be passed to the callback/promise.
-  validateRequest: null,
+  validateRequest: any = null;
+
+  constructor(stripe: Stripe, deprecatedUrlData?: never) {
+    this._stripe = stripe;
+    if (deprecatedUrlData) {
+      throw new Error(
+        'Support for curried url params was dropped in stripe-node v7.0.0. Instead, pass two ids.'
+      );
+    }
+
+    this.basePath = makeURLInterpolator(
+      // @ts-ignore changing type of basePath
+      this.basePath || stripe.getApiField('basePath')
+    );
+    // @ts-ignore changing type of path - path comes from prototype as string, convert to interpolator
+    const rawPath = this.path || '';
+    this.resourcePath = (rawPath as unknown) as string;
+    this.path = makeURLInterpolator((rawPath as unknown) as string);
+
+    this.initialize(stripe, deprecatedUrlData);
+  }
+
+  initialize(_stripe?: Stripe, _deprecatedUrlData?: never): void {}
 
   createFullPath(
     commandPath: string | ((urlData: Record<string, unknown>) => string),
@@ -93,12 +87,14 @@ StripeResource.prototype = {
     }
 
     return this._joinUrlParts(urlParts);
-  },
+  }
 
   // Creates a relative resource path with symbols left in (unlike
   // createFullPath which takes some data to replace them with). For example it
   // might produce: /invoices/{id}
-  createResourcePathWithSymbols(pathWithSymbols: string | null): string {
+  createResourcePathWithSymbols(
+    pathWithSymbols: string | null | undefined
+  ): string {
     // If there is no path beyond the resource path, we want to produce just
     // /<resource path> rather than /<resource path>/.
     if (pathWithSymbols) {
@@ -106,7 +102,7 @@ StripeResource.prototype = {
     } else {
       return `/${this.resourcePath}`;
     }
-  },
+  }
 
   _joinUrlParts(parts: Array<string>): string {
     // Replace any accidentally doubled up slashes. This previously used
@@ -114,7 +110,7 @@ StripeResource.prototype = {
     // as the functions for creating paths are technically part of the public
     // interface and so we need to preserve backwards compatibility.
     return parts.join('/').replace(/\/{2,}/g, '/');
-  },
+  }
 
   _getRequestOpts(
     requestArgs: RequestArgs,
@@ -129,13 +125,13 @@ StripeResource.prototype = {
 
     const isUsingFullPath = !!spec.fullPath;
     const commandPath: UrlInterpolator = makeURLInterpolator(
-      isUsingFullPath ? spec.fullPath! : spec.path || ''
+      isUsingFullPath ? spec.fullPath ?? '' : spec.path || ''
     );
     // When using fullPath, we ignore the resource path as it should already be
     // fully qualified.
     const path = isUsingFullPath
       ? spec.fullPath
-      : this.createResourcePathWithSymbols(spec.path);
+      : this.createResourcePathWithSymbols(spec.path ?? null);
 
     // Don't mutate args externally.
     const args: RequestArgs = [].slice.call(requestArgs);
@@ -194,7 +190,7 @@ StripeResource.prototype = {
       settings: options.settings,
       usage,
     };
-  },
+  }
 
   _makeRequest(
     requestArgs: RequestArgs,
@@ -250,7 +246,7 @@ StripeResource.prototype = {
         this.requestDataProcessor?.bind(this)
       );
     });
-  },
-} as StripeResourceObject;
+  }
+}
 
 export {StripeResource};

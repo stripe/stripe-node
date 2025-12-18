@@ -71,7 +71,7 @@ declare module 'stripe' {
       fetchEvent(): Promise<V1BillingMeterErrorReportTriggeredEvent>;
     }
 
-    namespace V1BillingMeterErrorReportTriggeredEvent {
+    export namespace V1BillingMeterErrorReportTriggeredEvent {
       export interface Data {
         /**
          * Extra field included in the event's `data` when fetched from /v2/events.
@@ -94,7 +94,7 @@ declare module 'stripe' {
         validation_start: string;
       }
 
-      namespace Data {
+      export namespace Data {
         export interface Reason {
           /**
            * The total error count within this window.
@@ -107,7 +107,7 @@ declare module 'stripe' {
           error_types: Array<Reason.ErrorType>;
         }
 
-        namespace Reason {
+        export namespace Reason {
           export interface ErrorType {
             /**
              * Open Enum.
@@ -125,7 +125,7 @@ declare module 'stripe' {
             sample_errors: Array<ErrorType.SampleError>;
           }
 
-          namespace ErrorType {
+          export namespace ErrorType {
             export type Code =
               | 'archived_meter'
               | 'meter_event_customer_not_found'
@@ -149,7 +149,7 @@ declare module 'stripe' {
               request: SampleError.Request;
             }
 
-            namespace SampleError {
+            export namespace SampleError {
               export interface Request {
                 /**
                  * The request idempotency key.
@@ -176,7 +176,7 @@ declare module 'stripe' {
       fetchEvent(): Promise<V1BillingMeterNoMeterFoundEvent>;
     }
 
-    namespace V1BillingMeterNoMeterFoundEvent {
+    export namespace V1BillingMeterNoMeterFoundEvent {
       export interface Data {
         /**
          * Extra field included in the event's `data` when fetched from /v2/events.
@@ -199,7 +199,7 @@ declare module 'stripe' {
         validation_start: string;
       }
 
-      namespace Data {
+      export namespace Data {
         export interface Reason {
           /**
            * The total error count within this window.
@@ -212,7 +212,7 @@ declare module 'stripe' {
           error_types: Array<Reason.ErrorType>;
         }
 
-        namespace Reason {
+        export namespace Reason {
           export interface ErrorType {
             /**
              * Open Enum.
@@ -230,7 +230,7 @@ declare module 'stripe' {
             sample_errors: Array<ErrorType.SampleError>;
           }
 
-          namespace ErrorType {
+          export namespace ErrorType {
             export type Code =
               | 'archived_meter'
               | 'meter_event_customer_not_found'
@@ -254,7 +254,7 @@ declare module 'stripe' {
               request: SampleError.Request;
             }
 
-            namespace SampleError {
+            export namespace SampleError {
               export interface Request {
                 /**
                  * The request idempotency key.

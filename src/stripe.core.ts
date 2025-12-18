@@ -5,7 +5,6 @@ import {StripeContext} from './StripeContext.js';
 import {
   AppInfo,
   RequestAuthenticator,
-  StripeObject,
   UserProvidedConfig,
   RequestData,
   RequestOptions,
@@ -51,7 +50,7 @@ const ALLOWED_CONFIG_PROPERTIES = [
   'stripeContext',
 ];
 
-type RequestSenderFactory = (stripe: StripeObject) => RequestSender;
+type RequestSenderFactory = (stripe: Stripe) => RequestSender;
 
 const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
   new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
@@ -70,26 +69,82 @@ export function createStripe(
     typescript: false,
     ...determineProcessUserAgentProperties(),
   };
-  Stripe.StripeResource = StripeResource;
-  Stripe.StripeContext = StripeContext;
-  Stripe.resources = resources;
-  Stripe.HttpClient = HttpClient;
-  Stripe.HttpClientResponse = HttpClientResponse;
-  Stripe.CryptoProvider = CryptoProvider;
-  Stripe.webhooks = createWebhooks(platformFunctions);
+  static StripeResource = StripeResource;
+  static StripeContext = StripeContext;
+  static resources = resources;
+  static HttpClient = HttpClient;
+  static HttpClientResponse = HttpClientResponse;
+  static CryptoProvider = CryptoProvider;
+  static errors = _Error;
 
-  function Stripe(
-    this: StripeObject,
-    key: string,
-    config: Record<string, unknown> = {}
+  private static _platformFunctions: PlatformFunctions;
+  private static _requestSenderFactory: RequestSenderFactory = defaultRequestSenderFactory;
+  static webhooks: ReturnType<typeof createWebhooks>;
+
+  static createNodeHttpClient: PlatformFunctions['createNodeHttpClient'];
+  static createFetchHttpClient: PlatformFunctions['createFetchHttpClient'];
+  static createNodeCryptoProvider: PlatformFunctions['createNodeCryptoProvider'];
+  static createSubtleCryptoProvider: PlatformFunctions['createSubtleCryptoProvider'];
+
+  // Instance properties
+  _appInfo: any;
+  on: any;
+  off: any;
+  once: any;
+  VERSION: string;
+  // StripeResource: typeof StripeResource;
+  webhooks: ReturnType<typeof createWebhooks>;
+  errors: typeof _Error;
+  _api: any;
+  _prevRequestMetrics: any;
+  _emitter: any;
+  _enableTelemetry: boolean;
+  _requestSender: RequestSender;
+  _platformFunctions: PlatformFunctions;
+  _authenticator: RequestAuthenticator | null = null;
+  _clientId?: string;
+
+  /**
+   * @private
+   * This may be removed in the future.
+   */
+  _setApiField<K extends keyof Stripe['_api']>(
+    key: K,
+    value: Stripe['_api'][K]
   ): void {
-    if (!(this instanceof Stripe)) {
-      return new (Stripe as any)(key, config);
-    }
+    this._api[key] = value;
+  }
 
+  /**
+   * @private
+   * Please open or upvote an issue at github.com/stripe/stripe-node
+   * if you use this, detailing your use-case.
+   *
+   * It may be deprecated and removed in the future.
+   */
+  getApiField<K extends keyof Stripe['_api']>(key: K): Stripe['_api'][K] {
+    return this._api[key];
+  }
+
+  static initialize(
+    platformFunctions: PlatformFunctions,
+    requestSenderFactory: RequestSenderFactory = defaultRequestSenderFactory
+  ): void {
+    Stripe._platformFunctions = platformFunctions;
+    Stripe._requestSenderFactory = requestSenderFactory;
+    Stripe.webhooks = createWebhooks(platformFunctions);
+    Stripe.createNodeHttpClient = platformFunctions.createNodeHttpClient;
+    Stripe.createFetchHttpClient = platformFunctions.createFetchHttpClient;
+    Stripe.createNodeCryptoProvider =
+      platformFunctions.createNodeCryptoProvider;
+    Stripe.createSubtleCryptoProvider =
+      platformFunctions.createSubtleCryptoProvider;
+  }
+
+  constructor(key: string, config: Record<string, unknown> = {}) {
     const props = this._getPropsFromConfig(config);
 
-    this._platformFunctions = platformFunctions;
+    this._platformFunctions = Stripe._platformFunctions;
 
     Object.defineProperty(this, '_emitter', {
       value: this._platformFunctions.createEmitter(),
@@ -143,7 +198,7 @@ export function createStripe(
     }
 
     this._prepResources();
-    this._setAuthenticator(key, props.authenticator);
+    this._setAuthenticator(key, props.authenticator || null);
 
     this.errors = _Error;
 
@@ -152,398 +207,336 @@ export function createStripe(
     this._prevRequestMetrics = [];
     this._enableTelemetry = props.telemetry !== false;
 
-    this._requestSender = requestSender(this);
+    this._requestSender = Stripe._requestSenderFactory(this as any);
 
-    // Expose StripeResource on the instance too
-    // @ts-ignore
-    this.StripeResource = Stripe.StripeResource;
+    // // Expose StripeResource on the instance too
+    // // @ts-ignore
+    // this.StripeResource = Stripe.StripeResource;
   }
 
-  Stripe.errors = _Error;
-
-  Stripe.createNodeHttpClient = platformFunctions.createNodeHttpClient;
+  rawRequest(
+    method: string,
+    path: string,
+    params?: RequestData,
+    options?: RequestOptions
+  ): Promise<any> {
+    return this._requestSender._rawRequest(method, path, params, options);
+  }
 
   /**
-   * Creates an HTTP client for issuing Stripe API requests which uses the Web
-   * Fetch API.
+   * @private
+   */
+  _setAuthenticator(
+    key: string,
+    authenticator: RequestAuthenticator | null
+  ): void {
+    if (key && authenticator) {
+      throw new Error("Can't specify both apiKey and authenticator");
+    }
+
+    if (!key && !authenticator) {
+      throw new Error('Neither apiKey nor config.authenticator provided');
+    }
+
+    this._authenticator = key ? createApiKeyAuthenticator(key) : authenticator;
+  }
+
+  /**
+   * @private
+   * This may be removed in the future.
+   */
+  _setAppInfo(info: AppInfo): void {
+    if (info && typeof info !== 'object') {
+      throw new Error('AppInfo must be an object.');
+    }
+
+    if (info && !info.name) {
+      throw new Error('AppInfo.name is required');
+    }
+
+    info = info || {};
+
+    this._appInfo = APP_INFO_PROPERTIES.reduce<Record<string, any>>(
+      (accum: Record<string, any>, prop) => {
+        if (typeof info[prop] == 'string') {
+          accum = accum || {};
+
+          accum[prop] = info[prop];
+        }
+
+        return accum;
+      },
+      {}
+    );
+  }
+
+  setClientId(clientId: string): void {
+    this._clientId = clientId;
+  }
+
+  getClientId(): string | undefined {
+    return this._clientId;
+  }
+
+  /**
+   * @private
+   * Please open or upvote an issue at github.com/stripe/stripe-node
+   * if you use this, detailing your use-case.
    *
-   * A fetch function can optionally be passed in as a parameter. If none is
-   * passed, will default to the default `fetch` function in the global scope.
+   * It may be deprecated and removed in the future.
    */
-  Stripe.createFetchHttpClient = platformFunctions.createFetchHttpClient;
+  getConstant(c: string): unknown {
+    switch (c) {
+      case 'DEFAULT_HOST':
+        return DEFAULT_HOST;
+      case 'DEFAULT_PORT':
+        return DEFAULT_PORT;
+      case 'DEFAULT_BASE_PATH':
+        return DEFAULT_BASE_PATH;
+      case 'DEFAULT_API_VERSION':
+        return DEFAULT_API_VERSION;
+      case 'DEFAULT_TIMEOUT':
+        return DEFAULT_TIMEOUT;
+      case 'MAX_NETWORK_RETRY_DELAY_SEC':
+        return MAX_NETWORK_RETRY_DELAY_SEC;
+      case 'INITIAL_NETWORK_RETRY_DELAY_SEC':
+        return INITIAL_NETWORK_RETRY_DELAY_SEC;
+    }
+    return ((Stripe as unknown) as Record<string, unknown>)[c];
+  }
+
+  getMaxNetworkRetries(): number {
+    return this.getApiField('maxNetworkRetries');
+  }
 
   /**
-   * Create a CryptoProvider which uses the built-in Node crypto libraries for
-   * its crypto operations.
+   * @private
+   * This may be removed in the future.
    */
-  Stripe.createNodeCryptoProvider = platformFunctions.createNodeCryptoProvider;
+  _setApiNumberField(
+    prop: keyof Stripe['_api'],
+    n: number,
+    defaultVal?: number
+  ): void {
+    // @ts-ignore
+    const val = validateInteger(prop, n, defaultVal);
+
+    this._setApiField(prop, val);
+  }
+
+  getMaxNetworkRetryDelay(): number {
+    return MAX_NETWORK_RETRY_DELAY_SEC;
+  }
+
+  getInitialNetworkRetryDelay(): number {
+    return INITIAL_NETWORK_RETRY_DELAY_SEC;
+  }
 
   /**
-   * Creates a CryptoProvider which uses the Subtle Crypto API from the Web
-   * Crypto API spec for its crypto operations.
+   * @private
+   * Please open or upvote an issue at github.com/stripe/stripe-node
+   * if you use this, detailing your use-case.
    *
-   * A SubtleCrypto interface can optionally be passed in as a parameter. If none
-   * is passed, will default to the default `crypto.subtle` object in the global
-   * scope.
+   * It may be deprecated and removed in the future.
+   *
+   * Gets a JSON version of a User-Agent and uses a cached version for a slight
+   * speed advantage.
    */
-  Stripe.createSubtleCryptoProvider =
-    platformFunctions.createSubtleCryptoProvider;
+  getClientUserAgent(cb: (userAgent: string) => void): void {
+    return this.getClientUserAgentSeeded(Stripe.USER_AGENT, cb);
+  }
 
-  Stripe.prototype = {
-    // Properties are set in the constructor above
-    _appInfo: undefined!,
-    on: null!,
-    off: null!,
-    once: null!,
-    VERSION: null!,
-    StripeResource: null!,
-    webhooks: null!,
-    errors: null!,
-    _api: null!,
-    _prevRequestMetrics: null!,
-    _emitter: null!,
-    _enableTelemetry: null!,
-    _requestSender: null!,
-    _platformFunctions: null!,
-
-    rawRequest(
-      method: string,
-      path: string,
-      params?: RequestData,
-      options?: RequestOptions
-    ): Promise<any> {
-      return this._requestSender._rawRequest(method, path, params, options);
-    },
-
-    /**
-     * @private
-     */
-    _setAuthenticator(
-      key: string,
-      authenticator: RequestAuthenticator | undefined
-    ): void {
-      if (key && authenticator) {
-        throw new Error("Can't specify both apiKey and authenticator");
-      }
-
-      if (!key && !authenticator) {
-        throw new Error('Neither apiKey nor config.authenticator provided');
-      }
-
-      this._authenticator = key
-        ? createApiKeyAuthenticator(key)
-        : authenticator;
-    },
-
-    /**
-     * @private
-     * This may be removed in the future.
-     */
-    _setAppInfo(info: AppInfo): void {
-      if (info && typeof info !== 'object') {
-        throw new Error('AppInfo must be an object.');
-      }
-
-      if (info && !info.name) {
-        throw new Error('AppInfo.name is required');
-      }
-
-      info = info || {};
-
-      this._appInfo = APP_INFO_PROPERTIES.reduce<Record<string, any>>(
-        (accum: Record<string, any>, prop) => {
-          if (typeof info[prop] == 'string') {
-            accum = accum || {};
-
-            accum[prop] = info[prop];
-          }
-
-          return accum;
-        },
-        {}
-      );
-    },
-
-    /**
-     * @private
-     * This may be removed in the future.
-     */
-    _setApiField<K extends keyof StripeObject['_api']>(
-      key: K,
-      value: StripeObject['_api'][K]
-    ): void {
-      this._api[key] = value;
-    },
-
-    /**
-     * @private
-     * Please open or upvote an issue at github.com/stripe/stripe-node
-     * if you use this, detailing your use-case.
-     *
-     * It may be deprecated and removed in the future.
-     */
-    getApiField<K extends keyof StripeObject['_api']>(
-      key: K
-    ): StripeObject['_api'][K] {
-      return this._api[key];
-    },
-
-    setClientId(clientId: string): void {
-      this._clientId = clientId;
-    },
-
-    getClientId(): string | undefined {
-      return this._clientId;
-    },
-
-    /**
-     * @private
-     * Please open or upvote an issue at github.com/stripe/stripe-node
-     * if you use this, detailing your use-case.
-     *
-     * It may be deprecated and removed in the future.
-     */
-    getConstant: (c: string): unknown => {
-      switch (c) {
-        case 'DEFAULT_HOST':
-          return DEFAULT_HOST;
-        case 'DEFAULT_PORT':
-          return DEFAULT_PORT;
-        case 'DEFAULT_BASE_PATH':
-          return DEFAULT_BASE_PATH;
-        case 'DEFAULT_API_VERSION':
-          return DEFAULT_API_VERSION;
-        case 'DEFAULT_TIMEOUT':
-          return DEFAULT_TIMEOUT;
-        case 'MAX_NETWORK_RETRY_DELAY_SEC':
-          return MAX_NETWORK_RETRY_DELAY_SEC;
-        case 'INITIAL_NETWORK_RETRY_DELAY_SEC':
-          return INITIAL_NETWORK_RETRY_DELAY_SEC;
-      }
-      return ((Stripe as unknown) as Record<string, unknown>)[c];
-    },
-
-    getMaxNetworkRetries(): number {
-      return this.getApiField('maxNetworkRetries');
-    },
-
-    /**
-     * @private
-     * This may be removed in the future.
-     */
-    _setApiNumberField(
-      prop: keyof StripeObject['_api'],
-      n: number,
-      defaultVal?: number
-    ): void {
-      const val = validateInteger(prop, n, defaultVal);
-
-      this._setApiField(prop, val);
-    },
-
-    getMaxNetworkRetryDelay(): number {
-      return MAX_NETWORK_RETRY_DELAY_SEC;
-    },
-
-    getInitialNetworkRetryDelay(): number {
-      return INITIAL_NETWORK_RETRY_DELAY_SEC;
-    },
-
-    /**
-     * @private
-     * Please open or upvote an issue at github.com/stripe/stripe-node
-     * if you use this, detailing your use-case.
-     *
-     * It may be deprecated and removed in the future.
-     *
-     * Gets a JSON version of a User-Agent and uses a cached version for a slight
-     * speed advantage.
-     */
-    getClientUserAgent(cb: (userAgent: string) => void): void {
-      return this.getClientUserAgentSeeded(Stripe.USER_AGENT, cb);
-    },
-
-    /**
-     * @private
-     * Please open or upvote an issue at github.com/stripe/stripe-node
-     * if you use this, detailing your use-case.
-     *
-     * It may be deprecated and removed in the future.
-     *
-     * Gets a JSON version of a User-Agent by encoding a seeded object and
-     * fetching a uname from the system.
-     */
-    getClientUserAgentSeeded(
-      seed: Record<string, string | boolean | null>,
-      cb: (userAgent: string) => void
-    ): void {
-      this._platformFunctions.getUname().then((uname: string | null) => {
-        const userAgent: Record<string, string> = {};
-        for (const field in seed) {
-          if (!Object.prototype.hasOwnProperty.call(seed, field)) {
-            continue;
-          }
-          userAgent[field] = encodeURIComponent(seed[field] ?? 'null');
-        }
-
-        // URI-encode in case there are unusual characters in the system's uname.
-        userAgent.uname = encodeURIComponent(uname || 'UNKNOWN');
-
-        const client = this.getApiField('httpClient');
-        if (client) {
-          userAgent.httplib = encodeURIComponent(client.getClientName());
-        }
-
-        if (this._appInfo) {
-          userAgent.application = this._appInfo;
-        }
-
-        cb(JSON.stringify(userAgent));
-      });
-    },
-
-    /**
-     * @private
-     * Please open or upvote an issue at github.com/stripe/stripe-node
-     * if you use this, detailing your use-case.
-     *
-     * It may be deprecated and removed in the future.
-     */
-    getAppInfoAsString(): string {
-      if (!this._appInfo) {
-        return '';
-      }
-
-      let formatted = this._appInfo.name;
-
-      if (this._appInfo.version) {
-        formatted += `/${this._appInfo.version}`;
-      }
-
-      if (this._appInfo.url) {
-        formatted += ` (${this._appInfo.url})`;
-      }
-
-      return formatted;
-    },
-
-    getTelemetryEnabled(): boolean {
-      return this._enableTelemetry;
-    },
-
-    /**
-     * @private
-     * This may be removed in the future.
-     */
-    _prepResources(): void {
-      for (const name in resources) {
-        if (!Object.prototype.hasOwnProperty.call(resources, name)) {
+  /**
+   * @private
+   * Please open or upvote an issue at github.com/stripe/stripe-node
+   * if you use this, detailing your use-case.
+   *
+   * It may be deprecated and removed in the future.
+   *
+   * Gets a JSON version of a User-Agent by encoding a seeded object and
+   * fetching a uname from the system.
+   */
+  getClientUserAgentSeeded(
+    seed: Record<string, string | boolean | null>,
+    cb: (userAgent: string) => void
+  ): void {
+    this._platformFunctions.getUname().then((uname: string | null) => {
+      const userAgent: Record<string, string> = {};
+      for (const field in seed) {
+        if (!Object.prototype.hasOwnProperty.call(seed, field)) {
           continue;
         }
-
-        // @ts-ignore
-        this[pascalToCamelCase(name)] = new resources[name](this);
-      }
-    },
-
-    /**
-     * @private
-     * This may be removed in the future.
-     */
-    _getPropsFromConfig(config: Record<string, unknown>): UserProvidedConfig {
-      // If config is null or undefined, just bail early with no props
-      if (!config) {
-        return {};
+        userAgent[field] = encodeURIComponent(seed[field] ?? 'null');
       }
 
-      // config can be an object or a string
-      const isString = typeof config === 'string';
-      const isObject = config === Object(config) && !Array.isArray(config);
+      // URI-encode in case there are unusual characters in the system's uname.
+      userAgent.uname = encodeURIComponent(uname || 'UNKNOWN');
 
-      if (!isObject && !isString) {
-        throw new Error('Config must either be an object or a string');
+      const client = this.getApiField('httpClient');
+      if (client) {
+        userAgent.httplib = encodeURIComponent(client.getClientName());
       }
 
-      // If config is a string, we assume the old behavior of passing in a string representation of the api version
-      if (isString) {
-        return {
-          apiVersion: config,
-        };
+      if (this._appInfo) {
+        userAgent.application = this._appInfo;
       }
 
-      // If config is an object, we assume the new behavior and make sure it doesn't contain any unexpected values
-      const values = Object.keys(config).filter(
-        (value) => !ALLOWED_CONFIG_PROPERTIES.includes(value)
-      );
+      cb(JSON.stringify(userAgent));
+    });
+  }
 
-      if (values.length > 0) {
-        throw new Error(
-          `Config object may only contain the following: ${ALLOWED_CONFIG_PROPERTIES.join(
-            ', '
-          )}`
-        );
+  /**
+   * @private
+   * Please open or upvote an issue at github.com/stripe/stripe-node
+   * if you use this, detailing your use-case.
+   *
+   * It may be deprecated and removed in the future.
+   */
+  getAppInfoAsString(): string {
+    if (!this._appInfo) {
+      return '';
+    }
+
+    let formatted = this._appInfo.name;
+
+    if (this._appInfo.version) {
+      formatted += `/${this._appInfo.version}`;
+    }
+
+    if (this._appInfo.url) {
+      formatted += ` (${this._appInfo.url})`;
+    }
+
+    return formatted;
+  }
+
+  getTelemetryEnabled(): boolean {
+    return this._enableTelemetry;
+  }
+
+  /**
+   * @private
+   * This may be removed in the future.
+   */
+  _prepResources(): void {
+    for (const name in resources) {
+      if (!Object.prototype.hasOwnProperty.call(resources, name)) {
+        continue;
       }
 
-      return config;
-    },
+      // @ts-ignore
+      this[pascalToCamelCase(name.replace('Resource', ''))] = new resources[
+        name
+      ](this);
+    }
+  }
 
-    parseEventNotification(
-      payload: string | Uint8Array,
-      header: string | Uint8Array,
-      secret: string,
-      tolerance?: number,
-      cryptoProvider?: CryptoProvider,
-      receivedAt?: number
-      // this return type is ignored?? picks up types from `types/index.d.ts` instead
-    ): unknown {
-      // parses and validates the event payload all in one go
-      const eventNotification = this.webhooks.constructEvent(
-        payload,
-        header,
-        secret,
-        tolerance,
-        cryptoProvider,
-        receivedAt
-      );
+  /**
+   * @private
+   * This may be removed in the future.
+   */
+  _getPropsFromConfig(config: Record<string, unknown>): UserProvidedConfig {
+    // If config is null or undefined, just bail early with no props
+    if (!config) {
+      return {};
+    }
 
-      // Parse string context into StripeContext object if present
-      if (eventNotification.context) {
-        eventNotification.context = StripeContext.parse(
-          eventNotification.context
-        );
-      }
+    // config can be an object or a string
+    const isString = typeof config === 'string';
+    const isObject = config === Object(config) && !Array.isArray(config);
 
-      eventNotification.fetchEvent = (): Promise<unknown> => {
-        return this._requestSender._rawRequest(
-          'GET',
-          `/v2/core/events/${eventNotification.id}`,
-          undefined,
-          {
-            stripeContext: eventNotification.context,
-          },
-          ['fetch_event']
-        );
+    if (!isObject && !isString) {
+      throw new Error('Config must either be an object or a string');
+    }
+
+    // If config is a string, we assume the old behavior of passing in a string representation of the api version
+    if (isString) {
+      return {
+        apiVersion: config,
       };
+    }
 
-      eventNotification.fetchRelatedObject = (): Promise<unknown> => {
-        if (!eventNotification.related_object) {
-          return Promise.resolve(null);
-        }
+    // If config is an object, we assume the new behavior and make sure it doesn't contain any unexpected values
+    const values = Object.keys(config).filter(
+      (value) => !ALLOWED_CONFIG_PROPERTIES.includes(value)
+    );
 
-        return this._requestSender._rawRequest(
-          'GET',
-          eventNotification.related_object.url,
-          undefined,
-          {
-            stripeContext: eventNotification.context,
-          },
-          ['fetch_related_object']
-        );
-      };
+    if (values.length > 0) {
+      throw new Error(
+        `Config object may only contain the following: ${ALLOWED_CONFIG_PROPERTIES.join(
+          ', '
+        )}`
+      );
+    }
 
-      return eventNotification;
-    },
-  } as StripeObject;
+    return config;
+  }
+
+  parseEventNotification(
+    payload: string | Uint8Array,
+    header: string | Uint8Array,
+    secret: string,
+    tolerance?: number,
+    cryptoProvider?: CryptoProvider,
+    receivedAt?: number
+    // this return type is ignored?? picks up types from `types/index.d.ts` instead
+  ): any {
+    // parses and validates the event payload all in one go
+    const eventNotification: any = (this.webhooks.constructEvent as any)(
+      payload,
+      header,
+      secret,
+      tolerance,
+      cryptoProvider,
+      receivedAt
+    );
+
+    // Parse string context into StripeContext object if present
+    if (eventNotification.context) {
+      eventNotification.context = StripeContext.parse(
+        eventNotification.context
+      );
+    }
+
+    eventNotification.fetchEvent = (): Promise<unknown> => {
+      return this._requestSender._rawRequest(
+        'GET',
+        `/v2/core/events/${eventNotification.id}`,
+        undefined,
+        {
+          stripeContext: eventNotification.context as any,
+        },
+        ['fetch_event']
+      );
+    };
+
+    eventNotification.fetchRelatedObject = (): Promise<unknown> => {
+      if (!eventNotification.related_object) {
+        return Promise.resolve(null);
+      }
+
+      return this._requestSender._rawRequest(
+        'GET',
+        eventNotification.related_object.url,
+        undefined,
+        {
+          stripeContext: eventNotification.context as any,
+        },
+        ['fetch_related_object']
+      );
+    };
+
+    return eventNotification;
+  }
+}
+
+// For backward compatibility, export createStripe as a factory function
+export function createStripe(
+  platformFunctions: PlatformFunctions,
+  requestSender: RequestSenderFactory = defaultRequestSenderFactory
+): typeof Stripe {
+  // Initialize static properties
+  Stripe.initialize(platformFunctions, requestSender);
 
   return Stripe;
 }
