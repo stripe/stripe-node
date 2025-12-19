@@ -341,7 +341,7 @@ declare module 'stripe' {
               type Level = 'city' | 'country' | 'county' | 'district' | 'state';
             }
 
-            type Sourcing = 'destination' | 'origin';
+            type Sourcing = 'destination' | 'origin' | 'performance';
 
             type TaxabilityReason =
               | 'customer_exempt'
@@ -379,19 +379,27 @@ declare module 'stripe' {
 
             namespace TaxRateDetails {
               type TaxType =
+                | 'admissions_tax'
                 | 'amusement_tax'
+                | 'attendance_tax'
                 | 'communications_tax'
+                | 'entertainment_tax'
+                | 'gross_receipts_tax'
                 | 'gst'
+                | 'hospitality_tax'
                 | 'hst'
                 | 'igst'
                 | 'jct'
                 | 'lease_tax'
+                | 'luxury_tax'
                 | 'pst'
                 | 'qst'
+                | 'resort_tax'
                 | 'retail_delivery_fee'
                 | 'rst'
                 | 'sales_tax'
                 | 'service_tax'
+                | 'tourism_tax'
                 | 'vat';
             }
           }
@@ -487,19 +495,27 @@ declare module 'stripe' {
             type RateType = 'flat_amount' | 'percentage';
 
             type TaxType =
+              | 'admissions_tax'
               | 'amusement_tax'
+              | 'attendance_tax'
               | 'communications_tax'
+              | 'entertainment_tax'
+              | 'gross_receipts_tax'
               | 'gst'
+              | 'hospitality_tax'
               | 'hst'
               | 'igst'
               | 'jct'
               | 'lease_tax'
+              | 'luxury_tax'
               | 'pst'
               | 'qst'
+              | 'resort_tax'
               | 'retail_delivery_fee'
               | 'rst'
               | 'sales_tax'
               | 'service_tax'
+              | 'tourism_tax'
               | 'vat';
           }
         }

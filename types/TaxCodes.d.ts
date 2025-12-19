@@ -25,6 +25,24 @@ declare module 'stripe' {
        * A short name for the tax code.
        */
       name: string;
+
+      /**
+       * An object that describes more information about the tax location required for this tax code. Some [tax codes](https://docs.stripe.com/tax/tax-for-tickets/integration-guide#types-of-products) require a tax location of type `performance` to calculate tax correctly.
+       */
+      requirements?: TaxCode.Requirements | null;
+    }
+
+    namespace TaxCode {
+      interface Requirements {
+        /**
+         * Describes whether a performance location is required for a successful tax calculation with a tax code.
+         */
+        performance_location?: Requirements.PerformanceLocation;
+      }
+
+      namespace Requirements {
+        type PerformanceLocation = 'optional' | 'required';
+      }
     }
   }
 }
