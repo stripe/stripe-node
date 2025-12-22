@@ -96,3 +96,4 @@ class PlatformFunctions {
     }
 }
 exports.PlatformFunctions = PlatformFunctions;
+//# sourceMappingURL=PlatformFunctions.js.map

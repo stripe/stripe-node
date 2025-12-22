@@ -120,3 +120,4 @@ export class NodePlatformFunctions extends PlatformFunctions {
         return this.createNodeCryptoProvider();
     }
 }
+//# sourceMappingURL=NodePlatformFunctions.js.map

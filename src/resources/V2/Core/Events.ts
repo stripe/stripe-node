@@ -1,10 +1,11 @@
 // This file is manually maintained
+import {Response} from '../../../lib.js';
 import {StripeResource} from '../../../StripeResource.js';
 
 const stripeMethod = StripeResource.method;
 
-export const Event = StripeResource.extend({
-  retrieve(...args: any[]) {
+export class Event extends StripeResource {
+  retrieve(...args: any[]): Promise<Response<any>> {
     const transformResponseData = (response: any): any => {
       return this.addFetchRelatedObjectIfNeeded(response);
     };
@@ -13,9 +14,9 @@ export const Event = StripeResource.extend({
       fullPath: '/v2/core/events/{id}',
       transformResponseData,
     }).apply(this, args);
-  },
+  }
 
-  list(...args: any[]) {
+  list(...args: any[]): Promise<Response<any>> {
     const transformResponseData = (response: any): any => {
       return {
         ...response,
@@ -28,7 +29,7 @@ export const Event = StripeResource.extend({
       methodType: 'list',
       transformResponseData,
     }).apply(this, args);
-  },
+  }
 
   /**
    * @private
@@ -39,7 +40,7 @@ export const Event = StripeResource.extend({
    * @returns The retrieved event object with a fetchRelatedObject method,
    * if pulledEvent.related_object is valid (non-null and has a url)
    */
-  addFetchRelatedObjectIfNeeded(pulledEvent: any) {
+  addFetchRelatedObjectIfNeeded(pulledEvent: any): any {
     if (!pulledEvent.related_object || !pulledEvent.related_object.url) {
       return pulledEvent;
     }
@@ -60,5 +61,5 @@ export const Event = StripeResource.extend({
           },
         ]),
     };
-  },
-});
+  }
+}

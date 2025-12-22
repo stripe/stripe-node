@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {
   MetadataParam,
   Emptyable,
@@ -72,11 +72,7 @@ export class FeatureResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A feature represents a monetizable ability or functionality in your system.
- * Features can be assigned to products, and when those products are purchased, Stripe will create an entitlement to the feature for the purchasing customer.
- */
-interface Feature {
+export interface Feature {
   /**
    * Unique identifier for the object.
    */

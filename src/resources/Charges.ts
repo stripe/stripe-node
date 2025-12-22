@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Application} from './Applications.js';
 import {ApplicationFee} from './ApplicationFees.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
@@ -133,12 +133,7 @@ export class ChargeResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * The `Charge` object represents a single attempt to move money into your Stripe account.
- * PaymentIntent confirmation is the most common way to create Charges, but [Account Debits](https://stripe.com/docs/connect/account-debits) may also create Charges.
- * Some legacy payment flows create Charges directly, which is not recommended for new integrations.
- */
-interface Charge {
+export interface Charge {
   /**
    * Unique identifier for the object.
    */

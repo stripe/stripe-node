@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Transaction} from './Transactions.js';
 import {PaginationParams, Address} from '../../shared.js';
 import {ApiListPromise, Response} from '../../lib.js';
@@ -41,10 +41,7 @@ export class ReceivedDebitResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * ReceivedDebits represent funds pulled from a [FinancialAccount](https://stripe.com/docs/api#financial_accounts). These are not initiated from the FinancialAccount.
- */
-interface ReceivedDebit {
+export interface ReceivedDebit {
   /**
    * Unique identifier for the object.
    */

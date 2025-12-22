@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Product, DeletedProduct} from './Products.js';
 import {
   Emptyable,
@@ -87,17 +87,7 @@ export class PlanResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * You can now model subscriptions more flexibly using the [Prices API](https://stripe.com/docs/api#prices). It replaces the Plans API and is backwards compatible to simplify your migration.
- *
- * Plans define the base price, currency, and billing cycle for recurring purchases of products.
- * [Products](https://stripe.com/docs/api#products) help you track inventory or provisioning, and plans help you track pricing. Different physical goods or levels of service should be represented by products, and pricing options should be represented by plans. This approach lets you change prices without having to change your provisioning scheme.
- *
- * For example, you might have a single "gold" product that has plans for $10/month, $100/year, €9/month, and €90/year.
- *
- * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription) and more about [products and prices](https://stripe.com/docs/products-prices/overview).
- */
-interface Plan {
+export interface Plan {
   /**
    * Unique identifier for the object.
    */
@@ -203,10 +193,7 @@ interface Plan {
    */
   usage_type: Plan.UsageType;
 }
-export /**
- * The DeletedPlan object.
- */
-interface DeletedPlan {
+export interface DeletedPlan {
   /**
    * Unique identifier for the object.
    */

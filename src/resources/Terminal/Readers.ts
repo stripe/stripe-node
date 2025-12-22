@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Location} from './Locations.js';
 import {PaymentIntent} from './../PaymentIntents.js';
 import {PaymentMethod} from './../PaymentMethods.js';
@@ -225,12 +225,7 @@ export class ReaderResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Reader represents a physical device for accepting payment details.
- *
- * Related guide: [Connecting to a reader](https://stripe.com/docs/terminal/payments/connect-reader)
- */
-interface Reader {
+export interface Reader {
   /**
    * Unique identifier for the object.
    */
@@ -302,10 +297,7 @@ interface Reader {
   status: Terminal.Reader.Status | null;
 }
 export namespace Terminal {
-  export /**
-   * The DeletedReader object.
-   */
-  interface DeletedReader {
+  export interface DeletedReader {
     /**
      * Unique identifier for the object.
      */

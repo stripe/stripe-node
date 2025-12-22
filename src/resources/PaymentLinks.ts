@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {LineItem} from './LineItems.js';
 import {Application, DeletedApplication} from './Applications.js';
 import {Account} from './Accounts.js';
@@ -97,14 +97,7 @@ export class PaymentLinkResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A payment link is a shareable URL that will take your customers to a hosted payment page. A payment link can be shared and used multiple times.
- *
- * When a customer opens a payment link it will open a new [checkout session](https://stripe.com/docs/api/checkout/sessions) to render the payment page. You can use [checkout session events](https://stripe.com/docs/api/events/types#event_types-checkout.session.completed) to track payments through payment links.
- *
- * Related guide: [Payment Links API](https://stripe.com/docs/payment-links)
- */
-interface PaymentLink {
+export interface PaymentLink {
   /**
    * Unique identifier for the object.
    */

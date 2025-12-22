@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RequestOptions} from '../../../Types.js';
+import {RequestOptions} from '../../../lib.js';
 import {Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
 export class MeterEventAdjustmentResource extends StripeResource {
@@ -19,10 +19,7 @@ export class MeterEventAdjustmentResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * The MeterEventAdjustment object.
- */
-interface MeterEventAdjustment {
+export interface MeterEventAdjustment {
   /**
    * The unique id of this meter event adjustment.
    */

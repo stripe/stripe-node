@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RequestOptions} from '../../../Types.js';
+import {RequestOptions} from '../../../lib.js';
 import {Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
 export class MeterEventResource extends StripeResource {
@@ -19,10 +19,7 @@ export class MeterEventResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Fix me empty_doc_string.
- */
-interface MeterEvent {
+export interface MeterEvent {
   /**
    * String representing the object's type. Objects of the same type share the same value of the object field.
    */

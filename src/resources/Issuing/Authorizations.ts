@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {BalanceTransaction} from './../BalanceTransactions.js';
 import {Card} from './Cards.js';
 import {Cardholder} from './Cardholders.js';
@@ -109,14 +109,7 @@ export class AuthorizationResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * When an [issued card](https://stripe.com/docs/issuing) is used to make a purchase, an Issuing `Authorization`
- * object is created. [Authorizations](https://stripe.com/docs/issuing/purchases/authorizations) must be approved for the
- * purchase to be completed successfully.
- *
- * Related guide: [Issued card authorizations](https://stripe.com/docs/issuing/purchases/authorizations)
- */
-interface Authorization {
+export interface Authorization {
   /**
    * Unique identifier for the object.
    */

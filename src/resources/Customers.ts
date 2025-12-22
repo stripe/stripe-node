@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {DeletedDiscount, Discount} from './Discounts.js';
 import {CustomerBalanceTransaction} from './CustomerBalanceTransactions.js';
 import {CashBalance} from './CashBalances.js';
@@ -562,11 +562,7 @@ export class CustomerResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * This object represents a customer of your business. Use it to [create recurring charges](https://stripe.com/docs/invoicing/customer), [save payment](https://stripe.com/docs/payments/save-during-payment) and contact information,
- * and track payments that belong to the same customer.
- */
-interface Customer {
+export interface Customer {
   /**
    * Unique identifier for the object.
    */
@@ -724,10 +720,7 @@ interface Customer {
    */
   test_clock?: string | TestHelpers.TestClock | null;
 }
-export /**
- * The DeletedCustomer object.
- */
-interface DeletedCustomer {
+export interface DeletedCustomer {
   /**
    * Unique identifier for the object.
    */

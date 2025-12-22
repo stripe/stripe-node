@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Customer} from './Customers.js';
 import {Account} from './Accounts.js';
 import {Application} from './Applications.js';
@@ -71,13 +71,7 @@ export class TaxIdResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * You can add one or multiple tax IDs to a [customer](https://stripe.com/docs/api/customers) or account.
- * Customer and account tax IDs get displayed on related invoices and credit notes.
- *
- * Related guides: [Customer tax identification numbers](https://stripe.com/docs/billing/taxes/tax-ids), [Account tax IDs](https://stripe.com/docs/invoicing/connect#account-tax-ids)
- */
-interface TaxId {
+export interface TaxId {
   /**
    * Unique identifier for the object.
    */
@@ -133,10 +127,7 @@ interface TaxId {
    */
   verification: TaxId.Verification | null;
 }
-export /**
- * The DeletedTaxId object.
- */
-interface DeletedTaxId {
+export interface DeletedTaxId {
   /**
    * Unique identifier for the object.
    */

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Capability} from './Capabilities.js';
 import {DeletedExternalAccount, ExternalAccount} from './ExternalAccounts.js';
 import {LoginLink} from './LoginLinks.js';
@@ -451,21 +451,7 @@ export class AccountResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * This is an object representing a Stripe account. You can retrieve it to see
- * properties on the account like its current requirements or if the account is
- * enabled to make live charges or receive payouts.
- *
- * For accounts where [controller.requirement_collection](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection)
- * is `application`, which includes Custom accounts, the properties below are always
- * returned.
- *
- * For accounts where [controller.requirement_collection](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection)
- * is `stripe`, which includes Standard and Express accounts, some properties are only returned
- * until you create an [Account Link](https://docs.stripe.com/api/account_links) or [Account Session](https://docs.stripe.com/api/account_sessions)
- * to start Connect Onboarding. Learn about the [differences between accounts](https://docs.stripe.com/connect/accounts).
- */
-interface Account {
+export interface Account {
   /**
    * Unique identifier for the object.
    */
@@ -572,10 +558,7 @@ interface Account {
    */
   type: Account.Type;
 }
-export /**
- * The DeletedAccount object.
- */
-interface DeletedAccount {
+export interface DeletedAccount {
   /**
    * Unique identifier for the object.
    */

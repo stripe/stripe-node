@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {PaginationParams} from '../../shared.js';
 import {Response, ApiListPromise} from '../../lib.js';
 const stripeMethod = StripeResource.method;
@@ -86,12 +86,7 @@ export class TestClockResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A test clock enables deterministic control over objects in testmode. With a test clock, you can create
- * objects at a frozen time in the past or future, and advance to a specific future time to observe webhooks and state changes. After the clock advances,
- * you can either validate the current state of your scenario (and test your assumptions), change the current state of your scenario (and test more complex scenarios), or keep advancing forward in time.
- */
-interface TestClock {
+export interface TestClock {
   /**
    * Unique identifier for the object.
    */
@@ -140,10 +135,7 @@ interface TestClock {
   status_details: TestHelpers.TestClock.StatusDetails;
 }
 export namespace TestHelpers {
-  export /**
-   * The DeletedTestClock object.
-   */
-  interface DeletedTestClock {
+  export interface DeletedTestClock {
     /**
      * Unique identifier for the object.
      */

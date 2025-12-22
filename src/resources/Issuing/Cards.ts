@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Cardholder} from './Cardholders.js';
 import {PersonalizationDesign} from './PersonalizationDesigns.js';
 import {
@@ -76,10 +76,7 @@ export class CardResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * You can [create physical or virtual cards](https://stripe.com/docs/issuing) that are issued to cardholders.
- */
-interface Card {
+export interface Card {
   /**
    * Unique identifier for the object.
    */

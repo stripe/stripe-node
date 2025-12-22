@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {
   Emptyable,
   MetadataParam,
@@ -94,16 +94,7 @@ export class WebhookEndpointResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * You can configure [webhook endpoints](https://docs.stripe.com/webhooks/) via the API to be
- * notified about events that happen in your Stripe account or connected
- * accounts.
- *
- * Most users configure webhooks from [the dashboard](https://dashboard.stripe.com/webhooks), which provides a user interface for registering and testing your webhook endpoints.
- *
- * Related guide: [Setting up webhooks](https://docs.stripe.com/webhooks/configure)
- */
-interface WebhookEndpoint {
+export interface WebhookEndpoint {
   /**
    * Unique identifier for the object.
    */
@@ -169,10 +160,7 @@ interface WebhookEndpoint {
    */
   url: string;
 }
-export /**
- * The DeletedWebhookEndpoint object.
- */
-interface DeletedWebhookEndpoint {
+export interface DeletedWebhookEndpoint {
   /**
    * Unique identifier for the object.
    */

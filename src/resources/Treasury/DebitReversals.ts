@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Transaction} from './Transactions.js';
 import {MetadataParam, PaginationParams, Metadata} from '../../shared.js';
 import {ApiListPromise, Response} from '../../lib.js';
@@ -55,10 +55,7 @@ export class DebitReversalResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * You can reverse some [ReceivedDebits](https://stripe.com/docs/api#received_debits) depending on their network and source flow. Reversing a ReceivedDebit leads to the creation of a new object known as a DebitReversal.
- */
-interface DebitReversal {
+export interface DebitReversal {
   /**
    * Unique identifier for the object.
    */

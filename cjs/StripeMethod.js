@@ -34,3 +34,4 @@ function stripeMethod(spec) {
     };
 }
 exports.stripeMethod = stripeMethod;
+//# sourceMappingURL=StripeMethod.js.map

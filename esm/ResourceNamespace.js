@@ -15,3 +15,4 @@ export function resourceNamespace(namespace, resources) {
         return new ResourceNamespace(stripe, resources);
     };
 }
+//# sourceMappingURL=ResourceNamespace.js.map

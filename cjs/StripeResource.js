@@ -168,3 +168,4 @@ exports.StripeResource = StripeResource;
 StripeResource.extend = utils_js_1.protoExtend;
 StripeResource.method = StripeMethod_js_1.stripeMethod;
 StripeResource.MAX_BUFFERED_REQUEST_METRICS = 100;
+//# sourceMappingURL=StripeResource.js.map

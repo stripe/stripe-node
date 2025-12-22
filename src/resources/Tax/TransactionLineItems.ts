@@ -1,10 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {Metadata} from '../../shared.js';
-export /**
- * The TransactionLineItem object.
- */
-interface TransactionLineItem {
+export interface TransactionLineItem {
   /**
    * Unique identifier for the object.
    */

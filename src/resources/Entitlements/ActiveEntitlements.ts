@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Feature} from './Features.js';
 import {PaginationParams} from '../../shared.js';
 import {ApiListPromise, Response} from '../../lib.js';
@@ -41,10 +41,7 @@ export class ActiveEntitlementResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * An active entitlement describes access to a feature for a customer.
- */
-interface ActiveEntitlement {
+export interface ActiveEntitlement {
   /**
    * Unique identifier for the object.
    */

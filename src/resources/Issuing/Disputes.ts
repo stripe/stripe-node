@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {BalanceTransaction} from './../BalanceTransactions.js';
 import {Transaction} from './Transactions.js';
 import {File} from './../Files.js';
@@ -93,12 +93,7 @@ export class DisputeResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * As a [card issuer](https://stripe.com/docs/issuing), you can dispute transactions that the cardholder does not recognize, suspects to be fraudulent, or has other issues with.
- *
- * Related guide: [Issuing disputes](https://stripe.com/docs/issuing/purchases/disputes)
- */
-interface Dispute {
+export interface Dispute {
   /**
    * Unique identifier for the object.
    */

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
 import {Source} from './Sources.js';
 import {
@@ -91,14 +91,7 @@ export class TopupResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * To top up your Stripe balance, you create a top-up object. You can retrieve
- * individual top-ups, as well as list all top-ups. Top-ups are identified by a
- * unique, random ID.
- *
- * Related guide: [Topping up your platform account](https://stripe.com/docs/connect/top-ups)
- */
-interface Topup {
+export interface Topup {
   /**
    * Unique identifier for the object.
    */

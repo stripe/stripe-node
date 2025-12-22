@@ -40,3 +40,4 @@ class WebPlatformFunctions extends PlatformFunctions_js_1.PlatformFunctions {
     }
 }
 exports.WebPlatformFunctions = WebPlatformFunctions;
+//# sourceMappingURL=WebPlatformFunctions.js.map

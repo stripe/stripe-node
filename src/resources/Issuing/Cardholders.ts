@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {File} from './../Files.js';
 import {
   MetadataParam,
@@ -75,12 +75,7 @@ export class CardholderResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * An Issuing `Cardholder` object represents an individual or business entity who is [issued](https://stripe.com/docs/issuing) cards.
- *
- * Related guide: [How to create a cardholder](https://stripe.com/docs/issuing/cards/virtual/issue-cards#create-cardholder)
- */
-interface Cardholder {
+export interface Cardholder {
   /**
    * Unique identifier for the object.
    */

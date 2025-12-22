@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {DeletedDiscount, Discount} from './Discounts.js';
 import {Application, DeletedApplication} from './Applications.js';
 import {Customer, DeletedCustomer} from './Customers.js';
@@ -208,12 +208,7 @@ export class SubscriptionResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Subscriptions allow you to charge a customer on a recurring basis.
- *
- * Related guide: [Creating subscriptions](https://stripe.com/docs/billing/subscriptions/creating)
- */
-interface Subscription {
+export interface Subscription {
   /**
    * Unique identifier for the object.
    */

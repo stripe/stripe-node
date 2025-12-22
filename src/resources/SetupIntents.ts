@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Application} from './Applications.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {SetupAttempt} from './SetupAttempts.js';
@@ -159,30 +159,7 @@ export class SetupIntentResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
- * For example, you can use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
- * Later, you can use [PaymentIntents](https://stripe.com/docs/api#payment_intents) to drive the payment flow.
- *
- * Create a SetupIntent when you're ready to collect your customer's payment credentials.
- * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
- * The SetupIntent transitions through multiple [statuses](https://docs.stripe.com/payments/intents#intent-statuses) as it guides
- * you through the setup process.
- *
- * Successful SetupIntents result in payment credentials that are optimized for future payments.
- * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
- * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
- * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
- * If you use the SetupIntent with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer),
- * it automatically attaches the resulting payment method to that Customer after successful setup.
- * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
- * PaymentIntents to save payment methods to prevent saving invalid or unoptimized payment methods.
- *
- * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
- *
- * Related guide: [Setup Intents API](https://docs.stripe.com/payments/setup-intents)
- */
-interface SetupIntent {
+export interface SetupIntent {
   /**
    * Unique identifier for the object.
    */

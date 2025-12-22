@@ -92,3 +92,4 @@ export class PlatformFunctions {
         throw new Error('createDefaultCryptoProvider not implemented.');
     }
 }
+//# sourceMappingURL=PlatformFunctions.js.map

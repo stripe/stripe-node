@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Meter} from './Meters.js';
 import {Customer} from './../Customers.js';
 import {PaginationParams} from '../../shared.js';
@@ -102,10 +102,7 @@ export class AlertResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A billing alert is a resource that notifies you when a certain usage threshold on a meter is crossed. For example, you might create a billing alert to notify you when a certain user made 100 API requests.
- */
-interface Alert {
+export interface Alert {
   /**
    * Unique identifier for the object.
    */

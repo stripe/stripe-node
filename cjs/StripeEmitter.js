@@ -44,3 +44,4 @@ class StripeEmitter {
     }
 }
 exports.StripeEmitter = StripeEmitter;
+//# sourceMappingURL=StripeEmitter.js.map

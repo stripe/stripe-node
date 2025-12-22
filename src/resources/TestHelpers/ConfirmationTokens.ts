@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {ConfirmationToken} from './../ConfirmationTokens.js';
 import {MetadataParam, Emptyable, AddressParam} from '../../shared.js';
 import {Response} from '../../lib.js';

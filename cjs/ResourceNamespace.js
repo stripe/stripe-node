@@ -19,3 +19,4 @@ function resourceNamespace(namespace, resources) {
     };
 }
 exports.resourceNamespace = resourceNamespace;
+//# sourceMappingURL=ResourceNamespace.js.map

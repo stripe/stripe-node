@@ -3,16 +3,7 @@
 import {Account} from './Accounts.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {Metadata} from '../shared.js';
-export /**
- * These bank accounts are payment methods on `Customer` objects.
- *
- * On the other hand [External Accounts](https://docs.stripe.com/api#external_accounts) are transfer
- * destinations on `Account` objects for connected accounts.
- * They can be bank accounts or debit cards as well, and are documented in the links above.
- *
- * Related guide: [Bank debits and transfers](https://docs.stripe.com/payments/bank-debits-transfers)
- */
-interface BankAccount {
+export interface BankAccount {
   /**
    * Unique identifier for the object.
    */
@@ -115,10 +106,7 @@ interface BankAccount {
    */
   status: string;
 }
-export /**
- * The DeletedBankAccount object.
- */
-interface DeletedBankAccount {
+export interface DeletedBankAccount {
   /**
    * Unique identifier for the object.
    */

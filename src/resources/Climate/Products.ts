@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Supplier} from './Suppliers.js';
 import {PaginationParams} from '../../shared.js';
 import {ApiListPromise, Response} from '../../lib.js';
@@ -39,11 +39,7 @@ export class ProductResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Climate product represents a type of carbon removal unit available for reservation.
- * You can retrieve it to see the current price and availability.
- */
-interface Product {
+export interface Product {
   /**
    * Unique identifier for the object. For convenience, Climate product IDs are human-readable strings
    * that start with `climsku_`. See [carbon removal inventory](https://stripe.com/docs/climate/orders/carbon-removal-inventory)

@@ -285,3 +285,4 @@ function isReverseIteration(requestArgs) {
     const dataFromArgs = getDataFromArgs(args);
     return !!dataFromArgs.ending_before;
 }
+//# sourceMappingURL=autoPagination.js.map

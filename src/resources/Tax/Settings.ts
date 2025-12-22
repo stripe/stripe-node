@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {AddressParam, Address} from '../../shared.js';
 import {Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
@@ -35,12 +35,7 @@ export class SettingResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * You can use Tax `Settings` to manage configurations used by Stripe Tax calculations.
- *
- * Related guide: [Using the Settings API](https://stripe.com/docs/tax/settings-api)
- */
-interface Settings {
+export interface Settings {
   /**
    * String representing the object's type. Objects of the same type share the same value.
    */

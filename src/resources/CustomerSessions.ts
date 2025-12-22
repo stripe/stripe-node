@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Customer} from './Customers.js';
 import {Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
@@ -20,15 +20,7 @@ export class CustomerSessionResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Customer Session allows you to grant Stripe's frontend SDKs (like Stripe.js) client-side access
- * control over a Customer.
- *
- * Related guides: [Customer Session with the Payment Element](https://docs.stripe.com/payments/accept-a-payment-deferred?platform=web&type=payment#save-payment-methods),
- * [Customer Session with the Pricing Table](https://docs.stripe.com/payments/checkout/pricing-table#customer-session),
- * [Customer Session with the Buy Button](https://docs.stripe.com/payment-links/buy-button#pass-an-existing-customer).
- */
-interface CustomerSession {
+export interface CustomerSession {
   /**
    * String representing the object's type. Objects of the same type share the same value.
    */

@@ -30,3 +30,4 @@ export function stripeMethod(spec) {
         return requestPromise;
     };
 }
+//# sourceMappingURL=StripeMethod.js.map

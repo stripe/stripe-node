@@ -1,7 +1,6 @@
-// This file is manually maintained
 import { StripeResource } from '../../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Event = StripeResource.extend({
+export class Event extends StripeResource {
     retrieve(...args) {
         const transformResponseData = (response) => {
             return this.addFetchRelatedObjectIfNeeded(response);
@@ -11,7 +10,7 @@ export const Event = StripeResource.extend({
             fullPath: '/v2/core/events/{id}',
             transformResponseData,
         }).apply(this, args);
-    },
+    }
     list(...args) {
         const transformResponseData = (response) => {
             return Object.assign(Object.assign({}, response), { data: response.data.map(this.addFetchRelatedObjectIfNeeded.bind(this)) });
@@ -22,7 +21,7 @@ export const Event = StripeResource.extend({
             methodType: 'list',
             transformResponseData,
         }).apply(this, args);
-    },
+    }
     /**
      * @private
      *
@@ -50,5 +49,6 @@ export const Event = StripeResource.extend({
                     stripeContext: pulledEvent.context,
                 },
             ]) });
-    },
-});
+    }
+}
+//# sourceMappingURL=Events.js.map

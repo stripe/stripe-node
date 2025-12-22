@@ -1,4 +1,4 @@
-import { Stripe } from '../../stripe.core.js';
+import { StripeClient } from '../../stripe.core.js';
 import { AlertResource } from './Alerts.js';
 import { CreditBalanceSummaryResource } from './CreditBalanceSummary.js';
 import { CreditBalanceTransactionResource } from './CreditBalanceTransactions.js';
@@ -22,5 +22,5 @@ export declare class Billing {
     meters: MeterResource;
     meterEvents: MeterEventResource;
     meterEventAdjustments: MeterEventAdjustmentResource;
-    constructor(stripe: Stripe);
+    constructor(stripe: StripeClient);
 }

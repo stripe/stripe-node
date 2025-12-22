@@ -39,6 +39,7 @@ export declare class StripeError extends Error {
  * some reason.
  */
 export declare class StripeCardError extends StripeError {
+    readonly decline_code: string;
     constructor(raw?: StripeRawError);
 }
 /**

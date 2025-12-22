@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Account} from './Accounts.js';
 import {Customer} from './../Customers.js';
 import {Response, ApiList} from '../../lib.js';
@@ -37,10 +37,7 @@ export class SessionResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Financial Connections Session is the secure way to programmatically launch the client-side Stripe.js modal that lets your users link their accounts.
- */
-interface Session {
+export interface Session {
   /**
    * Unique identifier for the object.
    */

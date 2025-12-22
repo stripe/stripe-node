@@ -1,9 +1,6 @@
 // File generated from our OpenAPI spec
 
-export /**
- * The ReserveTransaction object.
- */
-interface ReserveTransaction {
+export interface ReserveTransaction {
   /**
    * Unique identifier for the object.
    */

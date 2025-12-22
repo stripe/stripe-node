@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {BalanceTransactionSource} from './BalanceTransactionSources.js';
 import {PaginationParams, RangeQueryParam} from '../shared.js';
 import {ApiListPromise, Response} from '../lib.js';
@@ -46,13 +46,7 @@ export class BalanceTransactionResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Balance transactions represent funds moving through your Stripe account.
- * Stripe creates them for every type of transaction that enters or leaves your Stripe account balance.
- *
- * Related guide: [Balance transaction types](https://stripe.com/docs/reports/balance-transaction-types)
- */
-interface BalanceTransaction {
+export interface BalanceTransaction {
   /**
    * Unique identifier for the object.
    */

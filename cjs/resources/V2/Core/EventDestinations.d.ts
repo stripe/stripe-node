@@ -1,5 +1,6 @@
 import { StripeResource } from '../../../StripeResource.js';
 import { RequestOptions } from '../../../Types.js';
+import { Event } from './Events.js';
 import { MetadataParam, Metadata } from '../../../shared.js';
 import { ApiListPromise, Response } from '../../../lib.js';
 import { DeletedObject } from './../../V2/DeletedObject.js';

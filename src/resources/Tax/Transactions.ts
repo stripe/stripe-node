@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {TransactionLineItem} from './TransactionLineItems.js';
 import {
   MetadataParam,
@@ -79,12 +79,7 @@ export class TransactionResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Tax Transaction records the tax collected from or refunded to your customer.
- *
- * Related guide: [Calculate tax in your custom payment flow](https://stripe.com/docs/tax/custom#tax-transaction)
- */
-interface Transaction {
+export interface Transaction {
   /**
    * Unique identifier for the transaction.
    */

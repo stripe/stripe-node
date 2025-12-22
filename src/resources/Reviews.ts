@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Charge} from './Charges.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {PaginationParams, RangeQueryParam} from '../shared.js';
@@ -56,13 +56,7 @@ export class ReviewResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Reviews can be used to supplement automated fraud detection with human expertise.
- *
- * Learn more about [Radar](https://docs.stripe.com/radar) and reviewing payments
- * [here](https://stripe.com/docs/radar/reviews).
- */
-interface Review {
+export interface Review {
   /**
    * Unique identifier for the object.
    */

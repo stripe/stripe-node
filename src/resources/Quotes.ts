@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {LineItem} from './LineItems.js';
 import {Discount} from './Discounts.js';
 import {Application, DeletedApplication} from './Applications.js';
@@ -192,11 +192,7 @@ export class QuoteResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Quote is a way to model prices that you'd like to provide to a customer.
- * Once accepted, it will automatically create an invoice, subscription or subscription schedule.
- */
-interface Quote {
+export interface Quote {
   /**
    * Unique identifier for the object.
    */

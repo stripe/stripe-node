@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {PaginationParams, RangeQueryParam} from '../../shared.js';
 import {ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
@@ -40,10 +40,7 @@ export class TransactionResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Transaction represents a real transaction that affects a Financial Connections Account balance.
- */
-interface Transaction {
+export interface Transaction {
   /**
    * Unique identifier for the object.
    */

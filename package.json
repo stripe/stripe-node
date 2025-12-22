@@ -25,7 +25,6 @@
     "node": ">=16"
   },
   "main": "cjs/stripe.cjs.node.js",
-  "types": "types/index.d.ts",
   "devDependencies": {
     "@types/chai": "^4.3.4",
     "@types/chai-as-promised": "^7.1.5",
@@ -72,7 +71,6 @@
     "prepack": "just install && just build"
   },
   "exports": {
-    "types": "./types/index.d.ts",
     "browser": {
       "import": "./esm/stripe.esm.worker.js",
       "require": "./cjs/stripe.cjs.worker.js"
@@ -94,8 +92,14 @@
       "require": "./cjs/stripe.cjs.worker.js"
     },
     "default": {
-      "import": "./esm/stripe.esm.node.js",
-      "require": "./cjs/stripe.cjs.node.js"
+      "import": {
+        "types": "./esm/stripe.esm.node.d.ts",
+        "default": "./esm/stripe.esm.node.js"
+      },
+      "require": {
+        "types": "./cjs/stripe.cjs.node.d.ts",
+        "default": "./cjs/stripe.cjs.node.js"
+      }
     }
   }
 }

@@ -3,14 +3,7 @@
 import {Account} from './Accounts.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {Metadata} from '../shared.js';
-export /**
- * You can store multiple cards on a customer in order to charge the customer
- * later. You can also store multiple debit cards on a recipient in order to
- * transfer to those cards later.
- *
- * Related guide: [Card payments with Sources](https://stripe.com/docs/sources/cards)
- */
-interface Card {
+export interface Card {
   /**
    * Unique identifier for the object.
    */
@@ -182,10 +175,7 @@ interface Card {
    */
   tokenization_method: string | null;
 }
-export /**
- * The DeletedCard object.
- */
-interface DeletedCard {
+export interface DeletedCard {
   /**
    * Unique identifier for the object.
    */

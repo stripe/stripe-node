@@ -2,10 +2,7 @@
 
 import {AccountOwner} from './AccountOwners.js';
 import {ApiList} from '../../lib.js';
-export /**
- * Describes a snapshot of the owners of an account at a particular point in time.
- */
-interface AccountOwnership {
+export interface AccountOwnership {
   /**
    * Unique identifier for the object.
    */

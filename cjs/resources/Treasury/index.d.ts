@@ -1,4 +1,4 @@
-import { Stripe } from '../../stripe.core.js';
+import { StripeClient } from '../../stripe.core.js';
 import { CreditReversalResource } from './CreditReversals.js';
 import { DebitReversalResource } from './DebitReversals.js';
 import { FinancialAccountResource } from './FinancialAccounts.js';
@@ -31,5 +31,5 @@ export declare class Treasury {
     receivedDebits: ReceivedDebitResource;
     transactions: TransactionResource;
     transactionEntries: TransactionEntryResource;
-    constructor(stripe: Stripe);
+    constructor(stripe: StripeClient);
 }

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
 import {Charge} from './Charges.js';
 import {PaymentIntent} from './PaymentIntents.js';
@@ -85,14 +85,7 @@ export class DisputeResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A dispute occurs when a customer questions your charge with their card issuer.
- * When this happens, you have the opportunity to respond to the dispute with
- * evidence that shows that the charge is legitimate.
- *
- * Related guide: [Disputes and fraud](https://stripe.com/docs/disputes)
- */
-interface Dispute {
+export interface Dispute {
   /**
    * Unique identifier for the object.
    */

@@ -210,3 +210,4 @@ export function createWebhooks(platformFunctions) {
     Webhook.signature = signature;
     return Webhook;
 }
+//# sourceMappingURL=Webhooks.js.map

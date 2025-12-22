@@ -2,7 +2,7 @@
 
 import {multipartRequestDataProcessor} from '../multipart.js';
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {FileLink} from './FileLinks.js';
 import {
   Emptyable,
@@ -63,16 +63,7 @@ export class FileResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * This object represents files hosted on Stripe's servers. You can upload
- * files with the [create file](https://stripe.com/docs/api#create_file) request
- * (for example, when uploading dispute evidence). Stripe also
- * creates files independently (for example, the results of a [Sigma scheduled
- * query](https://docs.stripe.com/api#scheduled_queries)).
- *
- * Related guide: [File upload guide](https://stripe.com/docs/file-upload)
- */
-interface File {
+export interface File {
   /**
    * Unique identifier for the object.
    */

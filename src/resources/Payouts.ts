@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {ApplicationFee} from './ApplicationFees.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
 import {ExternalAccount, DeletedExternalAccount} from './ExternalAccounts.js';
@@ -114,17 +114,7 @@ export class PayoutResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A `Payout` object is created when you receive funds from Stripe, or when you
- * initiate a payout to either a bank account or debit card of a [connected
- * Stripe account](https://docs.stripe.com/docs/connect/bank-debit-card-payouts). You can retrieve individual payouts,
- * and list all payouts. Payouts are made on [varying
- * schedules](https://docs.stripe.com/docs/connect/manage-payout-schedule), depending on your country and
- * industry.
- *
- * Related guide: [Receiving payouts](https://stripe.com/docs/payouts)
- */
-interface Payout {
+export interface Payout {
   /**
    * Unique identifier for the object.
    */

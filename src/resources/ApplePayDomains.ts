@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {PaginationParams} from '../shared.js';
 import {Response, ApiListPromise} from '../lib.js';
 const stripeMethod = StripeResource.method;
@@ -74,10 +74,7 @@ export class ApplePayDomainResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * The ApplePayDomain object.
- */
-interface ApplePayDomain {
+export interface ApplePayDomain {
   /**
    * Unique identifier for the object.
    */
@@ -105,10 +102,7 @@ interface ApplePayDomain {
    */
   livemode: boolean;
 }
-export /**
- * The DeletedApplePayDomain object.
- */
-interface DeletedApplePayDomain {
+export interface DeletedApplePayDomain {
   /**
    * Unique identifier for the object.
    */

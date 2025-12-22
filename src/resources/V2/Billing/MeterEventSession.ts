@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RequestOptions} from '../../../Types.js';
+import {RequestOptions} from '../../../lib.js';
 import {Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
 export class MeterEventSessionResource extends StripeResource {
@@ -20,10 +20,7 @@ export class MeterEventSessionResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * The MeterEventSession object.
- */
-interface MeterEventSession {
+export interface MeterEventSession {
   /**
    * The unique id of this auth session.
    */

@@ -1,4 +1,4 @@
-import { Stripe } from '../../stripe.core.js';
+import { StripeClient } from '../../stripe.core.js';
 import { AccountResource } from './Accounts.js';
 import { SessionResource } from './Sessions.js';
 import { TransactionResource } from './Transactions.js';
@@ -10,5 +10,5 @@ export declare class FinancialConnections {
     accounts: AccountResource;
     sessions: SessionResource;
     transactions: TransactionResource;
-    constructor(stripe: Stripe);
+    constructor(stripe: StripeClient);
 }

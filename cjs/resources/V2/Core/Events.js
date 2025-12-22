@@ -1,10 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Event = void 0;
-// This file is manually maintained
 const StripeResource_js_1 = require("../../../StripeResource.js");
 const stripeMethod = StripeResource_js_1.StripeResource.method;
-exports.Event = StripeResource_js_1.StripeResource.extend({
+class Event extends StripeResource_js_1.StripeResource {
     retrieve(...args) {
         const transformResponseData = (response) => {
             return this.addFetchRelatedObjectIfNeeded(response);
@@ -14,7 +13,7 @@ exports.Event = StripeResource_js_1.StripeResource.extend({
             fullPath: '/v2/core/events/{id}',
             transformResponseData,
         }).apply(this, args);
-    },
+    }
     list(...args) {
         const transformResponseData = (response) => {
             return Object.assign(Object.assign({}, response), { data: response.data.map(this.addFetchRelatedObjectIfNeeded.bind(this)) });
@@ -25,7 +24,7 @@ exports.Event = StripeResource_js_1.StripeResource.extend({
             methodType: 'list',
             transformResponseData,
         }).apply(this, args);
-    },
+    }
     /**
      * @private
      *
@@ -53,5 +52,7 @@ exports.Event = StripeResource_js_1.StripeResource.extend({
                     stripeContext: pulledEvent.context,
                 },
             ]) });
-    },
-});
+    }
+}
+exports.Event = Event;
+//# sourceMappingURL=Events.js.map

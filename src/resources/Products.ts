@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {DeletedProductFeature, ProductFeature} from './ProductFeatures.js';
 import {Price} from './Prices.js';
 import {TaxCode} from './TaxCodes.js';
@@ -187,17 +187,7 @@ export class ProductResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Products describe the specific goods or services you offer to your customers.
- * For example, you might offer a Standard and Premium version of your goods or service; each version would be a separate Product.
- * They can be used in conjunction with [Prices](https://stripe.com/docs/api#prices) to configure pricing in Payment Links, Checkout, and Subscriptions.
- *
- * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription),
- * [share a Payment Link](https://stripe.com/docs/payment-links),
- * [accept payments with Checkout](https://stripe.com/docs/payments/accept-a-payment#create-product-prices-upfront),
- * and more about [Products and Prices](https://stripe.com/docs/products-prices/overview)
- */
-interface Product {
+export interface Product {
   /**
    * Unique identifier for the object.
    */
@@ -298,10 +288,7 @@ interface Product {
    */
   url: string | null;
 }
-export /**
- * The DeletedProduct object.
- */
-interface DeletedProduct {
+export interface DeletedProduct {
   /**
    * Unique identifier for the object.
    */

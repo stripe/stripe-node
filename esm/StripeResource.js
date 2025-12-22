@@ -165,3 +165,4 @@ StripeResource.extend = protoExtend;
 StripeResource.method = stripeMethod;
 StripeResource.MAX_BUFFERED_REQUEST_METRICS = 100;
 export { StripeResource };
+//# sourceMappingURL=StripeResource.js.map

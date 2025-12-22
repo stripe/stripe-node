@@ -1,12 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {Source} from './Sources.js';
-export /**
- * Source mandate notifications should be created when a notification related to
- * a source mandate must be sent to the payer. They will trigger a webhook or
- * deliver an email to the customer.
- */
-interface SourceMandateNotification {
+export interface SourceMandateNotification {
   /**
    * Unique identifier for the object.
    */

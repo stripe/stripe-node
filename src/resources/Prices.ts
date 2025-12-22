@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Product, DeletedProduct} from './Products.js';
 import {
   MetadataParam,
@@ -92,15 +92,7 @@ export class PriceResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Prices define the unit cost, currency, and (optional) billing cycle for both recurring and one-time purchases of products.
- * [Products](https://stripe.com/docs/api#products) help you track inventory or provisioning, and prices help you track payment terms. Different physical goods or levels of service should be represented by products, and pricing options should be represented by prices. This approach lets you change prices without having to change your provisioning scheme.
- *
- * For example, you might have a single "gold" product that has prices for $10/month, $100/year, and €9 once.
- *
- * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription), [create an invoice](https://stripe.com/docs/billing/invoices/create), and more about [products and prices](https://stripe.com/docs/products-prices/overview).
- */
-interface Price {
+export interface Price {
   /**
    * Unique identifier for the object.
    */
@@ -213,10 +205,7 @@ interface Price {
    */
   unit_amount_decimal: string | null;
 }
-export /**
- * The DeletedPrice object.
- */
-interface DeletedPrice {
+export interface DeletedPrice {
   /**
    * Unique identifier for the object.
    */

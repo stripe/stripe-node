@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Discount} from './Discounts.js';
 import {Application, DeletedApplication} from './Applications.js';
 import {Customer, DeletedCustomer} from './Customers.js';
@@ -128,12 +128,7 @@ export class SubscriptionScheduleResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A subscription schedule allows you to create and manage the lifecycle of a subscription by predefining expected changes.
- *
- * Related guide: [Subscription schedules](https://stripe.com/docs/billing/subscriptions/subscription-schedules)
- */
-interface SubscriptionSchedule {
+export interface SubscriptionSchedule {
   /**
    * Unique identifier for the object.
    */

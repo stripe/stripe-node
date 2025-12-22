@@ -1,4 +1,4 @@
-import { Stripe } from '../../stripe.core.js';
+import { StripeClient } from '../../stripe.core.js';
 import { EarlyFraudWarningResource } from './EarlyFraudWarnings.js';
 import { ValueListResource } from './ValueLists.js';
 import { ValueListItemResource } from './ValueListItems.js';
@@ -10,5 +10,5 @@ export declare class Radar {
     earlyFraudWarnings: EarlyFraudWarningResource;
     valueLists: ValueListResource;
     valueListItems: ValueListItemResource;
-    constructor(stripe: Stripe);
+    constructor(stripe: StripeClient);
 }

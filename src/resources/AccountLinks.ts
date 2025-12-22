@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export class AccountLinkResource extends StripeResource {
@@ -19,13 +19,7 @@ export class AccountLinkResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Account Links are the means by which a Connect platform grants a connected account permission to access
- * Stripe-hosted applications, such as Connect Onboarding.
- *
- * Related guide: [Connect Onboarding](https://stripe.com/docs/connect/custom/hosted-onboarding)
- */
-interface AccountLink {
+export interface AccountLink {
   /**
    * String representing the object's type. Objects of the same type share the same value.
    */

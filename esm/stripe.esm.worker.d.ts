@@ -1,3 +1,3 @@
-import { Stripe as StripeClass } from './stripe.core.js';
-export declare const Stripe: typeof StripeClass;
+import { StripeClient } from './stripe.core.js';
+export declare const Stripe: typeof StripeClient;
 export default Stripe;

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Product} from './Products.js';
 import {Supplier} from './Suppliers.js';
 import {
@@ -95,11 +95,7 @@ export class OrderResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Orders represent your intent to purchase a particular Climate product. When you create an order, the
- * payment is deducted from your merchant balance.
- */
-interface Order {
+export interface Order {
   /**
    * Unique identifier for the object.
    */
