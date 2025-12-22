@@ -124,3 +124,4 @@ class NodePlatformFunctions extends PlatformFunctions_js_1.PlatformFunctions {
     }
 }
 exports.NodePlatformFunctions = NodePlatformFunctions;
+//# sourceMappingURL=NodePlatformFunctions.js.map

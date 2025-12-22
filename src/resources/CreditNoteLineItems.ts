@@ -3,10 +3,7 @@
 import {TaxRate} from './TaxRates.js';
 import {Discount, DeletedDiscount} from './Discounts.js';
 import * as Billing from './Billing/index.js';
-export /**
- * The credit note line item object
- */
-interface CreditNoteLineItem {
+export interface CreditNoteLineItem {
   /**
    * Unique identifier for the object.
    */

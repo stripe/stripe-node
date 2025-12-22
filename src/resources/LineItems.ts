@@ -3,10 +3,7 @@
 import {Discount} from './Discounts.js';
 import {Price} from './Prices.js';
 import {TaxRate} from './TaxRates.js';
-export /**
- * A line item.
- */
-interface LineItem {
+export interface LineItem {
   /**
    * Unique identifier for the object.
    */

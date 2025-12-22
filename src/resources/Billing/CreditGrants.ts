@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Customer, DeletedCustomer} from './../Customers.js';
 import * as TestHelpers from './../TestHelpers/index.js';
 import {
@@ -112,12 +112,7 @@ export class CreditGrantResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A credit grant is an API resource that documents the allocation of some billing credits to a customer.
- *
- * Related guide: [Billing credits](https://docs.stripe.com/billing/subscriptions/usage-based/billing-credits)
- */
-interface CreditGrant {
+export interface CreditGrant {
   /**
    * Unique identifier for the object.
    */

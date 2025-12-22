@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export class MeterEventResource extends StripeResource {
@@ -19,10 +19,7 @@ export class MeterEventResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Meter events represent actions that customers take in your system. You can use meter events to bill a customer based on their usage. Meter events are associated with billing meters, which define both the contents of the event's payload and how to aggregate those events.
- */
-interface MeterEvent {
+export interface MeterEvent {
   /**
    * String representing the object's type. Objects of the same type share the same value.
    */

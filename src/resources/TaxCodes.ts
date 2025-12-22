@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {PaginationParams} from '../shared.js';
 import {ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
@@ -38,10 +38,7 @@ export class TaxCodeResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * [Tax codes](https://stripe.com/docs/tax/tax-categories) classify goods and services for tax purposes.
- */
-interface TaxCode {
+export interface TaxCode {
   /**
    * Unique identifier for the object.
    */

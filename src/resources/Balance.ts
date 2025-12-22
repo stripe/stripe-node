@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export class BalanceResource extends StripeResource {
@@ -21,15 +21,7 @@ export class BalanceResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * This is an object representing your Stripe balance. You can retrieve it to see
- * the balance currently on your Stripe account.
- *
- * The top-level `available` and `pending` comprise your "payments balance."
- *
- * Related guide: [Balances and settlement time](https://stripe.com/docs/payments/balances), [Understanding Connect account balances](https://stripe.com/docs/connect/account-balances)
- */
-interface Balance {
+export interface Balance {
   /**
    * String representing the object's type. Objects of the same type share the same value.
    */

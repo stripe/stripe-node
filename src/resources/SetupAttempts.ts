@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Application} from './Applications.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {Account} from './Accounts.js';
@@ -29,13 +29,7 @@ export class SetupAttemptResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A SetupAttempt describes one attempted confirmation of a SetupIntent,
- * whether that confirmation is successful or unsuccessful. You can use
- * SetupAttempts to inspect details of a specific attempt at setting up a
- * payment method using a SetupIntent.
- */
-interface SetupAttempt {
+export interface SetupAttempt {
   /**
    * Unique identifier for the object.
    */

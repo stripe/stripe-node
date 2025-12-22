@@ -46,3 +46,4 @@ export class HttpClientResponse {
         throw new Error('toJSON not implemented.');
     }
 }
+//# sourceMappingURL=HttpClient.js.map

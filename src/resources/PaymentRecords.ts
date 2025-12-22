@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {PaymentMethod} from './PaymentMethods.js';
 import {Mandate} from './Mandates.js';
 import {
@@ -148,13 +148,7 @@ export class PaymentRecordResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Payment Record is a resource that allows you to represent payments that occur on- or off-Stripe.
- * For example, you can create a Payment Record to model a payment made on a different payment processor,
- * in order to mark an Invoice as paid and a Subscription as active. Payment Records consist of one or
- * more Payment Attempt Records, which represent individual attempts made on a payment network.
- */
-interface PaymentRecord {
+export interface PaymentRecord {
   /**
    * Unique identifier for the object.
    */

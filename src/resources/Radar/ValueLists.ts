@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {ValueListItem} from './ValueListItems.js';
 import {
   MetadataParam,
@@ -92,12 +92,7 @@ export class ValueListResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Value lists allow you to group values together which can then be referenced in rules.
- *
- * Related guide: [Default Stripe lists](https://stripe.com/docs/radar/lists#managing-list-items)
- */
-interface ValueList {
+export interface ValueList {
   /**
    * Unique identifier for the object.
    */
@@ -154,10 +149,7 @@ interface ValueList {
   name: string;
 }
 export namespace Radar {
-  export /**
-   * The DeletedValueList object.
-   */
-  interface DeletedValueList {
+  export interface DeletedValueList {
     /**
      * Unique identifier for the object.
      */

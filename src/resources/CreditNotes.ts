@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {CreditNoteLineItem} from './CreditNoteLineItems.js';
 import {Refund} from './Refunds.js';
 import {Customer, DeletedCustomer} from './Customers.js';
@@ -162,12 +162,7 @@ export class CreditNoteResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Issue a credit note to adjust an invoice's amount after the invoice is finalized.
- *
- * Related guide: [Credit notes](https://stripe.com/docs/billing/invoices/credit-notes)
- */
-interface CreditNote {
+export interface CreditNote {
   /**
    * Unique identifier for the object.
    */

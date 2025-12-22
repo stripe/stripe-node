@@ -5,15 +5,7 @@ import {Customer} from './Customers.js';
 import {Invoice} from './Invoices.js';
 import * as Checkout from './Checkout/index.js';
 import {Metadata} from '../shared.js';
-export /**
- * Each customer has a [Balance](https://stripe.com/docs/api/customers/object#customer_object-balance) value,
- * which denotes a debit or credit that's automatically applied to their next invoice upon finalization.
- * You may modify the value directly by using the [update customer API](https://stripe.com/docs/api/customers/update),
- * or by creating a Customer Balance Transaction, which increments or decrements the customer's `balance` by the specified `amount`.
- *
- * Related guide: [Customer balance](https://stripe.com/docs/billing/customer/balance)
- */
-interface CustomerBalanceTransaction {
+export interface CustomerBalanceTransaction {
   /**
    * Unique identifier for the object.
    */

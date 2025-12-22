@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {resourceNamespace} from './ResourceNamespace.js';
-<<<<<<< HEAD
+
 import {AccountLinks as V2CoreAccountLinks} from './resources/V2/Core/AccountLinks.js';
 import {AccountTokens as V2CoreAccountTokens} from './resources/V2/Core/AccountTokens.js';
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
@@ -138,8 +138,11 @@ export {Tokens} from './resources/Tokens.js';
 export {Topups} from './resources/Topups.js';
 export {Transfers} from './resources/Transfers.js';
 export {WebhookEndpoints} from './resources/WebhookEndpoints.js';
-=======
+
+import {AccountLinkResource as V2CoreAccountLinks} from './resources/V2/Core/AccountLinks.js';
+import {AccountTokenResource as V2CoreAccountTokens} from './resources/V2/Core/AccountTokens.js';
 import {AccountResource as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
+import {AccountResource as V2CoreAccounts} from './resources/V2/Core/Accounts.js';
 import {ActiveEntitlementResource as EntitlementsActiveEntitlements} from './resources/Entitlements/ActiveEntitlements.js';
 import {AlertResource as BillingAlerts} from './resources/Billing/Alerts.js';
 import {AuthorizationResource as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';

@@ -1,9 +1,6 @@
 // File generated from our OpenAPI spec
 
-export /**
- * The PaymentIntentAmountDetailsLineItem object.
- */
-interface PaymentIntentAmountDetailsLineItem {
+export interface PaymentIntentAmountDetailsLineItem {
   /**
    * Unique identifier for the object.
    */

@@ -1,13 +1,13 @@
+import {NodePlatformFunctions} from './platform/NodePlatformFunctions.js';
+
 import * as _Error from './Error.js';
 import {RequestSender} from './RequestSender.js';
 import {StripeResource} from './StripeResource.js';
 import {StripeContext} from './StripeContext.js';
 import {
-  AppInfo,
   RequestAuthenticator,
   UserProvidedConfig,
   RequestData,
-  RequestOptions,
 } from './Types.js';
 import {createWebhooks} from './Webhooks.js';
 import {ApiVersion} from './apiVersion.js';
@@ -21,6 +21,97 @@ import {
   pascalToCamelCase,
   validateInteger,
 } from './utils.js';
+import {
+  Response,
+  RequestOptions,
+  RawRequestOptions,
+  ApiList,
+  ApiListPromise,
+  ApiSearchResultPromise,
+  ApiSearchResult,
+  StripeStreamResponse,
+  RequestEvent,
+  ResponseEvent,
+  AppInfo,
+  FileData,
+} from './lib.js';
+
+// StripeInstanceImports: The beginning of the section generated from our OpenAPI spec
+import {AccountResource} from './resources/Accounts.js';
+import {AccountLinkResource} from './resources/AccountLinks.js';
+import {AccountSessionResource} from './resources/AccountSessions.js';
+import {ApplePayDomainResource} from './resources/ApplePayDomains.js';
+import {ApplicationFeeResource} from './resources/ApplicationFees.js';
+import {BalanceResource} from './resources/Balance.js';
+import {BalanceSettingResource} from './resources/BalanceSettings.js';
+import {BalanceTransactionResource} from './resources/BalanceTransactions.js';
+import {ChargeResource} from './resources/Charges.js';
+import {ConfirmationTokenResource} from './resources/ConfirmationTokens.js';
+import {CountrySpecResource} from './resources/CountrySpecs.js';
+import {CouponResource} from './resources/Coupons.js';
+import {CreditNoteResource} from './resources/CreditNotes.js';
+import {CustomerResource} from './resources/Customers.js';
+import {CustomerSessionResource} from './resources/CustomerSessions.js';
+import {DisputeResource} from './resources/Disputes.js';
+import {EphemeralKeyResource} from './resources/EphemeralKeys.js';
+import {EventResource} from './resources/Events.js';
+import {ExchangeRateResource} from './resources/ExchangeRates.js';
+import {FileResource} from './resources/Files.js';
+import {FileLinkResource} from './resources/FileLinks.js';
+import {InvoiceResource} from './resources/Invoices.js';
+import {InvoiceItemResource} from './resources/InvoiceItems.js';
+import {InvoicePaymentResource} from './resources/InvoicePayments.js';
+import {InvoiceRenderingTemplateResource} from './resources/InvoiceRenderingTemplates.js';
+import {MandateResource} from './resources/Mandates.js';
+import {PaymentAttemptRecordResource} from './resources/PaymentAttemptRecords.js';
+import {PaymentIntentResource} from './resources/PaymentIntents.js';
+import {PaymentLinkResource} from './resources/PaymentLinks.js';
+import {PaymentMethodResource} from './resources/PaymentMethods.js';
+import {PaymentMethodConfigurationResource} from './resources/PaymentMethodConfigurations.js';
+import {PaymentMethodDomainResource} from './resources/PaymentMethodDomains.js';
+import {PaymentRecordResource} from './resources/PaymentRecords.js';
+import {PayoutResource} from './resources/Payouts.js';
+import {PlanResource} from './resources/Plans.js';
+import {PriceResource} from './resources/Prices.js';
+import {ProductResource} from './resources/Products.js';
+import {PromotionCodeResource} from './resources/PromotionCodes.js';
+import {QuoteResource} from './resources/Quotes.js';
+import {RefundResource} from './resources/Refunds.js';
+import {ReviewResource} from './resources/Reviews.js';
+import {SetupAttemptResource} from './resources/SetupAttempts.js';
+import {SetupIntentResource} from './resources/SetupIntents.js';
+import {ShippingRateResource} from './resources/ShippingRates.js';
+import {SourceResource} from './resources/Sources.js';
+import {SubscriptionResource} from './resources/Subscriptions.js';
+import {SubscriptionItemResource} from './resources/SubscriptionItems.js';
+import {SubscriptionScheduleResource} from './resources/SubscriptionSchedules.js';
+import {TaxCodeResource} from './resources/TaxCodes.js';
+import {TaxIdResource} from './resources/TaxIds.js';
+import {TaxRateResource} from './resources/TaxRates.js';
+import {TokenResource} from './resources/Tokens.js';
+import {TopupResource} from './resources/Topups.js';
+import {TransferResource} from './resources/Transfers.js';
+import {WebhookEndpointResource} from './resources/WebhookEndpoints.js';
+import {Apps} from './resources/Apps/index.js';
+import {Billing} from './resources/Billing/index.js';
+import {BillingPortal} from './resources/BillingPortal/index.js';
+import {Checkout} from './resources/Checkout/index.js';
+import {Climate} from './resources/Climate/index.js';
+import {Entitlements} from './resources/Entitlements/index.js';
+import {FinancialConnections} from './resources/FinancialConnections/index.js';
+import {Forwarding} from './resources/Forwarding/index.js';
+import {Identity} from './resources/Identity/index.js';
+import {Issuing} from './resources/Issuing/index.js';
+import {Radar} from './resources/Radar/index.js';
+import {Reporting} from './resources/Reporting/index.js';
+import {Sigma} from './resources/Sigma/index.js';
+import {Tax} from './resources/Tax/index.js';
+import {Terminal} from './resources/Terminal/index.js';
+import {TestHelpers} from './resources/TestHelpers/index.js';
+import {Treasury} from './resources/Treasury/index.js';
+import {V2} from './resources/V2/index.js';
+// StripeInstanceImports: The end of the section generated from our OpenAPI spec
+import {OAuthResource} from './resources.js';
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -32,7 +123,12 @@ const DEFAULT_TIMEOUT = 80000;
 const MAX_NETWORK_RETRY_DELAY_SEC = 5;
 const INITIAL_NETWORK_RETRY_DELAY_SEC = 0.5;
 
-const APP_INFO_PROPERTIES = ['name', 'version', 'url', 'partner_id'];
+const APP_INFO_PROPERTIES: (keyof AppInfo)[] = [
+  'name',
+  'version',
+  'url',
+  'partner_id',
+];
 const ALLOWED_CONFIG_PROPERTIES = [
   'authenticator',
   'apiVersion',
@@ -104,27 +200,84 @@ export function createStripe(
   _authenticator: RequestAuthenticator | null = null;
   _clientId?: string;
 
-  /**
-   * @private
-   * This may be removed in the future.
-   */
-  _setApiField<K extends keyof Stripe['_api']>(
-    key: K,
-    value: Stripe['_api'][K]
-  ): void {
-    this._api[key] = value;
-  }
-
-  /**
-   * @private
-   * Please open or upvote an issue at github.com/stripe/stripe-node
-   * if you use this, detailing your use-case.
-   *
-   * It may be deprecated and removed in the future.
-   */
-  getApiField<K extends keyof Stripe['_api']>(key: K): Stripe['_api'][K] {
-    return this._api[key];
-  }
+  // StripeInstanceVariables: The beginning of the section generated from our OpenAPI spec
+  accountLinks: AccountLinkResource;
+  accountSessions: AccountSessionResource;
+  accounts: AccountResource;
+  applePayDomains: ApplePayDomainResource;
+  applicationFees: ApplicationFeeResource;
+  balance: BalanceResource;
+  balanceSettings: BalanceSettingResource;
+  balanceTransactions: BalanceTransactionResource;
+  charges: ChargeResource;
+  confirmationTokens: ConfirmationTokenResource;
+  countrySpecs: CountrySpecResource;
+  coupons: CouponResource;
+  creditNotes: CreditNoteResource;
+  customerSessions: CustomerSessionResource;
+  customers: CustomerResource;
+  disputes: DisputeResource;
+  ephemeralKeys: EphemeralKeyResource;
+  events: EventResource;
+  exchangeRates: ExchangeRateResource;
+  fileLinks: FileLinkResource;
+  files: FileResource;
+  invoiceItems: InvoiceItemResource;
+  invoicePayments: InvoicePaymentResource;
+  invoiceRenderingTemplates: InvoiceRenderingTemplateResource;
+  invoices: InvoiceResource;
+  mandates: MandateResource;
+  paymentAttemptRecords: PaymentAttemptRecordResource;
+  paymentIntents: PaymentIntentResource;
+  paymentLinks: PaymentLinkResource;
+  paymentMethodConfigurations: PaymentMethodConfigurationResource;
+  paymentMethodDomains: PaymentMethodDomainResource;
+  paymentMethods: PaymentMethodResource;
+  paymentRecords: PaymentRecordResource;
+  payouts: PayoutResource;
+  plans: PlanResource;
+  prices: PriceResource;
+  products: ProductResource;
+  promotionCodes: PromotionCodeResource;
+  quotes: QuoteResource;
+  refunds: RefundResource;
+  reviews: ReviewResource;
+  setupAttempts: SetupAttemptResource;
+  setupIntents: SetupIntentResource;
+  shippingRates: ShippingRateResource;
+  sources: SourceResource;
+  subscriptionItems: SubscriptionItemResource;
+  subscriptionSchedules: SubscriptionScheduleResource;
+  subscriptions: SubscriptionResource;
+  taxCodes: TaxCodeResource;
+  taxIds: TaxIdResource;
+  taxRates: TaxRateResource;
+  tokens: TokenResource;
+  topups: TopupResource;
+  transfers: TransferResource;
+  webhookEndpoints: WebhookEndpointResource;
+  apps: Apps;
+  billing: Billing;
+  billingPortal: BillingPortal;
+  checkout: Checkout;
+  climate: Climate;
+  entitlements: Entitlements;
+  financialConnections: FinancialConnections;
+  forwarding: Forwarding;
+  identity: Identity;
+  issuing: Issuing;
+  radar: Radar;
+  reporting: Reporting;
+  sigma: Sigma;
+  tax: Tax;
+  terminal: Terminal;
+  testHelpers: TestHelpers;
+  treasury: Treasury;
+  v2: V2;
+  // StripeInstanceVariables: The end of the section generated from our OpenAPI spec
+  // webhooks: WebhookEndpointResource;
+  account: AccountResource;
+  oauth: OAuthResource;
 
   static initialize(
     platformFunctions: PlatformFunctions,
@@ -197,7 +350,6 @@ export function createStripe(
       this._setAppInfo(props.appInfo);
     }
 
-    this._prepResources();
     this._setAuthenticator(key, props.authenticator || null);
 
     this.errors = _Error;
@@ -212,13 +364,108 @@ export function createStripe(
     // // Expose StripeResource on the instance too
     // // @ts-ignore
     // this.StripeResource = Stripe.StripeResource;
+
+    // StripeInitInstanceVariables: The beginning of the section generated from our OpenAPI spec
+    this.accountLinks = new AccountLinkResource(this);
+    this.accountSessions = new AccountSessionResource(this);
+    this.accounts = new AccountResource(this);
+    this.applePayDomains = new ApplePayDomainResource(this);
+    this.applicationFees = new ApplicationFeeResource(this);
+    this.balance = new BalanceResource(this);
+    this.balanceSettings = new BalanceSettingResource(this);
+    this.balanceTransactions = new BalanceTransactionResource(this);
+    this.charges = new ChargeResource(this);
+    this.confirmationTokens = new ConfirmationTokenResource(this);
+    this.countrySpecs = new CountrySpecResource(this);
+    this.coupons = new CouponResource(this);
+    this.creditNotes = new CreditNoteResource(this);
+    this.customerSessions = new CustomerSessionResource(this);
+    this.customers = new CustomerResource(this);
+    this.disputes = new DisputeResource(this);
+    this.ephemeralKeys = new EphemeralKeyResource(this);
+    this.events = new EventResource(this);
+    this.exchangeRates = new ExchangeRateResource(this);
+    this.fileLinks = new FileLinkResource(this);
+    this.files = new FileResource(this);
+    this.invoiceItems = new InvoiceItemResource(this);
+    this.invoicePayments = new InvoicePaymentResource(this);
+    this.invoiceRenderingTemplates = new InvoiceRenderingTemplateResource(this);
+    this.invoices = new InvoiceResource(this);
+    this.mandates = new MandateResource(this);
+    this.paymentAttemptRecords = new PaymentAttemptRecordResource(this);
+    this.paymentIntents = new PaymentIntentResource(this);
+    this.paymentLinks = new PaymentLinkResource(this);
+    this.paymentMethodConfigurations = new PaymentMethodConfigurationResource(
+      this
+    );
+    this.paymentMethodDomains = new PaymentMethodDomainResource(this);
+    this.paymentMethods = new PaymentMethodResource(this);
+    this.paymentRecords = new PaymentRecordResource(this);
+    this.payouts = new PayoutResource(this);
+    this.plans = new PlanResource(this);
+    this.prices = new PriceResource(this);
+    this.products = new ProductResource(this);
+    this.promotionCodes = new PromotionCodeResource(this);
+    this.quotes = new QuoteResource(this);
+    this.refunds = new RefundResource(this);
+    this.reviews = new ReviewResource(this);
+    this.setupAttempts = new SetupAttemptResource(this);
+    this.setupIntents = new SetupIntentResource(this);
+    this.shippingRates = new ShippingRateResource(this);
+    this.sources = new SourceResource(this);
+    this.subscriptionItems = new SubscriptionItemResource(this);
+    this.subscriptionSchedules = new SubscriptionScheduleResource(this);
+    this.subscriptions = new SubscriptionResource(this);
+    this.taxCodes = new TaxCodeResource(this);
+    this.taxIds = new TaxIdResource(this);
+    this.taxRates = new TaxRateResource(this);
+    this.tokens = new TokenResource(this);
+    this.topups = new TopupResource(this);
+    this.transfers = new TransferResource(this);
+    this.webhookEndpoints = new WebhookEndpointResource(this);
+    this.apps = new Apps(this);
+    this.billing = new Billing(this);
+    this.billingPortal = new BillingPortal(this);
+    this.checkout = new Checkout(this);
+    this.climate = new Climate(this);
+    this.entitlements = new Entitlements(this);
+    this.financialConnections = new FinancialConnections(this);
+    this.forwarding = new Forwarding(this);
+    this.identity = new Identity(this);
+    this.issuing = new Issuing(this);
+    this.radar = new Radar(this);
+    this.reporting = new Reporting(this);
+    this.sigma = new Sigma(this);
+    this.tax = new Tax(this);
+    this.terminal = new Terminal(this);
+    this.testHelpers = new TestHelpers(this);
+    this.treasury = new Treasury(this);
+    this.v2 = new V2(this);
+    // StripeInitInstanceVariables: The end of the section generated from our OpenAPI spec
+
+    // hardcoded properties and resources
+    // account property is added for backward compatibility
+    this.account = this.accounts;
+    this.oauth = new OAuthResource(this);
+
+    // this._prepResources();
   }
 
+  /**
+   * Allows for sending "raw" requests to the Stripe API, which can be used for
+   * testing new API endpoints or performing requests that the library does
+   * not support yet.
+   *
+   * @param method - HTTP request method, 'GET', 'POST', or 'DELETE'
+   * @param path - The path of the request, e.g. '/v1/beta_endpoint'
+   * @param params - The parameters to include in the request body.
+   * @param options - Additional request options.
+   */
   rawRequest(
     method: string,
     path: string,
     params?: RequestData,
-    options?: RequestOptions
+    options?: RawRequestOptions
   ): Promise<any> {
     return this._requestSender._rawRequest(method, path, params, options);
   }
@@ -472,6 +719,28 @@ export function createStripe(
     return config;
   }
 
+  /**
+   * @private
+   * This may be removed in the future.
+   */
+  _setApiField<K extends keyof Stripe['_api']>(
+    key: K,
+    value: Stripe['_api'][K]
+  ): void {
+    this._api[key] = value;
+  }
+
+  /**
+   * @private
+   * Please open or upvote an issue at github.com/stripe/stripe-node
+   * if you use this, detailing your use-case.
+   *
+   * It may be deprecated and removed in the future.
+   */
+  getApiField<K extends keyof Stripe['_api']>(key: K): Stripe['_api'][K] {
+    return this._api[key];
+  }
+
   parseEventNotification(
     payload: string | Uint8Array,
     header: string | Uint8Array,
@@ -540,3 +809,104 @@ export function createStripe(
 
   return Stripe;
 }
+
+export declare namespace Stripe {
+  // StripeInterfaceExports: The beginning of the section generated from our OpenAPI spec
+  this.accountLinks = new AccountLinkResource(this);
+  this.accountSessions = new AccountSessionResource(this);
+  this.accounts = new AccountResource(this);
+  this.applePayDomains = new ApplePayDomainResource(this);
+  this.applicationFees = new ApplicationFeeResource(this);
+  this.balance = new BalanceResource(this);
+  this.balanceSettings = new BalanceSettingResource(this);
+  this.balanceTransactions = new BalanceTransactionResource(this);
+  this.charges = new ChargeResource(this);
+  this.confirmationTokens = new ConfirmationTokenResource(this);
+  this.countrySpecs = new CountrySpecResource(this);
+  this.coupons = new CouponResource(this);
+  this.creditNotes = new CreditNoteResource(this);
+  this.customerSessions = new CustomerSessionResource(this);
+  this.customers = new CustomerResource(this);
+  this.disputes = new DisputeResource(this);
+  this.ephemeralKeys = new EphemeralKeyResource(this);
+  this.events = new EventResource(this);
+  this.exchangeRates = new ExchangeRateResource(this);
+  this.fileLinks = new FileLinkResource(this);
+  this.files = new FileResource(this);
+  this.invoiceItems = new InvoiceItemResource(this);
+  this.invoicePayments = new InvoicePaymentResource(this);
+  this.invoiceRenderingTemplates = new InvoiceRenderingTemplateResource(this);
+  this.invoices = new InvoiceResource(this);
+  this.mandates = new MandateResource(this);
+  this.paymentAttemptRecords = new PaymentAttemptRecordResource(this);
+  this.paymentIntents = new PaymentIntentResource(this);
+  this.paymentLinks = new PaymentLinkResource(this);
+  this.paymentMethodConfigurations = new PaymentMethodConfigurationResource(
+    this
+  );
+  this.paymentMethodDomains = new PaymentMethodDomainResource(this);
+  this.paymentMethods = new PaymentMethodResource(this);
+  this.paymentRecords = new PaymentRecordResource(this);
+  this.payouts = new PayoutResource(this);
+  this.plans = new PlanResource(this);
+  this.prices = new PriceResource(this);
+  this.products = new ProductResource(this);
+  this.promotionCodes = new PromotionCodeResource(this);
+  this.quotes = new QuoteResource(this);
+  this.refunds = new RefundResource(this);
+  this.reviews = new ReviewResource(this);
+  this.setupAttempts = new SetupAttemptResource(this);
+  this.setupIntents = new SetupIntentResource(this);
+  this.shippingRates = new ShippingRateResource(this);
+  this.sources = new SourceResource(this);
+  this.subscriptionItems = new SubscriptionItemResource(this);
+  this.subscriptionSchedules = new SubscriptionScheduleResource(this);
+  this.subscriptions = new SubscriptionResource(this);
+  this.taxCodes = new TaxCodeResource(this);
+  this.taxIds = new TaxIdResource(this);
+  this.taxRates = new TaxRateResource(this);
+  this.tokens = new TokenResource(this);
+  this.topups = new TopupResource(this);
+  this.transfers = new TransferResource(this);
+  this.webhookEndpoints = new WebhookEndpointResource(this);
+  this.apps = new Apps(this);
+  this.billing = new Billing(this);
+  this.billingPortal = new BillingPortal(this);
+  this.checkout = new Checkout(this);
+  this.climate = new Climate(this);
+  this.entitlements = new Entitlements(this);
+  this.financialConnections = new FinancialConnections(this);
+  this.forwarding = new Forwarding(this);
+  this.identity = new Identity(this);
+  this.issuing = new Issuing(this);
+  this.radar = new Radar(this);
+  this.reporting = new Reporting(this);
+  this.sigma = new Sigma(this);
+  this.tax = new Tax(this);
+  this.terminal = new Terminal(this);
+  this.testHelpers = new TestHelpers(this);
+  this.treasury = new Treasury(this);
+  this.v2 = new V2(this);
+  // StripeInterfaceExports: The end of the section generated from our OpenAPI spec
+
+  // Export Response and other shared classes
+  export {
+    Response,
+    RequestOptions,
+    RawRequestOptions,
+    ApiList,
+    ApiListPromise,
+    ApiSearchResultPromise,
+    ApiSearchResult,
+    StripeStreamResponse,
+    RequestEvent,
+    ResponseEvent,
+    AppInfo,
+    FileData,
+  };
+}
+
+// Initialize the StripeClient class with Node platform functions
+Stripe.initialize(new NodePlatformFunctions());
+
+export default Stripe;

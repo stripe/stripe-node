@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {CalculationLineItem} from './CalculationLineItems.js';
 import {
   MetadataParam,
@@ -65,12 +65,7 @@ export class CalculationResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Tax Calculation allows you to calculate the tax to collect from your customer.
- *
- * Related guide: [Calculate tax in your custom payment flow](https://stripe.com/docs/tax/custom)
- */
-interface Calculation {
+export interface Calculation {
   /**
    * Unique identifier for the calculation.
    */

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {PaymentMethod} from './PaymentMethods.js';
 import {Mandate} from './Mandates.js';
 import {Metadata, Address} from '../shared.js';
@@ -42,13 +42,7 @@ export class PaymentAttemptRecordResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Payment Attempt Record represents an individual attempt at making a payment, on or off Stripe.
- * Each payment attempt tries to collect a fixed amount of money from a fixed customer and payment
- * method. Payment Attempt Records are attached to Payment Records. Only one attempt per Payment Record
- * can have guaranteed funds.
- */
-interface PaymentAttemptRecord {
+export interface PaymentAttemptRecord {
   /**
    * Unique identifier for the object.
    */

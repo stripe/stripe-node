@@ -7,10 +7,12 @@
     "checkJs": false,
     "alwaysStrict": true,
     "noImplicitAny": true,
+    "declaration": true,
     "noImplicitThis": true,
     "strict": true,
     "strictFunctionTypes": true,
     "types": [ "node" ],
+    "sourceMap": true,
     "esModuleInterop": false // This is a viral option, do not enable https://www.semver-ts.org/#module-interop
   },
   "include": ["./src/**/*"],

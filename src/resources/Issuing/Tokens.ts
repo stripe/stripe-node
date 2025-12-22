@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Card} from './Cards.js';
 import {PaginationParams, RangeQueryParam} from '../../shared.js';
 import {ApiListPromise, Response} from '../../lib.js';
@@ -53,10 +53,7 @@ export class TokenResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * An issuing token object is created when an issued card is added to a digital wallet. As a [card issuer](https://stripe.com/docs/issuing), you can [view and manage these tokens](https://stripe.com/docs/issuing/controls/token-management) through Stripe.
- */
-interface Token {
+export interface Token {
   /**
    * Unique identifier for the object.
    */

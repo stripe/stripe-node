@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {FinancialAccountFeatures} from './FinancialAccountFeatures.js';
 import {
   MetadataParam,
@@ -134,11 +134,7 @@ export class FinancialAccountResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Stripe Treasury provides users with a container for money called a FinancialAccount that is separate from their Payments balance.
- * FinancialAccounts serve as the source and destination of Treasury's money movement APIs.
- */
-interface FinancialAccount {
+export interface FinancialAccount {
   /**
    * Unique identifier for the object.
    */

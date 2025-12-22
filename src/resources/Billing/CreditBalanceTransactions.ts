@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {CreditGrant} from './CreditGrants.js';
 import {Invoice} from './../Invoices.js';
 import * as TestHelpers from './../TestHelpers/index.js';
@@ -43,10 +43,7 @@ export class CreditBalanceTransactionResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A credit balance transaction is a resource representing a transaction (either a credit or a debit) against an existing credit grant.
- */
-interface CreditBalanceTransaction {
+export interface CreditBalanceTransaction {
   /**
    * Unique identifier for the object.
    */

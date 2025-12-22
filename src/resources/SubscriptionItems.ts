@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Discount} from './Discounts.js';
 import {Plan} from './Plans.js';
 import {Price} from './Prices.js';
@@ -97,11 +97,7 @@ export class SubscriptionItemResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Subscription items allow you to create customer subscriptions with more than
- * one plan, making it easy to represent complex billing relationships.
- */
-interface SubscriptionItem {
+export interface SubscriptionItem {
   /**
    * Unique identifier for the object.
    */
@@ -184,10 +180,7 @@ interface SubscriptionItem {
    */
   tax_rates: Array<TaxRate> | null;
 }
-export /**
- * The DeletedSubscriptionItem object.
- */
-interface DeletedSubscriptionItem {
+export interface DeletedSubscriptionItem {
   /**
    * Unique identifier for the object.
    */

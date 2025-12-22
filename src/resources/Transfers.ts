@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {TransferReversal} from './TransferReversals.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
 import {Account} from './Accounts.js';
@@ -166,19 +166,7 @@ export class TransferResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A `Transfer` object is created when you move funds between Stripe accounts as
- * part of Connect.
- *
- * Before April 6, 2017, transfers also represented movement of funds from a
- * Stripe account to a card or bank account. This behavior has since been split
- * out into a [Payout](https://stripe.com/docs/api#payout_object) object, with corresponding payout endpoints. For more
- * information, read about the
- * [transfer/payout split](https://stripe.com/docs/transfer-payout-split).
- *
- * Related guide: [Creating separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers)
- */
-interface Transfer {
+export interface Transfer {
   /**
    * Unique identifier for the object.
    */

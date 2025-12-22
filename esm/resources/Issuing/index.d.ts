@@ -1,4 +1,4 @@
-import { Stripe } from '../../stripe.core.js';
+import { StripeClient } from '../../stripe.core.js';
 import { AuthorizationResource } from './Authorizations.js';
 import { CardResource } from './Cards.js';
 import { CardholderResource } from './Cardholders.js';
@@ -25,5 +25,5 @@ export declare class Issuing {
     physicalBundles: PhysicalBundleResource;
     tokens: TokenResource;
     transactions: TransactionResource;
-    constructor(stripe: Stripe);
+    constructor(stripe: StripeClient);
 }

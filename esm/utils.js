@@ -366,3 +366,4 @@ export function parseHeadersForFetch(headers) {
         return [key, parseHttpHeaderAsString(value)];
     });
 }
+//# sourceMappingURL=utils.js.map

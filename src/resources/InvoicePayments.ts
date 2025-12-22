@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Invoice, DeletedInvoice} from './Invoices.js';
 import {Charge} from './Charges.js';
 import {PaymentIntent} from './PaymentIntents.js';
@@ -45,17 +45,7 @@ export class InvoicePaymentResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Invoice Payments represent payments made against invoices. Invoice Payments can
- * be accessed in two ways:
- * 1. By expanding the `payments` field on the [Invoice](https://stripe.com/docs/api#invoice) resource.
- * 2. By using the Invoice Payment retrieve and list endpoints.
- *
- * Invoice Payments include the mapping between payment objects, such as Payment Intent, and Invoices.
- * This resource and its endpoints allows you to easily track if a payment is associated with a specific invoice and
- * monitor the allocation details of the payments.
- */
-interface InvoicePayment {
+export interface InvoicePayment {
   /**
    * Unique identifier for the object.
    */

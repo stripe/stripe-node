@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {AccountOwner} from './AccountOwners.js';
 import {AccountOwnership} from './AccountOwnerships.js';
 import {Customer} from './../Customers.js';
@@ -118,10 +118,7 @@ export class AccountResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Financial Connections Account represents an account that exists outside of Stripe, to which you have been granted some degree of access.
- */
-interface Account {
+export interface Account {
   /**
    * Unique identifier for the object.
    */

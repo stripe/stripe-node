@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Transaction} from './Transactions.js';
 import {CreditReversal} from './CreditReversals.js';
 import {OutboundPayment} from './OutboundPayments.js';
@@ -45,10 +45,7 @@ export class ReceivedCreditResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * ReceivedCredits represent funds sent to a [FinancialAccount](https://stripe.com/docs/api#financial_accounts) (for example, via ACH or wire). These money movements are not initiated from the FinancialAccount.
- */
-interface ReceivedCredit {
+export interface ReceivedCredit {
   /**
    * Unique identifier for the object.
    */

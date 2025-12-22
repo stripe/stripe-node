@@ -4,12 +4,7 @@ import {Discount, DeletedDiscount} from './Discounts.js';
 import {Subscription} from './Subscriptions.js';
 import * as Billing from './Billing/index.js';
 import {Metadata} from '../shared.js';
-export /**
- * Invoice Line Items represent the individual lines within an [invoice](https://stripe.com/docs/api/invoices) and only exist within the context of an invoice.
- *
- * Each line item is backed by either an [invoice item](https://stripe.com/docs/api/invoiceitems) or a [subscription item](https://stripe.com/docs/api/subscription_items).
- */
-interface InvoiceLineItem {
+export interface InvoiceLineItem {
   /**
    * Unique identifier for the object.
    */

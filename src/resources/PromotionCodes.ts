@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {Coupon} from './Coupons.js';
 import {
@@ -78,14 +78,7 @@ export class PromotionCodeResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Promotion Code represents a customer-redeemable code for an underlying promotion.
- * You can create multiple codes for a single promotion.
- *
- * If you enable promotion codes in your [customer portal configuration](https://stripe.com/docs/customer-management/configure-portal), then customers can redeem a code themselves when updating a subscription in the portal.
- * Customers can also view the currently active promotion codes and coupons on each of their subscriptions in the portal.
- */
-interface PromotionCode {
+export interface PromotionCode {
   /**
    * Unique identifier for the object.
    */

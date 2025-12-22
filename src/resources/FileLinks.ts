@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {File} from './Files.js';
 import {
   Emptyable,
@@ -74,12 +74,7 @@ export class FileLinkResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * To share the contents of a `File` object with non-Stripe users, you can
- * create a `FileLink`. `FileLink`s contain a URL that you can use to
- * retrieve the contents of the file without authentication.
- */
-interface FileLink {
+export interface FileLink {
   /**
    * Unique identifier for the object.
    */

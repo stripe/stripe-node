@@ -45,3 +45,4 @@ export class OAuthResource extends StripeResource {
         }).apply(this, [params, ...args]);
     }
 }
+//# sourceMappingURL=OAuth.js.map

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {TaxCode} from './TaxCodes.js';
 import {
   MetadataParam,
@@ -77,11 +77,7 @@ export class ShippingRateResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Shipping rates describe the price of shipping presented to your customers and
- * applied to a purchase. For more information, see [Charge for shipping](https://stripe.com/docs/payments/during-payment/charge-shipping).
- */
-interface ShippingRate {
+export interface ShippingRate {
   /**
    * Unique identifier for the object.
    */

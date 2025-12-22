@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Charge} from './../Charges.js';
 import {PaymentIntent} from './../PaymentIntents.js';
 import {PaginationParams, RangeQueryParam} from '../../shared.js';
@@ -45,13 +45,7 @@ export class EarlyFraudWarningResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * An early fraud warning indicates that the card issuer has notified us that a
- * charge may be fraudulent.
- *
- * Related guide: [Early fraud warnings](https://stripe.com/docs/disputes/measuring#early-fraud-warnings)
- */
-interface EarlyFraudWarning {
+export interface EarlyFraudWarning {
   /**
    * Unique identifier for the object.
    */

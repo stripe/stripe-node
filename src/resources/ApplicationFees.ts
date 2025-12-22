@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {FeeRefund} from './FeeRefunds.js';
 import {Account} from './Accounts.js';
 import {Application} from './Applications.js';
@@ -139,10 +139,7 @@ export class ApplicationFeeResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * The ApplicationFee object.
- */
-interface ApplicationFee {
+export interface ApplicationFee {
   /**
    * Unique identifier for the object.
    */

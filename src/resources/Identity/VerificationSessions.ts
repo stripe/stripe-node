@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {VerificationReport} from './VerificationReports.js';
 import {
   MetadataParam,
@@ -149,20 +149,7 @@ export class VerificationSessionResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A VerificationSession guides you through the process of collecting and verifying the identities
- * of your users. It contains details about the type of verification, such as what [verification
- * check](https://docs.stripe.com/docs/identity/verification-checks) to perform. Only create one VerificationSession for
- * each verification in your system.
- *
- * A VerificationSession transitions through [multiple
- * statuses](https://docs.stripe.com/docs/identity/how-sessions-work) throughout its lifetime as it progresses through
- * the verification flow. The VerificationSession contains the user's verified data after
- * verification checks are complete.
- *
- * Related guide: [The Verification Sessions API](https://stripe.com/docs/identity/verification-sessions)
- */
-interface VerificationSession {
+export interface VerificationSession {
   /**
    * Unique identifier for the object.
    */

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {MeterEventSummary} from './MeterEventSummaries.js';
 import {PaginationParams} from '../../shared.js';
 import {ApiListPromise, Response} from '../../lib.js';
@@ -116,12 +116,7 @@ export class MeterResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Meters specify how to aggregate meter events over a billing period. Meter events represent the actions that customers take in your system. Meters attach to prices and form the basis of the bill.
- *
- * Related guide: [Usage based billing](https://docs.stripe.com/billing/subscriptions/usage-based)
- */
-interface Meter {
+export interface Meter {
   /**
    * Unique identifier for the object.
    */

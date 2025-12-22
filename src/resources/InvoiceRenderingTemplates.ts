@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {PaginationParams, Metadata} from '../shared.js';
 import {ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
@@ -79,11 +79,7 @@ export class InvoiceRenderingTemplateResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Invoice Rendering Templates are used to configure how invoices are rendered on surfaces like the PDF. Invoice Rendering Templates
- * can be created from within the Dashboard, and they can be used over the API when creating invoices.
- */
-interface InvoiceRenderingTemplate {
+export interface InvoiceRenderingTemplate {
   /**
    * Unique identifier for the object.
    */

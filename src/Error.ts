@@ -57,7 +57,7 @@ export const generateV2Error = (
 export class StripeError extends Error {
   readonly message: string;
   readonly userMessage?: string;
-  readonly type: string;
+  readonly type: string; // TODO: This can be typed
   readonly raw: unknown;
   readonly rawType?: RawErrorType;
   readonly headers?: {[header: string]: string};
@@ -114,8 +114,10 @@ export class StripeError extends Error {
  * some reason.
  */
 export class StripeCardError extends StripeError {
+  readonly decline_code: string;
   constructor(raw: StripeRawError = {}) {
     super(raw, 'StripeCardError');
+    this.decline_code = raw.decline_code ?? '';
   }
 }
 

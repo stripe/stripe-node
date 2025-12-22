@@ -6,7 +6,7 @@ import http = require('http');
 import {CryptoProvider} from '../src/crypto/CryptoProvider.js';
 import {NodePlatformFunctions} from '../src/platform/NodePlatformFunctions.js';
 import {RequestSender} from '../src/RequestSender.js';
-import {Stripe} from '../src/stripe.core.js';
+import {StripeClient} from '../src/stripe.core.js';
 import {
   RequestAuthenticator,
   RequestCallback,
@@ -15,9 +15,7 @@ import {
   RequestHeaders,
   RequestOptions,
   RequestSettings,
-  StripeObject as StripeClient,
 } from '../src/Types.js';
-import stripe = require('../src/stripe.cjs.node.js');
 import {NodeHttpClient} from '../src/net/NodeHttpClient.js';
 import {HttpClientResponseInterface} from '../src/net/HttpClient.js';
 import {AddressInfo} from 'net';
@@ -142,16 +140,17 @@ export const getMockStripe = (
 
   // Provide a testable stripe instance
   // That is, with mock-requests built in and hookable
-  // Initialize Stripe with platform functions and custom request sender
-  Stripe.initialize(
-    new NodePlatformFunctions(),
-    (stripeInstance) =>
-      new MockRequestSender(
-        stripeInstance,
-        (stripe as any).StripeResource.MAX_BUFFERED_REQUEST_METRICS
-      )
+  // Create a normal instance and replace its _requestSender directly
+  // to avoid polluting global state via Stripe.initialize()
+  const stripe = require('../src/stripe.cjs.node.js');
+  const stripeInstance = stripe(FAKE_API_KEY, config);
+
+  stripeInstance._requestSender = new MockRequestSender(
+    stripeInstance,
+    StripeClient.StripeResource.MAX_BUFFERED_REQUEST_METRICS
   );
-  return new Stripe(FAKE_API_KEY, config) as any;
+
+  return stripeInstance;
 };
 
 export const createMockClient = (
@@ -245,13 +244,16 @@ export const getSpyableStripe = (
 
   // Provide a testable stripe instance
   // That is, with mock-requests built in and hookable
-  const stripeInstance = stripe(FAKE_API_KEY, config);
+  const stripeInstance = require('../src/stripe.cjs.node.js')(
+    FAKE_API_KEY,
+    config
+  );
 
   stripeInstance.REQUESTS = [];
 
   stripeInstance._requestSender = new SpyableRequestSender(
     stripeInstance,
-    stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
+    StripeClient.StripeResource.MAX_BUFFERED_REQUEST_METRICS
   );
 
   return stripeInstance;

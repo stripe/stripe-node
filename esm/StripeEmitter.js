@@ -40,3 +40,4 @@ export class StripeEmitter {
         return this.eventTarget.dispatchEvent(new _StripeEvent(eventName, data));
     }
 }
+//# sourceMappingURL=StripeEmitter.js.map

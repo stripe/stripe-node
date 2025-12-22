@@ -1,9 +1,6 @@
 // File generated from our OpenAPI spec
 
-export /**
- * Describes an owner of an account.
- */
-interface AccountOwner {
+export interface AccountOwner {
   /**
    * Unique identifier for the object.
    */

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {
   MetadataParam,
   PaginationParams,
@@ -57,25 +57,7 @@ export class RequestResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Instructs Stripe to make a request on your behalf using the destination URL. The destination URL
- * is activated by Stripe at the time of onboarding. Stripe verifies requests with your credentials
- * provided during onboarding, and injects card details from the payment_method into the request.
- *
- * Stripe redacts all sensitive fields and headers, including authentication credentials and card numbers,
- * before storing the request and response data in the forwarding Request object, which are subject to a
- * 30-day retention period.
- *
- * You can provide a Stripe idempotency key to make sure that requests with the same key result in only one
- * outbound request. The Stripe idempotency key provided should be unique and different from any idempotency
- * keys provided on the underlying third-party request.
- *
- * Forwarding Requests are synchronous requests that return a response or time out according to
- * Stripe's limits.
- *
- * Related guide: [Forward card details to third-party API endpoints](https://docs.stripe.com/payments/forwarding).
- */
-interface Request {
+export interface Request {
   /**
    * Unique identifier for the object.
    */

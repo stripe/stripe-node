@@ -50,3 +50,4 @@ export class StripeContext {
         return new StripeContext(contextStr.split('/'));
     }
 }
+//# sourceMappingURL=StripeContext.js.map

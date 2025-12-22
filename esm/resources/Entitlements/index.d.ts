@@ -1,4 +1,4 @@
-import { Stripe } from '../../stripe.core.js';
+import { StripeClient } from '../../stripe.core.js';
 import { ActiveEntitlementResource } from './ActiveEntitlements.js';
 import { FeatureResource } from './Features.js';
 export { ActiveEntitlement } from './ActiveEntitlements.js';
@@ -7,5 +7,5 @@ export declare class Entitlements {
     private readonly stripe;
     activeEntitlements: ActiveEntitlementResource;
     features: FeatureResource;
-    constructor(stripe: Stripe);
+    constructor(stripe: StripeClient);
 }

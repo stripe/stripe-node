@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
 import {Charge} from './Charges.js';
 import {PaymentIntent} from './PaymentIntents.js';
@@ -108,14 +108,7 @@ export class RefundResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Refund objects allow you to refund a previously created charge that isn't
- * refunded yet. Funds are refunded to the credit or debit card that's
- * initially charged.
- *
- * Related guide: [Refunds](https://stripe.com/docs/refunds)
- */
-interface Refund {
+export interface Refund {
   /**
    * Unique identifier for the object.
    */

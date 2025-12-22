@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export class EphemeralKeyResource extends StripeResource {
@@ -40,10 +40,7 @@ export class EphemeralKeyResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * The EphemeralKey object.
- */
-interface EphemeralKey {
+export interface EphemeralKey {
   /**
    * Unique identifier for the object.
    */

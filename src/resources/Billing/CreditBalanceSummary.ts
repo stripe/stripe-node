@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Customer, DeletedCustomer} from './../Customers.js';
 import {Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
@@ -20,10 +20,7 @@ export class CreditBalanceSummaryResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Indicates the billing credit balance for billing credits granted to a customer.
- */
-interface CreditBalanceSummary {
+export interface CreditBalanceSummary {
   /**
    * String representing the object's type. Objects of the same type share the same value.
    */

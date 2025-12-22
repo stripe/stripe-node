@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Transaction} from './Transactions.js';
 import {CreditReversal} from './CreditReversals.js';
 import {DebitReversal} from './DebitReversals.js';
@@ -49,10 +49,7 @@ export class TransactionEntryResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * TransactionEntries represent individual units of money movements within a single [Transaction](https://stripe.com/docs/api#transactions).
- */
-interface TransactionEntry {
+export interface TransactionEntry {
   /**
    * Unique identifier for the object.
    */

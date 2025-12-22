@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Customer} from './Customers.js';
 import {SetupAttempt} from './SetupAttempts.js';
 import {Charge} from './Charges.js';
@@ -129,14 +129,7 @@ export class PaymentMethodResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * PaymentMethod objects represent your customer's payment instruments.
- * You can use them with [PaymentIntents](https://stripe.com/docs/payments/payment-intents) to collect payments or save them to
- * Customer objects to store instrument details for future payments.
- *
- * Related guides: [Payment Methods](https://stripe.com/docs/payments/payment-methods) and [More Payment Scenarios](https://stripe.com/docs/payments/more-payment-scenarios).
- */
-interface PaymentMethod {
+export interface PaymentMethod {
   /**
    * Unique identifier for the object.
    */

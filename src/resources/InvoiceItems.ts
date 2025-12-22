@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Discount, DeletedDiscount} from './Discounts.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {Invoice} from './Invoices.js';
@@ -100,17 +100,7 @@ export class InvoiceItemResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Invoice Items represent the component lines of an [invoice](https://stripe.com/docs/api/invoices). When you create an invoice item with an `invoice` field, it is attached to the specified invoice and included as [an invoice line item](https://stripe.com/docs/api/invoices/line_item) within [invoice.lines](https://stripe.com/docs/api/invoices/object#invoice_object-lines).
- *
- * Invoice Items can be created before you are ready to actually send the invoice. This can be particularly useful when combined
- * with a [subscription](https://stripe.com/docs/api/subscriptions). Sometimes you want to add a charge or credit to a customer, but actually charge
- * or credit the customer's card only at the end of a regular billing cycle. This is useful for combining several charges
- * (to minimize per-transaction fees), or for having Stripe tabulate your usage-based billing totals.
- *
- * Related guides: [Integrate with the Invoicing API](https://stripe.com/docs/invoicing/integration), [Subscription Invoices](https://stripe.com/docs/billing/invoices/subscription#adding-upcoming-invoice-items).
- */
-interface InvoiceItem {
+export interface InvoiceItem {
   /**
    * Unique identifier for the object.
    */
@@ -215,10 +205,7 @@ interface InvoiceItem {
    */
   test_clock: string | TestHelpers.TestClock | null;
 }
-export /**
- * The DeletedInvoiceItem object.
- */
-interface DeletedInvoiceItem {
+export interface DeletedInvoiceItem {
   /**
    * Unique identifier for the object.
    */

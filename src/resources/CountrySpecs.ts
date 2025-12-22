@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {PaginationParams} from '../shared.js';
 import {ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
@@ -41,15 +41,7 @@ export class CountrySpecResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Stripe needs to collect certain pieces of information about each account
- * created. These requirements can differ depending on the account's country. The
- * Country Specs API makes these rules available to your integration.
- *
- * You can also view the information from this API call as [an online
- * guide](https://docs.stripe.com/docs/connect/required-verification-information).
- */
-interface CountrySpec {
+export interface CountrySpec {
   /**
    * Unique identifier for the object. Represented as the ISO country code for this country.
    */

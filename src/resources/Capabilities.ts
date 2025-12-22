@@ -1,12 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {Account} from './Accounts.js';
-export /**
- * This is an object representing a capability for a Stripe account.
- *
- * Related guide: [Account capabilities](https://stripe.com/docs/connect/account-capabilities)
- */
-interface Capability {
+export interface Capability {
   /**
    * The identifier for the capability.
    */

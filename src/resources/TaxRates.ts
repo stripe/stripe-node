@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {
   MetadataParam,
   Emptyable,
@@ -73,12 +73,7 @@ export class TaxRateResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Tax rates can be applied to [invoices](https://docs.stripe.com/invoicing/taxes/tax-rates), [subscriptions](https://docs.stripe.com/billing/taxes/tax-rates) and [Checkout Sessions](https://docs.stripe.com/payments/checkout/use-manual-tax-rates) to collect tax.
- *
- * Related guide: [Tax rates](https://docs.stripe.com/billing/taxes/tax-rates)
- */
-interface TaxRate {
+export interface TaxRate {
   /**
    * Unique identifier for the object.
    */

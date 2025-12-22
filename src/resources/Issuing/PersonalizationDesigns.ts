@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {File} from './../Files.js';
 import {PhysicalBundle} from './PhysicalBundles.js';
 import {
@@ -77,10 +77,7 @@ export class PersonalizationDesignResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Personalization Design is a logical grouping of a Physical Bundle, card logo, and carrier text that represents a product line.
- */
-interface PersonalizationDesign {
+export interface PersonalizationDesign {
   /**
    * Unique identifier for the object.
    */

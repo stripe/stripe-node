@@ -1,4 +1,4 @@
-import { Stripe } from '../../stripe.core.js';
+import { StripeClient } from '../../stripe.core.js';
 import { CalculationResource } from './Calculations.js';
 import { RegistrationResource } from './Registrations.js';
 import { SettingResource } from './Settings.js';
@@ -13,5 +13,5 @@ export declare class Tax {
     registrations: RegistrationResource;
     settings: SettingResource;
     transactions: TransactionResource;
-    constructor(stripe: Stripe);
+    constructor(stripe: StripeClient);
 }

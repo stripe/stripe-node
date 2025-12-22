@@ -36,3 +36,4 @@ export class WebPlatformFunctions extends PlatformFunctions {
         return this.createSubtleCryptoProvider();
     }
 }
+//# sourceMappingURL=WebPlatformFunctions.js.map

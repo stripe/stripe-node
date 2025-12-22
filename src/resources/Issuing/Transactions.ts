@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Authorization} from './Authorizations.js';
 import {BalanceTransaction} from './../BalanceTransactions.js';
 import {Card} from './Cards.js';
@@ -68,14 +68,7 @@ export class TransactionResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Any use of an [issued card](https://stripe.com/docs/issuing) that results in funds entering or leaving
- * your Stripe account, such as a completed purchase or refund, is represented by an Issuing
- * `Transaction` object.
- *
- * Related guide: [Issued card transactions](https://stripe.com/docs/issuing/purchases/transactions)
- */
-interface Transaction {
+export interface Transaction {
   /**
    * Unique identifier for the object.
    */

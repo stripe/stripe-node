@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {TransactionEntry} from './TransactionEntries.js';
 import {CreditReversal} from './CreditReversals.js';
 import {DebitReversal} from './DebitReversals.js';
@@ -49,10 +49,7 @@ export class TransactionResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Transactions represent changes to a [FinancialAccount's](https://stripe.com/docs/api#financial_accounts) balance.
- */
-interface Transaction {
+export interface Transaction {
   /**
    * Unique identifier for the object.
    */

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/resources/BillingPortal/index.ts"],"names":[],"mappings":";AAAA,uCAAuC;;;AAGvC,2DAA0D;AAC1D,+CAA8C;AAK9C,MAAa,aAAa;IAIxB,YAA6B,MAAoB;QAApB,WAAM,GAAN,MAAM,CAAc;QAC/C,IAAI,CAAC,cAAc,GAAG,IAAI,yCAAqB,CAAC,MAAM,CAAC,CAAC;QACxD,IAAI,CAAC,QAAQ,GAAG,IAAI,6BAAe,CAAC,MAAM,CAAC,CAAC;IAC9C,CAAC;CACF;AARD,sCAQC"}

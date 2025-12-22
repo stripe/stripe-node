@@ -1,4 +1,4 @@
-import { Stripe } from '../../stripe.core.js';
+import { StripeClient } from '../../stripe.core.js';
 import { ConfigurationResource } from './Configurations.js';
 import { ConnectionTokenResource } from './ConnectionTokens.js';
 import { LocationResource } from './Locations.js';
@@ -13,5 +13,5 @@ export declare class Terminal {
     connectionTokens: ConnectionTokenResource;
     locations: LocationResource;
     readers: ReaderResource;
-    constructor(stripe: Stripe);
+    constructor(stripe: StripeClient);
 }

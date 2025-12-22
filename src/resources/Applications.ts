@@ -1,9 +1,6 @@
 // File generated from our OpenAPI spec
 
-export /**
- * The Application object.
- */
-interface Application {
+export interface Application {
   /**
    * Unique identifier for the object.
    */
@@ -24,10 +21,7 @@ interface Application {
    */
   name: string | null;
 }
-export /**
- * The DeletedApplication object.
- */
-interface DeletedApplication {
+export interface DeletedApplication {
   /**
    * Unique identifier for the object.
    */

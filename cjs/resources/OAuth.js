@@ -48,3 +48,4 @@ class OAuthResource extends StripeResource_js_1.StripeResource {
     }
 }
 exports.OAuthResource = OAuthResource;
+//# sourceMappingURL=OAuth.js.map

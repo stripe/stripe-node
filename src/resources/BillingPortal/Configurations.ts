@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Application, DeletedApplication} from './../Applications.js';
 import {
   Emptyable,
@@ -76,10 +76,7 @@ export class ConfigurationResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A portal configuration describes the functionality and behavior you embed in a portal session. Related guide: [Configure the customer portal](https://docs.stripe.com/customer-management/configure-portal).
- */
-interface Configuration {
+export interface Configuration {
   /**
    * Unique identifier for the object.
    */

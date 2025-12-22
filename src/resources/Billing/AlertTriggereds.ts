@@ -1,10 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {Alert} from './Alerts.js';
-export /**
- * The AlertTriggered object.
- */
-interface AlertTriggered {
+export interface AlertTriggered {
   /**
    * String representing the object's type. Objects of the same type share the same value.
    */

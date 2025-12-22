@@ -1,11 +1,7 @@
 // File generated from our OpenAPI spec
 
 import * as Entitlements from './Entitlements/index.js';
-export /**
- * A product_feature represents an attachment between a feature and a product.
- * When a product is purchased that has a feature attached, Stripe will create an entitlement to the feature for the purchasing customer.
- */
-interface ProductFeature {
+export interface ProductFeature {
   /**
    * Unique identifier for the object.
    */
@@ -32,10 +28,7 @@ interface ProductFeature {
    */
   livemode: boolean;
 }
-export /**
- * The DeletedProductFeature object.
- */
-interface DeletedProductFeature {
+export interface DeletedProductFeature {
   /**
    * Unique identifier for the object.
    */

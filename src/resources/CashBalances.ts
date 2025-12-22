@@ -1,9 +1,6 @@
 // File generated from our OpenAPI spec
 
-export /**
- * A customer's `Cash balance` represents real funds. Customers can add funds to their cash balance by sending a bank transfer. These funds can be used for payment and can eventually be paid out to your bank account.
- */
-interface CashBalance {
+export interface CashBalance {
   /**
    * String representing the object's type. Objects of the same type share the same value.
    */

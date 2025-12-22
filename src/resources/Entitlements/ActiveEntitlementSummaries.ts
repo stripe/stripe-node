@@ -2,10 +2,7 @@
 
 import {ActiveEntitlement} from './ActiveEntitlements.js';
 import {ApiList} from '../../lib.js';
-export /**
- * A summary of a customer's active entitlements.
- */
-interface ActiveEntitlementSummary {
+export interface ActiveEntitlementSummary {
   /**
    * String representing the object's type. Objects of the same type share the same value.
    */

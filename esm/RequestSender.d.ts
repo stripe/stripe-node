@@ -1,13 +1,13 @@
 import { RequestHeaders, RequestEvent, ResponseEvent, RequestCallback, RequestCallbackReturn, RequestData, RequestDataProcessor, RequestOptions, RequestSettings, RequestAuthenticator, ApiMode } from './Types.js';
 import { HttpClientResponseInterface } from './net/HttpClient.js';
-import { Stripe } from './stripe.core.js';
+import { StripeClient } from './stripe.core.js';
 export type HttpClientResponseError = {
     code: string;
 };
 export declare class RequestSender {
-    protected _stripe: Stripe;
+    protected _stripe: StripeClient;
     private readonly _maxBufferedRequestMetric;
-    constructor(stripe: Stripe, maxBufferedRequestMetric: number);
+    constructor(stripe: StripeClient, maxBufferedRequestMetric: number);
     private _normalizeStripeContext;
     _addHeadersDirectlyToObject(obj: any, headers: RequestHeaders): void;
     _makeResponseEvent(requestEvent: RequestEvent, statusCode: number, headers: RequestHeaders): ResponseEvent;

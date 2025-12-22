@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {Customer} from './Customers.js';
 import {SetupAttempt} from './SetupAttempts.js';
 import {Charge} from './Charges.js';
@@ -28,16 +28,7 @@ export class ConfirmationTokenResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * ConfirmationTokens help transport client side data collected by Stripe JS over
- * to your server for confirming a PaymentIntent or SetupIntent. If the confirmation
- * is successful, values present on the ConfirmationToken are written onto the Intent.
- *
- * To learn more about how to use ConfirmationToken, visit the related guides:
- * - [Finalize payments on the server](https://stripe.com/docs/payments/finalize-payments-on-the-server)
- * - [Build two-step confirmation](https://stripe.com/docs/payments/build-a-two-step-confirmation).
- */
-interface ConfirmationToken {
+export interface ConfirmationToken {
   /**
    * Unique identifier for the object.
    */

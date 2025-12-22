@@ -4,6 +4,10 @@ exports.CryptoProviderOnlySupportsAsyncError = exports.CryptoProvider = void 0;
 /**
  * Interface encapsulating the various crypto computations used by the library,
  * allowing pluggable underlying crypto implementations.
+ *
+ * Implementations can choose which methods they want to implement (eg. a
+ * CryptoProvider can be used which only implements the asynchronous
+ * versions of each crypto computation).
  */
 class CryptoProvider {
     /**
@@ -49,3 +53,4 @@ exports.CryptoProvider = CryptoProvider;
 class CryptoProviderOnlySupportsAsyncError extends Error {
 }
 exports.CryptoProviderOnlySupportsAsyncError = CryptoProviderOnlySupportsAsyncError;
+//# sourceMappingURL=CryptoProvider.js.map

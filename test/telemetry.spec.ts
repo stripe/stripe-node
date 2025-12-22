@@ -209,8 +209,8 @@ describe('Client Telemetry', () => {
       }
     );
 
-    await Promise.all([stripe.balance.retrieve(), stripe.balances.retrieve()]);
-    await Promise.all([stripe.balance.retrieve(), stripe.balances.retrieve()]);
+    await Promise.all([stripe.balance.retrieve(), stripe.balance.retrieve()]);
+    await Promise.all([stripe.balance.retrieve(), stripe.balance.retrieve()]);
     expect(numRequests).to.equal(4);
   });
 });

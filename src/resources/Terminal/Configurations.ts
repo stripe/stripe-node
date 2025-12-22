@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {File} from './../Files.js';
 import {Emptyable, PaginationParams} from '../../shared.js';
 import {Response, ApiListPromise} from '../../lib.js';
@@ -91,11 +91,7 @@ export class ConfigurationResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Configurations object represents how features should be configured for terminal readers.
- * For information about how to use it, see the [Terminal configurations documentation](https://docs.stripe.com/terminal/fleet/configurations-overview).
- */
-interface Configuration {
+export interface Configuration {
   /**
    * Unique identifier for the object.
    */
@@ -143,10 +139,7 @@ interface Configuration {
   wifi?: Terminal.Configuration.Wifi;
 }
 export namespace Terminal {
-  export /**
-   * The DeletedConfiguration object.
-   */
-  interface DeletedConfiguration {
+  export interface DeletedConfiguration {
     /**
      * Unique identifier for the object.
      */

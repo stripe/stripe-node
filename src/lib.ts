@@ -2,6 +2,7 @@ import {Agent} from 'http';
 
 import {ApiVersion} from './apiVersion.js';
 import {HttpClient} from './net/HttpClient.js';
+import {StripeContext} from './StripeContext.js';
 
 // type StripeResourceClass = typeof StripeResource;
 
@@ -138,7 +139,7 @@ export interface RequestOptions {
   /**
    * An account on whose behalf you wish to make a request. See https://docs.corp.stripe.com/context for more information.
    */
-  stripeContext?: string;
+  stripeContext?: string | StripeContext;
 
   /**
    * The [API Version](https://stripe.com/docs/upgrades) to use for a given request (e.g., '2020-03-02').

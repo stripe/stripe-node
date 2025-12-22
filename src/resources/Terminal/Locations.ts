@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {
   Address,
   JapanAddressParam,
@@ -99,12 +99,7 @@ export class LocationResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Location represents a grouping of readers.
- *
- * Related guide: [Fleet management](https://stripe.com/docs/terminal/fleet/locations)
- */
-interface Location {
+export interface Location {
   /**
    * Unique identifier for the object.
    */
@@ -162,10 +157,7 @@ interface Location {
   phone?: string;
 }
 export namespace Terminal {
-  export /**
-   * The DeletedLocation object.
-   */
-  interface DeletedLocation {
+  export interface DeletedLocation {
     /**
      * Unique identifier for the object.
      */

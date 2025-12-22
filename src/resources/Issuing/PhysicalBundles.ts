@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {PaginationParams} from '../../shared.js';
 import {ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
@@ -41,10 +41,7 @@ export class PhysicalBundleResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Physical Bundle represents the bundle of physical items - card stock, carrier letter, and envelope - that is shipped to a cardholder when you create a physical card.
- */
-interface PhysicalBundle {
+export interface PhysicalBundle {
   /**
    * Unique identifier for the object.
    */

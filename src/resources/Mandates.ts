@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../Types.js';
+import {RequestOptions} from '../lib.js';
 import {PaymentMethod} from './PaymentMethods.js';
 import {Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
@@ -22,10 +22,7 @@ export class MandateResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Mandate is a record of the permission that your customer gives you to debit their payment method.
- */
-interface Mandate {
+export interface Mandate {
   /**
    * Unique identifier for the object.
    */

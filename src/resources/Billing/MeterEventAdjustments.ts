@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export class MeterEventAdjustmentResource extends StripeResource {
@@ -19,10 +19,7 @@ export class MeterEventAdjustmentResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A billing meter event adjustment is a resource that allows you to cancel a meter event. For example, you might create a billing meter event adjustment to cancel a meter event that was created in error or attached to the wrong customer.
- */
-interface MeterEventAdjustment {
+export interface MeterEventAdjustment {
   /**
    * String representing the object's type. Objects of the same type share the same value.
    */

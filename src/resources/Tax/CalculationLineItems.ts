@@ -1,10 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {Metadata} from '../../shared.js';
-export /**
- * The CalculationLineItem object.
- */
-interface CalculationLineItem {
+export interface CalculationLineItem {
   /**
    * Unique identifier for the object.
    */

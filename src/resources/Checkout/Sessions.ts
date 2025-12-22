@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../Types.js';
+import {RequestOptions} from '../../lib.js';
 import {LineItem} from './../LineItems.js';
 import {Discount} from './../Discounts.js';
 import {Subscription} from './../Subscriptions.js';
@@ -127,23 +127,7 @@ export class SessionResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * A Checkout Session represents your customer's session as they pay for
- * one-time purchases or subscriptions through [Checkout](https://stripe.com/docs/payments/checkout)
- * or [Payment Links](https://stripe.com/docs/payments/payment-links). We recommend creating a
- * new Session each time your customer attempts to pay.
- *
- * Once payment is successful, the Checkout Session will contain a reference
- * to the [Customer](https://stripe.com/docs/api/customers), and either the successful
- * [PaymentIntent](https://stripe.com/docs/api/payment_intents) or an active
- * [Subscription](https://stripe.com/docs/api/subscriptions).
- *
- * You can create a Checkout Session on your server and redirect to its URL
- * to begin Checkout.
- *
- * Related guide: [Checkout quickstart](https://stripe.com/docs/checkout/quickstart)
- */
-interface Session {
+export interface Session {
   /**
    * Unique identifier for the object.
    */

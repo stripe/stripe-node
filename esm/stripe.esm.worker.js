@@ -1,6 +1,7 @@
 import { WebPlatformFunctions } from './platform/WebPlatformFunctions.js';
-import { Stripe as StripeClass } from './stripe.core.js';
-// Initialize the Stripe class with Web platform functions
-StripeClass.initialize(new WebPlatformFunctions());
-export const Stripe = StripeClass;
+import { StripeClient } from './stripe.core.js';
+// Initialize the StripeClient class with Web platform functions
+StripeClient.initialize(new WebPlatformFunctions());
+export const Stripe = StripeClient;
 export default Stripe;
+//# sourceMappingURL=stripe.esm.worker.js.map

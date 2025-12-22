@@ -1,4 +1,4 @@
-import { Stripe } from '../../stripe.core.js';
+import { StripeClient } from '../../stripe.core.js';
 import { OrderResource } from './Orders.js';
 import { ProductResource } from './Products.js';
 import { SupplierResource } from './Suppliers.js';
@@ -10,5 +10,5 @@ export declare class Climate {
     orders: OrderResource;
     products: ProductResource;
     suppliers: SupplierResource;
-    constructor(stripe: Stripe);
+    constructor(stripe: StripeClient);
 }

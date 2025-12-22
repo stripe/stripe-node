@@ -76,7 +76,9 @@ StripeError.generate = generateV1Error;
  */
 export class StripeCardError extends StripeError {
     constructor(raw = {}) {
+        var _a;
         super(raw, 'StripeCardError');
+        this.decline_code = (_a = raw.decline_code) !== null && _a !== void 0 ? _a : '';
     }
 }
 /**
@@ -183,3 +185,4 @@ export class TemporarySessionExpiredError extends StripeError {
     }
 }
 // classDefinitions: The end of the section generated from our OpenAPI spec
+//# sourceMappingURL=Error.js.map

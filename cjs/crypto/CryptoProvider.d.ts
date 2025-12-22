@@ -1,6 +1,10 @@
 /**
  * Interface encapsulating the various crypto computations used by the library,
  * allowing pluggable underlying crypto implementations.
+ *
+ * Implementations can choose which methods they want to implement (eg. a
+ * CryptoProvider can be used which only implements the asynchronous
+ * versions of each crypto computation).
  */
 export declare class CryptoProvider {
     /**

@@ -51,3 +51,4 @@ class HttpClientResponse {
     }
 }
 exports.HttpClientResponse = HttpClientResponse;
+//# sourceMappingURL=HttpClient.js.map

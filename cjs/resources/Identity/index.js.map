@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/resources/Identity/index.ts"],"names":[],"mappings":";AAAA,uCAAuC;;;AAGvC,qEAAoE;AACpE,uEAAsE;AAKtE,MAAa,QAAQ;IAInB,YAA6B,MAAoB;QAApB,WAAM,GAAN,MAAM,CAAc;QAC/C,IAAI,CAAC,mBAAmB,GAAG,IAAI,mDAA0B,CAAC,MAAM,CAAC,CAAC;QAClE,IAAI,CAAC,oBAAoB,GAAG,IAAI,qDAA2B,CAAC,MAAM,CAAC,CAAC;IACtE,CAAC;CACF;AARD,4BAQC"}
