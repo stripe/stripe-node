@@ -79,6 +79,11 @@ declare module 'stripe' {
       deleted?: void;
 
       /**
+       * A custom identifier for this price, such as a SKU number or product code, that can be used to reference records from external systems.
+       */
+      external_reference?: string | null;
+
+      /**
        * The frequency at which a subscription is billed. One of `day`, `week`, `month` or `year`.
        */
       interval: Plan.Interval;
