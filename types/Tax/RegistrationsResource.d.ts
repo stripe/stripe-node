@@ -2379,11 +2379,19 @@ declare module 'stripe' {
             }
 
             type Type =
+              | 'admissions_tax'
+              | 'attendance_tax'
+              | 'entertainment_tax'
+              | 'gross_receipts_tax'
+              | 'hospitality_tax'
               | 'local_amusement_tax'
               | 'local_lease_tax'
+              | 'luxury_tax'
+              | 'resort_tax'
               | 'state_communications_tax'
               | 'state_retail_delivery_fee'
-              | 'state_sales_tax';
+              | 'state_sales_tax'
+              | 'tourism_tax';
           }
 
           interface Uy {

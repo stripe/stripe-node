@@ -62,6 +62,7 @@ import {Intents as V2BillingIntents} from './resources/V2/Billing/Intents.js';
 import {LicenseFeeSubscriptions as V2BillingLicenseFeeSubscriptions} from './resources/V2/Billing/LicenseFeeSubscriptions.js';
 import {LicenseFees as V2BillingLicenseFees} from './resources/V2/Billing/LicenseFees.js';
 import {LicensedItems as V2BillingLicensedItems} from './resources/V2/Billing/LicensedItems.js';
+import {Locations as TaxLocations} from './resources/Tax/Locations.js';
 import {Locations as TerminalLocations} from './resources/Terminal/Locations.js';
 import {ManualRules as V2TaxManualRules} from './resources/V2/Tax/ManualRules.js';
 import {MeterEventAdjustments as BillingMeterEventAdjustments} from './resources/Billing/MeterEventAdjustments.js';
@@ -295,6 +296,7 @@ export const Tax = resourceNamespace('tax', {
   Associations: TaxAssociations,
   Calculations: TaxCalculations,
   Forms: TaxForms,
+  Locations: TaxLocations,
   Registrations: TaxRegistrations,
   Settings: TaxSettings,
   Transactions: TaxTransactions,

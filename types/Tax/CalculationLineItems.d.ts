@@ -38,6 +38,11 @@ declare module 'stripe' {
         metadata: Stripe.Metadata | null;
 
         /**
+         * A tax location for a line item that acts as a performance location. This indicates that the line item might be taxed at the place where it is being performed at. This is helpful for events or other services being performed at non-customer addresses like venues or offices. This can be left empty for tax codes that do not require a tax location. For tax codes where the location requirement is "optional", this would override the customer address in most use cases.
+         */
+        performance_location?: string | null;
+
+        /**
          * The ID of an existing [Product](https://docs.stripe.com/api/products/object).
          */
         product: string | null;
@@ -127,7 +132,7 @@ declare module 'stripe' {
             type Level = 'city' | 'country' | 'county' | 'district' | 'state';
           }
 
-          type Sourcing = 'destination' | 'origin';
+          type Sourcing = 'destination' | 'origin' | 'performance';
 
           type TaxabilityReason =
             | 'customer_exempt'
@@ -165,19 +170,27 @@ declare module 'stripe' {
 
           namespace TaxRateDetails {
             type TaxType =
+              | 'admissions_tax'
               | 'amusement_tax'
+              | 'attendance_tax'
               | 'communications_tax'
+              | 'entertainment_tax'
+              | 'gross_receipts_tax'
               | 'gst'
+              | 'hospitality_tax'
               | 'hst'
               | 'igst'
               | 'jct'
               | 'lease_tax'
+              | 'luxury_tax'
               | 'pst'
               | 'qst'
+              | 'resort_tax'
               | 'retail_delivery_fee'
               | 'rst'
               | 'sales_tax'
               | 'service_tax'
+              | 'tourism_tax'
               | 'vat';
           }
         }

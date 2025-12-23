@@ -54,7 +54,7 @@ declare module 'stripe' {
       }
 
       namespace SharedPayment {
-        interface GrantedTokenUpdateParams {
+        interface GrantedTokenRevokeParams {
           /**
            * Specifies which fields in the response should be expanded.
            */
@@ -75,9 +75,13 @@ declare module 'stripe' {
           /**
            * Revokes a test SharedPaymentGrantedToken object. This endpoint is only available in test mode and allows sellers to revoke SharedPaymentGrantedTokens for testing their integration
            */
-          update(
+          revoke(
             id: string,
-            params?: GrantedTokenUpdateParams,
+            params?: GrantedTokenRevokeParams,
+            options?: RequestOptions
+          ): Promise<Stripe.Response<Stripe.SharedPayment.GrantedToken>>;
+          revoke(
+            id: string,
             options?: RequestOptions
           ): Promise<Stripe.Response<Stripe.SharedPayment.GrantedToken>>;
         }

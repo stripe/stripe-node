@@ -795,7 +795,7 @@ declare module 'stripe' {
         metadata: Stripe.Metadata | null;
 
         /**
-         * Configures how the quote handles billing for line transitions. Possible values are `line_start` (default) or `billing_period_start`. `line_start` bills based on the current state of the line, ignoring changes scheduled for future lines. `billing_period_start` bills predictively for upcoming line transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+         * Configures how the subscription schedule handles billing for phase transitions when the quote is accepted.
          */
         phase_effective_at?: SubscriptionData.PhaseEffectiveAt;
 
@@ -1084,7 +1084,7 @@ declare module 'stripe' {
 
         type EndBehavior = 'cancel' | 'release';
 
-        type PhaseEffectiveAt = 'billing_period_start' | 'line_start';
+        type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
 
         interface Prebilling {
           iterations: number;
@@ -1130,7 +1130,7 @@ declare module 'stripe' {
         end_behavior?: SubscriptionDataOverride.EndBehavior | null;
 
         /**
-         * Configures how the quote handles billing for line transitions. Possible values are `line_start` (default) or `billing_period_start`. `line_start` bills based on the current state of the line, ignoring changes scheduled for future lines. `billing_period_start` bills predictively for upcoming line transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+         * Configures how the subscription schedule handles billing for phase transitions when the quote is accepted.
          */
         phase_effective_at?: SubscriptionDataOverride.PhaseEffectiveAt;
 
@@ -1406,7 +1406,7 @@ declare module 'stripe' {
 
         type EndBehavior = 'cancel' | 'release';
 
-        type PhaseEffectiveAt = 'billing_period_start' | 'line_start';
+        type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
 
         type ProrationBehavior =
           | 'always_invoice'
