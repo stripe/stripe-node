@@ -1,6 +1,5 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
-import { Response } from '../lib.js';
+import { RequestOptions, Response } from '../lib.js';
 export declare class BalanceResource extends StripeResource {
     /**
      * Retrieves the current account balance, based on the authentication that was used to make the request.
@@ -9,20 +8,13 @@ export declare class BalanceResource extends StripeResource {
     retrieve(params?: BalanceRetrieveParams, options?: RequestOptions): Promise<Response<Balance>>;
     retrieve(options?: RequestOptions): Promise<Response<Balance>>;
 }
-export /**
- * This is an object representing your Stripe balance. You can retrieve it to see
- * the balance currently on your Stripe account.
- *
- * The top-level `available` and `pending` comprise your "payments balance."
- *
- * Related guide: [Balances and settlement time](https://stripe.com/docs/payments/balances), [Understanding Connect account balances](https://stripe.com/docs/connect/account-balances)
- */ interface Balance {
+export interface Balance {
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
     object: 'balance';
     /**
-     * Available funds that you can transfer or pay out automatically by Stripe or explicitly through the [Transfers API](https://stripe.com/docs/api#transfers) or [Payouts API](https://stripe.com/docs/api#payouts). You can find the available balance for each currency and payment type in the `source_types` property.
+     * Available funds that you can transfer or pay out automatically by Stripe or explicitly through the [Transfers API](https://api.stripe.com#transfers) or [Payouts API](https://api.stripe.com#payouts). You can find the available balance for each currency and payment type in the `source_types` property.
      */
     available: Array<Balance.Available>;
     /**

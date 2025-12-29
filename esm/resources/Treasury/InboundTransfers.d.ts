@@ -1,9 +1,8 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { Transaction } from './Transactions.js';
 import { Mandate } from './../Mandates.js';
 import { MetadataParam, PaginationParams, Metadata, Address } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class InboundTransferResource extends StripeResource {
     /**
      * Returns a list of InboundTransfers sent from the specified FinancialAccount.
@@ -24,11 +23,7 @@ export declare class InboundTransferResource extends StripeResource {
     cancel(id: string, params?: Treasury.InboundTransferCancelParams, options?: RequestOptions): Promise<Response<InboundTransfer>>;
     cancel(id: string, options?: RequestOptions): Promise<Response<InboundTransfer>>;
 }
-export /**
- * Use [InboundTransfers](https://docs.stripe.com/docs/treasury/moving-money/financial-accounts/into/inbound-transfers) to add funds to your [FinancialAccount](https://stripe.com/docs/api#financial_accounts) via a PaymentMethod that is owned by you. The funds will be transferred via an ACH debit.
- *
- * Related guide: [Moving money with Treasury using InboundTransfer objects](https://docs.stripe.com/docs/treasury/moving-money/financial-accounts/into/inbound-transfers)
- */ interface InboundTransfer {
+export interface InboundTransfer {
     /**
      * Unique identifier for the object.
      */
@@ -66,7 +61,7 @@ export /**
      */
     financial_account: string;
     /**
-     * A [hosted transaction receipt](https://stripe.com/docs/treasury/moving-money/regulatory-receipts) URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
+     * A [hosted transaction receipt](https://docs.stripe.com/treasury/moving-money/regulatory-receipts) URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
      */
     hosted_regulatory_receipt_url: string | null;
     linked_flows: Treasury.InboundTransfer.LinkedFlows;
@@ -75,7 +70,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata;
     /**
@@ -182,7 +177,7 @@ export declare namespace Treasury {
                  */
                 mandate?: string | Mandate;
                 /**
-                 * The network rails used. See the [docs](https://stripe.com/docs/treasury/money-movement/timelines) to learn more about money movement timelines for each network type.
+                 * The network rails used. See the [docs](https://docs.stripe.com/treasury/money-movement/timelines) to learn more about money movement timelines for each network type.
                  */
                 network: 'ach';
                 /**
@@ -224,11 +219,11 @@ export declare namespace Treasury {
          */
         expand?: Array<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
         /**
-         * The complete description that appears on your customers' statements. Maximum 10 characters.
+         * The complete description that appears on your customers' statements. Maximum 10 characters. Can only include -#.$&*, spaces, and alphanumeric characters.
          */
         statement_descriptor?: string;
     }

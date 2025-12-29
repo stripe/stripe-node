@@ -1,13 +1,24 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../stripe.core.js';
-import {AlertResource} from './Alerts.js';
-import {CreditBalanceSummaryResource} from './CreditBalanceSummary.js';
-import {CreditBalanceTransactionResource} from './CreditBalanceTransactions.js';
-import {CreditGrantResource} from './CreditGrants.js';
-import {MeterResource} from './Meters.js';
-import {MeterEventResource} from './MeterEvents.js';
-import {MeterEventAdjustmentResource} from './MeterEventAdjustments.js';
+import {Alert, AlertResource} from './Alerts.js';
+import {
+  CreditBalanceSummary,
+  CreditBalanceSummaryResource,
+} from './CreditBalanceSummary.js';
+import {
+  CreditBalanceTransaction,
+  CreditBalanceTransactionResource,
+} from './CreditBalanceTransactions.js';
+import {CreditGrant, CreditGrantResource} from './CreditGrants.js';
+import {Meter, MeterResource} from './Meters.js';
+import {MeterEvent, MeterEventResource} from './MeterEvents.js';
+import {
+  MeterEventAdjustment,
+  MeterEventAdjustmentResource,
+} from './MeterEventAdjustments.js';
+import {AlertTriggered} from './AlertTriggereds.js';
+import {MeterEventSummary} from './MeterEventSummaries.js';
 
 export {Alert} from './Alerts.js';
 export {CreditBalanceSummary} from './CreditBalanceSummary.js';
@@ -37,4 +48,16 @@ export class Billing {
     this.meterEvents = new MeterEventResource(stripe);
     this.meterEventAdjustments = new MeterEventAdjustmentResource(stripe);
   }
+}
+
+export declare namespace Billing {
+  export {Alert};
+  export {CreditBalanceSummary};
+  export {CreditBalanceTransaction};
+  export {CreditGrant};
+  export {Meter};
+  export {MeterEvent};
+  export {MeterEventAdjustment};
+  export {AlertTriggered};
+  export {MeterEventSummary};
 }

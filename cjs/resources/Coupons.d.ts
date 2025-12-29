@@ -1,7 +1,6 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { Emptyable, MetadataParam, PaginationParams, RangeQueryParam, Metadata } from '../shared.js';
-import { Response, ApiListPromise } from '../lib.js';
+import { RequestOptions, Response, ApiListPromise } from '../lib.js';
 export declare class CouponResource extends StripeResource {
     /**
      * You can delete coupons via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can't redeem the coupon. You can also delete coupons via the API.
@@ -30,11 +29,7 @@ export declare class CouponResource extends StripeResource {
     create(params?: CouponCreateParams, options?: RequestOptions): Promise<Response<Coupon>>;
     create(options?: RequestOptions): Promise<Response<Coupon>>;
 }
-export /**
- * A coupon contains information about a percent-off or amount-off discount you
- * might want to apply to a customer. Coupons may be applied to [subscriptions](https://stripe.com/docs/api#subscriptions), [invoices](https://stripe.com/docs/api#invoices),
- * [checkout sessions](https://stripe.com/docs/api/checkout/sessions), [quotes](https://stripe.com/docs/api#quotes), and more. Coupons do not work with conventional one-off [charges](https://stripe.com/docs/api#create_charge) or [payment intents](https://stripe.com/docs/api/payment_intents).
- */ interface Coupon {
+export interface Coupon {
     /**
      * Unique identifier for the object.
      */
@@ -83,7 +78,7 @@ export /**
      */
     max_redemptions: number | null;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata | null;
     /**
@@ -107,9 +102,7 @@ export /**
      */
     valid: boolean;
 }
-export /**
- * The DeletedCoupon object.
- */ interface DeletedCoupon {
+export interface DeletedCoupon {
     /**
      * Unique identifier for the object.
      */
@@ -178,7 +171,7 @@ export interface CouponCreateParams {
      */
     max_redemptions?: number;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
     /**
@@ -227,7 +220,7 @@ export interface CouponUpdateParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
     /**

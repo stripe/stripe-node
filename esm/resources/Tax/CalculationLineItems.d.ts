@@ -1,7 +1,5 @@
 import { Metadata } from '../../shared.js';
-export /**
- * The CalculationLineItem object.
- */ interface CalculationLineItem {
+export interface CalculationLineItem {
     /**
      * Unique identifier for the object.
      */
@@ -11,11 +9,11 @@ export /**
      */
     object: 'tax.calculation_line_item';
     /**
-     * The line item amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes were calculated on top of this amount.
+     * The line item amount in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes were calculated on top of this amount.
      */
     amount: number;
     /**
-     * The amount of tax calculated for this line item, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+     * The amount of tax calculated for this line item, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
      */
     amount_tax: number;
     /**
@@ -23,11 +21,11 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata | null;
     /**
-     * The ID of an existing [Product](https://stripe.com/docs/api/products/object).
+     * The ID of an existing [Product](https://docs.stripe.com/api/products/object).
      */
     product: string | null;
     /**
@@ -47,7 +45,7 @@ export /**
      */
     tax_breakdown?: Array<Tax.CalculationLineItem.TaxBreakdown> | null;
     /**
-     * The [tax code](https://stripe.com/docs/tax/tax-categories) ID used for this resource.
+     * The [tax code](https://docs.stripe.com/tax/tax-categories) ID used for this resource.
      */
     tax_code: string;
 }
@@ -56,7 +54,7 @@ export declare namespace Tax {
         type TaxBehavior = 'exclusive' | 'inclusive';
         interface TaxBreakdown {
             /**
-             * The amount of tax, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The amount of tax, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             amount: number;
             jurisdiction: TaxBreakdown.Jurisdiction;
@@ -73,7 +71,7 @@ export declare namespace Tax {
              */
             taxability_reason: TaxBreakdown.TaxabilityReason;
             /**
-             * The amount on which tax is calculated, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The amount on which tax is calculated, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             taxable_amount: number;
         }

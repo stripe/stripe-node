@@ -14,6 +14,7 @@ import {Topup} from './Topups.js';
 import {Transfer} from './Transfers.js';
 import {TransferReversal} from './TransferReversals.js';
 import * as Issuing from './Issuing/index.js';
+import {RequestOptions} from '../lib.js';
 export type BalanceTransactionSource =
   | ApplicationFee
   | Charge

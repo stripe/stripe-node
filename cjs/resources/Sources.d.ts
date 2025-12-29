@@ -1,8 +1,7 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { SourceTransaction } from './SourceTransactions.js';
 import { MetadataParam, Emptyable, AddressParam, ShippingAddressParam, PaginationParams, Metadata, Address } from '../shared.js';
-import { Response, ApiListPromise } from '../lib.js';
+import { RequestOptions, Response, ApiListPromise } from '../lib.js';
 export declare class SourceResource extends StripeResource {
     /**
      * Retrieves an existing source object. Supply the unique source ID from a source creation request and Stripe will return the corresponding up-to-date source object information.
@@ -30,18 +29,7 @@ export declare class SourceResource extends StripeResource {
     listSourceTransactions(id: string, params?: SourceListSourceTransactionsParams, options?: RequestOptions): ApiListPromise<SourceTransaction>;
     listSourceTransactions(id: string, options?: RequestOptions): ApiListPromise<SourceTransaction>;
 }
-export /**
- * `Source` objects allow you to accept a variety of payment methods. They
- * represent a customer's payment instrument, and can be used with the Stripe API
- * just like a `Card` object: once chargeable, they can be charged, or can be
- * attached to customers.
- *
- * Stripe doesn't recommend using the deprecated [Sources API](https://stripe.com/docs/api/sources).
- * We recommend that you adopt the [PaymentMethods API](https://stripe.com/docs/api/payment_methods).
- * This newer API provides access to our latest features and payment method types.
- *
- * Related guides: [Sources API](https://stripe.com/docs/sources) and [Sources & Customers](https://stripe.com/docs/sources/customers).
- */ interface Source {
+export interface Source {
     /**
      * Unique identifier for the object.
      */
@@ -96,7 +84,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata | null;
     multibanco?: Source.Multibanco;
@@ -121,7 +109,7 @@ export /**
     status: string;
     three_d_secure?: Source.ThreeDSecure;
     /**
-     * The `type` of the source. The `type` is a payment method, one of `ach_credit_transfer`, `ach_debit`, `alipay`, `bancontact`, `card`, `card_present`, `eps`, `giropay`, `ideal`, `multibanco`, `klarna`, `p24`, `sepa_debit`, `sofort`, `three_d_secure`, or `wechat`. An additional hash is included on the source with a name matching this value. It contains additional information specific to the [payment method](https://stripe.com/docs/sources) used.
+     * The `type` of the source. The `type` is a payment method, one of `ach_credit_transfer`, `ach_debit`, `alipay`, `bancontact`, `card`, `card_present`, `eps`, `giropay`, `ideal`, `multibanco`, `klarna`, `p24`, `sepa_debit`, `sofort`, `three_d_secure`, or `wechat`. An additional hash is included on the source with a name matching this value. It contains additional information specific to the [payment method](https://docs.stripe.com/sources) used.
      */
     type: Source.Type;
     /**
@@ -555,7 +543,7 @@ export interface SourceCreateParams {
      */
     token?: string;
     /**
-     * The `type` of the source to create. Required unless `customer` and `original_source` are specified (see the [Cloning card Sources](https://stripe.com/docs/sources/connect#cloning-card-sources) guide)
+     * The `type` of the source to create. Required unless `customer` and `original_source` are specified (see the [Cloning card Sources](https://docs.stripe.com/sources/connect#cloning-card-sources) guide)
      */
     type?: string;
     usage?: SourceCreateParams.Usage;
@@ -752,7 +740,7 @@ export interface SourceUpdateParams {
      */
     mandate?: SourceUpdateParams.Mandate;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
     /**

@@ -1,9 +1,8 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { Transaction } from './Transactions.js';
 import { Mandate } from './../Mandates.js';
 import { MetadataParam, Emptyable, PaginationParams, Metadata, Address } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class OutboundTransferResource extends StripeResource {
     /**
      * Returns a list of OutboundTransfers sent from the specified FinancialAccount.
@@ -24,13 +23,7 @@ export declare class OutboundTransferResource extends StripeResource {
     cancel(id: string, params?: Treasury.OutboundTransferCancelParams, options?: RequestOptions): Promise<Response<OutboundTransfer>>;
     cancel(id: string, options?: RequestOptions): Promise<Response<OutboundTransfer>>;
 }
-export /**
- * Use [OutboundTransfers](https://docs.stripe.com/docs/treasury/moving-money/financial-accounts/out-of/outbound-transfers) to transfer funds from a [FinancialAccount](https://stripe.com/docs/api#financial_accounts) to a PaymentMethod belonging to the same entity. To send funds to a different party, use [OutboundPayments](https://stripe.com/docs/api#outbound_payments) instead. You can send funds over ACH rails or through a domestic wire transfer to a user's own external bank account.
- *
- * Simulate OutboundTransfer state changes with the `/v1/test_helpers/treasury/outbound_transfers` endpoints. These methods can only be called on test mode objects.
- *
- * Related guide: [Moving money with Treasury using OutboundTransfer objects](https://docs.stripe.com/docs/treasury/moving-money/financial-accounts/out-of/outbound-transfers)
- */ interface OutboundTransfer {
+export interface OutboundTransfer {
     /**
      * Unique identifier for the object.
      */
@@ -73,7 +66,7 @@ export /**
      */
     financial_account: string;
     /**
-     * A [hosted transaction receipt](https://stripe.com/docs/treasury/moving-money/regulatory-receipts) URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
+     * A [hosted transaction receipt](https://docs.stripe.com/treasury/moving-money/regulatory-receipts) URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
      */
     hosted_regulatory_receipt_url: string | null;
     /**
@@ -81,7 +74,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata;
     /**
@@ -203,7 +196,7 @@ export declare namespace Treasury {
                  */
                 mandate?: string | Mandate;
                 /**
-                 * The network rails used. See the [docs](https://stripe.com/docs/treasury/money-movement/timelines) to learn more about money movement timelines for each network type.
+                 * The network rails used. See the [docs](https://docs.stripe.com/treasury/money-movement/timelines) to learn more about money movement timelines for each network type.
                  */
                 network: UsBankAccount.Network;
                 /**
@@ -280,11 +273,11 @@ export declare namespace Treasury {
          */
         expand?: Array<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
         /**
-         * Statement descriptor to be shown on the receiving end of an OutboundTransfer. Maximum 10 characters for `ach` transfers or 140 characters for `us_domestic_wire` transfers. The default value is "transfer".
+         * Statement descriptor to be shown on the receiving end of an OutboundTransfer. Maximum 10 characters for `ach` transfers or 140 characters for `us_domestic_wire` transfers. The default value is "transfer". Can only include -#.$&*, spaces, and alphanumeric characters.
          */
         statement_descriptor?: string;
     }
@@ -308,7 +301,7 @@ export declare namespace Treasury {
         namespace DestinationPaymentMethodOptions {
             interface UsBankAccount {
                 /**
-                 * Specifies the network rails to be used. If not set, will default to the PaymentMethod's preferred network. See the [docs](https://stripe.com/docs/treasury/money-movement/timelines) to learn more about money movement timelines for each network type.
+                 * Specifies the network rails to be used. If not set, will default to the PaymentMethod's preferred network. See the [docs](https://docs.stripe.com/treasury/money-movement/timelines) to learn more about money movement timelines for each network type.
                  */
                 network?: UsBankAccount.Network;
             }

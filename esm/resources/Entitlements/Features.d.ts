@@ -1,7 +1,6 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { MetadataParam, Emptyable, PaginationParams, Metadata } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class FeatureResource extends StripeResource {
     /**
      * Retrieve a list of features
@@ -22,10 +21,7 @@ export declare class FeatureResource extends StripeResource {
      */
     update(id: string, params?: Entitlements.FeatureUpdateParams, options?: RequestOptions): Promise<Response<Feature>>;
 }
-export /**
- * A feature represents a monetizable ability or functionality in your system.
- * Features can be assigned to products, and when those products are purchased, Stripe will create an entitlement to the feature for the purchasing customer.
- */ interface Feature {
+export interface Feature {
     /**
      * Unique identifier for the object.
      */

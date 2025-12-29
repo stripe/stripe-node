@@ -1,11 +1,10 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { TransferReversal } from './TransferReversals.js';
 import { BalanceTransaction } from './BalanceTransactions.js';
 import { Account } from './Accounts.js';
 import { Charge } from './Charges.js';
 import { MetadataParam, Emptyable, PaginationParams, RangeQueryParam, Metadata } from '../shared.js';
-import { ApiListPromise, Response, ApiList } from '../lib.js';
+import { RequestOptions, ApiListPromise, Response, ApiList } from '../lib.js';
 export declare class TransferResource extends StripeResource {
     /**
      * Returns a list of existing transfers sent to connected accounts. The transfers are returned in sorted order, with the most recently created transfers appearing first.
@@ -54,18 +53,7 @@ export declare class TransferResource extends StripeResource {
     updateReversal(transferId: string, id: string, params?: TransferUpdateReversalParams, options?: RequestOptions): Promise<Response<TransferReversal>>;
     updateReversal(transferId: string, id: string, options?: RequestOptions): Promise<Response<TransferReversal>>;
 }
-export /**
- * A `Transfer` object is created when you move funds between Stripe accounts as
- * part of Connect.
- *
- * Before April 6, 2017, transfers also represented movement of funds from a
- * Stripe account to a card or bank account. This behavior has since been split
- * out into a [Payout](https://stripe.com/docs/api#payout_object) object, with corresponding payout endpoints. For more
- * information, read about the
- * [transfer/payout split](https://stripe.com/docs/transfer-payout-split).
- *
- * Related guide: [Creating separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers)
- */ interface Transfer {
+export interface Transfer {
     /**
      * Unique identifier for the object.
      */
@@ -111,7 +99,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata;
     /**
@@ -131,7 +119,7 @@ export /**
      */
     source_type?: string;
     /**
-     * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/separate-charges-and-transfers#transfer-options) for details.
+     * A string that identifies this transaction as part of a group. See the [Connect documentation](https://docs.stripe.com/connect/separate-charges-and-transfers#transfer-options) for details.
      */
     transfer_group: string | null;
 }
@@ -157,11 +145,11 @@ export interface TransferCreateParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: MetadataParam;
     /**
-     * You can use this parameter to transfer funds from a charge before they are added to your available balance. A pending balance will transfer immediately but the funds will not become available until the original charge becomes available. [See the Connect documentation](https://stripe.com/docs/connect/separate-charges-and-transfers#transfer-availability) for details.
+     * You can use this parameter to transfer funds from a charge before they are added to your available balance. A pending balance will transfer immediately but the funds will not become available until the original charge becomes available. [See the Connect documentation](https://docs.stripe.com/connect/separate-charges-and-transfers#transfer-availability) for details.
      */
     source_transaction?: string;
     /**
@@ -169,7 +157,7 @@ export interface TransferCreateParams {
      */
     source_type?: TransferCreateParams.SourceType;
     /**
-     * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/separate-charges-and-transfers#transfer-options) for details.
+     * A string that identifies this transaction as part of a group. See the [Connect documentation](https://docs.stripe.com/connect/separate-charges-and-transfers#transfer-options) for details.
      */
     transfer_group?: string;
 }
@@ -192,7 +180,7 @@ export interface TransferUpdateParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
 }
@@ -228,7 +216,7 @@ export interface TransferCreateReversalParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
     /**
@@ -254,7 +242,7 @@ export interface TransferUpdateReversalParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
 }

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createStripe = exports.StripeClient = void 0;
+exports.createStripe = exports.Stripe = void 0;
 const _Error = require("./Error.js");
 const RequestSender_js_1 = require("./RequestSender.js");
 const StripeResource_js_1 = require("./StripeResource.js");
@@ -29,7 +29,6 @@ const Customers_js_1 = require("./resources/Customers.js");
 const CustomerSessions_js_1 = require("./resources/CustomerSessions.js");
 const Disputes_js_1 = require("./resources/Disputes.js");
 const EphemeralKeys_js_1 = require("./resources/EphemeralKeys.js");
-const Events_js_1 = require("./resources/Events.js");
 const ExchangeRates_js_1 = require("./resources/ExchangeRates.js");
 const Files_js_1 = require("./resources/Files.js");
 const FileLinks_js_1 = require("./resources/FileLinks.js");
@@ -86,6 +85,9 @@ const index_js_16 = require("./resources/TestHelpers/index.js");
 const index_js_17 = require("./resources/Treasury/index.js");
 const index_js_18 = require("./resources/V2/index.js");
 // StripeInstanceImports: The end of the section generated from our OpenAPI spec
+// V1EventImports: The beginning of the section generated from our OpenAPI spec
+const Events_js_1 = require("./resources/Events.js");
+// V1EventImports: The end of the section generated from our OpenAPI spec
 const resources_js_1 = require("./resources.js");
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -117,30 +119,29 @@ const ALLOWED_CONFIG_PROPERTIES = [
     'stripeContext',
 ];
 const defaultRequestSenderFactory = (stripe) => new RequestSender_js_1.RequestSender(stripe, StripeResource_js_1.StripeResource.MAX_BUFFERED_REQUEST_METRICS);
-class StripeClient {
+class Stripe {
     static initialize(platformFunctions, requestSenderFactory = defaultRequestSenderFactory) {
-        StripeClient._platformFunctions = platformFunctions;
-        StripeClient._requestSenderFactory = requestSenderFactory;
-        StripeClient.webhooks = (0, Webhooks_js_1.createWebhooks)(platformFunctions);
-        StripeClient.createNodeHttpClient = platformFunctions.createNodeHttpClient;
-        StripeClient.createFetchHttpClient =
-            platformFunctions.createFetchHttpClient;
-        StripeClient.createNodeCryptoProvider =
+        Stripe._platformFunctions = platformFunctions;
+        Stripe._requestSenderFactory = requestSenderFactory;
+        Stripe.webhooks = (0, Webhooks_js_1.createWebhooks)(platformFunctions);
+        Stripe.createNodeHttpClient = platformFunctions.createNodeHttpClient;
+        Stripe.createFetchHttpClient = platformFunctions.createFetchHttpClient;
+        Stripe.createNodeCryptoProvider =
             platformFunctions.createNodeCryptoProvider;
-        StripeClient.createSubtleCryptoProvider =
+        Stripe.createSubtleCryptoProvider =
             platformFunctions.createSubtleCryptoProvider;
     }
     constructor(key, config = {}) {
         this._authenticator = null;
         const props = this._getPropsFromConfig(config);
-        this._platformFunctions = StripeClient._platformFunctions;
+        this._platformFunctions = Stripe._platformFunctions;
         Object.defineProperty(this, '_emitter', {
             value: this._platformFunctions.createEmitter(),
             enumerable: false,
             configurable: false,
             writable: false,
         });
-        this.VERSION = StripeClient.PACKAGE_VERSION;
+        this.VERSION = Stripe.PACKAGE_VERSION;
         this.on = this._emitter.on.bind(this._emitter);
         this.once = this._emitter.once.bind(this._emitter);
         this.off = this._emitter.removeListener.bind(this._emitter);
@@ -163,22 +164,22 @@ class StripeClient {
             stripeContext: props.stripeContext || null,
         };
         const typescript = props.typescript || false;
-        if (typescript !== StripeClient.USER_AGENT.typescript) {
+        if (typescript !== Stripe.USER_AGENT.typescript) {
             // The mutation here is uncomfortable, but likely fastest;
             // serializing the user agent involves shelling out to the system,
             // and given some users may instantiate the library many times without switching between TS and non-TS,
             // we only want to incur the performance hit when that actually happens.
-            StripeClient.USER_AGENT.typescript = typescript;
+            Stripe.USER_AGENT.typescript = typescript;
         }
         if (props.appInfo) {
             this._setAppInfo(props.appInfo);
         }
         this._setAuthenticator(key, props.authenticator || null);
         this.errors = _Error;
-        this.webhooks = StripeClient.webhooks;
+        this.webhooks = Stripe.webhooks;
         this._prevRequestMetrics = [];
         this._enableTelemetry = props.telemetry !== false;
-        this._requestSender = StripeClient._requestSenderFactory(this);
+        this._requestSender = Stripe._requestSenderFactory(this);
         // // Expose StripeResource on the instance too
         // // @ts-ignore
         // this.StripeResource = Stripe.StripeResource;
@@ -338,7 +339,7 @@ class StripeClient {
             case 'INITIAL_NETWORK_RETRY_DELAY_SEC':
                 return INITIAL_NETWORK_RETRY_DELAY_SEC;
         }
-        return StripeClient[c];
+        return Stripe[c];
     }
     getMaxNetworkRetries() {
         return this.getApiField('maxNetworkRetries');
@@ -369,7 +370,7 @@ class StripeClient {
      * speed advantage.
      */
     getClientUserAgent(cb) {
-        return this.getClientUserAgentSeeded(StripeClient.USER_AGENT, cb);
+        return this.getClientUserAgentSeeded(Stripe.USER_AGENT, cb);
     }
     /**
      * @private
@@ -509,23 +510,21 @@ class StripeClient {
         return eventNotification;
     }
 }
-exports.StripeClient = StripeClient;
-StripeClient.PACKAGE_VERSION = '19.1.0';
-StripeClient.API_VERSION = apiVersion_js_1.ApiVersion;
-StripeClient.USER_AGENT = Object.assign({ bindings_version: StripeClient.PACKAGE_VERSION, lang: 'node', publisher: 'stripe', uname: null, typescript: false }, (0, utils_js_1.determineProcessUserAgentProperties)());
-StripeClient.StripeResource = StripeResource_js_1.StripeResource;
-StripeClient.StripeContext = StripeContext_js_1.StripeContext;
-StripeClient.resources = resources;
-StripeClient.HttpClient = HttpClient_js_1.HttpClient;
-StripeClient.HttpClientResponse = HttpClient_js_1.HttpClientResponse;
-StripeClient.CryptoProvider = CryptoProvider_js_1.CryptoProvider;
-StripeClient.errors = _Error;
-StripeClient._requestSenderFactory = defaultRequestSenderFactory;
+exports.Stripe = Stripe;
+Stripe.PACKAGE_VERSION = '19.1.0';
+Stripe.API_VERSION = apiVersion_js_1.ApiVersion;
+Stripe.USER_AGENT = Object.assign({ bindings_version: Stripe.PACKAGE_VERSION, lang: 'node', publisher: 'stripe', uname: null, typescript: false }, (0, utils_js_1.determineProcessUserAgentProperties)());
+Stripe.StripeResource = StripeResource_js_1.StripeResource;
+Stripe.resources = resources;
+Stripe.HttpClient = HttpClient_js_1.HttpClient;
+Stripe.HttpClientResponse = HttpClient_js_1.HttpClientResponse;
+Stripe.CryptoProvider = CryptoProvider_js_1.CryptoProvider;
+Stripe._requestSenderFactory = defaultRequestSenderFactory;
 // For backward compatibility, export createStripe as a factory function
 function createStripe(platformFunctions, requestSender = defaultRequestSenderFactory) {
     // Initialize static properties
-    StripeClient.initialize(platformFunctions, requestSender);
-    return StripeClient;
+    Stripe.initialize(platformFunctions, requestSender);
+    return Stripe;
 }
 exports.createStripe = createStripe;
 //# sourceMappingURL=stripe.core.js.map

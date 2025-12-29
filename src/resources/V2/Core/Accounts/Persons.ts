@@ -1,27 +1,1284 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../../StripeResource.js';
+import {AccountPerson} from './../../../V2/Core/AccountPersons.js';
+import {Address, MetadataParam, JapanAddressParam} from '../../../../shared.js';
+import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
+import {DeletedObject} from './../../../V2/DeletedObject.js';
 const stripeMethod = StripeResource.method;
-export const Persons = StripeResource.extend({
-  create: stripeMethod({
-    method: 'POST',
-    fullPath: '/v2/core/accounts/{account_id}/persons',
-  }),
-  retrieve: stripeMethod({
-    method: 'GET',
-    fullPath: '/v2/core/accounts/{account_id}/persons/{id}',
-  }),
-  update: stripeMethod({
-    method: 'POST',
-    fullPath: '/v2/core/accounts/{account_id}/persons/{id}',
-  }),
-  list: stripeMethod({
-    method: 'GET',
-    fullPath: '/v2/core/accounts/{account_id}/persons',
-    methodType: 'list',
-  }),
-  del: stripeMethod({
-    method: 'DELETE',
-    fullPath: '/v2/core/accounts/{account_id}/persons/{id}',
-  }),
-});
+export class PersonResource extends StripeResource {
+  /**
+   * Returns a paginated list of Persons associated with an Account.
+   */
+  list(
+    id: string,
+    params?: V2.Core.Accounts.PersonListParams,
+    options?: RequestOptions
+  ): ApiListPromise<AccountPerson>;
+  list(id: string, options?: RequestOptions): ApiListPromise<AccountPerson>;
+  list(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'GET',
+      fullPath: '/v2/core/accounts/{account_id}/persons',
+      methodType: 'list',
+    }).call(this, ...args);
+  }
+
+  /**
+   * Create a Person. Adds an individual to an Account's identity. You can set relationship attributes and identity information at creation.
+   */
+  create(
+    id: string,
+    params?: V2.Core.Accounts.PersonCreateParams,
+    options?: RequestOptions
+  ): Promise<Response<AccountPerson>>;
+  create(
+    id: string,
+    options?: RequestOptions
+  ): Promise<Response<AccountPerson>>;
+  create(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'POST',
+      fullPath: '/v2/core/accounts/{account_id}/persons',
+    }).call(this, ...args);
+  }
+
+  /**
+   * Delete a Person associated with an Account.
+   */
+  del(
+    accountId: string,
+    id: string,
+    params?: V2.Core.Accounts.PersonDeleteParams,
+    options?: RequestOptions
+  ): Promise<Response<DeletedObject>>;
+  del(
+    accountId: string,
+    id: string,
+    options?: RequestOptions
+  ): Promise<Response<DeletedObject>>;
+  del(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'DELETE',
+      fullPath: '/v2/core/accounts/{account_id}/persons/{id}',
+    }).call(this, ...args);
+  }
+
+  /**
+   * Retrieves a Person associated with an Account.
+   */
+  retrieve(
+    accountId: string,
+    id: string,
+    params?: V2.Core.Accounts.PersonRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<AccountPerson>>;
+  retrieve(
+    accountId: string,
+    id: string,
+    options?: RequestOptions
+  ): Promise<Response<AccountPerson>>;
+  retrieve(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'GET',
+      fullPath: '/v2/core/accounts/{account_id}/persons/{id}',
+    }).call(this, ...args);
+  }
+
+  /**
+   * Updates a Person associated with an Account.
+   */
+  update(
+    accountId: string,
+    id: string,
+    params?: V2.Core.Accounts.PersonUpdateParams,
+    options?: RequestOptions
+  ): Promise<Response<AccountPerson>>;
+  update(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'POST',
+      fullPath: '/v2/core/accounts/{account_id}/persons/{id}',
+    }).call(this, ...args);
+  }
+}
+export namespace V2 {
+  export namespace Core {
+    export namespace Accounts {
+      export interface PersonCreateParams {
+        /**
+         * Additional addresses associated with the person.
+         */
+        additional_addresses?: Array<PersonCreateParams.AdditionalAddress>;
+
+        /**
+         * Additional names (e.g. aliases) associated with the person.
+         */
+        additional_names?: Array<PersonCreateParams.AdditionalName>;
+
+        /**
+         * Attestations of accepted terms of service agreements.
+         */
+        additional_terms_of_service?: PersonCreateParams.AdditionalTermsOfService;
+
+        /**
+         * The person's residential address.
+         */
+        address?: PersonCreateParams.Address;
+
+        /**
+         * The person's date of birth.
+         */
+        date_of_birth?: PersonCreateParams.DateOfBirth;
+
+        /**
+         * Documents that may be submitted to satisfy various informational requests.
+         */
+        documents?: PersonCreateParams.Documents;
+
+        /**
+         * Email.
+         */
+        email?: string;
+
+        /**
+         * The person's first name.
+         */
+        given_name?: string;
+
+        /**
+         * The identification numbers (e.g., SSN) associated with the person.
+         */
+        id_numbers?: Array<PersonCreateParams.IdNumber>;
+
+        /**
+         * The person's gender (International regulations require either "male" or "female").
+         */
+        legal_gender?: PersonCreateParams.LegalGender;
+
+        /**
+         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         */
+        metadata?: MetadataParam;
+
+        /**
+         * The nationalities (countries) this person is associated with.
+         */
+        nationalities?: Array<string>;
+
+        /**
+         * The person token generated by the person token api.
+         */
+        person_token?: string;
+
+        /**
+         * The phone number for this person.
+         */
+        phone?: string;
+
+        /**
+         * The person's political exposure.
+         */
+        political_exposure?: PersonCreateParams.PoliticalExposure;
+
+        /**
+         * The relationship that this person has with the Account's business or legal entity.
+         */
+        relationship?: PersonCreateParams.Relationship;
+
+        /**
+         * The script addresses (e.g., non-Latin characters) associated with the person.
+         */
+        script_addresses?: PersonCreateParams.ScriptAddresses;
+
+        /**
+         * The script names (e.g. non-Latin characters) associated with the person.
+         */
+        script_names?: PersonCreateParams.ScriptNames;
+
+        /**
+         * The person's last name.
+         */
+        surname?: string;
+      }
+
+      export namespace PersonCreateParams {
+        export interface AdditionalAddress {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1?: string;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * Purpose of additional address.
+           */
+          purpose: 'registered';
+
+          /**
+           * State, county, province, or region.
+           */
+          state?: string;
+
+          /**
+           * Town or district.
+           */
+          town?: string;
+        }
+
+        export interface AdditionalName {
+          /**
+           * The person's full name.
+           */
+          full_name?: string;
+
+          /**
+           * The person's first or given name.
+           */
+          given_name?: string;
+
+          /**
+           * The purpose or type of the additional name.
+           */
+          purpose: AdditionalName.Purpose;
+
+          /**
+           * The person's last or family name.
+           */
+          surname?: string;
+        }
+
+        export interface AdditionalTermsOfService {
+          /**
+           * Stripe terms of service agreement.
+           */
+          account?: AdditionalTermsOfService.Account;
+        }
+
+        export interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1?: string;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * State, county, province, or region.
+           */
+          state?: string;
+
+          /**
+           * Town or district.
+           */
+          town?: string;
+        }
+
+        export interface DateOfBirth {
+          /**
+           * The day of birth.
+           */
+          day: number;
+
+          /**
+           * The month of birth.
+           */
+          month: number;
+
+          /**
+           * The year of birth.
+           */
+          year: number;
+        }
+
+        export interface Documents {
+          /**
+           * One or more documents that demonstrate proof that this person is authorized to represent the company.
+           */
+          company_authorization?: Documents.CompanyAuthorization;
+
+          /**
+           * One or more documents showing the person's passport page with photo and personal data.
+           */
+          passport?: Documents.Passport;
+
+          /**
+           * An identifying document showing the person's name, either a passport or local ID card.
+           */
+          primary_verification?: Documents.PrimaryVerification;
+
+          /**
+           * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
+           */
+          secondary_verification?: Documents.SecondaryVerification;
+
+          /**
+           * One or more documents showing the person's visa required for living in the country where they are residing.
+           */
+          visa?: Documents.Visa;
+        }
+
+        export interface IdNumber {
+          /**
+           * The ID number type of an individual.
+           */
+          type: IdNumber.Type;
+
+          /**
+           * The value of the ID number.
+           */
+          value: string;
+        }
+
+        export type LegalGender = 'female' | 'male';
+
+        export type PoliticalExposure = 'existing' | 'none';
+
+        export interface Relationship {
+          /**
+           * Whether the individual is an authorizer of the Account's identity.
+           */
+          authorizer?: boolean;
+
+          /**
+           * Indicates whether the person is a director of the associated legal entity.
+           */
+          director?: boolean;
+
+          /**
+           * Indicates whether the person is an executive of the associated legal entity.
+           */
+          executive?: boolean;
+
+          /**
+           * Indicates whether the person is a legal guardian of the associated legal entity.
+           */
+          legal_guardian?: boolean;
+
+          /**
+           * Indicates whether the person is an owner of the associated legal entity.
+           */
+          owner?: boolean;
+
+          /**
+           * The percentage of ownership the person has in the associated legal entity.
+           */
+          percent_ownership?: string;
+
+          /**
+           * Indicates whether the person is a representative of the associated legal entity.
+           */
+          representative?: boolean;
+
+          /**
+           * The title or position the person holds in the associated legal entity.
+           */
+          title?: string;
+        }
+
+        export interface ScriptAddresses {
+          /**
+           * Kana Address.
+           */
+          kana?: ScriptAddresses.Kana;
+
+          /**
+           * Kanji Address.
+           */
+          kanji?: ScriptAddresses.Kanji;
+        }
+
+        export interface ScriptNames {
+          /**
+           * Persons name in kana script.
+           */
+          kana?: ScriptNames.Kana;
+
+          /**
+           * Persons name in kanji script.
+           */
+          kanji?: ScriptNames.Kanji;
+        }
+
+        export namespace AdditionalName {
+          export type Purpose = 'alias' | 'maiden';
+        }
+
+        export namespace AdditionalTermsOfService {
+          export interface Account {
+            /**
+             * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+             */
+            date: string;
+
+            /**
+             * The IP address from which the Account's representative accepted the terms of service.
+             */
+            ip: string;
+
+            /**
+             * The user agent of the browser from which the Account's representative accepted the terms of service.
+             */
+            user_agent?: string;
+          }
+        }
+
+        export namespace Documents {
+          export interface CompanyAuthorization {
+            /**
+             * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+             */
+            files: Array<string>;
+
+            /**
+             * The format of the document. Currently supports `files` only.
+             */
+            type: 'files';
+          }
+
+          export interface Passport {
+            /**
+             * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+             */
+            files: Array<string>;
+
+            /**
+             * The format of the document. Currently supports `files` only.
+             */
+            type: 'files';
+          }
+
+          export interface PrimaryVerification {
+            /**
+             * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens referring to each side of the document.
+             */
+            front_back: PrimaryVerification.FrontBack;
+
+            /**
+             * The format of the verification document. Currently supports `front_back` only.
+             */
+            type: 'front_back';
+          }
+
+          export interface SecondaryVerification {
+            /**
+             * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens referring to each side of the document.
+             */
+            front_back: SecondaryVerification.FrontBack;
+
+            /**
+             * The format of the verification document. Currently supports `front_back` only.
+             */
+            type: 'front_back';
+          }
+
+          export interface Visa {
+            /**
+             * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+             */
+            files: Array<string>;
+
+            /**
+             * The format of the document. Currently supports `files` only.
+             */
+            type: 'files';
+          }
+
+          export namespace PrimaryVerification {
+            export interface FrontBack {
+              /**
+               * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+               */
+              back?: string;
+
+              /**
+               * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+               */
+              front: string;
+            }
+          }
+
+          export namespace SecondaryVerification {
+            export interface FrontBack {
+              /**
+               * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+               */
+              back?: string;
+
+              /**
+               * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+               */
+              front: string;
+            }
+          }
+        }
+
+        export namespace IdNumber {
+          export type Type =
+            | 'ae_eid'
+            | 'ao_nif'
+            | 'ar_cuil'
+            | 'ar_dni'
+            | 'at_stn'
+            | 'az_tin'
+            | 'bd_brc'
+            | 'bd_etin'
+            | 'bd_nid'
+            | 'be_nrn'
+            | 'bg_ucn'
+            | 'bn_nric'
+            | 'br_cpf'
+            | 'ca_sin'
+            | 'ch_oasi'
+            | 'cl_rut'
+            | 'cn_pp'
+            | 'co_nuip'
+            | 'cr_ci'
+            | 'cr_cpf'
+            | 'cr_dimex'
+            | 'cr_nite'
+            | 'cy_tic'
+            | 'cz_rc'
+            | 'de_stn'
+            | 'dk_cpr'
+            | 'do_cie'
+            | 'do_rcn'
+            | 'ec_ci'
+            | 'ee_ik'
+            | 'es_nif'
+            | 'fi_hetu'
+            | 'fr_nir'
+            | 'gb_nino'
+            | 'gr_afm'
+            | 'gt_nit'
+            | 'hk_id'
+            | 'hr_oib'
+            | 'hu_ad'
+            | 'id_nik'
+            | 'ie_ppsn'
+            | 'is_kt'
+            | 'it_cf'
+            | 'jp_inc'
+            | 'ke_pin'
+            | 'kz_iin'
+            | 'li_peid'
+            | 'lt_ak'
+            | 'lu_nif'
+            | 'lv_pk'
+            | 'mx_rfc'
+            | 'my_nric'
+            | 'mz_nuit'
+            | 'ng_nin'
+            | 'nl_bsn'
+            | 'no_nin'
+            | 'nz_ird'
+            | 'pe_dni'
+            | 'pk_cnic'
+            | 'pk_snic'
+            | 'pl_pesel'
+            | 'pt_nif'
+            | 'ro_cnp'
+            | 'sa_tin'
+            | 'se_pin'
+            | 'sg_fin'
+            | 'sg_nric'
+            | 'sk_dic'
+            | 'th_lc'
+            | 'th_pin'
+            | 'tr_tin'
+            | 'us_itin'
+            | 'us_itin_last_4'
+            | 'us_ssn'
+            | 'us_ssn_last_4'
+            | 'uy_dni'
+            | 'za_id';
+        }
+
+        export namespace ScriptAddresses {
+          export interface Kana {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+
+            /**
+             * Town or district.
+             */
+            town?: string;
+          }
+
+          export interface Kanji {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+
+            /**
+             * Town or district.
+             */
+            town?: string;
+          }
+        }
+
+        export namespace ScriptNames {
+          export interface Kana {
+            /**
+             * The person's first or given name.
+             */
+            given_name?: string;
+
+            /**
+             * The person's last or family name.
+             */
+            surname?: string;
+          }
+
+          export interface Kanji {
+            /**
+             * The person's first or given name.
+             */
+            given_name?: string;
+
+            /**
+             * The person's last or family name.
+             */
+            surname?: string;
+          }
+        }
+      }
+    }
+  }
+}
+export namespace V2 {
+  export namespace Core {
+    export namespace Accounts {
+      export interface PersonRetrieveParams {}
+    }
+  }
+}
+export namespace V2 {
+  export namespace Core {
+    export namespace Accounts {
+      export interface PersonUpdateParams {
+        /**
+         * Additional addresses associated with the person.
+         */
+        additional_addresses?: Array<PersonUpdateParams.AdditionalAddress>;
+
+        /**
+         * Additional names (e.g. aliases) associated with the person.
+         */
+        additional_names?: Array<PersonUpdateParams.AdditionalName>;
+
+        /**
+         * Attestations of accepted terms of service agreements.
+         */
+        additional_terms_of_service?: PersonUpdateParams.AdditionalTermsOfService;
+
+        /**
+         * The primary address associated with the person.
+         */
+        address?: JapanAddressParam;
+
+        /**
+         * The person's date of birth.
+         */
+        date_of_birth?: PersonUpdateParams.DateOfBirth;
+
+        /**
+         * Documents that may be submitted to satisfy various informational requests.
+         */
+        documents?: PersonUpdateParams.Documents;
+
+        /**
+         * Email.
+         */
+        email?: string;
+
+        /**
+         * The person's first name.
+         */
+        given_name?: string;
+
+        /**
+         * The identification numbers (e.g., SSN) associated with the person.
+         */
+        id_numbers?: Array<PersonUpdateParams.IdNumber>;
+
+        /**
+         * The person's gender (International regulations require either "male" or "female").
+         */
+        legal_gender?: PersonUpdateParams.LegalGender;
+
+        /**
+         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         */
+        metadata?: MetadataParam;
+
+        /**
+         * The nationalities (countries) this person is associated with.
+         */
+        nationalities?: Array<string>;
+
+        /**
+         * The person token generated by the person token api.
+         */
+        person_token?: string;
+
+        /**
+         * The phone number for this person.
+         */
+        phone?: string;
+
+        /**
+         * The person's political exposure.
+         */
+        political_exposure?: PersonUpdateParams.PoliticalExposure;
+
+        /**
+         * The relationship that this person has with the Account's business or legal entity.
+         */
+        relationship?: PersonUpdateParams.Relationship;
+
+        /**
+         * The script addresses (e.g., non-Latin characters) associated with the person.
+         */
+        script_addresses?: PersonUpdateParams.ScriptAddresses;
+
+        /**
+         * The script names (e.g. non-Latin characters) associated with the person.
+         */
+        script_names?: PersonUpdateParams.ScriptNames;
+
+        /**
+         * The person's last name.
+         */
+        surname?: string;
+      }
+
+      export namespace PersonUpdateParams {
+        export interface AdditionalAddress {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1?: string;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * Purpose of additional address.
+           */
+          purpose: 'registered';
+
+          /**
+           * State, county, province, or region.
+           */
+          state?: string;
+
+          /**
+           * Town or district.
+           */
+          town?: string;
+        }
+
+        export interface AdditionalName {
+          /**
+           * The person's full name.
+           */
+          full_name?: string;
+
+          /**
+           * The person's first or given name.
+           */
+          given_name?: string;
+
+          /**
+           * The purpose or type of the additional name.
+           */
+          purpose: AdditionalName.Purpose;
+
+          /**
+           * The person's last or family name.
+           */
+          surname?: string;
+        }
+
+        export interface AdditionalTermsOfService {
+          /**
+           * Stripe terms of service agreement.
+           */
+          account?: AdditionalTermsOfService.Account;
+        }
+
+        export interface DateOfBirth {
+          /**
+           * The day of the birth.
+           */
+          day: number;
+
+          /**
+           * The month of birth.
+           */
+          month: number;
+
+          /**
+           * The year of birth.
+           */
+          year: number;
+        }
+
+        export interface Documents {
+          /**
+           * One or more documents that demonstrate proof that this person is authorized to represent the company.
+           */
+          company_authorization?: Documents.CompanyAuthorization;
+
+          /**
+           * One or more documents showing the person's passport page with photo and personal data.
+           */
+          passport?: Documents.Passport;
+
+          /**
+           * An identifying document showing the person's name, either a passport or local ID card.
+           */
+          primary_verification?: Documents.PrimaryVerification;
+
+          /**
+           * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
+           */
+          secondary_verification?: Documents.SecondaryVerification;
+
+          /**
+           * One or more documents showing the person's visa required for living in the country where they are residing.
+           */
+          visa?: Documents.Visa;
+        }
+
+        export interface IdNumber {
+          /**
+           * The ID number type of an individual.
+           */
+          type: IdNumber.Type;
+
+          /**
+           * The value of the ID number.
+           */
+          value: string;
+        }
+
+        export type LegalGender = 'female' | 'male';
+
+        export type PoliticalExposure = 'existing' | 'none';
+
+        export interface Relationship {
+          /**
+           * Whether the individual is an authorizer of the Account's identity.
+           */
+          authorizer?: boolean;
+
+          /**
+           * Indicates whether the person is a director of the associated legal entity.
+           */
+          director?: boolean;
+
+          /**
+           * Indicates whether the person is an executive of the associated legal entity.
+           */
+          executive?: boolean;
+
+          /**
+           * Indicates whether the person is a legal guardian of the associated legal entity.
+           */
+          legal_guardian?: boolean;
+
+          /**
+           * Indicates whether the person is an owner of the associated legal entity.
+           */
+          owner?: boolean;
+
+          /**
+           * The percentage of ownership the person has in the associated legal entity.
+           */
+          percent_ownership?: string;
+
+          /**
+           * Indicates whether the person is a representative of the associated legal entity.
+           */
+          representative?: boolean;
+
+          /**
+           * The title or position the person holds in the associated legal entity.
+           */
+          title?: string;
+        }
+
+        export interface ScriptAddresses {
+          /**
+           * Kana Address.
+           */
+          kana?: JapanAddressParam;
+
+          /**
+           * Kanji Address.
+           */
+          kanji?: JapanAddressParam;
+        }
+
+        export interface ScriptNames {
+          /**
+           * Persons name in kana script.
+           */
+          kana?: ScriptNames.Kana;
+
+          /**
+           * Persons name in kanji script.
+           */
+          kanji?: ScriptNames.Kanji;
+        }
+
+        export namespace AdditionalName {
+          export type Purpose = 'alias' | 'maiden';
+        }
+
+        export namespace AdditionalTermsOfService {
+          export interface Account {
+            /**
+             * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+             */
+            date?: string;
+
+            /**
+             * The IP address from which the Account's representative accepted the terms of service.
+             */
+            ip?: string;
+
+            /**
+             * The user agent of the browser from which the Account's representative accepted the terms of service.
+             */
+            user_agent?: string;
+          }
+        }
+
+        export namespace Documents {
+          export interface CompanyAuthorization {
+            /**
+             * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+             */
+            files: Array<string>;
+
+            /**
+             * The format of the document. Currently supports `files` only.
+             */
+            type: 'files';
+          }
+
+          export interface Passport {
+            /**
+             * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+             */
+            files: Array<string>;
+
+            /**
+             * The format of the document. Currently supports `files` only.
+             */
+            type: 'files';
+          }
+
+          export interface PrimaryVerification {
+            /**
+             * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens referring to each side of the document.
+             */
+            front_back: PrimaryVerification.FrontBack;
+
+            /**
+             * The format of the verification document. Currently supports `front_back` only.
+             */
+            type: 'front_back';
+          }
+
+          export interface SecondaryVerification {
+            /**
+             * The [file upload](https://docs.stripe.com/api/persons/update#create_file) tokens referring to each side of the document.
+             */
+            front_back: SecondaryVerification.FrontBack;
+
+            /**
+             * The format of the verification document. Currently supports `front_back` only.
+             */
+            type: 'front_back';
+          }
+
+          export interface Visa {
+            /**
+             * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+             */
+            files: Array<string>;
+
+            /**
+             * The format of the document. Currently supports `files` only.
+             */
+            type: 'files';
+          }
+
+          export namespace PrimaryVerification {
+            export interface FrontBack {
+              /**
+               * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+               */
+              back?: string;
+
+              /**
+               * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+               */
+              front?: string;
+            }
+          }
+
+          export namespace SecondaryVerification {
+            export interface FrontBack {
+              /**
+               * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+               */
+              back?: string;
+
+              /**
+               * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+               */
+              front?: string;
+            }
+          }
+        }
+
+        export namespace IdNumber {
+          export type Type =
+            | 'ae_eid'
+            | 'ao_nif'
+            | 'ar_cuil'
+            | 'ar_dni'
+            | 'at_stn'
+            | 'az_tin'
+            | 'bd_brc'
+            | 'bd_etin'
+            | 'bd_nid'
+            | 'be_nrn'
+            | 'bg_ucn'
+            | 'bn_nric'
+            | 'br_cpf'
+            | 'ca_sin'
+            | 'ch_oasi'
+            | 'cl_rut'
+            | 'cn_pp'
+            | 'co_nuip'
+            | 'cr_ci'
+            | 'cr_cpf'
+            | 'cr_dimex'
+            | 'cr_nite'
+            | 'cy_tic'
+            | 'cz_rc'
+            | 'de_stn'
+            | 'dk_cpr'
+            | 'do_cie'
+            | 'do_rcn'
+            | 'ec_ci'
+            | 'ee_ik'
+            | 'es_nif'
+            | 'fi_hetu'
+            | 'fr_nir'
+            | 'gb_nino'
+            | 'gr_afm'
+            | 'gt_nit'
+            | 'hk_id'
+            | 'hr_oib'
+            | 'hu_ad'
+            | 'id_nik'
+            | 'ie_ppsn'
+            | 'is_kt'
+            | 'it_cf'
+            | 'jp_inc'
+            | 'ke_pin'
+            | 'kz_iin'
+            | 'li_peid'
+            | 'lt_ak'
+            | 'lu_nif'
+            | 'lv_pk'
+            | 'mx_rfc'
+            | 'my_nric'
+            | 'mz_nuit'
+            | 'ng_nin'
+            | 'nl_bsn'
+            | 'no_nin'
+            | 'nz_ird'
+            | 'pe_dni'
+            | 'pk_cnic'
+            | 'pk_snic'
+            | 'pl_pesel'
+            | 'pt_nif'
+            | 'ro_cnp'
+            | 'sa_tin'
+            | 'se_pin'
+            | 'sg_fin'
+            | 'sg_nric'
+            | 'sk_dic'
+            | 'th_lc'
+            | 'th_pin'
+            | 'tr_tin'
+            | 'us_itin'
+            | 'us_itin_last_4'
+            | 'us_ssn'
+            | 'us_ssn_last_4'
+            | 'uy_dni'
+            | 'za_id';
+        }
+
+        export namespace ScriptNames {
+          export interface Kana {
+            /**
+             * The person's first or given name.
+             */
+            given_name?: string;
+
+            /**
+             * The person's last or family name.
+             */
+            surname?: string;
+          }
+
+          export interface Kanji {
+            /**
+             * The person's first or given name.
+             */
+            given_name?: string;
+
+            /**
+             * The person's last or family name.
+             */
+            surname?: string;
+          }
+        }
+      }
+    }
+  }
+}
+export namespace V2 {
+  export namespace Core {
+    export namespace Accounts {
+      export interface PersonListParams {
+        /**
+         * The upper limit on the number of accounts returned by the List Account request.
+         */
+        limit?: number;
+      }
+    }
+  }
+}
+export namespace V2 {
+  export namespace Core {
+    export namespace Accounts {
+      export interface PersonDeleteParams {}
+    }
+  }
+}

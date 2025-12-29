@@ -1,10 +1,9 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { AccountOwner } from './AccountOwners.js';
 import { AccountOwnership } from './AccountOwnerships.js';
 import { Customer } from './../Customers.js';
 import { PaginationParams } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class AccountResource extends StripeResource {
     /**
      * Returns a list of Financial Connections Account objects.
@@ -38,9 +37,7 @@ export declare class AccountResource extends StripeResource {
      */
     listOwners(id: string, params: FinancialConnections.AccountListOwnersParams, options?: RequestOptions): ApiListPromise<AccountOwner>;
 }
-export /**
- * A Financial Connections Account represents an account that exists outside of Stripe, to which you have been granted some degree of access.
- */ interface Account {
+export interface Account {
     /**
      * Unique identifier for the object.
      */
@@ -53,6 +50,10 @@ export /**
      * The account holder that this account belongs to.
      */
     account_holder: FinancialConnections.Account.AccountHolder | null;
+    /**
+     * Details about the account numbers.
+     */
+    account_numbers: Array<FinancialConnections.Account.AccountNumber> | null;
     /**
      * The most recent information about the account's balance.
      */
@@ -123,7 +124,7 @@ export /**
      */
     subscriptions: Array<'transactions'> | null;
     /**
-     * The [PaymentMethod type](https://stripe.com/docs/api/payment_methods/object#payment_method_object-type)(s) that can be created from this account.
+     * The [PaymentMethod type](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type)(s) that can be created from this account.
      */
     supported_payment_method_types: Array<FinancialConnections.Account.SupportedPaymentMethodType>;
     /**
@@ -135,17 +136,36 @@ export declare namespace FinancialConnections {
     namespace Account {
         interface AccountHolder {
             /**
-             * The ID of the Stripe account this account belongs to. Should only be present if `account_holder.type` is `account`.
+             * The ID of the Stripe account that this account belongs to. Only available when `account_holder.type` is `account`.
              */
             account?: string | Account;
             /**
-             * ID of the Stripe customer this account belongs to. Present if and only if `account_holder.type` is `customer`.
+             * The ID for an Account representing a customer that this account belongs to. Only available when `account_holder.type` is `customer`.
              */
             customer?: string | Customer;
+            customer_account?: string;
             /**
              * Type of account holder that this account belongs to.
              */
             type: AccountHolder.Type;
+        }
+        interface AccountNumber {
+            /**
+             * When the account number is expected to expire, if applicable.
+             */
+            expected_expiry_date: number | null;
+            /**
+             * The type of account number associated with the account.
+             */
+            identifier_type: AccountNumber.IdentifierType;
+            /**
+             * Whether the account number is currently active and usable for transactions.
+             */
+            status: AccountNumber.Status;
+            /**
+             * The payment networks that the account number can be used for.
+             */
+            supported_networks: Array<'ach'>;
         }
         interface Balance {
             /**
@@ -223,6 +243,10 @@ export declare namespace FinancialConnections {
         namespace AccountHolder {
             type Type = 'account' | 'customer';
         }
+        namespace AccountNumber {
+            type IdentifierType = 'account_number' | 'tokenized_account_number';
+            type Status = 'deactivated' | 'transactable';
+        }
         namespace Balance {
             interface Cash {
                 /**
@@ -287,13 +311,17 @@ export declare namespace FinancialConnections {
     namespace AccountListParams {
         interface AccountHolder {
             /**
-             * The ID of the Stripe account whose accounts will be retrieved.
+             * The ID of the Stripe account whose accounts you will retrieve.
              */
             account?: string;
             /**
-             * The ID of the Stripe customer whose accounts will be retrieved.
+             * The ID of the Stripe customer whose accounts you will retrieve.
              */
             customer?: string;
+            /**
+             * The ID of the Account representing a customer whose accounts you will retrieve.
+             */
+            customer_account?: string;
         }
     }
 }

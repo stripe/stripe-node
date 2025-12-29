@@ -1,9 +1,12 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../stripe.core.js';
-import {EarlyFraudWarningResource} from './EarlyFraudWarnings.js';
-import {ValueListResource} from './ValueLists.js';
-import {ValueListItemResource} from './ValueListItems.js';
+import {
+  EarlyFraudWarning,
+  EarlyFraudWarningResource,
+} from './EarlyFraudWarnings.js';
+import {ValueList, ValueListResource} from './ValueLists.js';
+import {ValueListItem, ValueListItemResource} from './ValueListItems.js';
 
 export {EarlyFraudWarning} from './EarlyFraudWarnings.js';
 export {ValueList} from './ValueLists.js';
@@ -19,4 +22,10 @@ export class Radar {
     this.valueLists = new ValueListResource(stripe);
     this.valueListItems = new ValueListItemResource(stripe);
   }
+}
+
+export declare namespace Radar {
+  export {EarlyFraudWarning};
+  export {ValueList};
+  export {ValueListItem};
 }

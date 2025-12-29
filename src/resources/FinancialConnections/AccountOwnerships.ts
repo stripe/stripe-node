@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {AccountOwner} from './AccountOwners.js';
-import {ApiList} from '../../lib.js';
+import {RequestOptions, ApiList} from '../../lib.js';
 export interface AccountOwnership {
   /**
    * Unique identifier for the object.

@@ -3,29 +3,30 @@ import {Agent} from 'http';
 import {ApiVersion} from './apiVersion.js';
 import {HttpClient} from './net/HttpClient.js';
 import {StripeContext} from './StripeContext.js';
+import {Stripe} from '../src/stripe.core.js';
 
-// type StripeResourceClass = typeof StripeResource;
+type StripeResourceClass = typeof StripeResource;
 
-// interface StripeResourceExtension<T extends object>
-//   extends StripeResourceClass {
-//   new (stripe: Stripe): StripeResource & T;
-// }
+interface StripeResourceExtension<T extends Record<string, unknown>>
+  extends StripeResourceClass {
+  new (stripe: Stripe): StripeResource & T;
+}
 
-// export class StripeResource {
-//   static extend<
-//     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//     T extends {[prop: string]: any}
-//   >(spec: T): StripeResourceExtension<T>;
-//   static method<ResponseObject = object>(spec: {
-//     method: string;
-//     path?: string;
-//     fullPath?: string;
-//     // Please note, methodType === 'search' is beta functionality and is subject to
-//     // change/removal at any time.
-//     methodType?: 'list' | 'search';
-//   }): (...args: any[]) => Response<ResponseObject>; // eslint-disable-line @typescript-eslint/no-explicit-any
-//   static MAX_BUFFERED_REQUEST_METRICS: number;
-// }
+export declare class StripeResource {
+  static extend<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    T extends {[prop: string]: any}
+  >(spec: T): StripeResourceExtension<T>;
+  static method<ResponseObject = Record<string, unknown>>(spec: {
+    method: string;
+    path?: string;
+    fullPath?: string;
+    // Please note, methodType === 'search' is beta functionality and is subject to
+    // change/removal at any time.
+    methodType?: 'list' | 'search';
+  }): (...args: any[]) => Response<ResponseObject>; // eslint-disable-line @typescript-eslint/no-explicit-any
+  static MAX_BUFFERED_REQUEST_METRICS: number;
+}
 export type LatestApiVersion = typeof ApiVersion;
 // export const API_VERSION: string;
 export type HttpAgent = Agent;

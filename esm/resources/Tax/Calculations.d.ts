@@ -1,8 +1,7 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { CalculationLineItem } from './CalculationLineItems.js';
 import { MetadataParam, Address, Emptyable, PaginationParams } from '../../shared.js';
-import { Response, ApiListPromise, ApiList } from '../../lib.js';
+import { RequestOptions, Response, ApiListPromise, ApiList } from '../../lib.js';
 export declare class CalculationResource extends StripeResource {
     /**
      * Retrieves a Tax Calculation object, if the calculation hasn't expired.
@@ -19,11 +18,7 @@ export declare class CalculationResource extends StripeResource {
     listLineItems(id: string, params?: Tax.CalculationListLineItemsParams, options?: RequestOptions): ApiListPromise<CalculationLineItem>;
     listLineItems(id: string, options?: RequestOptions): ApiListPromise<CalculationLineItem>;
 }
-export /**
- * A Tax Calculation allows you to calculate the tax to collect from your customer.
- *
- * Related guide: [Calculate tax in your custom payment flow](https://stripe.com/docs/tax/custom)
- */ interface Calculation {
+export interface Calculation {
     /**
      * Unique identifier for the calculation.
      */
@@ -33,7 +28,7 @@ export /**
      */
     object: 'tax.calculation';
     /**
-     * Total amount after taxes in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+     * Total amount after taxes in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
      */
     amount_total: number;
     /**
@@ -41,7 +36,7 @@ export /**
      */
     currency: string;
     /**
-     * The ID of an existing [Customer](https://stripe.com/docs/api/customers/object) used for the resource.
+     * The ID of an existing [Customer](https://docs.stripe.com/api/customers/object) used for the resource.
      */
     customer: string | null;
     customer_details: Tax.Calculation.CustomerDetails;
@@ -111,15 +106,15 @@ export declare namespace Tax {
         }
         interface ShippingCost {
             /**
-             * The shipping amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes were calculated on top of this amount.
+             * The shipping amount in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes were calculated on top of this amount.
              */
             amount: number;
             /**
-             * The amount of tax calculated for shipping, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The amount of tax calculated for shipping, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             amount_tax: number;
             /**
-             * The ID of an existing [ShippingRate](https://stripe.com/docs/api/shipping_rates/object).
+             * The ID of an existing [ShippingRate](https://docs.stripe.com/api/shipping_rates/object).
              */
             shipping_rate?: string;
             /**
@@ -131,13 +126,13 @@ export declare namespace Tax {
              */
             tax_breakdown?: Array<ShippingCost.TaxBreakdown>;
             /**
-             * The [tax code](https://stripe.com/docs/tax/tax-categories) ID used for shipping.
+             * The [tax code](https://docs.stripe.com/tax/tax-categories) ID used for shipping.
              */
             tax_code: string;
         }
         interface TaxBreakdown {
             /**
-             * The amount of tax, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The amount of tax, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             amount: number;
             /**
@@ -150,7 +145,7 @@ export declare namespace Tax {
              */
             taxability_reason: TaxBreakdown.TaxabilityReason;
             /**
-             * The amount on which tax is calculated, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The amount on which tax is calculated, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             taxable_amount: number;
         }
@@ -175,7 +170,7 @@ export declare namespace Tax {
             type TaxBehavior = 'exclusive' | 'inclusive';
             interface TaxBreakdown {
                 /**
-                 * The amount of tax, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+                 * The amount of tax, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
                  */
                 amount: number;
                 jurisdiction: TaxBreakdown.Jurisdiction;
@@ -192,7 +187,7 @@ export declare namespace Tax {
                  */
                 taxability_reason: TaxBreakdown.TaxabilityReason;
                 /**
-                 * The amount on which tax is calculated, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+                 * The amount on which tax is calculated, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
                  */
                 taxable_amount: number;
             }
@@ -258,7 +253,7 @@ export declare namespace Tax {
                  */
                 rate_type: TaxRateDetails.RateType | null;
                 /**
-                 * State, county, province, or region.
+                 * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
                  */
                 state: string | null;
                 /**
@@ -322,12 +317,12 @@ export declare namespace Tax {
     namespace CalculationCreateParams {
         interface LineItem {
             /**
-             * A positive integer representing the line item's total price in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * A positive integer representing the line item's total price in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              * If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes are calculated on top of this amount.
              */
             amount: number;
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
              */
             metadata?: MetadataParam;
             /**
@@ -339,7 +334,7 @@ export declare namespace Tax {
              */
             quantity?: number;
             /**
-             * A custom identifier for this line item, which must be unique across the line items in the calculation. The reference helps identify each line item in exported [tax reports](https://stripe.com/docs/tax/reports).
+             * A custom identifier for this line item, which must be unique across the line items in the calculation. The reference helps identify each line item in exported [tax reports](https://docs.stripe.com/tax/reports).
              */
             reference?: string;
             /**
@@ -347,7 +342,7 @@ export declare namespace Tax {
              */
             tax_behavior?: LineItem.TaxBehavior;
             /**
-             * A [tax code](https://stripe.com/docs/tax/tax-categories) ID to use for this line item. If not provided, we will use the tax code from the provided `product` param. If neither `tax_code` nor `product` is provided, we will use the default tax code from your Tax Settings.
+             * A [tax code](https://docs.stripe.com/tax/tax-categories) ID to use for this line item. If not provided, we will use the tax code from the provided `product` param. If neither `tax_code` nor `product` is provided, we will use the default tax code from your Tax Settings.
              */
             tax_code?: string;
         }
@@ -381,11 +376,11 @@ export declare namespace Tax {
         }
         interface ShippingCost {
             /**
-             * A positive integer in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) representing the shipping charge. If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes are calculated on top of this amount.
+             * A positive integer in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) representing the shipping charge. If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes are calculated on top of this amount.
              */
             amount?: number;
             /**
-             * If provided, the [shipping rate](https://stripe.com/docs/api/shipping_rates/object)'s `amount`, `tax_code` and `tax_behavior` are used. If you provide a shipping rate, then you cannot pass the `amount`, `tax_code`, or `tax_behavior` parameters.
+             * If provided, the [shipping rate](https://docs.stripe.com/api/shipping_rates/object)'s `amount`, `tax_code` and `tax_behavior` are used. If you provide a shipping rate, then you cannot pass the `amount`, `tax_code`, or `tax_behavior` parameters.
              */
             shipping_rate?: string;
             /**
@@ -393,7 +388,7 @@ export declare namespace Tax {
              */
             tax_behavior?: ShippingCost.TaxBehavior;
             /**
-             * The [tax code](https://stripe.com/docs/tax/tax-categories) used to calculate tax on shipping. If not provided, the default shipping tax code from your [Tax Settings](https://dashboard.stripe.com/settings/tax) is used.
+             * The [tax code](https://docs.stripe.com/tax/tax-categories) used to calculate tax on shipping. If not provided, the default shipping tax code from your [Tax Settings](https://dashboard.stripe.com/settings/tax) is used.
              */
             tax_code?: string;
         }

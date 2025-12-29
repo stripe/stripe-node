@@ -1,14 +1,13 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../lib.js';
 import {
   Emptyable,
   MetadataParam,
   PaginationParams,
   Metadata,
 } from '../shared.js';
-import {Response, ApiListPromise} from '../lib.js';
+import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export class WebhookEndpointResource extends StripeResource {
   /**
@@ -141,7 +140,7 @@ export interface WebhookEndpoint {
   livemode: boolean;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata;
 
@@ -208,7 +207,7 @@ export interface WebhookEndpointCreateParams {
   expand?: Array<string>;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 }
@@ -286,6 +285,7 @@ export namespace WebhookEndpointCreateParams {
     | 'customer_cash_balance_transaction.created'
     | 'entitlements.active_entitlement_summary.updated'
     | 'file.created'
+    | 'financial_connections.account.account_numbers_updated'
     | 'financial_connections.account.created'
     | 'financial_connections.account.deactivated'
     | 'financial_connections.account.disconnected'
@@ -293,6 +293,7 @@ export namespace WebhookEndpointCreateParams {
     | 'financial_connections.account.refreshed_balance'
     | 'financial_connections.account.refreshed_ownership'
     | 'financial_connections.account.refreshed_transactions'
+    | 'financial_connections.account.upcoming_account_number_expiry'
     | 'identity.verification_session.canceled'
     | 'identity.verification_session.created'
     | 'identity.verification_session.processing'
@@ -584,7 +585,10 @@ export namespace WebhookEndpointCreateParams {
     | '2025-07-30.basil'
     | '2025-08-27.basil'
     | '2025-09-30.clover'
-    | '2025-10-29.clover';
+    | '2025-10-29.clover'
+    | '2025-11-17.clover'
+    | '2025-12-15.clover'
+    | '2026-01-28.clover';
 }
 export interface WebhookEndpointRetrieveParams {
   /**
@@ -614,7 +618,7 @@ export interface WebhookEndpointUpdateParams {
   expand?: Array<string>;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 
@@ -697,6 +701,7 @@ export namespace WebhookEndpointUpdateParams {
     | 'customer_cash_balance_transaction.created'
     | 'entitlements.active_entitlement_summary.updated'
     | 'file.created'
+    | 'financial_connections.account.account_numbers_updated'
     | 'financial_connections.account.created'
     | 'financial_connections.account.deactivated'
     | 'financial_connections.account.disconnected'
@@ -704,6 +709,7 @@ export namespace WebhookEndpointUpdateParams {
     | 'financial_connections.account.refreshed_balance'
     | 'financial_connections.account.refreshed_ownership'
     | 'financial_connections.account.refreshed_transactions'
+    | 'financial_connections.account.upcoming_account_number_expiry'
     | 'identity.verification_session.canceled'
     | 'identity.verification_session.created'
     | 'identity.verification_session.processing'

@@ -281,16 +281,6 @@ const instanceofCheck2 = {} instanceof Stripe.errors.StripeAPIError;
 const instanceofCheck5 = {} instanceof stripe.errors.StripeError;
 const instanceofCheck6 = {} instanceof stripe.errors.StripeAPIError;
 
-Stripe.errors.generate({
-  type: 'card_error',
-});
-stripe.errors.generate({
-  type: 'card_error',
-});
-Stripe.errors.StripeError.generate({
-  type: 'card_error',
-});
-
 stripe.accounts.retrieve('123', {
   host: 'my_host',
 });

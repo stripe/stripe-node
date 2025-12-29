@@ -1,9 +1,8 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { Customer, DeletedCustomer } from './../Customers.js';
 import * as TestHelpers from './../TestHelpers/index.js';
 import { MetadataParam, Emptyable, PaginationParams, Metadata } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class CreditGrantResource extends StripeResource {
     /**
      * Retrieve a list of credit grants.
@@ -34,11 +33,7 @@ export declare class CreditGrantResource extends StripeResource {
     voidGrant(id: string, params?: Billing.CreditGrantVoidGrantParams, options?: RequestOptions): Promise<Response<CreditGrant>>;
     voidGrant(id: string, options?: RequestOptions): Promise<Response<CreditGrant>>;
 }
-export /**
- * A credit grant is an API resource that documents the allocation of some billing credits to a customer.
- *
- * Related guide: [Billing credits](https://docs.stripe.com/billing/subscriptions/usage-based/billing-credits)
- */ interface CreditGrant {
+export interface CreditGrant {
     /**
      * Unique identifier for the object.
      */
@@ -62,6 +57,10 @@ export /**
      */
     customer: string | Customer | DeletedCustomer;
     /**
+     * ID of the account representing the customer receiving the billing credits
+     */
+    customer_account: string | null;
+    /**
      * The time when the billing credits become effective-when they're eligible for use.
      */
     effective_at: number | null;
@@ -74,7 +73,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata;
     /**
@@ -159,13 +158,17 @@ export declare namespace Billing {
          */
         applicability_config: CreditGrantCreateParams.ApplicabilityConfig;
         /**
-         * ID of the customer to receive the billing credits.
-         */
-        customer: string;
-        /**
          * The category of this credit grant. It defaults to `paid` if not specified.
          */
         category?: CreditGrantCreateParams.Category;
+        /**
+         * ID of the customer receiving the billing credits.
+         */
+        customer?: string;
+        /**
+         * ID of the account representing the customer receiving the billing credits.
+         */
+        customer_account?: string;
         /**
          * The time when the billing credits become effective-when they're eligible for use. It defaults to the current timestamp if not specified.
          */
@@ -273,6 +276,10 @@ export declare namespace Billing {
          * Only return credit grants for this customer.
          */
         customer?: string;
+        /**
+         * Only return credit grants for this account representing the customer.
+         */
+        customer_account?: string;
         /**
          * Specifies which fields in the response should be expanded.
          */

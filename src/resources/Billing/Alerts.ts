@@ -1,11 +1,10 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../lib.js';
 import {Meter} from './Meters.js';
 import {Customer} from './../Customers.js';
 import {PaginationParams} from '../../shared.js';
-import {ApiListPromise, Response} from '../../lib.js';
+import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export class AlertResource extends StripeResource {
   /**
@@ -134,7 +133,7 @@ export interface Alert {
   title: string;
 
   /**
-   * Encapsulates configuration of the alert to monitor usage on a specific [Billing Meter](https://stripe.com/docs/api/billing/meter).
+   * Encapsulates configuration of the alert to monitor usage on a specific [Billing Meter](https://docs.stripe.com/api/billing/meter).
    */
   usage_threshold: Billing.Alert.UsageThreshold | null;
 }

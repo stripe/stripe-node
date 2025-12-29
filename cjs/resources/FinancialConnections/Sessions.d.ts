@@ -1,8 +1,7 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { Account } from './Accounts.js';
 import { Customer } from './../Customers.js';
-import { Response, ApiList } from '../../lib.js';
+import { RequestOptions, Response, ApiList } from '../../lib.js';
 export declare class SessionResource extends StripeResource {
     /**
      * Retrieves the details of a Financial Connections Session
@@ -14,9 +13,7 @@ export declare class SessionResource extends StripeResource {
      */
     create(params: FinancialConnections.SessionCreateParams, options?: RequestOptions): Promise<Response<Session>>;
 }
-export /**
- * A Financial Connections Session is the secure way to programmatically launch the client-side Stripe.js modal that lets your users link their accounts.
- */ interface Session {
+export interface Session {
     /**
      * Unique identifier for the object.
      */
@@ -36,7 +33,7 @@ export /**
     /**
      * A value that will be passed to the client to launch the authentication flow.
      */
-    client_secret: string;
+    client_secret: string | null;
     filters?: FinancialConnections.Session.Filters;
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -59,13 +56,14 @@ export declare namespace FinancialConnections {
     namespace Session {
         interface AccountHolder {
             /**
-             * The ID of the Stripe account this account belongs to. Should only be present if `account_holder.type` is `account`.
+             * The ID of the Stripe account that this account belongs to. Only available when `account_holder.type` is `account`.
              */
             account?: string | Account;
             /**
-             * ID of the Stripe customer this account belongs to. Present if and only if `account_holder.type` is `customer`.
+             * The ID for an Account representing a customer that this account belongs to. Only available when `account_holder.type` is `customer`.
              */
             customer?: string | Customer;
+            customer_account?: string;
             /**
              * Type of account holder that this account belongs to.
              */
@@ -123,13 +121,17 @@ export declare namespace FinancialConnections {
     namespace SessionCreateParams {
         interface AccountHolder {
             /**
-             * The ID of the Stripe account whose accounts will be retrieved. Should only be present if `type` is `account`.
+             * The ID of the Stripe account whose accounts you will retrieve. Only available when `type` is `account`.
              */
             account?: string;
             /**
-             * The ID of the Stripe customer whose accounts will be retrieved. Should only be present if `type` is `customer`.
+             * The ID of the Stripe customer whose accounts you will retrieve. Only available when `type` is `customer`.
              */
             customer?: string;
+            /**
+             * The ID of Account representing a customer whose accounts you will retrieve. Only available when `type` is `customer`.
+             */
+            customer_account?: string;
             /**
              * Type of account holder to collect accounts for.
              */

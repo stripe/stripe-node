@@ -1,4 +1,4 @@
-import { StripeClient } from '../../../stripe.core.js';
+import { Stripe } from '../../../stripe.core.js';
 import { AuthorizationResource } from './Authorizations.js';
 import { CardResource } from './Cards.js';
 import { PersonalizationDesignResource } from './PersonalizationDesigns.js';
@@ -9,5 +9,6 @@ export declare class Issuing {
     cards: CardResource;
     personalizationDesigns: PersonalizationDesignResource;
     transactions: TransactionResource;
-    constructor(stripe: StripeClient);
+    constructor(stripe: Stripe);
 }
+export declare namespace Issuing { }

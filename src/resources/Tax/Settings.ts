@@ -1,9 +1,8 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../lib.js';
 import {AddressParam, Address} from '../../shared.js';
-import {Response} from '../../lib.js';
+import {RequestOptions, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export class SettingResource extends StripeResource {
   /**
@@ -146,7 +145,7 @@ export namespace Tax {
       tax_behavior?: Defaults.TaxBehavior;
 
       /**
-       * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+       * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
        */
       tax_code?: string;
     }

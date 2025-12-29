@@ -1,7 +1,6 @@
 import { StripeResource } from '../../../StripeResource.js';
-import { RequestOptions } from '../../../Types.js';
 import { PersonalizationDesign } from './../../Issuing/PersonalizationDesigns.js';
-import { Response } from '../../../lib.js';
+import { RequestOptions, Response } from '../../../lib.js';
 export declare class PersonalizationDesignResource extends StripeResource {
     /**
      * Updates the status of the specified testmode personalization design object to active.

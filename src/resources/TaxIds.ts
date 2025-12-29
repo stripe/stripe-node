@@ -1,12 +1,11 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../lib.js';
 import {Customer} from './Customers.js';
 import {Account} from './Accounts.js';
 import {Application} from './Applications.js';
 import {PaginationParams} from '../shared.js';
-import {Response, ApiListPromise} from '../lib.js';
+import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export class TaxIdResource extends StripeResource {
   /**
@@ -98,6 +97,11 @@ export interface TaxId {
   customer: string | Customer | null;
 
   /**
+   * ID of the Account representing the customer.
+   */
+  customer_account: string | null;
+
+  /**
    * Always true for a deleted object
    */
   deleted?: void;
@@ -159,6 +163,11 @@ export namespace TaxId {
      * The customer being referenced when `type` is `customer`.
      */
     customer?: string | Customer;
+
+    /**
+     * The Account representing the customer being referenced when `type` is `customer`.
+     */
+    customer_account: string | null;
 
     /**
      * Type of owner referenced.
@@ -440,7 +449,7 @@ export namespace TaxIdCreateParams {
 
   export interface Owner {
     /**
-     * Account the tax ID belongs to. Required when `type=account`
+     * Connected Account the tax ID belongs to. Required when `type=account`
      */
     account?: string;
 
@@ -448,6 +457,11 @@ export namespace TaxIdCreateParams {
      * Customer the tax ID belongs to. Required when `type=customer`
      */
     customer?: string;
+
+    /**
+     * ID of the Account representing the customer that the tax ID belongs to. Can be used in place of `customer` when `type=customer`
+     */
+    customer_account?: string;
 
     /**
      * Type of owner referenced.
@@ -479,7 +493,7 @@ export interface TaxIdListParams extends PaginationParams {
 export namespace TaxIdListParams {
   export interface Owner {
     /**
-     * Account the tax ID belongs to. Required when `type=account`
+     * Connected Account the tax ID belongs to. Required when `type=account`
      */
     account?: string;
 
@@ -487,6 +501,11 @@ export namespace TaxIdListParams {
      * Customer the tax ID belongs to. Required when `type=customer`
      */
     customer?: string;
+
+    /**
+     * ID of the Account representing the customer that the tax ID belongs to. Can be used in place of `customer` when `type=customer`
+     */
+    customer_account?: string;
 
     /**
      * Type of owner referenced.

@@ -1,12 +1,12 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { Discount, DeletedDiscount } from './Discounts.js';
 import { Customer, DeletedCustomer } from './Customers.js';
 import { Invoice } from './Invoices.js';
 import { TaxRate } from './TaxRates.js';
+import { Price } from './Prices.js';
 import * as TestHelpers from './TestHelpers/index.js';
 import { Emptyable, MetadataParam, PaginationParams, RangeQueryParam, Metadata } from '../shared.js';
-import { Response, ApiListPromise } from '../lib.js';
+import { RequestOptions, Response, ApiListPromise } from '../lib.js';
 export declare class InvoiceItemResource extends StripeResource {
     /**
      * Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they're not attached to invoices, or if it's attached to a draft invoice.
@@ -30,18 +30,10 @@ export declare class InvoiceItemResource extends StripeResource {
     /**
      * Creates an item to be added to a draft invoice (up to 250 items per invoice). If no invoice is specified, the item will be on the next invoice created for the customer specified.
      */
-    create(params: InvoiceItemCreateParams, options?: RequestOptions): Promise<Response<InvoiceItem>>;
+    create(params?: InvoiceItemCreateParams, options?: RequestOptions): Promise<Response<InvoiceItem>>;
+    create(options?: RequestOptions): Promise<Response<InvoiceItem>>;
 }
-export /**
- * Invoice Items represent the component lines of an [invoice](https://stripe.com/docs/api/invoices). When you create an invoice item with an `invoice` field, it is attached to the specified invoice and included as [an invoice line item](https://stripe.com/docs/api/invoices/line_item) within [invoice.lines](https://stripe.com/docs/api/invoices/object#invoice_object-lines).
- *
- * Invoice Items can be created before you are ready to actually send the invoice. This can be particularly useful when combined
- * with a [subscription](https://stripe.com/docs/api/subscriptions). Sometimes you want to add a charge or credit to a customer, but actually charge
- * or credit the customer's card only at the end of a regular billing cycle. This is useful for combining several charges
- * (to minimize per-transaction fees), or for having Stripe tabulate your usage-based billing totals.
- *
- * Related guides: [Integrate with the Invoicing API](https://stripe.com/docs/invoicing/integration), [Subscription Invoices](https://stripe.com/docs/billing/invoices/subscription#adding-upcoming-invoice-items).
- */ interface InvoiceItem {
+export interface InvoiceItem {
     /**
      * Unique identifier for the object.
      */
@@ -59,9 +51,13 @@ export /**
      */
     currency: string;
     /**
-     * The ID of the customer who will be billed when this invoice item is billed.
+     * The ID of the customer to bill for this invoice item.
      */
     customer: string | Customer | DeletedCustomer;
+    /**
+     * The ID of the account to bill for this invoice item.
+     */
+    customer_account: string | null;
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
@@ -91,7 +87,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata | null;
     /**
@@ -125,9 +121,7 @@ export /**
      */
     test_clock: string | TestHelpers.TestClock | null;
 }
-export /**
- * The DeletedInvoiceItem object.
- */ interface DeletedInvoiceItem {
+export interface DeletedInvoiceItem {
     /**
      * Unique identifier for the object.
      */
@@ -196,7 +190,7 @@ export declare namespace InvoiceItem {
             /**
              * The ID of the price this item is associated with.
              */
-            price: string;
+            price: string | Price;
             /**
              * The ID of the product this item is associated with.
              */
@@ -218,10 +212,6 @@ export declare namespace InvoiceItem {
 }
 export interface InvoiceItemCreateParams {
     /**
-     * The ID of the customer who will be billed when this invoice item is billed.
-     */
-    customer: string;
-    /**
      * The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. Passing in a negative `amount` will reduce the `amount_due` on the invoice.
      */
     amount?: number;
@@ -229,6 +219,14 @@ export interface InvoiceItemCreateParams {
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
     currency?: string;
+    /**
+     * The ID of the customer to bill for this invoice item.
+     */
+    customer?: string;
+    /**
+     * The ID of the account representing the customer to bill for this invoice item.
+     */
+    customer_account?: string;
     /**
      * An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.
      */
@@ -250,15 +248,15 @@ export interface InvoiceItemCreateParams {
      */
     invoice?: string;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
     /**
-     * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+     * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://docs.stripe.com/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
      */
     period?: InvoiceItemCreateParams.Period;
     /**
-     * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+     * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
      */
     price_data?: InvoiceItemCreateParams.PriceData;
     /**
@@ -274,11 +272,11 @@ export interface InvoiceItemCreateParams {
      */
     subscription?: string;
     /**
-     * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+     * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
      */
     tax_behavior?: InvoiceItemCreateParams.TaxBehavior;
     /**
-     * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+     * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
      */
     tax_code?: Emptyable<string>;
     /**
@@ -325,7 +323,7 @@ export declare namespace InvoiceItemCreateParams {
          */
         product: string;
         /**
-         * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
          */
         tax_behavior?: PriceData.TaxBehavior;
         /**
@@ -376,15 +374,15 @@ export interface InvoiceItemUpdateParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
     /**
-     * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+     * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://docs.stripe.com/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
      */
     period?: InvoiceItemUpdateParams.Period;
     /**
-     * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+     * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
      */
     price_data?: InvoiceItemUpdateParams.PriceData;
     /**
@@ -396,11 +394,11 @@ export interface InvoiceItemUpdateParams {
      */
     quantity?: number;
     /**
-     * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+     * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
      */
     tax_behavior?: InvoiceItemUpdateParams.TaxBehavior;
     /**
-     * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+     * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
      */
     tax_code?: Emptyable<string>;
     /**
@@ -447,7 +445,7 @@ export declare namespace InvoiceItemUpdateParams {
          */
         product: string;
         /**
-         * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
          */
         tax_behavior?: PriceData.TaxBehavior;
         /**
@@ -476,9 +474,13 @@ export interface InvoiceItemListParams extends PaginationParams {
      */
     created?: RangeQueryParam | number;
     /**
-     * The identifier of the customer whose invoice items to return. If none is provided, all invoice items will be returned.
+     * The identifier of the customer whose invoice items to return. If none is provided, returns all invoice items.
      */
     customer?: string;
+    /**
+     * The identifier of the account representing the customer whose invoice items to return. If none is provided, returns all invoice items.
+     */
+    customer_account?: string;
     /**
      * Specifies which fields in the response should be expanded.
      */

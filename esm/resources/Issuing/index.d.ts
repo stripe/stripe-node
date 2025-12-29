@@ -1,12 +1,12 @@
-import { StripeClient } from '../../stripe.core.js';
-import { AuthorizationResource } from './Authorizations.js';
-import { CardResource } from './Cards.js';
-import { CardholderResource } from './Cardholders.js';
-import { DisputeResource } from './Disputes.js';
-import { PersonalizationDesignResource } from './PersonalizationDesigns.js';
-import { PhysicalBundleResource } from './PhysicalBundles.js';
-import { TokenResource } from './Tokens.js';
-import { TransactionResource } from './Transactions.js';
+import { Stripe } from '../../stripe.core.js';
+import { Authorization, AuthorizationResource } from './Authorizations.js';
+import { Card, CardResource } from './Cards.js';
+import { Cardholder, CardholderResource } from './Cardholders.js';
+import { Dispute, DisputeResource } from './Disputes.js';
+import { PersonalizationDesign, PersonalizationDesignResource } from './PersonalizationDesigns.js';
+import { PhysicalBundle, PhysicalBundleResource } from './PhysicalBundles.js';
+import { Token, TokenResource } from './Tokens.js';
+import { Transaction, TransactionResource } from './Transactions.js';
 export { Authorization } from './Authorizations.js';
 export { Card } from './Cards.js';
 export { Cardholder } from './Cardholders.js';
@@ -25,5 +25,15 @@ export declare class Issuing {
     physicalBundles: PhysicalBundleResource;
     tokens: TokenResource;
     transactions: TransactionResource;
-    constructor(stripe: StripeClient);
+    constructor(stripe: Stripe);
+}
+export declare namespace Issuing {
+    export { Authorization };
+    export { Card };
+    export { Cardholder };
+    export { Dispute };
+    export { PersonalizationDesign };
+    export { PhysicalBundle };
+    export { Token };
+    export { Transaction };
 }

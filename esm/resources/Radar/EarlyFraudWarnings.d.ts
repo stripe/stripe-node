@@ -1,9 +1,8 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { Charge } from './../Charges.js';
 import { PaymentIntent } from './../PaymentIntents.js';
 import { PaginationParams, RangeQueryParam } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class EarlyFraudWarningResource extends StripeResource {
     /**
      * Returns a list of early fraud warnings.
@@ -18,12 +17,7 @@ export declare class EarlyFraudWarningResource extends StripeResource {
     retrieve(id: string, params?: Radar.EarlyFraudWarningRetrieveParams, options?: RequestOptions): Promise<Response<EarlyFraudWarning>>;
     retrieve(id: string, options?: RequestOptions): Promise<Response<EarlyFraudWarning>>;
 }
-export /**
- * An early fraud warning indicates that the card issuer has notified us that a
- * charge may be fraudulent.
- *
- * Related guide: [Early fraud warnings](https://stripe.com/docs/disputes/measuring#early-fraud-warnings)
- */ interface EarlyFraudWarning {
+export interface EarlyFraudWarning {
     /**
      * Unique identifier for the object.
      */

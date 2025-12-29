@@ -1,10 +1,9 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../lib.js';
 import {Transaction} from './Transactions.js';
 import {PaginationParams, Address} from '../../shared.js';
-import {ApiListPromise, Response} from '../../lib.js';
+import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export class ReceivedDebitResource extends StripeResource {
   /**
@@ -83,7 +82,7 @@ export interface ReceivedDebit {
   financial_account: string | null;
 
   /**
-   * A [hosted transaction receipt](https://stripe.com/docs/treasury/moving-money/regulatory-receipts) URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
+   * A [hosted transaction receipt](https://docs.stripe.com/treasury/moving-money/regulatory-receipts) URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
    */
   hosted_regulatory_receipt_url: string | null;
 
@@ -136,7 +135,7 @@ export namespace Treasury {
       financial_account?: InitiatingPaymentMethodDetails.FinancialAccount;
 
       /**
-       * Set when `type` is `issuing_card`. This is an [Issuing Card](https://stripe.com/docs/api#issuing_cards) ID.
+       * Set when `type` is `issuing_card`. This is an [Issuing Card](https://api.stripe.com#issuing_cards) ID.
        */
       issuing_card?: string;
 
@@ -160,17 +159,17 @@ export namespace Treasury {
       inbound_transfer: string | null;
 
       /**
-       * Set if the ReceivedDebit was created due to an [Issuing Authorization](https://stripe.com/docs/api#issuing_authorizations) object.
+       * Set if the ReceivedDebit was created due to an [Issuing Authorization](https://api.stripe.com#issuing_authorizations) object.
        */
       issuing_authorization: string | null;
 
       /**
-       * Set if the ReceivedDebit is also viewable as an [Issuing Dispute](https://stripe.com/docs/api#issuing_disputes) object.
+       * Set if the ReceivedDebit is also viewable as an [Issuing Dispute](https://api.stripe.com#issuing_disputes) object.
        */
       issuing_transaction: string | null;
 
       /**
-       * Set if the ReceivedDebit was created due to a [Payout](https://stripe.com/docs/api#payouts) object.
+       * Set if the ReceivedDebit was created due to a [Payout](https://api.stripe.com#payouts) object.
        */
       payout: string | null;
     }

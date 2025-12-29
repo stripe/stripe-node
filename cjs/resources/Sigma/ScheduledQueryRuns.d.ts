@@ -1,8 +1,7 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { File } from './../Files.js';
 import { PaginationParams } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class ScheduledQueryRunResource extends StripeResource {
     /**
      * Returns a list of scheduled query runs.
@@ -15,12 +14,7 @@ export declare class ScheduledQueryRunResource extends StripeResource {
     retrieve(id: string, params?: Sigma.ScheduledQueryRunRetrieveParams, options?: RequestOptions): Promise<Response<ScheduledQueryRun>>;
     retrieve(id: string, options?: RequestOptions): Promise<Response<ScheduledQueryRun>>;
 }
-export /**
- * If you have [scheduled a Sigma query](https://stripe.com/docs/sigma/scheduled-queries), you'll
- * receive a `sigma.scheduled_query_run.created` webhook each time the query
- * runs. The webhook contains a `ScheduledQueryRun` object, which you can use to
- * retrieve the query results.
- */ interface ScheduledQueryRun {
+export interface ScheduledQueryRun {
     /**
      * Unique identifier for the object.
      */

@@ -1,13 +1,7 @@
 import { BalanceTransaction } from './BalanceTransactions.js';
 import { ApplicationFee } from './ApplicationFees.js';
 import { Metadata } from '../shared.js';
-export /**
- * `Application Fee Refund` objects allow you to refund an application fee that
- * has previously been created but not yet refunded. Funds will be refunded to
- * the Stripe account from which the fee was originally collected.
- *
- * Related guide: [Refunding application fees](https://stripe.com/docs/connect/destination-charges#refunding-app-fee)
- */ interface FeeRefund {
+export interface FeeRefund {
     /**
      * Unique identifier for the object.
      */
@@ -37,7 +31,7 @@ export /**
      */
     fee: string | ApplicationFee;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata | null;
 }

@@ -1,8 +1,7 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { TaxCode } from './TaxCodes.js';
 import { MetadataParam, Emptyable, PaginationParams, RangeQueryParam, Metadata } from '../shared.js';
-import { ApiListPromise, Response } from '../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../lib.js';
 export declare class ShippingRateResource extends StripeResource {
     /**
      * Returns a list of your shipping rates.
@@ -23,10 +22,7 @@ export declare class ShippingRateResource extends StripeResource {
      */
     update(id: string, params?: ShippingRateUpdateParams, options?: RequestOptions): Promise<Response<ShippingRate>>;
 }
-export /**
- * Shipping rates describe the price of shipping presented to your customers and
- * applied to a purchase. For more information, see [Charge for shipping](https://stripe.com/docs/payments/during-payment/charge-shipping).
- */ interface ShippingRate {
+export interface ShippingRate {
     /**
      * Unique identifier for the object.
      */
@@ -57,7 +53,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata;
     /**
@@ -65,7 +61,7 @@ export /**
      */
     tax_behavior: ShippingRate.TaxBehavior | null;
     /**
-     * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
+     * A [tax code](https://docs.stripe.com/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
      */
     tax_code: string | TaxCode | null;
     /**
@@ -163,7 +159,7 @@ export interface ShippingRateCreateParams {
      */
     fixed_amount?: ShippingRateCreateParams.FixedAmount;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: MetadataParam;
     /**
@@ -171,7 +167,7 @@ export interface ShippingRateCreateParams {
      */
     tax_behavior?: ShippingRateCreateParams.TaxBehavior;
     /**
-     * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
+     * A [tax code](https://docs.stripe.com/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
      */
     tax_code?: string;
     /**
@@ -271,7 +267,7 @@ export interface ShippingRateUpdateParams {
      */
     fixed_amount?: ShippingRateUpdateParams.FixedAmount;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
     /**

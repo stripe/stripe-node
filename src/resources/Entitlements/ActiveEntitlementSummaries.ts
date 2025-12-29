@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {ActiveEntitlement} from './ActiveEntitlements.js';
-import {ApiList} from '../../lib.js';
+import {RequestOptions, ApiList} from '../../lib.js';
 export interface ActiveEntitlementSummary {
   /**
    * String representing the object's type. Objects of the same type share the same value.

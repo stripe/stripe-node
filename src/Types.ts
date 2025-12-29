@@ -7,7 +7,7 @@ import {
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import {HttpClientResponseError, RequestSender} from './RequestSender.js';
 import {StripeContext} from './StripeContext.js';
-import {StripeClient} from './stripe.core.js';
+import {Stripe} from './stripe.core.js';
 import {AppInfo} from './lib.js';
 
 export type ApiMode = 'v1' | 'v2';
@@ -227,7 +227,7 @@ export type StripeRawError = {
 //   new (stripe: StripeObject, deprecatedUrlData?: never): StripeResourceObject;
 // };
 export type StripeResourceObject = {
-  _stripe: StripeClient;
+  _stripe: Stripe;
   basePath: UrlInterpolator;
   path: UrlInterpolator;
   resourcePath: string;

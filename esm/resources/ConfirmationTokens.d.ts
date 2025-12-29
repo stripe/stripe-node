@@ -1,10 +1,9 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { Customer } from './Customers.js';
 import { SetupAttempt } from './SetupAttempts.js';
 import { Charge } from './Charges.js';
 import { Address } from '../shared.js';
-import { Response } from '../lib.js';
+import { RequestOptions, Response } from '../lib.js';
 export declare class ConfirmationTokenResource extends StripeResource {
     /**
      * Retrieves an existing ConfirmationToken object
@@ -12,15 +11,7 @@ export declare class ConfirmationTokenResource extends StripeResource {
     retrieve(id: string, params?: ConfirmationTokenRetrieveParams, options?: RequestOptions): Promise<Response<ConfirmationToken>>;
     retrieve(id: string, options?: RequestOptions): Promise<Response<ConfirmationToken>>;
 }
-export /**
- * ConfirmationTokens help transport client side data collected by Stripe JS over
- * to your server for confirming a PaymentIntent or SetupIntent. If the confirmation
- * is successful, values present on the ConfirmationToken are written onto the Intent.
- *
- * To learn more about how to use ConfirmationToken, visit the related guides:
- * - [Finalize payments on the server](https://stripe.com/docs/payments/finalize-payments-on-the-server)
- * - [Build two-step confirmation](https://stripe.com/docs/payments/build-a-two-step-confirmation).
- */ interface ConfirmationToken {
+export interface ConfirmationToken {
     /**
      * Unique identifier for the object.
      */
@@ -64,7 +55,7 @@ export /**
     /**
      * Indicates that you intend to make future payments with this ConfirmationToken's payment method.
      *
-     * The presence of this property will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete.
+     * The presence of this property will [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete.
      */
     setup_future_usage: ConfirmationToken.SetupFutureUsage | null;
     /**
@@ -119,6 +110,7 @@ export declare namespace ConfirmationToken {
          * The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
          */
         customer: string | Customer | null;
+        customer_account: string | null;
         customer_balance?: PaymentMethodPreview.CustomerBalance;
         eps?: PaymentMethodPreview.Eps;
         fpx?: PaymentMethodPreview.Fpx;
@@ -142,6 +134,7 @@ export declare namespace ConfirmationToken {
         payco?: PaymentMethodPreview.Payco;
         paynow?: PaymentMethodPreview.Paynow;
         paypal?: PaymentMethodPreview.Paypal;
+        payto?: PaymentMethodPreview.Payto;
         pix?: PaymentMethodPreview.Pix;
         promptpay?: PaymentMethodPreview.Promptpay;
         revolut_pay?: PaymentMethodPreview.RevolutPay;
@@ -505,7 +498,7 @@ export declare namespace ConfirmationToken {
         }
         interface Ideal {
             /**
-             * The customer's bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `handelsbanken`, `ing`, `knab`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
+             * The customer's bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `finom`, `handelsbanken`, `ing`, `knab`, `mollie`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
              */
             bank: Ideal.Bank | null;
             /**
@@ -675,6 +668,20 @@ export declare namespace ConfirmationToken {
              */
             payer_id: string | null;
         }
+        interface Payto {
+            /**
+             * Bank-State-Branch number of the bank account.
+             */
+            bsb_number: string | null;
+            /**
+             * Last four digits of the bank account number.
+             */
+            last4: string | null;
+            /**
+             * The PayID alias for the bank account.
+             */
+            pay_id: string | null;
+        }
         interface Pix {
         }
         interface Promptpay {
@@ -721,7 +728,7 @@ export declare namespace ConfirmationToken {
         }
         interface Twint {
         }
-        type Type = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'card_present' | 'cashapp' | 'crypto' | 'custom' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'interac_present' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
+        type Type = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'card_present' | 'cashapp' | 'crypto' | 'custom' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'interac_present' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'payto' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
         interface UsBankAccount {
             /**
              * Account holder type: individual or company.
@@ -896,7 +903,7 @@ export declare namespace ConfirmationToken {
                          */
                         iin?: string | null;
                         /**
-                         * Whether this [PaymentIntent](https://stripe.com/docs/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
+                         * Whether this [PaymentIntent](https://docs.stripe.com/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
                          */
                         incremental_authorization_supported: boolean;
                         /**
@@ -1092,8 +1099,8 @@ export declare namespace ConfirmationToken {
             type Bank = 'affin_bank' | 'agrobank' | 'alliance_bank' | 'ambank' | 'bank_islam' | 'bank_muamalat' | 'bank_of_china' | 'bank_rakyat' | 'bsn' | 'cimb' | 'deutsche_bank' | 'hong_leong_bank' | 'hsbc' | 'kfh' | 'maybank2e' | 'maybank2u' | 'ocbc' | 'pb_enterprise' | 'public_bank' | 'rhb' | 'standard_chartered' | 'uob';
         }
         namespace Ideal {
-            type Bank = 'abn_amro' | 'asn_bank' | 'bunq' | 'buut' | 'handelsbanken' | 'ing' | 'knab' | 'moneyou' | 'n26' | 'nn' | 'rabobank' | 'regiobank' | 'revolut' | 'sns_bank' | 'triodos_bank' | 'van_lanschot' | 'yoursafe';
-            type Bic = 'ABNANL2A' | 'ASNBNL21' | 'BITSNL2A' | 'BUNQNL2A' | 'BUUTNL2A' | 'FVLBNL22' | 'HANDNL2A' | 'INGBNL2A' | 'KNABNL2H' | 'MOYONL21' | 'NNBANL2G' | 'NTSBDEB1' | 'RABONL2U' | 'RBRBNL21' | 'REVOIE23' | 'REVOLT21' | 'SNSBNL2A' | 'TRIONL2U';
+            type Bank = 'abn_amro' | 'asn_bank' | 'bunq' | 'buut' | 'finom' | 'handelsbanken' | 'ing' | 'knab' | 'mollie' | 'moneyou' | 'n26' | 'nn' | 'rabobank' | 'regiobank' | 'revolut' | 'sns_bank' | 'triodos_bank' | 'van_lanschot' | 'yoursafe';
+            type Bic = 'ABNANL2A' | 'ASNBNL21' | 'BITSNL2A' | 'BUNQNL2A' | 'BUUTNL2A' | 'FNOMNL22' | 'FVLBNL22' | 'HANDNL2A' | 'INGBNL2A' | 'KNABNL2H' | 'MLLENL2A' | 'MOYONL21' | 'NNBANL2G' | 'NTSBDEB1' | 'RABONL2U' | 'RBRBNL21' | 'REVOIE23' | 'REVOLT21' | 'SNSBNL2A' | 'TRIONL2U';
         }
         namespace InteracPresent {
             interface Networks {
@@ -1177,7 +1184,7 @@ export declare namespace ConfirmationToken {
                 }
                 namespace Blocked {
                     type NetworkCode = 'R02' | 'R03' | 'R04' | 'R05' | 'R07' | 'R08' | 'R10' | 'R11' | 'R16' | 'R20' | 'R29' | 'R31';
-                    type Reason = 'bank_account_closed' | 'bank_account_frozen' | 'bank_account_invalid_details' | 'bank_account_restricted' | 'bank_account_unusable' | 'debit_not_authorized';
+                    type Reason = 'bank_account_closed' | 'bank_account_frozen' | 'bank_account_invalid_details' | 'bank_account_restricted' | 'bank_account_unusable' | 'debit_not_authorized' | 'tokenized_account_number_deactivated';
                 }
             }
         }

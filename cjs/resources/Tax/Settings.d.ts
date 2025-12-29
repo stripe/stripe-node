@@ -1,7 +1,6 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { AddressParam, Address } from '../../shared.js';
-import { Response } from '../../lib.js';
+import { RequestOptions, Response } from '../../lib.js';
 export declare class SettingResource extends StripeResource {
     /**
      * Retrieves Tax Settings for a merchant.
@@ -13,11 +12,7 @@ export declare class SettingResource extends StripeResource {
      */
     update(params?: Tax.SettingsUpdateParams, options?: RequestOptions): Promise<Response<Settings>>;
 }
-export /**
- * You can use Tax `Settings` to manage configurations used by Stripe Tax calculations.
- *
- * Related guide: [Using the Settings API](https://stripe.com/docs/tax/settings-api)
- */ interface Settings {
+export interface Settings {
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
@@ -107,7 +102,7 @@ export declare namespace Tax {
              */
             tax_behavior?: Defaults.TaxBehavior;
             /**
-             * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+             * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
              */
             tax_code?: string;
         }

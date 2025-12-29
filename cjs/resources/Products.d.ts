@@ -1,10 +1,9 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { DeletedProductFeature, ProductFeature } from './ProductFeatures.js';
 import { Price } from './Prices.js';
 import { TaxCode } from './TaxCodes.js';
 import { MetadataParam, Emptyable, PaginationParams, RangeQueryParam, Metadata } from '../shared.js';
-import { Response, ApiListPromise, ApiSearchResultPromise } from '../lib.js';
+import { RequestOptions, Response, ApiListPromise, ApiSearchResultPromise } from '../lib.js';
 export declare class ProductResource extends StripeResource {
     /**
      * Delete a product. Deleting a product is only possible if it has no prices associated with it. Additionally, deleting a product with type=good is only possible if it has no SKUs associated with it.
@@ -56,16 +55,7 @@ export declare class ProductResource extends StripeResource {
      */
     createFeature(id: string, params: ProductCreateFeatureParams, options?: RequestOptions): Promise<Response<ProductFeature>>;
 }
-export /**
- * Products describe the specific goods or services you offer to your customers.
- * For example, you might offer a Standard and Premium version of your goods or service; each version would be a separate Product.
- * They can be used in conjunction with [Prices](https://stripe.com/docs/api#prices) to configure pricing in Payment Links, Checkout, and Subscriptions.
- *
- * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription),
- * [share a Payment Link](https://stripe.com/docs/payment-links),
- * [accept payments with Checkout](https://stripe.com/docs/payments/accept-a-payment#create-product-prices-upfront),
- * and more about [Products and Prices](https://stripe.com/docs/products-prices/overview)
- */ interface Product {
+export interface Product {
     /**
      * Unique identifier for the object.
      */
@@ -83,7 +73,7 @@ export /**
      */
     created: number;
     /**
-     * The ID of the [Price](https://stripe.com/docs/api/prices) object that is the default price for this product.
+     * The ID of the [Price](https://docs.stripe.com/api/prices) object that is the default price for this product.
      */
     default_price?: string | Price | null;
     /**
@@ -103,11 +93,11 @@ export /**
      */
     livemode: boolean;
     /**
-     * A list of up to 15 marketing features for this product. These are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
+     * A list of up to 15 marketing features for this product. These are displayed in [pricing tables](https://docs.stripe.com/payments/checkout/pricing-table).
      */
     marketing_features: Array<Product.MarketingFeature>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata;
     /**
@@ -127,9 +117,9 @@ export /**
      */
     statement_descriptor?: string | null;
     /**
-     * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+     * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
      */
-    tax_code: string | TaxCode | null;
+    tax_code?: string | TaxCode | null;
     /**
      * The type of the product. The product is either of type `good`, which is eligible for use with Orders and SKUs, or `service`, which is eligible for use with Subscriptions and Plans.
      */
@@ -147,9 +137,7 @@ export /**
      */
     url: string | null;
 }
-export /**
- * The DeletedProduct object.
- */ interface DeletedProduct {
+export interface DeletedProduct {
     /**
      * Unique identifier for the object.
      */
@@ -200,7 +188,7 @@ export interface ProductCreateParams {
      */
     active?: boolean;
     /**
-     * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object. This Price will be set as the default price for this product.
+     * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object. This Price will be set as the default price for this product.
      */
     default_price_data?: ProductCreateParams.DefaultPriceData;
     /**
@@ -220,11 +208,11 @@ export interface ProductCreateParams {
      */
     images?: Array<string>;
     /**
-     * A list of up to 15 marketing features for this product. These are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
+     * A list of up to 15 marketing features for this product. These are displayed in [pricing tables](https://docs.stripe.com/payments/checkout/pricing-table).
      */
     marketing_features?: Array<ProductCreateParams.MarketingFeature>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: MetadataParam;
     /**
@@ -243,7 +231,7 @@ export interface ProductCreateParams {
      */
     statement_descriptor?: string;
     /**
-     * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+     * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
      */
     tax_code?: string;
     /**
@@ -276,7 +264,7 @@ export declare namespace ProductCreateParams {
          */
         custom_unit_amount?: DefaultPriceData.CustomUnitAmount;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
         /**
@@ -284,7 +272,7 @@ export declare namespace ProductCreateParams {
          */
         recurring?: DefaultPriceData.Recurring;
         /**
-         * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
          */
         tax_behavior?: DefaultPriceData.TaxBehavior;
         /**
@@ -328,7 +316,7 @@ export declare namespace ProductCreateParams {
              */
             custom_unit_amount?: CurrencyOptions.CustomUnitAmount;
             /**
-             * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
              */
             tax_behavior?: CurrencyOptions.TaxBehavior;
             /**
@@ -433,7 +421,7 @@ export interface ProductUpdateParams {
      */
     active?: boolean;
     /**
-     * The ID of the [Price](https://stripe.com/docs/api/prices) object that is the default price for this product.
+     * The ID of the [Price](https://docs.stripe.com/api/prices) object that is the default price for this product.
      */
     default_price?: string;
     /**
@@ -449,11 +437,11 @@ export interface ProductUpdateParams {
      */
     images?: Emptyable<Array<string>>;
     /**
-     * A list of up to 15 marketing features for this product. These are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
+     * A list of up to 15 marketing features for this product. These are displayed in [pricing tables](https://docs.stripe.com/payments/checkout/pricing-table).
      */
     marketing_features?: Emptyable<Array<ProductUpdateParams.MarketingFeature>>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
     /**
@@ -476,7 +464,7 @@ export interface ProductUpdateParams {
      */
     statement_descriptor?: string;
     /**
-     * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+     * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
      */
     tax_code?: Emptyable<string>;
     /**
@@ -528,7 +516,7 @@ export interface ProductListParams extends PaginationParams {
      */
     expand?: Array<string>;
     /**
-     * Only return products with the given IDs. Cannot be used with [starting_after](https://stripe.com/docs/api#list_products-starting_after) or [ending_before](https://stripe.com/docs/api#list_products-ending_before).
+     * Only return products with the given IDs. Cannot be used with [starting_after](https://api.stripe.com#list_products-starting_after) or [ending_before](https://api.stripe.com#list_products-ending_before).
      */
     ids?: Array<string>;
     /**
@@ -551,7 +539,7 @@ export interface ProductDeleteParams {
 }
 export interface ProductCreateFeatureParams {
     /**
-     * The ID of the [Feature](https://stripe.com/docs/api/entitlements/feature) object attached to this product.
+     * The ID of the [Feature](https://docs.stripe.com/api/entitlements/feature) object attached to this product.
      */
     entitlement_feature: string;
     /**
@@ -575,7 +563,7 @@ export interface ProductRetrieveFeatureParams {
 }
 export interface ProductSearchParams {
     /**
-     * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for products](https://stripe.com/docs/search#query-fields-for-products).
+     * The search query string. See [search query language](https://docs.stripe.com/search#search-query-language) and the list of supported [query fields for products](https://docs.stripe.com/search#query-fields-for-products).
      */
     query: string;
     /**

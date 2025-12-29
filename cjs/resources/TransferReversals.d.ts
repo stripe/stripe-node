@@ -2,21 +2,7 @@ import { BalanceTransaction } from './BalanceTransactions.js';
 import { Refund } from './Refunds.js';
 import { Transfer } from './Transfers.js';
 import { Metadata } from '../shared.js';
-export /**
- * [Stripe Connect](https://stripe.com/docs/connect) platforms can reverse transfers made to a
- * connected account, either entirely or partially, and can also specify whether
- * to refund any related application fees. Transfer reversals add to the
- * platform's balance and subtract from the destination account's balance.
- *
- * Reversing a transfer that was made for a [destination
- * charge](https://docs.stripe.com/docs/connect/destination-charges) is allowed only up to the amount of
- * the charge. It is possible to reverse a
- * [transfer_group](https://stripe.com/docs/connect/separate-charges-and-transfers#transfer-options)
- * transfer only if the destination account has enough balance to cover the
- * reversal.
- *
- * Related guide: [Reverse transfers](https://stripe.com/docs/connect/separate-charges-and-transfers#reverse-transfers)
- */ interface TransferReversal {
+export interface TransferReversal {
     /**
      * Unique identifier for the object.
      */
@@ -46,7 +32,7 @@ export /**
      */
     destination_payment_refund: string | Refund | null;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata | null;
     /**

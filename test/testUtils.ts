@@ -6,7 +6,7 @@ import http = require('http');
 import {CryptoProvider} from '../src/crypto/CryptoProvider.js';
 import {NodePlatformFunctions} from '../src/platform/NodePlatformFunctions.js';
 import {RequestSender} from '../src/RequestSender.js';
-import {StripeClient} from '../src/stripe.core.js';
+import {Stripe} from '../src/stripe.core.js';
 import {
   RequestAuthenticator,
   RequestCallback,
@@ -30,11 +30,7 @@ export const getTestServerStripe = (
     res: http.ServerResponse,
     nPreviousRequests: number
   ) => {shouldStayOpen?: boolean} | null,
-  callback: (
-    err: Error | null,
-    stripe: StripeClient,
-    closeServer: () => void
-  ) => void
+  callback: (err: Error | null, stripe: Stripe, closeServer: () => void) => void
 ): void => {
   let nPreviousRequests = 0;
   const server = http.createServer((req, res) => {
@@ -64,7 +60,7 @@ export const getTestServerStripe = (
   });
 };
 
-export const getStripeMockClient = (): StripeClient => {
+export const getStripeMockClient = (): Stripe => {
   const stripe = require('../src/stripe.cjs.node.js');
   class StripeMockForwardingClient extends NodeHttpClient {
     makeRequest(
@@ -111,7 +107,7 @@ export const getMockPlatformFunctions = (
 export const getMockStripe = (
   config: Record<string, unknown>,
   request: RequestSender['_request']
-): StripeClient => {
+): Stripe => {
   class MockRequestSender extends RequestSender {
     _request(
       method: string,
@@ -147,7 +143,7 @@ export const getMockStripe = (
 
   stripeInstance._requestSender = new MockRequestSender(
     stripeInstance,
-    StripeClient.StripeResource.MAX_BUFFERED_REQUEST_METRICS
+    Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
   );
 
   return stripeInstance;
@@ -155,7 +151,7 @@ export const getMockStripe = (
 
 export const createMockClient = (
   requests: Array<{method: string; path: string; response: string}>
-): StripeClient => {
+): Stripe => {
   return getMockStripe({}, (method, _host, path, _4, _5, _6, _7, callback) => {
     const request = requests.find((r) => r.method == method && r.path == path);
     if (!request) {
@@ -166,9 +162,7 @@ export const createMockClient = (
   });
 };
 
-export const getSpyableStripe = (
-  config: Record<string, unknown>
-): StripeClient => {
+export const getSpyableStripe = (config: Record<string, unknown>): Stripe => {
   class SpyableRequestSender extends RequestSender {
     _request(
       method: string,
@@ -253,7 +247,7 @@ export const getSpyableStripe = (
 
   stripeInstance._requestSender = new SpyableRequestSender(
     stripeInstance,
-    StripeClient.StripeResource.MAX_BUFFERED_REQUEST_METRICS
+    Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
   );
 
   return stripeInstance;

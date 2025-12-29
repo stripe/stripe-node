@@ -1,7 +1,6 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { PaginationParams, RangeQueryParam, Address } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class VerificationReportResource extends StripeResource {
     /**
      * List all verification reports.
@@ -14,19 +13,7 @@ export declare class VerificationReportResource extends StripeResource {
     retrieve(id: string, params?: Identity.VerificationReportRetrieveParams, options?: RequestOptions): Promise<Response<VerificationReport>>;
     retrieve(id: string, options?: RequestOptions): Promise<Response<VerificationReport>>;
 }
-export /**
- * A VerificationReport is the result of an attempt to collect and verify data from a user.
- * The collection of verification checks performed is determined from the `type` and `options`
- * parameters used. You can find the result of each verification check performed in the
- * appropriate sub-resource: `document`, `id_number`, `selfie`.
- *
- * Each VerificationReport contains a copy of any data collected by the user as well as
- * reference IDs which can be used to access collected images through the [FileUpload](https://stripe.com/docs/api/files)
- * API. To configure and create VerificationReports, use the
- * [VerificationSession](https://stripe.com/docs/api/identity/verification_sessions) API.
- *
- * Related guide: [Accessing verification results](https://stripe.com/docs/identity/verification-sessions#results).
- */ interface VerificationReport {
+export interface VerificationReport {
     /**
      * Unique identifier for the object.
      */
@@ -101,7 +88,7 @@ export declare namespace Identity {
              */
             expiration_date?: Document.ExpirationDate | null;
             /**
-             * Array of [File](https://stripe.com/docs/api/files) ids containing images for this document.
+             * Array of [File](https://docs.stripe.com/api/files) ids containing images for this document.
              */
             files: Array<string> | null;
             /**
@@ -209,7 +196,7 @@ export declare namespace Identity {
         }
         interface Selfie {
             /**
-             * ID of the [File](https://stripe.com/docs/api/files) holding the image of the identity document used in this check.
+             * ID of the [File](https://docs.stripe.com/api/files) holding the image of the identity document used in this check.
              */
             document: string | null;
             /**
@@ -217,7 +204,7 @@ export declare namespace Identity {
              */
             error: Selfie.Error | null;
             /**
-             * ID of the [File](https://stripe.com/docs/api/files) holding the image of the selfie used in this check.
+             * ID of the [File](https://docs.stripe.com/api/files) holding the image of the selfie used in this check.
              */
             selfie: string | null;
             /**
@@ -340,7 +327,7 @@ export declare namespace Identity {
                  */
                 allowed_types?: Array<Document.AllowedType>;
                 /**
-                 * Collect an ID number and perform an [ID number check](https://stripe.com/docs/identity/verification-checks?type=id-number) with the document's extracted name and date of birth.
+                 * Collect an ID number and perform an [ID number check](https://docs.stripe.com/identity/verification-checks?type=id-number) with the document's extracted name and date of birth.
                  */
                 require_id_number?: boolean;
                 /**
@@ -348,7 +335,7 @@ export declare namespace Identity {
                  */
                 require_live_capture?: boolean;
                 /**
-                 * Capture a face image and perform a [selfie check](https://stripe.com/docs/identity/verification-checks?type=selfie) comparing a photo ID and a picture of your user's face. [Learn more](https://stripe.com/docs/identity/selfie).
+                 * Capture a face image and perform a [selfie check](https://docs.stripe.com/identity/verification-checks?type=selfie) comparing a photo ID and a picture of your user's face. [Learn more](https://docs.stripe.com/identity/selfie).
                  */
                 require_matching_selfie?: boolean;
             }

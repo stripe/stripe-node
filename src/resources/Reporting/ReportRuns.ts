@@ -1,10 +1,9 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../lib.js';
 import {File} from './../Files.js';
 import {PaginationParams, RangeQueryParam} from '../../shared.js';
-import {ApiListPromise, Response} from '../../lib.js';
+import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export class ReportRunResource extends StripeResource {
   /**
@@ -83,7 +82,7 @@ export interface ReportRun {
   parameters: Reporting.ReportRun.Parameters;
 
   /**
-   * The ID of the [report type](https://stripe.com/docs/reports/report-types) to run, such as `"balance.summary.1"`.
+   * The ID of the [report type](https://docs.stripe.com/reports/report-types) to run, such as `"balance.summary.1"`.
    */
   report_type: string;
 
@@ -154,7 +153,7 @@ export namespace Reporting {
 export namespace Reporting {
   export interface ReportRunCreateParams {
     /**
-     * The ID of the [report type](https://stripe.com/docs/reporting/statements/api#report-types) to run, such as `"balance.summary.1"`.
+     * The ID of the [report type](https://docs.stripe.com/reporting/statements/api#report-types) to run, such as `"balance.summary.1"`.
      */
     report_type: string;
 
@@ -164,7 +163,7 @@ export namespace Reporting {
     expand?: Array<string>;
 
     /**
-     * Parameters specifying how the report should be run. Different Report Types have different required and optional parameters, listed in the [API Access to Reports](https://stripe.com/docs/reporting/statements/api) documentation.
+     * Parameters specifying how the report should be run. Different Report Types have different required and optional parameters, listed in the [API Access to Reports](https://docs.stripe.com/reporting/statements/api) documentation.
      */
     parameters?: ReportRunCreateParams.Parameters;
   }

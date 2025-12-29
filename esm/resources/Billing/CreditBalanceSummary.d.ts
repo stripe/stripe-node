@@ -1,16 +1,13 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { Customer, DeletedCustomer } from './../Customers.js';
-import { Response } from '../../lib.js';
+import { RequestOptions, Response } from '../../lib.js';
 export declare class CreditBalanceSummaryResource extends StripeResource {
     /**
      * Retrieves the credit balance summary for a customer.
      */
     retrieve(params: Billing.CreditBalanceSummaryRetrieveParams, options?: RequestOptions): Promise<Response<CreditBalanceSummary>>;
 }
-export /**
- * Indicates the billing credit balance for billing credits granted to a customer.
- */ interface CreditBalanceSummary {
+export interface CreditBalanceSummary {
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
@@ -23,6 +20,10 @@ export /**
      * The customer the balance is for.
      */
     customer: string | Customer | DeletedCustomer;
+    /**
+     * The account the balance is for.
+     */
+    customer_account: string | null;
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
@@ -85,13 +86,17 @@ export declare namespace Billing {
 export declare namespace Billing {
     interface CreditBalanceSummaryRetrieveParams {
         /**
-         * The customer for which to fetch credit balance summary.
-         */
-        customer: string;
-        /**
          * The filter criteria for the credit balance summary.
          */
         filter: CreditBalanceSummaryRetrieveParams.Filter;
+        /**
+         * The customer whose credit balance summary you're retrieving.
+         */
+        customer?: string;
+        /**
+         * The account representing the customer whose credit balance summary you're retrieving.
+         */
+        customer_account?: string;
         /**
          * Specifies which fields in the response should be expanded.
          */

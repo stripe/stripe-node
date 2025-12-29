@@ -9,61 +9,60 @@ import { HttpClient, HttpClientResponse } from './net/HttpClient.js';
 import * as resources from './resources.js';
 import { createApiKeyAuthenticator, determineProcessUserAgentProperties, pascalToCamelCase, validateInteger, } from './utils.js';
 // StripeInstanceImports: The beginning of the section generated from our OpenAPI spec
-import { AccountResource } from './resources/Accounts.js';
-import { AccountLinkResource } from './resources/AccountLinks.js';
-import { AccountSessionResource } from './resources/AccountSessions.js';
-import { ApplePayDomainResource } from './resources/ApplePayDomains.js';
-import { ApplicationFeeResource } from './resources/ApplicationFees.js';
-import { BalanceResource } from './resources/Balance.js';
-import { BalanceSettingResource } from './resources/BalanceSettings.js';
-import { BalanceTransactionResource } from './resources/BalanceTransactions.js';
-import { ChargeResource } from './resources/Charges.js';
-import { ConfirmationTokenResource } from './resources/ConfirmationTokens.js';
-import { CountrySpecResource } from './resources/CountrySpecs.js';
-import { CouponResource } from './resources/Coupons.js';
-import { CreditNoteResource } from './resources/CreditNotes.js';
-import { CustomerResource } from './resources/Customers.js';
-import { CustomerSessionResource } from './resources/CustomerSessions.js';
-import { DisputeResource } from './resources/Disputes.js';
-import { EphemeralKeyResource } from './resources/EphemeralKeys.js';
-import { EventResource } from './resources/Events.js';
-import { ExchangeRateResource } from './resources/ExchangeRates.js';
-import { FileResource } from './resources/Files.js';
-import { FileLinkResource } from './resources/FileLinks.js';
-import { InvoiceResource } from './resources/Invoices.js';
-import { InvoiceItemResource } from './resources/InvoiceItems.js';
-import { InvoicePaymentResource } from './resources/InvoicePayments.js';
-import { InvoiceRenderingTemplateResource } from './resources/InvoiceRenderingTemplates.js';
-import { MandateResource } from './resources/Mandates.js';
-import { PaymentAttemptRecordResource } from './resources/PaymentAttemptRecords.js';
-import { PaymentIntentResource } from './resources/PaymentIntents.js';
-import { PaymentLinkResource } from './resources/PaymentLinks.js';
-import { PaymentMethodResource } from './resources/PaymentMethods.js';
-import { PaymentMethodConfigurationResource } from './resources/PaymentMethodConfigurations.js';
-import { PaymentMethodDomainResource } from './resources/PaymentMethodDomains.js';
-import { PaymentRecordResource } from './resources/PaymentRecords.js';
-import { PayoutResource } from './resources/Payouts.js';
-import { PlanResource } from './resources/Plans.js';
-import { PriceResource } from './resources/Prices.js';
-import { ProductResource } from './resources/Products.js';
-import { PromotionCodeResource } from './resources/PromotionCodes.js';
-import { QuoteResource } from './resources/Quotes.js';
-import { RefundResource } from './resources/Refunds.js';
-import { ReviewResource } from './resources/Reviews.js';
-import { SetupAttemptResource } from './resources/SetupAttempts.js';
-import { SetupIntentResource } from './resources/SetupIntents.js';
-import { ShippingRateResource } from './resources/ShippingRates.js';
-import { SourceResource } from './resources/Sources.js';
-import { SubscriptionResource } from './resources/Subscriptions.js';
-import { SubscriptionItemResource } from './resources/SubscriptionItems.js';
-import { SubscriptionScheduleResource } from './resources/SubscriptionSchedules.js';
-import { TaxCodeResource } from './resources/TaxCodes.js';
-import { TaxIdResource } from './resources/TaxIds.js';
-import { TaxRateResource } from './resources/TaxRates.js';
-import { TokenResource } from './resources/Tokens.js';
-import { TopupResource } from './resources/Topups.js';
-import { TransferResource } from './resources/Transfers.js';
-import { WebhookEndpointResource } from './resources/WebhookEndpoints.js';
+import { AccountResource, } from './resources/Accounts.js';
+import { AccountLinkResource, } from './resources/AccountLinks.js';
+import { AccountSessionResource, } from './resources/AccountSessions.js';
+import { ApplePayDomainResource, } from './resources/ApplePayDomains.js';
+import { ApplicationFeeResource, } from './resources/ApplicationFees.js';
+import { BalanceResource, } from './resources/Balance.js';
+import { BalanceSettingResource, } from './resources/BalanceSettings.js';
+import { BalanceTransactionResource, } from './resources/BalanceTransactions.js';
+import { ChargeResource, } from './resources/Charges.js';
+import { ConfirmationTokenResource, } from './resources/ConfirmationTokens.js';
+import { CountrySpecResource, } from './resources/CountrySpecs.js';
+import { CouponResource, } from './resources/Coupons.js';
+import { CreditNoteResource, } from './resources/CreditNotes.js';
+import { CustomerResource, } from './resources/Customers.js';
+import { CustomerSessionResource, } from './resources/CustomerSessions.js';
+import { DisputeResource, } from './resources/Disputes.js';
+import { EphemeralKeyResource, } from './resources/EphemeralKeys.js';
+import { ExchangeRateResource, } from './resources/ExchangeRates.js';
+import { FileResource, } from './resources/Files.js';
+import { FileLinkResource, } from './resources/FileLinks.js';
+import { InvoiceResource, } from './resources/Invoices.js';
+import { InvoiceItemResource, } from './resources/InvoiceItems.js';
+import { InvoicePaymentResource, } from './resources/InvoicePayments.js';
+import { InvoiceRenderingTemplateResource, } from './resources/InvoiceRenderingTemplates.js';
+import { MandateResource, } from './resources/Mandates.js';
+import { PaymentAttemptRecordResource, } from './resources/PaymentAttemptRecords.js';
+import { PaymentIntentResource, } from './resources/PaymentIntents.js';
+import { PaymentLinkResource, } from './resources/PaymentLinks.js';
+import { PaymentMethodResource, } from './resources/PaymentMethods.js';
+import { PaymentMethodConfigurationResource, } from './resources/PaymentMethodConfigurations.js';
+import { PaymentMethodDomainResource, } from './resources/PaymentMethodDomains.js';
+import { PaymentRecordResource, } from './resources/PaymentRecords.js';
+import { PayoutResource, } from './resources/Payouts.js';
+import { PlanResource, } from './resources/Plans.js';
+import { PriceResource, } from './resources/Prices.js';
+import { ProductResource, } from './resources/Products.js';
+import { PromotionCodeResource, } from './resources/PromotionCodes.js';
+import { QuoteResource, } from './resources/Quotes.js';
+import { RefundResource, } from './resources/Refunds.js';
+import { ReviewResource, } from './resources/Reviews.js';
+import { SetupAttemptResource, } from './resources/SetupAttempts.js';
+import { SetupIntentResource, } from './resources/SetupIntents.js';
+import { ShippingRateResource, } from './resources/ShippingRates.js';
+import { SourceResource, } from './resources/Sources.js';
+import { SubscriptionResource, } from './resources/Subscriptions.js';
+import { SubscriptionItemResource, } from './resources/SubscriptionItems.js';
+import { SubscriptionScheduleResource, } from './resources/SubscriptionSchedules.js';
+import { TaxCodeResource, } from './resources/TaxCodes.js';
+import { TaxIdResource, } from './resources/TaxIds.js';
+import { TaxRateResource, } from './resources/TaxRates.js';
+import { TokenResource, } from './resources/Tokens.js';
+import { TopupResource, } from './resources/Topups.js';
+import { TransferResource, } from './resources/Transfers.js';
+import { WebhookEndpointResource, } from './resources/WebhookEndpoints.js';
 import { Apps } from './resources/Apps/index.js';
 import { Billing } from './resources/Billing/index.js';
 import { BillingPortal } from './resources/BillingPortal/index.js';
@@ -83,6 +82,9 @@ import { TestHelpers } from './resources/TestHelpers/index.js';
 import { Treasury } from './resources/Treasury/index.js';
 import { V2 } from './resources/V2/index.js';
 // StripeInstanceImports: The end of the section generated from our OpenAPI spec
+// V1EventImports: The beginning of the section generated from our OpenAPI spec
+import { EventResource, } from './resources/Events.js';
+// V1EventImports: The end of the section generated from our OpenAPI spec
 import { OAuthResource } from './resources.js';
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -114,30 +116,29 @@ const ALLOWED_CONFIG_PROPERTIES = [
     'stripeContext',
 ];
 const defaultRequestSenderFactory = (stripe) => new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
-export class StripeClient {
+export class Stripe {
     static initialize(platformFunctions, requestSenderFactory = defaultRequestSenderFactory) {
-        StripeClient._platformFunctions = platformFunctions;
-        StripeClient._requestSenderFactory = requestSenderFactory;
-        StripeClient.webhooks = createWebhooks(platformFunctions);
-        StripeClient.createNodeHttpClient = platformFunctions.createNodeHttpClient;
-        StripeClient.createFetchHttpClient =
-            platformFunctions.createFetchHttpClient;
-        StripeClient.createNodeCryptoProvider =
+        Stripe._platformFunctions = platformFunctions;
+        Stripe._requestSenderFactory = requestSenderFactory;
+        Stripe.webhooks = createWebhooks(platformFunctions);
+        Stripe.createNodeHttpClient = platformFunctions.createNodeHttpClient;
+        Stripe.createFetchHttpClient = platformFunctions.createFetchHttpClient;
+        Stripe.createNodeCryptoProvider =
             platformFunctions.createNodeCryptoProvider;
-        StripeClient.createSubtleCryptoProvider =
+        Stripe.createSubtleCryptoProvider =
             platformFunctions.createSubtleCryptoProvider;
     }
     constructor(key, config = {}) {
         this._authenticator = null;
         const props = this._getPropsFromConfig(config);
-        this._platformFunctions = StripeClient._platformFunctions;
+        this._platformFunctions = Stripe._platformFunctions;
         Object.defineProperty(this, '_emitter', {
             value: this._platformFunctions.createEmitter(),
             enumerable: false,
             configurable: false,
             writable: false,
         });
-        this.VERSION = StripeClient.PACKAGE_VERSION;
+        this.VERSION = Stripe.PACKAGE_VERSION;
         this.on = this._emitter.on.bind(this._emitter);
         this.once = this._emitter.once.bind(this._emitter);
         this.off = this._emitter.removeListener.bind(this._emitter);
@@ -160,22 +161,22 @@ export class StripeClient {
             stripeContext: props.stripeContext || null,
         };
         const typescript = props.typescript || false;
-        if (typescript !== StripeClient.USER_AGENT.typescript) {
+        if (typescript !== Stripe.USER_AGENT.typescript) {
             // The mutation here is uncomfortable, but likely fastest;
             // serializing the user agent involves shelling out to the system,
             // and given some users may instantiate the library many times without switching between TS and non-TS,
             // we only want to incur the performance hit when that actually happens.
-            StripeClient.USER_AGENT.typescript = typescript;
+            Stripe.USER_AGENT.typescript = typescript;
         }
         if (props.appInfo) {
             this._setAppInfo(props.appInfo);
         }
         this._setAuthenticator(key, props.authenticator || null);
         this.errors = _Error;
-        this.webhooks = StripeClient.webhooks;
+        this.webhooks = Stripe.webhooks;
         this._prevRequestMetrics = [];
         this._enableTelemetry = props.telemetry !== false;
-        this._requestSender = StripeClient._requestSenderFactory(this);
+        this._requestSender = Stripe._requestSenderFactory(this);
         // // Expose StripeResource on the instance too
         // // @ts-ignore
         // this.StripeResource = Stripe.StripeResource;
@@ -335,7 +336,7 @@ export class StripeClient {
             case 'INITIAL_NETWORK_RETRY_DELAY_SEC':
                 return INITIAL_NETWORK_RETRY_DELAY_SEC;
         }
-        return StripeClient[c];
+        return Stripe[c];
     }
     getMaxNetworkRetries() {
         return this.getApiField('maxNetworkRetries');
@@ -366,7 +367,7 @@ export class StripeClient {
      * speed advantage.
      */
     getClientUserAgent(cb) {
-        return this.getClientUserAgentSeeded(StripeClient.USER_AGENT, cb);
+        return this.getClientUserAgentSeeded(Stripe.USER_AGENT, cb);
     }
     /**
      * @private
@@ -506,21 +507,19 @@ export class StripeClient {
         return eventNotification;
     }
 }
-StripeClient.PACKAGE_VERSION = '19.1.0';
-StripeClient.API_VERSION = ApiVersion;
-StripeClient.USER_AGENT = Object.assign({ bindings_version: StripeClient.PACKAGE_VERSION, lang: 'node', publisher: 'stripe', uname: null, typescript: false }, determineProcessUserAgentProperties());
-StripeClient.StripeResource = StripeResource;
-StripeClient.StripeContext = StripeContext;
-StripeClient.resources = resources;
-StripeClient.HttpClient = HttpClient;
-StripeClient.HttpClientResponse = HttpClientResponse;
-StripeClient.CryptoProvider = CryptoProvider;
-StripeClient.errors = _Error;
-StripeClient._requestSenderFactory = defaultRequestSenderFactory;
+Stripe.PACKAGE_VERSION = '19.1.0';
+Stripe.API_VERSION = ApiVersion;
+Stripe.USER_AGENT = Object.assign({ bindings_version: Stripe.PACKAGE_VERSION, lang: 'node', publisher: 'stripe', uname: null, typescript: false }, determineProcessUserAgentProperties());
+Stripe.StripeResource = StripeResource;
+Stripe.resources = resources;
+Stripe.HttpClient = HttpClient;
+Stripe.HttpClientResponse = HttpClientResponse;
+Stripe.CryptoProvider = CryptoProvider;
+Stripe._requestSenderFactory = defaultRequestSenderFactory;
 // For backward compatibility, export createStripe as a factory function
 export function createStripe(platformFunctions, requestSender = defaultRequestSenderFactory) {
     // Initialize static properties
-    StripeClient.initialize(platformFunctions, requestSender);
-    return StripeClient;
+    Stripe.initialize(platformFunctions, requestSender);
+    return Stripe;
 }
 //# sourceMappingURL=stripe.core.js.map

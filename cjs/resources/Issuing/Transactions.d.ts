@@ -1,5 +1,4 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { Authorization } from './Authorizations.js';
 import { BalanceTransaction } from './../BalanceTransactions.js';
 import { Card } from './Cards.js';
@@ -7,7 +6,7 @@ import { Cardholder } from './Cardholders.js';
 import { Dispute } from './Disputes.js';
 import { Token } from './Tokens.js';
 import { Emptyable, MetadataParam, PaginationParams, RangeQueryParam, Metadata } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class TransactionResource extends StripeResource {
     /**
      * Returns a list of Issuing Transaction objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -24,13 +23,7 @@ export declare class TransactionResource extends StripeResource {
      */
     update(id: string, params?: Issuing.TransactionUpdateParams, options?: RequestOptions): Promise<Response<Transaction>>;
 }
-export /**
- * Any use of an [issued card](https://stripe.com/docs/issuing) that results in funds entering or leaving
- * your Stripe account, such as a completed purchase or refund, is represented by an Issuing
- * `Transaction` object.
- *
- * Related guide: [Issued card transactions](https://stripe.com/docs/issuing/purchases/transactions)
- */ interface Transaction {
+export interface Transaction {
     /**
      * Unique identifier for the object.
      */
@@ -40,11 +33,11 @@ export /**
      */
     object: 'issuing.transaction';
     /**
-     * The transaction amount, which will be reflected in your balance. This amount is in your currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+     * The transaction amount, which will be reflected in your balance. This amount is in your currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
      */
     amount: number;
     /**
-     * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+     * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
      */
     amount_details: Issuing.Transaction.AmountDetails | null;
     /**
@@ -52,7 +45,7 @@ export /**
      */
     authorization: string | Authorization | null;
     /**
-     * ID of the [balance transaction](https://stripe.com/docs/api/balance_transactions) associated with this transaction.
+     * ID of the [balance transaction](https://docs.stripe.com/api/balance_transactions) associated with this transaction.
      */
     balance_transaction: string | BalanceTransaction | null;
     /**
@@ -80,7 +73,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * The amount that the merchant will receive, denominated in `merchant_currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). It will be different from `amount` if the merchant is taking payment in a different currency.
+     * The amount that the merchant will receive, denominated in `merchant_currency` and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). It will be different from `amount` if the merchant is taking payment in a different currency.
      */
     merchant_amount: number;
     /**
@@ -89,7 +82,7 @@ export /**
     merchant_currency: string;
     merchant_data: Issuing.Transaction.MerchantData;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata;
     /**
@@ -101,11 +94,11 @@ export /**
      */
     purchase_details?: Issuing.Transaction.PurchaseDetails | null;
     /**
-     * [Token](https://stripe.com/docs/api/issuing/tokens/object) object used for this transaction. If a network token was not used for this transaction, this field will be null.
+     * [Token](https://docs.stripe.com/api/issuing/tokens/object) object used for this transaction. If a network token was not used for this transaction, this field will be null.
      */
     token?: string | Token | null;
     /**
-     * [Treasury](https://stripe.com/docs/api/treasury) details related to this transaction if it was created on a [FinancialAccount](/docs/api/treasury/financial_accounts
+     * [Treasury](https://docs.stripe.com/api/treasury) details related to this transaction if it was created on a [FinancialAccount](/docs/api/treasury/financial_accounts
      */
     treasury?: Issuing.Transaction.Treasury | null;
     /**
@@ -131,7 +124,7 @@ export declare namespace Issuing {
         }
         interface MerchantData {
             /**
-             * A categorization of the seller's type of business. See our [merchant categories guide](https://stripe.com/docs/issuing/merchant-categories) for a list of possible values.
+             * A categorization of the seller's type of business. See our [merchant categories guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
              */
             category: string;
             /**
@@ -217,11 +210,11 @@ export declare namespace Issuing {
         }
         interface Treasury {
             /**
-             * The Treasury [ReceivedCredit](https://stripe.com/docs/api/treasury/received_credits) representing this Issuing transaction if it is a refund
+             * The Treasury [ReceivedCredit](https://docs.stripe.com/api/treasury/received_credits) representing this Issuing transaction if it is a refund
              */
             received_credit: string | null;
             /**
-             * The Treasury [ReceivedDebit](https://stripe.com/docs/api/treasury/received_debits) representing this Issuing transaction if it is a capture
+             * The Treasury [ReceivedDebit](https://docs.stripe.com/api/treasury/received_debits) representing this Issuing transaction if it is a capture
              */
             received_debit: string | null;
         }
@@ -426,7 +419,7 @@ export declare namespace Issuing {
          */
         expand?: Array<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Emptyable<MetadataParam>;
     }

@@ -19,3 +19,5 @@ export class Issuing {
     this.transactions = new TransactionResource(stripe);
   }
 }
+
+export declare namespace Issuing {}

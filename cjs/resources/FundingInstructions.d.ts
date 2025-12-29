@@ -1,11 +1,5 @@
 import { Address } from '../shared.js';
-export /**
- * Each customer has a [`balance`](https://stripe.com/docs/api/customers/object#customer_object-balance) that is
- * automatically applied to future invoices and payments using the `customer_balance` payment method.
- * Customers can fund this balance by initiating a bank transfer to any account in the
- * `financial_addresses` field.
- * Related guide: [Customer balance funding instructions](https://stripe.com/docs/payments/customer-balance/funding-instructions)
- */ interface FundingInstructions {
+export interface FundingInstructions {
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */

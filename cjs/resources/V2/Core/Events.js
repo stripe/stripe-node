@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Event = void 0;
+exports.EventResource = void 0;
 const StripeResource_js_1 = require("../../../StripeResource.js");
 const stripeMethod = StripeResource_js_1.StripeResource.method;
-class Event extends StripeResource_js_1.StripeResource {
+class EventResource extends StripeResource_js_1.StripeResource {
     retrieve(...args) {
         const transformResponseData = (response) => {
             return this.addFetchRelatedObjectIfNeeded(response);
@@ -54,5 +54,5 @@ class Event extends StripeResource_js_1.StripeResource {
             ]) });
     }
 }
-exports.Event = Event;
+exports.EventResource = EventResource;
 //# sourceMappingURL=Events.js.map

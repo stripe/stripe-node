@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../lib.js';
 import {PaymentMethod} from './PaymentMethods.js';
 import {Mandate} from './Mandates.js';
 import {
@@ -11,7 +10,7 @@ import {
   Metadata,
   Address,
 } from '../shared.js';
-import {Response} from '../lib.js';
+import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export class PaymentRecordResource extends StripeResource {
   /**
@@ -230,7 +229,7 @@ export interface PaymentRecord {
   livemode: boolean;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata;
 
@@ -245,6 +244,11 @@ export interface PaymentRecord {
   processor_details: PaymentRecord.ProcessorDetails;
 
   /**
+   * Indicates who reported the payment.
+   */
+  reported_by: PaymentRecord.ReportedBy;
+
+  /**
    * Shipping information for this payment.
    */
   shipping_details: PaymentRecord.ShippingDetails | null;
@@ -257,7 +261,7 @@ export namespace PaymentRecord {
     currency: string;
 
     /**
-     * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+     * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
      */
     value: number;
   }
@@ -269,7 +273,7 @@ export namespace PaymentRecord {
     currency: string;
 
     /**
-     * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+     * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
      */
     value: number;
   }
@@ -281,7 +285,7 @@ export namespace PaymentRecord {
     currency: string;
 
     /**
-     * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+     * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
      */
     value: number;
   }
@@ -293,7 +297,7 @@ export namespace PaymentRecord {
     currency: string;
 
     /**
-     * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+     * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
      */
     value: number;
   }
@@ -305,7 +309,7 @@ export namespace PaymentRecord {
     currency: string;
 
     /**
-     * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+     * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
      */
     value: number;
   }
@@ -317,7 +321,7 @@ export namespace PaymentRecord {
     currency: string;
 
     /**
-     * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+     * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
      */
     value: number;
   }
@@ -329,7 +333,7 @@ export namespace PaymentRecord {
     currency: string;
 
     /**
-     * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+     * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
      */
     value: number;
   }
@@ -461,6 +465,8 @@ export namespace PaymentRecord {
 
     paypal?: PaymentMethodDetails.Paypal;
 
+    payto?: PaymentMethodDetails.Payto;
+
     pix?: PaymentMethodDetails.Pix;
 
     promptpay?: PaymentMethodDetails.Promptpay;
@@ -484,15 +490,12 @@ export namespace PaymentRecord {
     twint?: PaymentMethodDetails.Twint;
 
     /**
-     * The type of transaction-specific details of the payment method used in the payment. See [PaymentMethod.type](https://stripe.com/docs/api/payment_methods/object#payment_method_object-type) for the full list of possible types.
+     * The type of transaction-specific details of the payment method used in the payment. See [PaymentMethod.type](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type) for the full list of possible types.
      * An additional hash is included on `payment_method_details` with a name matching this value.
      * It contains information specific to the payment method.
      */
     type: string;
 
-    /**
-     * Details of the US Bank Account used for this payment attempt.
-     */
     us_bank_account?: PaymentMethodDetails.UsBankAccount;
 
     wechat?: PaymentMethodDetails.Wechat;
@@ -515,6 +518,8 @@ export namespace PaymentRecord {
      */
     type: 'custom';
   }
+
+  export type ReportedBy = 'self' | 'stripe';
 
   export interface ShippingDetails {
     /**
@@ -595,6 +600,11 @@ export namespace PaymentRecord {
       bank_name: string | null;
 
       /**
+       * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+       */
+      expected_debit_date?: string;
+
+      /**
        * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
        */
       fingerprint: string | null;
@@ -622,12 +632,12 @@ export namespace PaymentRecord {
 
     export interface Affirm {
       /**
-       * ID of the [location](https://stripe.com/docs/api/terminal/locations) that this transaction's reader is assigned to.
+       * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
        */
       location?: string;
 
       /**
-       * ID of the [reader](https://stripe.com/docs/api/terminal/readers) this transaction was made on.
+       * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
        */
       reader?: string;
 
@@ -691,6 +701,11 @@ export namespace PaymentRecord {
       bsb_number: string | null;
 
       /**
+       * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+       */
+      expected_debit_date?: string;
+
+      /**
        * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
        */
       fingerprint: string | null;
@@ -707,6 +722,11 @@ export namespace PaymentRecord {
     }
 
     export interface BacsDebit {
+      /**
+       * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+       */
+      expected_debit_date?: string;
+
       /**
        * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
        */
@@ -817,6 +837,11 @@ export namespace PaymentRecord {
 
     export interface Card {
       /**
+       * The authorization code of the payment.
+       */
+      authorization_code: string | null;
+
+      /**
        * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
        */
       brand: Card.Brand;
@@ -835,6 +860,11 @@ export namespace PaymentRecord {
        * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
        */
       country: string | null;
+
+      /**
+       * A high-level description of the type of cards issued in this range.
+       */
+      description: string | null;
 
       /**
        * Two-digit number representing the card's expiration month.
@@ -859,6 +889,21 @@ export namespace PaymentRecord {
       funding: Card.Funding;
 
       /**
+       * Issuer identification number of the card.
+       */
+      iin: string | null;
+
+      /**
+       * Installment details for this payment.
+       */
+      installments: Card.Installments | null;
+
+      /**
+       * The name of the card's issuing bank.
+       */
+      issuer: string | null;
+
+      /**
        * The last four digits of the card.
        */
       last4: string;
@@ -874,6 +919,16 @@ export namespace PaymentRecord {
       network: Card.Network | null;
 
       /**
+       * Advice code from the card network for the failed payment.
+       */
+      network_advice_code: string | null;
+
+      /**
+       * Decline code from the card network for the failed payment.
+       */
+      network_decline_code: string | null;
+
+      /**
        * If this card has network token credentials, this contains the details of the network token credentials.
        */
       network_token?: Card.NetworkToken | null;
@@ -882,6 +937,11 @@ export namespace PaymentRecord {
        * This is used by the financial networks to identify a transaction. Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data. This value will be present if it is returned by the financial network in the authorization response, and null otherwise.
        */
       network_transaction_id: string | null;
+
+      /**
+       * The transaction type that was passed for an off-session, Merchant-Initiated transaction, one of `recurring` or `unscheduled`.
+       */
+      stored_credential_usage: Card.StoredCredentialUsage | null;
 
       /**
        * Populated if this transaction used 3D Secure authentication.
@@ -968,7 +1028,7 @@ export namespace PaymentRecord {
       iin?: string | null;
 
       /**
-       * Whether this [PaymentIntent](https://stripe.com/docs/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
+       * Whether this [PaymentIntent](https://docs.stripe.com/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
        */
       incremental_authorization_supported: boolean;
 
@@ -1137,7 +1197,7 @@ export namespace PaymentRecord {
 
     export interface Ideal {
       /**
-       * The customer's bank. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `handelsbanken`, `ing`, `knab`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
+       * The customer's bank. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `finom`, `handelsbanken`, `ing`, `knab`, `mollie`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
        */
       bank: Ideal.Bank | null;
 
@@ -1160,6 +1220,11 @@ export namespace PaymentRecord {
        * Last four characters of the IBAN.
        */
       iban_last4: string | null;
+
+      /**
+       * Unique transaction ID generated by iDEAL.
+       */
+      transaction_id: string | null;
 
       /**
        * Owner's verified full name. Values are verified or provided by iDEAL directly
@@ -1385,6 +1450,11 @@ export namespace PaymentRecord {
       branch_code: string;
 
       /**
+       * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+       */
+      expected_debit_date?: string;
+
+      /**
        * Last four digits of the bank account number.
        */
       last4: string;
@@ -1437,12 +1507,12 @@ export namespace PaymentRecord {
 
     export interface Paynow {
       /**
-       * ID of the [location](https://stripe.com/docs/api/terminal/locations) that this transaction's reader is assigned to.
+       * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
        */
       location?: string;
 
       /**
-       * ID of the [reader](https://stripe.com/docs/api/terminal/readers) this transaction was made on.
+       * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
        */
       reader?: string;
 
@@ -1484,6 +1554,28 @@ export namespace PaymentRecord {
        * A unique ID generated by PayPal for this transaction.
        */
       transaction_id: string | null;
+    }
+
+    export interface Payto {
+      /**
+       * Bank-State-Branch number of the bank account.
+       */
+      bsb_number: string | null;
+
+      /**
+       * Last four digits of the bank account number.
+       */
+      last4: string | null;
+
+      /**
+       * ID of the mandate used to make this payment.
+       */
+      mandate?: string;
+
+      /**
+       * The PayID alias for the bank account.
+       */
+      pay_id: string | null;
     }
 
     export interface Pix {
@@ -1562,6 +1654,11 @@ export namespace PaymentRecord {
       country: string | null;
 
       /**
+       * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+       */
+      expected_debit_date?: string;
+
+      /**
        * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
        */
       fingerprint: string | null;
@@ -1572,7 +1669,7 @@ export namespace PaymentRecord {
       last4: string | null;
 
       /**
-       * Find the ID of the mandate used for this payment under the [payment_method_details.sepa_debit.mandate](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-sepa_debit-mandate) property on the Charge. Use this mandate ID to [retrieve the Mandate](https://stripe.com/docs/api/mandates/retrieve).
+       * Find the ID of the mandate used for this payment under the [payment_method_details.sepa_debit.mandate](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-sepa_debit-mandate) property on the Charge. Use this mandate ID to [retrieve the Mandate](https://docs.stripe.com/api/mandates/retrieve).
        */
       mandate: string | null;
     }
@@ -1648,14 +1745,25 @@ export namespace PaymentRecord {
     export interface Twint {}
 
     export interface UsBankAccount {
+      /**
+       * The type of entity that holds the account. This can be either 'individual' or 'company'.
+       */
       account_holder_type: UsBankAccount.AccountHolderType | null;
 
+      /**
+       * The type of the bank account. This can be either 'checking' or 'savings'.
+       */
       account_type: UsBankAccount.AccountType | null;
 
       /**
        * Name of the bank associated with the bank account.
        */
       bank_name: string | null;
+
+      /**
+       * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+       */
+      expected_debit_date?: string | null;
 
       /**
        * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
@@ -1673,12 +1781,12 @@ export namespace PaymentRecord {
       mandate?: string | Mandate;
 
       /**
-       * Reference number to locate ACH payments with customer's bank.
+       * The ACH payment reference for this transaction.
        */
       payment_reference: string | null;
 
       /**
-       * Routing number of the bank account.
+       * The routing number for the bank account.
        */
       routing_number: string | null;
     }
@@ -1692,12 +1800,12 @@ export namespace PaymentRecord {
       fingerprint: string | null;
 
       /**
-       * ID of the [location](https://stripe.com/docs/api/terminal/locations) that this transaction's reader is assigned to.
+       * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
        */
       location?: string;
 
       /**
-       * ID of the [reader](https://stripe.com/docs/api/terminal/readers) this transaction was made on.
+       * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
        */
       reader?: string;
 
@@ -1796,6 +1904,10 @@ export namespace PaymentRecord {
 
       export type Funding = 'credit' | 'debit' | 'prepaid' | 'unknown';
 
+      export interface Installments {
+        plan: Installments.Plan | null;
+      }
+
       export type Network =
         | 'amex'
         | 'cartes_bancaires'
@@ -1816,6 +1928,8 @@ export namespace PaymentRecord {
          */
         used: boolean;
       }
+
+      export type StoredCredentialUsage = 'recurring' | 'unscheduled';
 
       export interface ThreeDSecure {
         authentication_flow: ThreeDSecure.AuthenticationFlow | null;
@@ -1857,6 +1971,29 @@ export namespace PaymentRecord {
           | 'unchecked';
 
         export type CvcCheck = 'fail' | 'pass' | 'unavailable' | 'unchecked';
+      }
+
+      export namespace Installments {
+        export interface Plan {
+          /**
+           * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
+           */
+          count: number | null;
+
+          /**
+           * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card. One of `month`.
+           */
+          interval: 'month' | null;
+
+          /**
+           * Type of installment plan, one of `fixed_count`, `revolving`, or `bonus`.
+           */
+          type: Plan.Type;
+        }
+
+        export namespace Plan {
+          export type Type = 'bonus' | 'fixed_count' | 'revolving';
+        }
       }
 
       export namespace ThreeDSecure {
@@ -2053,9 +2190,11 @@ export namespace PaymentRecord {
         | 'asn_bank'
         | 'bunq'
         | 'buut'
+        | 'finom'
         | 'handelsbanken'
         | 'ing'
         | 'knab'
+        | 'mollie'
         | 'moneyou'
         | 'n26'
         | 'nn'
@@ -2073,10 +2212,12 @@ export namespace PaymentRecord {
         | 'BITSNL2A'
         | 'BUNQNL2A'
         | 'BUUTNL2A'
+        | 'FNOMNL22'
         | 'FVLBNL22'
         | 'HANDNL2A'
         | 'INGBNL2A'
         | 'KNABNL2H'
+        | 'MLLENL2A'
         | 'MOYONL21'
         | 'NNBANL2G'
         | 'NTSBDEB1'
@@ -2409,7 +2550,7 @@ export interface PaymentRecordReportPaymentParams {
   guaranteed?: PaymentRecordReportPaymentParams.Guaranteed;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 
@@ -2436,7 +2577,7 @@ export namespace PaymentRecordReportPaymentParams {
     currency: string;
 
     /**
-     * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+     * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
      */
     value: number;
   }
@@ -2604,7 +2745,7 @@ export interface PaymentRecordReportPaymentAttemptParams {
   guaranteed?: PaymentRecordReportPaymentAttemptParams.Guaranteed;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 
@@ -2771,7 +2912,7 @@ export interface PaymentRecordReportPaymentAttemptInformationalParams {
   expand?: Array<string>;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 
@@ -2839,7 +2980,7 @@ export interface PaymentRecordReportRefundParams {
   refunded: PaymentRecordReportRefundParams.Refunded;
 
   /**
-   * A positive integer in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) representing how much of this payment to refund. Can refund only up to the remaining, unrefunded amount of the payment.
+   * A positive integer in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) representing how much of this payment to refund. Can refund only up to the remaining, unrefunded amount of the payment.
    */
   amount?: PaymentRecordReportRefundParams.Amount;
 
@@ -2854,7 +2995,7 @@ export interface PaymentRecordReportRefundParams {
   initiated_at?: number;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 }
@@ -2885,7 +3026,7 @@ export namespace PaymentRecordReportRefundParams {
     currency: string;
 
     /**
-     * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+     * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
      */
     value: number;
   }

@@ -1,9 +1,8 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { File } from './../Files.js';
 import { PhysicalBundle } from './PhysicalBundles.js';
 import { MetadataParam, Emptyable, PaginationParams, Metadata } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class PersonalizationDesignResource extends StripeResource {
     /**
      * Returns a list of personalization design objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -24,9 +23,7 @@ export declare class PersonalizationDesignResource extends StripeResource {
      */
     update(id: string, params?: Issuing.PersonalizationDesignUpdateParams, options?: RequestOptions): Promise<Response<PersonalizationDesign>>;
 }
-export /**
- * A Personalization Design is a logical grouping of a Physical Bundle, card logo, and carrier text that represents a product line.
- */ interface PersonalizationDesign {
+export interface PersonalizationDesign {
     /**
      * Unique identifier for the object.
      */
@@ -56,7 +53,7 @@ export /**
      */
     lookup_key: string | null;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata;
     /**
@@ -144,7 +141,7 @@ export declare namespace Issuing {
          */
         lookup_key?: string;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
         /**
@@ -214,7 +211,7 @@ export declare namespace Issuing {
          */
         lookup_key?: Emptyable<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
         /**

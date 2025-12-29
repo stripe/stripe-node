@@ -1,7 +1,6 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { CustomerCashBalanceTransaction } from './../CustomerCashBalanceTransactions.js';
-import { Response } from '../../lib.js';
+import { RequestOptions, Response } from '../../lib.js';
 export declare class CustomerResource extends StripeResource {
     /**
      * Create an incoming testmode bank transfer
@@ -11,7 +10,7 @@ export declare class CustomerResource extends StripeResource {
 export declare namespace TestHelpers {
     interface CustomerFundCashBalanceParams {
         /**
-         * Amount to be used for this test cash balance transaction. A positive integer representing how much to fund in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to fund $1.00 or 100 to fund ¥100, a zero-decimal currency).
+         * Amount to be used for this test cash balance transaction. A positive integer representing how much to fund in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) (e.g., 100 cents to fund $1.00 or 100 to fund ¥100, a zero-decimal currency).
          */
         amount: number;
         /**
@@ -23,7 +22,7 @@ export declare namespace TestHelpers {
          */
         expand?: Array<string>;
         /**
-         * A description of the test funding. This simulates free-text references supplied by customers when making bank transfers to their cash balance. You can use this to test how Stripe's [reconciliation algorithm](https://stripe.com/docs/payments/customer-balance/reconciliation) applies to different user inputs.
+         * A description of the test funding. This simulates free-text references supplied by customers when making bank transfers to their cash balance. You can use this to test how Stripe's [reconciliation algorithm](https://docs.stripe.com/payments/customer-balance/reconciliation) applies to different user inputs.
          */
         reference?: string;
     }

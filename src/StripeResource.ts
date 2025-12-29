@@ -16,7 +16,7 @@ import {
   UrlInterpolator,
 } from './Types.js';
 import {HttpClientResponseInterface} from './net/HttpClient.js';
-import {StripeClient} from './stripe.core.js';
+import {Stripe} from './stripe.core.js';
 
 /**
  * Encapsulates request logic for a Stripe Resource
@@ -28,7 +28,7 @@ class StripeResource implements StripeResourceObject {
   static MAX_BUFFERED_REQUEST_METRICS = 100;
 
   // Instance properties
-  _stripe!: StripeClient;
+  _stripe!: Stripe;
   // Note: path is declared without an initializer so that subclasses created via
   // protoExtend can set it on the prototype and it won't be shadowed by an instance property
   path!: UrlInterpolator;
@@ -46,7 +46,7 @@ class StripeResource implements StripeResourceObject {
   // be thrown, and they will be passed to the callback/promise.
   validateRequest: any = null;
 
-  constructor(stripe: StripeClient, deprecatedUrlData?: never) {
+  constructor(stripe: Stripe, deprecatedUrlData?: never) {
     this._stripe = stripe;
     if (deprecatedUrlData) {
       throw new Error(
@@ -66,7 +66,7 @@ class StripeResource implements StripeResourceObject {
     this.initialize(stripe, deprecatedUrlData);
   }
 
-  initialize(_stripe?: StripeClient, _deprecatedUrlData?: never): void {}
+  initialize(_stripe?: Stripe, _deprecatedUrlData?: never): void {}
 
   createFullPath(
     commandPath: string | ((urlData: Record<string, unknown>) => string),

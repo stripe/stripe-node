@@ -1,7 +1,6 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { PaginationParams } from '../shared.js';
-import { Response, ApiListPromise } from '../lib.js';
+import { RequestOptions, Response, ApiListPromise } from '../lib.js';
 export declare class ApplePayDomainResource extends StripeResource {
     /**
      * Delete an apple pay domain.
@@ -23,9 +22,7 @@ export declare class ApplePayDomainResource extends StripeResource {
      */
     create(params: ApplePayDomainCreateParams, options?: RequestOptions): Promise<Response<ApplePayDomain>>;
 }
-export /**
- * The ApplePayDomain object.
- */ interface ApplePayDomain {
+export interface ApplePayDomain {
     /**
      * Unique identifier for the object.
      */
@@ -48,9 +45,7 @@ export /**
      */
     livemode: boolean;
 }
-export /**
- * The DeletedApplePayDomain object.
- */ interface DeletedApplePayDomain {
+export interface DeletedApplePayDomain {
     /**
      * Unique identifier for the object.
      */

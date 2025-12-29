@@ -1,15 +1,12 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
-import { Response } from '../../lib.js';
+import { RequestOptions, Response } from '../../lib.js';
 export declare class MeterEventResource extends StripeResource {
     /**
      * Creates a billing meter event.
      */
     create(params: Billing.MeterEventCreateParams, options?: RequestOptions): Promise<Response<MeterEvent>>;
 }
-export /**
- * Meter events represent actions that customers take in your system. You can use meter events to bill a customer based on their usage. Meter events are associated with billing meters, which define both the contents of the event's payload and how to aggregate those events.
- */ interface MeterEvent {
+export interface MeterEvent {
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
@@ -31,7 +28,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * The payload of the event. This contains the fields corresponding to a meter's `customer_mapping.event_payload_key` (default is `stripe_customer_id`) and `value_settings.event_payload_key` (default is `value`). Read more about the [payload](https://stripe.com/docs/billing/subscriptions/usage-based/recording-usage#payload-key-overrides).
+     * The payload of the event. This contains the fields corresponding to a meter's `customer_mapping.event_payload_key` (default is `stripe_customer_id`) and `value_settings.event_payload_key` (default is `value`). Read more about the [payload](https://docs.stripe.com/billing/subscriptions/usage-based/meters/configure#meter-configuration-attributes).
      */
     payload: {
         [key: string]: string;
@@ -48,7 +45,7 @@ export declare namespace Billing {
          */
         event_name: string;
         /**
-         * The payload of the event. This must contain the fields corresponding to a meter's `customer_mapping.event_payload_key` (default is `stripe_customer_id`) and `value_settings.event_payload_key` (default is `value`). Read more about the [payload](https://docs.stripe.com/billing/subscriptions/usage-based/recording-usage#payload-key-overrides).
+         * The payload of the event. This must contain the fields corresponding to a meter's `customer_mapping.event_payload_key` (default is `stripe_customer_id`) and `value_settings.event_payload_key` (default is `value`). Read more about the [payload](https://docs.stripe.com/billing/subscriptions/usage-based/meters/configure#meter-configuration-attributes).
          */
         payload: {
             [key: string]: string;

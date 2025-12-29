@@ -1,11 +1,13 @@
-import { StripeClient } from '../../stripe.core.js';
-import { AlertResource } from './Alerts.js';
-import { CreditBalanceSummaryResource } from './CreditBalanceSummary.js';
-import { CreditBalanceTransactionResource } from './CreditBalanceTransactions.js';
-import { CreditGrantResource } from './CreditGrants.js';
-import { MeterResource } from './Meters.js';
-import { MeterEventResource } from './MeterEvents.js';
-import { MeterEventAdjustmentResource } from './MeterEventAdjustments.js';
+import { Stripe } from '../../stripe.core.js';
+import { Alert, AlertResource } from './Alerts.js';
+import { CreditBalanceSummary, CreditBalanceSummaryResource } from './CreditBalanceSummary.js';
+import { CreditBalanceTransaction, CreditBalanceTransactionResource } from './CreditBalanceTransactions.js';
+import { CreditGrant, CreditGrantResource } from './CreditGrants.js';
+import { Meter, MeterResource } from './Meters.js';
+import { MeterEvent, MeterEventResource } from './MeterEvents.js';
+import { MeterEventAdjustment, MeterEventAdjustmentResource } from './MeterEventAdjustments.js';
+import { AlertTriggered } from './AlertTriggereds.js';
+import { MeterEventSummary } from './MeterEventSummaries.js';
 export { Alert } from './Alerts.js';
 export { CreditBalanceSummary } from './CreditBalanceSummary.js';
 export { CreditBalanceTransaction } from './CreditBalanceTransactions.js';
@@ -22,5 +24,16 @@ export declare class Billing {
     meters: MeterResource;
     meterEvents: MeterEventResource;
     meterEventAdjustments: MeterEventAdjustmentResource;
-    constructor(stripe: StripeClient);
+    constructor(stripe: Stripe);
+}
+export declare namespace Billing {
+    export { Alert };
+    export { CreditBalanceSummary };
+    export { CreditBalanceTransaction };
+    export { CreditGrant };
+    export { Meter };
+    export { MeterEvent };
+    export { MeterEventAdjustment };
+    export { AlertTriggered };
+    export { MeterEventSummary };
 }

@@ -1,10 +1,9 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RequestOptions} from '../../../Types.js';
 import {Event} from './Events.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
-import {ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 import {DeletedObject} from './../../V2/DeletedObject.js';
 const stripeMethod = StripeResource.method;
 export class EventDestinationResource extends StripeResource {
@@ -142,10 +141,7 @@ export class EventDestinationResource extends StripeResource {
     }).call(this, ...args);
   }
 }
-export /**
- * Set up an event destination to receive events from Stripe across multiple destination types, including [webhook endpoints](https://docs.stripe.com/webhooks) and [Amazon EventBridge](https://docs.stripe.com/event-destinations/eventbridge). Event destinations support receiving [thin events](https://docs.stripe.com/api/v2/events) and [snapshot events](https://docs.stripe.com/api/events).
- */
-interface EventDestination {
+export interface EventDestination {
   /**
    * Unique identifier for the object.
    */

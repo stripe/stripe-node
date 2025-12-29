@@ -1,15 +1,7 @@
 import { Account } from './Accounts.js';
 import { Customer, DeletedCustomer } from './Customers.js';
 import { Metadata } from '../shared.js';
-export /**
- * These bank accounts are payment methods on `Customer` objects.
- *
- * On the other hand [External Accounts](https://docs.stripe.com/api#external_accounts) are transfer
- * destinations on `Account` objects for connected accounts.
- * They can be bank accounts or debit cards as well, and are documented in the links above.
- *
- * Related guide: [Bank debits and transfers](https://docs.stripe.com/payments/bank-debits-transfers)
- */ interface BankAccount {
+export interface BankAccount {
     /**
      * Unique identifier for the object.
      */
@@ -67,7 +59,7 @@ export /**
      */
     fingerprint: string | null;
     /**
-     * Information about the [upcoming new requirements for the bank account](https://stripe.com/docs/connect/custom-accounts/future-requirements), including what information needs to be collected, and by when.
+     * Information about the [upcoming new requirements for the bank account](https://docs.stripe.com/connect/custom-accounts/future-requirements), including what information needs to be collected, and by when.
      */
     future_requirements?: BankAccount.FutureRequirements | null;
     /**
@@ -75,7 +67,7 @@ export /**
      */
     last4: string;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata?: Metadata | null;
     /**
@@ -87,15 +79,13 @@ export /**
      */
     routing_number: string | null;
     /**
-     * For bank accounts, possible values are `new`, `validated`, `verified`, `verification_failed`, or `errored`. A bank account that hasn't had any activity or validation performed is `new`. If Stripe can determine that the bank account exists, its status will be `validated`. Note that there often isn't enough information to know (e.g., for smaller credit unions), and the validation is not always run. If customer bank account verification has succeeded, the bank account status will be `verified`. If the verification failed for any reason, such as microdeposit failure, the status will be `verification_failed`. If a payout sent to this bank account fails, we'll set the status to `errored` and will not continue to send [scheduled payouts](https://stripe.com/docs/payouts#payout-schedule) until the bank details are updated.
+     * For bank accounts, possible values are `new`, `validated`, `verified`, `verification_failed`, `tokenized_account_number_deactivated` or `errored`. A bank account that hasn't had any activity or validation performed is `new`. If Stripe can determine that the bank account exists, its status will be `validated`. Note that there often isn't enough information to know (e.g., for smaller credit unions), and the validation is not always run. If customer bank account verification has succeeded, the bank account status will be `verified`. If the verification failed for any reason, such as microdeposit failure, the status will be `verification_failed`. If the status is `tokenized_account_number_deactivated`, the account utilizes a tokenized account number which has been deactivated due to expiration or revocation. This account will need to be reverified to continue using it for money movement. If a payout sent to this bank account fails, we'll set the status to `errored` and will not continue to send [scheduled payouts](https://stripe.com/docs/payouts#payout-schedule) until the bank details are updated.
      *
-     * For external accounts, possible values are `new`, `errored` and `verification_failed`. If a payout fails, the status is set to `errored` and scheduled payouts are stopped until account details are updated. In the US and India, if we can't [verify the owner of the bank account](https://support.stripe.com/questions/bank-account-ownership-verification), we'll set the status to `verification_failed`. Other validations aren't run against external accounts because they're only used for payouts. This means the other statuses don't apply.
+     * For external accounts, possible values are `new`, `errored`, `verification_failed`, and `tokenized_account_number_deactivated`. If a payout fails, the status is set to `errored` and scheduled payouts are stopped until account details are updated. In the US and India, if we can't [verify the owner of the bank account](https://support.stripe.com/questions/bank-account-ownership-verification), we'll set the status to `verification_failed`. Other validations aren't run against external accounts because they're only used for payouts. This means the other statuses don't apply.
      */
     status: string;
 }
-export /**
- * The DeletedBankAccount object.
- */ interface DeletedBankAccount {
+export interface DeletedBankAccount {
     /**
      * Unique identifier for the object.
      */
@@ -117,37 +107,37 @@ export declare namespace BankAccount {
     type AvailablePayoutMethod = 'instant' | 'standard';
     interface FutureRequirements {
         /**
-         * Fields that need to be collected to keep the external account enabled. If not collected by `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
+         * Fields that need to be resolved to keep the external account enabled. If not resolved by `current_deadline`, these fields will appear in `past_due` as well, and the account is disabled.
          */
         currently_due: Array<string> | null;
         /**
-         * Fields that are `currently_due` and need to be collected again because validation or verification failed.
+         * Details about validation and verification failures for `due` requirements that must be resolved.
          */
         errors: Array<FutureRequirements.Error> | null;
         /**
-         * Fields that weren't collected by `current_deadline`. These fields need to be collected to enable the external account.
+         * Fields that haven't been resolved by `current_deadline`. These fields need to be resolved to enable the external account.
          */
         past_due: Array<string> | null;
         /**
-         * Fields that might become required depending on the results of verification or review. It's an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`. Fields might appear in `eventually_due`, `currently_due`, or `past_due` and in `pending_verification` if verification fails but another verification is still pending.
+         * Fields that are being reviewed, or might become required depending on the results of a review. If the review fails, these fields can move to `eventually_due`, `currently_due`, `past_due` or `alternatives`. Fields might appear in `eventually_due`, `currently_due`, `past_due` or `alternatives` and in `pending_verification` if one verification fails but another is still pending.
          */
         pending_verification: Array<string> | null;
     }
     interface Requirements {
         /**
-         * Fields that need to be collected to keep the external account enabled. If not collected by `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
+         * Fields that need to be resolved to keep the external account enabled. If not resolved by `current_deadline`, these fields will appear in `past_due` as well, and the account is disabled.
          */
         currently_due: Array<string> | null;
         /**
-         * Fields that are `currently_due` and need to be collected again because validation or verification failed.
+         * Details about validation and verification failures for `due` requirements that must be resolved.
          */
         errors: Array<Requirements.Error> | null;
         /**
-         * Fields that weren't collected by `current_deadline`. These fields need to be collected to enable the external account.
+         * Fields that haven't been resolved by `current_deadline`. These fields need to be resolved to enable the external account.
          */
         past_due: Array<string> | null;
         /**
-         * Fields that might become required depending on the results of verification or review. It's an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`. Fields might appear in `eventually_due`, `currently_due`, or `past_due` and in `pending_verification` if verification fails but another verification is still pending.
+         * Fields that are being reviewed, or might become required depending on the results of a review. If the review fails, these fields can move to `eventually_due`, `currently_due`, `past_due` or `alternatives`. Fields might appear in `eventually_due`, `currently_due`, `past_due` or `alternatives` and in `pending_verification` if one verification fails but another is still pending.
          */
         pending_verification: Array<string> | null;
     }

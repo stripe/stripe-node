@@ -1,8 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../lib.js';
-import {Response} from '../../lib.js';
+import {RequestOptions, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export class MeterEventAdjustmentResource extends StripeResource {
   /**

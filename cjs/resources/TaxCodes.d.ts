@@ -1,7 +1,6 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { PaginationParams } from '../shared.js';
-import { ApiListPromise, Response } from '../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../lib.js';
 export declare class TaxCodeResource extends StripeResource {
     /**
      * A list of [all tax codes available](https://stripe.com/docs/tax/tax-categories) to add to Products in order to allow specific tax calculations.
@@ -14,9 +13,7 @@ export declare class TaxCodeResource extends StripeResource {
     retrieve(id: string, params?: TaxCodeRetrieveParams, options?: RequestOptions): Promise<Response<TaxCode>>;
     retrieve(id: string, options?: RequestOptions): Promise<Response<TaxCode>>;
 }
-export /**
- * [Tax codes](https://stripe.com/docs/tax/tax-categories) classify goods and services for tax purposes.
- */ interface TaxCode {
+export interface TaxCode {
     /**
      * Unique identifier for the object.
      */

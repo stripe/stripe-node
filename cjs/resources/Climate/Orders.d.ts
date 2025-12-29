@@ -1,9 +1,8 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { Product } from './Products.js';
 import { Supplier } from './Suppliers.js';
 import { MetadataParam, Emptyable, PaginationParams, Metadata } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class OrderResource extends StripeResource {
     /**
      * Lists all Climate order objects. The orders are returned sorted by creation date, with the
@@ -34,10 +33,7 @@ export declare class OrderResource extends StripeResource {
     cancel(id: string, params?: Climate.OrderCancelParams, options?: RequestOptions): Promise<Response<Order>>;
     cancel(id: string, options?: RequestOptions): Promise<Response<Order>>;
 }
-export /**
- * Orders represent your intent to purchase a particular Climate product. When you create an order, the
- * payment is deducted from your merchant balance.
- */ interface Order {
+export interface Order {
     /**
      * Unique identifier for the object.
      */
@@ -104,7 +100,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata;
     /**
@@ -205,7 +201,7 @@ export declare namespace Climate {
          */
         expand?: Array<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
         /**
@@ -241,7 +237,7 @@ export declare namespace Climate {
          */
         expand?: Array<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
     }

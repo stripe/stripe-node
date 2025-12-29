@@ -1,9 +1,8 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../lib.js';
 import {Customer} from './Customers.js';
-import {Response} from '../lib.js';
+import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export class CustomerSessionResource extends StripeResource {
   /**
@@ -47,6 +46,11 @@ export interface CustomerSession {
    * The Customer the Customer Session was created for.
    */
   customer: string | Customer;
+
+  /**
+   * The Account that the Customer Session was created for.
+   */
+  customer_account: string | null;
 
   /**
    * The timestamp at which this Customer Session will expire.
@@ -285,14 +289,19 @@ export namespace CustomerSession {
 }
 export interface CustomerSessionCreateParams {
   /**
-   * Configuration for each component. Exactly 1 component must be enabled.
+   * Configuration for each component. At least 1 component must be enabled.
    */
   components: CustomerSessionCreateParams.Components;
 
   /**
    * The ID of an existing customer for which to create the Customer Session.
    */
-  customer: string;
+  customer?: string;
+
+  /**
+   * The ID of an existing Account for which to create the Customer Session.
+   */
+  customer_account?: string;
 
   /**
    * Specifies which fields in the response should be expanded.

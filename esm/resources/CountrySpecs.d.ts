@@ -1,7 +1,6 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { PaginationParams } from '../shared.js';
-import { ApiListPromise, Response } from '../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../lib.js';
 export declare class CountrySpecResource extends StripeResource {
     /**
      * Lists all Country Spec objects available in the API.
@@ -14,14 +13,7 @@ export declare class CountrySpecResource extends StripeResource {
     retrieve(id: string, params?: CountrySpecRetrieveParams, options?: RequestOptions): Promise<Response<CountrySpec>>;
     retrieve(id: string, options?: RequestOptions): Promise<Response<CountrySpec>>;
 }
-export /**
- * Stripe needs to collect certain pieces of information about each account
- * created. These requirements can differ depending on the account's country. The
- * Country Specs API makes these rules available to your integration.
- *
- * You can also view the information from this API call as [an online
- * guide](https://docs.stripe.com/docs/connect/required-verification-information).
- */ interface CountrySpec {
+export interface CountrySpec {
     /**
      * Unique identifier for the object. Represented as the ISO country code for this country.
      */

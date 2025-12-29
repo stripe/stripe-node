@@ -2,8 +2,10 @@
 
 import {Discount, DeletedDiscount} from './Discounts.js';
 import {Subscription} from './Subscriptions.js';
+import {Price} from './Prices.js';
 import * as Billing from './Billing/index.js';
 import {Metadata} from '../shared.js';
+import {RequestOptions} from '../lib.js';
 export interface InvoiceLineItem {
   /**
    * Unique identifier for the object.
@@ -56,7 +58,7 @@ export interface InvoiceLineItem {
   livemode: boolean;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription`, `metadata` reflects the current metadata from the subscription associated with the line item, unless the invoice line was directly updated with different metadata after creation.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription`, `metadata` reflects the current metadata from the subscription associated with the line item, unless the invoice line was directly updated with different metadata after creation.
    */
   metadata: Metadata;
 
@@ -83,6 +85,11 @@ export interface InvoiceLineItem {
   quantity: number | null;
 
   subscription: string | Subscription | null;
+
+  /**
+   * The subtotal of the line item, in cents (or local equivalent), before any discounts or taxes.
+   */
+  subtotal: number;
 
   /**
    * The tax information of the line item.
@@ -310,7 +317,7 @@ export namespace InvoiceLineItem {
       /**
        * The ID of the price this item is associated with.
        */
-      price: string;
+      price: string | Price;
 
       /**
        * The ID of the product this item is associated with.
@@ -323,6 +330,9 @@ export namespace InvoiceLineItem {
     export type TaxBehavior = 'exclusive' | 'inclusive';
 
     export interface TaxRateDetails {
+      /**
+       * ID of the tax rate
+       */
       tax_rate: string;
     }
 

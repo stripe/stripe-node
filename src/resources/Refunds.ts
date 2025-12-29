@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../lib.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
 import {Charge} from './Charges.js';
 import {PaymentIntent} from './PaymentIntents.js';
@@ -13,7 +12,7 @@ import {
   RangeQueryParam,
   Metadata,
 } from '../shared.js';
-import {ApiListPromise, Response} from '../lib.js';
+import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export class RefundResource extends StripeResource {
   /**
@@ -167,7 +166,7 @@ export interface Refund {
   instructions_email?: string;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata | null;
 
@@ -201,7 +200,7 @@ export interface Refund {
   source_transfer_reversal: string | TransferReversal | null;
 
   /**
-   * Status of the refund. This can be `pending`, `requires_action`, `succeeded`, `failed`, or `canceled`. Learn more about [failed refunds](https://stripe.com/docs/refunds#failed-refunds).
+   * Status of the refund. This can be `pending`, `requires_action`, `succeeded`, `failed`, or `canceled`. Learn more about [failed refunds](https://docs.stripe.com/refunds#failed-refunds).
    */
   status: string | null;
 
@@ -250,6 +249,8 @@ export namespace Refund {
 
     klarna?: DestinationDetails.Klarna;
 
+    mb_way?: DestinationDetails.MbWay;
+
     multibanco?: DestinationDetails.Multibanco;
 
     mx_bank_transfer?: DestinationDetails.MxBankTransfer;
@@ -271,6 +272,8 @@ export namespace Refund {
     swish?: DestinationDetails.Swish;
 
     th_bank_transfer?: DestinationDetails.ThBankTransfer;
+
+    twint?: DestinationDetails.Twint;
 
     /**
      * The type of transaction-specific details of the payment method used in the refund (e.g., `card`). An additional hash is included on `destination_details` with a name matching this value. It contains information specific to the refund transaction.
@@ -435,6 +438,18 @@ export namespace Refund {
 
     export interface Klarna {}
 
+    export interface MbWay {
+      /**
+       * The reference assigned to the refund.
+       */
+      reference: string | null;
+
+      /**
+       * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+       */
+      reference_status: string | null;
+    }
+
     export interface Multibanco {
       /**
        * The reference assigned to the refund.
@@ -517,6 +532,8 @@ export namespace Refund {
       reference_status: string | null;
     }
 
+    export interface Twint {}
+
     export interface UsBankTransfer {
       /**
        * The reference assigned to the refund.
@@ -592,7 +609,7 @@ export interface RefundCreateParams {
   instructions_email?: string;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 
@@ -607,7 +624,7 @@ export interface RefundCreateParams {
   payment_intent?: string;
 
   /**
-   * String indicating the reason for the refund. If set, possible values are `duplicate`, `fraudulent`, and `requested_by_customer`. If you believe the charge to be fraudulent, specifying `fraudulent` as the reason will add the associated card and email to your [block lists](https://stripe.com/docs/radar/lists), and will also help us improve our fraud detection algorithms.
+   * String indicating the reason for the refund. If set, possible values are `duplicate`, `fraudulent`, and `requested_by_customer`. If you believe the charge to be fraudulent, specifying `fraudulent` as the reason will add the associated card and email to your [block lists](https://docs.stripe.com/radar/lists), and will also help us improve our fraud detection algorithms.
    */
   reason?: RefundCreateParams.Reason;
 
@@ -639,7 +656,7 @@ export interface RefundUpdateParams {
   expand?: Array<string>;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 }

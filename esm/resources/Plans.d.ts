@@ -1,8 +1,7 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { Product, DeletedProduct } from './Products.js';
 import { Emptyable, MetadataParam, PaginationParams, RangeQueryParam, Metadata } from '../shared.js';
-import { Response, ApiListPromise } from '../lib.js';
+import { RequestOptions, Response, ApiListPromise } from '../lib.js';
 export declare class PlanResource extends StripeResource {
     /**
      * Deleting plans means new subscribers can't be added. Existing subscribers aren't affected.
@@ -28,16 +27,7 @@ export declare class PlanResource extends StripeResource {
      */
     create(params: PlanCreateParams, options?: RequestOptions): Promise<Response<Plan>>;
 }
-export /**
- * You can now model subscriptions more flexibly using the [Prices API](https://stripe.com/docs/api#prices). It replaces the Plans API and is backwards compatible to simplify your migration.
- *
- * Plans define the base price, currency, and billing cycle for recurring purchases of products.
- * [Products](https://stripe.com/docs/api#products) help you track inventory or provisioning, and plans help you track pricing. Different physical goods or levels of service should be represented by products, and pricing options should be represented by plans. This approach lets you change prices without having to change your provisioning scheme.
- *
- * For example, you might have a single "gold" product that has plans for $10/month, $100/year, €9/month, and €90/year.
- *
- * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription) and more about [products and prices](https://stripe.com/docs/products-prices/overview).
- */ interface Plan {
+export interface Plan {
     /**
      * Unique identifier for the object.
      */
@@ -87,7 +77,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata | null;
     /**
@@ -115,7 +105,7 @@ export /**
      */
     transform_usage: Plan.TransformUsage | null;
     /**
-     * Default number of trial days when subscribing a customer to this plan using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
+     * Default number of trial days when subscribing a customer to this plan using [`trial_from_plan=true`](https://docs.stripe.com/api#create_subscription-trial_from_plan).
      */
     trial_period_days: number | null;
     /**
@@ -123,9 +113,7 @@ export /**
      */
     usage_type: Plan.UsageType;
 }
-export /**
- * The DeletedPlan object.
- */ interface DeletedPlan {
+export interface DeletedPlan {
     /**
      * Unique identifier for the object.
      */
@@ -218,7 +206,7 @@ export interface PlanCreateParams {
      */
     interval_count?: number;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
     /**
@@ -243,7 +231,7 @@ export interface PlanCreateParams {
      */
     transform_usage?: PlanCreateParams.TransformUsage;
     /**
-     * Default number of trial days when subscribing a customer to this plan using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
+     * Default number of trial days when subscribing a customer to this plan using [`trial_from_plan=true`](https://docs.stripe.com/api#create_subscription-trial_from_plan).
      */
     trial_period_days?: number;
     /**
@@ -264,7 +252,7 @@ export declare namespace PlanCreateParams {
          */
         id?: string;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
         /**
@@ -278,7 +266,7 @@ export declare namespace PlanCreateParams {
          */
         statement_descriptor?: string;
         /**
-         * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+         * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
          */
         tax_code?: string;
         /**
@@ -340,7 +328,7 @@ export interface PlanUpdateParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
     /**
@@ -352,7 +340,7 @@ export interface PlanUpdateParams {
      */
     product?: string;
     /**
-     * Default number of trial days when subscribing a customer to this plan using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
+     * Default number of trial days when subscribing a customer to this plan using [`trial_from_plan=true`](https://docs.stripe.com/api#create_subscription-trial_from_plan).
      */
     trial_period_days?: number;
 }

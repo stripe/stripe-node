@@ -1,7 +1,7 @@
-import { StripeClient } from '../../../stripe.core.js';
-import { MeterEventResource } from './MeterEvents.js';
-import { MeterEventAdjustmentResource } from './MeterEventAdjustments.js';
-import { MeterEventSessionResource } from './MeterEventSession.js';
+import { Stripe } from '../../../stripe.core.js';
+import { MeterEvent, MeterEventResource } from './MeterEvents.js';
+import { MeterEventAdjustment, MeterEventAdjustmentResource } from './MeterEventAdjustments.js';
+import { MeterEventSession, MeterEventSessionResource } from './MeterEventSession.js';
 import { MeterEventStreamResource } from './MeterEventStream.js';
 export { MeterEvent } from './MeterEvents.js';
 export { MeterEventAdjustment } from './MeterEventAdjustments.js';
@@ -12,5 +12,10 @@ export declare class Billing {
     meterEventAdjustments: MeterEventAdjustmentResource;
     meterEventSession: MeterEventSessionResource;
     meterEventStream: MeterEventStreamResource;
-    constructor(stripe: StripeClient);
+    constructor(stripe: Stripe);
+}
+export declare namespace Billing {
+    export { MeterEvent };
+    export { MeterEventAdjustment };
+    export { MeterEventSession };
 }

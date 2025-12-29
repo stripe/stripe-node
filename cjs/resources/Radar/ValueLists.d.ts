@@ -1,8 +1,7 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { ValueListItem } from './ValueListItems.js';
 import { MetadataParam, PaginationParams, RangeQueryParam, Metadata } from '../../shared.js';
-import { Response, ApiListPromise, ApiList } from '../../lib.js';
+import { RequestOptions, Response, ApiListPromise, ApiList } from '../../lib.js';
 export declare class ValueListResource extends StripeResource {
     /**
      * Deletes a ValueList object, also deleting any items contained within the value list. To be deleted, a value list must not be referenced in any rules.
@@ -28,11 +27,7 @@ export declare class ValueListResource extends StripeResource {
      */
     create(params: Radar.ValueListCreateParams, options?: RequestOptions): Promise<Response<ValueList>>;
 }
-export /**
- * Value lists allow you to group values together which can then be referenced in rules.
- *
- * Related guide: [Default Stripe lists](https://stripe.com/docs/radar/lists#managing-list-items)
- */ interface ValueList {
+export interface ValueList {
     /**
      * Unique identifier for the object.
      */
@@ -70,7 +65,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata;
     /**
@@ -116,7 +111,7 @@ export declare namespace Radar {
          */
         item_type?: ValueListCreateParams.ItemType;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
     }
@@ -143,7 +138,7 @@ export declare namespace Radar {
          */
         expand?: Array<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
         /**

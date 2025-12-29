@@ -22,3 +22,5 @@ export class Treasury {
     this.receivedDebits = new ReceivedDebitResource(stripe);
   }
 }
+
+export declare namespace Treasury {}

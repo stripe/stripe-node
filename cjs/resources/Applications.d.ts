@@ -1,6 +1,4 @@
-export /**
- * The Application object.
- */ interface Application {
+export interface Application {
     /**
      * Unique identifier for the object.
      */
@@ -18,9 +16,7 @@ export /**
      */
     name: string | null;
 }
-export /**
- * The DeletedApplication object.
- */ interface DeletedApplication {
+export interface DeletedApplication {
     /**
      * Unique identifier for the object.
      */

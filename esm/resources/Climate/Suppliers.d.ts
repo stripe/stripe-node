@@ -1,7 +1,6 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { PaginationParams } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class SupplierResource extends StripeResource {
     /**
      * Lists all available Climate supplier objects.
@@ -14,9 +13,7 @@ export declare class SupplierResource extends StripeResource {
     retrieve(id: string, params?: Climate.SupplierRetrieveParams, options?: RequestOptions): Promise<Response<Supplier>>;
     retrieve(id: string, options?: RequestOptions): Promise<Response<Supplier>>;
 }
-export /**
- * A supplier of carbon removal.
- */ interface Supplier {
+export interface Supplier {
     /**
      * Unique identifier for the object.
      */

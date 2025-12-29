@@ -1,12 +1,11 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../lib.js';
 import {Customer} from './Customers.js';
 import {SetupAttempt} from './SetupAttempts.js';
 import {Charge} from './Charges.js';
 import {Address} from '../shared.js';
-import {Response} from '../lib.js';
+import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export class ConfirmationTokenResource extends StripeResource {
   /**
@@ -82,7 +81,7 @@ export interface ConfirmationToken {
   /**
    * Indicates that you intend to make future payments with this ConfirmationToken's payment method.
    *
-   * The presence of this property will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete.
+   * The presence of this property will [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete.
    */
   setup_future_usage: ConfirmationToken.SetupFutureUsage | null;
 
@@ -161,6 +160,8 @@ export namespace ConfirmationToken {
      */
     customer: string | Customer | null;
 
+    customer_account: string | null;
+
     customer_balance?: PaymentMethodPreview.CustomerBalance;
 
     eps?: PaymentMethodPreview.Eps;
@@ -206,6 +207,8 @@ export namespace ConfirmationToken {
     paynow?: PaymentMethodPreview.Paynow;
 
     paypal?: PaymentMethodPreview.Paypal;
+
+    payto?: PaymentMethodPreview.Payto;
 
     pix?: PaymentMethodPreview.Pix;
 
@@ -655,7 +658,7 @@ export namespace ConfirmationToken {
 
     export interface Ideal {
       /**
-       * The customer's bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `handelsbanken`, `ing`, `knab`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
+       * The customer's bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `finom`, `handelsbanken`, `ing`, `knab`, `mollie`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
        */
       bank: Ideal.Bank | null;
 
@@ -858,6 +861,23 @@ export namespace ConfirmationToken {
       payer_id: string | null;
     }
 
+    export interface Payto {
+      /**
+       * Bank-State-Branch number of the bank account.
+       */
+      bsb_number: string | null;
+
+      /**
+       * Last four digits of the bank account number.
+       */
+      last4: string | null;
+
+      /**
+       * The PayID alias for the bank account.
+       */
+      pay_id: string | null;
+    }
+
     export interface Pix {}
 
     export interface Promptpay {}
@@ -952,6 +972,7 @@ export namespace ConfirmationToken {
       | 'payco'
       | 'paynow'
       | 'paypal'
+      | 'payto'
       | 'pix'
       | 'promptpay'
       | 'revolut_pay'
@@ -1183,7 +1204,7 @@ export namespace ConfirmationToken {
             iin?: string | null;
 
             /**
-             * Whether this [PaymentIntent](https://stripe.com/docs/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
+             * Whether this [PaymentIntent](https://docs.stripe.com/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
              */
             incremental_authorization_supported: boolean;
 
@@ -1508,9 +1529,11 @@ export namespace ConfirmationToken {
         | 'asn_bank'
         | 'bunq'
         | 'buut'
+        | 'finom'
         | 'handelsbanken'
         | 'ing'
         | 'knab'
+        | 'mollie'
         | 'moneyou'
         | 'n26'
         | 'nn'
@@ -1528,10 +1551,12 @@ export namespace ConfirmationToken {
         | 'BITSNL2A'
         | 'BUNQNL2A'
         | 'BUUTNL2A'
+        | 'FNOMNL22'
         | 'FVLBNL22'
         | 'HANDNL2A'
         | 'INGBNL2A'
         | 'KNABNL2H'
+        | 'MLLENL2A'
         | 'MOYONL21'
         | 'NNBANL2G'
         | 'NTSBDEB1'
@@ -1716,7 +1741,8 @@ export namespace ConfirmationToken {
             | 'bank_account_invalid_details'
             | 'bank_account_restricted'
             | 'bank_account_unusable'
-            | 'debit_not_authorized';
+            | 'debit_not_authorized'
+            | 'tokenized_account_number_deactivated';
         }
       }
     }

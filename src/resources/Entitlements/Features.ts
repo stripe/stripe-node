@@ -1,14 +1,13 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../lib.js';
 import {
   MetadataParam,
   Emptyable,
   PaginationParams,
   Metadata,
 } from '../../shared.js';
-import {ApiListPromise, Response} from '../../lib.js';
+import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export class FeatureResource extends StripeResource {
   /**

@@ -1,6 +1,5 @@
 import { StripeResource } from '../../../StripeResource.js';
-import { RequestOptions } from '../../../Types.js';
-import { Response } from '../../../lib.js';
+import { RequestOptions, Response } from '../../../lib.js';
 export declare class MeterEventSessionResource extends StripeResource {
     /**
      * Creates a meter event session to send usage on the high-throughput meter event stream. Authentication tokens are only valid for 15 minutes, so you will need to create a new meter event session when your token expires.
@@ -8,9 +7,7 @@ export declare class MeterEventSessionResource extends StripeResource {
     create(params?: V2.Billing.MeterEventSessionCreateParams, options?: RequestOptions): Promise<Response<MeterEventSession>>;
     create(options?: RequestOptions): Promise<Response<MeterEventSession>>;
 }
-export /**
- * The MeterEventSession object.
- */ interface MeterEventSession {
+export interface MeterEventSession {
     /**
      * The unique id of this auth session.
      */

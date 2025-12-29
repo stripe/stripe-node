@@ -1,11 +1,10 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { Invoice, DeletedInvoice } from './Invoices.js';
 import { Charge } from './Charges.js';
 import { PaymentIntent } from './PaymentIntents.js';
 import { PaymentRecord } from './PaymentRecords.js';
-import { PaginationParams } from '../shared.js';
-import { ApiListPromise, Response } from '../lib.js';
+import { PaginationParams, RangeQueryParam } from '../shared.js';
+import { RequestOptions, ApiListPromise, Response } from '../lib.js';
 export declare class InvoicePaymentResource extends StripeResource {
     /**
      * When retrieving an invoice, there is an includable payments property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of payments.
@@ -18,16 +17,7 @@ export declare class InvoicePaymentResource extends StripeResource {
     retrieve(id: string, params?: InvoicePaymentRetrieveParams, options?: RequestOptions): Promise<Response<InvoicePayment>>;
     retrieve(id: string, options?: RequestOptions): Promise<Response<InvoicePayment>>;
 }
-export /**
- * Invoice Payments represent payments made against invoices. Invoice Payments can
- * be accessed in two ways:
- * 1. By expanding the `payments` field on the [Invoice](https://stripe.com/docs/api#invoice) resource.
- * 2. By using the Invoice Payment retrieve and list endpoints.
- *
- * Invoice Payments include the mapping between payment objects, such as Payment Intent, and Invoices.
- * This resource and its endpoints allows you to easily track if a payment is associated with a specific invoice and
- * monitor the allocation details of the payments.
- */ interface InvoicePayment {
+export interface InvoicePayment {
     /**
      * Unique identifier for the object.
      */
@@ -111,6 +101,10 @@ export interface InvoicePaymentRetrieveParams {
     expand?: Array<string>;
 }
 export interface InvoicePaymentListParams extends PaginationParams {
+    /**
+     * Only return invoice payments that were created during the given date interval.
+     */
+    created?: RangeQueryParam | number;
     /**
      * Specifies which fields in the response should be expanded.
      */

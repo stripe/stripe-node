@@ -1,9 +1,8 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RequestOptions} from '../../../lib.js';
 import {PersonalizationDesign} from './../../Issuing/PersonalizationDesigns.js';
-import {Response} from '../../../lib.js';
+import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
 export class PersonalizationDesignResource extends StripeResource {
   /**

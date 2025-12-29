@@ -1,9 +1,8 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../lib.js';
 import {Emptyable} from '../shared.js';
-import {Response} from '../lib.js';
+import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export class BalanceSettingResource extends StripeResource {
   /**
@@ -70,7 +69,7 @@ export namespace BalanceSettings {
       } | null;
 
       /**
-       * Details on when funds from charges are available, and when they are paid out to an external account. See our [Setting Bank and Debit Card Payouts](https://stripe.com/docs/connect/bank-transfers#payout-information) documentation for details.
+       * Details on when funds from charges are available, and when they are paid out to an external account. See our [Setting Bank and Debit Card Payouts](https://docs.stripe.com/connect/bank-transfers#payout-information) documentation for details.
        */
       schedule: Payouts.Schedule | null;
 

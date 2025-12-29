@@ -5,6 +5,24 @@
 import { Agent } from 'http';
 import { ApiVersion } from './apiVersion.js';
 import { HttpClient } from './net/HttpClient.js';
+import { StripeContext } from './StripeContext.js';
+import { Stripe } from '../src/stripe.core.js';
+type StripeResourceClass = typeof StripeResource;
+interface StripeResourceExtension<T extends Record<string, unknown>> extends StripeResourceClass {
+    new (stripe: Stripe): StripeResource & T;
+}
+export declare class StripeResource {
+    static extend<T extends {
+        [prop: string]: any;
+    }>(spec: T): StripeResourceExtension<T>;
+    static method<ResponseObject = Record<string, unknown>>(spec: {
+        method: string;
+        path?: string;
+        fullPath?: string;
+        methodType?: 'list' | 'search';
+    }): (...args: any[]) => Response<ResponseObject>;
+    static MAX_BUFFERED_REQUEST_METRICS: number;
+}
 export type LatestApiVersion = typeof ApiVersion;
 export type HttpAgent = Agent;
 export type HttpProtocol = 'http' | 'https';
@@ -100,7 +118,7 @@ export interface RequestOptions {
     /**
      * An account on whose behalf you wish to make a request. See https://docs.corp.stripe.com/context for more information.
      */
-    stripeContext?: string;
+    stripeContext?: string | StripeContext;
     /**
      * The [API Version](https://stripe.com/docs/upgrades) to use for a given request (e.g., '2020-03-02').
      */
@@ -238,3 +256,4 @@ export interface FileData {
     name?: string;
     type?: string;
 }
+export {};

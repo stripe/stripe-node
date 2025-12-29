@@ -1,15 +1,12 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
-import { Response } from '../../lib.js';
+import { RequestOptions, Response } from '../../lib.js';
 export declare class MeterEventAdjustmentResource extends StripeResource {
     /**
      * Creates a billing meter event adjustment.
      */
     create(params: Billing.MeterEventAdjustmentCreateParams, options?: RequestOptions): Promise<Response<MeterEventAdjustment>>;
 }
-export /**
- * A billing meter event adjustment is a resource that allows you to cancel a meter event. For example, you might create a billing meter event adjustment to cancel a meter event that was created in error or attached to the wrong customer.
- */ interface MeterEventAdjustment {
+export interface MeterEventAdjustment {
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */

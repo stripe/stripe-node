@@ -1,10 +1,9 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../lib.js';
 import {File} from './../Files.js';
 import {Emptyable, PaginationParams} from '../../shared.js';
-import {Response, ApiListPromise} from '../../lib.js';
+import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export class ConfigurationResource extends StripeResource {
   /**
@@ -711,12 +710,12 @@ export namespace Terminal {
 export namespace Terminal {
   export interface ConfigurationCreateParams {
     /**
-     * An object containing device type specific settings for BBPOS WisePad 3 readers
+     * An object containing device type specific settings for BBPOS WisePad 3 readers.
      */
     bbpos_wisepad3?: ConfigurationCreateParams.BbposWisepad3;
 
     /**
-     * An object containing device type specific settings for BBPOS WisePOS E readers
+     * An object containing device type specific settings for BBPOS WisePOS E readers.
      */
     bbpos_wisepos_e?: ConfigurationCreateParams.BbposWiseposE;
 
@@ -736,22 +735,22 @@ export namespace Terminal {
     offline?: Emptyable<ConfigurationCreateParams.Offline>;
 
     /**
-     * Reboot time settings for readers that support customized reboot time configuration.
+     * Reboot time settings for readers. that support customized reboot time configuration.
      */
     reboot_window?: ConfigurationCreateParams.RebootWindow;
 
     /**
-     * An object containing device type specific settings for Stripe S700 readers
+     * An object containing device type specific settings for Stripe S700 readers.
      */
     stripe_s700?: ConfigurationCreateParams.StripeS700;
 
     /**
-     * Tipping configurations for readers supporting on-reader tips
+     * Tipping configurations for readers. supporting on-reader tips
      */
     tipping?: Emptyable<ConfigurationCreateParams.Tipping>;
 
     /**
-     * An object containing device type specific settings for Verifone P400 readers
+     * An object containing device type specific settings for Verifone P400 readers.
      */
     verifone_p400?: ConfigurationCreateParams.VerifoneP400;
 
@@ -764,7 +763,7 @@ export namespace Terminal {
   export namespace ConfigurationCreateParams {
     export interface BbposWisepad3 {
       /**
-       * A File ID representing an image you would like displayed on the reader.
+       * A File ID representing an image you want to display on the reader.
        */
       splashscreen?: Emptyable<string>;
     }
@@ -797,7 +796,7 @@ export namespace Terminal {
 
     export interface StripeS700 {
       /**
-       * A File ID representing an image you would like displayed on the reader.
+       * A File ID representing an image you want to display on the reader.
        */
       splashscreen?: Emptyable<string>;
     }
@@ -916,7 +915,7 @@ export namespace Terminal {
 
     export interface VerifoneP400 {
       /**
-       * A File ID representing an image you would like displayed on the reader.
+       * A File ID representing an image you want to display on the reader.
        */
       splashscreen?: Emptyable<string>;
     }
@@ -1399,12 +1398,12 @@ export namespace Terminal {
 export namespace Terminal {
   export interface ConfigurationUpdateParams {
     /**
-     * An object containing device type specific settings for BBPOS WisePad 3 readers
+     * An object containing device type specific settings for BBPOS WisePad 3 readers.
      */
     bbpos_wisepad3?: Emptyable<ConfigurationUpdateParams.BbposWisepad3>;
 
     /**
-     * An object containing device type specific settings for BBPOS WisePOS E readers
+     * An object containing device type specific settings for BBPOS WisePOS E readers.
      */
     bbpos_wisepos_e?: Emptyable<ConfigurationUpdateParams.BbposWiseposE>;
 
@@ -1424,22 +1423,22 @@ export namespace Terminal {
     offline?: Emptyable<ConfigurationUpdateParams.Offline>;
 
     /**
-     * Reboot time settings for readers that support customized reboot time configuration.
+     * Reboot time settings for readers. that support customized reboot time configuration.
      */
     reboot_window?: Emptyable<ConfigurationUpdateParams.RebootWindow>;
 
     /**
-     * An object containing device type specific settings for Stripe S700 readers
+     * An object containing device type specific settings for Stripe S700 readers.
      */
     stripe_s700?: Emptyable<ConfigurationUpdateParams.StripeS700>;
 
     /**
-     * Tipping configurations for readers supporting on-reader tips
+     * Tipping configurations for readers. supporting on-reader tips
      */
     tipping?: Emptyable<ConfigurationUpdateParams.Tipping>;
 
     /**
-     * An object containing device type specific settings for Verifone P400 readers
+     * An object containing device type specific settings for Verifone P400 readers.
      */
     verifone_p400?: Emptyable<ConfigurationUpdateParams.VerifoneP400>;
 
@@ -1452,7 +1451,7 @@ export namespace Terminal {
   export namespace ConfigurationUpdateParams {
     export interface BbposWisepad3 {
       /**
-       * A File ID representing an image you would like displayed on the reader.
+       * A File ID representing an image you want to display on the reader.
        */
       splashscreen?: Emptyable<string>;
     }
@@ -1485,7 +1484,7 @@ export namespace Terminal {
 
     export interface StripeS700 {
       /**
-       * A File ID representing an image you would like displayed on the reader.
+       * A File ID representing an image you want to display on the reader.
        */
       splashscreen?: Emptyable<string>;
     }
@@ -1604,7 +1603,7 @@ export namespace Terminal {
 
     export interface VerifoneP400 {
       /**
-       * A File ID representing an image you would like displayed on the reader.
+       * A File ID representing an image you want to display on the reader.
        */
       splashscreen?: Emptyable<string>;
     }

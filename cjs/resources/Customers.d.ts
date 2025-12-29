@@ -1,5 +1,4 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { DeletedDiscount, Discount } from './Discounts.js';
 import { CustomerBalanceTransaction } from './CustomerBalanceTransactions.js';
 import { CashBalance } from './CashBalances.js';
@@ -12,7 +11,7 @@ import { DeletedTaxId, TaxId } from './TaxIds.js';
 import { Subscription } from './Subscriptions.js';
 import * as TestHelpers from './TestHelpers/index.js';
 import { Emptyable, AddressParam, MetadataParam, PaginationParams, RangeQueryParam, Address, Metadata } from '../shared.js';
-import { Response, ApiListPromise, ApiList, ApiSearchResultPromise } from '../lib.js';
+import { RequestOptions, Response, ApiListPromise, ApiList, ApiSearchResultPromise } from '../lib.js';
 export declare class CustomerResource extends StripeResource {
     /**
      * Permanently deletes a customer. It cannot be undone. Also immediately cancels any active subscriptions on the customer.
@@ -160,10 +159,7 @@ export declare class CustomerResource extends StripeResource {
      */
     createTaxId(id: string, params: CustomerCreateTaxIdParams, options?: RequestOptions): Promise<Response<TaxId>>;
 }
-export /**
- * This object represents a customer of your business. Use it to [create recurring charges](https://stripe.com/docs/invoicing/customer), [save payment](https://stripe.com/docs/payments/save-during-payment) and contact information,
- * and track payments that belong to the same customer.
- */ interface Customer {
+export interface Customer {
     /**
      * Unique identifier for the object.
      */
@@ -177,7 +173,7 @@ export /**
      */
     address?: Address | null;
     /**
-     * The current balance, if any, that's stored on the customer in their default currency. If negative, the customer has credit to apply to their next invoice. If positive, the customer has an amount owed that's added to their next invoice. The balance only considers amounts that Stripe hasn't successfully applied to any invoice. It doesn't reflect unpaid invoices. This balance is only taken into account after invoices finalize. For multi-currency balances, see [invoice_credit_balance](https://stripe.com/docs/api/customers/object#customer_object-invoice_credit_balance).
+     * The current balance, if any, that's stored on the customer in their default currency. If negative, the customer has credit to apply to their next invoice. If positive, the customer has an amount owed that's added to their next invoice. The balance only considers amounts that Stripe hasn't successfully applied to any invoice. It doesn't reflect unpaid invoices. This balance is only taken into account after invoices finalize. For multi-currency balances, see [invoice_credit_balance](https://docs.stripe.com/api/customers/object#customer_object-invoice_credit_balance).
      */
     balance: number;
     /**
@@ -197,9 +193,13 @@ export /**
      */
     currency?: string | null;
     /**
+     * The ID of an Account representing a customer. You can use this ID with any v1 API that accepts a customer_account parameter.
+     */
+    customer_account?: string | null;
+    /**
      * ID of the default payment source for the customer.
      *
-     * If you use payment methods created through the PaymentMethods API, see the [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method) field instead.
+     * If you use payment methods created through the PaymentMethods API, see the [invoice_settings.default_payment_method](https://docs.stripe.com/api/customers/object#customer_object-invoice_settings-default_payment_method) field instead.
      */
     default_source: string | CustomerSource | null;
     /**
@@ -209,7 +209,7 @@ export /**
     /**
      * Tracks the most recent state change on any invoice belonging to the customer. Paying an invoice or marking it uncollectible via the API will set this field to false. An automatic payment failure or passing the `invoice.due_date` will set this field to `true`.
      *
-     * If an invoice becomes uncollectible by [dunning](https://stripe.com/docs/billing/automatic-collection), `delinquent` doesn't reset to `false`.
+     * If an invoice becomes uncollectible by [dunning](https://docs.stripe.com/billing/automatic-collection), `delinquent` doesn't reset to `false`.
      *
      * If you care whether the customer has paid their most recent subscription invoice, use `subscription.status` instead. Paying or marking uncollectible any customer invoice regardless of whether it is the latest invoice for a subscription will always set this field to `false`.
      */
@@ -246,7 +246,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata;
     /**
@@ -291,9 +291,7 @@ export /**
      */
     test_clock?: string | TestHelpers.TestClock | null;
 }
-export /**
- * The DeletedCustomer object.
- */ interface DeletedCustomer {
+export interface DeletedCustomer {
     /**
      * Unique identifier for the object.
      */
@@ -410,7 +408,7 @@ export declare namespace Customer {
 }
 export interface CustomerCreateParams {
     /**
-     * The customer's address.
+     * The customer's address. Learn about [country-specific requirements for calculating tax](https://docs.stripe.com/invoicing/taxes?dashboard-or-api=dashboard#set-up-customer).
      */
     address?: Emptyable<AddressParam>;
     /**
@@ -450,7 +448,7 @@ export interface CustomerCreateParams {
      */
     invoice_settings?: CustomerCreateParams.InvoiceSettings;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
     /**
@@ -557,7 +555,7 @@ export declare namespace CustomerCreateParams {
     namespace CashBalance {
         interface Settings {
             /**
-             * Controls how funds transferred by the customer are applied to payment intents and invoices. Valid options are `automatic`, `manual`, or `merchant_default`. For more information about these reconciliation modes, see [Reconciliation](https://stripe.com/docs/payments/customer-balance/reconciliation).
+             * Controls how funds transferred by the customer are applied to payment intents and invoices. Valid options are `automatic`, `manual`, or `merchant_default`. For more information about these reconciliation modes, see [Reconciliation](https://docs.stripe.com/payments/customer-balance/reconciliation).
              */
             reconciliation_mode?: Settings.ReconciliationMode;
         }
@@ -605,7 +603,7 @@ export interface CustomerRetrieveParams {
 }
 export interface CustomerUpdateParams {
     /**
-     * The customer's address.
+     * The customer's address. Learn about [country-specific requirements for calculating tax](https://docs.stripe.com/invoicing/taxes?dashboard-or-api=dashboard#set-up-customer).
      */
     address?: Emptyable<AddressParam>;
     /**
@@ -621,11 +619,11 @@ export interface CustomerUpdateParams {
      */
     cash_balance?: CustomerUpdateParams.CashBalance;
     /**
-     * If you are using payment methods created via the PaymentMethods API, see the [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/update#update_customer-invoice_settings-default_payment_method) parameter.
+     * If you are using payment methods created via the PaymentMethods API, see the [invoice_settings.default_payment_method](https://docs.stripe.com/api/customers/update#update_customer-invoice_settings-default_payment_method) parameter.
      *
      * Provide the ID of a payment source already attached to this customer to make it this customer's default payment source.
      *
-     * If you want to add a new payment source and make it the default, see the [source](https://stripe.com/docs/api/customers/update#update_customer-source) property.
+     * If you want to add a new payment source and make it the default, see the [source](https://docs.stripe.com/api/customers/update#update_customer-source) property.
      */
     default_source?: string;
     /**
@@ -653,7 +651,7 @@ export interface CustomerUpdateParams {
      */
     invoice_settings?: CustomerUpdateParams.InvoiceSettings;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
     /**
@@ -741,7 +739,7 @@ export declare namespace CustomerUpdateParams {
     namespace CashBalance {
         interface Settings {
             /**
-             * Controls how funds transferred by the customer are applied to payment intents and invoices. Valid options are `automatic`, `manual`, or `merchant_default`. For more information about these reconciliation modes, see [Reconciliation](https://stripe.com/docs/payments/customer-balance/reconciliation).
+             * Controls how funds transferred by the customer are applied to payment intents and invoices. Valid options are `automatic`, `manual`, or `merchant_default`. For more information about these reconciliation modes, see [Reconciliation](https://docs.stripe.com/payments/customer-balance/reconciliation).
              */
             reconciliation_mode?: Settings.ReconciliationMode;
         }
@@ -804,7 +802,7 @@ export interface CustomerCreateBalanceTransactionParams {
      */
     amount: number;
     /**
-     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Specifies the [`invoice_credit_balance`](https://stripe.com/docs/api/customers/object#customer_object-invoice_credit_balance) that this transaction will apply to. If the customer's `currency` is not set, it will be updated to this value.
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Specifies the [`invoice_credit_balance`](https://docs.stripe.com/api/customers/object#customer_object-invoice_credit_balance) that this transaction will apply to. If the customer's `currency` is not set, it will be updated to this value.
      */
     currency: string;
     /**
@@ -816,7 +814,7 @@ export interface CustomerCreateBalanceTransactionParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
 }
@@ -868,7 +866,7 @@ export declare namespace CustomerCreateFundingInstructionsParams {
 }
 export interface CustomerCreateSourceParams {
     /**
-     * Please refer to full [documentation](https://stripe.com/docs/api) instead.
+     * Please refer to full [documentation](https://api.stripe.com) instead.
      */
     source: string;
     /**
@@ -876,7 +874,7 @@ export interface CustomerCreateSourceParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: MetadataParam;
     validate?: boolean;
@@ -910,9 +908,17 @@ export interface CustomerDeleteTaxIdParams {
 }
 export interface CustomerListBalanceTransactionsParams extends PaginationParams {
     /**
+     * Only return customer balance transactions that were created during the given date interval.
+     */
+    created?: RangeQueryParam | number;
+    /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
+    /**
+     * Only return transactions that are related to the specified invoice.
+     */
+    invoice?: string;
 }
 export interface CustomerListCashBalanceTransactionsParams extends PaginationParams {
     /**
@@ -936,7 +942,7 @@ export interface CustomerListPaymentMethodsParams extends PaginationParams {
 }
 export declare namespace CustomerListPaymentMethodsParams {
     type AllowRedisplay = 'always' | 'limited' | 'unspecified';
-    type Type = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'custom' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
+    type Type = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'custom' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'payto' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
 }
 export interface CustomerListSourcesParams extends PaginationParams {
     /**
@@ -992,7 +998,7 @@ export interface CustomerRetrieveTaxIdParams {
 }
 export interface CustomerSearchParams {
     /**
-     * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for customers](https://stripe.com/docs/search#query-fields-for-customers).
+     * The search query string. See [search query language](https://docs.stripe.com/search#search-query-language) and the list of supported [query fields for customers](https://docs.stripe.com/search#query-fields-for-customers).
      */
     query: string;
     /**
@@ -1018,7 +1024,7 @@ export interface CustomerUpdateBalanceTransactionParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
 }
@@ -1035,7 +1041,7 @@ export interface CustomerUpdateCashBalanceParams {
 export declare namespace CustomerUpdateCashBalanceParams {
     interface Settings {
         /**
-         * Controls how funds transferred by the customer are applied to payment intents and invoices. Valid options are `automatic`, `manual`, or `merchant_default`. For more information about these reconciliation modes, see [Reconciliation](https://stripe.com/docs/payments/customer-balance/reconciliation).
+         * Controls how funds transferred by the customer are applied to payment intents and invoices. Valid options are `automatic`, `manual`, or `merchant_default`. For more information about these reconciliation modes, see [Reconciliation](https://docs.stripe.com/payments/customer-balance/reconciliation).
          */
         reconciliation_mode?: Settings.ReconciliationMode;
     }
@@ -1089,7 +1095,7 @@ export interface CustomerUpdateSourceParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
     /**

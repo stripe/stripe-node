@@ -1,7 +1,6 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { Emptyable, PaginationParams } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class RegistrationResource extends StripeResource {
     /**
      * Returns a list of Tax Registration objects.
@@ -24,13 +23,7 @@ export declare class RegistrationResource extends StripeResource {
      */
     update(id: string, params?: Tax.RegistrationUpdateParams, options?: RequestOptions): Promise<Response<Registration>>;
 }
-export /**
- * A Tax `Registration` lets us know that your business is registered to collect tax on payments within a region, enabling you to [automatically collect tax](https://stripe.com/docs/tax).
- *
- * Stripe doesn't register on your behalf with the relevant authorities when you create a Tax `Registration` object. For more information on how to register to collect tax, see [our guide](https://stripe.com/docs/tax/registering).
- *
- * Related guide: [Using the Registrations API](https://stripe.com/docs/tax/registrations-api)
- */ interface Registration {
+export interface Registration {
     /**
      * Unique identifier for the object.
      */
@@ -3182,7 +3175,7 @@ export declare namespace Tax {
             namespace Us {
                 interface LocalAmusementTax {
                     /**
-                     * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction. Supported FIPS codes are: `14000` (Chicago), `06613` (Bloomington), `21696` (East Dundee), `24582` (Evanston), `45421` (Lynwood), `48892` (Midlothian), `64343` (River Grove), and `68081` (Schiller Park).
+                     * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction. Supported FIPS codes are: `14000` (Chicago), `02154` (Arlington Heights), `06613` (Bloomington), `10906` (Campton Hills), `21696` (East Dundee), `24582` (Evanston), `45421` (Lynwood), `48892` (Midlothian), `64343` (River Grove), and `68081` (Schiller Park).
                      */
                     jurisdiction: string;
                 }

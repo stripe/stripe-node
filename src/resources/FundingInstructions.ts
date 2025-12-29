@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {Address} from '../shared.js';
+import {RequestOptions} from '../lib.js';
 export interface FundingInstructions {
   /**
    * String representing the object's type. Objects of the same type share the same value.

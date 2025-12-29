@@ -1,8 +1,11 @@
-import { StripeClient } from '../../stripe.core.js';
-import { SessionResource } from './Sessions.js';
+import { Stripe } from '../../stripe.core.js';
+import { Session, SessionResource } from './Sessions.js';
 export { Session } from './Sessions.js';
 export declare class Checkout {
     private readonly stripe;
     sessions: SessionResource;
-    constructor(stripe: StripeClient);
+    constructor(stripe: Stripe);
+}
+export declare namespace Checkout {
+    export { Session };
 }

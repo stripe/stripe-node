@@ -1,12 +1,9 @@
 import { Discount, DeletedDiscount } from './Discounts.js';
 import { Subscription } from './Subscriptions.js';
+import { Price } from './Prices.js';
 import * as Billing from './Billing/index.js';
 import { Metadata } from '../shared.js';
-export /**
- * Invoice Line Items represent the individual lines within an [invoice](https://stripe.com/docs/api/invoices) and only exist within the context of an invoice.
- *
- * Each line item is backed by either an [invoice item](https://stripe.com/docs/api/invoiceitems) or a [subscription item](https://stripe.com/docs/api/subscription_items).
- */ interface InvoiceLineItem {
+export interface InvoiceLineItem {
     /**
      * Unique identifier for the object.
      */
@@ -48,7 +45,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription`, `metadata` reflects the current metadata from the subscription associated with the line item, unless the invoice line was directly updated with different metadata after creation.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription`, `metadata` reflects the current metadata from the subscription associated with the line item, unless the invoice line was directly updated with different metadata after creation.
      */
     metadata: Metadata;
     /**
@@ -69,6 +66,10 @@ export /**
      */
     quantity: number | null;
     subscription: string | Subscription | null;
+    /**
+     * The subtotal of the line item, in cents (or local equivalent), before any discounts or taxes.
+     */
+    subtotal: number;
     /**
      * The tax information of the line item.
      */
@@ -255,7 +256,7 @@ export declare namespace InvoiceLineItem {
             /**
              * The ID of the price this item is associated with.
              */
-            price: string;
+            price: string | Price;
             /**
              * The ID of the product this item is associated with.
              */
@@ -265,6 +266,9 @@ export declare namespace InvoiceLineItem {
     namespace Tax {
         type TaxBehavior = 'exclusive' | 'inclusive';
         interface TaxRateDetails {
+            /**
+             * ID of the tax rate
+             */
             tax_rate: string;
         }
         type TaxabilityReason = 'customer_exempt' | 'not_available' | 'not_collecting' | 'not_subject_to_tax' | 'not_supported' | 'portion_product_exempt' | 'portion_reduced_rated' | 'portion_standard_rated' | 'product_exempt' | 'product_exempt_holiday' | 'proportionally_rated' | 'reduced_rated' | 'reverse_charge' | 'standard_rated' | 'taxable_basis_reduced' | 'zero_rated';

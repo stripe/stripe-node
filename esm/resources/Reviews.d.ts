@@ -1,9 +1,8 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { Charge } from './Charges.js';
 import { PaymentIntent } from './PaymentIntents.js';
 import { PaginationParams, RangeQueryParam } from '../shared.js';
-import { ApiListPromise, Response } from '../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../lib.js';
 export declare class ReviewResource extends StripeResource {
     /**
      * Returns a list of Review objects that have open set to true. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -21,12 +20,7 @@ export declare class ReviewResource extends StripeResource {
     approve(id: string, params?: ReviewApproveParams, options?: RequestOptions): Promise<Response<Review>>;
     approve(id: string, options?: RequestOptions): Promise<Response<Review>>;
 }
-export /**
- * Reviews can be used to supplement automated fraud detection with human expertise.
- *
- * Learn more about [Radar](https://docs.stripe.com/radar) and reviewing payments
- * [here](https://stripe.com/docs/radar/reviews).
- */ interface Review {
+export interface Review {
     /**
      * Unique identifier for the object.
      */

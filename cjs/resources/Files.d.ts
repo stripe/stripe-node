@@ -1,8 +1,7 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { FileLink } from './FileLinks.js';
 import { Emptyable, MetadataParam, PaginationParams, RangeQueryParam } from '../shared.js';
-import { ApiListPromise, Response, ApiList, FileData } from '../lib.js';
+import { RequestOptions, ApiListPromise, Response, ApiList, FileData } from '../lib.js';
 export declare class FileResource extends StripeResource {
     /**
      * Returns a list of the files that your account has access to. Stripe sorts and returns the files by their creation dates, placing the most recently created files at the top.
@@ -21,15 +20,7 @@ export declare class FileResource extends StripeResource {
     retrieve(id: string, params?: FileRetrieveParams, options?: RequestOptions): Promise<Response<File>>;
     retrieve(id: string, options?: RequestOptions): Promise<Response<File>>;
 }
-export /**
- * This object represents files hosted on Stripe's servers. You can upload
- * files with the [create file](https://stripe.com/docs/api#create_file) request
- * (for example, when uploading dispute evidence). Stripe also
- * creates files independently (for example, the results of a [Sigma scheduled
- * query](https://docs.stripe.com/api#scheduled_queries)).
- *
- * Related guide: [File upload guide](https://stripe.com/docs/file-upload)
- */ interface File {
+export interface File {
     /**
      * Unique identifier for the object.
      */
@@ -51,11 +42,11 @@ export /**
      */
     filename: string | null;
     /**
-     * A list of [file links](https://stripe.com/docs/api#file_links) that point at this file.
+     * A list of [file links](https://api.stripe.com#file_links) that point at this file.
      */
     links?: ApiList<FileLink> | null;
     /**
-     * The [purpose](https://stripe.com/docs/file-upload#uploading-a-file) of the uploaded file.
+     * The [purpose](https://docs.stripe.com/file-upload#uploading-a-file) of the uploaded file.
      */
     purpose: File.Purpose;
     /**
@@ -84,7 +75,7 @@ export interface FileCreateParams {
      */
     file: FileData;
     /**
-     * The [purpose](https://stripe.com/docs/file-upload#uploading-a-file) of the uploaded file.
+     * The [purpose](https://docs.stripe.com/file-upload#uploading-a-file) of the uploaded file.
      */
     purpose: FileCreateParams.Purpose;
     /**
@@ -92,7 +83,7 @@ export interface FileCreateParams {
      */
     expand?: Array<string>;
     /**
-     * Optional parameters that automatically create a [file link](https://stripe.com/docs/api#file_links) for the newly created file.
+     * Optional parameters that automatically create a [file link](https://api.stripe.com#file_links) for the newly created file.
      */
     file_link_data?: FileCreateParams.FileLinkData;
 }
@@ -108,7 +99,7 @@ export declare namespace FileCreateParams {
          */
         expires_at?: number;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Emptyable<MetadataParam>;
     }

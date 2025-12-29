@@ -3,14 +3,7 @@ import { Customer } from './Customers.js';
 import { Invoice } from './Invoices.js';
 import * as Checkout from './Checkout/index.js';
 import { Metadata } from '../shared.js';
-export /**
- * Each customer has a [Balance](https://stripe.com/docs/api/customers/object#customer_object-balance) value,
- * which denotes a debit or credit that's automatically applied to their next invoice upon finalization.
- * You may modify the value directly by using the [update customer API](https://stripe.com/docs/api/customers/update),
- * or by creating a Customer Balance Transaction, which increments or decrements the customer's `balance` by the specified `amount`.
- *
- * Related guide: [Customer balance](https://stripe.com/docs/billing/customer/balance)
- */ interface CustomerBalanceTransaction {
+export interface CustomerBalanceTransaction {
     /**
      * Unique identifier for the object.
      */
@@ -44,6 +37,10 @@ export /**
      */
     customer: string | Customer;
     /**
+     * The ID of an Account representing a customer that the transaction belongs to.
+     */
+    customer_account: string | null;
+    /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
      */
     description: string | null;
@@ -60,11 +57,11 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata | null;
     /**
-     * Transaction type: `adjustment`, `applied_to_invoice`, `credit_note`, `initial`, `invoice_overpaid`, `invoice_too_large`, `invoice_too_small`, `unspent_receiver_credit`, `unapplied_from_invoice`, `checkout_session_subscription_payment`, or `checkout_session_subscription_payment_canceled`. See the [Customer Balance page](https://stripe.com/docs/billing/customer/balance#types) to learn more about transaction types.
+     * Transaction type: `adjustment`, `applied_to_invoice`, `credit_note`, `initial`, `invoice_overpaid`, `invoice_too_large`, `invoice_too_small`, `unspent_receiver_credit`, `unapplied_from_invoice`, `checkout_session_subscription_payment`, or `checkout_session_subscription_payment_canceled`. See the [Customer Balance page](https://docs.stripe.com/billing/customer/balance#types) to learn more about transaction types.
      */
     type: CustomerBalanceTransaction.Type;
 }

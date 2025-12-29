@@ -1,12 +1,11 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { FeeRefund } from './FeeRefunds.js';
 import { Account } from './Accounts.js';
 import { Application } from './Applications.js';
 import { BalanceTransaction } from './BalanceTransactions.js';
 import { Charge } from './Charges.js';
 import { PaginationParams, RangeQueryParam, MetadataParam, Emptyable } from '../shared.js';
-import { ApiListPromise, Response, ApiList } from '../lib.js';
+import { RequestOptions, ApiListPromise, Response, ApiList } from '../lib.js';
 export declare class ApplicationFeeResource extends StripeResource {
     /**
      * Returns a list of application fees you've previously collected. The application fees are returned in sorted order, with the most recent fees appearing first.
@@ -49,9 +48,7 @@ export declare class ApplicationFeeResource extends StripeResource {
     createRefund(id: string, params?: ApplicationFeeCreateRefundParams, options?: RequestOptions): Promise<Response<FeeRefund>>;
     createRefund(id: string, options?: RequestOptions): Promise<Response<FeeRefund>>;
 }
-export /**
- * The ApplicationFee object.
- */ interface ApplicationFee {
+export interface ApplicationFee {
     /**
      * Unique identifier for the object.
      */
@@ -162,7 +159,7 @@ export interface ApplicationFeeCreateRefundParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: MetadataParam;
 }
@@ -184,7 +181,7 @@ export interface ApplicationFeeUpdateRefundParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
 }
