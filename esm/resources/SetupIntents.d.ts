@@ -1,5 +1,4 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { Application } from './Applications.js';
 import { Customer, DeletedCustomer } from './Customers.js';
 import { SetupAttempt } from './SetupAttempts.js';
@@ -9,7 +8,7 @@ import { PaymentMethod } from './PaymentMethods.js';
 import { PaymentIntent } from './PaymentIntents.js';
 import { CustomerSource } from './CustomerSources.js';
 import { Emptyable, MetadataParam, AddressParam, PaginationParams, RangeQueryParam, Metadata } from '../shared.js';
-import { ApiListPromise, Response } from '../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../lib.js';
 export declare class SetupIntentResource extends StripeResource {
     /**
      * Returns a list of SetupIntents.
@@ -68,29 +67,7 @@ export declare class SetupIntentResource extends StripeResource {
     verifyMicrodeposits(id: string, params?: SetupIntentVerifyMicrodepositsParams, options?: RequestOptions): Promise<Response<SetupIntent>>;
     verifyMicrodeposits(id: string, options?: RequestOptions): Promise<Response<SetupIntent>>;
 }
-export /**
- * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
- * For example, you can use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
- * Later, you can use [PaymentIntents](https://stripe.com/docs/api#payment_intents) to drive the payment flow.
- *
- * Create a SetupIntent when you're ready to collect your customer's payment credentials.
- * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
- * The SetupIntent transitions through multiple [statuses](https://docs.stripe.com/payments/intents#intent-statuses) as it guides
- * you through the setup process.
- *
- * Successful SetupIntents result in payment credentials that are optimized for future payments.
- * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
- * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
- * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
- * If you use the SetupIntent with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer),
- * it automatically attaches the resulting payment method to that Customer after successful setup.
- * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
- * PaymentIntents to save payment methods to prevent saving invalid or unoptimized payment methods.
- *
- * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
- *
- * Related guide: [Setup Intents API](https://docs.stripe.com/payments/setup-intents)
- */ interface SetupIntent {
+export interface SetupIntent {
     /**
      * Unique identifier for the object.
      */
@@ -134,6 +111,12 @@ export /**
      */
     customer: string | Customer | DeletedCustomer | null;
     /**
+     * ID of the Account this SetupIntent belongs to, if one exists.
+     *
+     * If present, the SetupIntent's payment method will be attached to the Account on successful setup. Payment methods attached to other Accounts cannot be used with this SetupIntent.
+     */
+    customer_account?: string | null;
+    /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
      */
     description: string | null;
@@ -164,7 +147,7 @@ export /**
      */
     mandate: string | Mandate | null;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata | null;
     /**
@@ -180,7 +163,7 @@ export /**
      */
     payment_method: string | PaymentMethod | null;
     /**
-     * Information about the [payment method configuration](https://stripe.com/docs/api/payment_method_configurations) used for this Setup Intent.
+     * Information about the [payment method configuration](https://docs.stripe.com/api/payment_method_configurations) used for this Setup Intent.
      */
     payment_method_configuration_details: SetupIntent.PaymentMethodConfigurationDetails | null;
     /**
@@ -196,7 +179,7 @@ export /**
      */
     single_use_mandate: string | Mandate | null;
     /**
-     * [Status](https://stripe.com/docs/payments/intents#intent-statuses) of this SetupIntent, one of `requires_payment_method`, `requires_confirmation`, `requires_action`, `processing`, `canceled`, or `succeeded`.
+     * [Status](https://docs.stripe.com/payments/intents#intent-statuses) of this SetupIntent, one of `requires_payment_method`, `requires_confirmation`, `requires_action`, `processing`, `canceled`, or `succeeded`.
      */
     status: SetupIntent.Status;
     /**
@@ -211,7 +194,7 @@ export declare namespace SetupIntent {
         /**
          * Controls whether this SetupIntent will accept redirect-based payment methods.
          *
-         * Redirect-based payment methods may require your customer to be redirected to a payment method's app or site for authentication or additional steps. To [confirm](https://stripe.com/docs/api/setup_intents/confirm) this SetupIntent, you may be required to provide a `return_url` to redirect customers back to your site after they authenticate or complete the setup.
+         * Redirect-based payment methods may require your customer to be redirected to a payment method's app or site for authentication or additional steps. To [confirm](https://docs.stripe.com/api/setup_intents/confirm) this SetupIntent, you may be required to provide a `return_url` to redirect customers back to your site after they authenticate or complete the setup.
          */
         allow_redirects?: AutomaticPaymentMethods.AllowRedirects;
         /**
@@ -220,11 +203,11 @@ export declare namespace SetupIntent {
         enabled: boolean | null;
     }
     type CancellationReason = 'abandoned' | 'duplicate' | 'requested_by_customer';
-    type ExcludedPaymentMethodType = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
+    type ExcludedPaymentMethodType = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'payto' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
     type FlowDirection = 'inbound' | 'outbound';
     interface LastSetupError {
         /**
-         * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://stripe.com/docs/declines#retrying-issuer-declines) if they provide one.
+         * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://docs.stripe.com/declines#retrying-issuer-declines) if they provide one.
          */
         advice_code?: string;
         /**
@@ -232,15 +215,15 @@ export declare namespace SetupIntent {
          */
         charge?: string;
         /**
-         * For some errors that could be handled programmatically, a short string indicating the [error code](https://stripe.com/docs/error-codes) reported.
+         * For some errors that could be handled programmatically, a short string indicating the [error code](https://docs.stripe.com/error-codes) reported.
          */
         code?: LastSetupError.Code;
         /**
-         * For card errors resulting from a card issuer decline, a short string indicating the [card issuer's reason for the decline](https://stripe.com/docs/declines#issuer-declines) if they provide one.
+         * For card errors resulting from a card issuer decline, a short string indicating the [card issuer's reason for the decline](https://docs.stripe.com/declines#issuer-declines) if they provide one.
          */
         decline_code?: string;
         /**
-         * A URL to more information about the [error code](https://stripe.com/docs/error-codes) reported.
+         * A URL to more information about the [error code](https://docs.stripe.com/error-codes) reported.
          */
         doc_url?: string;
         /**
@@ -266,19 +249,19 @@ export declare namespace SetupIntent {
          * see the history of payment attempts for a particular session.
          *
          * A PaymentIntent transitions through
-         * [multiple statuses](https://stripe.com/docs/payments/intents#intent-statuses)
+         * [multiple statuses](https://docs.stripe.com/payments/paymentintents/lifecycle)
          * throughout its lifetime as it interfaces with Stripe.js to perform
          * authentication flows and ultimately creates at most one successful charge.
          *
-         * Related guide: [Payment Intents API](https://stripe.com/docs/payments/payment-intents)
+         * Related guide: [Payment Intents API](https://docs.stripe.com/payments/payment-intents)
          */
         payment_intent?: PaymentIntent;
         /**
          * PaymentMethod objects represent your customer's payment instruments.
-         * You can use them with [PaymentIntents](https://stripe.com/docs/payments/payment-intents) to collect payments or save them to
+         * You can use them with [PaymentIntents](https://docs.stripe.com/payments/payment-intents) to collect payments or save them to
          * Customer objects to store instrument details for future payments.
          *
-         * Related guides: [Payment Methods](https://stripe.com/docs/payments/payment-methods) and [More Payment Scenarios](https://stripe.com/docs/payments/more-payment-scenarios).
+         * Related guides: [Payment Methods](https://docs.stripe.com/payments/payment-methods) and [More Payment Scenarios](https://docs.stripe.com/payments/more-payment-scenarios).
          */
         payment_method?: PaymentMethod;
         /**
@@ -292,7 +275,7 @@ export declare namespace SetupIntent {
         /**
          * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
          * For example, you can use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
-         * Later, you can use [PaymentIntents](https://stripe.com/docs/api#payment_intents) to drive the payment flow.
+         * Later, you can use [PaymentIntents](https://api.stripe.com#payment_intents) to drive the payment flow.
          *
          * Create a SetupIntent when you're ready to collect your customer's payment credentials.
          * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
@@ -303,9 +286,9 @@ export declare namespace SetupIntent {
          * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
          * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
          * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
-         * If you use the SetupIntent with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer),
+         * If you use the SetupIntent with a [Customer](https://api.stripe.com#setup_intent_object-customer),
          * it automatically attaches the resulting payment method to that Customer after successful setup.
-         * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
+         * We recommend using SetupIntents or [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) on
          * PaymentIntents to save payment methods to prevent saving invalid or unoptimized payment methods.
          *
          * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
@@ -351,6 +334,7 @@ export declare namespace SetupIntent {
         klarna?: PaymentMethodOptions.Klarna;
         link?: PaymentMethodOptions.Link;
         paypal?: PaymentMethodOptions.Paypal;
+        payto?: PaymentMethodOptions.Payto;
         sepa_debit?: PaymentMethodOptions.SepaDebit;
         us_bank_account?: PaymentMethodOptions.UsBankAccount;
     }
@@ -359,7 +343,7 @@ export declare namespace SetupIntent {
         type AllowRedirects = 'always' | 'never';
     }
     namespace LastSetupError {
-        type Code = 'account_closed' | 'account_country_invalid_address' | 'account_error_country_change_requires_additional_steps' | 'account_information_mismatch' | 'account_invalid' | 'account_number_invalid' | 'acss_debit_session_incomplete' | 'alipay_upgrade_required' | 'amount_too_large' | 'amount_too_small' | 'api_key_expired' | 'application_fees_not_allowed' | 'authentication_required' | 'balance_insufficient' | 'balance_invalid_parameter' | 'bank_account_bad_routing_numbers' | 'bank_account_declined' | 'bank_account_exists' | 'bank_account_restricted' | 'bank_account_unusable' | 'bank_account_unverified' | 'bank_account_verification_failed' | 'billing_invalid_mandate' | 'bitcoin_upgrade_required' | 'capture_charge_authorization_expired' | 'capture_unauthorized_payment' | 'card_decline_rate_limit_exceeded' | 'card_declined' | 'cardholder_phone_number_required' | 'charge_already_captured' | 'charge_already_refunded' | 'charge_disputed' | 'charge_exceeds_source_limit' | 'charge_exceeds_transaction_limit' | 'charge_expired_for_capture' | 'charge_invalid_parameter' | 'charge_not_refundable' | 'clearing_code_unsupported' | 'country_code_invalid' | 'country_unsupported' | 'coupon_expired' | 'customer_max_payment_methods' | 'customer_max_subscriptions' | 'customer_session_expired' | 'customer_tax_location_invalid' | 'debit_not_authorized' | 'email_invalid' | 'expired_card' | 'financial_connections_account_inactive' | 'financial_connections_account_pending_account_numbers' | 'financial_connections_account_unavailable_account_numbers' | 'financial_connections_no_successful_transaction_refresh' | 'forwarding_api_inactive' | 'forwarding_api_invalid_parameter' | 'forwarding_api_retryable_upstream_error' | 'forwarding_api_upstream_connection_error' | 'forwarding_api_upstream_connection_timeout' | 'forwarding_api_upstream_error' | 'idempotency_key_in_use' | 'incorrect_address' | 'incorrect_cvc' | 'incorrect_number' | 'incorrect_zip' | 'india_recurring_payment_mandate_canceled' | 'instant_payouts_config_disabled' | 'instant_payouts_currency_disabled' | 'instant_payouts_limit_exceeded' | 'instant_payouts_unsupported' | 'insufficient_funds' | 'intent_invalid_state' | 'intent_verification_method_missing' | 'invalid_card_type' | 'invalid_characters' | 'invalid_charge_amount' | 'invalid_cvc' | 'invalid_expiry_month' | 'invalid_expiry_year' | 'invalid_mandate_reference_prefix_format' | 'invalid_number' | 'invalid_source_usage' | 'invalid_tax_location' | 'invoice_no_customer_line_items' | 'invoice_no_payment_method_types' | 'invoice_no_subscription_line_items' | 'invoice_not_editable' | 'invoice_on_behalf_of_not_editable' | 'invoice_payment_intent_requires_action' | 'invoice_upcoming_none' | 'livemode_mismatch' | 'lock_timeout' | 'missing' | 'no_account' | 'not_allowed_on_standard_account' | 'out_of_inventory' | 'ownership_declaration_not_allowed' | 'parameter_invalid_empty' | 'parameter_invalid_integer' | 'parameter_invalid_string_blank' | 'parameter_invalid_string_empty' | 'parameter_missing' | 'parameter_unknown' | 'parameters_exclusive' | 'payment_intent_action_required' | 'payment_intent_authentication_failure' | 'payment_intent_incompatible_payment_method' | 'payment_intent_invalid_parameter' | 'payment_intent_konbini_rejected_confirmation_number' | 'payment_intent_mandate_invalid' | 'payment_intent_payment_attempt_expired' | 'payment_intent_payment_attempt_failed' | 'payment_intent_rate_limit_exceeded' | 'payment_intent_unexpected_state' | 'payment_method_bank_account_already_verified' | 'payment_method_bank_account_blocked' | 'payment_method_billing_details_address_missing' | 'payment_method_configuration_failures' | 'payment_method_currency_mismatch' | 'payment_method_customer_decline' | 'payment_method_invalid_parameter' | 'payment_method_invalid_parameter_testmode' | 'payment_method_microdeposit_failed' | 'payment_method_microdeposit_verification_amounts_invalid' | 'payment_method_microdeposit_verification_amounts_mismatch' | 'payment_method_microdeposit_verification_attempts_exceeded' | 'payment_method_microdeposit_verification_descriptor_code_mismatch' | 'payment_method_microdeposit_verification_timeout' | 'payment_method_not_available' | 'payment_method_provider_decline' | 'payment_method_provider_timeout' | 'payment_method_unactivated' | 'payment_method_unexpected_state' | 'payment_method_unsupported_type' | 'payout_reconciliation_not_ready' | 'payouts_limit_exceeded' | 'payouts_not_allowed' | 'platform_account_required' | 'platform_api_key_expired' | 'postal_code_invalid' | 'processing_error' | 'product_inactive' | 'progressive_onboarding_limit_exceeded' | 'rate_limit' | 'refer_to_customer' | 'refund_disputed_payment' | 'resource_already_exists' | 'resource_missing' | 'return_intent_already_processed' | 'routing_number_invalid' | 'secret_key_required' | 'sepa_unsupported_account' | 'setup_attempt_failed' | 'setup_intent_authentication_failure' | 'setup_intent_invalid_parameter' | 'setup_intent_mandate_invalid' | 'setup_intent_mobile_wallet_unsupported' | 'setup_intent_setup_attempt_expired' | 'setup_intent_unexpected_state' | 'shipping_address_invalid' | 'shipping_calculation_failed' | 'sku_inactive' | 'state_unsupported' | 'status_transition_invalid' | 'stripe_tax_inactive' | 'tax_id_invalid' | 'tax_id_prohibited' | 'taxes_calculation_failed' | 'terminal_location_country_unsupported' | 'terminal_reader_busy' | 'terminal_reader_hardware_fault' | 'terminal_reader_invalid_location_for_activation' | 'terminal_reader_invalid_location_for_payment' | 'terminal_reader_offline' | 'terminal_reader_timeout' | 'testmode_charges_only' | 'tls_version_unsupported' | 'token_already_used' | 'token_card_network_invalid' | 'token_in_use' | 'transfer_source_balance_parameters_mismatch' | 'transfers_not_allowed' | 'url_invalid';
+        type Code = 'account_closed' | 'account_country_invalid_address' | 'account_error_country_change_requires_additional_steps' | 'account_information_mismatch' | 'account_invalid' | 'account_number_invalid' | 'account_token_required_for_v2_account' | 'acss_debit_session_incomplete' | 'alipay_upgrade_required' | 'amount_too_large' | 'amount_too_small' | 'api_key_expired' | 'application_fees_not_allowed' | 'authentication_required' | 'balance_insufficient' | 'balance_invalid_parameter' | 'bank_account_bad_routing_numbers' | 'bank_account_declined' | 'bank_account_exists' | 'bank_account_restricted' | 'bank_account_unusable' | 'bank_account_unverified' | 'bank_account_verification_failed' | 'billing_invalid_mandate' | 'bitcoin_upgrade_required' | 'capture_charge_authorization_expired' | 'capture_unauthorized_payment' | 'card_decline_rate_limit_exceeded' | 'card_declined' | 'cardholder_phone_number_required' | 'charge_already_captured' | 'charge_already_refunded' | 'charge_disputed' | 'charge_exceeds_source_limit' | 'charge_exceeds_transaction_limit' | 'charge_expired_for_capture' | 'charge_invalid_parameter' | 'charge_not_refundable' | 'clearing_code_unsupported' | 'country_code_invalid' | 'country_unsupported' | 'coupon_expired' | 'customer_max_payment_methods' | 'customer_max_subscriptions' | 'customer_session_expired' | 'customer_tax_location_invalid' | 'debit_not_authorized' | 'email_invalid' | 'expired_card' | 'financial_connections_account_inactive' | 'financial_connections_account_pending_account_numbers' | 'financial_connections_account_unavailable_account_numbers' | 'financial_connections_no_successful_transaction_refresh' | 'forwarding_api_inactive' | 'forwarding_api_invalid_parameter' | 'forwarding_api_retryable_upstream_error' | 'forwarding_api_upstream_connection_error' | 'forwarding_api_upstream_connection_timeout' | 'forwarding_api_upstream_error' | 'idempotency_key_in_use' | 'incorrect_address' | 'incorrect_cvc' | 'incorrect_number' | 'incorrect_zip' | 'india_recurring_payment_mandate_canceled' | 'instant_payouts_config_disabled' | 'instant_payouts_currency_disabled' | 'instant_payouts_limit_exceeded' | 'instant_payouts_unsupported' | 'insufficient_funds' | 'intent_invalid_state' | 'intent_verification_method_missing' | 'invalid_card_type' | 'invalid_characters' | 'invalid_charge_amount' | 'invalid_cvc' | 'invalid_expiry_month' | 'invalid_expiry_year' | 'invalid_mandate_reference_prefix_format' | 'invalid_number' | 'invalid_source_usage' | 'invalid_tax_location' | 'invoice_no_customer_line_items' | 'invoice_no_payment_method_types' | 'invoice_no_subscription_line_items' | 'invoice_not_editable' | 'invoice_on_behalf_of_not_editable' | 'invoice_payment_intent_requires_action' | 'invoice_upcoming_none' | 'livemode_mismatch' | 'lock_timeout' | 'missing' | 'no_account' | 'not_allowed_on_standard_account' | 'out_of_inventory' | 'ownership_declaration_not_allowed' | 'parameter_invalid_empty' | 'parameter_invalid_integer' | 'parameter_invalid_string_blank' | 'parameter_invalid_string_empty' | 'parameter_missing' | 'parameter_unknown' | 'parameters_exclusive' | 'payment_intent_action_required' | 'payment_intent_authentication_failure' | 'payment_intent_incompatible_payment_method' | 'payment_intent_invalid_parameter' | 'payment_intent_konbini_rejected_confirmation_number' | 'payment_intent_mandate_invalid' | 'payment_intent_payment_attempt_expired' | 'payment_intent_payment_attempt_failed' | 'payment_intent_rate_limit_exceeded' | 'payment_intent_unexpected_state' | 'payment_method_bank_account_already_verified' | 'payment_method_bank_account_blocked' | 'payment_method_billing_details_address_missing' | 'payment_method_configuration_failures' | 'payment_method_currency_mismatch' | 'payment_method_customer_decline' | 'payment_method_invalid_parameter' | 'payment_method_invalid_parameter_testmode' | 'payment_method_microdeposit_failed' | 'payment_method_microdeposit_verification_amounts_invalid' | 'payment_method_microdeposit_verification_amounts_mismatch' | 'payment_method_microdeposit_verification_attempts_exceeded' | 'payment_method_microdeposit_verification_descriptor_code_mismatch' | 'payment_method_microdeposit_verification_timeout' | 'payment_method_not_available' | 'payment_method_provider_decline' | 'payment_method_provider_timeout' | 'payment_method_unactivated' | 'payment_method_unexpected_state' | 'payment_method_unsupported_type' | 'payout_reconciliation_not_ready' | 'payouts_limit_exceeded' | 'payouts_not_allowed' | 'platform_account_required' | 'platform_api_key_expired' | 'postal_code_invalid' | 'processing_error' | 'product_inactive' | 'progressive_onboarding_limit_exceeded' | 'rate_limit' | 'refer_to_customer' | 'refund_disputed_payment' | 'resource_already_exists' | 'resource_missing' | 'return_intent_already_processed' | 'routing_number_invalid' | 'secret_key_required' | 'sepa_unsupported_account' | 'setup_attempt_failed' | 'setup_intent_authentication_failure' | 'setup_intent_invalid_parameter' | 'setup_intent_mandate_invalid' | 'setup_intent_mobile_wallet_unsupported' | 'setup_intent_setup_attempt_expired' | 'setup_intent_unexpected_state' | 'shipping_address_invalid' | 'shipping_calculation_failed' | 'sku_inactive' | 'state_unsupported' | 'status_transition_invalid' | 'stripe_tax_inactive' | 'tax_id_invalid' | 'tax_id_prohibited' | 'taxes_calculation_failed' | 'terminal_location_country_unsupported' | 'terminal_reader_busy' | 'terminal_reader_hardware_fault' | 'terminal_reader_invalid_location_for_activation' | 'terminal_reader_invalid_location_for_payment' | 'terminal_reader_offline' | 'terminal_reader_timeout' | 'testmode_charges_only' | 'tls_version_unsupported' | 'token_already_used' | 'token_card_network_invalid' | 'token_in_use' | 'transfer_source_balance_parameters_mismatch' | 'transfers_not_allowed' | 'url_invalid';
         type Type = 'api_error' | 'card_error' | 'idempotency_error' | 'invalid_request_error';
     }
     namespace NextAction {
@@ -448,7 +432,7 @@ export declare namespace SetupIntent {
              */
             network: Card.Network | null;
             /**
-             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure: Card.RequestThreeDSecure | null;
         }
@@ -476,6 +460,9 @@ export declare namespace SetupIntent {
              * The PayPal Billing Agreement ID (BAID). This is an ID generated by PayPal which represents the mandate between the merchant and the customer.
              */
             billing_agreement_id: string | null;
+        }
+        interface Payto {
+            mandate_options?: Payto.MandateOptions;
         }
         interface SepaDebit {
             mandate_options?: SepaDebit.MandateOptions;
@@ -577,6 +564,43 @@ export declare namespace SetupIntent {
                 type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
             }
         }
+        namespace Payto {
+            interface MandateOptions {
+                /**
+                 * Amount that will be collected. It is required when `amount_type` is `fixed`.
+                 */
+                amount: number | null;
+                /**
+                 * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
+                 */
+                amount_type: MandateOptions.AmountType | null;
+                /**
+                 * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+                 */
+                end_date: string | null;
+                /**
+                 * The periodicity at which payments will be collected. Defaults to `adhoc`.
+                 */
+                payment_schedule: MandateOptions.PaymentSchedule | null;
+                /**
+                 * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+                 */
+                payments_per_period: number | null;
+                /**
+                 * The purpose for which payments are made. Has a default value based on your merchant category code.
+                 */
+                purpose: MandateOptions.Purpose | null;
+                /**
+                 * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+                 */
+                start_date: string | null;
+            }
+            namespace MandateOptions {
+                type AmountType = 'fixed' | 'maximum';
+                type PaymentSchedule = 'adhoc' | 'annual' | 'daily' | 'fortnightly' | 'monthly' | 'quarterly' | 'semi_annual' | 'weekly';
+                type Purpose = 'dependant_support' | 'government' | 'loan' | 'mortgage' | 'other' | 'pension' | 'personal' | 'retail' | 'salary' | 'tax' | 'utility';
+            }
+        }
         namespace SepaDebit {
             interface MandateOptions {
                 /**
@@ -652,6 +676,12 @@ export interface SetupIntentCreateParams {
      */
     customer?: string;
     /**
+     * ID of the Account this SetupIntent belongs to, if one exists.
+     *
+     * If present, the SetupIntent's payment method will be attached to the Account on successful setup. Payment methods attached to other Accounts cannot be used with this SetupIntent.
+     */
+    customer_account?: string;
+    /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
      */
     description?: string;
@@ -670,11 +700,11 @@ export interface SetupIntentCreateParams {
      */
     flow_directions?: Array<SetupIntentCreateParams.FlowDirection>;
     /**
-     * This hash contains details about the mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
+     * This hash contains details about the mandate to create. This parameter can only be used with [`confirm=true`](https://docs.stripe.com/api/setup_intents/create#create_setup_intent-confirm).
      */
     mandate_data?: Emptyable<SetupIntentCreateParams.MandateData>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: MetadataParam;
     /**
@@ -686,11 +716,11 @@ export interface SetupIntentCreateParams {
      */
     payment_method?: string;
     /**
-     * The ID of the [payment method configuration](https://stripe.com/docs/api/payment_method_configurations) to use with this SetupIntent.
+     * The ID of the [payment method configuration](https://docs.stripe.com/api/payment_method_configurations) to use with this SetupIntent.
      */
     payment_method_configuration?: string;
     /**
-     * When included, this hash creates a PaymentMethod that is set as the [`payment_method`](https://stripe.com/docs/api/setup_intents/object#setup_intent_object-payment_method)
+     * When included, this hash creates a PaymentMethod that is set as the [`payment_method`](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-payment_method)
      * value in the SetupIntent.
      */
     payment_method_data?: SetupIntentCreateParams.PaymentMethodData;
@@ -703,7 +733,7 @@ export interface SetupIntentCreateParams {
      */
     payment_method_types?: Array<string>;
     /**
-     * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site. To redirect to a mobile application, you can alternatively supply an application URI scheme. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
+     * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site. To redirect to a mobile application, you can alternatively supply an application URI scheme. This parameter can only be used with [`confirm=true`](https://docs.stripe.com/api/setup_intents/create#create_setup_intent-confirm).
      */
     return_url?: string;
     /**
@@ -726,7 +756,7 @@ export declare namespace SetupIntentCreateParams {
         /**
          * Controls whether this SetupIntent will accept redirect-based payment methods.
          *
-         * Redirect-based payment methods may require your customer to be redirected to a payment method's app or site for authentication or additional steps. To [confirm](https://stripe.com/docs/api/setup_intents/confirm) this SetupIntent, you may be required to provide a `return_url` to redirect customers back to your site after they authenticate or complete the setup.
+         * Redirect-based payment methods may require your customer to be redirected to a payment method's app or site for authentication or additional steps. To [confirm](https://docs.stripe.com/api/setup_intents/confirm) this SetupIntent, you may be required to provide a `return_url` to redirect customers back to your site after they authenticate or complete the setup.
          */
         allow_redirects?: AutomaticPaymentMethods.AllowRedirects;
         /**
@@ -734,7 +764,7 @@ export declare namespace SetupIntentCreateParams {
          */
         enabled: boolean;
     }
-    type ExcludedPaymentMethodType = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
+    type ExcludedPaymentMethodType = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'payto' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
     type FlowDirection = 'inbound' | 'outbound';
     interface MandateData {
         /**
@@ -860,7 +890,7 @@ export declare namespace SetupIntentCreateParams {
          */
         mb_way?: PaymentMethodData.MbWay;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
         /**
@@ -904,6 +934,10 @@ export declare namespace SetupIntentCreateParams {
          */
         paypal?: PaymentMethodData.Paypal;
         /**
+         * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+         */
+        payto?: PaymentMethodData.Payto;
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -912,7 +946,7 @@ export declare namespace SetupIntentCreateParams {
          */
         promptpay?: PaymentMethodData.Promptpay;
         /**
-         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
         /**
@@ -994,6 +1028,10 @@ export declare namespace SetupIntentCreateParams {
          */
         paypal?: PaymentMethodOptions.Paypal;
         /**
+         * If this is a `payto` SetupIntent, this sub-hash contains details about the PayTo payment method options.
+         */
+        payto?: PaymentMethodOptions.Payto;
+        /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: PaymentMethodOptions.SepaDebit;
@@ -1004,7 +1042,7 @@ export declare namespace SetupIntentCreateParams {
     }
     interface SingleUse {
         /**
-         * Amount the customer is granting permission to collect later. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
+         * Amount the customer is granting permission to collect later. A positive integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://docs.stripe.com/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
          */
         amount: number;
         /**
@@ -1230,13 +1268,27 @@ export declare namespace SetupIntentCreateParams {
         }
         interface Paypal {
         }
+        interface Payto {
+            /**
+             * The account number for the bank account.
+             */
+            account_number?: string;
+            /**
+             * Bank-State-Branch number of the bank account.
+             */
+            bsb_number?: string;
+            /**
+             * The PayID alias for the bank account.
+             */
+            pay_id?: string;
+        }
         interface Pix {
         }
         interface Promptpay {
         }
         interface RadarOptions {
             /**
-             * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+             * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
              */
             session?: string;
         }
@@ -1262,7 +1314,7 @@ export declare namespace SetupIntentCreateParams {
         }
         interface Twint {
         }
-        type Type = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
+        type Type = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'payto' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
         interface UsBankAccount {
             /**
              * Account holder type: individual or company.
@@ -1297,7 +1349,7 @@ export declare namespace SetupIntentCreateParams {
             type Bank = 'affin_bank' | 'agrobank' | 'alliance_bank' | 'ambank' | 'bank_islam' | 'bank_muamalat' | 'bank_of_china' | 'bank_rakyat' | 'bsn' | 'cimb' | 'deutsche_bank' | 'hong_leong_bank' | 'hsbc' | 'kfh' | 'maybank2e' | 'maybank2u' | 'ocbc' | 'pb_enterprise' | 'public_bank' | 'rhb' | 'standard_chartered' | 'uob';
         }
         namespace Ideal {
-            type Bank = 'abn_amro' | 'asn_bank' | 'bunq' | 'buut' | 'handelsbanken' | 'ing' | 'knab' | 'moneyou' | 'n26' | 'nn' | 'rabobank' | 'regiobank' | 'revolut' | 'sns_bank' | 'triodos_bank' | 'van_lanschot' | 'yoursafe';
+            type Bank = 'abn_amro' | 'asn_bank' | 'bunq' | 'buut' | 'finom' | 'handelsbanken' | 'ing' | 'knab' | 'mollie' | 'moneyou' | 'n26' | 'nn' | 'rabobank' | 'regiobank' | 'revolut' | 'sns_bank' | 'triodos_bank' | 'van_lanschot' | 'yoursafe';
         }
         namespace Klarna {
             interface Dob {
@@ -1368,7 +1420,7 @@ export declare namespace SetupIntentCreateParams {
              */
             network?: Card.Network;
             /**
-             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
             /**
@@ -1409,6 +1461,12 @@ export declare namespace SetupIntentCreateParams {
              * The PayPal Billing Agreement ID (BAID). This is an ID generated by PayPal which represents the mandate between the merchant and the customer.
              */
             billing_agreement_id?: string;
+        }
+        interface Payto {
+            /**
+             * Additional fields for Mandate creation.
+             */
+            mandate_options?: Payto.MandateOptions;
         }
         interface SepaDebit {
             /**
@@ -1662,6 +1720,43 @@ export declare namespace SetupIntentCreateParams {
                 }
             }
         }
+        namespace Payto {
+            interface MandateOptions {
+                /**
+                 * Amount that will be collected. It is required when `amount_type` is `fixed`.
+                 */
+                amount?: Emptyable<number>;
+                /**
+                 * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
+                 */
+                amount_type?: Emptyable<MandateOptions.AmountType>;
+                /**
+                 * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+                 */
+                end_date?: Emptyable<string>;
+                /**
+                 * The periodicity at which payments will be collected. Defaults to `adhoc`.
+                 */
+                payment_schedule?: Emptyable<MandateOptions.PaymentSchedule>;
+                /**
+                 * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+                 */
+                payments_per_period?: Emptyable<number>;
+                /**
+                 * The purpose for which payments are made. Has a default value based on your merchant category code.
+                 */
+                purpose?: Emptyable<MandateOptions.Purpose>;
+                /**
+                 * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+                 */
+                start_date?: Emptyable<string>;
+            }
+            namespace MandateOptions {
+                type AmountType = 'fixed' | 'maximum';
+                type PaymentSchedule = 'adhoc' | 'annual' | 'daily' | 'fortnightly' | 'monthly' | 'quarterly' | 'semi_annual' | 'weekly';
+                type Purpose = 'dependant_support' | 'government' | 'loan' | 'mortgage' | 'other' | 'pension' | 'personal' | 'retail' | 'salary' | 'tax' | 'utility';
+            }
+        }
         namespace SepaDebit {
             interface MandateOptions {
                 /**
@@ -1745,6 +1840,12 @@ export interface SetupIntentUpdateParams {
      */
     customer?: string;
     /**
+     * ID of the Account this SetupIntent belongs to, if one exists.
+     *
+     * If present, the SetupIntent's payment method will be attached to the Account on successful setup. Payment methods attached to other Accounts cannot be used with this SetupIntent.
+     */
+    customer_account?: string;
+    /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
      */
     description?: string;
@@ -1763,7 +1864,7 @@ export interface SetupIntentUpdateParams {
      */
     flow_directions?: Array<SetupIntentUpdateParams.FlowDirection>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
     /**
@@ -1771,11 +1872,11 @@ export interface SetupIntentUpdateParams {
      */
     payment_method?: string;
     /**
-     * The ID of the [payment method configuration](https://stripe.com/docs/api/payment_method_configurations) to use with this SetupIntent.
+     * The ID of the [payment method configuration](https://docs.stripe.com/api/payment_method_configurations) to use with this SetupIntent.
      */
     payment_method_configuration?: string;
     /**
-     * When included, this hash creates a PaymentMethod that is set as the [`payment_method`](https://stripe.com/docs/api/setup_intents/object#setup_intent_object-payment_method)
+     * When included, this hash creates a PaymentMethod that is set as the [`payment_method`](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-payment_method)
      * value in the SetupIntent.
      */
     payment_method_data?: SetupIntentUpdateParams.PaymentMethodData;
@@ -1789,7 +1890,7 @@ export interface SetupIntentUpdateParams {
     payment_method_types?: Array<string>;
 }
 export declare namespace SetupIntentUpdateParams {
-    type ExcludedPaymentMethodType = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
+    type ExcludedPaymentMethodType = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'payto' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
     type FlowDirection = 'inbound' | 'outbound';
     interface PaymentMethodData {
         /**
@@ -1909,7 +2010,7 @@ export declare namespace SetupIntentUpdateParams {
          */
         mb_way?: PaymentMethodData.MbWay;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
         /**
@@ -1953,6 +2054,10 @@ export declare namespace SetupIntentUpdateParams {
          */
         paypal?: PaymentMethodData.Paypal;
         /**
+         * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+         */
+        payto?: PaymentMethodData.Payto;
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -1961,7 +2066,7 @@ export declare namespace SetupIntentUpdateParams {
          */
         promptpay?: PaymentMethodData.Promptpay;
         /**
-         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
         /**
@@ -2042,6 +2147,10 @@ export declare namespace SetupIntentUpdateParams {
          * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
          */
         paypal?: PaymentMethodOptions.Paypal;
+        /**
+         * If this is a `payto` SetupIntent, this sub-hash contains details about the PayTo payment method options.
+         */
+        payto?: PaymentMethodOptions.Payto;
         /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
@@ -2230,13 +2339,27 @@ export declare namespace SetupIntentUpdateParams {
         }
         interface Paypal {
         }
+        interface Payto {
+            /**
+             * The account number for the bank account.
+             */
+            account_number?: string;
+            /**
+             * Bank-State-Branch number of the bank account.
+             */
+            bsb_number?: string;
+            /**
+             * The PayID alias for the bank account.
+             */
+            pay_id?: string;
+        }
         interface Pix {
         }
         interface Promptpay {
         }
         interface RadarOptions {
             /**
-             * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+             * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
              */
             session?: string;
         }
@@ -2262,7 +2385,7 @@ export declare namespace SetupIntentUpdateParams {
         }
         interface Twint {
         }
-        type Type = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
+        type Type = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'payto' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
         interface UsBankAccount {
             /**
              * Account holder type: individual or company.
@@ -2297,7 +2420,7 @@ export declare namespace SetupIntentUpdateParams {
             type Bank = 'affin_bank' | 'agrobank' | 'alliance_bank' | 'ambank' | 'bank_islam' | 'bank_muamalat' | 'bank_of_china' | 'bank_rakyat' | 'bsn' | 'cimb' | 'deutsche_bank' | 'hong_leong_bank' | 'hsbc' | 'kfh' | 'maybank2e' | 'maybank2u' | 'ocbc' | 'pb_enterprise' | 'public_bank' | 'rhb' | 'standard_chartered' | 'uob';
         }
         namespace Ideal {
-            type Bank = 'abn_amro' | 'asn_bank' | 'bunq' | 'buut' | 'handelsbanken' | 'ing' | 'knab' | 'moneyou' | 'n26' | 'nn' | 'rabobank' | 'regiobank' | 'revolut' | 'sns_bank' | 'triodos_bank' | 'van_lanschot' | 'yoursafe';
+            type Bank = 'abn_amro' | 'asn_bank' | 'bunq' | 'buut' | 'finom' | 'handelsbanken' | 'ing' | 'knab' | 'mollie' | 'moneyou' | 'n26' | 'nn' | 'rabobank' | 'regiobank' | 'revolut' | 'sns_bank' | 'triodos_bank' | 'van_lanschot' | 'yoursafe';
         }
         namespace Klarna {
             interface Dob {
@@ -2368,7 +2491,7 @@ export declare namespace SetupIntentUpdateParams {
              */
             network?: Card.Network;
             /**
-             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
             /**
@@ -2409,6 +2532,12 @@ export declare namespace SetupIntentUpdateParams {
              * The PayPal Billing Agreement ID (BAID). This is an ID generated by PayPal which represents the mandate between the merchant and the customer.
              */
             billing_agreement_id?: string;
+        }
+        interface Payto {
+            /**
+             * Additional fields for Mandate creation.
+             */
+            mandate_options?: Payto.MandateOptions;
         }
         interface SepaDebit {
             /**
@@ -2662,6 +2791,43 @@ export declare namespace SetupIntentUpdateParams {
                 }
             }
         }
+        namespace Payto {
+            interface MandateOptions {
+                /**
+                 * Amount that will be collected. It is required when `amount_type` is `fixed`.
+                 */
+                amount?: Emptyable<number>;
+                /**
+                 * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
+                 */
+                amount_type?: Emptyable<MandateOptions.AmountType>;
+                /**
+                 * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+                 */
+                end_date?: Emptyable<string>;
+                /**
+                 * The periodicity at which payments will be collected. Defaults to `adhoc`.
+                 */
+                payment_schedule?: Emptyable<MandateOptions.PaymentSchedule>;
+                /**
+                 * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+                 */
+                payments_per_period?: Emptyable<number>;
+                /**
+                 * The purpose for which payments are made. Has a default value based on your merchant category code.
+                 */
+                purpose?: Emptyable<MandateOptions.Purpose>;
+                /**
+                 * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+                 */
+                start_date?: Emptyable<string>;
+            }
+            namespace MandateOptions {
+                type AmountType = 'fixed' | 'maximum';
+                type PaymentSchedule = 'adhoc' | 'annual' | 'daily' | 'fortnightly' | 'monthly' | 'quarterly' | 'semi_annual' | 'weekly';
+                type Purpose = 'dependant_support' | 'government' | 'loan' | 'mortgage' | 'other' | 'pension' | 'personal' | 'retail' | 'salary' | 'tax' | 'utility';
+            }
+        }
         namespace SepaDebit {
             interface MandateOptions {
                 /**
@@ -2737,6 +2903,10 @@ export interface SetupIntentListParams extends PaginationParams {
      */
     customer?: string;
     /**
+     * Only return SetupIntents for the account specified by this customer ID.
+     */
+    customer_account?: string;
+    /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
@@ -2775,7 +2945,7 @@ export interface SetupIntentConfirmParams {
      */
     payment_method?: string;
     /**
-     * When included, this hash creates a PaymentMethod that is set as the [`payment_method`](https://stripe.com/docs/api/setup_intents/object#setup_intent_object-payment_method)
+     * When included, this hash creates a PaymentMethod that is set as the [`payment_method`](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-payment_method)
      * value in the SetupIntent.
      */
     payment_method_data?: SetupIntentConfirmParams.PaymentMethodData;
@@ -2919,7 +3089,7 @@ export declare namespace SetupIntentConfirmParams {
          */
         mb_way?: PaymentMethodData.MbWay;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
         /**
@@ -2963,6 +3133,10 @@ export declare namespace SetupIntentConfirmParams {
          */
         paypal?: PaymentMethodData.Paypal;
         /**
+         * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+         */
+        payto?: PaymentMethodData.Payto;
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -2971,7 +3145,7 @@ export declare namespace SetupIntentConfirmParams {
          */
         promptpay?: PaymentMethodData.Promptpay;
         /**
-         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
         /**
@@ -3052,6 +3226,10 @@ export declare namespace SetupIntentConfirmParams {
          * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
          */
         paypal?: PaymentMethodOptions.Paypal;
+        /**
+         * If this is a `payto` SetupIntent, this sub-hash contains details about the PayTo payment method options.
+         */
+        payto?: PaymentMethodOptions.Payto;
         /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
@@ -3275,13 +3453,27 @@ export declare namespace SetupIntentConfirmParams {
         }
         interface Paypal {
         }
+        interface Payto {
+            /**
+             * The account number for the bank account.
+             */
+            account_number?: string;
+            /**
+             * Bank-State-Branch number of the bank account.
+             */
+            bsb_number?: string;
+            /**
+             * The PayID alias for the bank account.
+             */
+            pay_id?: string;
+        }
         interface Pix {
         }
         interface Promptpay {
         }
         interface RadarOptions {
             /**
-             * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+             * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
              */
             session?: string;
         }
@@ -3307,7 +3499,7 @@ export declare namespace SetupIntentConfirmParams {
         }
         interface Twint {
         }
-        type Type = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
+        type Type = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'payto' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
         interface UsBankAccount {
             /**
              * Account holder type: individual or company.
@@ -3342,7 +3534,7 @@ export declare namespace SetupIntentConfirmParams {
             type Bank = 'affin_bank' | 'agrobank' | 'alliance_bank' | 'ambank' | 'bank_islam' | 'bank_muamalat' | 'bank_of_china' | 'bank_rakyat' | 'bsn' | 'cimb' | 'deutsche_bank' | 'hong_leong_bank' | 'hsbc' | 'kfh' | 'maybank2e' | 'maybank2u' | 'ocbc' | 'pb_enterprise' | 'public_bank' | 'rhb' | 'standard_chartered' | 'uob';
         }
         namespace Ideal {
-            type Bank = 'abn_amro' | 'asn_bank' | 'bunq' | 'buut' | 'handelsbanken' | 'ing' | 'knab' | 'moneyou' | 'n26' | 'nn' | 'rabobank' | 'regiobank' | 'revolut' | 'sns_bank' | 'triodos_bank' | 'van_lanschot' | 'yoursafe';
+            type Bank = 'abn_amro' | 'asn_bank' | 'bunq' | 'buut' | 'finom' | 'handelsbanken' | 'ing' | 'knab' | 'mollie' | 'moneyou' | 'n26' | 'nn' | 'rabobank' | 'regiobank' | 'revolut' | 'sns_bank' | 'triodos_bank' | 'van_lanschot' | 'yoursafe';
         }
         namespace Klarna {
             interface Dob {
@@ -3413,7 +3605,7 @@ export declare namespace SetupIntentConfirmParams {
              */
             network?: Card.Network;
             /**
-             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
             /**
@@ -3454,6 +3646,12 @@ export declare namespace SetupIntentConfirmParams {
              * The PayPal Billing Agreement ID (BAID). This is an ID generated by PayPal which represents the mandate between the merchant and the customer.
              */
             billing_agreement_id?: string;
+        }
+        interface Payto {
+            /**
+             * Additional fields for Mandate creation.
+             */
+            mandate_options?: Payto.MandateOptions;
         }
         interface SepaDebit {
             /**
@@ -3705,6 +3903,43 @@ export declare namespace SetupIntentConfirmParams {
                      */
                     date: string;
                 }
+            }
+        }
+        namespace Payto {
+            interface MandateOptions {
+                /**
+                 * Amount that will be collected. It is required when `amount_type` is `fixed`.
+                 */
+                amount?: Emptyable<number>;
+                /**
+                 * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
+                 */
+                amount_type?: Emptyable<MandateOptions.AmountType>;
+                /**
+                 * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+                 */
+                end_date?: Emptyable<string>;
+                /**
+                 * The periodicity at which payments will be collected. Defaults to `adhoc`.
+                 */
+                payment_schedule?: Emptyable<MandateOptions.PaymentSchedule>;
+                /**
+                 * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+                 */
+                payments_per_period?: Emptyable<number>;
+                /**
+                 * The purpose for which payments are made. Has a default value based on your merchant category code.
+                 */
+                purpose?: Emptyable<MandateOptions.Purpose>;
+                /**
+                 * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+                 */
+                start_date?: Emptyable<string>;
+            }
+            namespace MandateOptions {
+                type AmountType = 'fixed' | 'maximum';
+                type PaymentSchedule = 'adhoc' | 'annual' | 'daily' | 'fortnightly' | 'monthly' | 'quarterly' | 'semi_annual' | 'weekly';
+                type Purpose = 'dependant_support' | 'government' | 'loan' | 'mortgage' | 'other' | 'pension' | 'personal' | 'retail' | 'salary' | 'tax' | 'utility';
             }
         }
         namespace SepaDebit {

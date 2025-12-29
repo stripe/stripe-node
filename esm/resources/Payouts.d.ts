@@ -1,10 +1,9 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { ApplicationFee } from './ApplicationFees.js';
 import { BalanceTransaction } from './BalanceTransactions.js';
 import { ExternalAccount, DeletedExternalAccount } from './ExternalAccounts.js';
 import { MetadataParam, Emptyable, PaginationParams, RangeQueryParam, Metadata } from '../shared.js';
-import { ApiListPromise, Response } from '../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../lib.js';
 export declare class PayoutResource extends StripeResource {
     /**
      * Returns a list of existing payouts sent to third-party bank accounts or payouts that Stripe sent to you. The payouts return in sorted order, with the most recently created payouts appearing first.
@@ -41,16 +40,7 @@ export declare class PayoutResource extends StripeResource {
     reverse(id: string, params?: PayoutReverseParams, options?: RequestOptions): Promise<Response<Payout>>;
     reverse(id: string, options?: RequestOptions): Promise<Response<Payout>>;
 }
-export /**
- * A `Payout` object is created when you receive funds from Stripe, or when you
- * initiate a payout to either a bank account or debit card of a [connected
- * Stripe account](https://docs.stripe.com/docs/connect/bank-debit-card-payouts). You can retrieve individual payouts,
- * and list all payouts. Payouts are made on [varying
- * schedules](https://docs.stripe.com/docs/connect/manage-payout-schedule), depending on your country and
- * industry.
- *
- * Related guide: [Receiving payouts](https://stripe.com/docs/payouts)
- */ interface Payout {
+export interface Payout {
     /**
      * Unique identifier for the object.
      */
@@ -64,11 +54,11 @@ export /**
      */
     amount: number;
     /**
-     * The application fee (if any) for the payout. [See the Connect documentation](https://stripe.com/docs/connect/instant-payouts#monetization-and-fees) for details.
+     * The application fee (if any) for the payout. [See the Connect documentation](https://docs.stripe.com/connect/instant-payouts#monetization-and-fees) for details.
      */
     application_fee: string | ApplicationFee | null;
     /**
-     * The amount of the application fee (if any) requested for the payout. [See the Connect documentation](https://stripe.com/docs/connect/instant-payouts#monetization-and-fees) for details.
+     * The amount of the application fee (if any) requested for the payout. [See the Connect documentation](https://docs.stripe.com/connect/instant-payouts#monetization-and-fees) for details.
      */
     application_fee_amount: number | null;
     /**
@@ -76,7 +66,7 @@ export /**
      */
     arrival_date: number;
     /**
-     * Returns `true` if the payout is created by an [automated payout schedule](https://stripe.com/docs/payouts#payout-schedule) and `false` if it's [requested manually](https://stripe.com/docs/payouts#manual-payouts).
+     * Returns `true` if the payout is created by an [automated payout schedule](https://docs.stripe.com/payouts#payout-schedule) and `false` if it's [requested manually](https://stripe.com/docs/payouts#manual-payouts).
      */
     automatic: boolean;
     /**
@@ -104,7 +94,7 @@ export /**
      */
     failure_balance_transaction: string | BalanceTransaction | null;
     /**
-     * Error code that provides a reason for a payout failure, if available. View our [list of failure codes](https://stripe.com/docs/api#payout_failures).
+     * Error code that provides a reason for a payout failure, if available. View our [list of failure codes](https://docs.stripe.com/api#payout_failures).
      */
     failure_code: string | null;
     /**
@@ -116,7 +106,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata | null;
     /**
@@ -132,7 +122,7 @@ export /**
      */
     payout_method: string | null;
     /**
-     * If `completed`, you can use the [Balance Transactions API](https://stripe.com/docs/api/balance_transactions/list#balance_transaction_list-payout) to list all balance transactions that are paid out in this payout.
+     * If `completed`, you can use the [Balance Transactions API](https://docs.stripe.com/api/balance_transactions/list#balance_transaction_list-payout) to list all balance transactions that are paid out in this payout.
      */
     reconciliation_status: Payout.ReconciliationStatus;
     /**
@@ -196,7 +186,7 @@ export interface PayoutCreateParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: MetadataParam;
     /**
@@ -232,7 +222,7 @@ export interface PayoutUpdateParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
 }
@@ -270,7 +260,7 @@ export interface PayoutReverseParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: MetadataParam;
 }

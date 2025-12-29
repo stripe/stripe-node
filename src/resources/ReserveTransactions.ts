@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import {RequestOptions} from '../lib.js';
 export interface ReserveTransaction {
   /**
    * Unique identifier for the object.

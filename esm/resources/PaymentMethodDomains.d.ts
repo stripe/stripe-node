@@ -1,7 +1,6 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { PaginationParams } from '../shared.js';
-import { ApiListPromise, Response } from '../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../lib.js';
 export declare class PaymentMethodDomainResource extends StripeResource {
     /**
      * Lists the details of existing payment method domains.
@@ -32,12 +31,7 @@ export declare class PaymentMethodDomainResource extends StripeResource {
     validate(id: string, params?: PaymentMethodDomainValidateParams, options?: RequestOptions): Promise<Response<PaymentMethodDomain>>;
     validate(id: string, options?: RequestOptions): Promise<Response<PaymentMethodDomain>>;
 }
-export /**
- * A payment method domain represents a web domain that you have registered with Stripe.
- * Stripe Elements use registered payment method domains to control where certain payment methods are shown.
- *
- * Related guide: [Payment method domains](https://stripe.com/docs/payments/payment-methods/pmd-registration).
- */ interface PaymentMethodDomain {
+export interface PaymentMethodDomain {
     /**
      * Unique identifier for the object.
      */

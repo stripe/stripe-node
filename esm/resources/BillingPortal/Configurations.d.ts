@@ -1,8 +1,7 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { Application, DeletedApplication } from './../Applications.js';
 import { Emptyable, MetadataParam, PaginationParams, Metadata } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class ConfigurationResource extends StripeResource {
     /**
      * Returns a list of configurations that describe the functionality of the customer portal.
@@ -23,9 +22,7 @@ export declare class ConfigurationResource extends StripeResource {
      */
     update(id: string, params?: BillingPortal.ConfigurationUpdateParams, options?: RequestOptions): Promise<Response<Configuration>>;
 }
-export /**
- * A portal configuration describes the functionality and behavior you embed in a portal session. Related guide: [Configure the customer portal](https://docs.stripe.com/customer-management/configure-portal).
- */ interface Configuration {
+export interface Configuration {
     /**
      * Unique identifier for the object.
      */
@@ -48,7 +45,7 @@ export /**
      */
     created: number;
     /**
-     * The default URL to redirect customers to when they click on the portal's link to return to your website. This can be [overriden](https://stripe.com/docs/api/customer_portal/sessions/create#create_portal_session-return_url) when creating the session.
+     * The default URL to redirect customers to when they click on the portal's link to return to your website. This can be [overriden](https://docs.stripe.com/api/customer_portal/sessions/create#create_portal_session-return_url) when creating the session.
      */
     default_return_url: string | null;
     features: BillingPortal.Configuration.Features;
@@ -62,7 +59,7 @@ export /**
     livemode: boolean;
     login_page: BillingPortal.Configuration.LoginPage;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata | null;
     /**
@@ -105,7 +102,7 @@ export declare namespace BillingPortal {
              */
             enabled: boolean;
             /**
-             * A shareable URL to the hosted portal login page. Your customers will be able to log in with their [email](https://stripe.com/docs/api/customers/object#customer_object-email) and receive a link to their customer portal.
+             * A shareable URL to the hosted portal login page. Your customers will be able to log in with their [email](https://docs.stripe.com/api/customers/object#customer_object-email) and receive a link to their customer portal.
              */
             url: string | null;
         }
@@ -131,6 +128,10 @@ export declare namespace BillingPortal {
                  * Whether the feature is enabled.
                  */
                 enabled: boolean;
+                /**
+                 * The [Payment Method Configuration](https://docs.stripe.com/api/payment_method_configurations) to use for this portal session. When specified, customers will be able to update their payment method to one of the options specified by the payment method configuration. If not set, the default payment method configuration is used.
+                 */
+                payment_method_configuration: string | null;
             }
             interface SubscriptionCancel {
                 cancellation_reason: SubscriptionCancel.CancellationReason;
@@ -148,6 +149,10 @@ export declare namespace BillingPortal {
                 proration_behavior: SubscriptionCancel.ProrationBehavior;
             }
             interface SubscriptionUpdate {
+                /**
+                 * Determines the value to use for the billing cycle anchor on subscription updates. Valid values are `now` or `unchanged`, and the default value is `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time (in UTC). For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
+                 */
+                billing_cycle_anchor: SubscriptionUpdate.BillingCycleAnchor | null;
                 /**
                  * The types of subscription updates that are supported for items listed in the `products` attribute. When empty, subscriptions are not updateable.
                  */
@@ -191,6 +196,7 @@ export declare namespace BillingPortal {
                 }
             }
             namespace SubscriptionUpdate {
+                type BillingCycleAnchor = 'now' | 'unchanged';
                 type DefaultAllowedUpdate = 'price' | 'promotion_code' | 'quantity';
                 interface Product {
                     adjustable_quantity: Product.AdjustableQuantity;
@@ -253,7 +259,7 @@ export declare namespace BillingPortal {
          */
         business_profile?: ConfigurationCreateParams.BusinessProfile;
         /**
-         * The default URL to redirect customers to when they click on the portal's link to return to your website. This can be [overriden](https://stripe.com/docs/api/customer_portal/sessions/create#create_portal_session-return_url) when creating the session.
+         * The default URL to redirect customers to when they click on the portal's link to return to your website. This can be [overriden](https://docs.stripe.com/api/customer_portal/sessions/create#create_portal_session-return_url) when creating the session.
          */
         default_return_url?: Emptyable<string>;
         /**
@@ -265,7 +271,7 @@ export declare namespace BillingPortal {
          */
         login_page?: ConfigurationCreateParams.LoginPage;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
         /**
@@ -312,7 +318,7 @@ export declare namespace BillingPortal {
         }
         interface LoginPage {
             /**
-             * Set to `true` to generate a shareable URL [`login_page.url`](https://stripe.com/docs/api/customer_portal/configuration#portal_configuration_object-login_page-url) that will take your customers to a hosted login page for the customer portal.
+             * Set to `true` to generate a shareable URL [`login_page.url`](https://docs.stripe.com/api/customer_portal/configuration#portal_configuration_object-login_page-url) that will take your customers to a hosted login page for the customer portal.
              */
             enabled: boolean;
         }
@@ -363,6 +369,10 @@ export declare namespace BillingPortal {
             }
             interface SubscriptionUpdate {
                 /**
+                 * Determines the value to use for the billing cycle anchor on subscription updates. Valid values are `now` or `unchanged`, and the default value is `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time (in UTC). For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
+                 */
+                billing_cycle_anchor?: SubscriptionUpdate.BillingCycleAnchor;
+                /**
                  * The types of subscription updates that are supported. When empty, subscriptions are not updateable.
                  */
                 default_allowed_updates?: Emptyable<Array<SubscriptionUpdate.DefaultAllowedUpdate>>;
@@ -408,6 +418,7 @@ export declare namespace BillingPortal {
                 }
             }
             namespace SubscriptionUpdate {
+                type BillingCycleAnchor = 'now' | 'unchanged';
                 type DefaultAllowedUpdate = 'price' | 'promotion_code' | 'quantity';
                 interface Product {
                     /**
@@ -481,7 +492,7 @@ export declare namespace BillingPortal {
          */
         business_profile?: ConfigurationUpdateParams.BusinessProfile;
         /**
-         * The default URL to redirect customers to when they click on the portal's link to return to your website. This can be [overriden](https://stripe.com/docs/api/customer_portal/sessions/create#create_portal_session-return_url) when creating the session.
+         * The default URL to redirect customers to when they click on the portal's link to return to your website. This can be [overriden](https://docs.stripe.com/api/customer_portal/sessions/create#create_portal_session-return_url) when creating the session.
          */
         default_return_url?: Emptyable<string>;
         /**
@@ -497,7 +508,7 @@ export declare namespace BillingPortal {
          */
         login_page?: ConfigurationUpdateParams.LoginPage;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Emptyable<MetadataParam>;
         /**
@@ -544,7 +555,7 @@ export declare namespace BillingPortal {
         }
         interface LoginPage {
             /**
-             * Set to `true` to generate a shareable URL [`login_page.url`](https://stripe.com/docs/api/customer_portal/configuration#portal_configuration_object-login_page-url) that will take your customers to a hosted login page for the customer portal.
+             * Set to `true` to generate a shareable URL [`login_page.url`](https://docs.stripe.com/api/customer_portal/configuration#portal_configuration_object-login_page-url) that will take your customers to a hosted login page for the customer portal.
              *
              * Set to `false` to deactivate the `login_page.url`.
              */
@@ -597,6 +608,10 @@ export declare namespace BillingPortal {
             }
             interface SubscriptionUpdate {
                 /**
+                 * Determines the value to use for the billing cycle anchor on subscription updates. Valid values are `now` or `unchanged`, and the default value is `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time (in UTC). For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
+                 */
+                billing_cycle_anchor?: SubscriptionUpdate.BillingCycleAnchor;
+                /**
                  * The types of subscription updates that are supported. When empty, subscriptions are not updateable.
                  */
                 default_allowed_updates?: Emptyable<Array<SubscriptionUpdate.DefaultAllowedUpdate>>;
@@ -642,6 +657,7 @@ export declare namespace BillingPortal {
                 }
             }
             namespace SubscriptionUpdate {
+                type BillingCycleAnchor = 'now' | 'unchanged';
                 type DefaultAllowedUpdate = 'price' | 'promotion_code' | 'quantity';
                 interface Product {
                     /**

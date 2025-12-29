@@ -4,6 +4,7 @@ import {Customer} from './Customers.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {Refund} from './Refunds.js';
+import {RequestOptions} from '../lib.js';
 export interface CustomerCashBalanceTransaction {
   /**
    * Unique identifier for the object.
@@ -35,7 +36,12 @@ export interface CustomerCashBalanceTransaction {
   customer: string | Customer;
 
   /**
-   * The total available cash balance for the specified currency after this transaction was applied. Represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+   * The ID of an Account representing a customer whose available cash balance changed as a result of this transaction.
+   */
+  customer_account: string | null;
+
+  /**
+   * The total available cash balance for the specified currency after this transaction was applied. Represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
    */
   ending_balance: number;
 
@@ -47,7 +53,7 @@ export interface CustomerCashBalanceTransaction {
   livemode: boolean;
 
   /**
-   * The amount by which the cash balance changed, represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). A positive value represents funds being added to the cash balance, a negative value represents funds being removed from the cash balance.
+   * The amount by which the cash balance changed, represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). A positive value represents funds being added to the cash balance, a negative value represents funds being removed from the cash balance.
    */
   net_amount: number;
 
@@ -56,7 +62,7 @@ export interface CustomerCashBalanceTransaction {
   transferred_to_balance?: CustomerCashBalanceTransaction.TransferredToBalance;
 
   /**
-   * The type of the cash balance transaction. New types may be added in future. See [Customer Balance](https://stripe.com/docs/payments/customer-balance#types) to learn more about these types.
+   * The type of the cash balance transaction. New types may be added in future. See [Customer Balance](https://docs.stripe.com/payments/customer-balance#types) to learn more about these types.
    */
   type: CustomerCashBalanceTransaction.Type;
 
@@ -65,19 +71,19 @@ export interface CustomerCashBalanceTransaction {
 export namespace CustomerCashBalanceTransaction {
   export interface AdjustedForOverdraft {
     /**
-     * The [Balance Transaction](https://stripe.com/docs/api/balance_transactions/object) that corresponds to funds taken out of your Stripe balance.
+     * The [Balance Transaction](https://docs.stripe.com/api/balance_transactions/object) that corresponds to funds taken out of your Stripe balance.
      */
     balance_transaction: string | BalanceTransaction;
 
     /**
-     * The [Cash Balance Transaction](https://stripe.com/docs/api/cash_balance_transactions/object) that brought the customer balance negative, triggering the clawback of funds.
+     * The [Cash Balance Transaction](https://docs.stripe.com/api/cash_balance_transactions/object) that brought the customer balance negative, triggering the clawback of funds.
      */
     linked_transaction: string | CustomerCashBalanceTransaction;
   }
 
   export interface AppliedToPayment {
     /**
-     * The [Payment Intent](https://stripe.com/docs/api/payment_intents/object) that funds were applied to.
+     * The [Payment Intent](https://docs.stripe.com/api/payment_intents/object) that funds were applied to.
      */
     payment_intent: string | PaymentIntent;
   }
@@ -88,14 +94,14 @@ export namespace CustomerCashBalanceTransaction {
 
   export interface RefundedFromPayment {
     /**
-     * The [Refund](https://stripe.com/docs/api/refunds/object) that moved these funds into the customer's cash balance.
+     * The [Refund](https://docs.stripe.com/api/refunds/object) that moved these funds into the customer's cash balance.
      */
     refund: string | Refund;
   }
 
   export interface TransferredToBalance {
     /**
-     * The [Balance Transaction](https://stripe.com/docs/api/balance_transactions/object) that corresponds to funds transferred to your Stripe balance.
+     * The [Balance Transaction](https://docs.stripe.com/api/balance_transactions/object) that corresponds to funds transferred to your Stripe balance.
      */
     balance_transaction: string | BalanceTransaction;
   }
@@ -113,7 +119,7 @@ export namespace CustomerCashBalanceTransaction {
 
   export interface UnappliedFromPayment {
     /**
-     * The [Payment Intent](https://stripe.com/docs/api/payment_intents/object) that funds were unapplied from.
+     * The [Payment Intent](https://docs.stripe.com/api/payment_intents/object) that funds were unapplied from.
      */
     payment_intent: string | PaymentIntent;
   }

@@ -1,6 +1,4 @@
-export /**
- * The DeletedObject object.
- */ interface DeletedObject {
+export interface DeletedObject {
     /**
      * The ID of the object that's being deleted.
      */

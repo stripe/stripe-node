@@ -1,8 +1,7 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { Transaction } from './Transactions.js';
 import { PaginationParams, Address } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class ReceivedDebitResource extends StripeResource {
     /**
      * Returns a list of ReceivedDebits.
@@ -14,9 +13,7 @@ export declare class ReceivedDebitResource extends StripeResource {
     retrieve(id: string, params?: Treasury.ReceivedDebitRetrieveParams, options?: RequestOptions): Promise<Response<ReceivedDebit>>;
     retrieve(id: string, options?: RequestOptions): Promise<Response<ReceivedDebit>>;
 }
-export /**
- * ReceivedDebits represent funds pulled from a [FinancialAccount](https://stripe.com/docs/api#financial_accounts). These are not initiated from the FinancialAccount.
- */ interface ReceivedDebit {
+export interface ReceivedDebit {
     /**
      * Unique identifier for the object.
      */
@@ -50,7 +47,7 @@ export /**
      */
     financial_account: string | null;
     /**
-     * A [hosted transaction receipt](https://stripe.com/docs/treasury/moving-money/regulatory-receipts) URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
+     * A [hosted transaction receipt](https://docs.stripe.com/treasury/moving-money/regulatory-receipts) URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
      */
     hosted_regulatory_receipt_url: string | null;
     initiating_payment_method_details?: Treasury.ReceivedDebit.InitiatingPaymentMethodDetails;
@@ -87,7 +84,7 @@ export declare namespace Treasury {
             billing_details: InitiatingPaymentMethodDetails.BillingDetails;
             financial_account?: InitiatingPaymentMethodDetails.FinancialAccount;
             /**
-             * Set when `type` is `issuing_card`. This is an [Issuing Card](https://stripe.com/docs/api#issuing_cards) ID.
+             * Set when `type` is `issuing_card`. This is an [Issuing Card](https://api.stripe.com#issuing_cards) ID.
              */
             issuing_card?: string;
             /**
@@ -106,15 +103,15 @@ export declare namespace Treasury {
              */
             inbound_transfer: string | null;
             /**
-             * Set if the ReceivedDebit was created due to an [Issuing Authorization](https://stripe.com/docs/api#issuing_authorizations) object.
+             * Set if the ReceivedDebit was created due to an [Issuing Authorization](https://api.stripe.com#issuing_authorizations) object.
              */
             issuing_authorization: string | null;
             /**
-             * Set if the ReceivedDebit is also viewable as an [Issuing Dispute](https://stripe.com/docs/api#issuing_disputes) object.
+             * Set if the ReceivedDebit is also viewable as an [Issuing Dispute](https://api.stripe.com#issuing_disputes) object.
              */
             issuing_transaction: string | null;
             /**
-             * Set if the ReceivedDebit was created due to a [Payout](https://stripe.com/docs/api#payouts) object.
+             * Set if the ReceivedDebit was created due to a [Payout](https://api.stripe.com#payouts) object.
              */
             payout: string | null;
         }

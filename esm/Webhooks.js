@@ -9,6 +9,7 @@ export function createWebhooks(platformFunctions) {
                 if (!this.signature) {
                     throw new Error('ERR: missing signature helper, unable to verify');
                 }
+                cryptoProvider = cryptoProvider || getCryptoProvider();
                 this.signature.verifyHeader(payload, header, secret, tolerance || Webhook.DEFAULT_TOLERANCE, cryptoProvider, receivedAt);
             }
             catch (e) {
@@ -27,6 +28,7 @@ export function createWebhooks(platformFunctions) {
             if (!this.signature) {
                 throw new Error('ERR: missing signature helper, unable to verify');
             }
+            cryptoProvider = cryptoProvider || getCryptoProvider();
             await this.signature.verifyHeaderAsync(payload, header, secret, tolerance || Webhook.DEFAULT_TOLERANCE, cryptoProvider, receivedAt);
             const jsonPayload = payload instanceof Uint8Array
                 ? JSON.parse(new TextDecoder('utf8').decode(payload))

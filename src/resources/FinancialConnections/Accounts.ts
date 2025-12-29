@@ -1,12 +1,11 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../lib.js';
 import {AccountOwner} from './AccountOwners.js';
 import {AccountOwnership} from './AccountOwnerships.js';
 import {Customer} from './../Customers.js';
 import {PaginationParams} from '../../shared.js';
-import {ApiListPromise, Response} from '../../lib.js';
+import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export class AccountResource extends StripeResource {
   /**
@@ -135,6 +134,11 @@ export interface Account {
   account_holder: FinancialConnections.Account.AccountHolder | null;
 
   /**
+   * Details about the account numbers.
+   */
+  account_numbers: Array<FinancialConnections.Account.AccountNumber> | null;
+
+  /**
    * The most recent information about the account's balance.
    */
   balance: FinancialConnections.Account.Balance | null;
@@ -218,7 +222,7 @@ export interface Account {
   subscriptions: Array<'transactions'> | null;
 
   /**
-   * The [PaymentMethod type](https://stripe.com/docs/api/payment_methods/object#payment_method_object-type)(s) that can be created from this account.
+   * The [PaymentMethod type](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type)(s) that can be created from this account.
    */
   supported_payment_method_types: Array<
     FinancialConnections.Account.SupportedPaymentMethodType
@@ -233,19 +237,43 @@ export namespace FinancialConnections {
   export namespace Account {
     export interface AccountHolder {
       /**
-       * The ID of the Stripe account this account belongs to. Should only be present if `account_holder.type` is `account`.
+       * The ID of the Stripe account that this account belongs to. Only available when `account_holder.type` is `account`.
        */
       account?: string | Account;
 
       /**
-       * ID of the Stripe customer this account belongs to. Present if and only if `account_holder.type` is `customer`.
+       * The ID for an Account representing a customer that this account belongs to. Only available when `account_holder.type` is `customer`.
        */
       customer?: string | Customer;
+
+      customer_account?: string;
 
       /**
        * Type of account holder that this account belongs to.
        */
       type: AccountHolder.Type;
+    }
+
+    export interface AccountNumber {
+      /**
+       * When the account number is expected to expire, if applicable.
+       */
+      expected_expiry_date: number | null;
+
+      /**
+       * The type of account number associated with the account.
+       */
+      identifier_type: AccountNumber.IdentifierType;
+
+      /**
+       * Whether the account number is currently active and usable for transactions.
+       */
+      status: AccountNumber.Status;
+
+      /**
+       * The payment networks that the account number can be used for.
+       */
+      supported_networks: Array<'ach'>;
     }
 
     export interface Balance {
@@ -355,6 +383,14 @@ export namespace FinancialConnections {
       export type Type = 'account' | 'customer';
     }
 
+    export namespace AccountNumber {
+      export type IdentifierType =
+        | 'account_number'
+        | 'tokenized_account_number';
+
+      export type Status = 'deactivated' | 'transactable';
+    }
+
     export namespace Balance {
       export interface Cash {
         /**
@@ -427,14 +463,19 @@ export namespace FinancialConnections {
   export namespace AccountListParams {
     export interface AccountHolder {
       /**
-       * The ID of the Stripe account whose accounts will be retrieved.
+       * The ID of the Stripe account whose accounts you will retrieve.
        */
       account?: string;
 
       /**
-       * The ID of the Stripe customer whose accounts will be retrieved.
+       * The ID of the Stripe customer whose accounts you will retrieve.
        */
       customer?: string;
+
+      /**
+       * The ID of the Account representing a customer whose accounts you will retrieve.
+       */
+      customer_account?: string;
     }
   }
 }

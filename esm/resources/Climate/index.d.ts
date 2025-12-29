@@ -1,7 +1,7 @@
-import { StripeClient } from '../../stripe.core.js';
-import { OrderResource } from './Orders.js';
-import { ProductResource } from './Products.js';
-import { SupplierResource } from './Suppliers.js';
+import { Stripe } from '../../stripe.core.js';
+import { Order, OrderResource } from './Orders.js';
+import { Product, ProductResource } from './Products.js';
+import { Supplier, SupplierResource } from './Suppliers.js';
 export { Order } from './Orders.js';
 export { Product } from './Products.js';
 export { Supplier } from './Suppliers.js';
@@ -10,5 +10,10 @@ export declare class Climate {
     orders: OrderResource;
     products: ProductResource;
     suppliers: SupplierResource;
-    constructor(stripe: StripeClient);
+    constructor(stripe: Stripe);
+}
+export declare namespace Climate {
+    export { Order };
+    export { Product };
+    export { Supplier };
 }

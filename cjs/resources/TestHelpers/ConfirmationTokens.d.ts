@@ -1,8 +1,7 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { ConfirmationToken } from './../ConfirmationTokens.js';
 import { MetadataParam, Emptyable, AddressParam } from '../../shared.js';
-import { Response } from '../../lib.js';
+import { RequestOptions, Response } from '../../lib.js';
 export declare class ConfirmationTokenResource extends StripeResource {
     /**
      * Creates a test mode Confirmation Token server side for your integration tests.
@@ -35,7 +34,7 @@ export declare namespace TestHelpers {
         /**
          * Indicates that you intend to make future payments with this ConfirmationToken's payment method.
          *
-         * The presence of this property will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete.
+         * The presence of this property will [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete.
          */
         setup_future_usage?: ConfirmationTokenCreateParams.SetupFutureUsage;
         /**
@@ -162,7 +161,7 @@ export declare namespace TestHelpers {
              */
             mb_way?: PaymentMethodData.MbWay;
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: MetadataParam;
             /**
@@ -206,6 +205,10 @@ export declare namespace TestHelpers {
              */
             paypal?: PaymentMethodData.Paypal;
             /**
+             * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+             */
+            payto?: PaymentMethodData.Payto;
+            /**
              * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
              */
             pix?: PaymentMethodData.Pix;
@@ -214,7 +217,7 @@ export declare namespace TestHelpers {
              */
             promptpay?: PaymentMethodData.Promptpay;
             /**
-             * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+             * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
              */
             radar_options?: PaymentMethodData.RadarOptions;
             /**
@@ -462,13 +465,27 @@ export declare namespace TestHelpers {
             }
             interface Paypal {
             }
+            interface Payto {
+                /**
+                 * The account number for the bank account.
+                 */
+                account_number?: string;
+                /**
+                 * Bank-State-Branch number of the bank account.
+                 */
+                bsb_number?: string;
+                /**
+                 * The PayID alias for the bank account.
+                 */
+                pay_id?: string;
+            }
             interface Pix {
             }
             interface Promptpay {
             }
             interface RadarOptions {
                 /**
-                 * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+                 * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
                  */
                 session?: string;
             }
@@ -494,7 +511,7 @@ export declare namespace TestHelpers {
             }
             interface Twint {
             }
-            type Type = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
+            type Type = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'payto' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
             interface UsBankAccount {
                 /**
                  * Account holder type: individual or company.
@@ -529,7 +546,7 @@ export declare namespace TestHelpers {
                 type Bank = 'affin_bank' | 'agrobank' | 'alliance_bank' | 'ambank' | 'bank_islam' | 'bank_muamalat' | 'bank_of_china' | 'bank_rakyat' | 'bsn' | 'cimb' | 'deutsche_bank' | 'hong_leong_bank' | 'hsbc' | 'kfh' | 'maybank2e' | 'maybank2u' | 'ocbc' | 'pb_enterprise' | 'public_bank' | 'rhb' | 'standard_chartered' | 'uob';
             }
             namespace Ideal {
-                type Bank = 'abn_amro' | 'asn_bank' | 'bunq' | 'buut' | 'handelsbanken' | 'ing' | 'knab' | 'moneyou' | 'n26' | 'nn' | 'rabobank' | 'regiobank' | 'revolut' | 'sns_bank' | 'triodos_bank' | 'van_lanschot' | 'yoursafe';
+                type Bank = 'abn_amro' | 'asn_bank' | 'bunq' | 'buut' | 'finom' | 'handelsbanken' | 'ing' | 'knab' | 'mollie' | 'moneyou' | 'n26' | 'nn' | 'rabobank' | 'regiobank' | 'revolut' | 'sns_bank' | 'triodos_bank' | 'van_lanschot' | 'yoursafe';
             }
             namespace Klarna {
                 interface Dob {

@@ -1,7 +1,6 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { PaginationParams, RangeQueryParam } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class TransactionResource extends StripeResource {
     /**
      * Returns a list of Financial Connections Transaction objects.
@@ -13,9 +12,7 @@ export declare class TransactionResource extends StripeResource {
     retrieve(id: string, params?: FinancialConnections.TransactionRetrieveParams, options?: RequestOptions): Promise<Response<Transaction>>;
     retrieve(id: string, options?: RequestOptions): Promise<Response<Transaction>>;
 }
-export /**
- * A Transaction represents a real transaction that affects a Financial Connections Account balance.
- */ interface Transaction {
+export interface Transaction {
     /**
      * Unique identifier for the object.
      */

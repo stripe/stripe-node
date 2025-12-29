@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../lib.js';
 import {Cardholder} from './Cardholders.js';
 import {PersonalizationDesign} from './PersonalizationDesigns.js';
 import {
@@ -12,7 +11,7 @@ import {
   RangeQueryParam,
   Metadata,
 } from '../../shared.js';
-import {ApiListPromise, Response} from '../../lib.js';
+import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export class CardResource extends StripeResource {
   /**
@@ -98,9 +97,9 @@ export interface Card {
   cancellation_reason: Issuing.Card.CancellationReason | null;
 
   /**
-   * An Issuing `Cardholder` object represents an individual or business entity who is [issued](https://stripe.com/docs/issuing) cards.
+   * An Issuing `Cardholder` object represents an individual or business entity who is [issued](https://docs.stripe.com/issuing) cards.
    *
-   * Related guide: [How to create a cardholder](https://stripe.com/docs/issuing/cards/virtual/issue-cards#create-cardholder)
+   * Related guide: [How to create a cardholder](https://docs.stripe.com/issuing/cards/virtual/issue-cards#create-cardholder)
    */
   cardholder: Cardholder;
 
@@ -115,7 +114,7 @@ export interface Card {
   currency: string;
 
   /**
-   * The card's CVC. For security reasons, this is only available for virtual cards, and will be omitted unless you explicitly request it with [the `expand` parameter](https://stripe.com/docs/api/expanding_objects). Additionally, it's only available via the ["Retrieve a card" endpoint](https://stripe.com/docs/api/issuing/cards/retrieve), not via "List all cards" or any other endpoint.
+   * The card's CVC. For security reasons, this is only available for virtual cards, and will be omitted unless you explicitly request it with [the `expand` parameter](https://docs.stripe.com/api/expanding_objects). Additionally, it's only available via the ["Retrieve a card" endpoint](https://docs.stripe.com/api/issuing/cards/retrieve), not via "List all cards" or any other endpoint.
    */
   cvc?: string;
 
@@ -140,17 +139,22 @@ export interface Card {
   last4: string;
 
   /**
+   * Stripe's assessment of whether this card's details have been compromised. If this property isn't null, cancel and reissue the card to prevent fraudulent activity risk.
+   */
+  latest_fraud_warning: Issuing.Card.LatestFraudWarning | null;
+
+  /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
    */
   livemode: boolean;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata;
 
   /**
-   * The full unredacted card number. For security reasons, this is only available for virtual cards, and will be omitted unless you explicitly request it with [the `expand` parameter](https://stripe.com/docs/api/expanding_objects). Additionally, it's only available via the ["Retrieve a card" endpoint](https://stripe.com/docs/api/issuing/cards/retrieve), not via "List all cards" or any other endpoint.
+   * The full unredacted card number. For security reasons, this is only available for virtual cards, and will be omitted unless you explicitly request it with [the `expand` parameter](https://docs.stripe.com/api/expanding_objects). Additionally, it's only available via the ["Retrieve a card" endpoint](https://docs.stripe.com/api/issuing/cards/retrieve), not via "List all cards" or any other endpoint.
    */
   number?: string;
 
@@ -204,6 +208,18 @@ export interface Card {
 export namespace Issuing {
   export namespace Card {
     export type CancellationReason = 'design_rejected' | 'lost' | 'stolen';
+
+    export interface LatestFraudWarning {
+      /**
+       * Timestamp of the most recent fraud warning.
+       */
+      started_at: number | null;
+
+      /**
+       * The type of fraud warning that most recently took place on this card. This field updates with every new fraud warning, so the value changes over time. If populated, cancel and reissue the card.
+       */
+      type: LatestFraudWarning.Type | null;
+    }
 
     export type ReplacementReason = 'damaged' | 'expired' | 'lost' | 'stolen';
 
@@ -273,7 +289,7 @@ export namespace Issuing {
 
     export interface SpendingControls {
       /**
-       * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
+       * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
        */
       allowed_categories: Array<SpendingControls.AllowedCategory> | null;
 
@@ -283,7 +299,7 @@ export namespace Issuing {
       allowed_merchant_countries: Array<string> | null;
 
       /**
-       * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
+       * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
        */
       blocked_categories: Array<SpendingControls.BlockedCategory> | null;
 
@@ -316,6 +332,14 @@ export namespace Issuing {
        * Unique identifier for a card used with digital wallets
        */
       primary_account_identifier: string | null;
+    }
+
+    export namespace LatestFraudWarning {
+      export type Type =
+        | 'card_testing_exposure'
+        | 'fraud_dispute_filed'
+        | 'third_party_reported'
+        | 'user_indicated_fraud';
     }
 
     export namespace Shipping {
@@ -968,12 +992,12 @@ export namespace Issuing {
 
       export interface SpendingLimit {
         /**
-         * Maximum amount allowed to spend per interval. This amount is in the card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+         * Maximum amount allowed to spend per interval. This amount is in the card's currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
          */
         amount: number;
 
         /**
-         * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) this limit applies to. Omitting this field will apply the limit to all categories.
+         * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) this limit applies to. Omitting this field will apply the limit to all categories.
          */
         categories: Array<SpendingLimit.Category> | null;
 
@@ -1345,7 +1369,7 @@ export namespace Issuing {
     type: CardCreateParams.Type;
 
     /**
-     * The [Cardholder](https://stripe.com/docs/api#issuing_cardholder_object) object with which the card will be associated.
+     * The [Cardholder](https://docs.stripe.com/api#issuing_cardholder_object) object with which the card will be associated.
      */
     cardholder?: string;
 
@@ -1370,7 +1394,7 @@ export namespace Issuing {
     financial_account?: string;
 
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: MetadataParam;
 
@@ -1405,7 +1429,7 @@ export namespace Issuing {
     shipping?: CardCreateParams.Shipping;
 
     /**
-     * Rules that control spending for this card. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
+     * Rules that control spending for this card. Refer to our [documentation](https://docs.stripe.com/issuing/controls/spending-controls) for more details.
      */
     spending_controls?: CardCreateParams.SpendingControls;
 
@@ -1471,7 +1495,7 @@ export namespace Issuing {
 
     export interface SpendingControls {
       /**
-       * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
+       * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
        */
       allowed_categories?: Array<SpendingControls.AllowedCategory>;
 
@@ -1481,7 +1505,7 @@ export namespace Issuing {
       allowed_merchant_countries?: Array<string>;
 
       /**
-       * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
+       * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
        */
       blocked_categories?: Array<SpendingControls.BlockedCategory>;
 
@@ -1526,7 +1550,7 @@ export namespace Issuing {
         postal_code: string;
 
         /**
-         * State, county, province, or region.
+         * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
          */
         state?: string;
       }
@@ -2159,7 +2183,7 @@ export namespace Issuing {
         amount: number;
 
         /**
-         * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) this limit applies to. Omitting this field will apply the limit to all categories.
+         * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) this limit applies to. Omitting this field will apply the limit to all categories.
          */
         categories?: Array<SpendingLimit.Category>;
 
@@ -2499,7 +2523,7 @@ export namespace Issuing {
     expand?: Array<string>;
 
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
 
@@ -2516,7 +2540,7 @@ export namespace Issuing {
     shipping?: CardUpdateParams.Shipping;
 
     /**
-     * Rules that control spending for this card. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
+     * Rules that control spending for this card. Refer to our [documentation](https://docs.stripe.com/issuing/controls/spending-controls) for more details.
      */
     spending_controls?: CardUpdateParams.SpendingControls;
 
@@ -2580,7 +2604,7 @@ export namespace Issuing {
 
     export interface SpendingControls {
       /**
-       * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
+       * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
        */
       allowed_categories?: Array<SpendingControls.AllowedCategory>;
 
@@ -2590,7 +2614,7 @@ export namespace Issuing {
       allowed_merchant_countries?: Array<string>;
 
       /**
-       * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
+       * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
        */
       blocked_categories?: Array<SpendingControls.BlockedCategory>;
 
@@ -2635,7 +2659,7 @@ export namespace Issuing {
         postal_code: string;
 
         /**
-         * State, county, province, or region.
+         * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
          */
         state?: string;
       }
@@ -3268,7 +3292,7 @@ export namespace Issuing {
         amount: number;
 
         /**
-         * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) this limit applies to. Omitting this field will apply the limit to all categories.
+         * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) this limit applies to. Omitting this field will apply the limit to all categories.
          */
         categories?: Array<SpendingLimit.Category>;
 

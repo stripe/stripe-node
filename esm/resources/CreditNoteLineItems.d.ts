@@ -1,9 +1,7 @@
 import { TaxRate } from './TaxRates.js';
 import { Discount, DeletedDiscount } from './Discounts.js';
 import * as Billing from './Billing/index.js';
-export /**
- * The credit note line item object
- */ interface CreditNoteLineItem {
+export interface CreditNoteLineItem {
     /**
      * Unique identifier for the object.
      */
@@ -127,6 +125,9 @@ export declare namespace CreditNoteLineItem {
     namespace Tax {
         type TaxBehavior = 'exclusive' | 'inclusive';
         interface TaxRateDetails {
+            /**
+             * ID of the tax rate
+             */
             tax_rate: string;
         }
         type TaxabilityReason = 'customer_exempt' | 'not_available' | 'not_collecting' | 'not_subject_to_tax' | 'not_supported' | 'portion_product_exempt' | 'portion_reduced_rated' | 'portion_standard_rated' | 'product_exempt' | 'product_exempt_holiday' | 'proportionally_rated' | 'reduced_rated' | 'reverse_charge' | 'standard_rated' | 'taxable_basis_reduced' | 'zero_rated';

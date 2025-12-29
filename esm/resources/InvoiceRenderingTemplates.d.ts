@@ -1,7 +1,6 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { PaginationParams, Metadata } from '../shared.js';
-import { ApiListPromise, Response } from '../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../lib.js';
 export declare class InvoiceRenderingTemplateResource extends StripeResource {
     /**
      * List all templates, ordered by creation date, with the most recently created template appearing first.
@@ -24,10 +23,7 @@ export declare class InvoiceRenderingTemplateResource extends StripeResource {
     unarchive(id: string, params?: InvoiceRenderingTemplateUnarchiveParams, options?: RequestOptions): Promise<Response<InvoiceRenderingTemplate>>;
     unarchive(id: string, options?: RequestOptions): Promise<Response<InvoiceRenderingTemplate>>;
 }
-export /**
- * Invoice Rendering Templates are used to configure how invoices are rendered on surfaces like the PDF. Invoice Rendering Templates
- * can be created from within the Dashboard, and they can be used over the API when creating invoices.
- */ interface InvoiceRenderingTemplate {
+export interface InvoiceRenderingTemplate {
     /**
      * Unique identifier for the object.
      */
@@ -45,7 +41,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata | null;
     /**

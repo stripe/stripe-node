@@ -1,7 +1,6 @@
 import { StripeResource } from '../../../StripeResource.js';
-import { RequestOptions } from '../../../Types.js';
 import { Card } from './../../Issuing/Cards.js';
-import { Response } from '../../../lib.js';
+import { RequestOptions, Response } from '../../../lib.js';
 export declare class CardResource extends StripeResource {
     /**
      * Updates the shipping status of the specified Issuing Card object to delivered.

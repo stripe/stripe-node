@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {Account} from './Accounts.js';
+import {RequestOptions} from '../lib.js';
 export interface ConnectCollectionTransfer {
   /**
    * Unique identifier for the object.

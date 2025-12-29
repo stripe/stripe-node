@@ -1,6 +1,5 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
-import { Response } from '../lib.js';
+import { RequestOptions, Response } from '../lib.js';
 export declare class EphemeralKeyResource extends StripeResource {
     /**
      * Invalidates a short-lived API key for a given resource.
@@ -10,9 +9,7 @@ export declare class EphemeralKeyResource extends StripeResource {
     create(params?: EphemeralKeyCreateParams, options?: RequestOptions): Promise<Response<EphemeralKey>>;
     create(options?: RequestOptions): Promise<Response<EphemeralKey>>;
 }
-export /**
- * The EphemeralKey object.
- */ interface EphemeralKey {
+export interface EphemeralKey {
     /**
      * Unique identifier for the object.
      */

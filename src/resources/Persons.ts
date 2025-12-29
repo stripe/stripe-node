@@ -2,6 +2,7 @@
 
 import {File} from './Files.js';
 import {Address, Metadata} from '../shared.js';
+import {RequestOptions} from '../lib.js';
 export interface Person {
   /**
    * Unique identifier for the object.
@@ -70,7 +71,7 @@ export interface Person {
   full_name_aliases?: Array<string>;
 
   /**
-   * Information about the [upcoming new requirements for this person](https://stripe.com/docs/connect/custom-accounts/future-requirements), including what information needs to be collected, and by when.
+   * Information about the [upcoming new requirements for this person](https://docs.stripe.com/connect/custom-accounts/future-requirements), including what information needs to be collected, and by when.
    */
   future_requirements?: Person.FutureRequirements | null;
 
@@ -110,7 +111,7 @@ export interface Person {
   maiden_name?: string | null;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata?: Metadata;
 
@@ -267,17 +268,17 @@ export namespace Person {
 
   export interface FutureRequirements {
     /**
-     * Fields that are due and can be satisfied by providing the corresponding alternative fields instead.
+     * Fields that are due and can be resolved by providing the corresponding alternative fields instead. Many alternatives can list the same `original_fields_due`, and any of these alternatives can serve as a pathway for attempting to resolve the fields again. Re-providing `original_fields_due` also serves as a pathway for attempting to resolve the fields again.
      */
     alternatives: Array<FutureRequirements.Alternative> | null;
 
     /**
-     * Fields that need to be collected to keep the person's account enabled. If not collected by the account's `future_requirements[current_deadline]`, these fields will transition to the main `requirements` hash, and may immediately become `past_due`, but the account may also be given a grace period depending on the account's enablement state prior to transition.
+     * Fields that need to be resolved to keep the person's account enabled. If not resolved by the account's `future_requirements[current_deadline]`, these fields will transition to the main `requirements` hash, and may immediately become `past_due`, but the account may also be given a grace period depending on the account's enablement state prior to transition.
      */
     currently_due: Array<string>;
 
     /**
-     * Fields that are `currently_due` and need to be collected again because validation or verification failed.
+     * Details about validation and verification failures for `due` requirements that must be resolved.
      */
     errors: Array<FutureRequirements.Error>;
 
@@ -287,12 +288,12 @@ export namespace Person {
     eventually_due: Array<string>;
 
     /**
-     * Fields that weren't collected by the account's `requirements.current_deadline`. These fields need to be collected to enable the person's account. New fields will never appear here; `future_requirements.past_due` will always be a subset of `requirements.past_due`.
+     * Fields that haven't been resolved by the account's `requirements.current_deadline`. These fields need to be resolved to enable the person's account. `future_requirements.past_due` is a subset of `requirements.past_due`.
      */
     past_due: Array<string>;
 
     /**
-     * Fields that might become required depending on the results of verification or review. It's an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due` or `currently_due`. Fields might appear in `eventually_due` or `currently_due` and in `pending_verification` if verification fails but another verification is still pending.
+     * Fields that are being reviewed, or might become required depending on the results of a review. If the review fails, these fields can move to `eventually_due`, `currently_due`, `past_due` or `alternatives`. Fields might appear in `eventually_due`, `currently_due`, `past_due` or `alternatives` and in `pending_verification` if one verification fails but another is still pending.
      */
     pending_verification: Array<string>;
   }
@@ -343,17 +344,17 @@ export namespace Person {
 
   export interface Requirements {
     /**
-     * Fields that are due and can be satisfied by providing the corresponding alternative fields instead.
+     * Fields that are due and can be resolved by providing the corresponding alternative fields instead. Many alternatives can list the same `original_fields_due`, and any of these alternatives can serve as a pathway for attempting to resolve the fields again. Re-providing `original_fields_due` also serves as a pathway for attempting to resolve the fields again.
      */
     alternatives: Array<Requirements.Alternative> | null;
 
     /**
-     * Fields that need to be collected to keep the person's account enabled. If not collected by the account's `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
+     * Fields that need to be resolved to keep the person's account enabled. If not resolved by the account's `current_deadline`, these fields will appear in `past_due` as well, and the account is disabled.
      */
     currently_due: Array<string>;
 
     /**
-     * Fields that are `currently_due` and need to be collected again because validation or verification failed.
+     * Details about validation and verification failures for `due` requirements that must be resolved.
      */
     errors: Array<Requirements.Error>;
 
@@ -363,12 +364,12 @@ export namespace Person {
     eventually_due: Array<string>;
 
     /**
-     * Fields that weren't collected by the account's `current_deadline`. These fields need to be collected to enable the person's account.
+     * Fields that haven't been resolved by `current_deadline`. These fields need to be resolved to enable the person's account.
      */
     past_due: Array<string>;
 
     /**
-     * Fields that might become required depending on the results of verification or review. It's an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`. Fields might appear in `eventually_due`, `currently_due`, or `past_due` and in `pending_verification` if verification fails but another verification is still pending.
+     * Fields that are being reviewed, or might become required depending on the results of a review. If the review fails, these fields can move to `eventually_due`, `currently_due`, `past_due` or `alternatives`. Fields might appear in `eventually_due`, `currently_due`, `past_due` or `alternatives` and in `pending_verification` if one verification fails but another is still pending.
      */
     pending_verification: Array<string>;
   }
@@ -409,7 +410,7 @@ export namespace Person {
     document?: Verification.Document;
 
     /**
-     * The state of verification for the person. Possible values are `unverified`, `pending`, or `verified`. Please refer [guide](https://stripe.com/docs/connect/handling-api-verification) to handle verification updates.
+     * The state of verification for the person. Possible values are `unverified`, `pending`, or `verified`. Please refer [guide](https://docs.stripe.com/connect/handling-api-verification) to handle verification updates.
      */
     status: string;
   }
@@ -436,12 +437,12 @@ export namespace Person {
   export namespace FutureRequirements {
     export interface Alternative {
       /**
-       * Fields that can be provided to satisfy all fields in `original_fields_due`.
+       * Fields that can be provided to resolve all fields in `original_fields_due`.
        */
       alternative_fields_due: Array<string>;
 
       /**
-       * Fields that are due and can be satisfied by providing all fields in `alternative_fields_due`.
+       * Fields that are due and can be resolved by providing all fields in `alternative_fields_due`.
        */
       original_fields_due: Array<string>;
     }
@@ -568,12 +569,12 @@ export namespace Person {
   export namespace Requirements {
     export interface Alternative {
       /**
-       * Fields that can be provided to satisfy all fields in `original_fields_due`.
+       * Fields that can be provided to resolve all fields in `original_fields_due`.
        */
       alternative_fields_due: Array<string>;
 
       /**
-       * Fields that are due and can be satisfied by providing all fields in `alternative_fields_due`.
+       * Fields that are due and can be resolved by providing all fields in `alternative_fields_due`.
        */
       original_fields_due: Array<string>;
     }
@@ -765,7 +766,7 @@ export namespace Person {
   export namespace Verification {
     export interface AdditionalDocument {
       /**
-       * The back of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`.
+       * The back of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
        */
       back: string | File | null;
 
@@ -780,14 +781,14 @@ export namespace Person {
       details_code: string | null;
 
       /**
-       * The front of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`.
+       * The front of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
        */
       front: string | File | null;
     }
 
     export interface Document {
       /**
-       * The back of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`.
+       * The back of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
        */
       back: string | File | null;
 
@@ -802,7 +803,7 @@ export namespace Person {
       details_code: string | null;
 
       /**
-       * The front of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`.
+       * The front of an ID returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `identity_document`.
        */
       front: string | File | null;
     }

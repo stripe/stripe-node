@@ -1,8 +1,7 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { Card } from './Cards.js';
 import { PaginationParams, RangeQueryParam } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class TokenResource extends StripeResource {
     /**
      * Lists all Issuing Token objects for a given card.
@@ -18,9 +17,7 @@ export declare class TokenResource extends StripeResource {
      */
     update(id: string, params: Issuing.TokenUpdateParams, options?: RequestOptions): Promise<Response<Token>>;
 }
-export /**
- * An issuing token object is created when an issued card is added to a digital wallet. As a [card issuer](https://stripe.com/docs/issuing), you can [view and manage these tokens](https://stripe.com/docs/issuing/controls/token-management) through Stripe.
- */ interface Token {
+export interface Token {
     /**
      * Unique identifier for the object.
      */

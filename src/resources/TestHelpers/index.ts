@@ -4,7 +4,7 @@ import {Stripe} from '../../stripe.core.js';
 import {ConfirmationTokenResource} from './ConfirmationTokens.js';
 import {CustomerResource} from './Customers.js';
 import {RefundResource} from './Refunds.js';
-import {TestClockResource} from './TestClocks.js';
+import {TestClock, TestClockResource} from './TestClocks.js';
 import {Issuing} from './Issuing/index.js';
 import {Terminal} from './Terminal/index.js';
 import {Treasury} from './Treasury/index.js';
@@ -29,4 +29,8 @@ export class TestHelpers {
     this.terminal = new Terminal(stripe);
     this.treasury = new Treasury(stripe);
   }
+}
+
+export declare namespace TestHelpers {
+  export {TestClock};
 }

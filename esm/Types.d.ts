@@ -3,7 +3,7 @@ import { EventEmitter } from 'events';
 import { HttpClientInterface, HttpClientResponseInterface } from './net/HttpClient.js';
 import { HttpClientResponseError } from './RequestSender.js';
 import { StripeContext } from './StripeContext.js';
-import { StripeClient } from './stripe.core.js';
+import { Stripe } from './stripe.core.js';
 import { AppInfo } from './lib.js';
 export type ApiMode = 'v1' | 'v2';
 export type BufferedFile = {
@@ -125,7 +125,7 @@ export type StripeRawError = {
     exception?: any;
 };
 export type StripeResourceObject = {
-    _stripe: StripeClient;
+    _stripe: Stripe;
     basePath: UrlInterpolator;
     path: UrlInterpolator;
     resourcePath: string;

@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../lib.js';
 import {File} from './Files.js';
 import {
   Emptyable,
@@ -10,7 +9,7 @@ import {
   RangeQueryParam,
   Metadata,
 } from '../shared.js';
-import {ApiListPromise, Response} from '../lib.js';
+import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export class FileLinkResource extends StripeResource {
   /**
@@ -111,7 +110,7 @@ export interface FileLink {
   livemode: boolean;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata;
 
@@ -137,7 +136,7 @@ export interface FileLinkCreateParams {
   expires_at?: number;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 }
@@ -159,7 +158,7 @@ export interface FileLinkUpdateParams {
   expires_at?: Emptyable<'now' | number>;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 }

@@ -1,7 +1,6 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { MetadataParam, PaginationParams, RangeQueryParam, Metadata } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class RequestResource extends StripeResource {
     /**
      * Lists all ForwardingRequest objects.
@@ -18,24 +17,7 @@ export declare class RequestResource extends StripeResource {
     retrieve(id: string, params?: Forwarding.RequestRetrieveParams, options?: RequestOptions): Promise<Response<Request>>;
     retrieve(id: string, options?: RequestOptions): Promise<Response<Request>>;
 }
-export /**
- * Instructs Stripe to make a request on your behalf using the destination URL. The destination URL
- * is activated by Stripe at the time of onboarding. Stripe verifies requests with your credentials
- * provided during onboarding, and injects card details from the payment_method into the request.
- *
- * Stripe redacts all sensitive fields and headers, including authentication credentials and card numbers,
- * before storing the request and response data in the forwarding Request object, which are subject to a
- * 30-day retention period.
- *
- * You can provide a Stripe idempotency key to make sure that requests with the same key result in only one
- * outbound request. The Stripe idempotency key provided should be unique and different from any idempotency
- * keys provided on the underlying third-party request.
- *
- * Forwarding Requests are synchronous requests that return a response or time out according to
- * Stripe's limits.
- *
- * Related guide: [Forward card details to third-party API endpoints](https://docs.stripe.com/payments/forwarding).
- */ interface Request {
+export interface Request {
     /**
      * Unique identifier for the object.
      */
@@ -53,7 +35,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata?: Metadata | null;
     /**
@@ -171,7 +153,7 @@ export declare namespace Forwarding {
          */
         expand?: Array<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
     }

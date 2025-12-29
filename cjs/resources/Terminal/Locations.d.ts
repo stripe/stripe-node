@@ -1,7 +1,6 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { Address, JapanAddressParam, Emptyable, MetadataParam, AddressParam, PaginationParams, Metadata } from '../../shared.js';
-import { Response, ApiListPromise } from '../../lib.js';
+import { RequestOptions, Response, ApiListPromise } from '../../lib.js';
 export declare class LocationResource extends StripeResource {
     /**
      * Deletes a Location object.
@@ -29,11 +28,7 @@ export declare class LocationResource extends StripeResource {
     create(params?: Terminal.LocationCreateParams, options?: RequestOptions): Promise<Response<Location>>;
     create(options?: RequestOptions): Promise<Response<Location>>;
 }
-export /**
- * A Location represents a grouping of readers.
- *
- * Related guide: [Fleet management](https://stripe.com/docs/terminal/fleet/locations)
- */ interface Location {
+export interface Location {
     /**
      * Unique identifier for the object.
      */
@@ -70,7 +65,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata;
     /**
@@ -191,7 +186,7 @@ export declare namespace Terminal {
          */
         expand?: Array<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Emptyable<MetadataParam>;
         /**
@@ -222,7 +217,7 @@ export declare namespace Terminal {
              */
             postal_code?: string;
             /**
-             * State, county, province, or region.
+             * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
              */
             state?: string;
         }
@@ -271,7 +266,7 @@ export declare namespace Terminal {
          */
         expand?: Array<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Emptyable<MetadataParam>;
         /**

@@ -1,7 +1,4 @@
-export /**
- * Encodes whether a FinancialAccount has access to a particular Feature, with a `status` enum and associated `status_details`.
- * Stripe or the platform can control Features via the requested field.
- */ interface FinancialAccountFeatures {
+export interface FinancialAccountFeatures {
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */

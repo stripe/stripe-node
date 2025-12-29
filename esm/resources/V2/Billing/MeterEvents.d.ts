@@ -1,15 +1,12 @@
 import { StripeResource } from '../../../StripeResource.js';
-import { RequestOptions } from '../../../Types.js';
-import { Response } from '../../../lib.js';
+import { RequestOptions, Response } from '../../../lib.js';
 export declare class MeterEventResource extends StripeResource {
     /**
      * Creates a meter event. Events are validated synchronously, but are processed asynchronously. Supports up to 1,000 events per second in livemode. For higher rate-limits, please use meter event streams instead.
      */
     create(params: V2.Billing.MeterEventCreateParams, options?: RequestOptions): Promise<Response<MeterEvent>>;
 }
-export /**
- * Fix me empty_doc_string.
- */ interface MeterEvent {
+export interface MeterEvent {
     /**
      * String representing the object's type. Objects of the same type share the same value of the object field.
      */

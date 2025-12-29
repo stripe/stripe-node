@@ -1,9 +1,8 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RequestOptions} from '../../../lib.js';
 import {ReceivedDebit} from './../../Treasury/ReceivedDebits.js';
-import {Response} from '../../../lib.js';
+import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
 export class ReceivedDebitResource extends StripeResource {
   /**
@@ -39,7 +38,7 @@ export namespace TestHelpers {
       financial_account: string;
 
       /**
-       * Specifies the network rails to be used. If not set, will default to the PaymentMethod's preferred network. See the [docs](https://stripe.com/docs/treasury/money-movement/timelines) to learn more about money movement timelines for each network type.
+       * Specifies the network rails to be used. If not set, will default to the PaymentMethod's preferred network. See the [docs](https://docs.stripe.com/treasury/money-movement/timelines) to learn more about money movement timelines for each network type.
        */
       network: 'ach';
 

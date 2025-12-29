@@ -1,12 +1,11 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { BalanceTransaction } from './../BalanceTransactions.js';
 import { Card } from './Cards.js';
 import { Cardholder } from './Cardholders.js';
 import { Token } from './Tokens.js';
 import { Transaction } from './Transactions.js';
 import { Emptyable, MetadataParam, PaginationParams, RangeQueryParam, Metadata } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class AuthorizationResource extends StripeResource {
     /**
      * Returns a list of Issuing Authorization objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -37,13 +36,7 @@ export declare class AuthorizationResource extends StripeResource {
     decline(id: string, params?: Issuing.AuthorizationDeclineParams, options?: RequestOptions): Promise<Response<Authorization>>;
     decline(id: string, options?: RequestOptions): Promise<Response<Authorization>>;
 }
-export /**
- * When an [issued card](https://stripe.com/docs/issuing) is used to make a purchase, an Issuing `Authorization`
- * object is created. [Authorizations](https://stripe.com/docs/issuing/purchases/authorizations) must be approved for the
- * purchase to be completed successfully.
- *
- * Related guide: [Issued card authorizations](https://stripe.com/docs/issuing/purchases/authorizations)
- */ interface Authorization {
+export interface Authorization {
     /**
      * Unique identifier for the object.
      */
@@ -57,7 +50,7 @@ export /**
      */
     amount: number;
     /**
-     * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+     * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
      */
     amount_details: Issuing.Authorization.AmountDetails | null;
     /**
@@ -73,7 +66,7 @@ export /**
      */
     balance_transactions: Array<BalanceTransaction>;
     /**
-     * You can [create physical or virtual cards](https://stripe.com/docs/issuing) that are issued to cardholders.
+     * You can [create physical or virtual cards](https://docs.stripe.com/issuing) that are issued to cardholders.
      */
     card: Card;
     /**
@@ -114,7 +107,7 @@ export /**
     merchant_currency: string;
     merchant_data: Issuing.Authorization.MerchantData;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata;
     /**
@@ -134,15 +127,15 @@ export /**
      */
     status: Issuing.Authorization.Status;
     /**
-     * [Token](https://stripe.com/docs/api/issuing/tokens/object) object used for this authorization. If a network token was not used for this authorization, this field will be null.
+     * [Token](https://docs.stripe.com/api/issuing/tokens/object) object used for this authorization. If a network token was not used for this authorization, this field will be null.
      */
     token?: string | Token | null;
     /**
-     * List of [transactions](https://stripe.com/docs/api/issuing/transactions) associated with this authorization.
+     * List of [transactions](https://docs.stripe.com/api/issuing/transactions) associated with this authorization.
      */
     transactions: Array<Transaction>;
     /**
-     * [Treasury](https://stripe.com/docs/api/treasury) details related to this authorization if it was created on a [FinancialAccount](https://stripe.com/docs/api/treasury/financial_accounts).
+     * [Treasury](https://docs.stripe.com/api/treasury) details related to this authorization if it was created on a [FinancialAccount](https://docs.stripe.com/api/treasury/financial_accounts).
      */
     treasury?: Issuing.Authorization.Treasury | null;
     verification_data: Issuing.Authorization.VerificationData;
@@ -224,7 +217,7 @@ export declare namespace Issuing {
         }
         interface MerchantData {
             /**
-             * A categorization of the seller's type of business. See our [merchant categories guide](https://stripe.com/docs/issuing/merchant-categories) for a list of possible values.
+             * A categorization of the seller's type of business. See our [merchant categories guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
              */
             category: string;
             /**
@@ -284,11 +277,11 @@ export declare namespace Issuing {
         }
         interface PendingRequest {
             /**
-             * The additional amount Stripe will hold if the authorization is approved, in the card's [currency](https://stripe.com/docs/api#issuing_authorization_object-pending-request-currency) and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The additional amount Stripe will hold if the authorization is approved, in the card's [currency](https://docs.stripe.com/api#issuing_authorization_object-pending-request-currency) and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             amount: number;
             /**
-             * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             amount_details: PendingRequest.AmountDetails | null;
             /**
@@ -296,11 +289,11 @@ export declare namespace Issuing {
              */
             currency: string;
             /**
-             * If set `true`, you may provide [amount](https://stripe.com/docs/api/issuing/authorizations/approve#approve_issuing_authorization-amount) to control how much to hold for the authorization.
+             * If set `true`, you may provide [amount](https://docs.stripe.com/api/issuing/authorizations/approve#approve_issuing_authorization-amount) to control how much to hold for the authorization.
              */
             is_amount_controllable: boolean;
             /**
-             * The amount the merchant is requesting to be authorized in the `merchant_currency`. The amount is in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The amount the merchant is requesting to be authorized in the `merchant_currency`. The amount is in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             merchant_amount: number;
             /**
@@ -314,11 +307,11 @@ export declare namespace Issuing {
         }
         interface RequestHistory {
             /**
-             * The `pending_request.amount` at the time of the request, presented in your card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Stripe held this amount from your account to fund the authorization if the request was approved.
+             * The `pending_request.amount` at the time of the request, presented in your card's currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). Stripe held this amount from your account to fund the authorization if the request was approved.
              */
             amount: number;
             /**
-             * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             amount_details: RequestHistory.AmountDetails | null;
             /**
@@ -338,7 +331,7 @@ export declare namespace Issuing {
              */
             currency: string;
             /**
-             * The `pending_request.merchant_amount` at the time of the request, presented in the `merchant_currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The `pending_request.merchant_amount` at the time of the request, presented in the `merchant_currency` and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             merchant_amount: number;
             /**
@@ -365,15 +358,15 @@ export declare namespace Issuing {
         type Status = 'closed' | 'expired' | 'pending' | 'reversed';
         interface Treasury {
             /**
-             * The array of [ReceivedCredits](https://stripe.com/docs/api/treasury/received_credits) associated with this authorization
+             * The array of [ReceivedCredits](https://docs.stripe.com/api/treasury/received_credits) associated with this authorization
              */
             received_credits: Array<string>;
             /**
-             * The array of [ReceivedDebits](https://stripe.com/docs/api/treasury/received_debits) associated with this authorization
+             * The array of [ReceivedDebits](https://docs.stripe.com/api/treasury/received_debits) associated with this authorization
              */
             received_debits: Array<string>;
             /**
-             * The Treasury [Transaction](https://stripe.com/docs/api/treasury/transactions) associated with this authorization
+             * The Treasury [Transaction](https://docs.stripe.com/api/treasury/transactions) associated with this authorization
              */
             transaction: string | null;
         }
@@ -555,7 +548,7 @@ export declare namespace Issuing {
          */
         expand?: Array<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Emptyable<MetadataParam>;
     }
@@ -590,7 +583,7 @@ export declare namespace Issuing {
 export declare namespace Issuing {
     interface AuthorizationApproveParams {
         /**
-         * If the authorization's `pending_request.is_amount_controllable` property is `true`, you may provide this value to control how much to hold for the authorization. Must be positive (use [`decline`](https://stripe.com/docs/api/issuing/authorizations/decline) to decline an authorization request).
+         * If the authorization's `pending_request.is_amount_controllable` property is `true`, you may provide this value to control how much to hold for the authorization. Must be positive (use [`decline`](https://docs.stripe.com/api/issuing/authorizations/decline) to decline an authorization request).
          */
         amount?: number;
         /**
@@ -598,7 +591,7 @@ export declare namespace Issuing {
          */
         expand?: Array<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Emptyable<MetadataParam>;
     }
@@ -610,7 +603,7 @@ export declare namespace Issuing {
          */
         expand?: Array<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Emptyable<MetadataParam>;
     }

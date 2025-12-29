@@ -1,7 +1,6 @@
 import { StripeResource } from '../../../StripeResource.js';
-import { RequestOptions } from '../../../Types.js';
 import { Authorization } from './../../Issuing/Authorizations.js';
-import { Response } from '../../../lib.js';
+import { RequestOptions, Response } from '../../../lib.js';
 export declare class AuthorizationResource extends StripeResource {
     /**
      * Create a test-mode authorization.
@@ -43,11 +42,11 @@ export declare namespace TestHelpers {
              */
             card: string;
             /**
-             * The total amount to attempt to authorize. This amount is in the provided currency, or defaults to the card's currency, and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The total amount to attempt to authorize. This amount is in the provided currency, or defaults to the card's currency, and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             amount?: number;
             /**
-             * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             amount_details?: AuthorizationCreateParams.AmountDetails;
             /**
@@ -75,11 +74,11 @@ export declare namespace TestHelpers {
              */
             fuel?: AuthorizationCreateParams.Fuel;
             /**
-             * If set `true`, you may provide [amount](https://stripe.com/docs/api/issuing/authorizations/approve#approve_issuing_authorization-amount) to control how much to hold for the authorization.
+             * If set `true`, you may provide [amount](https://docs.stripe.com/api/issuing/authorizations/approve#approve_issuing_authorization-amount) to control how much to hold for the authorization.
              */
             is_amount_controllable?: boolean;
             /**
-             * The total amount to attempt to authorize. This amount is in the provided merchant currency, and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The total amount to attempt to authorize. This amount is in the provided merchant currency, and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             merchant_amount?: number;
             /**
@@ -162,7 +161,7 @@ export declare namespace TestHelpers {
             }
             interface MerchantData {
                 /**
-                 * A categorization of the seller's type of business. See our [merchant categories guide](https://stripe.com/docs/issuing/merchant-categories) for a list of possible values.
+                 * A categorization of the seller's type of business. See our [merchant categories guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
                  */
                 category?: MerchantData.Category;
                 /**
@@ -209,6 +208,10 @@ export declare namespace TestHelpers {
                  * Stripe's assessment of this authorization's likelihood of being card testing activity.
                  */
                 card_testing_risk?: RiskAssessment.CardTestingRisk;
+                /**
+                 * Stripe's assessment of this authorization's likelihood to be fraudulent.
+                 */
+                fraud_risk?: RiskAssessment.FraudRisk;
                 /**
                  * The dispute risk of the merchant (the seller on a purchase) on an authorization based on all Stripe Issuing activity.
                  */
@@ -327,6 +330,16 @@ export declare namespace TestHelpers {
                      */
                     risk_level: CardTestingRisk.RiskLevel;
                 }
+                interface FraudRisk {
+                    /**
+                     * Stripe's assessment of the likelihood of fraud on an authorization.
+                     */
+                    level: FraudRisk.Level;
+                    /**
+                     * Stripe's numerical model score assessing the likelihood of fraudulent activity. A higher score means a higher likelihood of fraudulent activity, and anything above 25 is considered high risk.
+                     */
+                    score?: number;
+                }
                 interface MerchantDisputeRisk {
                     /**
                      * The dispute rate observed across all Stripe Issuing authorizations for this merchant. For example, a value of 50 means 50% of authorizations from this merchant on Stripe Issuing have resulted in a dispute. Higher values mean a higher likelihood the authorization is disputed. Takes on values between 0 and 100.
@@ -339,6 +352,9 @@ export declare namespace TestHelpers {
                 }
                 namespace CardTestingRisk {
                     type RiskLevel = 'elevated' | 'highest' | 'low' | 'normal' | 'not_assessed' | 'unknown';
+                }
+                namespace FraudRisk {
+                    type Level = 'elevated' | 'highest' | 'low' | 'normal' | 'not_assessed' | 'unknown';
                 }
                 namespace MerchantDisputeRisk {
                     type RiskLevel = 'elevated' | 'highest' | 'low' | 'normal' | 'not_assessed' | 'unknown';
@@ -380,7 +396,7 @@ export declare namespace TestHelpers {
     namespace Issuing {
         interface AuthorizationCaptureParams {
             /**
-             * The amount to capture from the authorization. If not provided, the full amount of the authorization will be captured. This amount is in the authorization currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The amount to capture from the authorization. If not provided, the full amount of the authorization will be captured. This amount is in the authorization currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             capture_amount?: number;
             /**
@@ -616,7 +632,7 @@ export declare namespace TestHelpers {
     namespace Issuing {
         interface AuthorizationFinalizeAmountParams {
             /**
-             * The final authorization amount that will be captured by the merchant. This amount is in the authorization currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The final authorization amount that will be captured by the merchant. This amount is in the authorization currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             final_amount: number;
             /**
@@ -748,7 +764,7 @@ export declare namespace TestHelpers {
     namespace Issuing {
         interface AuthorizationIncrementParams {
             /**
-             * The amount to increment the authorization by. This amount is in the authorization currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The amount to increment the authorization by. This amount is in the authorization currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             increment_amount: number;
             /**
@@ -756,7 +772,7 @@ export declare namespace TestHelpers {
              */
             expand?: Array<string>;
             /**
-             * If set `true`, you may provide [amount](https://stripe.com/docs/api/issuing/authorizations/approve#approve_issuing_authorization-amount) to control how much to hold for the authorization.
+             * If set `true`, you may provide [amount](https://docs.stripe.com/api/issuing/authorizations/approve#approve_issuing_authorization-amount) to control how much to hold for the authorization.
              */
             is_amount_controllable?: boolean;
         }
@@ -784,7 +800,7 @@ export declare namespace TestHelpers {
              */
             expand?: Array<string>;
             /**
-             * The amount to reverse from the authorization. If not provided, the full amount of the authorization will be reversed. This amount is in the authorization currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The amount to reverse from the authorization. If not provided, the full amount of the authorization will be reversed. This amount is in the authorization currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             reverse_amount?: number;
         }

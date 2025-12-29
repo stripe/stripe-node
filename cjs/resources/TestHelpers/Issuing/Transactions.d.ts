@@ -1,7 +1,6 @@
 import { StripeResource } from '../../../StripeResource.js';
-import { RequestOptions } from '../../../Types.js';
 import { Transaction } from './../../Issuing/Transactions.js';
-import { Response } from '../../../lib.js';
+import { RequestOptions, Response } from '../../../lib.js';
 export declare class TransactionResource extends StripeResource {
     /**
      * Refund a test-mode Transaction.
@@ -21,7 +20,7 @@ export declare namespace TestHelpers {
     namespace Issuing {
         interface TransactionCreateForceCaptureParams {
             /**
-             * The total amount to attempt to capture. This amount is in the provided currency, or defaults to the cards currency, and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The total amount to attempt to capture. This amount is in the provided currency, or defaults to the cards currency, and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             amount: number;
             /**
@@ -48,7 +47,7 @@ export declare namespace TestHelpers {
         namespace TransactionCreateForceCaptureParams {
             interface MerchantData {
                 /**
-                 * A categorization of the seller's type of business. See our [merchant categories guide](https://stripe.com/docs/issuing/merchant-categories) for a list of possible values.
+                 * A categorization of the seller's type of business. See our [merchant categories guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
                  */
                 category?: MerchantData.Category;
                 /**
@@ -296,7 +295,7 @@ export declare namespace TestHelpers {
     namespace Issuing {
         interface TransactionCreateUnlinkedRefundParams {
             /**
-             * The total amount to attempt to refund. This amount is in the provided currency, or defaults to the cards currency, and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The total amount to attempt to refund. This amount is in the provided currency, or defaults to the cards currency, and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             amount: number;
             /**
@@ -323,7 +322,7 @@ export declare namespace TestHelpers {
         namespace TransactionCreateUnlinkedRefundParams {
             interface MerchantData {
                 /**
-                 * A categorization of the seller's type of business. See our [merchant categories guide](https://stripe.com/docs/issuing/merchant-categories) for a list of possible values.
+                 * A categorization of the seller's type of business. See our [merchant categories guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
                  */
                 category?: MerchantData.Category;
                 /**
@@ -575,7 +574,7 @@ export declare namespace TestHelpers {
              */
             expand?: Array<string>;
             /**
-             * The total amount to attempt to refund. This amount is in the provided currency, or defaults to the cards currency, and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The total amount to attempt to refund. This amount is in the provided currency, or defaults to the cards currency, and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             refund_amount?: number;
         }

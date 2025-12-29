@@ -1,7 +1,6 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { PaginationParams, RangeQueryParam } from '../../shared.js';
-import { Response, ApiListPromise } from '../../lib.js';
+import { RequestOptions, Response, ApiListPromise } from '../../lib.js';
 export declare class ValueListItemResource extends StripeResource {
     /**
      * Deletes a ValueListItem object, removing it from its parent value list.
@@ -22,11 +21,7 @@ export declare class ValueListItemResource extends StripeResource {
      */
     create(params: Radar.ValueListItemCreateParams, options?: RequestOptions): Promise<Response<ValueListItem>>;
 }
-export /**
- * Value list items allow you to add specific values to a given Radar value list, which can then be used in rules.
- *
- * Related guide: [Managing list items](https://stripe.com/docs/radar/lists#managing-list-items)
- */ interface ValueListItem {
+export interface ValueListItem {
     /**
      * Unique identifier for the object.
      */

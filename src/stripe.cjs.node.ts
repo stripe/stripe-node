@@ -1,32 +1,32 @@
 import {NodePlatformFunctions} from './platform/NodePlatformFunctions.js';
-import {StripeClient} from './stripe.core.js';
+import {Stripe} from './stripe.core.js';
 
 // Initialize the Stripe class with Node platform functions
-StripeClient.initialize(new NodePlatformFunctions());
+Stripe.initialize(new NodePlatformFunctions());
 
 // Create a callable wrapper for backward compatibility
 const StripeConstructor = function(
   this: any,
   key: string,
   config?: Record<string, unknown>
-): StripeClient {
+): Stripe {
   // Support calling without `new`
   if (!(this instanceof StripeConstructor)) {
-    return new StripeClient(key, config);
+    return new Stripe(key, config);
   }
   // If called with `new`, return a new Stripe instance
-  return new StripeClient(key, config);
+  return new Stripe(key, config);
 } as any;
 
 // Copy all static properties from Stripe to the wrapper
-Object.setPrototypeOf(StripeConstructor, StripeClient);
-Object.setPrototypeOf(StripeConstructor.prototype, StripeClient.prototype);
+Object.setPrototypeOf(StripeConstructor, Stripe);
+Object.setPrototypeOf(StripeConstructor.prototype, Stripe.prototype);
 
 // Copy static properties explicitly
-for (const key of Object.getOwnPropertyNames(StripeClient)) {
+for (const key of Object.getOwnPropertyNames(Stripe)) {
   if (key !== 'length' && key !== 'prototype' && key !== 'name') {
     Object.defineProperty(StripeConstructor, key, {
-      value: (StripeClient as any)[key],
+      value: (Stripe as any)[key],
       writable: true,
       enumerable: true,
       configurable: true,

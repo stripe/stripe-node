@@ -1,8 +1,7 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { Feature } from './Features.js';
 import { PaginationParams } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class ActiveEntitlementResource extends StripeResource {
     /**
      * Retrieve a list of active entitlements for a customer
@@ -14,9 +13,7 @@ export declare class ActiveEntitlementResource extends StripeResource {
     retrieve(id: string, params?: Entitlements.ActiveEntitlementRetrieveParams, options?: RequestOptions): Promise<Response<ActiveEntitlement>>;
     retrieve(id: string, options?: RequestOptions): Promise<Response<ActiveEntitlement>>;
 }
-export /**
- * An active entitlement describes access to a feature for a customer.
- */ interface ActiveEntitlement {
+export interface ActiveEntitlement {
     /**
      * Unique identifier for the object.
      */
@@ -26,7 +23,7 @@ export /**
      */
     object: 'entitlements.active_entitlement';
     /**
-     * The [Feature](https://stripe.com/docs/api/entitlements/feature) that the customer is entitled to.
+     * The [Feature](https://docs.stripe.com/api/entitlements/feature) that the customer is entitled to.
      */
     feature: string | Feature;
     /**

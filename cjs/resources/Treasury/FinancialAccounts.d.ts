@@ -1,8 +1,7 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { FinancialAccountFeatures } from './FinancialAccountFeatures.js';
 import { MetadataParam, Emptyable, PaginationParams, RangeQueryParam, Metadata } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class FinancialAccountResource extends StripeResource {
     /**
      * Returns a list of FinancialAccounts.
@@ -38,10 +37,7 @@ export declare class FinancialAccountResource extends StripeResource {
     retrieveFeatures(id: string, params?: Treasury.FinancialAccountRetrieveFeaturesParams, options?: RequestOptions): Promise<Response<FinancialAccountFeatures>>;
     retrieveFeatures(id: string, options?: RequestOptions): Promise<Response<FinancialAccountFeatures>>;
 }
-export /**
- * Stripe Treasury provides users with a container for money called a FinancialAccount that is separate from their Payments balance.
- * FinancialAccounts serve as the source and destination of Treasury's money movement APIs.
- */ interface FinancialAccount {
+export interface FinancialAccount {
     /**
      * Unique identifier for the object.
      */
@@ -81,7 +77,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata | null;
     /**
@@ -223,7 +219,7 @@ export declare namespace Treasury {
          */
         features?: FinancialAccountCreateParams.Features;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
         /**
@@ -401,7 +397,7 @@ export declare namespace Treasury {
          */
         forwarding_settings?: FinancialAccountUpdateParams.ForwardingSettings;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
         /**

@@ -1,5 +1,4 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { InvoiceLineItem } from './InvoiceLineItems.js';
 import { Discount, DeletedDiscount } from './Discounts.js';
 import { TaxId, DeletedTaxId } from './TaxIds.js';
@@ -17,7 +16,7 @@ import { ShippingRate } from './ShippingRates.js';
 import * as TestHelpers from './TestHelpers/index.js';
 import * as Billing from './Billing/index.js';
 import { Emptyable, MetadataParam, AddressParam, PaginationParams, RangeQueryParam, Address, Metadata } from '../shared.js';
-import { Response, ApiListPromise, ApiList, ApiSearchResultPromise } from '../lib.js';
+import { RequestOptions, Response, ApiListPromise, ApiList, ApiSearchResultPromise } from '../lib.js';
 export declare class InvoiceResource extends StripeResource {
     /**
      * Permanently deletes a one-off invoice draft. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized or if an invoice is for a subscription, it must be [voided](https://docs.stripe.com/api#void_invoice).
@@ -137,40 +136,7 @@ export declare class InvoiceResource extends StripeResource {
     updateLineItem(invoiceId: string, id: string, params?: InvoiceUpdateLineItemParams, options?: RequestOptions): Promise<Response<InvoiceLineItem>>;
     updateLineItem(invoiceId: string, id: string, options?: RequestOptions): Promise<Response<InvoiceLineItem>>;
 }
-export /**
- * Invoices are statements of amounts owed by a customer, and are either
- * generated one-off, or generated periodically from a subscription.
- *
- * They contain [invoice items](https://stripe.com/docs/api#invoiceitems), and proration adjustments
- * that may be caused by subscription upgrades/downgrades (if necessary).
- *
- * If your invoice is configured to be billed through automatic charges,
- * Stripe automatically finalizes your invoice and attempts payment. Note
- * that finalizing the invoice,
- * [when automatic](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection), does
- * not happen immediately as the invoice is created. Stripe waits
- * until one hour after the last webhook was successfully sent (or the last
- * webhook timed out after failing). If you (and the platforms you may have
- * connected to) have no webhooks configured, Stripe waits one hour after
- * creation to finalize the invoice.
- *
- * If your invoice is configured to be billed by sending an email, then based on your
- * [email settings](https://dashboard.stripe.com/account/billing/automatic),
- * Stripe will email the invoice to your customer and await payment. These
- * emails can contain a link to a hosted page to pay the invoice.
- *
- * Stripe applies any customer credit on the account before determining the
- * amount due for the invoice (i.e., the amount that will be actually
- * charged). If the amount due for the invoice is less than Stripe's [minimum allowed charge
- * per currency](https://docs.stripe.com/docs/currencies#minimum-and-maximum-charge-amounts), the
- * invoice is automatically marked paid, and we add the amount due to the
- * customer's credit balance which is applied to the next invoice.
- *
- * More details on the customer's credit balance are
- * [here](https://stripe.com/docs/billing/customer/balance).
- *
- * Related guide: [Send invoices to customers](https://stripe.com/docs/billing/invoices/sending)
- */ interface Invoice {
+export interface Invoice {
     /**
      * Unique identifier for the object. For preview invoices created using the [create preview](https://stripe.com/docs/api/invoices/create_preview) endpoint, this id will be prefixed with `upcoming_in`.
      */
@@ -224,7 +190,7 @@ export /**
      */
     attempted: boolean;
     /**
-     * Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
+     * Controls whether Stripe performs [automatic collection](https://docs.stripe.com/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
      */
     auto_advance?: boolean;
     automatic_tax: Invoice.AutomaticTax;
@@ -241,7 +207,7 @@ export /**
      * * `subscription_cycle`: A subscription advanced into a new period.
      * * `subscription_threshold`: A subscription reached a billing threshold.
      * * `subscription_update`: A subscription was updated.
-     * * `upcoming`: Reserved for simulated invoices, per the upcoming invoice endpoint.
+     * * `upcoming`: Reserved for upcoming invoices created through the Create Preview Invoice API or when an `invoice.upcoming` event is generated for an upcoming invoice on a subscription.
      */
     billing_reason: Invoice.BillingReason | null;
     /**
@@ -265,9 +231,13 @@ export /**
      */
     custom_fields: Array<Invoice.CustomField> | null;
     /**
-     * The ID of the customer who will be billed.
+     * The ID of the customer to bill.
      */
     customer: string | Customer | DeletedCustomer | null;
+    /**
+     * The ID of the account representing the customer to bill.
+     */
+    customer_account: string | null;
     /**
      * The customer's address. Until the invoice is finalized, this field will equal `customer.address`. Once the invoice is finalized, this field will no longer be updated.
      */
@@ -337,7 +307,7 @@ export /**
      */
     footer: string | null;
     /**
-     * Details of the invoice that was cloned. See the [revision documentation](https://stripe.com/docs/invoicing/invoice-revisions) for more details.
+     * Details of the invoice that was cloned. See the [revision documentation](https://docs.stripe.com/invoicing/invoice-revisions) for more details.
      */
     from_invoice: Invoice.FromInvoice | null;
     /**
@@ -366,7 +336,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata | null;
     /**
@@ -378,7 +348,7 @@ export /**
      */
     number: string | null;
     /**
-     * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://stripe.com/docs/billing/invoices/connect) documentation for details.
+     * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://docs.stripe.com/billing/invoices/connect) documentation for details.
      */
     on_behalf_of: string | Account | null;
     /**
@@ -431,7 +401,7 @@ export /**
      */
     statement_descriptor: string | null;
     /**
-     * The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://stripe.com/docs/billing/invoices/workflow#workflow-overview)
+     * The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://docs.stripe.com/billing/invoices/workflow#workflow-overview)
      */
     status: Invoice.Status | null;
     status_transitions: Invoice.StatusTransitions;
@@ -469,13 +439,11 @@ export /**
      */
     total_taxes: Array<Invoice.TotalTax> | null;
     /**
-     * Invoices are automatically paid or sent 1 hour after webhooks are delivered, or until all webhook delivery attempts have [been exhausted](https://stripe.com/docs/billing/webhooks#understand). This field tracks the time when webhooks for this invoice were successfully delivered. If the invoice had no webhooks to deliver, this will be set while the invoice is being created.
+     * Invoices are automatically paid or sent 1 hour after webhooks are delivered, or until all webhook delivery attempts have [been exhausted](https://docs.stripe.com/billing/webhooks#understand). This field tracks the time when webhooks for this invoice were successfully delivered. If the invoice had no webhooks to deliver, this will be set while the invoice is being created.
      */
     webhooks_delivered_at: number | null;
 }
-export /**
- * The DeletedInvoice object.
- */ interface DeletedInvoice {
+export interface DeletedInvoice {
     /**
      * Unique identifier for the object.
      */
@@ -496,7 +464,7 @@ export declare namespace Invoice {
          */
         disabled_reason: AutomaticTax.DisabledReason | null;
         /**
-         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
+         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://docs.stripe.com/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
          */
         enabled: boolean;
         /**
@@ -586,7 +554,7 @@ export declare namespace Invoice {
     }
     interface LastFinalizationError {
         /**
-         * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://stripe.com/docs/declines#retrying-issuer-declines) if they provide one.
+         * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://docs.stripe.com/declines#retrying-issuer-declines) if they provide one.
          */
         advice_code?: string;
         /**
@@ -594,15 +562,15 @@ export declare namespace Invoice {
          */
         charge?: string;
         /**
-         * For some errors that could be handled programmatically, a short string indicating the [error code](https://stripe.com/docs/error-codes) reported.
+         * For some errors that could be handled programmatically, a short string indicating the [error code](https://docs.stripe.com/error-codes) reported.
          */
         code?: LastFinalizationError.Code;
         /**
-         * For card errors resulting from a card issuer decline, a short string indicating the [card issuer's reason for the decline](https://stripe.com/docs/declines#issuer-declines) if they provide one.
+         * For card errors resulting from a card issuer decline, a short string indicating the [card issuer's reason for the decline](https://docs.stripe.com/declines#issuer-declines) if they provide one.
          */
         decline_code?: string;
         /**
-         * A URL to more information about the [error code](https://stripe.com/docs/error-codes) reported.
+         * A URL to more information about the [error code](https://docs.stripe.com/error-codes) reported.
          */
         doc_url?: string;
         /**
@@ -628,19 +596,19 @@ export declare namespace Invoice {
          * see the history of payment attempts for a particular session.
          *
          * A PaymentIntent transitions through
-         * [multiple statuses](https://stripe.com/docs/payments/intents#intent-statuses)
+         * [multiple statuses](https://docs.stripe.com/payments/paymentintents/lifecycle)
          * throughout its lifetime as it interfaces with Stripe.js to perform
          * authentication flows and ultimately creates at most one successful charge.
          *
-         * Related guide: [Payment Intents API](https://stripe.com/docs/payments/payment-intents)
+         * Related guide: [Payment Intents API](https://docs.stripe.com/payments/payment-intents)
          */
         payment_intent?: PaymentIntent;
         /**
          * PaymentMethod objects represent your customer's payment instruments.
-         * You can use them with [PaymentIntents](https://stripe.com/docs/payments/payment-intents) to collect payments or save them to
+         * You can use them with [PaymentIntents](https://docs.stripe.com/payments/payment-intents) to collect payments or save them to
          * Customer objects to store instrument details for future payments.
          *
-         * Related guides: [Payment Methods](https://stripe.com/docs/payments/payment-methods) and [More Payment Scenarios](https://stripe.com/docs/payments/more-payment-scenarios).
+         * Related guides: [Payment Methods](https://docs.stripe.com/payments/payment-methods) and [More Payment Scenarios](https://docs.stripe.com/payments/more-payment-scenarios).
          */
         payment_method?: PaymentMethod;
         /**
@@ -654,7 +622,7 @@ export declare namespace Invoice {
         /**
          * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
          * For example, you can use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
-         * Later, you can use [PaymentIntents](https://stripe.com/docs/api#payment_intents) to drive the payment flow.
+         * Later, you can use [PaymentIntents](https://api.stripe.com#payment_intents) to drive the payment flow.
          *
          * Create a SetupIntent when you're ready to collect your customer's payment credentials.
          * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
@@ -665,9 +633,9 @@ export declare namespace Invoice {
          * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
          * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
          * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
-         * If you use the SetupIntent with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer),
+         * If you use the SetupIntent with a [Customer](https://api.stripe.com#setup_intent_object-customer),
          * it automatically attaches the resulting payment method to that Customer after successful setup.
-         * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
+         * We recommend using SetupIntents or [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) on
          * PaymentIntents to save payment methods to prevent saving invalid or unoptimized payment methods.
          *
          * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
@@ -875,7 +843,7 @@ export declare namespace Invoice {
         type Type = 'account' | 'self';
     }
     namespace LastFinalizationError {
-        type Code = 'account_closed' | 'account_country_invalid_address' | 'account_error_country_change_requires_additional_steps' | 'account_information_mismatch' | 'account_invalid' | 'account_number_invalid' | 'acss_debit_session_incomplete' | 'alipay_upgrade_required' | 'amount_too_large' | 'amount_too_small' | 'api_key_expired' | 'application_fees_not_allowed' | 'authentication_required' | 'balance_insufficient' | 'balance_invalid_parameter' | 'bank_account_bad_routing_numbers' | 'bank_account_declined' | 'bank_account_exists' | 'bank_account_restricted' | 'bank_account_unusable' | 'bank_account_unverified' | 'bank_account_verification_failed' | 'billing_invalid_mandate' | 'bitcoin_upgrade_required' | 'capture_charge_authorization_expired' | 'capture_unauthorized_payment' | 'card_decline_rate_limit_exceeded' | 'card_declined' | 'cardholder_phone_number_required' | 'charge_already_captured' | 'charge_already_refunded' | 'charge_disputed' | 'charge_exceeds_source_limit' | 'charge_exceeds_transaction_limit' | 'charge_expired_for_capture' | 'charge_invalid_parameter' | 'charge_not_refundable' | 'clearing_code_unsupported' | 'country_code_invalid' | 'country_unsupported' | 'coupon_expired' | 'customer_max_payment_methods' | 'customer_max_subscriptions' | 'customer_session_expired' | 'customer_tax_location_invalid' | 'debit_not_authorized' | 'email_invalid' | 'expired_card' | 'financial_connections_account_inactive' | 'financial_connections_account_pending_account_numbers' | 'financial_connections_account_unavailable_account_numbers' | 'financial_connections_no_successful_transaction_refresh' | 'forwarding_api_inactive' | 'forwarding_api_invalid_parameter' | 'forwarding_api_retryable_upstream_error' | 'forwarding_api_upstream_connection_error' | 'forwarding_api_upstream_connection_timeout' | 'forwarding_api_upstream_error' | 'idempotency_key_in_use' | 'incorrect_address' | 'incorrect_cvc' | 'incorrect_number' | 'incorrect_zip' | 'india_recurring_payment_mandate_canceled' | 'instant_payouts_config_disabled' | 'instant_payouts_currency_disabled' | 'instant_payouts_limit_exceeded' | 'instant_payouts_unsupported' | 'insufficient_funds' | 'intent_invalid_state' | 'intent_verification_method_missing' | 'invalid_card_type' | 'invalid_characters' | 'invalid_charge_amount' | 'invalid_cvc' | 'invalid_expiry_month' | 'invalid_expiry_year' | 'invalid_mandate_reference_prefix_format' | 'invalid_number' | 'invalid_source_usage' | 'invalid_tax_location' | 'invoice_no_customer_line_items' | 'invoice_no_payment_method_types' | 'invoice_no_subscription_line_items' | 'invoice_not_editable' | 'invoice_on_behalf_of_not_editable' | 'invoice_payment_intent_requires_action' | 'invoice_upcoming_none' | 'livemode_mismatch' | 'lock_timeout' | 'missing' | 'no_account' | 'not_allowed_on_standard_account' | 'out_of_inventory' | 'ownership_declaration_not_allowed' | 'parameter_invalid_empty' | 'parameter_invalid_integer' | 'parameter_invalid_string_blank' | 'parameter_invalid_string_empty' | 'parameter_missing' | 'parameter_unknown' | 'parameters_exclusive' | 'payment_intent_action_required' | 'payment_intent_authentication_failure' | 'payment_intent_incompatible_payment_method' | 'payment_intent_invalid_parameter' | 'payment_intent_konbini_rejected_confirmation_number' | 'payment_intent_mandate_invalid' | 'payment_intent_payment_attempt_expired' | 'payment_intent_payment_attempt_failed' | 'payment_intent_rate_limit_exceeded' | 'payment_intent_unexpected_state' | 'payment_method_bank_account_already_verified' | 'payment_method_bank_account_blocked' | 'payment_method_billing_details_address_missing' | 'payment_method_configuration_failures' | 'payment_method_currency_mismatch' | 'payment_method_customer_decline' | 'payment_method_invalid_parameter' | 'payment_method_invalid_parameter_testmode' | 'payment_method_microdeposit_failed' | 'payment_method_microdeposit_verification_amounts_invalid' | 'payment_method_microdeposit_verification_amounts_mismatch' | 'payment_method_microdeposit_verification_attempts_exceeded' | 'payment_method_microdeposit_verification_descriptor_code_mismatch' | 'payment_method_microdeposit_verification_timeout' | 'payment_method_not_available' | 'payment_method_provider_decline' | 'payment_method_provider_timeout' | 'payment_method_unactivated' | 'payment_method_unexpected_state' | 'payment_method_unsupported_type' | 'payout_reconciliation_not_ready' | 'payouts_limit_exceeded' | 'payouts_not_allowed' | 'platform_account_required' | 'platform_api_key_expired' | 'postal_code_invalid' | 'processing_error' | 'product_inactive' | 'progressive_onboarding_limit_exceeded' | 'rate_limit' | 'refer_to_customer' | 'refund_disputed_payment' | 'resource_already_exists' | 'resource_missing' | 'return_intent_already_processed' | 'routing_number_invalid' | 'secret_key_required' | 'sepa_unsupported_account' | 'setup_attempt_failed' | 'setup_intent_authentication_failure' | 'setup_intent_invalid_parameter' | 'setup_intent_mandate_invalid' | 'setup_intent_mobile_wallet_unsupported' | 'setup_intent_setup_attempt_expired' | 'setup_intent_unexpected_state' | 'shipping_address_invalid' | 'shipping_calculation_failed' | 'sku_inactive' | 'state_unsupported' | 'status_transition_invalid' | 'stripe_tax_inactive' | 'tax_id_invalid' | 'tax_id_prohibited' | 'taxes_calculation_failed' | 'terminal_location_country_unsupported' | 'terminal_reader_busy' | 'terminal_reader_hardware_fault' | 'terminal_reader_invalid_location_for_activation' | 'terminal_reader_invalid_location_for_payment' | 'terminal_reader_offline' | 'terminal_reader_timeout' | 'testmode_charges_only' | 'tls_version_unsupported' | 'token_already_used' | 'token_card_network_invalid' | 'token_in_use' | 'transfer_source_balance_parameters_mismatch' | 'transfers_not_allowed' | 'url_invalid';
+        type Code = 'account_closed' | 'account_country_invalid_address' | 'account_error_country_change_requires_additional_steps' | 'account_information_mismatch' | 'account_invalid' | 'account_number_invalid' | 'account_token_required_for_v2_account' | 'acss_debit_session_incomplete' | 'alipay_upgrade_required' | 'amount_too_large' | 'amount_too_small' | 'api_key_expired' | 'application_fees_not_allowed' | 'authentication_required' | 'balance_insufficient' | 'balance_invalid_parameter' | 'bank_account_bad_routing_numbers' | 'bank_account_declined' | 'bank_account_exists' | 'bank_account_restricted' | 'bank_account_unusable' | 'bank_account_unverified' | 'bank_account_verification_failed' | 'billing_invalid_mandate' | 'bitcoin_upgrade_required' | 'capture_charge_authorization_expired' | 'capture_unauthorized_payment' | 'card_decline_rate_limit_exceeded' | 'card_declined' | 'cardholder_phone_number_required' | 'charge_already_captured' | 'charge_already_refunded' | 'charge_disputed' | 'charge_exceeds_source_limit' | 'charge_exceeds_transaction_limit' | 'charge_expired_for_capture' | 'charge_invalid_parameter' | 'charge_not_refundable' | 'clearing_code_unsupported' | 'country_code_invalid' | 'country_unsupported' | 'coupon_expired' | 'customer_max_payment_methods' | 'customer_max_subscriptions' | 'customer_session_expired' | 'customer_tax_location_invalid' | 'debit_not_authorized' | 'email_invalid' | 'expired_card' | 'financial_connections_account_inactive' | 'financial_connections_account_pending_account_numbers' | 'financial_connections_account_unavailable_account_numbers' | 'financial_connections_no_successful_transaction_refresh' | 'forwarding_api_inactive' | 'forwarding_api_invalid_parameter' | 'forwarding_api_retryable_upstream_error' | 'forwarding_api_upstream_connection_error' | 'forwarding_api_upstream_connection_timeout' | 'forwarding_api_upstream_error' | 'idempotency_key_in_use' | 'incorrect_address' | 'incorrect_cvc' | 'incorrect_number' | 'incorrect_zip' | 'india_recurring_payment_mandate_canceled' | 'instant_payouts_config_disabled' | 'instant_payouts_currency_disabled' | 'instant_payouts_limit_exceeded' | 'instant_payouts_unsupported' | 'insufficient_funds' | 'intent_invalid_state' | 'intent_verification_method_missing' | 'invalid_card_type' | 'invalid_characters' | 'invalid_charge_amount' | 'invalid_cvc' | 'invalid_expiry_month' | 'invalid_expiry_year' | 'invalid_mandate_reference_prefix_format' | 'invalid_number' | 'invalid_source_usage' | 'invalid_tax_location' | 'invoice_no_customer_line_items' | 'invoice_no_payment_method_types' | 'invoice_no_subscription_line_items' | 'invoice_not_editable' | 'invoice_on_behalf_of_not_editable' | 'invoice_payment_intent_requires_action' | 'invoice_upcoming_none' | 'livemode_mismatch' | 'lock_timeout' | 'missing' | 'no_account' | 'not_allowed_on_standard_account' | 'out_of_inventory' | 'ownership_declaration_not_allowed' | 'parameter_invalid_empty' | 'parameter_invalid_integer' | 'parameter_invalid_string_blank' | 'parameter_invalid_string_empty' | 'parameter_missing' | 'parameter_unknown' | 'parameters_exclusive' | 'payment_intent_action_required' | 'payment_intent_authentication_failure' | 'payment_intent_incompatible_payment_method' | 'payment_intent_invalid_parameter' | 'payment_intent_konbini_rejected_confirmation_number' | 'payment_intent_mandate_invalid' | 'payment_intent_payment_attempt_expired' | 'payment_intent_payment_attempt_failed' | 'payment_intent_rate_limit_exceeded' | 'payment_intent_unexpected_state' | 'payment_method_bank_account_already_verified' | 'payment_method_bank_account_blocked' | 'payment_method_billing_details_address_missing' | 'payment_method_configuration_failures' | 'payment_method_currency_mismatch' | 'payment_method_customer_decline' | 'payment_method_invalid_parameter' | 'payment_method_invalid_parameter_testmode' | 'payment_method_microdeposit_failed' | 'payment_method_microdeposit_verification_amounts_invalid' | 'payment_method_microdeposit_verification_amounts_mismatch' | 'payment_method_microdeposit_verification_attempts_exceeded' | 'payment_method_microdeposit_verification_descriptor_code_mismatch' | 'payment_method_microdeposit_verification_timeout' | 'payment_method_not_available' | 'payment_method_provider_decline' | 'payment_method_provider_timeout' | 'payment_method_unactivated' | 'payment_method_unexpected_state' | 'payment_method_unsupported_type' | 'payout_reconciliation_not_ready' | 'payouts_limit_exceeded' | 'payouts_not_allowed' | 'platform_account_required' | 'platform_api_key_expired' | 'postal_code_invalid' | 'processing_error' | 'product_inactive' | 'progressive_onboarding_limit_exceeded' | 'rate_limit' | 'refer_to_customer' | 'refund_disputed_payment' | 'resource_already_exists' | 'resource_missing' | 'return_intent_already_processed' | 'routing_number_invalid' | 'secret_key_required' | 'sepa_unsupported_account' | 'setup_attempt_failed' | 'setup_intent_authentication_failure' | 'setup_intent_invalid_parameter' | 'setup_intent_mandate_invalid' | 'setup_intent_mobile_wallet_unsupported' | 'setup_intent_setup_attempt_expired' | 'setup_intent_unexpected_state' | 'shipping_address_invalid' | 'shipping_calculation_failed' | 'sku_inactive' | 'state_unsupported' | 'status_transition_invalid' | 'stripe_tax_inactive' | 'tax_id_invalid' | 'tax_id_prohibited' | 'taxes_calculation_failed' | 'terminal_location_country_unsupported' | 'terminal_reader_busy' | 'terminal_reader_hardware_fault' | 'terminal_reader_invalid_location_for_activation' | 'terminal_reader_invalid_location_for_payment' | 'terminal_reader_offline' | 'terminal_reader_timeout' | 'testmode_charges_only' | 'tls_version_unsupported' | 'token_already_used' | 'token_card_network_invalid' | 'token_in_use' | 'transfer_source_balance_parameters_mismatch' | 'transfers_not_allowed' | 'url_invalid';
         type Type = 'api_error' | 'card_error' | 'idempotency_error' | 'invalid_request_error';
     }
     namespace Parent {
@@ -887,7 +855,7 @@ export declare namespace Invoice {
         }
         interface SubscriptionDetails {
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) defined as subscription metadata when an invoice is created. Becomes an immutable snapshot of the subscription metadata at the time of invoice finalization.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) defined as subscription metadata when an invoice is created. Becomes an immutable snapshot of the subscription metadata at the time of invoice finalization.
              *  *Note: This attribute is populated only for invoices created on or after June 29, 2023.*
              */
             metadata: Metadata | null;
@@ -925,6 +893,10 @@ export declare namespace Invoice {
              */
             konbini: PaymentMethodOptions.Konbini | null;
             /**
+             * If paying by `payto`, this sub-hash contains details about the PayTo payment method options to pass to the invoice's PaymentIntent.
+             */
+            payto?: PaymentMethodOptions.Payto | null;
+            /**
              * If paying by `sepa_debit`, this sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
              */
             sepa_debit: PaymentMethodOptions.SepaDebit | null;
@@ -933,7 +905,7 @@ export declare namespace Invoice {
              */
             us_bank_account: PaymentMethodOptions.UsBankAccount | null;
         }
-        type PaymentMethodType = 'ach_credit_transfer' | 'ach_debit' | 'acss_debit' | 'affirm' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'custom' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'jp_credit_transfer' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'p24' | 'payco' | 'paynow' | 'paypal' | 'promptpay' | 'revolut_pay' | 'sepa_credit_transfer' | 'sepa_debit' | 'sofort' | 'swish' | 'us_bank_account' | 'wechat_pay';
+        type PaymentMethodType = 'ach_credit_transfer' | 'ach_debit' | 'acss_debit' | 'affirm' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'custom' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'jp_credit_transfer' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'p24' | 'payco' | 'paynow' | 'paypal' | 'payto' | 'promptpay' | 'revolut_pay' | 'sepa_credit_transfer' | 'sepa_debit' | 'sofort' | 'swish' | 'us_bank_account' | 'wechat_pay';
         namespace PaymentMethodOptions {
             interface AcssDebit {
                 mandate_options?: AcssDebit.MandateOptions;
@@ -951,7 +923,7 @@ export declare namespace Invoice {
             interface Card {
                 installments?: Card.Installments;
                 /**
-                 * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+                 * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
                  */
                 request_three_d_secure: Card.RequestThreeDSecure | null;
             }
@@ -963,6 +935,9 @@ export declare namespace Invoice {
                 funding_type: 'bank_transfer' | null;
             }
             interface Konbini {
+            }
+            interface Payto {
+                mandate_options?: Payto.MandateOptions;
             }
             interface SepaDebit {
             }
@@ -1015,6 +990,26 @@ export declare namespace Invoice {
                     namespace EuBankTransfer {
                         type Country = 'BE' | 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
                     }
+                }
+            }
+            namespace Payto {
+                interface MandateOptions {
+                    /**
+                     * The maximum amount that can be collected in a single invoice. If you don't specify a maximum, then there is no limit.
+                     */
+                    amount: number | null;
+                    /**
+                     * Only `maximum` is supported.
+                     */
+                    amount_type: MandateOptions.AmountType | null;
+                    /**
+                     * The purpose for which payments are made. Has a default value based on your merchant category code.
+                     */
+                    purpose: MandateOptions.Purpose | null;
+                }
+                namespace MandateOptions {
+                    type AmountType = 'fixed' | 'maximum';
+                    type Purpose = 'dependant_support' | 'government' | 'loan' | 'mortgage' | 'other' | 'pension' | 'personal' | 'retail' | 'salary' | 'tax' | 'utility';
                 }
             }
             namespace UsBankAccount {
@@ -1100,6 +1095,9 @@ export declare namespace Invoice {
     namespace TotalTax {
         type TaxBehavior = 'exclusive' | 'inclusive';
         interface TaxRateDetails {
+            /**
+             * ID of the tax rate
+             */
             tax_rate: string;
         }
         type TaxabilityReason = 'customer_exempt' | 'not_available' | 'not_collecting' | 'not_subject_to_tax' | 'not_supported' | 'portion_product_exempt' | 'portion_reduced_rated' | 'portion_standard_rated' | 'product_exempt' | 'product_exempt_holiday' | 'proportionally_rated' | 'reduced_rated' | 'reverse_charge' | 'standard_rated' | 'taxable_basis_reduced' | 'zero_rated';
@@ -1111,11 +1109,11 @@ export interface InvoiceCreateParams {
      */
     account_tax_ids?: Emptyable<Array<string>>;
     /**
-     * A fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/billing/invoices/connect#collecting-fees).
+     * A fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://docs.stripe.com/billing/invoices/connect#collecting-fees).
      */
     application_fee_amount?: number;
     /**
-     * Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action. Defaults to false.
+     * Controls whether Stripe performs [automatic collection](https://docs.stripe.com/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action. Defaults to false.
      */
     auto_advance?: boolean;
     /**
@@ -1139,9 +1137,13 @@ export interface InvoiceCreateParams {
      */
     custom_fields?: Emptyable<Array<InvoiceCreateParams.CustomField>>;
     /**
-     * The ID of the customer who will be billed.
+     * The ID of the customer to bill.
      */
     customer?: string;
+    /**
+     * The ID of the account to bill.
+     */
+    customer_account?: string;
     /**
      * The number of days from when the invoice is created until it is due. Valid only for invoices where `collection_method=send_invoice`.
      */
@@ -1183,7 +1185,7 @@ export interface InvoiceCreateParams {
      */
     footer?: string;
     /**
-     * Revise an existing invoice. The new invoice will be created in `status=draft`. See the [revision documentation](https://stripe.com/docs/invoicing/invoice-revisions) for more details.
+     * Revise an existing invoice. The new invoice will be created in `status=draft`. See the [revision documentation](https://docs.stripe.com/invoicing/invoice-revisions) for more details.
      */
     from_invoice?: InvoiceCreateParams.FromInvoice;
     /**
@@ -1191,7 +1193,7 @@ export interface InvoiceCreateParams {
      */
     issuer?: InvoiceCreateParams.Issuer;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
     /**
@@ -1199,7 +1201,7 @@ export interface InvoiceCreateParams {
      */
     number?: string;
     /**
-     * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://stripe.com/docs/billing/invoices/connect) documentation for details.
+     * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://docs.stripe.com/billing/invoices/connect) documentation for details.
      */
     on_behalf_of?: string;
     /**
@@ -1238,7 +1240,7 @@ export interface InvoiceCreateParams {
 export declare namespace InvoiceCreateParams {
     interface AutomaticTax {
         /**
-         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
+         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://docs.stripe.com/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
          */
         enabled: boolean;
         /**
@@ -1399,6 +1401,10 @@ export declare namespace InvoiceCreateParams {
              */
             konbini?: Emptyable<PaymentMethodOptions.Konbini>;
             /**
+             * If paying by `payto`, this sub-hash contains details about the PayTo payment method options to pass to the invoice's PaymentIntent.
+             */
+            payto?: Emptyable<PaymentMethodOptions.Payto>;
+            /**
              * If paying by `sepa_debit`, this sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
              */
             sepa_debit?: Emptyable<PaymentMethodOptions.SepaDebit>;
@@ -1407,7 +1413,7 @@ export declare namespace InvoiceCreateParams {
              */
             us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
         }
-        type PaymentMethodType = 'ach_credit_transfer' | 'ach_debit' | 'acss_debit' | 'affirm' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'custom' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'jp_credit_transfer' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'p24' | 'payco' | 'paynow' | 'paypal' | 'promptpay' | 'revolut_pay' | 'sepa_credit_transfer' | 'sepa_debit' | 'sofort' | 'swish' | 'us_bank_account' | 'wechat_pay';
+        type PaymentMethodType = 'ach_credit_transfer' | 'ach_debit' | 'acss_debit' | 'affirm' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'custom' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'jp_credit_transfer' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'p24' | 'payco' | 'paynow' | 'paypal' | 'payto' | 'promptpay' | 'revolut_pay' | 'sepa_credit_transfer' | 'sepa_debit' | 'sofort' | 'swish' | 'us_bank_account' | 'wechat_pay';
         namespace PaymentMethodOptions {
             interface AcssDebit {
                 /**
@@ -1429,11 +1435,11 @@ export declare namespace InvoiceCreateParams {
                 /**
                  * Installment configuration for payments attempted on this invoice.
                  *
-                 * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
+                 * For more information, see the [installments integration guide](https://docs.stripe.com/payments/installments).
                  */
                 installments?: Card.Installments;
                 /**
-                 * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+                 * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
                  */
                 request_three_d_secure?: Card.RequestThreeDSecure;
             }
@@ -1448,6 +1454,12 @@ export declare namespace InvoiceCreateParams {
                 funding_type?: string;
             }
             interface Konbini {
+            }
+            interface Payto {
+                /**
+                 * Additional fields for Mandate creation.
+                 */
+                mandate_options?: Payto.MandateOptions;
             }
             interface SepaDebit {
             }
@@ -1530,6 +1542,21 @@ export declare namespace InvoiceCreateParams {
                     }
                 }
             }
+            namespace Payto {
+                interface MandateOptions {
+                    /**
+                     * The maximum amount that can be collected in a single invoice. If you don't specify a maximum, then there is no limit.
+                     */
+                    amount?: number;
+                    /**
+                     * The purpose for which payments are made. Has a default value based on your merchant category code.
+                     */
+                    purpose?: MandateOptions.Purpose;
+                }
+                namespace MandateOptions {
+                    type Purpose = 'dependant_support' | 'government' | 'loan' | 'mortgage' | 'other' | 'pension' | 'personal' | 'retail' | 'salary' | 'tax' | 'utility';
+                }
+            }
             namespace UsBankAccount {
                 interface FinancialConnections {
                     /**
@@ -1591,7 +1618,7 @@ export declare namespace InvoiceCreateParams {
              */
             fixed_amount?: ShippingRateData.FixedAmount;
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: MetadataParam;
             /**
@@ -1599,7 +1626,7 @@ export declare namespace InvoiceCreateParams {
              */
             tax_behavior?: ShippingRateData.TaxBehavior;
             /**
-             * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
+             * A [tax code](https://docs.stripe.com/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
              */
             tax_code?: string;
             /**
@@ -1693,11 +1720,11 @@ export interface InvoiceUpdateParams {
      */
     account_tax_ids?: Emptyable<Array<string>>;
     /**
-     * A fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/billing/invoices/connect#collecting-fees).
+     * A fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://docs.stripe.com/billing/invoices/connect#collecting-fees).
      */
     application_fee_amount?: number;
     /**
-     * Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice.
+     * Controls whether Stripe performs [automatic collection](https://docs.stripe.com/invoicing/integration/automatic-advancement-collection) of the invoice.
      */
     auto_advance?: boolean;
     /**
@@ -1761,7 +1788,7 @@ export interface InvoiceUpdateParams {
      */
     issuer?: InvoiceUpdateParams.Issuer;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
     /**
@@ -1769,7 +1796,7 @@ export interface InvoiceUpdateParams {
      */
     number?: Emptyable<string>;
     /**
-     * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://stripe.com/docs/billing/invoices/connect) documentation for details.
+     * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://docs.stripe.com/billing/invoices/connect) documentation for details.
      */
     on_behalf_of?: Emptyable<string>;
     /**
@@ -1800,7 +1827,7 @@ export interface InvoiceUpdateParams {
 export declare namespace InvoiceUpdateParams {
     interface AutomaticTax {
         /**
-         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
+         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://docs.stripe.com/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
          */
         enabled: boolean;
         /**
@@ -1950,6 +1977,10 @@ export declare namespace InvoiceUpdateParams {
              */
             konbini?: Emptyable<PaymentMethodOptions.Konbini>;
             /**
+             * If paying by `payto`, this sub-hash contains details about the PayTo payment method options to pass to the invoice's PaymentIntent.
+             */
+            payto?: Emptyable<PaymentMethodOptions.Payto>;
+            /**
              * If paying by `sepa_debit`, this sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
              */
             sepa_debit?: Emptyable<PaymentMethodOptions.SepaDebit>;
@@ -1958,7 +1989,7 @@ export declare namespace InvoiceUpdateParams {
              */
             us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
         }
-        type PaymentMethodType = 'ach_credit_transfer' | 'ach_debit' | 'acss_debit' | 'affirm' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'custom' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'jp_credit_transfer' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'p24' | 'payco' | 'paynow' | 'paypal' | 'promptpay' | 'revolut_pay' | 'sepa_credit_transfer' | 'sepa_debit' | 'sofort' | 'swish' | 'us_bank_account' | 'wechat_pay';
+        type PaymentMethodType = 'ach_credit_transfer' | 'ach_debit' | 'acss_debit' | 'affirm' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'custom' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'jp_credit_transfer' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'p24' | 'payco' | 'paynow' | 'paypal' | 'payto' | 'promptpay' | 'revolut_pay' | 'sepa_credit_transfer' | 'sepa_debit' | 'sofort' | 'swish' | 'us_bank_account' | 'wechat_pay';
         namespace PaymentMethodOptions {
             interface AcssDebit {
                 /**
@@ -1980,11 +2011,11 @@ export declare namespace InvoiceUpdateParams {
                 /**
                  * Installment configuration for payments attempted on this invoice.
                  *
-                 * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
+                 * For more information, see the [installments integration guide](https://docs.stripe.com/payments/installments).
                  */
                 installments?: Card.Installments;
                 /**
-                 * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+                 * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
                  */
                 request_three_d_secure?: Card.RequestThreeDSecure;
             }
@@ -1999,6 +2030,12 @@ export declare namespace InvoiceUpdateParams {
                 funding_type?: string;
             }
             interface Konbini {
+            }
+            interface Payto {
+                /**
+                 * Additional fields for Mandate creation.
+                 */
+                mandate_options?: Payto.MandateOptions;
             }
             interface SepaDebit {
             }
@@ -2081,6 +2118,21 @@ export declare namespace InvoiceUpdateParams {
                     }
                 }
             }
+            namespace Payto {
+                interface MandateOptions {
+                    /**
+                     * The maximum amount that can be collected in a single invoice. If you don't specify a maximum, then there is no limit.
+                     */
+                    amount?: number;
+                    /**
+                     * The purpose for which payments are made. Has a default value based on your merchant category code.
+                     */
+                    purpose?: MandateOptions.Purpose;
+                }
+                namespace MandateOptions {
+                    type Purpose = 'dependant_support' | 'government' | 'loan' | 'mortgage' | 'other' | 'pension' | 'personal' | 'retail' | 'salary' | 'tax' | 'utility';
+                }
+            }
             namespace UsBankAccount {
                 interface FinancialConnections {
                     /**
@@ -2142,7 +2194,7 @@ export declare namespace InvoiceUpdateParams {
              */
             fixed_amount?: ShippingRateData.FixedAmount;
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: MetadataParam;
             /**
@@ -2150,7 +2202,7 @@ export declare namespace InvoiceUpdateParams {
              */
             tax_behavior?: ShippingRateData.TaxBehavior;
             /**
-             * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
+             * A [tax code](https://docs.stripe.com/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
              */
             tax_code?: string;
             /**
@@ -2245,13 +2297,17 @@ export interface InvoiceListParams extends PaginationParams {
      * Only return invoices for the customer specified by this customer ID.
      */
     customer?: string;
+    /**
+     * Only return invoices for the account representing the customer specified by this account ID.
+     */
+    customer_account?: string;
     due_date?: RangeQueryParam | number;
     /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
     /**
-     * The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://stripe.com/docs/billing/invoices/workflow#workflow-overview)
+     * The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://docs.stripe.com/billing/invoices/workflow#workflow-overview)
      */
     status?: InvoiceListParams.Status;
     /**
@@ -2275,7 +2331,7 @@ export interface InvoiceAddLinesParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     invoice_metadata?: Emptyable<{
         [key: string]: string;
@@ -2304,15 +2360,15 @@ export declare namespace InvoiceAddLinesParams {
          */
         invoice_item?: string;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Emptyable<MetadataParam>;
         /**
-         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://docs.stripe.com/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
          */
         period?: Line.Period;
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+         * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
          */
         price_data?: Line.PriceData;
         /**
@@ -2324,7 +2380,7 @@ export declare namespace InvoiceAddLinesParams {
          */
         quantity?: number;
         /**
-         * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://stripe.com/docs/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://stripe.com/docs/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
+         * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://docs.stripe.com/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://docs.stripe.com/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
          */
         tax_amounts?: Emptyable<Array<Line.TaxAmount>>;
         /**
@@ -2371,7 +2427,7 @@ export declare namespace InvoiceAddLinesParams {
              */
             product_data?: PriceData.ProductData;
             /**
-             * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
              */
             tax_behavior?: PriceData.TaxBehavior;
             /**
@@ -2420,7 +2476,7 @@ export declare namespace InvoiceAddLinesParams {
                  */
                 images?: Array<string>;
                 /**
-                 * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+                 * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
                  */
                 metadata?: MetadataParam;
                 /**
@@ -2428,7 +2484,7 @@ export declare namespace InvoiceAddLinesParams {
                  */
                 name: string;
                 /**
-                 * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+                 * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
                  */
                 tax_code?: string;
                 /**
@@ -2509,9 +2565,13 @@ export interface InvoiceCreatePreviewParams {
      */
     currency?: string;
     /**
-     * The identifier of the customer whose upcoming invoice you'd like to retrieve. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
+     * The identifier of the customer whose upcoming invoice you're retrieving. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
      */
     customer?: string;
+    /**
+     * The identifier of the account representing the customer whose upcoming invoice you're retrieving. If `automatic_tax` is enabled then one of `customer`, `customer_account`, `customer_details`, `subscription`, or `schedule` must be set.
+     */
+    customer_account?: string;
     /**
      * Details about the customer you want to invoice or overrides for an existing customer. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
      */
@@ -2533,7 +2593,7 @@ export interface InvoiceCreatePreviewParams {
      */
     issuer?: InvoiceCreatePreviewParams.Issuer;
     /**
-     * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://stripe.com/docs/billing/invoices/connect) documentation for details.
+     * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://docs.stripe.com/billing/invoices/connect) documentation for details.
      */
     on_behalf_of?: Emptyable<string>;
     /**
@@ -2560,7 +2620,7 @@ export interface InvoiceCreatePreviewParams {
 export declare namespace InvoiceCreatePreviewParams {
     interface AutomaticTax {
         /**
-         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
+         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://docs.stripe.com/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
          */
         enabled: boolean;
         /**
@@ -2570,7 +2630,7 @@ export declare namespace InvoiceCreatePreviewParams {
     }
     interface CustomerDetails {
         /**
-         * The customer's address.
+         * The customer's address. Learn about [country-specific requirements for calculating tax](https://docs.stripe.com/invoicing/taxes?dashboard-or-api=dashboard#set-up-customer).
          */
         address?: Emptyable<AddressParam>;
         /**
@@ -2630,11 +2690,11 @@ export declare namespace InvoiceCreatePreviewParams {
          */
         invoiceitem?: string;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Emptyable<MetadataParam>;
         /**
-         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://docs.stripe.com/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
          */
         period?: InvoiceItem.Period;
         /**
@@ -2642,7 +2702,7 @@ export declare namespace InvoiceCreatePreviewParams {
          */
         price?: string;
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+         * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
          */
         price_data?: InvoiceItem.PriceData;
         /**
@@ -2650,11 +2710,11 @@ export declare namespace InvoiceCreatePreviewParams {
          */
         quantity?: number;
         /**
-         * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
          */
         tax_behavior?: InvoiceItem.TaxBehavior;
         /**
-         * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+         * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
          */
         tax_code?: Emptyable<string>;
         /**
@@ -2701,7 +2761,7 @@ export declare namespace InvoiceCreatePreviewParams {
     }
     interface SubscriptionDetails {
         /**
-         * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
+         * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://docs.stripe.com/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
          */
         billing_cycle_anchor?: SubscriptionDetails.BillingCycleAnchor | number;
         /**
@@ -2729,7 +2789,7 @@ export declare namespace InvoiceCreatePreviewParams {
          */
         items?: Array<SubscriptionDetails.Item>;
         /**
-         * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+         * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
          */
         proration_behavior?: SubscriptionDetails.ProrationBehavior;
         /**
@@ -2835,7 +2895,7 @@ export declare namespace InvoiceCreatePreviewParams {
              */
             product: string;
             /**
-             * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
              */
             tax_behavior?: PriceData.TaxBehavior;
             /**
@@ -2881,7 +2941,7 @@ export declare namespace InvoiceCreatePreviewParams {
              */
             automatic_tax?: Phase.AutomaticTax;
             /**
-             * Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+             * Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial. For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
              */
             billing_cycle_anchor?: Phase.BillingCycleAnchor;
             /**
@@ -2901,7 +2961,7 @@ export declare namespace InvoiceCreatePreviewParams {
              */
             default_payment_method?: string;
             /**
-             * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
+             * A list of [Tax Rate](https://docs.stripe.com/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://docs.stripe.com/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
              */
             default_tax_rates?: Emptyable<Array<string>>;
             /**
@@ -2917,7 +2977,7 @@ export declare namespace InvoiceCreatePreviewParams {
              */
             duration?: Phase.Duration;
             /**
-             * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
+             * The date at which this phase of the subscription schedule ends. If set, `duration` must not be set.
              */
             end_date?: number | 'now';
             /**
@@ -2929,7 +2989,7 @@ export declare namespace InvoiceCreatePreviewParams {
              */
             items: Array<Phase.Item>;
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered, adding new keys and replacing existing keys in the subscription's `metadata`. Individual keys in the subscription's `metadata` can be unset by posting an empty value to them in the phase's `metadata`. To unset all keys in the subscription's `metadata`, update the subscription directly or unset every key individually from the phase's `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered, adding new keys and replacing existing keys in the subscription's `metadata`. Individual keys in the subscription's `metadata` can be unset by posting an empty value to them in the phase's `metadata`. To unset all keys in the subscription's `metadata`, update the subscription directly or unset every key individually from the phase's `metadata`.
              */
             metadata?: MetadataParam;
             /**
@@ -2937,7 +2997,7 @@ export declare namespace InvoiceCreatePreviewParams {
              */
             on_behalf_of?: string;
             /**
-             * Controls whether the subscription schedule should create [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when transitioning to this phase if there is a difference in billing configuration. It's different from the request-level [proration_behavior](https://stripe.com/docs/api/subscription_schedules/update#update_subscription_schedule-proration_behavior) parameter which controls what happens if the update request affects the billing configuration (item price, quantity, etc.) of the current phase.
+             * Controls whether the subscription schedule should create [prorations](https://docs.stripe.com/billing/subscriptions/prorations) when transitioning to this phase if there is a difference in billing configuration. It's different from the request-level [proration_behavior](https://docs.stripe.com/api/subscription_schedules/update#update_subscription_schedule-proration_behavior) parameter which controls what happens if the update request affects the billing configuration (item price, quantity, etc.) of the current phase.
              */
             proration_behavior?: Phase.ProrationBehavior;
             /**
@@ -2977,7 +3037,7 @@ export declare namespace InvoiceCreatePreviewParams {
                  */
                 discounts?: Array<AddInvoiceItem.Discount>;
                 /**
-                 * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+                 * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
                  */
                 metadata?: MetadataParam;
                 /**
@@ -2989,7 +3049,7 @@ export declare namespace InvoiceCreatePreviewParams {
                  */
                 price?: string;
                 /**
-                 * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+                 * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
                  */
                 price_data?: AddInvoiceItem.PriceData;
                 /**
@@ -3071,7 +3131,7 @@ export declare namespace InvoiceCreatePreviewParams {
                  */
                 discounts?: Emptyable<Array<Item.Discount>>;
                 /**
-                 * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a configuration item. Metadata on a configuration item will update the underlying subscription item's `metadata` when the phase is entered, adding new keys and replacing existing keys. Individual keys in the subscription item's `metadata` can be unset by posting an empty value to them in the configuration item's `metadata`. To unset all keys in the subscription item's `metadata`, update the subscription item directly or unset every key individually from the configuration item's `metadata`.
+                 * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to a configuration item. Metadata on a configuration item will update the underlying subscription item's `metadata` when the phase is entered, adding new keys and replacing existing keys. Individual keys in the subscription item's `metadata` can be unset by posting an empty value to them in the configuration item's `metadata`. To unset all keys in the subscription item's `metadata`, update the subscription item directly or unset every key individually from the configuration item's `metadata`.
                  */
                 metadata?: MetadataParam;
                 /**
@@ -3083,7 +3143,7 @@ export declare namespace InvoiceCreatePreviewParams {
                  */
                 price?: string;
                 /**
-                 * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+                 * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
                  */
                 price_data?: Item.PriceData;
                 /**
@@ -3091,7 +3151,7 @@ export declare namespace InvoiceCreatePreviewParams {
                  */
                 quantity?: number;
                 /**
-                 * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+                 * A list of [Tax Rate](https://docs.stripe.com/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
                  */
                 tax_rates?: Emptyable<Array<string>>;
             }
@@ -3141,7 +3201,7 @@ export declare namespace InvoiceCreatePreviewParams {
                      */
                     product: string;
                     /**
-                     * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+                     * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
                      */
                     tax_behavior?: PriceData.TaxBehavior;
                     /**
@@ -3221,7 +3281,7 @@ export declare namespace InvoiceCreatePreviewParams {
             namespace Item {
                 interface BillingThresholds {
                     /**
-                     * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+                     * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://docs.stripe.com/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
                      */
                     usage_gte: number;
                 }
@@ -3253,7 +3313,7 @@ export declare namespace InvoiceCreatePreviewParams {
                      */
                     recurring: PriceData.Recurring;
                     /**
-                     * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+                     * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
                      */
                     tax_behavior?: PriceData.TaxBehavior;
                     /**
@@ -3319,7 +3379,7 @@ export declare namespace InvoiceCreatePreviewParams {
              */
             id?: string;
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: Emptyable<MetadataParam>;
             /**
@@ -3331,7 +3391,7 @@ export declare namespace InvoiceCreatePreviewParams {
              */
             price?: string;
             /**
-             * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+             * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
              */
             price_data?: Item.PriceData;
             /**
@@ -3339,7 +3399,7 @@ export declare namespace InvoiceCreatePreviewParams {
              */
             quantity?: number;
             /**
-             * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+             * A list of [Tax Rate](https://docs.stripe.com/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
              */
             tax_rates?: Emptyable<Array<string>>;
         }
@@ -3359,7 +3419,7 @@ export declare namespace InvoiceCreatePreviewParams {
         namespace Item {
             interface BillingThresholds {
                 /**
-                 * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+                 * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://docs.stripe.com/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
                  */
                 usage_gte: number;
             }
@@ -3391,7 +3451,7 @@ export declare namespace InvoiceCreatePreviewParams {
                  */
                 recurring: PriceData.Recurring;
                 /**
-                 * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+                 * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
                  */
                 tax_behavior?: PriceData.TaxBehavior;
                 /**
@@ -3424,7 +3484,7 @@ export declare namespace InvoiceCreatePreviewParams {
 }
 export interface InvoiceFinalizeInvoiceParams {
     /**
-     * Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
+     * Controls whether Stripe performs [automatic collection](https://docs.stripe.com/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
      */
     auto_advance?: boolean;
     /**
@@ -3486,7 +3546,7 @@ export interface InvoiceRemoveLinesParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     invoice_metadata?: Emptyable<{
         [key: string]: string;
@@ -3509,7 +3569,7 @@ export declare namespace InvoiceRemoveLinesParams {
 }
 export interface InvoiceSearchParams {
     /**
-     * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for invoices](https://stripe.com/docs/search#query-fields-for-invoices).
+     * The search query string. See [search query language](https://docs.stripe.com/search#search-query-language) and the list of supported [query fields for invoices](https://docs.stripe.com/search#query-fields-for-invoices).
      */
     query: string;
     /**
@@ -3541,7 +3601,7 @@ export interface InvoiceUpdateLinesParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-type) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](api/invoices/line_item#invoice_line_item_object-type) line items, where any existing metadata on the invoice line is merged with the incoming data.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-type) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](api/invoices/line_item#invoice_line_item_object-type) line items, where any existing metadata on the invoice line is merged with the incoming data.
      */
     invoice_metadata?: Emptyable<{
         [key: string]: string;
@@ -3570,15 +3630,15 @@ export declare namespace InvoiceUpdateLinesParams {
          */
         id: string;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-type) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](api/invoices/line_item#invoice_line_item_object-type) line items, where any existing metadata on the invoice line is merged with the incoming data.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-type) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](api/invoices/line_item#invoice_line_item_object-type) line items, where any existing metadata on the invoice line is merged with the incoming data.
          */
         metadata?: Emptyable<MetadataParam>;
         /**
-         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://docs.stripe.com/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
          */
         period?: Line.Period;
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+         * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
          */
         price_data?: Line.PriceData;
         /**
@@ -3590,7 +3650,7 @@ export declare namespace InvoiceUpdateLinesParams {
          */
         quantity?: number;
         /**
-         * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://stripe.com/docs/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://stripe.com/docs/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
+         * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://docs.stripe.com/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://docs.stripe.com/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
          */
         tax_amounts?: Emptyable<Array<Line.TaxAmount>>;
         /**
@@ -3637,7 +3697,7 @@ export declare namespace InvoiceUpdateLinesParams {
              */
             product_data?: PriceData.ProductData;
             /**
-             * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
              */
             tax_behavior?: PriceData.TaxBehavior;
             /**
@@ -3686,7 +3746,7 @@ export declare namespace InvoiceUpdateLinesParams {
                  */
                 images?: Array<string>;
                 /**
-                 * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+                 * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
                  */
                 metadata?: MetadataParam;
                 /**
@@ -3694,7 +3754,7 @@ export declare namespace InvoiceUpdateLinesParams {
                  */
                 name: string;
                 /**
-                 * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+                 * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
                  */
                 tax_code?: string;
                 /**
@@ -3773,15 +3833,15 @@ export interface InvoiceUpdateLineItemParams {
      */
     expand?: Array<string>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-type) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](api/invoices/line_item#invoice_line_item_object-type) line items, where any existing metadata on the invoice line is merged with the incoming data.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-type) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](api/invoices/line_item#invoice_line_item_object-type) line items, where any existing metadata on the invoice line is merged with the incoming data.
      */
     metadata?: Emptyable<MetadataParam>;
     /**
-     * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+     * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://docs.stripe.com/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
      */
     period?: InvoiceUpdateLineItemParams.Period;
     /**
-     * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+     * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
      */
     price_data?: InvoiceUpdateLineItemParams.PriceData;
     /**
@@ -3793,7 +3853,7 @@ export interface InvoiceUpdateLineItemParams {
      */
     quantity?: number;
     /**
-     * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://stripe.com/docs/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://stripe.com/docs/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
+     * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://docs.stripe.com/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://docs.stripe.com/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
      */
     tax_amounts?: Emptyable<Array<InvoiceUpdateLineItemParams.TaxAmount>>;
     /**
@@ -3840,7 +3900,7 @@ export declare namespace InvoiceUpdateLineItemParams {
          */
         product_data?: PriceData.ProductData;
         /**
-         * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
          */
         tax_behavior?: PriceData.TaxBehavior;
         /**
@@ -3889,7 +3949,7 @@ export declare namespace InvoiceUpdateLineItemParams {
              */
             images?: Array<string>;
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: MetadataParam;
             /**
@@ -3897,7 +3957,7 @@ export declare namespace InvoiceUpdateLineItemParams {
              */
             name: string;
             /**
-             * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+             * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
              */
             tax_code?: string;
             /**

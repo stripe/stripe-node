@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import {RequestOptions} from '../../lib.js';
 export interface MeterEventSummary {
   /**
    * Unique identifier for the object.

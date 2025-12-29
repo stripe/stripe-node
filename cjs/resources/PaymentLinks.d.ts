@@ -1,12 +1,11 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { LineItem } from './LineItems.js';
 import { Application, DeletedApplication } from './Applications.js';
 import { Account } from './Accounts.js';
 import { TaxId, DeletedTaxId } from './TaxIds.js';
 import { ShippingRate } from './ShippingRates.js';
 import { MetadataParam, Emptyable, PaginationParams, Metadata } from '../shared.js';
-import { ApiListPromise, Response, ApiList } from '../lib.js';
+import { RequestOptions, ApiListPromise, Response, ApiList } from '../lib.js';
 export declare class PaymentLinkResource extends StripeResource {
     /**
      * Returns a list of your payment links.
@@ -32,13 +31,7 @@ export declare class PaymentLinkResource extends StripeResource {
     listLineItems(id: string, params?: PaymentLinkListLineItemsParams, options?: RequestOptions): ApiListPromise<LineItem>;
     listLineItems(id: string, options?: RequestOptions): ApiListPromise<LineItem>;
 }
-export /**
- * A payment link is a shareable URL that will take your customers to a hosted payment page. A payment link can be shared and used multiple times.
- *
- * When a customer opens a payment link it will open a new [checkout session](https://stripe.com/docs/api/checkout/sessions) to render the payment page. You can use [checkout session events](https://stripe.com/docs/api/events/types#event_types-checkout.session.completed) to track payments through payment links.
- *
- * Related guide: [Payment Links API](https://stripe.com/docs/payment-links)
- */ interface PaymentLink {
+export interface PaymentLink {
     /**
      * Unique identifier for the object.
      */
@@ -107,7 +100,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata;
     name_collection?: PaymentLink.NameCollection;
@@ -262,7 +255,7 @@ export declare namespace PaymentLink {
          */
         description: string | null;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on [Payment Intents](https://stripe.com/docs/api/payment_intents) generated from this payment link.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will set metadata on [Payment Intents](https://docs.stripe.com/api/payment_intents) generated from this payment link.
          */
         metadata: Metadata;
         /**
@@ -278,12 +271,12 @@ export declare namespace PaymentLink {
          */
         statement_descriptor_suffix: string | null;
         /**
-         * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
+         * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://docs.stripe.com/connect/separate-charges-and-transfers) for details.
          */
         transfer_group: string | null;
     }
     type PaymentMethodCollection = 'always' | 'if_required';
-    type PaymentMethodType = 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'klarna' | 'konbini' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'oxxo' | 'p24' | 'pay_by_bank' | 'paynow' | 'paypal' | 'pix' | 'promptpay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
+    type PaymentMethodType = 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'klarna' | 'konbini' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'oxxo' | 'p24' | 'pay_by_bank' | 'paynow' | 'paypal' | 'payto' | 'pix' | 'promptpay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
     interface PhoneNumberCollection {
         /**
          * If `true`, a phone number will be collected during checkout.
@@ -317,7 +310,7 @@ export declare namespace PaymentLink {
         description: string | null;
         invoice_settings: SubscriptionData.InvoiceSettings;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on [Subscriptions](https://stripe.com/docs/api/subscriptions) generated from this payment link.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will set metadata on [Subscriptions](https://docs.stripe.com/api/subscriptions) generated from this payment link.
          */
         metadata: Metadata;
         /**
@@ -503,7 +496,7 @@ export declare namespace PaymentLink {
              */
             issuer: InvoiceData.Issuer | null;
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
              */
             metadata: Metadata | null;
             /**
@@ -691,7 +684,7 @@ export interface PaymentLinkCreateParams {
      */
     custom_text?: PaymentLinkCreateParams.CustomText;
     /**
-     * Configures whether [checkout sessions](https://stripe.com/docs/api/checkout/sessions) created by this payment link create a [Customer](https://stripe.com/docs/api/customers).
+     * Configures whether [checkout sessions](https://docs.stripe.com/api/checkout/sessions) created by this payment link create a [Customer](https://docs.stripe.com/api/customers).
      */
     customer_creation?: PaymentLinkCreateParams.CustomerCreation;
     /**
@@ -707,7 +700,7 @@ export interface PaymentLinkCreateParams {
      */
     invoice_creation?: PaymentLinkCreateParams.InvoiceCreation;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. Metadata associated with this Payment Link will automatically be copied to [checkout sessions](https://stripe.com/docs/api/checkout/sessions) created by this payment link.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. Metadata associated with this Payment Link will automatically be copied to [checkout sessions](https://docs.stripe.com/api/checkout/sessions) created by this payment link.
      */
     metadata?: MetadataParam;
     /**
@@ -719,7 +712,7 @@ export interface PaymentLinkCreateParams {
      */
     on_behalf_of?: string;
     /**
-     * A list of optional items the customer can add to their order at checkout. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices).
+     * A list of optional items the customer can add to their order at checkout. Use this parameter to pass one-time or recurring [Prices](https://docs.stripe.com/api/prices).
      * There is a maximum of 10 optional items allowed on a payment link, and the existing limits on the number of line items allowed on a payment link apply to the combined number of line items and optional items.
      * There is a maximum of 20 combined line items and optional items.
      */
@@ -733,11 +726,11 @@ export interface PaymentLinkCreateParams {
      *
      * Can only be set in `subscription` mode. Defaults to `always`.
      *
-     * If you'd like information on how to collect a payment method outside of Checkout, read the guide on [configuring subscriptions with a free trial](https://stripe.com/docs/payments/checkout/free-trials).
+     * If you'd like information on how to collect a payment method outside of Checkout, read the guide on [configuring subscriptions with a free trial](https://docs.stripe.com/payments/checkout/free-trials).
      */
     payment_method_collection?: PaymentLinkCreateParams.PaymentMethodCollection;
     /**
-     * The list of payment method types that customers can use. If no value is passed, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods) (20+ payment methods [supported](https://stripe.com/docs/payments/payment-methods/integration-options#payment-method-product-support)).
+     * The list of payment method types that customers can use. If no value is passed, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods) (20+ payment methods [supported](https://docs.stripe.com/payments/payment-methods/integration-options#payment-method-product-support)).
      */
     payment_method_types?: Array<PaymentLinkCreateParams.PaymentMethodType>;
     /**
@@ -755,11 +748,11 @@ export interface PaymentLinkCreateParams {
      */
     shipping_address_collection?: PaymentLinkCreateParams.ShippingAddressCollection;
     /**
-     * The shipping rate options to apply to [checkout sessions](https://stripe.com/docs/api/checkout/sessions) created by this payment link.
+     * The shipping rate options to apply to [checkout sessions](https://docs.stripe.com/api/checkout/sessions) created by this payment link.
      */
     shipping_options?: Array<PaymentLinkCreateParams.ShippingOption>;
     /**
-     * Describes the type of transaction being performed in order to customize relevant text on the page, such as the submit button. Changing this value will also affect the hostname in the [url](https://stripe.com/docs/api/payment_links/payment_links/object#url) property (example: `donate.stripe.com`).
+     * Describes the type of transaction being performed in order to customize relevant text on the page, such as the submit button. Changing this value will also affect the hostname in the [url](https://docs.stripe.com/api/payment_links/payment_links/object#url) property (example: `donate.stripe.com`).
      */
     submit_type?: PaymentLinkCreateParams.SubmitType;
     /**
@@ -782,11 +775,11 @@ export declare namespace PaymentLinkCreateParams {
          */
         adjustable_quantity?: LineItem.AdjustableQuantity;
         /**
-         * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object. One of `price` or `price_data` is required.
+         * The ID of the [Price](https://docs.stripe.com/api/prices) or [Plan](https://docs.stripe.com/api/plans) object. One of `price` or `price_data` is required.
          */
         price?: string;
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+         * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
          */
         price_data?: LineItem.PriceData;
         /**
@@ -913,7 +906,7 @@ export declare namespace PaymentLinkCreateParams {
          */
         adjustable_quantity?: OptionalItem.AdjustableQuantity;
         /**
-         * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object.
+         * The ID of the [Price](https://docs.stripe.com/api/prices) or [Plan](https://docs.stripe.com/api/plans) object.
          */
         price: string;
         /**
@@ -931,11 +924,11 @@ export declare namespace PaymentLinkCreateParams {
          */
         description?: string;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Payment Intents](https://stripe.com/docs/api/payment_intents) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will declaratively set metadata on [Payment Intents](https://docs.stripe.com/api/payment_intents) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
          */
         metadata?: MetadataParam;
         /**
-         * Indicates that you intend to [make future payments](https://stripe.com/docs/payments/payment-intents#future-usage) with the payment method collected by this Checkout Session.
+         * Indicates that you intend to [make future payments](https://docs.stripe.com/payments/payment-intents#future-usage) with the payment method collected by this Checkout Session.
          *
          * When setting this to `on_session`, Checkout will show a notice to the customer that their payment details will be saved.
          *
@@ -959,12 +952,12 @@ export declare namespace PaymentLinkCreateParams {
          */
         statement_descriptor_suffix?: string;
         /**
-         * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
+         * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://docs.stripe.com/connect/separate-charges-and-transfers) for details.
          */
         transfer_group?: string;
     }
     type PaymentMethodCollection = 'always' | 'if_required';
-    type PaymentMethodType = 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'klarna' | 'konbini' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'oxxo' | 'p24' | 'pay_by_bank' | 'paynow' | 'paypal' | 'pix' | 'promptpay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
+    type PaymentMethodType = 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'klarna' | 'konbini' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'oxxo' | 'p24' | 'pay_by_bank' | 'paynow' | 'paypal' | 'payto' | 'pix' | 'promptpay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
     interface PhoneNumberCollection {
         /**
          * Set to `true` to enable phone number collection.
@@ -1001,7 +994,7 @@ export declare namespace PaymentLinkCreateParams {
          */
         invoice_settings?: SubscriptionData.InvoiceSettings;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Subscriptions](https://stripe.com/docs/api/subscriptions) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will declaratively set metadata on [Subscriptions](https://docs.stripe.com/api/subscriptions) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
          */
         metadata?: MetadataParam;
         /**
@@ -1045,7 +1038,7 @@ export declare namespace PaymentLinkCreateParams {
         }
         interface Redirect {
             /**
-             * The URL the customer will be redirected to after the purchase is complete. You can embed `{CHECKOUT_SESSION_ID}` into the URL to have the `id` of the completed [checkout session](https://stripe.com/docs/api/checkout/sessions/object#checkout_session_object-id) included.
+             * The URL the customer will be redirected to after the purchase is complete. You can embed `{CHECKOUT_SESSION_ID}` into the URL to have the `id` of the completed [checkout session](https://docs.stripe.com/api/checkout/sessions/object#checkout_session_object-id) included.
              */
             url: string;
         }
@@ -1192,7 +1185,7 @@ export declare namespace PaymentLinkCreateParams {
              */
             issuer?: InvoiceData.Issuer;
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: Emptyable<MetadataParam>;
             /**
@@ -1272,7 +1265,7 @@ export declare namespace PaymentLinkCreateParams {
              */
             recurring?: PriceData.Recurring;
             /**
-             * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
              */
             tax_behavior?: PriceData.TaxBehavior;
             /**
@@ -1295,7 +1288,7 @@ export declare namespace PaymentLinkCreateParams {
                  */
                 images?: Array<string>;
                 /**
-                 * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+                 * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
                  */
                 metadata?: MetadataParam;
                 /**
@@ -1303,7 +1296,7 @@ export declare namespace PaymentLinkCreateParams {
                  */
                 name: string;
                 /**
-                 * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+                 * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
                  */
                 tax_code?: string;
                 /**
@@ -1460,7 +1453,7 @@ export interface PaymentLinkUpdateParams {
      */
     custom_text?: PaymentLinkUpdateParams.CustomText;
     /**
-     * Configures whether [checkout sessions](https://stripe.com/docs/api/checkout/sessions) created by this payment link create a [Customer](https://stripe.com/docs/api/customers).
+     * Configures whether [checkout sessions](https://docs.stripe.com/api/checkout/sessions) created by this payment link create a [Customer](https://docs.stripe.com/api/customers).
      */
     customer_creation?: PaymentLinkUpdateParams.CustomerCreation;
     /**
@@ -1480,7 +1473,7 @@ export interface PaymentLinkUpdateParams {
      */
     line_items?: Array<PaymentLinkUpdateParams.LineItem>;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. Metadata associated with this Payment Link will automatically be copied to [checkout sessions](https://stripe.com/docs/api/checkout/sessions) created by this payment link.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. Metadata associated with this Payment Link will automatically be copied to [checkout sessions](https://docs.stripe.com/api/checkout/sessions) created by this payment link.
      */
     metadata?: MetadataParam;
     /**
@@ -1496,7 +1489,7 @@ export interface PaymentLinkUpdateParams {
      *
      * Can only be set in `subscription` mode. Defaults to `always`.
      *
-     * If you'd like information on how to collect a payment method outside of Checkout, read the guide on [configuring subscriptions with a free trial](https://stripe.com/docs/payments/checkout/free-trials).
+     * If you'd like information on how to collect a payment method outside of Checkout, read the guide on [configuring subscriptions with a free trial](https://docs.stripe.com/payments/checkout/free-trials).
      */
     payment_method_collection?: PaymentLinkUpdateParams.PaymentMethodCollection;
     /**
@@ -1518,7 +1511,7 @@ export interface PaymentLinkUpdateParams {
      */
     shipping_address_collection?: Emptyable<PaymentLinkUpdateParams.ShippingAddressCollection>;
     /**
-     * Describes the type of transaction being performed in order to customize relevant text on the page, such as the submit button. Changing this value will also affect the hostname in the [url](https://stripe.com/docs/api/payment_links/payment_links/object#url) property (example: `donate.stripe.com`).
+     * Describes the type of transaction being performed in order to customize relevant text on the page, such as the submit button. Changing this value will also affect the hostname in the [url](https://docs.stripe.com/api/payment_links/payment_links/object#url) property (example: `donate.stripe.com`).
      */
     submit_type?: PaymentLinkUpdateParams.SubmitType;
     /**
@@ -1647,7 +1640,7 @@ export declare namespace PaymentLinkUpdateParams {
          */
         description?: Emptyable<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Payment Intents](https://stripe.com/docs/api/payment_intents) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will declaratively set metadata on [Payment Intents](https://docs.stripe.com/api/payment_intents) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
          */
         metadata?: Emptyable<MetadataParam>;
         /**
@@ -1661,12 +1654,12 @@ export declare namespace PaymentLinkUpdateParams {
          */
         statement_descriptor_suffix?: Emptyable<string>;
         /**
-         * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
+         * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://docs.stripe.com/connect/separate-charges-and-transfers) for details.
          */
         transfer_group?: Emptyable<string>;
     }
     type PaymentMethodCollection = 'always' | 'if_required';
-    type PaymentMethodType = 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'klarna' | 'konbini' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'oxxo' | 'p24' | 'pay_by_bank' | 'paynow' | 'paypal' | 'pix' | 'promptpay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
+    type PaymentMethodType = 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'klarna' | 'konbini' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'oxxo' | 'p24' | 'pay_by_bank' | 'paynow' | 'paypal' | 'payto' | 'pix' | 'promptpay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
     interface PhoneNumberCollection {
         /**
          * Set to `true` to enable phone number collection.
@@ -1693,7 +1686,7 @@ export declare namespace PaymentLinkUpdateParams {
          */
         invoice_settings?: SubscriptionData.InvoiceSettings;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Subscriptions](https://stripe.com/docs/api/subscriptions) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will declaratively set metadata on [Subscriptions](https://docs.stripe.com/api/subscriptions) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
          */
         metadata?: Emptyable<MetadataParam>;
         /**
@@ -1724,7 +1717,7 @@ export declare namespace PaymentLinkUpdateParams {
         }
         interface Redirect {
             /**
-             * The URL the customer will be redirected to after the purchase is complete. You can embed `{CHECKOUT_SESSION_ID}` into the URL to have the `id` of the completed [checkout session](https://stripe.com/docs/api/checkout/sessions/object#checkout_session_object-id) included.
+             * The URL the customer will be redirected to after the purchase is complete. You can embed `{CHECKOUT_SESSION_ID}` into the URL to have the `id` of the completed [checkout session](https://docs.stripe.com/api/checkout/sessions/object#checkout_session_object-id) included.
              */
             url: string;
         }
@@ -1857,7 +1850,7 @@ export declare namespace PaymentLinkUpdateParams {
              */
             issuer?: InvoiceData.Issuer;
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: Emptyable<MetadataParam>;
             /**

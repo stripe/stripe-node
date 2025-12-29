@@ -1,8 +1,14 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../stripe.core.js';
-import {VerificationReportResource} from './VerificationReports.js';
-import {VerificationSessionResource} from './VerificationSessions.js';
+import {
+  VerificationReport,
+  VerificationReportResource,
+} from './VerificationReports.js';
+import {
+  VerificationSession,
+  VerificationSessionResource,
+} from './VerificationSessions.js';
 
 export {VerificationReport} from './VerificationReports.js';
 export {VerificationSession} from './VerificationSessions.js';
@@ -15,4 +21,9 @@ export class Identity {
     this.verificationReports = new VerificationReportResource(stripe);
     this.verificationSessions = new VerificationSessionResource(stripe);
   }
+}
+
+export declare namespace Identity {
+  export {VerificationReport};
+  export {VerificationSession};
 }

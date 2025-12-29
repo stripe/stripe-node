@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../lib.js';
 import {Customer} from './Customers.js';
 import {SetupAttempt} from './SetupAttempts.js';
 import {Charge} from './Charges.js';
@@ -13,11 +12,11 @@ import {
   Metadata,
   Address,
 } from '../shared.js';
-import {ApiListPromise, Response} from '../lib.js';
+import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export class PaymentMethodResource extends StripeResource {
   /**
-   * Returns a list of PaymentMethods for Treasury flows. If you want to list the PaymentMethods attached to a Customer for payments, you should use the [List a Customer's PaymentMethods](https://docs.stripe.com/docs/api/payment_methods/customer_list) API instead.
+   * Returns a list of all PaymentMethods.
    */
   list(
     params?: PaymentMethodListParams,
@@ -100,7 +99,11 @@ export class PaymentMethodResource extends StripeResource {
    */
   attach(
     id: string,
-    params: PaymentMethodAttachParams,
+    params?: PaymentMethodAttachParams,
+    options?: RequestOptions
+  ): Promise<Response<PaymentMethod>>;
+  attach(
+    id: string,
     options?: RequestOptions
   ): Promise<Response<PaymentMethod>>;
   attach(...args: any[]): Promise<Response<any>> {
@@ -191,6 +194,8 @@ export interface PaymentMethod {
    */
   customer: string | Customer | null;
 
+  customer_account: string | null;
+
   customer_balance?: PaymentMethod.CustomerBalance;
 
   eps?: PaymentMethod.Eps;
@@ -223,7 +228,7 @@ export interface PaymentMethod {
   mb_way?: PaymentMethod.MbWay;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata | null;
 
@@ -247,12 +252,14 @@ export interface PaymentMethod {
 
   paypal?: PaymentMethod.Paypal;
 
+  payto?: PaymentMethod.Payto;
+
   pix?: PaymentMethod.Pix;
 
   promptpay?: PaymentMethod.Promptpay;
 
   /**
-   * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+   * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
    */
   radar_options?: PaymentMethod.RadarOptions;
 
@@ -628,7 +635,7 @@ export namespace PaymentMethod {
 
   export interface Ideal {
     /**
-     * The customer's bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `handelsbanken`, `ing`, `knab`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
+     * The customer's bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `finom`, `handelsbanken`, `ing`, `knab`, `mollie`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
      */
     bank: Ideal.Bank | null;
 
@@ -831,13 +838,30 @@ export namespace PaymentMethod {
     payer_id: string | null;
   }
 
+  export interface Payto {
+    /**
+     * Bank-State-Branch number of the bank account.
+     */
+    bsb_number: string | null;
+
+    /**
+     * Last four digits of the bank account number.
+     */
+    last4: string | null;
+
+    /**
+     * The PayID alias for the bank account.
+     */
+    pay_id: string | null;
+  }
+
   export interface Pix {}
 
   export interface Promptpay {}
 
   export interface RadarOptions {
     /**
-     * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+     * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
      */
     session?: string;
   }
@@ -932,6 +956,7 @@ export namespace PaymentMethod {
     | 'payco'
     | 'paynow'
     | 'paypal'
+    | 'payto'
     | 'pix'
     | 'promptpay'
     | 'revolut_pay'
@@ -1163,7 +1188,7 @@ export namespace PaymentMethod {
           iin?: string | null;
 
           /**
-           * Whether this [PaymentIntent](https://stripe.com/docs/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
+           * Whether this [PaymentIntent](https://docs.stripe.com/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
            */
           incremental_authorization_supported: boolean;
 
@@ -1498,9 +1523,11 @@ export namespace PaymentMethod {
       | 'asn_bank'
       | 'bunq'
       | 'buut'
+      | 'finom'
       | 'handelsbanken'
       | 'ing'
       | 'knab'
+      | 'mollie'
       | 'moneyou'
       | 'n26'
       | 'nn'
@@ -1518,10 +1545,12 @@ export namespace PaymentMethod {
       | 'BITSNL2A'
       | 'BUNQNL2A'
       | 'BUUTNL2A'
+      | 'FNOMNL22'
       | 'FVLBNL22'
       | 'HANDNL2A'
       | 'INGBNL2A'
       | 'KNABNL2H'
+      | 'MLLENL2A'
       | 'MOYONL21'
       | 'NNBANL2G'
       | 'NTSBDEB1'
@@ -1706,7 +1735,8 @@ export namespace PaymentMethod {
           | 'bank_account_invalid_details'
           | 'bank_account_restricted'
           | 'bank_account_unusable'
-          | 'debit_not_authorized';
+          | 'debit_not_authorized'
+          | 'tokenized_account_number_deactivated';
       }
     }
   }
@@ -1878,7 +1908,7 @@ export interface PaymentMethodCreateParams {
   mb_way?: PaymentMethodCreateParams.MbWay;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: MetadataParam;
 
@@ -1938,6 +1968,11 @@ export interface PaymentMethodCreateParams {
   paypal?: PaymentMethodCreateParams.Paypal;
 
   /**
+   * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+   */
+  payto?: PaymentMethodCreateParams.Payto;
+
+  /**
    * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
    */
   pix?: PaymentMethodCreateParams.Pix;
@@ -1948,7 +1983,7 @@ export interface PaymentMethodCreateParams {
   promptpay?: PaymentMethodCreateParams.Promptpay;
 
   /**
-   * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+   * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
    */
   radar_options?: PaymentMethodCreateParams.RadarOptions;
 
@@ -2252,13 +2287,30 @@ export namespace PaymentMethodCreateParams {
 
   export interface Paypal {}
 
+  export interface Payto {
+    /**
+     * The account number for the bank account.
+     */
+    account_number?: string;
+
+    /**
+     * Bank-State-Branch number of the bank account.
+     */
+    bsb_number?: string;
+
+    /**
+     * The PayID alias for the bank account.
+     */
+    pay_id?: string;
+  }
+
   export interface Pix {}
 
   export interface Promptpay {}
 
   export interface RadarOptions {
     /**
-     * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+     * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
      */
     session?: string;
   }
@@ -2326,6 +2378,7 @@ export namespace PaymentMethodCreateParams {
     | 'payco'
     | 'paynow'
     | 'paypal'
+    | 'payto'
     | 'pix'
     | 'promptpay'
     | 'revolut_pay'
@@ -2449,9 +2502,11 @@ export namespace PaymentMethodCreateParams {
       | 'asn_bank'
       | 'bunq'
       | 'buut'
+      | 'finom'
       | 'handelsbanken'
       | 'ing'
       | 'knab'
+      | 'mollie'
       | 'moneyou'
       | 'n26'
       | 'nn'
@@ -2555,9 +2610,14 @@ export interface PaymentMethodUpdateParams {
   expand?: Array<string>;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
+
+  /**
+   * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+   */
+  payto?: PaymentMethodUpdateParams.Payto;
 
   /**
    * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
@@ -2611,6 +2671,23 @@ export namespace PaymentMethodUpdateParams {
     networks?: Card.Networks;
   }
 
+  export interface Payto {
+    /**
+     * The account number for the bank account.
+     */
+    account_number?: string;
+
+    /**
+     * Bank-State-Branch number of the bank account.
+     */
+    bsb_number?: string;
+
+    /**
+     * The PayID alias for the bank account.
+     */
+    pay_id?: string;
+  }
+
   export interface UsBankAccount {
     /**
      * Bank account holder type.
@@ -2644,9 +2721,19 @@ export namespace PaymentMethodUpdateParams {
 }
 export interface PaymentMethodListParams extends PaginationParams {
   /**
+   * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow.
+   */
+  allow_redisplay?: PaymentMethodListParams.AllowRedisplay;
+
+  /**
    * The ID of the customer whose PaymentMethods will be retrieved.
    */
   customer?: string;
+
+  /**
+   * The ID of the Account whose PaymentMethods will be retrieved.
+   */
+  customer_account?: string;
 
   /**
    * Specifies which fields in the response should be expanded.
@@ -2659,6 +2746,8 @@ export interface PaymentMethodListParams extends PaginationParams {
   type?: PaymentMethodListParams.Type;
 }
 export namespace PaymentMethodListParams {
+  export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
   export type Type =
     | 'acss_debit'
     | 'affirm'
@@ -2698,6 +2787,7 @@ export namespace PaymentMethodListParams {
     | 'payco'
     | 'paynow'
     | 'paypal'
+    | 'payto'
     | 'pix'
     | 'promptpay'
     | 'revolut_pay'
@@ -2715,7 +2805,12 @@ export interface PaymentMethodAttachParams {
   /**
    * The ID of the customer to which to attach the PaymentMethod.
    */
-  customer: string;
+  customer?: string;
+
+  /**
+   * The ID of the Account representing the customer to which to attach the PaymentMethod.
+   */
+  customer_account?: string;
 
   /**
    * Specifies which fields in the response should be expanded.

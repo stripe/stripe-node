@@ -4,6 +4,7 @@ import {BalanceTransaction} from './BalanceTransactions.js';
 import {Refund} from './Refunds.js';
 import {Transfer} from './Transfers.js';
 import {Metadata} from '../shared.js';
+import {RequestOptions} from '../lib.js';
 export interface TransferReversal {
   /**
    * Unique identifier for the object.
@@ -41,7 +42,7 @@ export interface TransferReversal {
   destination_payment_refund: string | Refund | null;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata | null;
 

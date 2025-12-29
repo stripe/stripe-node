@@ -1,5 +1,4 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { LineItem } from './../LineItems.js';
 import { Subscription } from './../Subscriptions.js';
 import { Customer, DeletedCustomer } from './../Customers.js';
@@ -14,7 +13,7 @@ import { PromotionCode } from './../PromotionCodes.js';
 import { ShippingRate } from './../ShippingRates.js';
 import { TaxRate } from './../TaxRates.js';
 import { MetadataParam, Emptyable, Address, ShippingAddressParam, PaginationParams, RangeQueryParam, Metadata } from '../../shared.js';
-import { ApiListPromise, Response, ApiList } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response, ApiList } from '../../lib.js';
 export declare class SessionResource extends StripeResource {
     /**
      * Returns a list of Checkout Sessions.
@@ -50,22 +49,7 @@ export declare class SessionResource extends StripeResource {
     listLineItems(id: string, params?: Checkout.SessionListLineItemsParams, options?: RequestOptions): ApiListPromise<LineItem>;
     listLineItems(id: string, options?: RequestOptions): ApiListPromise<LineItem>;
 }
-export /**
- * A Checkout Session represents your customer's session as they pay for
- * one-time purchases or subscriptions through [Checkout](https://stripe.com/docs/payments/checkout)
- * or [Payment Links](https://stripe.com/docs/payments/payment-links). We recommend creating a
- * new Session each time your customer attempts to pay.
- *
- * Once payment is successful, the Checkout Session will contain a reference
- * to the [Customer](https://stripe.com/docs/api/customers), and either the successful
- * [PaymentIntent](https://stripe.com/docs/api/payment_intents) or an active
- * [Subscription](https://stripe.com/docs/api/subscriptions).
- *
- * You can create a Checkout Session on your server and redirect to its URL
- * to begin Checkout.
- *
- * Related guide: [Checkout quickstart](https://stripe.com/docs/checkout/quickstart)
- */ interface Session {
+export interface Session {
     /**
      * Unique identifier for the object.
      */
@@ -112,7 +96,7 @@ export /**
     client_reference_id: string | null;
     /**
      * The client secret of your Checkout Session. Applies to Checkout Sessions with `ui_mode: embedded` or `ui_mode: custom`. For `ui_mode: embedded`, the client secret is to be used when initializing Stripe.js embedded checkout.
-     *  For `ui_mode: custom`, use the client secret with [initCheckout](https://stripe.com/docs/js/custom_checkout/init) on your front end.
+     *  For `ui_mode: custom`, use the client secret with [initCheckout](https://docs.stripe.com/js/custom_checkout/init) on your front end.
      */
     client_secret: string | null;
     /**
@@ -152,6 +136,10 @@ export /**
      * the Session was created.
      */
     customer: string | Customer | DeletedCustomer | null;
+    /**
+     * The ID of the account for this Session.
+     */
+    customer_account: string | null;
     /**
      * Configure whether a Checkout Session creates a Customer when the Checkout Session completes.
      */
@@ -201,7 +189,7 @@ export /**
      */
     locale: Checkout.Session.Locale | null;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata | null;
     /**
@@ -218,7 +206,7 @@ export /**
      */
     origin_context: Checkout.Session.OriginContext | null;
     /**
-     * The ID of the PaymentIntent for Checkout Sessions in `payment` mode. You can't confirm or cancel the PaymentIntent for a Checkout Session. To cancel, [expire the Checkout Session](https://stripe.com/docs/api/checkout/sessions/expire) instead.
+     * The ID of the PaymentIntent for Checkout Sessions in `payment` mode. You can't confirm or cancel the PaymentIntent for a Checkout Session. To cancel, [expire the Checkout Session](https://docs.stripe.com/api/checkout/sessions/expire) instead.
      */
     payment_intent: string | PaymentIntent | null;
     /**
@@ -260,7 +248,7 @@ export /**
      */
     recovered_from: string | null;
     /**
-     * This parameter applies to `ui_mode: embedded`. Learn more about the [redirect behavior](https://stripe.com/docs/payments/checkout/custom-success-page?payment-ui=embedded-form) of embedded sessions. Defaults to `always`.
+     * This parameter applies to `ui_mode: embedded`. Learn more about the [redirect behavior](https://docs.stripe.com/payments/checkout/custom-success-page?payment-ui=embedded-form) of embedded sessions. Defaults to `always`.
      */
     redirect_on_completion?: Checkout.Session.RedirectOnCompletion;
     /**
@@ -272,7 +260,7 @@ export /**
      */
     saved_payment_method_options: Checkout.Session.SavedPaymentMethodOptions | null;
     /**
-     * The ID of the SetupIntent for Checkout Sessions in `setup` mode. You can't confirm or cancel the SetupIntent for a Checkout Session. To cancel, [expire the Checkout Session](https://stripe.com/docs/api/checkout/sessions/expire) instead.
+     * The ID of the SetupIntent for Checkout Sessions in `setup` mode. You can't confirm or cancel the SetupIntent for a Checkout Session. To cancel, [expire the Checkout Session](https://docs.stripe.com/api/checkout/sessions/expire) instead.
      */
     setup_intent: string | SetupIntent | null;
     /**
@@ -298,7 +286,7 @@ export /**
      */
     submit_type: Checkout.Session.SubmitType | null;
     /**
-     * The ID of the [Subscription](https://stripe.com/docs/api/subscriptions) for Checkout Sessions in `subscription` mode.
+     * The ID of the [Subscription](https://docs.stripe.com/api/subscriptions) for Checkout Sessions in `subscription` mode.
      */
     subscription: string | Subscription | null;
     /**
@@ -316,7 +304,7 @@ export /**
      */
     ui_mode: Checkout.Session.UiMode | null;
     /**
-     * The URL to the Checkout Session. Applies to Checkout Sessions with `ui_mode: hosted`. Redirect customers to this URL to take them to Checkout. If you're using [Custom Domains](https://stripe.com/docs/payments/checkout/custom-domains), the URL will use your subdomain. Otherwise, it'll use `checkout.stripe.com.`
+     * The URL to the Checkout Session. Applies to Checkout Sessions with `ui_mode: hosted`. Redirect customers to this URL to take them to Checkout. If you're using [Custom Domains](https://docs.stripe.com/payments/checkout/custom-domains), the URL will use your subdomain. Otherwise, it'll use `checkout.stripe.com.`
      * This value is only present when the session is active.
      */
     url: string | null;
@@ -592,6 +580,7 @@ export declare namespace Checkout {
             payco?: PaymentMethodOptions.Payco;
             paynow?: PaymentMethodOptions.Paynow;
             paypal?: PaymentMethodOptions.Paypal;
+            payto?: PaymentMethodOptions.Payto;
             pix?: PaymentMethodOptions.Pix;
             revolut_pay?: PaymentMethodOptions.RevolutPay;
             samsung_pay?: PaymentMethodOptions.SamsungPay;
@@ -956,7 +945,7 @@ export declare namespace Checkout {
                  */
                 issuer: InvoiceData.Issuer | null;
                 /**
-                 * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+                 * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
                  */
                 metadata: Metadata | null;
                 /**
@@ -1220,7 +1209,7 @@ export declare namespace Checkout {
                  */
                 request_overcapture?: Card.RequestOvercapture;
                 /**
-                 * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+                 * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
                  */
                 request_three_d_secure: Card.RequestThreeDSecure;
                 restrictions?: Card.Restrictions;
@@ -1530,6 +1519,19 @@ export declare namespace Checkout {
                  */
                 setup_future_usage?: Paypal.SetupFutureUsage;
             }
+            interface Payto {
+                mandate_options?: Payto.MandateOptions;
+                /**
+                 * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+                 *
+                 * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+                 *
+                 * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+                 *
+                 * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+                 */
+                setup_future_usage?: Payto.SetupFutureUsage;
+            }
             interface Pix {
                 /**
                  * Determines if the amount includes the IOF tax.
@@ -1762,6 +1764,44 @@ export declare namespace Checkout {
             namespace Paypal {
                 type SetupFutureUsage = 'none' | 'off_session';
             }
+            namespace Payto {
+                interface MandateOptions {
+                    /**
+                     * Amount that will be collected. It is required when `amount_type` is `fixed`.
+                     */
+                    amount: number | null;
+                    /**
+                     * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
+                     */
+                    amount_type: MandateOptions.AmountType | null;
+                    /**
+                     * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+                     */
+                    end_date: string | null;
+                    /**
+                     * The periodicity at which payments will be collected. Defaults to `adhoc`.
+                     */
+                    payment_schedule: MandateOptions.PaymentSchedule | null;
+                    /**
+                     * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+                     */
+                    payments_per_period: number | null;
+                    /**
+                     * The purpose for which payments are made. Has a default value based on your merchant category code.
+                     */
+                    purpose: MandateOptions.Purpose | null;
+                    /**
+                     * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+                     */
+                    start_date: string | null;
+                }
+                type SetupFutureUsage = 'none' | 'off_session';
+                namespace MandateOptions {
+                    type AmountType = 'fixed' | 'maximum';
+                    type PaymentSchedule = 'adhoc' | 'annual' | 'daily' | 'fortnightly' | 'monthly' | 'quarterly' | 'semi_annual' | 'weekly';
+                    type Purpose = 'dependant_support' | 'government' | 'loan' | 'mortgage' | 'other' | 'pension' | 'personal' | 'retail' | 'salary' | 'tax' | 'utility';
+                }
+            }
             namespace Pix {
                 type AmountIncludesIof = 'always' | 'never';
             }
@@ -1867,10 +1907,10 @@ export declare namespace Checkout {
                      */
                     amount: number;
                     /**
-                     * A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
+                     * A discount represents the actual application of a [coupon](https://api.stripe.com#coupons) or [promotion code](https://api.stripe.com#promotion_codes).
                      * It contains information about when the discount began, when it will end, and what it is applied to.
                      *
-                     * Related guide: [Applying discounts to subscriptions](https://stripe.com/docs/billing/subscriptions/discounts)
+                     * Related guide: [Applying discounts to subscriptions](https://docs.stripe.com/billing/subscriptions/discounts)
                      */
                     discount: Discount;
                 }
@@ -1967,24 +2007,28 @@ export declare namespace Checkout {
         /**
          * ID of an existing Customer, if one exists. In `payment` mode, the customer's most recently saved card
          * payment method will be used to prefill the email, name, card details, and billing address
-         * on the Checkout page. In `subscription` mode, the customer's [default payment method](https://stripe.com/docs/api/customers/update#update_customer-invoice_settings-default_payment_method)
+         * on the Checkout page. In `subscription` mode, the customer's [default payment method](https://docs.stripe.com/api/customers/update#update_customer-invoice_settings-default_payment_method)
          * will be used if it's a card, otherwise the most recently saved card will be used. A valid billing address, billing name and billing email are required on the payment method for Checkout to prefill the customer's card details.
          *
-         * If the Customer already has a valid [email](https://stripe.com/docs/api/customers/object#customer_object-email) set, the email will be prefilled and not editable in Checkout.
+         * If the Customer already has a valid [email](https://docs.stripe.com/api/customers/object#customer_object-email) set, the email will be prefilled and not editable in Checkout.
          * If the Customer does not have a valid `email`, Checkout will set the email entered during the session on the Customer.
          *
          * If blank for Checkout Sessions in `subscription` mode or with `customer_creation` set as `always` in `payment` mode, Checkout will create a new Customer object based on information provided during the payment flow.
          *
-         * You can set [`payment_intent_data.setup_future_usage`](https://stripe.com/docs/api/checkout/sessions/create#create_checkout_session-payment_intent_data-setup_future_usage) to have Checkout automatically attach the payment method to the Customer you pass in for future reuse.
+         * You can set [`payment_intent_data.setup_future_usage`](https://docs.stripe.com/api/checkout/sessions/create#create_checkout_session-payment_intent_data-setup_future_usage) to have Checkout automatically attach the payment method to the Customer you pass in for future reuse.
          */
         customer?: string;
         /**
-         * Configure whether a Checkout Session creates a [Customer](https://stripe.com/docs/api/customers) during Session confirmation.
+         * ID of an existing Account, if one exists. Has the same behavior as `customer`.
+         */
+        customer_account?: string;
+        /**
+         * Configure whether a Checkout Session creates a [Customer](https://docs.stripe.com/api/customers) during Session confirmation.
          *
          * When a Customer is not created, you can still retrieve email, address, and other customer data entered in Checkout
-         * with [customer_details](https://stripe.com/docs/api/checkout/sessions/object#checkout_session_object-customer_details).
+         * with [customer_details](https://docs.stripe.com/api/checkout/sessions/object#checkout_session_object-customer_details).
          *
-         * Sessions that don't create Customers instead are grouped by [guest customers](https://stripe.com/docs/payments/checkout/guest-customers)
+         * Sessions that don't create Customers instead are grouped by [guest customers](https://docs.stripe.com/payments/checkout/guest-customers)
          * in the Dashboard. Promotion codes limited to first time customers will return invalid for these Sessions.
          *
          * Can only be set in `payment` and `setup` mode.
@@ -2023,7 +2067,7 @@ export declare namespace Checkout {
          */
         invoice_creation?: SessionCreateParams.InvoiceCreation;
         /**
-         * A list of items the customer is purchasing. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices). The parameter is required for `payment` and `subscription` mode.
+         * A list of items the customer is purchasing. Use this parameter to pass one-time or recurring [Prices](https://docs.stripe.com/api/prices). The parameter is required for `payment` and `subscription` mode.
          *
          * For `payment` mode, there is a maximum of 100 line items, however it is recommended to consolidate line items if there are more than a few dozen.
          *
@@ -2035,7 +2079,7 @@ export declare namespace Checkout {
          */
         locale?: SessionCreateParams.Locale;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
         /**
@@ -2047,11 +2091,11 @@ export declare namespace Checkout {
          *
          * You can configure Checkout to collect your customers' business names, individual names, or both. Each name field can be either required or optional.
          *
-         * If a [Customer](https://stripe.com/docs/api/customers) is created or provided, the names can be saved to the Customer object as well.
+         * If a [Customer](https://docs.stripe.com/api/customers) is created or provided, the names can be saved to the Customer object as well.
          */
         name_collection?: SessionCreateParams.NameCollection;
         /**
-         * A list of optional items the customer can add to their order at checkout. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices).
+         * A list of optional items the customer can add to their order at checkout. Use this parameter to pass one-time or recurring [Prices](https://docs.stripe.com/api/prices).
          *
          * There is a maximum of 10 optional items allowed on a Checkout Session, and the existing limits on the number of line items allowed on a Checkout Session apply to the combined number of line items and optional items.
          *
@@ -2074,7 +2118,7 @@ export declare namespace Checkout {
          *
          * Can only be set in `subscription` mode. Defaults to `always`.
          *
-         * If you'd like information on how to collect a payment method outside of Checkout, read the guide on configuring [subscriptions with a free trial](https://stripe.com/docs/payments/checkout/free-trials).
+         * If you'd like information on how to collect a payment method outside of Checkout, read the guide on configuring [subscriptions with a free trial](https://docs.stripe.com/payments/checkout/free-trials).
          */
         payment_method_collection?: SessionCreateParams.PaymentMethodCollection;
         /**
@@ -2093,7 +2137,7 @@ export declare namespace Checkout {
          * A list of the types of payment methods (e.g., `card`) this Checkout Session can accept.
          *
          * You can omit this attribute to manage your payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
-         * See [Dynamic Payment Methods](https://stripe.com/docs/payments/payment-methods/integration-options#using-dynamic-payment-methods) for more details.
+         * See [Dynamic Payment Methods](https://docs.stripe.com/payments/payment-methods/integration-options#using-dynamic-payment-methods) for more details.
          *
          * Read more about the supported payment methods and their requirements in our [payment
          * method details guide](https://docs.stripe.com/docs/payments/checkout/payment-methods).
@@ -2113,11 +2157,11 @@ export declare namespace Checkout {
          * Controls phone number collection settings for the session.
          *
          * We recommend that you review your privacy policy and check with your legal contacts
-         * before using this feature. Learn more about [collecting phone numbers with Checkout](https://stripe.com/docs/payments/checkout/phone-numbers).
+         * before using this feature. Learn more about [collecting phone numbers with Checkout](https://docs.stripe.com/payments/checkout/phone-numbers).
          */
         phone_number_collection?: SessionCreateParams.PhoneNumberCollection;
         /**
-         * This parameter applies to `ui_mode: embedded`. Learn more about the [redirect behavior](https://stripe.com/docs/payments/checkout/custom-success-page?payment-ui=embedded-form) of embedded sessions. Defaults to `always`.
+         * This parameter applies to `ui_mode: embedded`. Learn more about the [redirect behavior](https://docs.stripe.com/payments/checkout/custom-success-page?payment-ui=embedded-form) of embedded sessions. Defaults to `always`.
          */
         redirect_on_completion?: SessionCreateParams.RedirectOnCompletion;
         /**
@@ -2158,7 +2202,7 @@ export declare namespace Checkout {
          * is complete.
          * This parameter is not allowed if ui_mode is `embedded` or `custom`. If you'd like to use
          * information from the successful Checkout Session on your page, read the
-         * guide on [customizing your success page](https://stripe.com/docs/payments/checkout/custom-success-page).
+         * guide on [customizing your success page](https://docs.stripe.com/payments/checkout/custom-success-page).
          */
         success_url?: string;
         /**
@@ -2322,7 +2366,7 @@ export declare namespace Checkout {
              */
             promotion_code?: string;
         }
-        type ExcludedPaymentMethodType = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
+        type ExcludedPaymentMethodType = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'payto' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
         interface InvoiceCreation {
             /**
              * Set to `true` to enable invoice creation.
@@ -2339,15 +2383,19 @@ export declare namespace Checkout {
              */
             adjustable_quantity?: LineItem.AdjustableQuantity;
             /**
-             * The [tax rates](https://stripe.com/docs/api/tax_rates) that will be applied to this line item depending on the customer's billing/shipping address. We currently support the following countries: US, GB, AU, and all countries in the EU.
+             * The [tax rates](https://docs.stripe.com/api/tax_rates) that will be applied to this line item depending on the customer's billing/shipping address. We currently support the following countries: US, GB, AU, and all countries in the EU.
              */
             dynamic_tax_rates?: Array<string>;
             /**
-             * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object. One of `price` or `price_data` is required.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             */
+            metadata?: MetadataParam;
+            /**
+             * The ID of the [Price](https://docs.stripe.com/api/prices) or [Plan](https://docs.stripe.com/api/plans) object. One of `price` or `price_data` is required.
              */
             price?: string;
             /**
-             * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+             * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
              */
             price_data?: LineItem.PriceData;
             /**
@@ -2355,7 +2403,7 @@ export declare namespace Checkout {
              */
             quantity?: number;
             /**
-             * The [tax rates](https://stripe.com/docs/api/tax_rates) which apply to this line item.
+             * The [tax rates](https://docs.stripe.com/api/tax_rates) which apply to this line item.
              */
             tax_rates?: Array<string>;
         }
@@ -2377,7 +2425,7 @@ export declare namespace Checkout {
              */
             adjustable_quantity?: OptionalItem.AdjustableQuantity;
             /**
-             * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object.
+             * The ID of the [Price](https://docs.stripe.com/api/prices) or [Plan](https://docs.stripe.com/api/plans) object.
              */
             price: string;
             /**
@@ -2388,7 +2436,7 @@ export declare namespace Checkout {
         type OriginContext = 'mobile_app' | 'web';
         interface PaymentIntentData {
             /**
-             * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+             * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://docs.stripe.com/payments/connected-accounts).
              */
             application_fee_amount?: number;
             /**
@@ -2400,7 +2448,7 @@ export declare namespace Checkout {
              */
             description?: string;
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: MetadataParam;
             /**
@@ -2414,7 +2462,7 @@ export declare namespace Checkout {
              */
             receipt_email?: string;
             /**
-             * Indicates that you intend to [make future payments](https://stripe.com/docs/payments/payment-intents#future-usage) with the payment
+             * Indicates that you intend to [make future payments](https://docs.stripe.com/payments/payment-intents#future-usage) with the payment
              * method collected by this Checkout Session.
              *
              * When setting this to `on_session`, Checkout will show a notice to the
@@ -2452,11 +2500,11 @@ export declare namespace Checkout {
             statement_descriptor_suffix?: string;
             /**
              * The parameters used to automatically create a Transfer when the payment succeeds.
-             * For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+             * For more information, see the PaymentIntents [use case for connected accounts](https://docs.stripe.com/payments/connected-accounts).
              */
             transfer_data?: PaymentIntentData.TransferData;
             /**
-             * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
+             * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://docs.stripe.com/connect/separate-charges-and-transfers) for details.
              */
             transfer_group?: string;
         }
@@ -2605,6 +2653,10 @@ export declare namespace Checkout {
              */
             paypal?: PaymentMethodOptions.Paypal;
             /**
+             * contains details about the PayTo payment method options.
+             */
+            payto?: PaymentMethodOptions.Payto;
+            /**
              * contains details about the Pix payment method options.
              */
             pix?: PaymentMethodOptions.Pix;
@@ -2645,7 +2697,7 @@ export declare namespace Checkout {
              */
             wechat_pay?: PaymentMethodOptions.WechatPay;
         }
-        type PaymentMethodType = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
+        type PaymentMethodType = 'acss_debit' | 'affirm' | 'afterpay_clearpay' | 'alipay' | 'alma' | 'amazon_pay' | 'au_becs_debit' | 'bacs_debit' | 'bancontact' | 'billie' | 'blik' | 'boleto' | 'card' | 'cashapp' | 'crypto' | 'customer_balance' | 'eps' | 'fpx' | 'giropay' | 'grabpay' | 'ideal' | 'kakao_pay' | 'klarna' | 'konbini' | 'kr_card' | 'link' | 'mb_way' | 'mobilepay' | 'multibanco' | 'naver_pay' | 'nz_bank_account' | 'oxxo' | 'p24' | 'pay_by_bank' | 'payco' | 'paynow' | 'paypal' | 'payto' | 'pix' | 'promptpay' | 'revolut_pay' | 'samsung_pay' | 'satispay' | 'sepa_debit' | 'sofort' | 'swish' | 'twint' | 'us_bank_account' | 'wechat_pay' | 'zip';
         interface Permissions {
             /**
              * Determines which entity is allowed to update the shipping details.
@@ -2685,7 +2737,7 @@ export declare namespace Checkout {
              */
             description?: string;
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: MetadataParam;
             /**
@@ -2733,7 +2785,7 @@ export declare namespace Checkout {
             /**
              * The subscription's description, meant to be displayable to the customer.
              * Use this field to optionally store an explanation of the subscription
-             * for rendering in the [customer portal](https://stripe.com/docs/customer-management).
+             * for rendering in the [customer portal](https://docs.stripe.com/customer-management).
              */
             description?: string;
             /**
@@ -2741,7 +2793,7 @@ export declare namespace Checkout {
              */
             invoice_settings?: SubscriptionData.InvoiceSettings;
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: MetadataParam;
             /**
@@ -2984,7 +3036,7 @@ export declare namespace Checkout {
                  */
                 issuer?: InvoiceData.Issuer;
                 /**
-                 * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+                 * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
                  */
                 metadata?: MetadataParam;
                 /**
@@ -3064,7 +3116,7 @@ export declare namespace Checkout {
                  */
                 recurring?: PriceData.Recurring;
                 /**
-                 * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+                 * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
                  */
                 tax_behavior?: PriceData.TaxBehavior;
                 /**
@@ -3087,7 +3139,7 @@ export declare namespace Checkout {
                      */
                     images?: Array<string>;
                     /**
-                     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+                     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
                      */
                     metadata?: MetadataParam;
                     /**
@@ -3095,7 +3147,7 @@ export declare namespace Checkout {
                      */
                     name: string;
                     /**
-                     * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+                     * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
                      */
                     tax_code?: string;
                     /**
@@ -3390,7 +3442,7 @@ export declare namespace Checkout {
                  */
                 request_overcapture?: Card.RequestOvercapture;
                 /**
-                 * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+                 * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
                  */
                 request_three_d_secure?: Card.RequestThreeDSecure;
                 /**
@@ -3710,7 +3762,7 @@ export declare namespace Checkout {
                  */
                 capture_method?: Emptyable<'manual'>;
                 /**
-                 * [Preferred locale](https://stripe.com/docs/payments/paypal/supported-locales) of the PayPal checkout page that the customer is redirected to.
+                 * [Preferred locale](https://docs.stripe.com/payments/paypal/supported-locales) of the PayPal checkout page that the customer is redirected to.
                  */
                 preferred_locale?: Paypal.PreferredLocale;
                 /**
@@ -3733,6 +3785,22 @@ export declare namespace Checkout {
                  * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
                  */
                 setup_future_usage?: Emptyable<Paypal.SetupFutureUsage>;
+            }
+            interface Payto {
+                /**
+                 * Additional fields for Mandate creation
+                 */
+                mandate_options?: Payto.MandateOptions;
+                /**
+                 * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+                 *
+                 * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+                 *
+                 * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+                 *
+                 * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+                 */
+                setup_future_usage?: Payto.SetupFutureUsage;
             }
             interface Pix {
                 /**
@@ -4036,6 +4104,44 @@ export declare namespace Checkout {
                 type PreferredLocale = 'cs-CZ' | 'da-DK' | 'de-AT' | 'de-DE' | 'de-LU' | 'el-GR' | 'en-GB' | 'en-US' | 'es-ES' | 'fi-FI' | 'fr-BE' | 'fr-FR' | 'fr-LU' | 'hu-HU' | 'it-IT' | 'nl-BE' | 'nl-NL' | 'pl-PL' | 'pt-PT' | 'sk-SK' | 'sv-SE';
                 type SetupFutureUsage = 'none' | 'off_session';
             }
+            namespace Payto {
+                interface MandateOptions {
+                    /**
+                     * Amount that will be collected. It is required when `amount_type` is `fixed`.
+                     */
+                    amount?: Emptyable<number>;
+                    /**
+                     * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
+                     */
+                    amount_type?: Emptyable<MandateOptions.AmountType>;
+                    /**
+                     * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+                     */
+                    end_date?: Emptyable<string>;
+                    /**
+                     * The periodicity at which payments will be collected. Defaults to `adhoc`.
+                     */
+                    payment_schedule?: Emptyable<MandateOptions.PaymentSchedule>;
+                    /**
+                     * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+                     */
+                    payments_per_period?: Emptyable<number>;
+                    /**
+                     * The purpose for which payments are made. Has a default value based on your merchant category code.
+                     */
+                    purpose?: Emptyable<MandateOptions.Purpose>;
+                    /**
+                     * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+                     */
+                    start_date?: Emptyable<string>;
+                }
+                type SetupFutureUsage = 'none' | 'off_session';
+                namespace MandateOptions {
+                    type AmountType = 'fixed' | 'maximum';
+                    type PaymentSchedule = 'adhoc' | 'annual' | 'daily' | 'fortnightly' | 'monthly' | 'quarterly' | 'semi_annual' | 'weekly';
+                    type Purpose = 'dependant_support' | 'government' | 'loan' | 'mortgage' | 'other' | 'pension' | 'personal' | 'retail' | 'salary' | 'tax' | 'utility';
+                }
+            }
             namespace Pix {
                 type AmountIncludesIof = 'always' | 'never';
             }
@@ -4099,7 +4205,7 @@ export declare namespace Checkout {
                  */
                 fixed_amount?: ShippingRateData.FixedAmount;
                 /**
-                 * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+                 * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
                  */
                 metadata?: MetadataParam;
                 /**
@@ -4107,7 +4213,7 @@ export declare namespace Checkout {
                  */
                 tax_behavior?: ShippingRateData.TaxBehavior;
                 /**
-                 * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
+                 * A [tax code](https://docs.stripe.com/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
                  */
                 tax_code?: string;
                 /**
@@ -4296,7 +4402,23 @@ export declare namespace Checkout {
          */
         expand?: Array<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * A list of items the customer is purchasing.
+         *
+         * When updating line items, you must retransmit the entire array of line items.
+         *
+         * To retain an existing line item, specify its `id`.
+         *
+         * To update an existing line item, specify its `id` along with the new values of the fields to update.
+         *
+         * To add a new line item, specify one of `price` or `price_data` and `quantity`.
+         *
+         * To remove an existing line item, omit the line item's ID from the retransmitted array.
+         *
+         * To reorder a line item, specify it at the desired position in the retransmitted array.
+         */
+        line_items?: Array<SessionUpdateParams.LineItem>;
+        /**
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Emptyable<MetadataParam>;
         /**
@@ -4310,6 +4432,36 @@ export declare namespace Checkout {
              * The shipping details to apply to this Session.
              */
             shipping_details?: CollectedInformation.ShippingDetails;
+        }
+        interface LineItem {
+            /**
+             * When set, provides configuration for this item's quantity to be adjusted by the customer during Checkout.
+             */
+            adjustable_quantity?: LineItem.AdjustableQuantity;
+            /**
+             * ID of an existing line item.
+             */
+            id?: string;
+            /**
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             */
+            metadata?: Emptyable<MetadataParam>;
+            /**
+             * The ID of the [Price](https://docs.stripe.com/api/prices). One of `price` or `price_data` is required when creating a new line item.
+             */
+            price?: string;
+            /**
+             * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required when creating a new line item.
+             */
+            price_data?: LineItem.PriceData;
+            /**
+             * The quantity of the line item being purchased. Quantity should not be defined when `recurring.usage_type=metered`.
+             */
+            quantity?: number;
+            /**
+             * The [tax rates](https://docs.stripe.com/api/tax_rates) which apply to this line item.
+             */
+            tax_rates?: Emptyable<Array<string>>;
         }
         interface ShippingOption {
             /**
@@ -4355,9 +4507,97 @@ export declare namespace Checkout {
                      */
                     postal_code?: string;
                     /**
-                     * State, county, province, or region.
+                     * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
                      */
                     state?: string;
+                }
+            }
+        }
+        namespace LineItem {
+            interface AdjustableQuantity {
+                /**
+                 * Set to true if the quantity can be adjusted to any positive integer. Setting to false will remove any previously specified constraints on quantity.
+                 */
+                enabled: boolean;
+                /**
+                 * The maximum quantity the customer can purchase for the Checkout Session. By default this value is 99. You can specify a value up to 999999.
+                 */
+                maximum?: number;
+                /**
+                 * The minimum quantity the customer must purchase for the Checkout Session. By default this value is 0.
+                 */
+                minimum?: number;
+            }
+            interface PriceData {
+                /**
+                 * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+                 */
+                currency: string;
+                /**
+                 * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to. One of `product` or `product_data` is required.
+                 */
+                product?: string;
+                /**
+                 * Data used to generate a new [Product](https://docs.stripe.com/api/products) object inline. One of `product` or `product_data` is required.
+                 */
+                product_data?: PriceData.ProductData;
+                /**
+                 * The recurring components of a price such as `interval` and `interval_count`.
+                 */
+                recurring?: PriceData.Recurring;
+                /**
+                 * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+                 */
+                tax_behavior?: PriceData.TaxBehavior;
+                /**
+                 * A non-negative integer in cents (or local equivalent) representing how much to charge. One of `unit_amount` or `unit_amount_decimal` is required.
+                 */
+                unit_amount?: number;
+                /**
+                 * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+                 */
+                unit_amount_decimal?: string;
+            }
+            namespace PriceData {
+                interface ProductData {
+                    /**
+                     * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
+                     */
+                    description?: string;
+                    /**
+                     * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
+                     */
+                    images?: Array<string>;
+                    /**
+                     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+                     */
+                    metadata?: MetadataParam;
+                    /**
+                     * The product's name, meant to be displayable to the customer.
+                     */
+                    name: string;
+                    /**
+                     * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+                     */
+                    tax_code?: string;
+                    /**
+                     * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
+                     */
+                    unit_label?: string;
+                }
+                interface Recurring {
+                    /**
+                     * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+                     */
+                    interval: Recurring.Interval;
+                    /**
+                     * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
+                     */
+                    interval_count?: number;
+                }
+                type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+                namespace Recurring {
+                    type Interval = 'day' | 'month' | 'week' | 'year';
                 }
             }
         }
@@ -4376,7 +4616,7 @@ export declare namespace Checkout {
                  */
                 fixed_amount?: ShippingRateData.FixedAmount;
                 /**
-                 * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+                 * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
                  */
                 metadata?: MetadataParam;
                 /**
@@ -4384,7 +4624,7 @@ export declare namespace Checkout {
                  */
                 tax_behavior?: ShippingRateData.TaxBehavior;
                 /**
-                 * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
+                 * A [tax code](https://docs.stripe.com/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
                  */
                 tax_code?: string;
                 /**
@@ -4477,6 +4717,10 @@ export declare namespace Checkout {
          * Only return the Checkout Sessions for the Customer specified.
          */
         customer?: string;
+        /**
+         * Only return the Checkout Sessions for the Account specified.
+         */
+        customer_account?: string;
         /**
          * Only return the Checkout Sessions for the Customer details specified.
          */

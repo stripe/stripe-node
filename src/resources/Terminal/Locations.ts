@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../lib.js';
 import {
   Address,
   JapanAddressParam,
@@ -11,7 +10,7 @@ import {
   PaginationParams,
   Metadata,
 } from '../../shared.js';
-import {Response, ApiListPromise} from '../../lib.js';
+import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export class LocationResource extends StripeResource {
   /**
@@ -147,7 +146,7 @@ export interface Location {
   livemode: boolean;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata;
 
@@ -293,7 +292,7 @@ export namespace Terminal {
     expand?: Array<string>;
 
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
 
@@ -331,7 +330,7 @@ export namespace Terminal {
       postal_code?: string;
 
       /**
-       * State, county, province, or region.
+       * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
        */
       state?: string;
     }
@@ -388,7 +387,7 @@ export namespace Terminal {
     expand?: Array<string>;
 
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
 

@@ -1,10 +1,9 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../lib.js';
 import {Card} from './Cards.js';
 import {PaginationParams, RangeQueryParam} from '../../shared.js';
-import {ApiListPromise, Response} from '../../lib.js';
+import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export class TokenResource extends StripeResource {
   /**

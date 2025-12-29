@@ -1,9 +1,8 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../lib.js';
 import {PaginationParams, RangeQueryParam, Address} from '../../shared.js';
-import {ApiListPromise, Response} from '../../lib.js';
+import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export class VerificationReportResource extends StripeResource {
   /**
@@ -133,7 +132,7 @@ export namespace Identity {
       expiration_date?: Document.ExpirationDate | null;
 
       /**
-       * Array of [File](https://stripe.com/docs/api/files) ids containing images for this document.
+       * Array of [File](https://docs.stripe.com/api/files) ids containing images for this document.
        */
       files: Array<string> | null;
 
@@ -267,7 +266,7 @@ export namespace Identity {
 
     export interface Selfie {
       /**
-       * ID of the [File](https://stripe.com/docs/api/files) holding the image of the identity document used in this check.
+       * ID of the [File](https://docs.stripe.com/api/files) holding the image of the identity document used in this check.
        */
       document: string | null;
 
@@ -277,7 +276,7 @@ export namespace Identity {
       error: Selfie.Error | null;
 
       /**
-       * ID of the [File](https://stripe.com/docs/api/files) holding the image of the selfie used in this check.
+       * ID of the [File](https://docs.stripe.com/api/files) holding the image of the selfie used in this check.
        */
       selfie: string | null;
 
@@ -439,7 +438,7 @@ export namespace Identity {
         allowed_types?: Array<Document.AllowedType>;
 
         /**
-         * Collect an ID number and perform an [ID number check](https://stripe.com/docs/identity/verification-checks?type=id-number) with the document's extracted name and date of birth.
+         * Collect an ID number and perform an [ID number check](https://docs.stripe.com/identity/verification-checks?type=id-number) with the document's extracted name and date of birth.
          */
         require_id_number?: boolean;
 
@@ -449,7 +448,7 @@ export namespace Identity {
         require_live_capture?: boolean;
 
         /**
-         * Capture a face image and perform a [selfie check](https://stripe.com/docs/identity/verification-checks?type=selfie) comparing a photo ID and a picture of your user's face. [Learn more](https://stripe.com/docs/identity/selfie).
+         * Capture a face image and perform a [selfie check](https://docs.stripe.com/identity/verification-checks?type=selfie) comparing a photo ID and a picture of your user's face. [Learn more](https://docs.stripe.com/identity/selfie).
          */
         require_matching_selfie?: boolean;
       }

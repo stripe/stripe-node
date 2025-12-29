@@ -1,10 +1,9 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { BalanceTransaction } from './../BalanceTransactions.js';
 import { Transaction } from './Transactions.js';
 import { File } from './../Files.js';
 import { MetadataParam, Emptyable, PaginationParams, RangeQueryParam, Metadata } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class DisputeResource extends StripeResource {
     /**
      * Returns a list of Issuing Dispute objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -31,11 +30,7 @@ export declare class DisputeResource extends StripeResource {
     submit(id: string, params?: Issuing.DisputeSubmitParams, options?: RequestOptions): Promise<Response<Dispute>>;
     submit(id: string, options?: RequestOptions): Promise<Response<Dispute>>;
 }
-export /**
- * As a [card issuer](https://stripe.com/docs/issuing), you can dispute transactions that the cardholder does not recognize, suspects to be fraudulent, or has other issues with.
- *
- * Related guide: [Issuing disputes](https://stripe.com/docs/issuing/purchases/disputes)
- */ interface Dispute {
+export interface Dispute {
     /**
      * Unique identifier for the object.
      */
@@ -45,7 +40,7 @@ export /**
      */
     object: 'issuing.dispute';
     /**
-     * Disputed amount in the card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Usually the amount of the `transaction`, but can differ (usually because of currency fluctuation).
+     * Disputed amount in the card's currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). Usually the amount of the `transaction`, but can differ (usually because of currency fluctuation).
      */
     amount: number;
     /**
@@ -70,7 +65,7 @@ export /**
      */
     loss_reason?: Issuing.Dispute.LossReason;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata;
     /**
@@ -82,7 +77,7 @@ export /**
      */
     transaction: string | Transaction;
     /**
-     * [Treasury](https://stripe.com/docs/api/treasury) details related to this dispute if it was created on a [FinancialAccount](/docs/api/treasury/financial_accounts
+     * [Treasury](https://docs.stripe.com/api/treasury) details related to this dispute if it was created on a [FinancialAccount](/docs/api/treasury/financial_accounts
      */
     treasury?: Issuing.Dispute.Treasury | null;
 }
@@ -106,11 +101,11 @@ export declare namespace Issuing {
         type Status = 'expired' | 'lost' | 'submitted' | 'unsubmitted' | 'won';
         interface Treasury {
             /**
-             * The Treasury [DebitReversal](https://stripe.com/docs/api/treasury/debit_reversals) representing this Issuing dispute
+             * The Treasury [DebitReversal](https://docs.stripe.com/api/treasury/debit_reversals) representing this Issuing dispute
              */
             debit_reversal: string | null;
             /**
-             * The Treasury [ReceivedDebit](https://stripe.com/docs/api/treasury/received_debits) that is being disputed.
+             * The Treasury [ReceivedDebit](https://docs.stripe.com/api/treasury/received_debits) that is being disputed.
              */
             received_debit: string;
         }
@@ -311,7 +306,7 @@ export declare namespace Issuing {
 export declare namespace Issuing {
     interface DisputeCreateParams {
         /**
-         * The dispute amount in the card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). If not set, defaults to the full transaction amount.
+         * The dispute amount in the card's currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). If not set, defaults to the full transaction amount.
          */
         amount?: number;
         /**
@@ -323,7 +318,7 @@ export declare namespace Issuing {
          */
         expand?: Array<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
         /**
@@ -585,7 +580,7 @@ export declare namespace Issuing {
 export declare namespace Issuing {
     interface DisputeUpdateParams {
         /**
-         * The dispute amount in the card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+         * The dispute amount in the card's currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
          */
         amount?: number;
         /**
@@ -597,7 +592,7 @@ export declare namespace Issuing {
          */
         expand?: Array<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Emptyable<MetadataParam>;
     }
@@ -864,7 +859,7 @@ export declare namespace Issuing {
          */
         expand?: Array<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Emptyable<MetadataParam>;
     }

@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../lib.js';
 import {TransactionLineItem} from './TransactionLineItems.js';
 import {
   MetadataParam,
@@ -9,7 +8,7 @@ import {
   Metadata,
   Address,
 } from '../../shared.js';
-import {Response, ApiListPromise, ApiList} from '../../lib.js';
+import {RequestOptions, Response, ApiListPromise, ApiList} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export class TransactionResource extends StripeResource {
   /**
@@ -101,7 +100,7 @@ export interface Transaction {
   currency: string;
 
   /**
-   * The ID of an existing [Customer](https://stripe.com/docs/api/customers/object) used for the resource.
+   * The ID of an existing [Customer](https://docs.stripe.com/api/customers/object) used for the resource.
    */
   customer: string | null;
 
@@ -118,7 +117,7 @@ export interface Transaction {
   livemode: boolean;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata | null;
 
@@ -199,17 +198,17 @@ export namespace Tax {
 
     export interface ShippingCost {
       /**
-       * The shipping amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes were calculated on top of this amount.
+       * The shipping amount in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes were calculated on top of this amount.
        */
       amount: number;
 
       /**
-       * The amount of tax calculated for shipping, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+       * The amount of tax calculated for shipping, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
        */
       amount_tax: number;
 
       /**
-       * The ID of an existing [ShippingRate](https://stripe.com/docs/api/shipping_rates/object).
+       * The ID of an existing [ShippingRate](https://docs.stripe.com/api/shipping_rates/object).
        */
       shipping_rate?: string;
 
@@ -224,7 +223,7 @@ export namespace Tax {
       tax_breakdown?: Array<ShippingCost.TaxBreakdown>;
 
       /**
-       * The [tax code](https://stripe.com/docs/tax/tax-categories) ID used for shipping.
+       * The [tax code](https://docs.stripe.com/tax/tax-categories) ID used for shipping.
        */
       tax_code: string;
     }
@@ -372,7 +371,7 @@ export namespace Tax {
 
       export interface TaxBreakdown {
         /**
-         * The amount of tax, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+         * The amount of tax, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
          */
         amount: number;
 
@@ -394,7 +393,7 @@ export namespace Tax {
         taxability_reason: TaxBreakdown.TaxabilityReason;
 
         /**
-         * The amount on which tax is calculated, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+         * The amount on which tax is calculated, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
          */
         taxable_amount: number;
       }
@@ -514,7 +513,7 @@ export namespace Tax {
     expand?: Array<string>;
 
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: MetadataParam;
 
@@ -537,7 +536,7 @@ export namespace Tax {
     original_transaction: string;
 
     /**
-     * A custom identifier for this reversal, such as `myOrder_123-refund_1`, which must be unique across all transactions. The reference helps identify this reversal transaction in exported [tax reports](https://stripe.com/docs/tax/reports).
+     * A custom identifier for this reversal, such as `myOrder_123-refund_1`, which must be unique across all transactions. The reference helps identify this reversal transaction in exported [tax reports](https://docs.stripe.com/tax/reports).
      */
     reference: string;
 
@@ -547,7 +546,7 @@ export namespace Tax {
     expand?: Array<string>;
 
     /**
-     * A flat amount to reverse across the entire transaction, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) in negative. This value represents the total amount to refund from the transaction, including taxes.
+     * A flat amount to reverse across the entire transaction, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) in negative. This value represents the total amount to refund from the transaction, including taxes.
      */
     flat_amount?: number;
 
@@ -557,7 +556,7 @@ export namespace Tax {
     line_items?: Array<TransactionCreateReversalParams.LineItem>;
 
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: MetadataParam;
 
@@ -572,17 +571,17 @@ export namespace Tax {
 
     export interface LineItem {
       /**
-       * The amount to reverse, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) in negative.
+       * The amount to reverse, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) in negative.
        */
       amount: number;
 
       /**
-       * The amount of tax to reverse, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) in negative.
+       * The amount of tax to reverse, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) in negative.
        */
       amount_tax: number;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata?: MetadataParam;
 
@@ -592,7 +591,7 @@ export namespace Tax {
       original_line_item: string;
 
       /**
-       * The quantity reversed. Appears in [tax exports](https://stripe.com/docs/tax/reports), but does not affect the amount of tax reversed.
+       * The quantity reversed. Appears in [tax exports](https://docs.stripe.com/tax/reports), but does not affect the amount of tax reversed.
        */
       quantity?: number;
 
@@ -604,12 +603,12 @@ export namespace Tax {
 
     export interface ShippingCost {
       /**
-       * The amount to reverse, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) in negative.
+       * The amount to reverse, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) in negative.
        */
       amount: number;
 
       /**
-       * The amount of tax to reverse, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) in negative.
+       * The amount of tax to reverse, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) in negative.
        */
       amount_tax: number;
     }

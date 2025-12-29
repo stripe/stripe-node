@@ -1,10 +1,9 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../lib.js';
 import {ConfirmationToken} from './../ConfirmationTokens.js';
 import {MetadataParam, Emptyable, AddressParam} from '../../shared.js';
-import {Response} from '../../lib.js';
+import {RequestOptions, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export class ConfirmationTokenResource extends StripeResource {
   /**
@@ -52,7 +51,7 @@ export namespace TestHelpers {
     /**
      * Indicates that you intend to make future payments with this ConfirmationToken's payment method.
      *
-     * The presence of this property will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete.
+     * The presence of this property will [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete.
      */
     setup_future_usage?: ConfirmationTokenCreateParams.SetupFutureUsage;
 
@@ -210,7 +209,7 @@ export namespace TestHelpers {
       mb_way?: PaymentMethodData.MbWay;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: MetadataParam;
 
@@ -265,6 +264,11 @@ export namespace TestHelpers {
       paypal?: PaymentMethodData.Paypal;
 
       /**
+       * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+       */
+      payto?: PaymentMethodData.Payto;
+
+      /**
        * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
        */
       pix?: PaymentMethodData.Pix;
@@ -275,7 +279,7 @@ export namespace TestHelpers {
       promptpay?: PaymentMethodData.Promptpay;
 
       /**
-       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+       * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
        */
       radar_options?: PaymentMethodData.RadarOptions;
 
@@ -567,13 +571,30 @@ export namespace TestHelpers {
 
       export interface Paypal {}
 
+      export interface Payto {
+        /**
+         * The account number for the bank account.
+         */
+        account_number?: string;
+
+        /**
+         * Bank-State-Branch number of the bank account.
+         */
+        bsb_number?: string;
+
+        /**
+         * The PayID alias for the bank account.
+         */
+        pay_id?: string;
+      }
+
       export interface Pix {}
 
       export interface Promptpay {}
 
       export interface RadarOptions {
         /**
-         * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+         * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
          */
         session?: string;
       }
@@ -639,6 +660,7 @@ export namespace TestHelpers {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'payto'
         | 'pix'
         | 'promptpay'
         | 'revolut_pay'
@@ -749,9 +771,11 @@ export namespace TestHelpers {
           | 'asn_bank'
           | 'bunq'
           | 'buut'
+          | 'finom'
           | 'handelsbanken'
           | 'ing'
           | 'knab'
+          | 'mollie'
           | 'moneyou'
           | 'n26'
           | 'nn'

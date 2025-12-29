@@ -1,24 +1,22 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { CreditGrant } from './CreditGrants.js';
 import { Invoice } from './../Invoices.js';
 import * as TestHelpers from './../TestHelpers/index.js';
 import { PaginationParams } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class CreditBalanceTransactionResource extends StripeResource {
     /**
      * Retrieve a list of credit balance transactions.
      */
-    list(params: Billing.CreditBalanceTransactionListParams, options?: RequestOptions): ApiListPromise<CreditBalanceTransaction>;
+    list(params?: Billing.CreditBalanceTransactionListParams, options?: RequestOptions): ApiListPromise<CreditBalanceTransaction>;
+    list(options?: RequestOptions): ApiListPromise<CreditBalanceTransaction>;
     /**
      * Retrieves a credit balance transaction.
      */
     retrieve(id: string, params?: Billing.CreditBalanceTransactionRetrieveParams, options?: RequestOptions): Promise<Response<CreditBalanceTransaction>>;
     retrieve(id: string, options?: RequestOptions): Promise<Response<CreditBalanceTransaction>>;
 }
-export /**
- * A credit balance transaction is a resource representing a transaction (either a credit or a debit) against an existing credit grant.
- */ interface CreditBalanceTransaction {
+export interface CreditBalanceTransaction {
     /**
      * Unique identifier for the object.
      */
@@ -168,13 +166,17 @@ export declare namespace Billing {
 export declare namespace Billing {
     interface CreditBalanceTransactionListParams extends PaginationParams {
         /**
-         * The customer for which to fetch credit balance transactions.
-         */
-        customer: string;
-        /**
          * The credit grant for which to fetch credit balance transactions.
          */
         credit_grant?: string;
+        /**
+         * The customer whose credit balance transactions you're retrieving.
+         */
+        customer?: string;
+        /**
+         * The account representing the customer whose credit balance transactions you're retrieving.
+         */
+        customer_account?: string;
         /**
          * Specifies which fields in the response should be expanded.
          */

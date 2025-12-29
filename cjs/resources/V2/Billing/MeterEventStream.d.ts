@@ -1,5 +1,5 @@
 import { StripeResource } from '../../../StripeResource.js';
-import { RequestOptions } from '../../../Types.js';
+import { RequestOptions } from '../../../lib.js';
 export declare class MeterEventStreamResource extends StripeResource {
     /**
      * Creates meter events. Events are processed asynchronously, including validation. Requires a meter event session for authentication. Supports up to 10,000 requests per second in livemode. For even higher rate-limits, contact sales.

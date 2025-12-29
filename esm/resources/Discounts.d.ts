@@ -1,12 +1,7 @@
 import { Customer, DeletedCustomer } from './Customers.js';
 import { PromotionCode } from './PromotionCodes.js';
 import { Coupon } from './Coupons.js';
-export /**
- * A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
- * It contains information about when the discount began, when it will end, and what it is applied to.
- *
- * Related guide: [Applying discounts to subscriptions](https://stripe.com/docs/billing/subscriptions/discounts)
- */ interface Discount {
+export interface Discount {
     /**
      * The ID of the discount object. Discounts cannot be fetched by ID. Use `expand[]=discounts` in API calls to expand discount IDs in an array.
      */
@@ -23,6 +18,10 @@ export /**
      * The ID of the customer associated with this discount.
      */
     customer: string | Customer | DeletedCustomer | null;
+    /**
+     * The ID of the account representing the customer associated with this discount.
+     */
+    customer_account: string | null;
     /**
      * Always true for a deleted object
      */
@@ -57,9 +56,7 @@ export /**
      */
     subscription_item: string | null;
 }
-export /**
- * The DeletedDiscount object.
- */ interface DeletedDiscount {
+export interface DeletedDiscount {
     /**
      * The ID of the discount object. Discounts cannot be fetched by ID. Use `expand[]=discounts` in API calls to expand discount IDs in an array.
      */
@@ -76,6 +73,10 @@ export /**
      * The ID of the customer associated with this discount.
      */
     customer: string | Customer | DeletedCustomer | null;
+    /**
+     * The ID of the account representing the customer associated with this discount.
+     */
+    customer_account: string | null;
     /**
      * Always true for a deleted object
      */

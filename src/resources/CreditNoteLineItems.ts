@@ -3,6 +3,7 @@
 import {TaxRate} from './TaxRates.js';
 import {Discount, DeletedDiscount} from './Discounts.js';
 import * as Billing from './Billing/index.js';
+import {RequestOptions} from '../lib.js';
 export interface CreditNoteLineItem {
   /**
    * Unique identifier for the object.
@@ -156,6 +157,9 @@ export namespace CreditNoteLineItem {
     export type TaxBehavior = 'exclusive' | 'inclusive';
 
     export interface TaxRateDetails {
+      /**
+       * ID of the tax rate
+       */
       tax_rate: string;
     }
 

@@ -1,7 +1,6 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { PaginationParams } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class PhysicalBundleResource extends StripeResource {
     /**
      * Returns a list of physical bundle objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -14,9 +13,7 @@ export declare class PhysicalBundleResource extends StripeResource {
     retrieve(id: string, params?: Issuing.PhysicalBundleRetrieveParams, options?: RequestOptions): Promise<Response<PhysicalBundle>>;
     retrieve(id: string, options?: RequestOptions): Promise<Response<PhysicalBundle>>;
 }
-export /**
- * A Physical Bundle represents the bundle of physical items - card stock, carrier letter, and envelope - that is shipped to a cardholder when you create a physical card.
- */ interface PhysicalBundle {
+export interface PhysicalBundle {
     /**
      * Unique identifier for the object.
      */

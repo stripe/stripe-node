@@ -26,7 +26,7 @@ import {
   ApiMode,
 } from './Types.js';
 import {HttpClient, HttpClientResponseInterface} from './net/HttpClient.js';
-import {StripeClient} from './stripe.core.js';
+import {Stripe} from './stripe.core.js';
 import {
   emitWarning,
   jsonStringifyRequestData,
@@ -45,10 +45,10 @@ export type HttpClientResponseError = {code: string};
 const MAX_RETRY_AFTER_WAIT = 60;
 
 export class RequestSender {
-  protected _stripe: StripeClient;
+  protected _stripe: Stripe;
   private readonly _maxBufferedRequestMetric: number;
 
-  constructor(stripe: StripeClient, maxBufferedRequestMetric: number) {
+  constructor(stripe: Stripe, maxBufferedRequestMetric: number) {
     this._stripe = stripe;
     this._maxBufferedRequestMetric = maxBufferedRequestMetric;
   }

@@ -1,8 +1,7 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { Transaction } from './Transactions.js';
 import { MetadataParam, PaginationParams, Metadata } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class CreditReversalResource extends StripeResource {
     /**
      * Returns a list of CreditReversals.
@@ -18,9 +17,7 @@ export declare class CreditReversalResource extends StripeResource {
     retrieve(id: string, params?: Treasury.CreditReversalRetrieveParams, options?: RequestOptions): Promise<Response<CreditReversal>>;
     retrieve(id: string, options?: RequestOptions): Promise<Response<CreditReversal>>;
 }
-export /**
- * You can reverse some [ReceivedCredits](https://stripe.com/docs/api#received_credits) depending on their network and source flow. Reversing a ReceivedCredit leads to the creation of a new object known as a CreditReversal.
- */ interface CreditReversal {
+export interface CreditReversal {
     /**
      * Unique identifier for the object.
      */
@@ -46,7 +43,7 @@ export /**
      */
     financial_account: string;
     /**
-     * A [hosted transaction receipt](https://stripe.com/docs/treasury/moving-money/regulatory-receipts) URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
+     * A [hosted transaction receipt](https://docs.stripe.com/treasury/moving-money/regulatory-receipts) URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
      */
     hosted_regulatory_receipt_url: string | null;
     /**
@@ -54,7 +51,7 @@ export /**
      */
     livemode: boolean;
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata: Metadata;
     /**
@@ -98,7 +95,7 @@ export declare namespace Treasury {
          */
         expand?: Array<string>;
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
     }

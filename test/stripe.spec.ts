@@ -6,7 +6,7 @@
 import {expect} from 'chai';
 import {StripeSignatureVerificationError} from '../src/Error.js';
 import {ApiVersion} from '../src/apiVersion.js';
-import {StripeClient} from '../src/stripe.core.js';
+import {Stripe} from '../src/stripe.core.js';
 import {NodePlatformFunctions} from '../src/platform/NodePlatformFunctions.js';
 import {createApiKeyAuthenticator} from '../src/utils.js';
 import {
@@ -229,12 +229,12 @@ describe('Stripe Module', function() {
 
     describe('uname', () => {
       it('gets added to the user-agent', () => {
-        StripeClient.initialize(
+        Stripe.initialize(
           getMockPlatformFunctions((cmd: string, cb: any): void => {
             cb(null, 'foøname');
           })
         );
-        const stripeInstance = new StripeClient(FAKE_API_KEY, 'latest');
+        const stripeInstance = new Stripe(FAKE_API_KEY, 'latest');
         return expect(
           new Promise((resolve, reject) => {
             stripeInstance.getClientUserAgentSeeded({lang: 'node'}, (c) => {
@@ -245,12 +245,12 @@ describe('Stripe Module', function() {
       });
 
       it('sets uname to UNKNOWN in case of an error', () => {
-        StripeClient.initialize(
+        Stripe.initialize(
           getMockPlatformFunctions((cmd: string, cb: any): void => {
             cb(new Error('security'), null);
           })
         );
-        const stripeInstance = new StripeClient(FAKE_API_KEY, 'latest');
+        const stripeInstance = new Stripe(FAKE_API_KEY, 'latest');
         return expect(
           new Promise((resolve, reject) => {
             stripeInstance.getClientUserAgentSeeded({lang: 'node'}, (c) => {
@@ -610,7 +610,7 @@ describe('Stripe Module', function() {
   describe('context', () => {
     describe('when passed in via the config object', () => {
       let headers;
-      let stripeClient: StripeClient;
+      let stripeClient: Stripe;
       let closeServer;
       beforeEach((callback) => {
         getTestServerStripe(

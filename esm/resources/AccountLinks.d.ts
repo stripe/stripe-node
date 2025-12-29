@@ -1,18 +1,12 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
-import { Response } from '../lib.js';
+import { RequestOptions, Response } from '../lib.js';
 export declare class AccountLinkResource extends StripeResource {
     /**
      * Creates an AccountLink object that includes a single-use Stripe URL that the platform can redirect their user to in order to take them through the Connect Onboarding flow.
      */
     create(params: AccountLinkCreateParams, options?: RequestOptions): Promise<Response<AccountLink>>;
 }
-export /**
- * Account Links are the means by which a Connect platform grants a connected account permission to access
- * Stripe-hosted applications, such as Connect Onboarding.
- *
- * Related guide: [Connect Onboarding](https://stripe.com/docs/connect/custom/hosted-onboarding)
- */ interface AccountLink {
+export interface AccountLink {
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */

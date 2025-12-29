@@ -1,6 +1,4 @@
-export /**
- * The TaxDeductedAtSource object.
- */ interface TaxDeductedAtSource {
+export interface TaxDeductedAtSource {
     /**
      * Unique identifier for the object.
      */

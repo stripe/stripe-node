@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {Alert} from './Alerts.js';
+import {RequestOptions} from '../../lib.js';
 export interface AlertTriggered {
   /**
    * String representing the object's type. Objects of the same type share the same value.

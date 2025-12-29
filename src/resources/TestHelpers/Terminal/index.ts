@@ -10,3 +10,5 @@ export class Terminal {
     this.readers = new ReaderResource(stripe);
   }
 }
+
+export declare namespace Terminal {}

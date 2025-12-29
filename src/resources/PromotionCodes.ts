@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../lib.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {Coupon} from './Coupons.js';
 import {
@@ -11,7 +10,7 @@ import {
   RangeQueryParam,
   Metadata,
 } from '../shared.js';
-import {ApiListPromise, Response} from '../lib.js';
+import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export class PromotionCodeResource extends StripeResource {
   /**
@@ -105,9 +104,14 @@ export interface PromotionCode {
   created: number;
 
   /**
-   * The customer that this promotion code can be used by.
+   * The customer who can use this promotion code.
    */
   customer: string | Customer | DeletedCustomer | null;
+
+  /**
+   * The account representing the customer who can use this promotion code.
+   */
+  customer_account: string | null;
 
   /**
    * Date at which the promotion code can no longer be redeemed.
@@ -125,7 +129,7 @@ export interface PromotionCode {
   max_redemptions: number | null;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata | null;
 
@@ -203,9 +207,14 @@ export interface PromotionCodeCreateParams {
   code?: string;
 
   /**
-   * The customer that this promotion code can be used by. If not set, the promotion code can be used by all customers.
+   * The customer who can use this promotion code. If not set, all customers can use the promotion code.
    */
   customer?: string;
+
+  /**
+   * The account representing the customer who can use this promotion code. If not set, all customers can use the promotion code.
+   */
+  customer_account?: string;
 
   /**
    * Specifies which fields in the response should be expanded.
@@ -223,7 +232,7 @@ export interface PromotionCodeCreateParams {
   max_redemptions?: number;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: MetadataParam;
 
@@ -296,7 +305,7 @@ export interface PromotionCodeUpdateParams {
   expand?: Array<string>;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
 
@@ -349,6 +358,11 @@ export interface PromotionCodeListParams extends PaginationParams {
    * Only return promotion codes that are restricted to this customer.
    */
   customer?: string;
+
+  /**
+   * Only return promotion codes that are restricted to this account representing the customer.
+   */
+  customer_account?: string;
 
   /**
    * Specifies which fields in the response should be expanded.

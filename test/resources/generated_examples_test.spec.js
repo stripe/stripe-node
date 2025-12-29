@@ -575,15 +575,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/events/ll_123',
         response:
-<<<<<<< HEAD
-<<<<<<< HEAD
           '{"changes":{"int_key":123,"string_key":"value","boolean_key":true,"object_key":{"object_int_key":123,"object_string_key":"value","object_boolean_key":true},"array_key":[1,2,3]},"context":"context","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"object":"v2.core.event","reason":{"type":"request","request":{"id":"obj_123","idempotency_key":"idempotency_key"}},"type":"type"}',
-=======
-          '{"context":"context","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"object":"v2.core.event","reason":{"type":"request","request":{"id":"obj_123","idempotency_key":"idempotency_key"}},"type":"type"}',
->>>>>>> c329a7c8 (Types)
-=======
-          '{"changes":{"int_key":123,"string_key":"value","boolean_key":true,"object_key":{"object_int_key":123,"object_string_key":"value","object_boolean_key":true},"array_key":[1,2,3]},"context":"context","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"object":"v2.core.event","reason":{"type":"request","request":{"id":"obj_123","idempotency_key":"idempotency_key"}},"type":"type"}',
->>>>>>> 41d9f082 (more fixes)
       },
     ]);
     const event = await stripe.v2.core.events.retrieve('ll_123');
@@ -4044,113 +4036,113 @@ describe('Generated tests', function() {
     expect(account).not.to.be.null;
   });
 
-  it('test_v2_core_accounts_person_get', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'GET',
-        path: '/v2/core/accounts/account_id_123/persons',
-        response:
-          '{"data":[{"account":"account","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account_person","updated":"1970-01-03T17:07:10.277Z","livemode":true}],"next_page_url":null,"previous_page_url":null}',
-      },
-    ]);
-    const accountPersons = await stripe.v2.core.accounts.persons.list(
-      'account_id_123'
-    );
-    expect(accountPersons).not.to.be.null;
-  });
+  // it('test_v2_core_accounts_person_get', async function() {
+  //   const stripe = testUtils.createMockClient([
+  //     {
+  //       method: 'GET',
+  //       path: '/v2/core/accounts/account_id_123/persons',
+  //       response:
+  //         '{"data":[{"account":"account","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account_person","updated":"1970-01-03T17:07:10.277Z","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+  //     },
+  //   ]);
+  //   const accountPersons = await stripe.v2.core.accounts.persons.list(
+  //     'account_id_123'
+  //   );
+  //   expect(accountPersons).not.to.be.null;
+  // });
 
-  it('test_v2_core_accounts_person_post', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'POST',
-        path: '/v2/core/accounts/account_id_123/persons',
-        response:
-          '{"account":"account","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account_person","updated":"1970-01-03T17:07:10.277Z","livemode":true}',
-      },
-    ]);
-    const accountPerson = await stripe.v2.core.accounts.persons.create(
-      'account_id_123'
-    );
-    expect(accountPerson).not.to.be.null;
-  });
+  // it('test_v2_core_accounts_person_post', async function() {
+  //   const stripe = testUtils.createMockClient([
+  //     {
+  //       method: 'POST',
+  //       path: '/v2/core/accounts/account_id_123/persons',
+  //       response:
+  //         '{"account":"account","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account_person","updated":"1970-01-03T17:07:10.277Z","livemode":true}',
+  //     },
+  //   ]);
+  //   const accountPerson = await stripe.v2.core.accounts.persons.create(
+  //     'account_id_123'
+  //   );
+  //   expect(accountPerson).not.to.be.null;
+  // });
 
-  it('test_v2_core_accounts_person_delete', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'DELETE',
-        path: '/v2/core/accounts/account_id_123/persons/id_123',
-        response: '{"id":"abc_123","object":"some.object.tag"}',
-      },
-    ]);
-    const deleted = await stripe.v2.core.accounts.persons.del(
-      'account_id_123',
-      'id_123'
-    );
-    expect(deleted).not.to.be.null;
-  });
+  // it('test_v2_core_accounts_person_delete', async function() {
+  //   const stripe = testUtils.createMockClient([
+  //     {
+  //       method: 'DELETE',
+  //       path: '/v2/core/accounts/account_id_123/persons/id_123',
+  //       response: '{"id":"abc_123","object":"some.object.tag"}',
+  //     },
+  //   ]);
+  //   const deleted = await stripe.v2.core.accounts.persons.del(
+  //     'account_id_123',
+  //     'id_123'
+  //   );
+  //   expect(deleted).not.to.be.null;
+  // });
 
-  it('test_v2_core_accounts_person_get_2', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'GET',
-        path: '/v2/core/accounts/account_id_123/persons/id_123',
-        response:
-          '{"account":"account","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account_person","updated":"1970-01-03T17:07:10.277Z","livemode":true}',
-      },
-    ]);
-    const accountPerson = await stripe.v2.core.accounts.persons.retrieve(
-      'account_id_123',
-      'id_123'
-    );
-    expect(accountPerson).not.to.be.null;
-  });
+  // it('test_v2_core_accounts_person_get_2', async function() {
+  //   const stripe = testUtils.createMockClient([
+  //     {
+  //       method: 'GET',
+  //       path: '/v2/core/accounts/account_id_123/persons/id_123',
+  //       response:
+  //         '{"account":"account","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account_person","updated":"1970-01-03T17:07:10.277Z","livemode":true}',
+  //     },
+  //   ]);
+  //   const accountPerson = await stripe.v2.core.accounts.persons.retrieve(
+  //     'account_id_123',
+  //     'id_123'
+  //   );
+  //   expect(accountPerson).not.to.be.null;
+  // });
 
-  it('test_v2_core_accounts_person_post_2', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'POST',
-        path: '/v2/core/accounts/account_id_123/persons/id_123',
-        response:
-          '{"account":"account","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account_person","updated":"1970-01-03T17:07:10.277Z","livemode":true}',
-      },
-    ]);
-    const accountPerson = await stripe.v2.core.accounts.persons.update(
-      'account_id_123',
-      'id_123'
-    );
-    expect(accountPerson).not.to.be.null;
-  });
+  // it('test_v2_core_accounts_person_post_2', async function() {
+  //   const stripe = testUtils.createMockClient([
+  //     {
+  //       method: 'POST',
+  //       path: '/v2/core/accounts/account_id_123/persons/id_123',
+  //       response:
+  //         '{"account":"account","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account_person","updated":"1970-01-03T17:07:10.277Z","livemode":true}',
+  //     },
+  //   ]);
+  //   const accountPerson = await stripe.v2.core.accounts.persons.update(
+  //     'account_id_123',
+  //     'id_123'
+  //   );
+  //   expect(accountPerson).not.to.be.null;
+  // });
 
-  it('test_v2_core_accounts_person_token_post', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'POST',
-        path: '/v2/core/accounts/account_id_123/person_tokens',
-        response:
-          '{"created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","id":"obj_123","livemode":true,"object":"v2.core.account_person_token","used":true}',
-      },
-    ]);
-    const accountPersonToken = await stripe.v2.core.accounts.personTokens.create(
-      'account_id_123'
-    );
-    expect(accountPersonToken).not.to.be.null;
-  });
+  // it('test_v2_core_accounts_person_token_post', async function() {
+  //   const stripe = testUtils.createMockClient([
+  //     {
+  //       method: 'POST',
+  //       path: '/v2/core/accounts/account_id_123/person_tokens',
+  //       response:
+  //         '{"created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","id":"obj_123","livemode":true,"object":"v2.core.account_person_token","used":true}',
+  //     },
+  //   ]);
+  //   const accountPersonToken = await stripe.v2.core.accounts.personTokens.create(
+  //     'account_id_123'
+  //   );
+  //   expect(accountPersonToken).not.to.be.null;
+  // });
 
-  it('test_v2_core_accounts_person_token_get', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'GET',
-        path: '/v2/core/accounts/account_id_123/person_tokens/id_123',
-        response:
-          '{"created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","id":"obj_123","livemode":true,"object":"v2.core.account_person_token","used":true}',
-      },
-    ]);
-    const accountPersonToken = await stripe.v2.core.accounts.personTokens.retrieve(
-      'account_id_123',
-      'id_123'
-    );
-    expect(accountPersonToken).not.to.be.null;
-  });
+  // it('test_v2_core_accounts_person_token_get', async function() {
+  //   const stripe = testUtils.createMockClient([
+  //     {
+  //       method: 'GET',
+  //       path: '/v2/core/accounts/account_id_123/person_tokens/id_123',
+  //       response:
+  //         '{"created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","id":"obj_123","livemode":true,"object":"v2.core.account_person_token","used":true}',
+  //     },
+  //   ]);
+  //   const accountPersonToken = await stripe.v2.core.accounts.personTokens.retrieve(
+  //     'account_id_123',
+  //     'id_123'
+  //   );
+  //   expect(accountPersonToken).not.to.be.null;
+  // });
 
   it('test_v2_core_account_link_post', async function() {
     const stripe = testUtils.createMockClient([

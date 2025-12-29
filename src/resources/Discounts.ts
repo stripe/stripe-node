@@ -3,6 +3,7 @@
 import {Customer, DeletedCustomer} from './Customers.js';
 import {PromotionCode} from './PromotionCodes.js';
 import {Coupon} from './Coupons.js';
+import {RequestOptions} from '../lib.js';
 export interface Discount {
   /**
    * The ID of the discount object. Discounts cannot be fetched by ID. Use `expand[]=discounts` in API calls to expand discount IDs in an array.
@@ -23,6 +24,11 @@ export interface Discount {
    * The ID of the customer associated with this discount.
    */
   customer: string | Customer | DeletedCustomer | null;
+
+  /**
+   * The ID of the account representing the customer associated with this discount.
+   */
+  customer_account: string | null;
 
   /**
    * Always true for a deleted object
@@ -86,6 +92,11 @@ export interface DeletedDiscount {
    * The ID of the customer associated with this discount.
    */
   customer: string | Customer | DeletedCustomer | null;
+
+  /**
+   * The ID of the account representing the customer associated with this discount.
+   */
+  customer_account: string | null;
 
   /**
    * Always true for a deleted object

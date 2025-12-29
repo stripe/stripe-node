@@ -1,8 +1,7 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { BalanceTransactionSource } from './BalanceTransactionSources.js';
 import { PaginationParams, RangeQueryParam } from '../shared.js';
-import { ApiListPromise, Response } from '../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../lib.js';
 export declare class BalanceTransactionResource extends StripeResource {
     /**
      * Returns a list of transactions that have contributed to the Stripe account balance (e.g., charges, transfers, and so forth). The transactions are returned in sorted order, with the most recent transactions appearing first.
@@ -19,12 +18,7 @@ export declare class BalanceTransactionResource extends StripeResource {
     retrieve(id: string, params?: BalanceTransactionRetrieveParams, options?: RequestOptions): Promise<Response<BalanceTransaction>>;
     retrieve(id: string, options?: RequestOptions): Promise<Response<BalanceTransaction>>;
 }
-export /**
- * Balance transactions represent funds moving through your Stripe account.
- * Stripe creates them for every type of transaction that enters or leaves your Stripe account balance.
- *
- * Related guide: [Balance transaction types](https://stripe.com/docs/reports/balance-transaction-types)
- */ interface BalanceTransaction {
+export interface BalanceTransaction {
     /**
      * Unique identifier for the object.
      */

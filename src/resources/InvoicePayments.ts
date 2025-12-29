@@ -1,13 +1,12 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../lib.js';
 import {Invoice, DeletedInvoice} from './Invoices.js';
 import {Charge} from './Charges.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {PaymentRecord} from './PaymentRecords.js';
-import {PaginationParams} from '../shared.js';
-import {ApiListPromise, Response} from '../lib.js';
+import {PaginationParams, RangeQueryParam} from '../shared.js';
+import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export class InvoicePaymentResource extends StripeResource {
   /**
@@ -146,6 +145,11 @@ export interface InvoicePaymentRetrieveParams {
   expand?: Array<string>;
 }
 export interface InvoicePaymentListParams extends PaginationParams {
+  /**
+   * Only return invoice payments that were created during the given date interval.
+   */
+  created?: RangeQueryParam | number;
+
   /**
    * Specifies which fields in the response should be expanded.
    */

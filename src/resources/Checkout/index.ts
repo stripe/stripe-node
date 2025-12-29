@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../stripe.core.js';
-import {SessionResource} from './Sessions.js';
+import {Session, SessionResource} from './Sessions.js';
 
 export {Session} from './Sessions.js';
 
@@ -11,4 +11,8 @@ export class Checkout {
   constructor(private readonly stripe: Stripe) {
     this.sessions = new SessionResource(stripe);
   }
+}
+
+export declare namespace Checkout {
+  export {Session};
 }

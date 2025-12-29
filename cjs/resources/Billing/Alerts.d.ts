@@ -1,9 +1,8 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
 import { Meter } from './Meters.js';
 import { Customer } from './../Customers.js';
 import { PaginationParams } from '../../shared.js';
-import { ApiListPromise, Response } from '../../lib.js';
+import { RequestOptions, ApiListPromise, Response } from '../../lib.js';
 export declare class AlertResource extends StripeResource {
     /**
      * Lists billing active and inactive alerts
@@ -35,9 +34,7 @@ export declare class AlertResource extends StripeResource {
     deactivate(id: string, params?: Billing.AlertDeactivateParams, options?: RequestOptions): Promise<Response<Alert>>;
     deactivate(id: string, options?: RequestOptions): Promise<Response<Alert>>;
 }
-export /**
- * A billing alert is a resource that notifies you when a certain usage threshold on a meter is crossed. For example, you might create a billing alert to notify you when a certain user made 100 API requests.
- */ interface Alert {
+export interface Alert {
     /**
      * Unique identifier for the object.
      */
@@ -63,7 +60,7 @@ export /**
      */
     title: string;
     /**
-     * Encapsulates configuration of the alert to monitor usage on a specific [Billing Meter](https://stripe.com/docs/api/billing/meter).
+     * Encapsulates configuration of the alert to monitor usage on a specific [Billing Meter](https://docs.stripe.com/api/billing/meter).
      */
     usage_threshold: Billing.Alert.UsageThreshold | null;
 }

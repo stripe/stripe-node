@@ -1,21 +1,13 @@
 import { StripeResource } from '../StripeResource.js';
-import { RequestOptions } from '../Types.js';
 import { Customer } from './Customers.js';
-import { Response } from '../lib.js';
+import { RequestOptions, Response } from '../lib.js';
 export declare class CustomerSessionResource extends StripeResource {
     /**
      * Creates a Customer Session object that includes a single-use client secret that you can use on your front-end to grant client-side API access for certain customer resources.
      */
     create(params: CustomerSessionCreateParams, options?: RequestOptions): Promise<Response<CustomerSession>>;
 }
-export /**
- * A Customer Session allows you to grant Stripe's frontend SDKs (like Stripe.js) client-side access
- * control over a Customer.
- *
- * Related guides: [Customer Session with the Payment Element](https://docs.stripe.com/payments/accept-a-payment-deferred?platform=web&type=payment#save-payment-methods),
- * [Customer Session with the Pricing Table](https://docs.stripe.com/payments/checkout/pricing-table#customer-session),
- * [Customer Session with the Buy Button](https://docs.stripe.com/payment-links/buy-button#pass-an-existing-customer).
- */ interface CustomerSession {
+export interface CustomerSession {
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
@@ -38,6 +30,10 @@ export /**
      * The Customer the Customer Session was created for.
      */
     customer: string | Customer;
+    /**
+     * The Account that the Customer Session was created for.
+     */
+    customer_account: string | null;
     /**
      * The timestamp at which this Customer Session will expire.
      */
@@ -219,13 +215,17 @@ export declare namespace CustomerSession {
 }
 export interface CustomerSessionCreateParams {
     /**
-     * Configuration for each component. Exactly 1 component must be enabled.
+     * Configuration for each component. At least 1 component must be enabled.
      */
     components: CustomerSessionCreateParams.Components;
     /**
      * The ID of an existing customer for which to create the Customer Session.
      */
-    customer: string;
+    customer?: string;
+    /**
+     * The ID of an existing Account for which to create the Customer Session.
+     */
+    customer_account?: string;
     /**
      * Specifies which fields in the response should be expanded.
      */

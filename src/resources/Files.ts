@@ -2,7 +2,6 @@
 
 import {multipartRequestDataProcessor} from '../multipart.js';
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../lib.js';
 import {FileLink} from './FileLinks.js';
 import {
   Emptyable,
@@ -10,7 +9,13 @@ import {
   PaginationParams,
   RangeQueryParam,
 } from '../shared.js';
-import {ApiListPromise, Response, ApiList, FileData} from '../lib.js';
+import {
+  RequestOptions,
+  ApiListPromise,
+  Response,
+  ApiList,
+  FileData,
+} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export class FileResource extends StripeResource {
   /**
@@ -90,12 +95,12 @@ export interface File {
   filename: string | null;
 
   /**
-   * A list of [file links](https://stripe.com/docs/api#file_links) that point at this file.
+   * A list of [file links](https://api.stripe.com#file_links) that point at this file.
    */
   links?: ApiList<FileLink> | null;
 
   /**
-   * The [purpose](https://stripe.com/docs/file-upload#uploading-a-file) of the uploaded file.
+   * The [purpose](https://docs.stripe.com/file-upload#uploading-a-file) of the uploaded file.
    */
   purpose: File.Purpose;
 
@@ -148,7 +153,7 @@ export interface FileCreateParams {
   file: FileData;
 
   /**
-   * The [purpose](https://stripe.com/docs/file-upload#uploading-a-file) of the uploaded file.
+   * The [purpose](https://docs.stripe.com/file-upload#uploading-a-file) of the uploaded file.
    */
   purpose: FileCreateParams.Purpose;
 
@@ -158,7 +163,7 @@ export interface FileCreateParams {
   expand?: Array<string>;
 
   /**
-   * Optional parameters that automatically create a [file link](https://stripe.com/docs/api#file_links) for the newly created file.
+   * Optional parameters that automatically create a [file link](https://api.stripe.com#file_links) for the newly created file.
    */
   file_link_data?: FileCreateParams.FileLinkData;
 }
@@ -190,7 +195,7 @@ export namespace FileCreateParams {
     expires_at?: number;
 
     /**
-     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
   }

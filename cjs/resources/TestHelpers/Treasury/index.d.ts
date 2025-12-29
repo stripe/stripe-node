@@ -1,4 +1,4 @@
-import { StripeClient } from '../../../stripe.core.js';
+import { Stripe } from '../../../stripe.core.js';
 import { InboundTransferResource } from './InboundTransfers.js';
 import { OutboundPaymentResource } from './OutboundPayments.js';
 import { OutboundTransferResource } from './OutboundTransfers.js';
@@ -11,5 +11,6 @@ export declare class Treasury {
     outboundTransfers: OutboundTransferResource;
     receivedCredits: ReceivedCreditResource;
     receivedDebits: ReceivedDebitResource;
-    constructor(stripe: StripeClient);
+    constructor(stripe: Stripe);
 }
+export declare namespace Treasury { }

@@ -1,8 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../lib.js';
-import {Response} from '../lib.js';
+import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export class BalanceResource extends StripeResource {
   /**
@@ -28,7 +27,7 @@ export interface Balance {
   object: 'balance';
 
   /**
-   * Available funds that you can transfer or pay out automatically by Stripe or explicitly through the [Transfers API](https://stripe.com/docs/api#transfers) or [Payouts API](https://stripe.com/docs/api#payouts). You can find the available balance for each currency and payment type in the `source_types` property.
+   * Available funds that you can transfer or pay out automatically by Stripe or explicitly through the [Transfers API](https://api.stripe.com#transfers) or [Payouts API](https://api.stripe.com#payouts). You can find the available balance for each currency and payment type in the `source_types` property.
    */
   available: Array<Balance.Available>;
 

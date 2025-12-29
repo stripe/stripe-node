@@ -1,15 +1,12 @@
 import { StripeResource } from '../../../StripeResource.js';
-import { RequestOptions } from '../../../Types.js';
-import { Response } from '../../../lib.js';
+import { RequestOptions, Response } from '../../../lib.js';
 export declare class MeterEventAdjustmentResource extends StripeResource {
     /**
      * Creates a meter event adjustment to cancel a previously sent meter event.
      */
     create(params: V2.Billing.MeterEventAdjustmentCreateParams, options?: RequestOptions): Promise<Response<MeterEventAdjustment>>;
 }
-export /**
- * The MeterEventAdjustment object.
- */ interface MeterEventAdjustment {
+export interface MeterEventAdjustment {
     /**
      * The unique id of this meter event adjustment.
      */

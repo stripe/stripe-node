@@ -1,6 +1,4 @@
-export /**
- * The ReserveTransaction object.
- */ interface ReserveTransaction {
+export interface ReserveTransaction {
     /**
      * Unique identifier for the object.
      */

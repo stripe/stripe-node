@@ -1,6 +1,5 @@
 import { StripeResource } from '../../StripeResource.js';
-import { RequestOptions } from '../../Types.js';
-import { Response } from '../../lib.js';
+import { RequestOptions, Response } from '../../lib.js';
 export declare class ConnectionTokenResource extends StripeResource {
     /**
      * To connect to a reader the Stripe Terminal SDK needs to retrieve a short-lived connection token from Stripe, proxied through your server. On your backend, add an endpoint that creates and returns a connection token.
@@ -8,11 +7,7 @@ export declare class ConnectionTokenResource extends StripeResource {
     create(params?: Terminal.ConnectionTokenCreateParams, options?: RequestOptions): Promise<Response<ConnectionToken>>;
     create(options?: RequestOptions): Promise<Response<ConnectionToken>>;
 }
-export /**
- * A Connection Token is used by the Stripe Terminal SDK to connect to a reader.
- *
- * Related guide: [Fleet management](https://stripe.com/docs/terminal/fleet/locations)
- */ interface ConnectionToken {
+export interface ConnectionToken {
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */

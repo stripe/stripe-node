@@ -429,7 +429,7 @@ export class RequestSender {
                     contentType: apiMode == 'v2'
                         ? 'application/json'
                         : 'application/x-www-form-urlencoded',
-                    contentLength: requestData.length,
+                    contentLength: new TextEncoder().encode(requestData).length,
                     apiVersion: apiVersion,
                     clientUserAgent,
                     method,

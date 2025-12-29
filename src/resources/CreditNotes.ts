@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions} from '../lib.js';
 import {CreditNoteLineItem} from './CreditNoteLineItems.js';
 import {Refund} from './Refunds.js';
 import {Customer, DeletedCustomer} from './Customers.js';
@@ -18,7 +17,7 @@ import {
   RangeQueryParam,
   Metadata,
 } from '../shared.js';
-import {ApiListPromise, Response, ApiList} from '../lib.js';
+import {RequestOptions, ApiListPromise, Response, ApiList} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export class CreditNoteResource extends StripeResource {
   /**
@@ -199,6 +198,11 @@ export interface CreditNote {
   customer: string | Customer | DeletedCustomer;
 
   /**
+   * ID of the account representing the customer.
+   */
+  customer_account: string | null;
+
+  /**
    * Customer balance transaction related to this credit note.
    */
   customer_balance_transaction: string | CustomerBalanceTransaction | null;
@@ -239,7 +243,7 @@ export interface CreditNote {
   memo: string | null;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata | null;
 
@@ -289,7 +293,7 @@ export interface CreditNote {
   shipping_cost: CreditNote.ShippingCost | null;
 
   /**
-   * Status of this credit note, one of `issued` or `void`. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).
+   * Status of this credit note, one of `issued` or `void`. Learn more about [voiding credit notes](https://docs.stripe.com/billing/invoices/credit-notes#voiding).
    */
   status: CreditNote.Status;
 
@@ -523,6 +527,9 @@ export namespace CreditNote {
     export type TaxBehavior = 'exclusive' | 'inclusive';
 
     export interface TaxRateDetails {
+      /**
+       * ID of the tax rate
+       */
       tax_rate: string;
     }
 
@@ -587,7 +594,7 @@ export interface CreditNoteCreateParams {
   memo?: string;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: MetadataParam;
 
@@ -756,7 +763,7 @@ export interface CreditNoteUpdateParams {
   memo?: string;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: MetadataParam;
 }
@@ -770,6 +777,11 @@ export interface CreditNoteListParams extends PaginationParams {
    * Only return credit notes for the customer specified by this customer ID.
    */
   customer?: string;
+
+  /**
+   * Only return credit notes for the account representing the customer specified by this account ID.
+   */
+  customer_account?: string;
 
   /**
    * Specifies which fields in the response should be expanded.
@@ -829,7 +841,7 @@ export interface CreditNoteListPreviewLineItemsParams extends PaginationParams {
   memo?: string;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: MetadataParam;
 
@@ -1022,7 +1034,7 @@ export interface CreditNotePreviewParams {
   memo?: string;
 
   /**
-   * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: MetadataParam;
 

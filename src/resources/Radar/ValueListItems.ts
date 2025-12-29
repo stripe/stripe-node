@@ -1,9 +1,8 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {RequestOptions} from '../../lib.js';
 import {PaginationParams, RangeQueryParam} from '../../shared.js';
-import {Response, ApiListPromise} from '../../lib.js';
+import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export class ValueListItemResource extends StripeResource {
   /**
