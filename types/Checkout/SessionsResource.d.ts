@@ -1122,6 +1122,11 @@ declare module 'stripe' {
             namespace ProductData {
               interface TaxDetails {
                 /**
+                 * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+                 */
+                performance_location?: string;
+
+                /**
                  * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
                  */
                 tax_code: string;
@@ -4010,6 +4015,11 @@ declare module 'stripe' {
 
             namespace ProductData {
               interface TaxDetails {
+                /**
+                 * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+                 */
+                performance_location?: string;
+
                 /**
                  * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
                  */

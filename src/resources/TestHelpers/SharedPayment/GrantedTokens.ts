@@ -7,7 +7,7 @@ export const GrantedTokens = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/test_helpers/shared_payment/granted_tokens',
   }),
-  update: stripeMethod({
+  revoke: stripeMethod({
     method: 'POST',
     fullPath:
       '/v1/test_helpers/shared_payment/granted_tokens/{shared_payment_granted_token}/revoke',

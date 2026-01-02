@@ -665,7 +665,7 @@ declare module 'stripe' {
           /**
            * French meal voucher benefit details for this PaymentIntent.
            */
-          fr_meal_voucher?: Benefit.FrMealVoucher;
+          fr_meal_voucher?: Stripe.Emptyable<Benefit.FrMealVoucher>;
         }
 
         namespace Benefit {
@@ -7629,7 +7629,7 @@ declare module 'stripe' {
           /**
            * French meal voucher benefit details for this PaymentIntent.
            */
-          fr_meal_voucher?: Benefit.FrMealVoucher;
+          fr_meal_voucher?: Stripe.Emptyable<Benefit.FrMealVoucher>;
         }
 
         namespace Benefit {
@@ -16781,7 +16781,7 @@ declare module 'stripe' {
           /**
            * French meal voucher benefit details for this PaymentIntent.
            */
-          fr_meal_voucher?: Benefit.FrMealVoucher;
+          fr_meal_voucher?: Stripe.Emptyable<Benefit.FrMealVoucher>;
         }
 
         namespace Benefit {
