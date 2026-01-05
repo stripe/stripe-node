@@ -216,7 +216,7 @@ export namespace Events {
     fetchEvent(): Promise<V1BillingMeterErrorReportTriggeredEvent>;
   }
 
-  namespace V1BillingMeterErrorReportTriggeredEvent {
+  export namespace V1BillingMeterErrorReportTriggeredEvent {
     export interface Data {
       /**
        * Extra field included in the event's `data` when fetched from /v2/events.
@@ -239,7 +239,7 @@ export namespace Events {
       validation_start: string;
     }
 
-    namespace Data {
+    export namespace Data {
       export interface Reason {
         /**
          * The total error count within this window.

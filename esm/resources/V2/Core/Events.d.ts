@@ -134,8 +134,8 @@ export declare namespace Events {
         fetchRelatedObject(): Promise<Billing.Meter>;
         fetchEvent(): Promise<V1BillingMeterErrorReportTriggeredEvent>;
     }
-    namespace V1BillingMeterErrorReportTriggeredEvent {
-        export interface Data {
+    export namespace V1BillingMeterErrorReportTriggeredEvent {
+        interface Data {
             /**
              * Extra field included in the event's `data` when fetched from /v2/events.
              */
@@ -205,7 +205,6 @@ export declare namespace Events {
             }
             export {};
         }
-        export {};
     }
     /**
      * Occurs when a Meter's id is missing or invalid in async usage events.
