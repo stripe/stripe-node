@@ -79,6 +79,11 @@ declare module 'stripe' {
       deleted?: void;
 
       /**
+       * A custom identifier for this price, such as a SKU number or product code, that can be used to reference records from external systems.
+       */
+      external_reference?: string | null;
+
+      /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;

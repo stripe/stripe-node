@@ -1137,6 +1137,11 @@ declare module 'stripe' {
            * The schedule that generated this invoice
            */
           schedule: string;
+
+          /**
+           * The subscription associated with this schedule
+           */
+          subscription: string | Stripe.Subscription | null;
         }
 
         interface SubscriptionDetails {

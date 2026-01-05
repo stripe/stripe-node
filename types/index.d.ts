@@ -118,6 +118,7 @@
 ///<reference path='./Tax/AssociationsResource.d.ts' />
 ///<reference path='./Tax/CalculationsResource.d.ts' />
 ///<reference path='./Tax/FormsResource.d.ts' />
+///<reference path='./Tax/LocationsResource.d.ts' />
 ///<reference path='./Tax/RegistrationsResource.d.ts' />
 ///<reference path='./Tax/SettingsResource.d.ts' />
 ///<reference path='./Tax/TransactionsResource.d.ts' />
@@ -368,6 +369,7 @@
 ///<reference path='./Tax/CalculationLineItems.d.ts' />
 ///<reference path='./Tax/Calculations.d.ts' />
 ///<reference path='./Tax/Forms.d.ts' />
+///<reference path='./Tax/Locations.d.ts' />
 ///<reference path='./Tax/Registrations.d.ts' />
 ///<reference path='./Tax/Settings.d.ts' />
 ///<reference path='./Tax/TransactionLineItems.d.ts' />
@@ -637,6 +639,7 @@ declare module 'stripe' {
       associations: Stripe.Tax.AssociationsResource;
       calculations: Stripe.Tax.CalculationsResource;
       forms: Stripe.Tax.FormsResource;
+      locations: Stripe.Tax.LocationsResource;
       registrations: Stripe.Tax.RegistrationsResource;
       settings: Stripe.Tax.SettingsResource;
       transactions: Stripe.Tax.TransactionsResource;
