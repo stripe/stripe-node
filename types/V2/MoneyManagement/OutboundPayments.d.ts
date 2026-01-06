@@ -117,6 +117,11 @@ declare module 'stripe' {
            * A unique identifier that can be used to track this OutboundPayment with recipient bank. Banks might call this a “reference number” or something similar.
            */
           trace_id: OutboundPayment.TraceId;
+
+          /**
+           * Information to track this OutboundPayment with the recipient bank.
+           */
+          tracking_details?: OutboundPayment.TrackingDetails;
         }
 
         namespace OutboundPayment {
@@ -134,18 +139,44 @@ declare module 'stripe' {
 
           interface DeliveryOptions {
             /**
+             * Open Enum. Speed of the payout.
+             */
+            speed?: DeliveryOptions.Speed;
+
+            /**
              * Open Enum. Method for bank account.
              */
             bank_account?: DeliveryOptions.BankAccount;
 
             /**
-             * Open Enum. Speed of the payout.
+             * Delivery options for paper check.
              */
-            speed?: DeliveryOptions.Speed;
+            paper_check?: DeliveryOptions.PaperCheck;
           }
 
           namespace DeliveryOptions {
             type BankAccount = 'automatic' | 'local' | 'wire';
+
+            interface PaperCheck {
+              /**
+               * Memo printed on the memo field of the check.
+               */
+              memo?: string;
+
+              /**
+               * Open Enum. Shipping speed of the paper check.
+               */
+              shipping_speed: PaperCheck.ShippingSpeed;
+
+              /**
+               * Signature for the paper check.
+               */
+              signature: string;
+            }
+
+            namespace PaperCheck {
+              type ShippingSpeed = 'priority' | 'standard';
+            }
 
             type Speed = 'instant' | 'next_business_day' | 'standard';
           }
@@ -322,6 +353,95 @@ declare module 'stripe' {
 
           namespace TraceId {
             type Status = 'pending' | 'supported' | 'unsupported';
+          }
+
+          interface TrackingDetails {
+            /**
+             * Paper check tracking details.
+             */
+            paper_check?: TrackingDetails.PaperCheck;
+          }
+
+          namespace TrackingDetails {
+            interface PaperCheck {
+              /**
+               * Open Enum. Carrier of the paper check.
+               */
+              carrier: PaperCheck.Carrier;
+
+              /**
+               * Check number.
+               */
+              check_number: string;
+
+              /**
+               * Postal code of the latest tracking update.
+               */
+              current_postal_code: string;
+
+              /**
+               * Mailing address of the paper check.
+               */
+              mailing_address: PaperCheck.MailingAddress;
+
+              /**
+               * Tracking number for the check.
+               */
+              tracking_number: string;
+
+              /**
+               * Open Enum. Tracking status of the paper check.
+               */
+              tracking_status: PaperCheck.TrackingStatus;
+
+              /**
+               * When the tracking details were last updated.
+               */
+              updated_at: string;
+            }
+
+            namespace PaperCheck {
+              type Carrier = 'fedex' | 'usps';
+
+              interface MailingAddress {
+                /**
+                 * City, district, suburb, town, or village.
+                 */
+                city?: string;
+
+                /**
+                 * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+                 */
+                country?: string;
+
+                /**
+                 * Address line 1 (e.g., street, PO Box, or company name).
+                 */
+                line1?: string;
+
+                /**
+                 * Address line 2 (e.g., apartment, suite, unit, or building).
+                 */
+                line2?: string;
+
+                /**
+                 * ZIP or postal code.
+                 */
+                postal_code?: string;
+
+                /**
+                 * State, county, province, or region.
+                 */
+                state?: string;
+
+                /**
+                 * Town or district.
+                 */
+                town?: string;
+              }
+
+              type TrackingStatus = 'delivered' | 'in_transit' | 'mailed';
+            }
           }
         }
       }

@@ -66,18 +66,44 @@ declare module 'stripe' {
 
           interface DeliveryOptions {
             /**
+             * Open Enum. Speed of the payout.
+             */
+            speed?: DeliveryOptions.Speed;
+
+            /**
              * Open Enum. Method for bank account.
              */
             bank_account?: DeliveryOptions.BankAccount;
 
             /**
-             * Open Enum. Speed of the payout.
+             * Delivery options for paper check.
              */
-            speed?: DeliveryOptions.Speed;
+            paper_check?: DeliveryOptions.PaperCheck;
           }
 
           namespace DeliveryOptions {
             type BankAccount = 'automatic' | 'local' | 'wire';
+
+            interface PaperCheck {
+              /**
+               * Memo printed on the memo field of the check.
+               */
+              memo?: string;
+
+              /**
+               * Open Enum. Shipping speed of the paper check. Defaults to standard.
+               */
+              shipping_speed?: PaperCheck.ShippingSpeed;
+
+              /**
+               * Signature for the paper check.
+               */
+              signature: string;
+            }
+
+            namespace PaperCheck {
+              type ShippingSpeed = 'priority' | 'standard';
+            }
 
             type Speed = 'instant' | 'next_business_day' | 'standard';
           }
