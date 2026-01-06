@@ -56,6 +56,7 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationStorerUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingDefaultsUpdatedEvent
+      | Stripe.Events.V2CoreAccountIncludingFutureRequirementsUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingIdentityUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingRequirementsUpdatedEvent
       | Stripe.Events.V2CoreAccountLinkReturnedEvent
@@ -211,6 +212,7 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEventNotification
       | Stripe.Events.V2CoreAccountIncludingConfigurationStorerUpdatedEventNotification
       | Stripe.Events.V2CoreAccountIncludingDefaultsUpdatedEventNotification
+      | Stripe.Events.V2CoreAccountIncludingFutureRequirementsUpdatedEventNotification
       | Stripe.Events.V2CoreAccountIncludingIdentityUpdatedEventNotification
       | Stripe.Events.V2CoreAccountIncludingRequirementsUpdatedEventNotification
       | Stripe.Events.V2CoreAccountLinkReturnedEventNotification
@@ -1897,6 +1899,29 @@ declare module 'stripe' {
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
       fetchEvent(): Promise<V2CoreAccountIncludingDefaultsUpdatedEvent>;
+    }
+
+    /**
+     * Occurs when an Account's future requirements are updated.
+     */
+    export interface V2CoreAccountIncludingFutureRequirementsUpdatedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.core.account[future_requirements].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+    export interface V2CoreAccountIncludingFutureRequirementsUpdatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.account[future_requirements].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+      fetchEvent(): Promise<
+        V2CoreAccountIncludingFutureRequirementsUpdatedEvent
+      >;
     }
 
     /**

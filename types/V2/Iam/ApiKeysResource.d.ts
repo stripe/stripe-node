@@ -145,7 +145,7 @@ declare module 'stripe' {
       namespace Iam {
         class ApiKeysResource {
           /**
-           * Create an API key.
+           * Create an API key. To create a secret key in livemode, a public key for encryption must be provided.
            */
           create(
             params: ApiKeyCreateParams,
@@ -153,7 +153,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Iam.ApiKey>>;
 
           /**
-           * Retrieve an API key.
+           * Retrieve an API key. For livemode secret keys, secret tokens are only returned on creation, and never returned here.
            */
           retrieve(
             id: string,
@@ -166,7 +166,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Iam.ApiKey>>;
 
           /**
-           * Update an API key.
+           * Update an API key. Only parameters that are specified in the request will be updated.
            */
           update(
             id: string,
@@ -184,7 +184,7 @@ declare module 'stripe' {
           list(options?: RequestOptions): ApiListPromise<Stripe.V2.Iam.ApiKey>;
 
           /**
-           * Expire an API key.
+           * Expire an API key. The specified key becomes invalid immediately.
            */
           expire(
             id: string,
@@ -197,7 +197,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Iam.ApiKey>>;
 
           /**
-           * Rotate an API key.
+           * Rotate an API key. A new key with the same properties is created and returned. The existing key is expired immediately, unless an expiry time is specified.
            */
           rotate(
             id: string,

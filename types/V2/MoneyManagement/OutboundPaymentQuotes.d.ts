@@ -75,14 +75,14 @@ declare module 'stripe' {
 
           interface DeliveryOptions {
             /**
-             * Open Enum. Method for bank account.
-             */
-            bank_account?: DeliveryOptions.BankAccount;
-
-            /**
              * Open Enum. Speed of the payout.
              */
             speed?: DeliveryOptions.Speed;
+
+            /**
+             * Open Enum. Method for bank account.
+             */
+            bank_account?: DeliveryOptions.BankAccount;
           }
 
           namespace DeliveryOptions {

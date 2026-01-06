@@ -7492,34 +7492,17 @@ describe('Generated tests', function() {
     const {RateLimitError} = require('../../src/Error.js');
 
     nock('https://api.stripe.com')
-      .post('/v2/reporting/report_runs')
+      .get('/v2/core/accounts')
       .reply(400, {
         error: {
           type: 'rate_limit',
-          code: 'report_run_rate_limit_exceeded',
+          code: 'account_rate_limit_exceeded',
         },
       });
 
-    await realStripe.v2.reporting.reportRuns.create(
-      {
-        report: 'report',
-        report_parameters: {
-          int_key: 123,
-          string_key: 'value',
-          boolean_key: true,
-          object_key: {
-            object_int_key: 123,
-            object_string_key: 'value',
-            object_boolean_key: true,
-          },
-          array_key: [1, 2, 3],
-        },
-      },
-
-      (err) => {
-        expect(err).to.be.instanceOf(RateLimitError);
-      }
-    );
+    await realStripe.v2.core.accounts.list((err) => {
+      expect(err).to.be.instanceOf(RateLimitError);
+    });
   });
 
   it('test_recipient_not_notifiable_error', async function() {
