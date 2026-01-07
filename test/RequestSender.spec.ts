@@ -340,7 +340,9 @@ describe('RequestSender', () => {
         const encoder = new TextEncoder();
         const bytes = encoder.encode(str);
 
-        expect(sender._getContentLength(str)).to.equal(sender._getContentLength(bytes));
+        expect(sender._getContentLength(str)).to.equal(
+          sender._getContentLength(bytes)
+        );
         expect(sender._getContentLength(str)).to.equal(11);
       });
 
@@ -349,7 +351,9 @@ describe('RequestSender', () => {
         const encoder = new TextEncoder();
         const bytes = encoder.encode(str);
 
-        expect(sender._getContentLength(str)).to.equal(sender._getContentLength(bytes));
+        expect(sender._getContentLength(str)).to.equal(
+          sender._getContentLength(bytes)
+        );
         expect(sender._getContentLength(str)).to.equal(6);
       });
 
@@ -358,7 +362,9 @@ describe('RequestSender', () => {
         const encoder = new TextEncoder();
         const bytes = encoder.encode(str);
 
-        expect(sender._getContentLength(str)).to.equal(sender._getContentLength(bytes));
+        expect(sender._getContentLength(str)).to.equal(
+          sender._getContentLength(bytes)
+        );
         expect(sender._getContentLength(str)).to.equal(8);
       });
 
@@ -367,7 +373,9 @@ describe('RequestSender', () => {
         const encoder = new TextEncoder();
         const bytes = encoder.encode(str);
 
-        expect(sender._getContentLength(str)).to.equal(sender._getContentLength(bytes));
+        expect(sender._getContentLength(str)).to.equal(
+          sender._getContentLength(bytes)
+        );
       });
     });
   });
