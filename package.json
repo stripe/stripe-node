@@ -1,6 +1,6 @@
 {
   "name": "stripe",
-  "version": "20.1.0",
+  "version": "20.1.1",
   "description": "Stripe API wrapper",
   "keywords": [
     "stripe",
@@ -56,7 +56,7 @@
     "nanoid": "^3.2.0"
   },
   "dependencies": {
-    "qs": "^6.11.0"
+    "qs": "^6.14.1"
   },
   "peerDependencies": {
     "@types/node": ">=16"
