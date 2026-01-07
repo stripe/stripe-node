@@ -162,6 +162,216 @@ describe('RequestSender', () => {
     });
   });
 
+  describe('_getContentLength', () => {
+    describe('string encoding', () => {
+      it('should return correct byte length for ASCII strings', () => {
+        const result = sender._getContentLength('hello');
+        expect(result).to.equal(5);
+      });
+
+      it('should return correct byte length for empty strings', () => {
+        const result = sender._getContentLength('');
+        expect(result).to.equal(0);
+      });
+
+      it('should return correct byte length for strings with spaces', () => {
+        const result = sender._getContentLength('hello world');
+        expect(result).to.equal(11);
+      });
+
+      it('should calculate correct byte length for 2-byte unicode characters', () => {
+        // å is 2 bytes in UTF-8
+        const result = sender._getContentLength('dåvid');
+        expect(result).to.equal(6); // d(1) + å(2) + v(1) + i(1) + d(1) = 6
+      });
+
+      it('should calculate correct byte length for 3-byte unicode characters', () => {
+        // ✓ (U+2713) is 3 bytes in UTF-8
+        const result = sender._getContentLength('✓');
+        expect(result).to.equal(3);
+      });
+
+      it('should calculate correct byte length for 4-byte unicode characters (emoji)', () => {
+        // 🎉 (U+1F389) is 4 bytes in UTF-8
+        const result = sender._getContentLength('🎉');
+        expect(result).to.equal(4);
+      });
+
+      it('should handle strings with mixed ASCII and unicode characters', () => {
+        // "test🎉data" = test(4) + 🎉(4) + data(4) = 12
+        const result = sender._getContentLength('test🎉data');
+        expect(result).to.equal(12);
+      });
+
+      it('should handle multiple emoji characters', () => {
+        // Each emoji is typically 4 bytes
+        const result = sender._getContentLength('🎉🎊🎈');
+        expect(result).to.equal(12); // 3 emojis * 4 bytes each
+      });
+
+      it('should calculate correct byte length for Chinese characters', () => {
+        // Chinese characters are typically 3 bytes in UTF-8
+        const result = sender._getContentLength('你好');
+        expect(result).to.equal(6); // 2 characters * 3 bytes each
+      });
+
+      it('should calculate correct byte length for Arabic characters', () => {
+        // Arabic characters are typically 2 bytes in UTF-8
+        const result = sender._getContentLength('مرحبا');
+        expect(result).to.equal(10); // 5 characters * 2 bytes each
+      });
+
+      it('should handle zero-width characters correctly', () => {
+        // Zero-width joiner (U+200D) is 3 bytes in UTF-8
+        const result = sender._getContentLength('a\u200Db');
+        expect(result).to.equal(5); // a(1) + ZWJ(3) + b(1) = 5
+      });
+
+      it('should handle zero-width non-joiner correctly', () => {
+        // Zero-width non-joiner (U+200C) is 3 bytes in UTF-8
+        const result = sender._getContentLength('test\u200Ctext');
+        expect(result).to.equal(11); // test(4) + ZWNJ(3) + text(4) = 11
+      });
+
+      it('should handle zero-width space correctly', () => {
+        // Zero-width space (U+200B) is 3 bytes in UTF-8
+        const result = sender._getContentLength('word\u200Bword');
+        expect(result).to.equal(11); // word(4) + ZWS(3) + word(4) = 11
+      });
+
+      it('should handle combining characters correctly', () => {
+        // e + combining acute accent (U+0301)
+        // e is 1 byte, combining acute is 2 bytes
+        const result = sender._getContentLength('e\u0301');
+        expect(result).to.equal(3);
+      });
+
+      it('should handle emoji with skin tone modifiers correctly', () => {
+        // 👋 (waving hand) + 🏽 (medium skin tone modifier)
+        // Base emoji (4 bytes) + skin tone modifier (4 bytes) = 8 bytes
+        const result = sender._getContentLength('👋🏽');
+        expect(result).to.equal(8);
+      });
+
+      it('should handle emoji ZWJ sequences correctly', () => {
+        // Family emoji is composed of multiple code points joined by ZWJ
+        // For example: 👨‍👩‍👧‍👦 (man + ZWJ + woman + ZWJ + girl + ZWJ + boy)
+        const result = sender._getContentLength('👨‍👩‍👧‍👦');
+        expect(result).to.equal(25); // Multiple emojis + ZWJ characters
+      });
+
+      it('should handle surrogate pairs correctly', () => {
+        // Characters outside the BMP require surrogate pairs
+        // 𝕳 (U+1D573) is 4 bytes in UTF-8
+        const result = sender._getContentLength('𝕳𝖊𝖑𝖑𝖔');
+        expect(result).to.equal(20); // 5 characters * 4 bytes each
+      });
+
+      it('should handle newlines and special characters', () => {
+        const result = sender._getContentLength('line1\nline2\r\nline3');
+        expect(result).to.equal(18); // Each \n and \r is 1 byte
+      });
+
+      it('should handle tab characters', () => {
+        const result = sender._getContentLength('col1\tcol2\tcol3');
+        expect(result).to.equal(14); // Each \t is 1 byte
+      });
+
+      it('should handle complex JSON-like strings with unicode', () => {
+        const jsonString = '{"name":"José","city":"São Paulo"}';
+        const result = sender._getContentLength(jsonString);
+        // é is 2 bytes, ã is 2 bytes, rest are ASCII (1 byte each)
+        expect(result).to.equal(36);
+      });
+    });
+
+    describe('Uint8Array handling', () => {
+      it('should return correct byte length for empty Uint8Array', () => {
+        const data = new Uint8Array([]);
+        const result = sender._getContentLength(data);
+        expect(result).to.equal(0);
+      });
+
+      it('should return correct byte length for Uint8Array with data', () => {
+        const data = new Uint8Array([1, 2, 3, 4, 5]);
+        const result = sender._getContentLength(data);
+        expect(result).to.equal(5);
+      });
+
+      it('should return correct byte length for Uint8Array with 256 bytes', () => {
+        const data = new Uint8Array(256);
+        const result = sender._getContentLength(data);
+        expect(result).to.equal(256);
+      });
+
+      it('should return correct byte length for Uint8Array with large data', () => {
+        const data = new Uint8Array(10000);
+        const result = sender._getContentLength(data);
+        expect(result).to.equal(10000);
+      });
+
+      it('should handle Uint8Array containing encoded unicode data', () => {
+        // Manually encode "hello" as UTF-8 bytes
+        const encoder = new TextEncoder();
+        const data = encoder.encode('hello');
+        const result = sender._getContentLength(data);
+        expect(result).to.equal(5);
+      });
+
+      it('should handle Uint8Array containing encoded unicode with wide characters', () => {
+        // Encode "你好" (Chinese for "hello") as UTF-8 bytes
+        const encoder = new TextEncoder();
+        const data = encoder.encode('你好');
+        const result = sender._getContentLength(data);
+        expect(result).to.equal(6); // 2 characters * 3 bytes each
+      });
+
+      it('should handle Uint8Array containing encoded emoji', () => {
+        const encoder = new TextEncoder();
+        const data = encoder.encode('🎉');
+        const result = sender._getContentLength(data);
+        expect(result).to.equal(4);
+      });
+    });
+
+    describe('consistency between string and Uint8Array', () => {
+      it('should return same length for ASCII string vs its Uint8Array encoding', () => {
+        const str = 'hello world';
+        const encoder = new TextEncoder();
+        const bytes = encoder.encode(str);
+
+        expect(sender._getContentLength(str)).to.equal(sender._getContentLength(bytes));
+        expect(sender._getContentLength(str)).to.equal(11);
+      });
+
+      it('should return same length for unicode string vs its Uint8Array encoding', () => {
+        const str = 'dåvid';
+        const encoder = new TextEncoder();
+        const bytes = encoder.encode(str);
+
+        expect(sender._getContentLength(str)).to.equal(sender._getContentLength(bytes));
+        expect(sender._getContentLength(str)).to.equal(6);
+      });
+
+      it('should return same length for emoji string vs its Uint8Array encoding', () => {
+        const str = '🎉🎊';
+        const encoder = new TextEncoder();
+        const bytes = encoder.encode(str);
+
+        expect(sender._getContentLength(str)).to.equal(sender._getContentLength(bytes));
+        expect(sender._getContentLength(str)).to.equal(8);
+      });
+
+      it('should return same length for mixed content string vs its Uint8Array encoding', () => {
+        const str = 'Hello 世界 🌍';
+        const encoder = new TextEncoder();
+        const bytes = encoder.encode(str);
+
+        expect(sender._getContentLength(str)).to.equal(sender._getContentLength(bytes));
+      });
+    });
+  });
+
   describe('Parameter encoding', () => {
     // Use a real instance of stripe as we're mocking the http.request responses.
     const realStripe = require('../src/stripe.cjs.node.js')(FAKE_API_KEY);
@@ -1284,7 +1494,7 @@ describe('RequestSender', () => {
         );
       });
 
-      it('should calculate content-length correctly for unicode strings', (done) => {
+      it('should calculate content-length correctly for unicode strings in requests', (done) => {
         return getTestServerStripe(
           {},
           (req, res) => {
