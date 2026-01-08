@@ -1,5 +1,9 @@
 # Changelog
 
+## 20.2.0-beta.2 - 2026-01-08
+
+This release is purely for pulling in fixes from the releases 20.1.1 and 20.1.2 into the public preview release. 
+
 ## 20.2.0-beta.1 - 2025-12-16
 This release changes the pinned API version to `2025-12-15.preview`.
 
