@@ -46,6 +46,13 @@ This release changes the pinned API version to `2025-12-15.preview`.
   * Remove support for error type `RateLimitError`
   * Add support for error code `account_token_required_for_v2_account` on `QuotePreviewInvoice.last_finalization_error`
 
+## 20.1.2 - 2026-01-07
+* [#2542](https://github.com/stripe/stripe-node/pull/2542) Fix content length calculations for multipart file uploads. This fixes the bug reported in [2538](https://github.com/stripe/stripe-node/issues/2538) around file uploads.
+* [#2539](https://github.com/stripe/stripe-node/pull/2539) Delete API_VERSION file as it is no longer needed
+
+## 20.1.1 - 2026-01-06
+* [#2535](https://github.com/stripe/stripe-node/pull/2535) Update qs dependency to latest version
+
 ## 20.1.0 - 2025-12-16
 This release changes the pinned API version to `2025-12-15.clover`.
 

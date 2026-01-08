@@ -555,6 +555,15 @@ export class RequestSender {
     return requestPromise;
   }
 
+  _getContentLength(data: string | Uint8Array): number {
+    // if we calculate this wrong, the server treats it as invalid json
+    // or if content length is too big, the request never finishes and it
+    // times out.
+    return typeof data === 'string'
+      ? new TextEncoder().encode(data).length
+      : data.length;
+  }
+
   _request(
     method: string,
     host: string | null,
@@ -566,7 +575,7 @@ export class RequestSender {
     callback: RequestCallback,
     requestDataProcessor: RequestDataProcessor | null = null
   ): void {
-    let requestData: string;
+    let requestData: string | Uint8Array;
     authenticator = authenticator ?? this._stripe._authenticator ?? null;
     const apiMode: ApiMode = getAPIMode(path);
     const retryRequest = (
@@ -708,7 +717,10 @@ export class RequestSender {
         });
     };
 
-    const prepareAndMakeRequest = (error: Error | null, data: string): void => {
+    const prepareAndMakeRequest = (
+      error: Error | null,
+      data: string | Uint8Array
+    ): void => {
       if (error) {
         return callback(error);
       }
@@ -722,7 +734,7 @@ export class RequestSender {
             apiMode == 'v2'
               ? 'application/json'
               : 'application/x-www-form-urlencoded',
-          contentLength: new TextEncoder().encode(requestData).length, // if we calculate this wrong, the server treats it as invalid json
+          contentLength: this._getContentLength(data),
           apiVersion: apiVersion,
           clientUserAgent,
           method,
