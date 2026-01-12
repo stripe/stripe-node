@@ -19,6 +19,9 @@ on:
       - sdk-release/**
       - feature/**
 
+permissions:
+  id-token: write  # Required for OIDC
+
 jobs:
   build:
     name: 'Static Checks'
@@ -30,6 +33,9 @@ jobs:
 
       - name: Setup node
         uses: actions/setup-node@v2
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -72,6 +78,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v2
         with:
+          registry-url: 'https://registry.npmjs.org'
           node-version: ${{ matrix.node }}
 
       - name: Print Node.js version
@@ -116,11 +123,13 @@ jobs:
       # just is called in `yarn prepack`, which is called during the `publish` operation
       - uses: extractions/setup-just@v2
       - uses: actions/checkout@v2
-      - run: sudo apt-get install -y oathtool
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
       - name: Publish to NPM
         run: |
           set -euxo pipefail
-          npm config set //registry.npmjs.org/:_authToken $NPM_AUTH_TOKEN
           # print the NPM user name for validation
           npm whoami
           VERSION=$(cat package.json | jq -r '.version')
@@ -129,10 +138,7 @@ jobs:
           echo "Publishing $VERSION with $NPM_TAG tag."
           # stop debug logging now, so we don't log the OTP
           set +x
-          npm publish --otp="$(oathtool -b --totp $NPM_OTP)" --tag $NPM_TAG
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-          NPM_OTP: ${{ secrets.NPM_OTP }}
+          npm publish --tag $NPM_TAG
       - uses: stripe/openapi/actions/notify-release@master
         if: always()
         with:
