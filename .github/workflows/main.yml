@@ -141,7 +141,7 @@ jobs:
           echo "Publishing $VERSION with $NPM_TAG tag."
           # stop debug logging to avoid dumping the output of `npm publish` command.
           set +x
-          npm publish --tag $NPM_TAG 
+          npm publish --tag $NPM_TAG
       - uses: stripe/openapi/actions/notify-release@master
         if: always()
         with:
