@@ -1,6 +1,6 @@
 # Changelog
 
-## 20.2.0-alpha.5 - 2026-01-14
+## 20.2.0-alpha.6 - 2026-01-14
 * [#2544](https://github.com/stripe/stripe-node/pull/2544) Update generated code for private-preview
   * Add support for `risk_details` on `DelegatedCheckout.RequestedSession`
   * Remove support for `description`, `images`, and `name` on `DelegatedCheckout.RequestedSession.line_item_details[]`
