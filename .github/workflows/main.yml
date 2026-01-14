@@ -134,8 +134,6 @@ jobs:
       - name: Publish to NPM
         run: |
           set -euxo pipefail
-          # print the NPM user name for validation
-          npm whoami
           VERSION=$(cat package.json | jq -r '.version')
           # use the tag correlating to this release channel
           NPM_TAG=$(cat package.json | jq -r '.version | if contains("beta") then "public-preview" else if contains("alpha") then "private-preview" else "latest" end end')
