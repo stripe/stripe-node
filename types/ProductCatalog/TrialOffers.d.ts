@@ -28,6 +28,11 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
+         * A brief, user-friendly name for the trial offer-for identification purposes.
+         */
+        name: string | null;
+
+        /**
          * The price during the trial offer.
          */
         price: string | Stripe.Price;

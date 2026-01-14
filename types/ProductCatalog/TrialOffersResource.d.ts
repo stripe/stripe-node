@@ -23,6 +23,11 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+
+        /**
+         * A brief, user-friendly name for the trial offer-for identification purposes.
+         */
+        name?: string;
       }
 
       namespace TrialOfferCreateParams {

@@ -82,6 +82,11 @@ declare module 'stripe' {
          */
         payment_method_preview: RequestedSession.PaymentMethodPreview | null;
 
+        /**
+         * The risk details of the requested session.
+         */
+        risk_details: RequestedSession.RiskDetails | null;
+
         seller_details: RequestedSession.SellerDetails;
 
         /**
@@ -239,24 +244,9 @@ declare module 'stripe' {
           amount_subtotal: number;
 
           /**
-           * The description of the line item.
-           */
-          description: string | null;
-
-          /**
-           * The images of the line item.
-           */
-          images: Array<string> | null;
-
-          /**
            * The key of the line item.
            */
           key: string;
-
-          /**
-           * The name of the line item.
-           */
-          name: string;
 
           product_details?: LineItemDetail.ProductDetails;
 
@@ -407,6 +397,42 @@ declare module 'stripe' {
              * The last 4 digits of the card number.
              */
             last4: string;
+          }
+        }
+
+        interface RiskDetails {
+          /**
+           * The risk metadata for the client device.
+           */
+          client_device_metadata_details: RiskDetails.ClientDeviceMetadataDetails | null;
+        }
+
+        namespace RiskDetails {
+          interface ClientDeviceMetadataDetails {
+            /**
+             * The radar session for the client device.
+             */
+            radar_session: string | null;
+
+            /**
+             * The referrer of the client device.
+             */
+            referrer: string | null;
+
+            /**
+             * The remote IP address of the client device.
+             */
+            remote_ip: string | null;
+
+            /**
+             * The time spent on the page by the client device.
+             */
+            time_on_page_ms: number | null;
+
+            /**
+             * The user agent of the client device.
+             */
+            user_agent: string | null;
           }
         }
 

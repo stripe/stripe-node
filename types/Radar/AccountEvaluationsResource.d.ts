@@ -104,12 +104,52 @@ declare module 'stripe' {
         /**
          * The type of event to report.
          */
-        type: 'registration_succeeded';
+        type: AccountEvaluationUpdateParams.Type;
 
         /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+
+        /**
+         * Event payload for login_failed.
+         */
+        login_failed?: AccountEvaluationUpdateParams.LoginFailed;
+
+        /**
+         * Event payload for registration_failed.
+         */
+        registration_failed?: AccountEvaluationUpdateParams.RegistrationFailed;
+      }
+
+      namespace AccountEvaluationUpdateParams {
+        interface LoginFailed {
+          /**
+           * The reason why this login failed.
+           */
+          reason: LoginFailed.Reason;
+        }
+
+        namespace LoginFailed {
+          type Reason = 'other' | 'suspected_account_sharing';
+        }
+
+        interface RegistrationFailed {
+          /**
+           * The reason why this registration failed.
+           */
+          reason: RegistrationFailed.Reason;
+        }
+
+        namespace RegistrationFailed {
+          type Reason = 'other' | 'suspected_multi_accounting';
+        }
+
+        type Type =
+          | 'login_failed'
+          | 'login_succeeded'
+          | 'registration_failed'
+          | 'registration_succeeded';
       }
 
       class AccountEvaluationsResource {
