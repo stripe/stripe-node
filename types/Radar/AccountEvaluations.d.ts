@@ -59,6 +59,32 @@ declare module 'stripe' {
            * The type of event that occurred.
            */
           type: string;
+
+          /**
+           * Data about a failed login event.
+           */
+          login_failed?: Event.LoginFailed;
+
+          /**
+           * Data about a failed registration event.
+           */
+          registration_failed?: Event.RegistrationFailed;
+        }
+
+        namespace Event {
+          interface LoginFailed {
+            /**
+             * The reason why this login failed.
+             */
+            reason: string;
+          }
+
+          interface RegistrationFailed {
+            /**
+             * The reason why this registration failed.
+             */
+            reason: string;
+          }
         }
 
         interface Signals {
