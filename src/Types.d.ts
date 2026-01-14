@@ -39,6 +39,7 @@ export type RawErrorType =
   | 'rate_limit_error'
   | 'authentication_error'
   | 'invalid_grant'
+  | 'rate_limit'
   | 'temporary_session_expired';
 // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec
 export type RequestArgs = Array<any>;
