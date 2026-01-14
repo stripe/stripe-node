@@ -26,6 +26,8 @@ jobs:
   build:
     name: 'Static Checks'
     runs-on: 'ubuntu-24.04'
+    permissions:
+      contents: read
 
     steps:
       - uses: extractions/setup-just@v2
@@ -70,6 +72,8 @@ jobs:
           - '18'
           - '16'
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
     steps:
       - uses: extractions/setup-just@v2
       - uses: actions/checkout@v2
@@ -117,6 +121,8 @@ jobs:
       endsWith(github.actor, '-stripe')
     needs: [build, test]
     runs-on: 'ubuntu-24.04'
+    permissions:
+      contents: read
     steps:
       # just is called in `yarn prepack`, which is called during the `publish` operation
       - uses: extractions/setup-just@v2
