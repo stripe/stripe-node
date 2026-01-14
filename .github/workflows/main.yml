@@ -33,6 +33,8 @@ jobs:
 
       - name: Setup node
         uses: actions/setup-node@v2
+        with:
+          node-version: '22'
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -119,27 +121,24 @@ jobs:
     runs-on: 'ubuntu-24.04'
     permissions:
       contents: read
+      id-token: write  # Required for OIDC
     steps:
       # just is called in `yarn prepack`, which is called during the `publish` operation
       - uses: extractions/setup-just@v2
       - uses: actions/checkout@v2
-      - run: sudo apt-get install -y oathtool
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install -g npm@11
       - name: Publish to NPM
         run: |
           set -euxo pipefail
-          npm config set //registry.npmjs.org/:_authToken $NPM_AUTH_TOKEN
-          # print the NPM user name for validation
-          npm whoami
           VERSION=$(cat package.json | jq -r '.version')
           # use the tag correlating to this release channel
           NPM_TAG=$(cat package.json | jq -r '.version | if contains("beta") then "public-preview" else if contains("alpha") then "private-preview" else "latest" end end')
           echo "Publishing $VERSION with $NPM_TAG tag."
-          # stop debug logging now, so we don't log the OTP
-          set +x
-          npm publish --otp="$(oathtool -b --totp $NPM_OTP)" --tag $NPM_TAG
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-          NPM_OTP: ${{ secrets.NPM_OTP }}
+          npm publish --tag $NPM_TAG
       - uses: stripe/openapi/actions/notify-release@master
         if: always()
         with:
