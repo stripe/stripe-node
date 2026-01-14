@@ -127,10 +127,11 @@ jobs:
       # just is called in `yarn prepack`, which is called during the `publish` operation
       - uses: extractions/setup-just@v2
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
+      - run: npm install -g npm@11
       - name: Publish to NPM
         run: |
           set -euxo pipefail
