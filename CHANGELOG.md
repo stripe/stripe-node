@@ -1,5 +1,8 @@
 # Changelog
 
+## 20.2.0-alpha.4 - 2026-01-14
+* [#2550](https://github.com/stripe/stripe-node/pull/2550) Remove `npm whoami` command from github workflow
+
 ## 20.2.0-alpha.3 - 2026-01-14
 * [#2544](https://github.com/stripe/stripe-node/pull/2544) Update generated code for private-preview
   * Add support for `risk_details` on `DelegatedCheckout.RequestedSession`
