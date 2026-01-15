@@ -51,6 +51,7 @@ export function isOptionsHash(o: unknown): boolean | unknown {
  */
 export function queryStringifyRequestData(
   data: RequestData | string,
+  /** @deprecated Will be removed in a future release. */
   _apiMode?: ApiMode
 ): string {
   return stringifyRequestData(data);

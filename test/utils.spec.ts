@@ -227,7 +227,9 @@ describe('utils', () => {
             {name: 'b', qty: 2},
           ],
         })
-      ).to.equal('items[0][name]=a&items[0][qty]=1&items[1][name]=b&items[1][qty]=2');
+      ).to.equal(
+        'items[0][name]=a&items[0][qty]=1&items[1][name]=b&items[1][qty]=2'
+      );
     });
 
     it('Handles deeply nested arrays', () => {
