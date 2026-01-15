@@ -1131,6 +1131,7 @@ declare module 'stripe' {
         class AccountTokensResource {
           /**
            * Creates an Account Token.
+           * @throws Stripe.RateLimitError
            */
           create(
             params?: AccountTokenCreateParams,
@@ -1142,6 +1143,7 @@ declare module 'stripe' {
 
           /**
            * Retrieves an Account Token.
+           * @throws Stripe.RateLimitError
            */
           retrieve(
             id: string,

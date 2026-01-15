@@ -19,6 +19,11 @@ declare module 'stripe' {
           object: 'v2.money_management.payout_method';
 
           /**
+           * The alternative reference for this payout method, if it's a projected payout method.
+           */
+          alternative_reference?: PayoutMethod.AlternativeReference;
+
+          /**
            * A set of available payout speeds for this payout method.
            */
           available_payout_speeds: Array<PayoutMethod.AvailablePayoutSpeed>;
@@ -60,6 +65,22 @@ declare module 'stripe' {
         }
 
         namespace PayoutMethod {
+          interface AlternativeReference {
+            /**
+             * The ID of the alternative resource being referenced.
+             */
+            id: string;
+
+            /**
+             * The type of the alternative reference (e.g., external_account for V1 external accounts).
+             */
+            type: AlternativeReference.Type;
+          }
+
+          namespace AlternativeReference {
+            type Type = 'external_account' | 'payment_method';
+          }
+
           type AvailablePayoutSpeed = 'instant' | 'standard';
 
           interface BankAccount {
@@ -132,6 +153,12 @@ declare module 'stripe' {
              * The year the card expires.
              */
             exp_year: string;
+
+            /**
+             * Uniquely identifies this particular card number. You can use this attribute to check whether two
+             * recipients who've signed up with you are using the same card number, for example.
+             */
+            fingerprint: string;
 
             /**
              * The last 4 digits of the card number.

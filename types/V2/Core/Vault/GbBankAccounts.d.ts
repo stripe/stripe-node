@@ -20,6 +20,11 @@ declare module 'stripe' {
             object: 'v2.core.vault.gb_bank_account';
 
             /**
+             * The alternative reference for this payout method, if it's a projected payout method.
+             */
+            alternative_reference?: GbBankAccount.AlternativeReference;
+
+            /**
              * Whether this bank account object was archived. Bank account objects can be archived through
              * the /archive API, and they will not be automatically archived by Stripe. Archived bank account objects
              * cannot be used as outbound destinations and will not appear in the outbound destination list.
@@ -64,6 +69,22 @@ declare module 'stripe' {
           }
 
           namespace GbBankAccount {
+            interface AlternativeReference {
+              /**
+               * The ID of the alternative resource being referenced.
+               */
+              id: string;
+
+              /**
+               * The type of the alternative reference (e.g., external_account for V1 external accounts).
+               */
+              type: AlternativeReference.Type;
+            }
+
+            namespace AlternativeReference {
+              type Type = 'external_account' | 'payment_method';
+            }
+
             type BankAccountType = 'checking' | 'savings';
 
             interface ConfirmationOfPayee {

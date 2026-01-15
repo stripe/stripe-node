@@ -20,6 +20,11 @@ declare module 'stripe' {
             object: 'v2.core.vault.us_bank_account';
 
             /**
+             * The alternative reference for this payout method, if it's a projected payout method.
+             */
+            alternative_reference?: UsBankAccount.AlternativeReference;
+
+            /**
              * Whether this USBankAccount object was archived.
              */
             archived: boolean;
@@ -71,6 +76,22 @@ declare module 'stripe' {
           }
 
           namespace UsBankAccount {
+            interface AlternativeReference {
+              /**
+               * The ID of the alternative resource being referenced.
+               */
+              id: string;
+
+              /**
+               * The type of the alternative reference (e.g., external_account for V1 external accounts).
+               */
+              type: AlternativeReference.Type;
+            }
+
+            namespace AlternativeReference {
+              type Type = 'external_account' | 'payment_method';
+            }
+
             type BankAccountType = 'checking' | 'savings';
 
             interface Verification {

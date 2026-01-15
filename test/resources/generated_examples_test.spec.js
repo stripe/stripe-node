@@ -5625,7 +5625,7 @@ describe('Generated tests', function() {
       .reply(400, {
         error: {
           type: 'blocked_by_stripe',
-          code: 'blocked_payout_method_bank_account',
+          code: 'blocked_payout_method',
         },
       });
 
@@ -5858,6 +5858,23 @@ describe('Generated tests', function() {
         expect(err).to.be.instanceOf(QuotaExceededError);
       }
     );
+  });
+
+  it('test_rate_limit_error', async function() {
+    const {RateLimitError} = require('../../src/Error.js');
+
+    nock('https://api.stripe.com')
+      .get('/v2/core/accounts')
+      .reply(400, {
+        error: {
+          type: 'rate_limit',
+          code: 'account_rate_limit_exceeded',
+        },
+      });
+
+    await realStripe.v2.core.accounts.list((err) => {
+      expect(err).to.be.instanceOf(RateLimitError);
+    });
   });
 
   it('test_recipient_not_notifiable_error', async function() {
