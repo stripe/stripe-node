@@ -1184,6 +1184,7 @@ declare module 'stripe' {
           class PersonsResource {
             /**
              * Create a Person. Adds an individual to an Account's identity. You can set relationship attributes and identity information at creation.
+             * @throws Stripe.RateLimitError
              */
             create(
               id: string,
@@ -1197,6 +1198,7 @@ declare module 'stripe' {
 
             /**
              * Retrieves a Person associated with an Account.
+             * @throws Stripe.RateLimitError
              */
             retrieve(
               accountId: string,
@@ -1212,6 +1214,7 @@ declare module 'stripe' {
 
             /**
              * Updates a Person associated with an Account.
+             * @throws Stripe.RateLimitError
              */
             update(
               accountId: string,
@@ -1222,6 +1225,7 @@ declare module 'stripe' {
 
             /**
              * Returns a paginated list of Persons associated with an Account.
+             * @throws Stripe.RateLimitError
              */
             list(
               id: string,
@@ -1235,6 +1239,7 @@ declare module 'stripe' {
 
             /**
              * Delete a Person associated with an Account.
+             * @throws Stripe.RateLimitError
              */
             del(
               accountId: string,
