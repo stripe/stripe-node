@@ -123,6 +123,202 @@ describe('utils', () => {
         )
       ).to.equal('include[0]=a&include[1]=b');
     });
+
+    // Additional comprehensive tests for edge cases
+    it('Handles empty object', () => {
+      expect(utils.queryStringifyRequestData({})).to.equal('');
+    });
+
+    it('Handles empty string value', () => {
+      expect(utils.queryStringifyRequestData({a: ''})).to.equal('a=');
+    });
+
+    it('Handles boolean values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          t: true,
+          f: false,
+        })
+      ).to.equal('t=true&f=false');
+    });
+
+    it('Handles zero and negative numbers', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          zero: 0,
+          negative: -42,
+          float: 3.14,
+        })
+      ).to.equal('zero=0&negative=-42&float=3.14');
+    });
+
+    it('Handles undefined values by omitting them', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: 1,
+          b: undefined,
+          c: 3,
+        })
+      ).to.equal('a=1&c=3');
+    });
+
+    it('Handles null values as empty string', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: null,
+        })
+      ).to.equal('a=');
+    });
+
+    it('Handles arrays of primitives', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          arr: [1, 2, 3],
+        })
+      ).to.equal('arr[0]=1&arr[1]=2&arr[2]=3');
+    });
+
+    it('Handles empty arrays', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          arr: [],
+        })
+      ).to.equal('');
+    });
+
+    it('Handles arrays with mixed types', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          arr: ['a', 1, true],
+        })
+      ).to.equal('arr[0]=a&arr[1]=1&arr[2]=true');
+    });
+
+    it('Handles special characters in values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          special: '!@#$%^&*()+=',
+        })
+      ).to.equal('special=%21%40%23%24%25%5E%26%2A%28%29%2B%3D');
+    });
+
+    it('Handles unicode characters', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          emoji: '\u{1F600}',
+          chinese: '\u4E2D\u6587',
+        })
+      ).to.equal('emoji=%F0%9F%98%80&chinese=%E4%B8%AD%E6%96%87');
+    });
+
+    it('Handles keys with special characters', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          'key with spaces': 'value',
+        })
+      ).to.equal('key%20with%20spaces=value');
+    });
+
+    it('Handles nested arrays of objects', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          items: [
+            {name: 'a', qty: 1},
+            {name: 'b', qty: 2},
+          ],
+        })
+      ).to.equal('items[0][name]=a&items[0][qty]=1&items[1][name]=b&items[1][qty]=2');
+    });
+
+    it('Handles deeply nested arrays', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: {
+            b: [{c: 1}, {c: 2}],
+          },
+        })
+      ).to.equal('a[b][0][c]=1&a[b][1][c]=2');
+    });
+
+    it('Handles Date at midnight UTC', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          date: new Date('2000-01-01T00:00:00Z'),
+        })
+      ).to.equal('date=946684800');
+    });
+
+    it('Handles nested empty objects', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: {},
+        })
+      ).to.equal('');
+    });
+
+    it('Handles mixed nested structures', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          user: {
+            name: 'John',
+            emails: ['a@b.com', 'c@d.com'],
+            address: {
+              city: 'NYC',
+            },
+          },
+        })
+      ).to.equal(
+        'user[name]=John&user[emails][0]=a%40b.com&user[emails][1]=c%40d.com&user[address][city]=NYC'
+      );
+    });
+
+    it('Handles sparse arrays by including indices', () => {
+      const sparseArray: (number | undefined)[] = [];
+      sparseArray[0] = 1;
+      sparseArray[2] = 3;
+      expect(
+        utils.queryStringifyRequestData({
+          arr: sparseArray,
+        })
+      ).to.equal('arr[0]=1&arr[2]=3');
+    });
+
+    it('Handles objects with numeric string keys', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          obj: {
+            '0': 'zero',
+            '1': 'one',
+          },
+        })
+      ).to.equal('obj[0]=zero&obj[1]=one');
+    });
+
+    it('Preserves order of object keys', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          z: 1,
+          a: 2,
+          m: 3,
+        })
+      ).to.equal('z=1&a=2&m=3');
+    });
+
+    it('Handles URL-like values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          url: 'https://example.com/path?query=1',
+        })
+      ).to.equal('url=https%3A%2F%2Fexample.com%2Fpath%3Fquery%3D1');
+    });
+
+    it('Handles newlines and tabs in values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          text: 'line1\nline2\ttab',
+        })
+      ).to.equal('text=line1%0Aline2%09tab');
+    });
   });
 
   describe('protoExtend', () => {

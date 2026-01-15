@@ -1,4 +1,3 @@
-import * as qs from 'qs';
 import {
   RequestData,
   UrlInterpolator,
@@ -52,21 +51,88 @@ export function isOptionsHash(o: unknown): boolean | unknown {
  */
 export function queryStringifyRequestData(
   data: RequestData | string,
-  apiMode?: ApiMode
+  _apiMode?: ApiMode
 ): string {
+  return stringifyRequestData(data);
+}
+
+/**
+ * Encodes a value for use in a query string, keeping brackets unencoded
+ * for readability (the server accepts both encoded and unencoded brackets).
+ */
+function encodeQueryValue(value: string): string {
   return (
-    qs
-      .stringify(data, {
-        serializeDate: (d: Date) => Math.floor(d.getTime() / 1000).toString(),
-        // Always use indexed format for arrays
-        arrayFormat: 'indices',
-      })
-      // Don't use strict form encoding by changing the square bracket control
-      // characters back to their literals. This is fine by the server, and
-      // makes these parameter strings easier to read.
+    encodeURIComponent(value)
+      // Encode characters not encoded by encodeURIComponent but encoded by qs
+      .replace(/!/g, '%21')
+      .replace(/\*/g, '%2A')
+      .replace(/\(/g, '%28')
+      .replace(/\)/g, '%29')
+      .replace(/'/g, '%27')
+      // Decode brackets for readability (server accepts both)
       .replace(/%5B/g, '[')
       .replace(/%5D/g, ']')
   );
+}
+
+/**
+ * Converts a value to a string representation for query string encoding.
+ * Dates are converted to Unix timestamps.
+ */
+function valueToString(value: unknown): string {
+  if (value instanceof Date) {
+    return Math.floor(value.getTime() / 1000).toString();
+  }
+  if (value === null) {
+    return '';
+  }
+  return String(value);
+}
+
+/**
+ * Custom query string stringifier that handles nested objects and arrays.
+ * Produces output compatible with the qs library's indexed array format.
+ */
+function stringifyRequestData(data: RequestData | string): string {
+  const pairs: string[] = [];
+
+  function encode(key: string, value: unknown): void {
+    if (value === undefined) {
+      return;
+    }
+
+    if (value === null || typeof value !== 'object' || value instanceof Date) {
+      // Primitive value (including null and Date)
+      pairs.push(
+        encodeQueryValue(key) + '=' + encodeQueryValue(valueToString(value))
+      );
+      return;
+    }
+
+    if (Array.isArray(value)) {
+      // Array: use indexed format arr[0], arr[1], etc.
+      for (let i = 0; i < value.length; i++) {
+        if (value[i] !== undefined) {
+          encode(key + '[' + i + ']', value[i]);
+        }
+      }
+      return;
+    }
+
+    // Object: recurse with bracket notation
+    for (const k of Object.keys(value)) {
+      encode(key + '[' + k + ']', (value as Record<string, unknown>)[k]);
+    }
+  }
+
+  // Handle top-level object
+  if (typeof data === 'object' && data !== null) {
+    for (const key of Object.keys(data)) {
+      encode(key, (data as Record<string, unknown>)[key]);
+    }
+  }
+
+  return pairs.join('&');
 }
 
 /**
