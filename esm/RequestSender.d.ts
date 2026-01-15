@@ -50,5 +50,6 @@ export declare class RequestSender {
     _getTelemetryHeader(): string | undefined;
     _recordRequestMetrics(requestId: string, requestDurationMs: number, usage: Array<string>): void;
     _rawRequest(method: string, path: string, params?: RequestData, options?: RequestOptions, usage?: Array<string>): Promise<any>;
+    _getContentLength(data: string | Uint8Array): number;
     _request(method: string, host: string | null, path: string, data: RequestData | null, authenticator: RequestAuthenticator | null, options: RequestOptions, usage: string[] | undefined, callback: RequestCallback, requestDataProcessor?: RequestDataProcessor | null): void;
 }

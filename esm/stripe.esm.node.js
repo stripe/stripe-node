@@ -87,7 +87,7 @@ import { V2 } from './resources/V2/index.js';
 import { EventResource, } from './resources/Events.js';
 // V1EventImports: The end of the section generated from our OpenAPI spec
 import { OAuthResource } from './resources.js';
-const DEFAULT_HOST = 'api.stripe.`com';
+const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
 const DEFAULT_BASE_PATH = '/v1/';
 const DEFAULT_API_VERSION = ApiVersion;

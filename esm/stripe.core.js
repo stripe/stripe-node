@@ -507,7 +507,7 @@ export class Stripe {
         return eventNotification;
     }
 }
-Stripe.PACKAGE_VERSION = '19.1.0';
+Stripe.PACKAGE_VERSION = '20.1.2';
 Stripe.API_VERSION = ApiVersion;
 Stripe.USER_AGENT = Object.assign({ bindings_version: Stripe.PACKAGE_VERSION, lang: 'node', publisher: 'stripe', uname: null, typescript: false }, determineProcessUserAgentProperties());
 Stripe.StripeResource = StripeResource;

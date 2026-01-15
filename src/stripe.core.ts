@@ -923,7 +923,6 @@ type RequestSenderFactory = (stripe: Stripe) => RequestSender;
 const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
   new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
-
 export class Stripe {
   static PACKAGE_VERSION = '20.1.2';
   static API_VERSION = ApiVersion;
