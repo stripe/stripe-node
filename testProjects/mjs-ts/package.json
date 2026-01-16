@@ -9,7 +9,7 @@
     "ts-node": "^10.9.1"
   },
   "scripts": {
-    "runtestproject": "ts-node index.ts",
+    "runtestproject": "node --loader ts-node/esm --experimental-specifier-resolution=node index.ts",
     "lint": "eslint . --ext .ts"
   },
   "devDependencies": {
