@@ -9,7 +9,6 @@ declare module 'stripe' {
       | 'rate_limit_error'
       | 'authentication_error'
       | 'invalid_grant'
-      | 'rate_limit'
       | 'temporary_session_expired';
     // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec
 
@@ -125,7 +124,6 @@ declare module 'stripe' {
           | 'StripeSignatureVerificationError'
           | 'StripeIdempotencyError'
           | 'StripeInvalidGrantError'
-          | 'RateLimitError'
           | 'TemporarySessionExpiredError';
         // errorClassNameEnum: The end of the section generated from our OpenAPI spec
 
@@ -272,10 +270,6 @@ declare module 'stripe' {
       }
 
       // errorClassDefinitions: The beginning of the section generated from our OpenAPI spec
-      export class RateLimitError extends StripeError {
-        readonly type: 'RateLimitError';
-        readonly rawType: 'rate_limit';
-      }
       export class TemporarySessionExpiredError extends StripeError {
         readonly type: 'TemporarySessionExpiredError';
         readonly rawType: 'temporary_session_expired';
