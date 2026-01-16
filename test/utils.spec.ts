@@ -472,7 +472,9 @@ describe('utils', () => {
       const parent = {inherited: 'should not appear'};
       const child = Object.create(parent);
       child.own = 'should appear';
-      expect(utils.queryStringifyRequestData(child)).to.equal('own=should%20appear');
+      expect(utils.queryStringifyRequestData(child)).to.equal(
+        'own=should%20appear'
+      );
     });
 
     it('Handles plus signs in values', () => {
