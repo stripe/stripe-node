@@ -4,8 +4,7 @@ import {
   CryptoProviderOnlySupportsAsyncError,
 } from './crypto/CryptoProvider.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
-import {EventBase} from './resources/Events.js';
-import {Stripe} from './stripe.core.js';
+import {Event} from './resources/Events.js';
 
 type WebhookHeader = string | Uint8Array;
 type WebhookParsedHeader = {
@@ -57,7 +56,7 @@ export type WebhookObject = {
     tolerance?: null,
     cryptoProvider?: CryptoProvider,
     receivedAt?: number
-  ) => EventBase;
+  ) => Event;
   constructEventAsync: (
     payload: WebhookPayload,
     header: WebhookHeader,
@@ -65,7 +64,7 @@ export type WebhookObject = {
     tolerance?: number,
     cryptoProvider?: CryptoProvider,
     receivedAt?: number
-  ) => Promise<EventBase>;
+  ) => Promise<Event>;
   generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
   generateTestHeaderStringAsync: (
     opts: WebhookTestHeaderOptions
@@ -85,7 +84,7 @@ export function createWebhooks(
       tolerance?: null,
       cryptoProvider?: CryptoProvider,
       receivedAt?: number
-    ): EventBase {
+    ): Event {
       try {
         if (!this.signature) {
           throw new Error('ERR: missing signature helper, unable to verify');
@@ -123,7 +122,7 @@ export function createWebhooks(
       tolerance?: number,
       cryptoProvider?: CryptoProvider,
       receivedAt?: number
-    ): Promise<EventBase> {
+    ): Promise<Event> {
       if (!this.signature) {
         throw new Error('ERR: missing signature helper, unable to verify');
       }

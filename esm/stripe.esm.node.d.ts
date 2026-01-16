@@ -10,6 +10,7 @@ import { PlatformFunctions } from './platform/PlatformFunctions.js';
 import * as resources from './resources.js';
 import { Response, RequestOptions, RawRequestOptions, ApiList, ApiListPromise, ApiSearchResultPromise, ApiSearchResult, StripeStreamResponse, RequestEvent, ResponseEvent, AppInfo, FileData } from './lib.js';
 import { Metadata, MetadataParam, Address, JapanAddress, AddressParam, ShippingAddressParam, JapanAddressParam, RangeQueryParam, PaginationParams, Emptyable } from './shared.js';
+import { EventNotification as V2EventNotification } from './resources/V2/Core/Events.js';
 import { Account, DeletedAccount, AccountCreateParams, AccountRetrieveParams, AccountUpdateParams, AccountListParams, AccountDeleteParams, AccountCreateExternalAccountParams, AccountCreateLoginLinkParams, AccountCreatePersonParams, AccountDeleteExternalAccountParams, AccountDeletePersonParams, AccountListCapabilitiesParams, AccountListExternalAccountsParams, AccountListPersonsParams, AccountRejectParams, AccountRetrieveCurrentParams, AccountRetrieveCapabilityParams, AccountRetrieveExternalAccountParams, AccountRetrievePersonParams, AccountUpdateCapabilityParams, AccountUpdateExternalAccountParams, AccountUpdatePersonParams, AccountResource } from './resources/Accounts.js';
 import { AccountLink, AccountLinkCreateParams, AccountLinkResource } from './resources/AccountLinks.js';
 import { AccountSession, AccountSessionCreateParams, AccountSessionResource } from './resources/AccountSessions.js';
@@ -317,7 +318,7 @@ export declare class Stripe {
      * It may be deprecated and removed in the future.
      */
     getApiField<K extends keyof Stripe['_api']>(key: K): Stripe['_api'][K];
-    parseEventNotification(payload: string | Uint8Array, header: string | Uint8Array, secret: string, tolerance?: number, cryptoProvider?: CryptoProvider, receivedAt?: number): any;
+    parseEventNotification(payload: string | Uint8Array, header: string | Uint8Array, secret: string, tolerance?: number, cryptoProvider?: CryptoProvider, receivedAt?: number): V2EventNotification;
 }
 export declare function createStripe(platformFunctions: PlatformFunctions, requestSender?: RequestSenderFactory): typeof Stripe;
 export declare namespace Stripe {

@@ -1,6 +1,6 @@
 import { CryptoProvider } from './crypto/CryptoProvider.js';
 import { PlatformFunctions } from './platform/PlatformFunctions.js';
-import { EventBase } from './resources/Events.js';
+import { Event } from './resources/Events.js';
 type WebhookHeader = string | Uint8Array;
 type WebhookTestHeaderOptions = {
     timestamp: number;
@@ -18,8 +18,8 @@ type WebhookSignatureObject = {
 export type WebhookObject = {
     DEFAULT_TOLERANCE: number;
     signature: WebhookSignatureObject | null;
-    constructEvent: (payload: WebhookPayload, header: WebhookHeader, secret: string, tolerance?: null, cryptoProvider?: CryptoProvider, receivedAt?: number) => EventBase;
-    constructEventAsync: (payload: WebhookPayload, header: WebhookHeader, secret: string, tolerance?: number, cryptoProvider?: CryptoProvider, receivedAt?: number) => Promise<EventBase>;
+    constructEvent: (payload: WebhookPayload, header: WebhookHeader, secret: string, tolerance?: null, cryptoProvider?: CryptoProvider, receivedAt?: number) => Event;
+    constructEventAsync: (payload: WebhookPayload, header: WebhookHeader, secret: string, tolerance?: number, cryptoProvider?: CryptoProvider, receivedAt?: number) => Promise<Event>;
     generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
     generateTestHeaderStringAsync: (opts: WebhookTestHeaderOptions) => Promise<string>;
 };

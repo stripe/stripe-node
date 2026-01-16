@@ -48,6 +48,7 @@ import {
   PaginationParams,
   Emptyable,
 } from './shared.js';
+import {EventNotification as V2EventNotification} from './resources/V2/Core/Events.js';
 
 // StripeInstanceImports: The beginning of the section generated from our OpenAPI spec
 import {
@@ -1517,8 +1518,7 @@ export class Stripe {
     tolerance?: number,
     cryptoProvider?: CryptoProvider,
     receivedAt?: number
-    // this return type is ignored?? picks up types from `types/index.d.ts` instead
-  ): any {
+  ): V2EventNotification {
     // parses and validates the event payload all in one go
     const eventNotification: any = (this.webhooks.constructEvent as any)(
       payload,

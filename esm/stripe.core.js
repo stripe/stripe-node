@@ -482,9 +482,7 @@ export class Stripe {
     getApiField(key) {
         return this._api[key];
     }
-    parseEventNotification(payload, header, secret, tolerance, cryptoProvider, receivedAt
-    // this return type is ignored?? picks up types from `types/index.d.ts` instead
-    ) {
+    parseEventNotification(payload, header, secret, tolerance, cryptoProvider, receivedAt) {
         // parses and validates the event payload all in one go
         const eventNotification = this.webhooks.constructEvent(payload, header, secret, tolerance, cryptoProvider, receivedAt);
         // Parse string context into StripeContext object if present
