@@ -4,6 +4,7 @@ import {
   CryptoProviderOnlySupportsAsyncError,
 } from './crypto/CryptoProvider.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
+import {Event} from './resources/Events.js';
 
 type WebhookHeader = string | Uint8Array;
 type WebhookParsedHeader = {
@@ -25,7 +26,7 @@ type WebhookTestHeaderOptions = {
   cryptoProvider: CryptoProvider;
 };
 
-export type WebhookEvent = Record<string, unknown>;
+// export type WebhookEvent = Record<string, unknown>;
 type WebhookPayload = string | Uint8Array;
 type WebhookSignatureObject = {
   verifyHeader: (
@@ -34,7 +35,7 @@ type WebhookSignatureObject = {
     secret: string,
     tolerance: number,
     cryptoProvider: CryptoProvider,
-    receivedAt: number
+    receivedAt?: number
   ) => boolean;
   verifyHeaderAsync: (
     encodedPayload: WebhookPayload,
@@ -42,7 +43,7 @@ type WebhookSignatureObject = {
     secret: string,
     tolerance: number,
     cryptoProvider: CryptoProvider,
-    receivedAt: number
+    receivedAt?: number
   ) => Promise<boolean>;
 };
 export type WebhookObject = {
@@ -52,18 +53,18 @@ export type WebhookObject = {
     payload: WebhookPayload,
     header: WebhookHeader,
     secret: string,
-    tolerance: null,
-    cryptoProvider: CryptoProvider,
-    receivedAt: number
-  ) => WebhookEvent;
+    tolerance?: null,
+    cryptoProvider?: CryptoProvider,
+    receivedAt?: number
+  ) => Event;
   constructEventAsync: (
     payload: WebhookPayload,
     header: WebhookHeader,
     secret: string,
-    tolerance: number,
-    cryptoProvider: CryptoProvider,
-    receivedAt: number
-  ) => Promise<WebhookEvent>;
+    tolerance?: number,
+    cryptoProvider?: CryptoProvider,
+    receivedAt?: number
+  ) => Promise<Event>;
   generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
   generateTestHeaderStringAsync: (
     opts: WebhookTestHeaderOptions
@@ -80,14 +81,16 @@ export function createWebhooks(
       payload: WebhookPayload,
       header: WebhookHeader,
       secret: string,
-      tolerance: null,
-      cryptoProvider: CryptoProvider,
-      receivedAt: number
-    ): WebhookEvent {
+      tolerance?: null,
+      cryptoProvider?: CryptoProvider,
+      receivedAt?: number
+    ): Event {
       try {
         if (!this.signature) {
           throw new Error('ERR: missing signature helper, unable to verify');
         }
+
+        cryptoProvider = cryptoProvider || getCryptoProvider();
 
         this.signature.verifyHeader(
           payload,
@@ -116,13 +119,15 @@ export function createWebhooks(
       payload: WebhookPayload,
       header: WebhookHeader,
       secret: string,
-      tolerance: number,
-      cryptoProvider: CryptoProvider,
-      receivedAt: number
-    ): Promise<WebhookEvent> {
+      tolerance?: number,
+      cryptoProvider?: CryptoProvider,
+      receivedAt?: number
+    ): Promise<Event> {
       if (!this.signature) {
         throw new Error('ERR: missing signature helper, unable to verify');
       }
+
+      cryptoProvider = cryptoProvider || getCryptoProvider();
 
       await this.signature.verifyHeaderAsync(
         payload,
@@ -188,7 +193,7 @@ export function createWebhooks(
       secret: string,
       tolerance: number,
       cryptoProvider: CryptoProvider,
-      receivedAt: number
+      receivedAt?: number
     ): boolean {
       const {
         decodedHeader: header,
@@ -228,7 +233,7 @@ export function createWebhooks(
       secret: string,
       tolerance: number,
       cryptoProvider: CryptoProvider,
-      receivedAt: number
+      receivedAt?: number
     ): Promise<boolean> {
       const {
         decodedHeader: header,
@@ -357,7 +362,7 @@ export function createWebhooks(
     tolerance: number,
     suspectPayloadType: boolean,
     secretContainsWhitespace: boolean,
-    receivedAt: number
+    receivedAt?: number
   ): boolean {
     const signatureFound = !!details.signatures.filter(
       platformFunctions.secureCompare.bind(platformFunctions, expectedSignature)

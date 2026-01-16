@@ -2,7 +2,11 @@ import * as http from 'http';
 import {CryptoProvider} from '../crypto/CryptoProvider.js';
 import {EventEmitter} from 'events';
 import {FetchHttpClient} from '../net/FetchHttpClient.js';
-import {HttpClient} from '../net/HttpClient.js';
+import {
+  HttpClient,
+  NodeHttpClientInterface,
+  FetchHttpClientInterface,
+} from '../net/HttpClient.js';
 import {StripeEmitter} from '../StripeEmitter.js';
 import {SubtleCryptoProvider} from '../crypto/SubtleCryptoProvider.js';
 import {MultipartRequestData, RequestData, BufferedFile} from '../Types.js';
@@ -75,7 +79,7 @@ export class PlatformFunctions {
    * Creates an HTTP client which uses the Node `http` and `https` packages
    * to issue requests.
    */
-  createNodeHttpClient(agent?: http.Agent): HttpClient {
+  createNodeHttpClient(agent?: http.Agent): NodeHttpClientInterface {
     throw new Error('createNodeHttpClient not implemented.');
   }
 
@@ -86,7 +90,7 @@ export class PlatformFunctions {
    * A fetch function can optionally be passed in as a parameter. If none is
    * passed, will default to the default `fetch` function in the global scope.
    */
-  createFetchHttpClient(fetchFn?: typeof fetch): HttpClient {
+  createFetchHttpClient(fetchFn?: typeof fetch): FetchHttpClientInterface {
     return new FetchHttpClient(fetchFn);
   }
 

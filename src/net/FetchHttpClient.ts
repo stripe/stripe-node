@@ -2,9 +2,9 @@ import {RequestHeaders, RequestData, ResponseHeaders} from '../Types.js';
 import {parseHeadersForFetch} from '../utils.js';
 import {
   HttpClient,
-  HttpClientInterface,
   HttpClientResponse,
-  HttpClientResponseInterface,
+  FetchHttpClientInterface,
+  FetchHttpClientResponseInterface,
 } from './HttpClient.js';
 
 type FetchWithTimeout = (
@@ -21,7 +21,8 @@ type FetchWithTimeout = (
  * Fetch API. As an example, this could be the function provided by the
  * node-fetch package (https://github.com/node-fetch/node-fetch).
  */
-export class FetchHttpClient extends HttpClient implements HttpClientInterface {
+export class FetchHttpClient extends HttpClient
+  implements FetchHttpClientInterface {
   private readonly _fetchFn: FetchWithTimeout;
 
   constructor(fetchFn?: typeof fetch) {
@@ -119,7 +120,7 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
     requestData: string,
     protocol: string,
     timeout: number
-  ): Promise<HttpClientResponseInterface> {
+  ): Promise<FetchHttpClientResponseInterface> {
     const isInsecureConnection = protocol === 'http';
 
     const url = new URL(
@@ -150,7 +151,7 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
 }
 
 export class FetchHttpClientResponse extends HttpClientResponse
-  implements HttpClientResponseInterface {
+  implements FetchHttpClientResponseInterface {
   _res: Response;
 
   constructor(res: Response) {
@@ -165,9 +166,7 @@ export class FetchHttpClientResponse extends HttpClientResponse
     return this._res;
   }
 
-  toStream(
-    streamCompleteCallback: () => void
-  ): ReadableStream<Uint8Array> | null {
+  toStream(streamCompleteCallback: () => void): ReadableStream<Uint8Array> {
     // Unfortunately `fetch` does not have event handlers for when the stream is
     // completely read. We therefore invoke the streamCompleteCallback right
     // away. This callback emits a response event with metadata and completes
@@ -176,7 +175,8 @@ export class FetchHttpClientResponse extends HttpClientResponse
     streamCompleteCallback();
 
     // Fetch's `body` property is expected to be a readable stream of the body.
-    return this._res.body;
+    // We assert non-null here as a proper HTTP response should always have a body.
+    return this._res.body!;
   }
 
   toJSON(): Promise<any> {

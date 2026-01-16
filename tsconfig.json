@@ -1,8 +1,9 @@
 {
   "extends": "./tsconfig.cjs.json",
   "compilerOptions": {
-    "noEmit": true,
-    "types": ["node", "mocha"]
+    "declaration": true,
+    "types": ["node", "mocha"],
+    "rootDir": "./src",
   },
   "ts-node": {
     "experimentalResolver": true

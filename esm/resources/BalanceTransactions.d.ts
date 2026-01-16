@@ -1,0 +1,144 @@
+import { StripeResource } from '../StripeResource.js';
+import { BalanceTransactionSource } from './BalanceTransactionSources.js';
+import { PaginationParams, RangeQueryParam } from '../shared.js';
+import { RequestOptions, ApiListPromise, Response } from '../lib.js';
+export declare class BalanceTransactionResource extends StripeResource {
+    /**
+     * Returns a list of transactions that have contributed to the Stripe account balance (e.g., charges, transfers, and so forth). The transactions are returned in sorted order, with the most recent transactions appearing first.
+     *
+     * Note that this endpoint was previously called “Balance history” and used the path /v1/balance/history.
+     */
+    list(params?: BalanceTransactionListParams, options?: RequestOptions): ApiListPromise<BalanceTransaction>;
+    list(options?: RequestOptions): ApiListPromise<BalanceTransaction>;
+    /**
+     * Retrieves the balance transaction with the given ID.
+     *
+     * Note that this endpoint previously used the path /v1/balance/history/:id.
+     */
+    retrieve(id: string, params?: BalanceTransactionRetrieveParams, options?: RequestOptions): Promise<Response<BalanceTransaction>>;
+    retrieve(id: string, options?: RequestOptions): Promise<Response<BalanceTransaction>>;
+}
+export interface BalanceTransaction {
+    /**
+     * Unique identifier for the object.
+     */
+    id: string;
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'balance_transaction';
+    /**
+     * Gross amount of this transaction (in cents (or local equivalent)). A positive value represents funds charged to another party, and a negative value represents funds sent to another party.
+     */
+    amount: number;
+    /**
+     * The date that the transaction's net funds become available in the Stripe balance.
+     */
+    available_on: number;
+    /**
+     * The balance that this transaction impacts.
+     */
+    balance_type: BalanceTransaction.BalanceType;
+    /**
+     * Time at which the object was created. Measured in seconds since the Unix epoch.
+     */
+    created: number;
+    /**
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency: string;
+    /**
+     * An arbitrary string attached to the object. Often useful for displaying to users.
+     */
+    description: string | null;
+    /**
+     * If applicable, this transaction uses an exchange rate. If money converts from currency A to currency B, then the `amount` in currency A, multipled by the `exchange_rate`, equals the `amount` in currency B. For example, if you charge a customer 10.00 EUR, the PaymentIntent's `amount` is `1000` and `currency` is `eur`. If this converts to 12.34 USD in your Stripe account, the BalanceTransaction's `amount` is `1234`, its `currency` is `usd`, and the `exchange_rate` is `1.234`.
+     */
+    exchange_rate: number | null;
+    /**
+     * Fees (in cents (or local equivalent)) paid for this transaction. Represented as a positive integer when assessed.
+     */
+    fee: number;
+    /**
+     * Detailed breakdown of fees (in cents (or local equivalent)) paid for this transaction.
+     */
+    fee_details: Array<BalanceTransaction.FeeDetail>;
+    /**
+     * Net impact to a Stripe balance (in cents (or local equivalent)). A positive value represents incrementing a Stripe balance, and a negative value decrementing a Stripe balance. You can calculate the net impact of a transaction on a balance by `amount` - `fee`
+     */
+    net: number;
+    /**
+     * Learn more about how [reporting categories](https://stripe.com/docs/reports/reporting-categories) can help you understand balance transactions from an accounting perspective.
+     */
+    reporting_category: string;
+    /**
+     * This transaction relates to the Stripe object.
+     */
+    source: string | BalanceTransactionSource | null;
+    /**
+     * The transaction's net funds status in the Stripe balance, which are either `available` or `pending`.
+     */
+    status: string;
+    /**
+     * Transaction type: `adjustment`, `advance`, `advance_funding`, `anticipation_repayment`, `application_fee`, `application_fee_refund`, `charge`, `climate_order_purchase`, `climate_order_refund`, `connect_collection_transfer`, `contribution`, `issuing_authorization_hold`, `issuing_authorization_release`, `issuing_dispute`, `issuing_transaction`, `obligation_outbound`, `obligation_reversal_inbound`, `payment`, `payment_failure_refund`, `payment_network_reserve_hold`, `payment_network_reserve_release`, `payment_refund`, `payment_reversal`, `payment_unreconciled`, `payout`, `payout_cancel`, `payout_failure`, `payout_minimum_balance_hold`, `payout_minimum_balance_release`, `refund`, `refund_failure`, `reserve_transaction`, `reserved_funds`, `stripe_fee`, `stripe_fx_fee`, `stripe_balance_payment_debit`, `stripe_balance_payment_debit_reversal`, `tax_fee`, `topup`, `topup_reversal`, `transfer`, `transfer_cancel`, `transfer_failure`, or `transfer_refund`. Learn more about [balance transaction types and what they represent](https://stripe.com/docs/reports/balance-transaction-types). To classify transactions for accounting purposes, consider `reporting_category` instead.
+     */
+    type: BalanceTransaction.Type;
+}
+export declare namespace BalanceTransaction {
+    type BalanceType = 'issuing' | 'payments' | 'refund_and_dispute_prefunding';
+    interface FeeDetail {
+        /**
+         * Amount of the fee, in cents.
+         */
+        amount: number;
+        /**
+         * ID of the Connect application that earned the fee.
+         */
+        application: string | null;
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+        /**
+         * An arbitrary string attached to the object. Often useful for displaying to users.
+         */
+        description: string | null;
+        /**
+         * Type of the fee, one of: `application_fee`, `payment_method_passthrough_fee`, `stripe_fee` or `tax`.
+         */
+        type: string;
+    }
+    type Type = 'adjustment' | 'advance' | 'advance_funding' | 'anticipation_repayment' | 'application_fee' | 'application_fee_refund' | 'charge' | 'climate_order_purchase' | 'climate_order_refund' | 'connect_collection_transfer' | 'contribution' | 'issuing_authorization_hold' | 'issuing_authorization_release' | 'issuing_dispute' | 'issuing_transaction' | 'obligation_outbound' | 'obligation_reversal_inbound' | 'payment' | 'payment_failure_refund' | 'payment_network_reserve_hold' | 'payment_network_reserve_release' | 'payment_refund' | 'payment_reversal' | 'payment_unreconciled' | 'payout' | 'payout_cancel' | 'payout_failure' | 'payout_minimum_balance_hold' | 'payout_minimum_balance_release' | 'refund' | 'refund_failure' | 'reserve_transaction' | 'reserved_funds' | 'stripe_balance_payment_debit' | 'stripe_balance_payment_debit_reversal' | 'stripe_fee' | 'stripe_fx_fee' | 'tax_fee' | 'topup' | 'topup_reversal' | 'transfer' | 'transfer_cancel' | 'transfer_failure' | 'transfer_refund';
+}
+export interface BalanceTransactionRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+}
+export interface BalanceTransactionListParams extends PaginationParams {
+    /**
+     * Only return transactions that were created during the given date interval.
+     */
+    created?: RangeQueryParam | number;
+    /**
+     * Only return transactions in a certain currency. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency?: string;
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+    /**
+     * For automatic Stripe payouts only, only returns transactions that were paid out on the specified payout ID.
+     */
+    payout?: string;
+    /**
+     * Only returns the original transaction.
+     */
+    source?: string;
+    /**
+     * Only returns transactions of the given type. One of: `adjustment`, `advance`, `advance_funding`, `anticipation_repayment`, `application_fee`, `application_fee_refund`, `charge`, `climate_order_purchase`, `climate_order_refund`, `connect_collection_transfer`, `contribution`, `issuing_authorization_hold`, `issuing_authorization_release`, `issuing_dispute`, `issuing_transaction`, `obligation_outbound`, `obligation_reversal_inbound`, `payment`, `payment_failure_refund`, `payment_network_reserve_hold`, `payment_network_reserve_release`, `payment_refund`, `payment_reversal`, `payment_unreconciled`, `payout`, `payout_cancel`, `payout_failure`, `payout_minimum_balance_hold`, `payout_minimum_balance_release`, `refund`, `refund_failure`, `reserve_transaction`, `reserved_funds`, `stripe_fee`, `stripe_fx_fee`, `stripe_balance_payment_debit`, `stripe_balance_payment_debit_reversal`, `tax_fee`, `topup`, `topup_reversal`, `transfer`, `transfer_cancel`, `transfer_failure`, or `transfer_refund`.
+     */
+    type?: string;
+}

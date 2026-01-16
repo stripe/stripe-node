@@ -2,7 +2,7 @@ import * as crypto from 'crypto';
 import * as http from 'http';
 import {CryptoProvider} from '../crypto/CryptoProvider.js';
 import {EventEmitter} from 'events';
-import {HttpClient} from '../net/HttpClient.js';
+import {HttpClient, NodeHttpClientInterface} from '../net/HttpClient.js';
 import {NodeCryptoProvider} from '../crypto/NodeCryptoProvider.js';
 import {NodeHttpClient} from '../net/NodeHttpClient.js';
 import {PlatformFunctions} from './PlatformFunctions.js';
@@ -127,7 +127,7 @@ export class NodePlatformFunctions extends PlatformFunctions {
   }
 
   /** @override */
-  createNodeHttpClient(agent?: http.Agent): HttpClient {
+  createNodeHttpClient(agent?: http.Agent): NodeHttpClientInterface {
     return new NodeHttpClient(agent);
   }
 

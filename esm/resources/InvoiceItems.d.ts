@@ -1,0 +1,498 @@
+import { StripeResource } from '../StripeResource.js';
+import { Discount, DeletedDiscount } from './Discounts.js';
+import { Customer, DeletedCustomer } from './Customers.js';
+import { Invoice } from './Invoices.js';
+import { TaxRate } from './TaxRates.js';
+import { Price } from './Prices.js';
+import * as TestHelpers from './TestHelpers/index.js';
+import { Emptyable, MetadataParam, PaginationParams, RangeQueryParam, Metadata } from '../shared.js';
+import { RequestOptions, Response, ApiListPromise } from '../lib.js';
+export declare class InvoiceItemResource extends StripeResource {
+    /**
+     * Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they're not attached to invoices, or if it's attached to a draft invoice.
+     */
+    del(id: string, params?: InvoiceItemDeleteParams, options?: RequestOptions): Promise<Response<DeletedInvoiceItem>>;
+    del(id: string, options?: RequestOptions): Promise<Response<DeletedInvoiceItem>>;
+    /**
+     * Retrieves the invoice item with the given ID.
+     */
+    retrieve(id: string, params?: InvoiceItemRetrieveParams, options?: RequestOptions): Promise<Response<InvoiceItem>>;
+    retrieve(id: string, options?: RequestOptions): Promise<Response<InvoiceItem>>;
+    /**
+     * Updates the amount or description of an invoice item on an upcoming invoice. Updating an invoice item is only possible before the invoice it's attached to is closed.
+     */
+    update(id: string, params?: InvoiceItemUpdateParams, options?: RequestOptions): Promise<Response<InvoiceItem>>;
+    /**
+     * Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
+     */
+    list(params?: InvoiceItemListParams, options?: RequestOptions): ApiListPromise<InvoiceItem>;
+    list(options?: RequestOptions): ApiListPromise<InvoiceItem>;
+    /**
+     * Creates an item to be added to a draft invoice (up to 250 items per invoice). If no invoice is specified, the item will be on the next invoice created for the customer specified.
+     */
+    create(params?: InvoiceItemCreateParams, options?: RequestOptions): Promise<Response<InvoiceItem>>;
+    create(options?: RequestOptions): Promise<Response<InvoiceItem>>;
+}
+export interface InvoiceItem {
+    /**
+     * Unique identifier for the object.
+     */
+    id: string;
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'invoiceitem';
+    /**
+     * Amount (in the `currency` specified) of the invoice item. This should always be equal to `unit_amount * quantity`.
+     */
+    amount: number;
+    /**
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency: string;
+    /**
+     * The ID of the customer to bill for this invoice item.
+     */
+    customer: string | Customer | DeletedCustomer;
+    /**
+     * The ID of the account to bill for this invoice item.
+     */
+    customer_account: string | null;
+    /**
+     * Time at which the object was created. Measured in seconds since the Unix epoch.
+     */
+    date: number;
+    /**
+     * Always true for a deleted object
+     */
+    deleted?: void;
+    /**
+     * An arbitrary string attached to the object. Often useful for displaying to users.
+     */
+    description: string | null;
+    /**
+     * If true, discounts will apply to this invoice item. Always false for prorations.
+     */
+    discountable: boolean;
+    /**
+     * The discounts which apply to the invoice item. Item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
+     */
+    discounts: Array<string | Discount> | null;
+    /**
+     * The ID of the invoice this invoice item belongs to.
+     */
+    invoice: string | Invoice | null;
+    /**
+     * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+     */
+    livemode: boolean;
+    /**
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: Metadata | null;
+    /**
+     * The amount after discounts, but before credits and taxes. This field is `null` for `discountable=true` items.
+     */
+    net_amount?: number;
+    /**
+     * The parent that generated this invoice item.
+     */
+    parent: InvoiceItem.Parent | null;
+    period: InvoiceItem.Period;
+    /**
+     * The pricing information of the invoice item.
+     */
+    pricing: InvoiceItem.Pricing | null;
+    /**
+     * Whether the invoice item was created automatically as a proration adjustment when the customer switched plans.
+     */
+    proration: boolean;
+    proration_details?: InvoiceItem.ProrationDetails;
+    /**
+     * Quantity of units for the invoice item. If the invoice item is a proration, the quantity of the subscription that the proration was computed for.
+     */
+    quantity: number;
+    /**
+     * The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
+     */
+    tax_rates: Array<TaxRate> | null;
+    /**
+     * ID of the test clock this invoice item belongs to.
+     */
+    test_clock: string | TestHelpers.TestClock | null;
+}
+export interface DeletedInvoiceItem {
+    /**
+     * Unique identifier for the object.
+     */
+    id: string;
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'invoiceitem';
+    /**
+     * Always true for a deleted object
+     */
+    deleted: true;
+}
+export declare namespace InvoiceItem {
+    interface Parent {
+        /**
+         * Details about the subscription that generated this invoice item
+         */
+        subscription_details: Parent.SubscriptionDetails | null;
+        /**
+         * The type of parent that generated this invoice item
+         */
+        type: 'subscription_details';
+    }
+    interface Period {
+        /**
+         * The end of the period, which must be greater than or equal to the start. This value is inclusive.
+         */
+        end: number;
+        /**
+         * The start of the period. This value is inclusive.
+         */
+        start: number;
+    }
+    interface Pricing {
+        price_details?: Pricing.PriceDetails;
+        /**
+         * The type of the pricing details.
+         */
+        type: 'price_details';
+        /**
+         * The unit amount (in the `currency` specified) of the item which contains a decimal value with at most 12 decimal places.
+         */
+        unit_amount_decimal: string | null;
+    }
+    interface ProrationDetails {
+        /**
+         * Discount amounts applied when the proration was created.
+         */
+        discount_amounts: Array<ProrationDetails.DiscountAmount>;
+    }
+    namespace Parent {
+        interface SubscriptionDetails {
+            /**
+             * The subscription that generated this invoice item
+             */
+            subscription: string;
+            /**
+             * The subscription item that generated this invoice item
+             */
+            subscription_item?: string;
+        }
+    }
+    namespace Pricing {
+        interface PriceDetails {
+            /**
+             * The ID of the price this item is associated with.
+             */
+            price: string | Price;
+            /**
+             * The ID of the product this item is associated with.
+             */
+            product: string;
+        }
+    }
+    namespace ProrationDetails {
+        interface DiscountAmount {
+            /**
+             * The amount, in cents (or local equivalent), of the discount.
+             */
+            amount: number;
+            /**
+             * The discount that was applied to get this discount amount.
+             */
+            discount: string | Discount | DeletedDiscount;
+        }
+    }
+}
+export interface InvoiceItemCreateParams {
+    /**
+     * The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. Passing in a negative `amount` will reduce the `amount_due` on the invoice.
+     */
+    amount?: number;
+    /**
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency?: string;
+    /**
+     * The ID of the customer to bill for this invoice item.
+     */
+    customer?: string;
+    /**
+     * The ID of the account representing the customer to bill for this invoice item.
+     */
+    customer_account?: string;
+    /**
+     * An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.
+     */
+    description?: string;
+    /**
+     * Controls whether discounts apply to this invoice item. Defaults to false for prorations or negative invoice items, and true for all other invoice items.
+     */
+    discountable?: boolean;
+    /**
+     * The coupons and promotion codes to redeem into discounts for the invoice item or invoice line item.
+     */
+    discounts?: Emptyable<Array<InvoiceItemCreateParams.Discount>>;
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+    /**
+     * The ID of an existing invoice to add this invoice item to. For subscription invoices, when left blank, the invoice item will be added to the next upcoming scheduled invoice. For standalone invoices, the invoice item won't be automatically added unless you pass `pending_invoice_item_behavior: 'include'` when creating the invoice. This is useful when adding invoice items in response to an invoice.created webhook. You can only add invoice items to draft invoices and there is a maximum of 250 items per invoice.
+     */
+    invoice?: string;
+    /**
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     */
+    metadata?: Emptyable<MetadataParam>;
+    /**
+     * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://docs.stripe.com/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+     */
+    period?: InvoiceItemCreateParams.Period;
+    /**
+     * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
+     */
+    price_data?: InvoiceItemCreateParams.PriceData;
+    /**
+     * The pricing information for the invoice item.
+     */
+    pricing?: InvoiceItemCreateParams.Pricing;
+    /**
+     * Non-negative integer. The quantity of units for the invoice item.
+     */
+    quantity?: number;
+    /**
+     * The ID of a subscription to add this invoice item to. When left blank, the invoice item is added to the next upcoming scheduled invoice. When set, scheduled invoices for subscriptions other than the specified subscription will ignore the invoice item. Use this when you want to express that an invoice item has been accrued within the context of a particular subscription.
+     */
+    subscription?: string;
+    /**
+     * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+     */
+    tax_behavior?: InvoiceItemCreateParams.TaxBehavior;
+    /**
+     * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+     */
+    tax_code?: Emptyable<string>;
+    /**
+     * The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
+     */
+    tax_rates?: Array<string>;
+    /**
+     * The decimal unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This `unit_amount_decimal` will be multiplied by the quantity to get the full amount. Passing in a negative `unit_amount_decimal` will reduce the `amount_due` on the invoice. Accepts at most 12 decimal places.
+     */
+    unit_amount_decimal?: string;
+}
+export declare namespace InvoiceItemCreateParams {
+    interface Discount {
+        /**
+         * ID of the coupon to create a new discount for.
+         */
+        coupon?: string;
+        /**
+         * ID of an existing discount on the object (or one of its ancestors) to reuse.
+         */
+        discount?: string;
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
+    }
+    interface Period {
+        /**
+         * The end of the period, which must be greater than or equal to the start. This value is inclusive.
+         */
+        end: number;
+        /**
+         * The start of the period. This value is inclusive.
+         */
+        start: number;
+    }
+    interface PriceData {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+        /**
+         * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
+         */
+        product: string;
+        /**
+         * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         */
+        tax_behavior?: PriceData.TaxBehavior;
+        /**
+         * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+         */
+        unit_amount?: number;
+        /**
+         * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         */
+        unit_amount_decimal?: string;
+    }
+    interface Pricing {
+        /**
+         * The ID of the price object.
+         */
+        price?: string;
+    }
+    type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    namespace PriceData {
+        type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    }
+}
+export interface InvoiceItemRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+}
+export interface InvoiceItemUpdateParams {
+    /**
+     * The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. If you want to apply a credit to the customer's account, pass a negative amount.
+     */
+    amount?: number;
+    /**
+     * An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.
+     */
+    description?: string;
+    /**
+     * Controls whether discounts apply to this invoice item. Defaults to false for prorations or negative invoice items, and true for all other invoice items. Cannot be set to true for prorations.
+     */
+    discountable?: boolean;
+    /**
+     * The coupons, promotion codes & existing discounts which apply to the invoice item or invoice line item. Item discounts are applied before invoice discounts. Pass an empty string to remove previously-defined discounts.
+     */
+    discounts?: Emptyable<Array<InvoiceItemUpdateParams.Discount>>;
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+    /**
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     */
+    metadata?: Emptyable<MetadataParam>;
+    /**
+     * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://docs.stripe.com/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+     */
+    period?: InvoiceItemUpdateParams.Period;
+    /**
+     * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
+     */
+    price_data?: InvoiceItemUpdateParams.PriceData;
+    /**
+     * The pricing information for the invoice item.
+     */
+    pricing?: InvoiceItemUpdateParams.Pricing;
+    /**
+     * Non-negative integer. The quantity of units for the invoice item.
+     */
+    quantity?: number;
+    /**
+     * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+     */
+    tax_behavior?: InvoiceItemUpdateParams.TaxBehavior;
+    /**
+     * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+     */
+    tax_code?: Emptyable<string>;
+    /**
+     * The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item. Pass an empty string to remove previously-defined tax rates.
+     */
+    tax_rates?: Emptyable<Array<string>>;
+    /**
+     * The decimal unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This `unit_amount_decimal` will be multiplied by the quantity to get the full amount. Passing in a negative `unit_amount_decimal` will reduce the `amount_due` on the invoice. Accepts at most 12 decimal places.
+     */
+    unit_amount_decimal?: string;
+}
+export declare namespace InvoiceItemUpdateParams {
+    interface Discount {
+        /**
+         * ID of the coupon to create a new discount for.
+         */
+        coupon?: string;
+        /**
+         * ID of an existing discount on the object (or one of its ancestors) to reuse.
+         */
+        discount?: string;
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
+    }
+    interface Period {
+        /**
+         * The end of the period, which must be greater than or equal to the start. This value is inclusive.
+         */
+        end: number;
+        /**
+         * The start of the period. This value is inclusive.
+         */
+        start: number;
+    }
+    interface PriceData {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+        /**
+         * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
+         */
+        product: string;
+        /**
+         * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         */
+        tax_behavior?: PriceData.TaxBehavior;
+        /**
+         * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+         */
+        unit_amount?: number;
+        /**
+         * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         */
+        unit_amount_decimal?: string;
+    }
+    interface Pricing {
+        /**
+         * The ID of the price object.
+         */
+        price?: string;
+    }
+    type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    namespace PriceData {
+        type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+    }
+}
+export interface InvoiceItemListParams extends PaginationParams {
+    /**
+     * Only return invoice items that were created during the given date interval.
+     */
+    created?: RangeQueryParam | number;
+    /**
+     * The identifier of the customer whose invoice items to return. If none is provided, returns all invoice items.
+     */
+    customer?: string;
+    /**
+     * The identifier of the account representing the customer whose invoice items to return. If none is provided, returns all invoice items.
+     */
+    customer_account?: string;
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+    /**
+     * Only return invoice items belonging to this invoice. If none is provided, all invoice items will be returned. If specifying an invoice, no customer identifier is needed.
+     */
+    invoice?: string;
+    /**
+     * Set to `true` to only show pending invoice items, which are not yet attached to any invoices. Set to `false` to only show invoice items already attached to invoices. If unspecified, no filter is applied.
+     */
+    pending?: boolean;
+}
+export interface InvoiceItemDeleteParams {
+}
