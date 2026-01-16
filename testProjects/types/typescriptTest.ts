@@ -304,8 +304,7 @@ const v2Context: string | undefined = v2Event.context;
 
 // but event notification is a context object
 const v2EventNotif = {} as Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification;
-const v2ContextObj: InstanceType<typeof Stripe.StripeContext> | undefined =
-  v2EventNotif.context;
+const v2ContextObj: Stripe.StripeContextType | undefined = v2EventNotif.context;
 
 async (): Promise<void> => {
   // parsing event notifications

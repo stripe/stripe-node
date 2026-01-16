@@ -2412,7 +2412,9 @@ export declare namespace Stripe {
     Emptyable,
   };
 
+  export {StripeContext as StripeContextType};
   export {StripeRawError};
+  export import ErrorType = _Error;
   export import Events = V2.Core.Events;
 }
 
