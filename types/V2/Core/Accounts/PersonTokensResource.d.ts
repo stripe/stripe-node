@@ -521,7 +521,6 @@ declare module 'stripe' {
           class PersonTokensResource {
             /**
              * Creates a Person Token associated with an Account.
-             * @throws Stripe.RateLimitError
              */
             create(
               id: string,
@@ -535,7 +534,6 @@ declare module 'stripe' {
 
             /**
              * Retrieves a Person Token associated with an Account.
-             * @throws Stripe.RateLimitError
              */
             retrieve(
               accountId: string,
