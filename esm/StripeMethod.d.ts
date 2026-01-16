@@ -17,4 +17,4 @@ import { MethodSpec } from './Types.js';
  *
  * <!-- Public API accessible via Stripe.StripeResource.method -->
  */
-export declare function stripeMethod(spec: MethodSpec): (...args: any[]) => Promise<any>;
+export declare function stripeMethod<T = any>(spec: MethodSpec): (...args: any[]) => any;

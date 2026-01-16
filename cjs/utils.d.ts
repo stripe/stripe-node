@@ -39,8 +39,8 @@ export declare function getOptionsFromArgs(args: RequestArgs): Options;
  * Provide simple "Class" extension mechanism.
  * <!-- Public API accessible via Stripe.StripeResource.extend -->
  */
-export declare function protoExtend(this: any, sub: any): {
-    new (...args: any[]): StripeResourceObject;
+export declare function protoExtend<T extends Record<string, any>>(this: any, sub: T): {
+    new (...args: any[]): StripeResourceObject & T;
 };
 /**
  * Remove empty values from an object

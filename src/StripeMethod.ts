@@ -21,9 +21,9 @@ import {StripeResource} from './StripeResource.js';
  *
  * <!-- Public API accessible via Stripe.StripeResource.method -->
  */
-export function stripeMethod(
+export function stripeMethod<T = any>(
   spec: MethodSpec
-): (...args: any[]) => Promise<any> {
+): (...args: any[]) => any {
   if (spec.path !== undefined && spec.fullPath !== undefined) {
     throw new Error(
       `Method spec specified both a 'path' (${spec.path}) and a 'fullPath' (${spec.fullPath}).`

@@ -232,10 +232,10 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
  * Provide simple "Class" extension mechanism.
  * <!-- Public API accessible via Stripe.StripeResource.extend -->
  */
-export function protoExtend(
+export function protoExtend<T extends Record<string, any>>(
   this: any,
-  sub: any
-): {new (...args: any[]): StripeResourceObject} {
+  sub: T
+): {new (...args: any[]): StripeResourceObject & T} {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const Super = this;
 
@@ -258,7 +258,9 @@ export function protoExtend(
   // Copy prototype methods from sub to Constructor.prototype
   Object.assign(Constructor.prototype, sub);
 
-  return Constructor as {new (...args: any[]): StripeResourceObject};
+  return (Constructor as unknown) as {
+    new (...args: any[]): StripeResourceObject & T;
+  };
 }
 
 /**
