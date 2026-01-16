@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "dependencies": {
     "stripe": "file:../../",
     "ts-node": "^10.9.1"

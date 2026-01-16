@@ -6,7 +6,7 @@ const stripe = new Stripe(process.argv[2], {
   host: process.env.STRIPE_MOCK_HOST || 'localhost',
   port: process.env.STRIPE_MOCK_PORT || 12111,
   protocol: 'http',
-  stripeContext: new Stripe.StripeContext(),
+  stripeContext: 'ctx_123',
 });
 const defaultStripe = new DefaultStripe(process.argv[2], {
   // if we specify a version, then our smoke tests fail every time there's a new API version being prepped
