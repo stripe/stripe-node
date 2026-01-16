@@ -1,5 +1,5 @@
 import { RequestHeaders, ResponseHeaders } from '../Types.js';
-import { HttpClient, HttpClientInterface, HttpClientResponse, HttpClientResponseInterface } from './HttpClient.js';
+import { HttpClient, HttpClientResponse, FetchHttpClientInterface, FetchHttpClientResponseInterface } from './HttpClient.js';
 /**
  * HTTP client which uses a `fetch` function to issue requests.
  *
@@ -8,20 +8,20 @@ import { HttpClient, HttpClientInterface, HttpClientResponse, HttpClientResponse
  * Fetch API. As an example, this could be the function provided by the
  * node-fetch package (https://github.com/node-fetch/node-fetch).
  */
-export declare class FetchHttpClient extends HttpClient implements HttpClientInterface {
+export declare class FetchHttpClient extends HttpClient implements FetchHttpClientInterface {
     private readonly _fetchFn;
     constructor(fetchFn?: typeof fetch);
     private static makeFetchWithRaceTimeout;
     private static makeFetchWithAbortTimeout;
     /** @override. */
     getClientName(): string;
-    makeRequest(host: string, port: string, path: string, method: string, headers: RequestHeaders, requestData: string, protocol: string, timeout: number): Promise<HttpClientResponseInterface>;
+    makeRequest(host: string, port: string, path: string, method: string, headers: RequestHeaders, requestData: string, protocol: string, timeout: number): Promise<FetchHttpClientResponseInterface>;
 }
-export declare class FetchHttpClientResponse extends HttpClientResponse implements HttpClientResponseInterface {
+export declare class FetchHttpClientResponse extends HttpClientResponse implements FetchHttpClientResponseInterface {
     _res: Response;
     constructor(res: Response);
     getRawResponse(): Response;
-    toStream(streamCompleteCallback: () => void): ReadableStream<Uint8Array> | null;
+    toStream(streamCompleteCallback: () => void): ReadableStream<Uint8Array>;
     toJSON(): Promise<any>;
     static _transformHeadersToObject(headers: Headers): ResponseHeaders;
 }

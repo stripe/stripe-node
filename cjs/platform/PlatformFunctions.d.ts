@@ -3,7 +3,7 @@
 import * as http from 'http';
 import { CryptoProvider } from '../crypto/CryptoProvider.js';
 import { EventEmitter } from 'events';
-import { HttpClient } from '../net/HttpClient.js';
+import { HttpClient, NodeHttpClientInterface, FetchHttpClientInterface } from '../net/HttpClient.js';
 import { StripeEmitter } from '../StripeEmitter.js';
 import { MultipartRequestData, RequestData, BufferedFile } from '../Types.js';
 /**
@@ -39,7 +39,7 @@ export declare class PlatformFunctions {
      * Creates an HTTP client which uses the Node `http` and `https` packages
      * to issue requests.
      */
-    createNodeHttpClient(agent?: http.Agent): HttpClient;
+    createNodeHttpClient(agent?: http.Agent): NodeHttpClientInterface;
     /**
      * Creates an HTTP client for issuing Stripe API requests which uses the Web
      * Fetch API.
@@ -47,7 +47,7 @@ export declare class PlatformFunctions {
      * A fetch function can optionally be passed in as a parameter. If none is
      * passed, will default to the default `fetch` function in the global scope.
      */
-    createFetchHttpClient(fetchFn?: typeof fetch): HttpClient;
+    createFetchHttpClient(fetchFn?: typeof fetch): FetchHttpClientInterface;
     /**
      * Creates an HTTP client using runtime-specific APIs.
      */

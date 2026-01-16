@@ -25,6 +25,48 @@ export interface HttpClientResponseInterface {
 }
 
 /**
+ * Interface for Node HTTP client with Node-specific stream types.
+ */
+export interface NodeHttpClientInterface extends HttpClientInterface {
+  makeRequest: (
+    host: string,
+    port: string,
+    path: string,
+    method: string,
+    headers: RequestHeaders,
+    requestData: string,
+    protocol: string,
+    timeout: number
+  ) => Promise<NodeHttpClientResponseInterface>;
+}
+
+export interface NodeHttpClientResponseInterface
+  extends HttpClientResponseInterface {
+  toStream: (streamCompleteCallback: () => void) => NodeJS.ReadableStream;
+}
+
+/**
+ * Interface for Fetch HTTP client with Web Streams API types.
+ */
+export interface FetchHttpClientInterface extends HttpClientInterface {
+  makeRequest: (
+    host: string,
+    port: string,
+    path: string,
+    method: string,
+    headers: RequestHeaders,
+    requestData: string,
+    protocol: string,
+    timeout: number
+  ) => Promise<FetchHttpClientResponseInterface>;
+}
+
+export interface FetchHttpClientResponseInterface
+  extends HttpClientResponseInterface {
+  toStream: (streamCompleteCallback: () => void) => ReadableStream<Uint8Array>;
+}
+
+/**
  * Encapsulates the logic for issuing a request to the Stripe API.
  *
  * A custom HTTP client should should implement:

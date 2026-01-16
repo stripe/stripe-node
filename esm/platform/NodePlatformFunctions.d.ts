@@ -3,7 +3,7 @@
 import * as http from 'http';
 import { CryptoProvider } from '../crypto/CryptoProvider.js';
 import { EventEmitter } from 'events';
-import { HttpClient } from '../net/HttpClient.js';
+import { HttpClient, NodeHttpClientInterface } from '../net/HttpClient.js';
 import { PlatformFunctions } from './PlatformFunctions.js';
 import { MultipartRequestData, RequestData, BufferedFile } from '../Types.js';
 /**
@@ -35,7 +35,7 @@ export declare class NodePlatformFunctions extends PlatformFunctions {
     /** @override */
     tryBufferData(data: MultipartRequestData): Promise<RequestData | BufferedFile>;
     /** @override */
-    createNodeHttpClient(agent?: http.Agent): HttpClient;
+    createNodeHttpClient(agent?: http.Agent): NodeHttpClientInterface;
     /** @override */
     createDefaultHttpClient(): HttpClient;
     /** @override */

@@ -121,6 +121,7 @@ class FetchHttpClientResponse extends HttpClient_js_1.HttpClientResponse {
         // completely read.
         streamCompleteCallback();
         // Fetch's `body` property is expected to be a readable stream of the body.
+        // We assert non-null here as a proper HTTP response should always have a body.
         return this._res.body;
     }
     toJSON() {

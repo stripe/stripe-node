@@ -1,5 +1,5 @@
 import { CryptoProvider } from '../crypto/CryptoProvider.js';
-import { HttpClient } from '../net/HttpClient.js';
+import { HttpClient, NodeHttpClientInterface } from '../net/HttpClient.js';
 import { PlatformFunctions } from './PlatformFunctions.js';
 import { StripeEmitter } from '../StripeEmitter.js';
 import { MultipartRequestData, RequestData, BufferedFile } from '../Types.js';
@@ -14,7 +14,7 @@ export declare class WebPlatformFunctions extends PlatformFunctions {
     /** @override */
     tryBufferData(data: MultipartRequestData): Promise<RequestData | BufferedFile>;
     /** @override */
-    createNodeHttpClient(): HttpClient;
+    createNodeHttpClient(): NodeHttpClientInterface;
     /** @override */
     createDefaultHttpClient(): HttpClient;
     /** @override */
