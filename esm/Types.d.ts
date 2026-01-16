@@ -30,7 +30,7 @@ export type MethodSpec = {
     usage?: Array<string>;
 };
 export type MultipartRequestData = RequestData | StreamingFile | BufferedFile;
-export type RawErrorType = 'card_error' | 'invalid_request_error' | 'api_error' | 'idempotency_error' | 'rate_limit_error' | 'authentication_error' | 'invalid_grant' | 'temporary_session_expired';
+export type RawErrorType = 'card_error' | 'invalid_request_error' | 'api_error' | 'idempotency_error' | 'rate_limit_error' | 'authentication_error' | 'invalid_grant' | 'rate_limit' | 'temporary_session_expired';
 export type RequestArgs = Array<any>;
 export type StripeRequest = {
     host: string;

@@ -119,6 +119,9 @@ export declare class StripeInvalidGrantError extends StripeError {
 export declare class StripeUnknownError extends StripeError {
     constructor(raw?: StripeRawError);
 }
+export declare class RateLimitError extends StripeError {
+    constructor(rawStripeError?: StripeRawError);
+}
 export declare class TemporarySessionExpiredError extends StripeError {
     constructor(rawStripeError?: StripeRawError);
 }

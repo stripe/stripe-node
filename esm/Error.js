@@ -24,6 +24,8 @@ export const generateV1Error = (rawStripeError) => {
 export const generateV2Error = (rawStripeError) => {
     switch (rawStripeError.type) {
         // switchCases: The beginning of the section generated from our OpenAPI spec
+        case 'rate_limit':
+            return new RateLimitError(rawStripeError);
         case 'temporary_session_expired':
             return new TemporarySessionExpiredError(rawStripeError);
         // switchCases: The end of the section generated from our OpenAPI spec
@@ -179,6 +181,11 @@ export class StripeUnknownError extends StripeError {
     }
 }
 // classDefinitions: The beginning of the section generated from our OpenAPI spec
+export class RateLimitError extends StripeError {
+    constructor(rawStripeError = {}) {
+        super(rawStripeError, 'RateLimitError');
+    }
+}
 export class TemporarySessionExpiredError extends StripeError {
     constructor(rawStripeError = {}) {
         super(rawStripeError, 'TemporarySessionExpiredError');

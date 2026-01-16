@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-warning-comments */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TemporarySessionExpiredError = exports.StripeUnknownError = exports.StripeInvalidGrantError = exports.StripeIdempotencyError = exports.StripeSignatureVerificationError = exports.StripeConnectionError = exports.StripeRateLimitError = exports.StripePermissionError = exports.StripeAuthenticationError = exports.StripeAPIError = exports.StripeInvalidRequestError = exports.StripeCardError = exports.StripeError = exports.generateV2Error = exports.generateV1Error = void 0;
+exports.TemporarySessionExpiredError = exports.RateLimitError = exports.StripeUnknownError = exports.StripeInvalidGrantError = exports.StripeIdempotencyError = exports.StripeSignatureVerificationError = exports.StripeConnectionError = exports.StripeRateLimitError = exports.StripePermissionError = exports.StripeAuthenticationError = exports.StripeAPIError = exports.StripeInvalidRequestError = exports.StripeCardError = exports.StripeError = exports.generateV2Error = exports.generateV1Error = void 0;
 const generateV1Error = (rawStripeError) => {
     switch (rawStripeError.type) {
         case 'card_error':
@@ -28,6 +28,8 @@ exports.generateV1Error = generateV1Error;
 const generateV2Error = (rawStripeError) => {
     switch (rawStripeError.type) {
         // switchCases: The beginning of the section generated from our OpenAPI spec
+        case 'rate_limit':
+            return new RateLimitError(rawStripeError);
         case 'temporary_session_expired':
             return new TemporarySessionExpiredError(rawStripeError);
         // switchCases: The end of the section generated from our OpenAPI spec
@@ -196,6 +198,12 @@ class StripeUnknownError extends StripeError {
 }
 exports.StripeUnknownError = StripeUnknownError;
 // classDefinitions: The beginning of the section generated from our OpenAPI spec
+class RateLimitError extends StripeError {
+    constructor(rawStripeError = {}) {
+        super(rawStripeError, 'RateLimitError');
+    }
+}
+exports.RateLimitError = RateLimitError;
 class TemporarySessionExpiredError extends StripeError {
     constructor(rawStripeError = {}) {
         super(rawStripeError, 'TemporarySessionExpiredError');
