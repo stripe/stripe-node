@@ -513,6 +513,8 @@ Stripe.resources = resources;
 Stripe.HttpClient = HttpClient;
 Stripe.HttpClientResponse = HttpClientResponse;
 Stripe.CryptoProvider = CryptoProvider;
+Stripe.StripeContext = StripeContext;
+Stripe.errors = _Error;
 Stripe._requestSenderFactory = defaultRequestSenderFactory;
 // For backward compatibility, export createStripe as a factory function
 export function createStripe(platformFunctions, requestSender = defaultRequestSenderFactory) {

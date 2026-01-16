@@ -274,7 +274,7 @@ async (): Promise<void> => {
 // Can reference error types
 let rawError: Stripe.StripeRawError;
 
-let newError: Stripe.errors.StripeError;
+let newError: typeof Stripe.errors.StripeError;
 
 const instanceofCheck1 = {} instanceof Stripe.errors.StripeError;
 const instanceofCheck2 = {} instanceof Stripe.errors.StripeAPIError;
@@ -304,7 +304,8 @@ const v2Context: string | undefined = v2Event.context;
 
 // but event notification is a context object
 const v2EventNotif = {} as Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification;
-const v2ContextObj: Stripe.StripeContext | undefined = v2EventNotif.context;
+const v2ContextObj: InstanceType<typeof Stripe.StripeContext> | undefined =
+  v2EventNotif.context;
 
 async (): Promise<void> => {
   // parsing event notifications

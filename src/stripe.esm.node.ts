@@ -942,6 +942,8 @@ export class Stripe {
   static HttpClient = HttpClient;
   static HttpClientResponse = HttpClientResponse;
   static CryptoProvider = CryptoProvider;
+  static StripeContext = StripeContext;
+  static errors = _Error;
 
   private static _platformFunctions: PlatformFunctions;
   private static _requestSenderFactory: RequestSenderFactory = defaultRequestSenderFactory;
@@ -2410,9 +2412,7 @@ export declare namespace Stripe {
     Emptyable,
   };
 
-  export {StripeContext};
   export {StripeRawError};
-  export import errors = _Error;
   export import Events = V2.Core.Events;
 }
 

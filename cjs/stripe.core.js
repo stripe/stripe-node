@@ -517,6 +517,8 @@ Stripe.resources = resources;
 Stripe.HttpClient = HttpClient_js_1.HttpClient;
 Stripe.HttpClientResponse = HttpClient_js_1.HttpClientResponse;
 Stripe.CryptoProvider = CryptoProvider_js_1.CryptoProvider;
+Stripe.StripeContext = StripeContext_js_1.StripeContext;
+Stripe.errors = _Error;
 Stripe._requestSenderFactory = defaultRequestSenderFactory;
 // For backward compatibility, export createStripe as a factory function
 function createStripe(platformFunctions, requestSender = defaultRequestSenderFactory) {

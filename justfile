@@ -18,7 +18,7 @@ test *args: install build
 
 # try to compile the example TS file to make sure exports work
 types-test: build
-    (cd testProjects/types && npm install)
+    if [ ! -d testProjects/types/node_modules ]; then (cd testProjects/types && npm install); fi
     tsc --build testProjects/types
 
 # run full integration tests by installing a bunch of packages and starting servers (slow)
