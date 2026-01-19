@@ -418,7 +418,7 @@ expect(event.id).to.equal(payload.id);
 
 In some cases, you might encounter parameters on an API request or fields on an API response that aren’t available in the SDKs.
 This might happen when they’re undocumented or when they’re in preview and you aren’t using a preview SDK. 
-See [undocumented params and properties](https://docs.stripe.com/sdks/server-side#undocumented-params-and-fields) to send those parameters or access those fields.
+See [undocumented params and properties](https://docs.stripe.com/sdks/server-side?lang=node#undocumented-params-and-fields) to send those parameters or access those fields.
 
 ### Writing a Plugin
 
