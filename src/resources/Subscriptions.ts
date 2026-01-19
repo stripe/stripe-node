@@ -33,10 +33,6 @@ export const Subscriptions = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/subscriptions/{subscription}/migrate',
   }),
-  pause: stripeMethod({
-    method: 'POST',
-    fullPath: '/v1/subscriptions/{subscription}/pause',
-  }),
   resume: stripeMethod({
     method: 'POST',
     fullPath: '/v1/subscriptions/{subscription}/resume',
