@@ -4,7 +4,6 @@ import {
   makeURLInterpolator,
   protoExtend,
   queryStringifyRequestData,
-  getAPIMode,
 } from './utils.js';
 import {stripeMethod} from './StripeMethod.js';
 import {
@@ -229,7 +228,7 @@ StripeResource.prototype = {
       const path = [
         opts.requestPath,
         emptyQuery ? '' : '?',
-        queryStringifyRequestData(opts.queryData, getAPIMode(opts.requestPath)),
+        queryStringifyRequestData(opts.queryData),
       ].join('');
 
       const {headers, settings} = opts;
