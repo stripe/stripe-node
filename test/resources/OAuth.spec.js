@@ -4,7 +4,6 @@ const stripe = require('../testUtils.js').getSpyableStripe();
 
 const expect = require('chai').expect;
 const URL = require('url');
-const qs = require('qs');
 
 describe('OAuth', () => {
   describe('authorize', () => {
@@ -32,7 +31,9 @@ describe('OAuth', () => {
       it('Uses the correct query', () => {
         const url = stripe.oauth.authorizeUrl({state: 'some_state'});
 
-        const query = qs.parse(URL.parse(url).query);
+        const query = Object.fromEntries(
+          new URLSearchParams(URL.parse(url).query)
+        );
 
         expect(query.client_id).to.equal('default_client_id');
         expect(query.response_type).to.equal('code');
@@ -43,7 +44,9 @@ describe('OAuth', () => {
       it('Uses a provided client_id instead of the default', () => {
         const url = stripe.oauth.authorizeUrl({client_id: '123abc'});
 
-        const query = qs.parse(URL.parse(url).query);
+        const query = Object.fromEntries(
+          new URLSearchParams(URL.parse(url).query)
+        );
 
         expect(query.client_id).to.equal('123abc');
       });

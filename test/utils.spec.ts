@@ -123,6 +123,589 @@ describe('utils', () => {
         )
       ).to.equal('include[0]=a&include[1]=b');
     });
+
+    // Additional comprehensive tests for edge cases
+    it('Handles empty object', () => {
+      expect(utils.queryStringifyRequestData({})).to.equal('');
+    });
+
+    it('Handles empty string value', () => {
+      expect(utils.queryStringifyRequestData({a: ''})).to.equal('a=');
+    });
+
+    it('Handles boolean values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          t: true,
+          f: false,
+        })
+      ).to.equal('t=true&f=false');
+    });
+
+    it('Handles zero and negative numbers', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          zero: 0,
+          negative: -42,
+          float: 3.14,
+        })
+      ).to.equal('zero=0&negative=-42&float=3.14');
+    });
+
+    it('Handles undefined values by omitting them', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: 1,
+          b: undefined,
+          c: 3,
+        })
+      ).to.equal('a=1&c=3');
+    });
+
+    it('Handles null values as empty string', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: null,
+        })
+      ).to.equal('a=');
+    });
+
+    it('Handles arrays of primitives', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          arr: [1, 2, 3],
+        })
+      ).to.equal('arr[0]=1&arr[1]=2&arr[2]=3');
+    });
+
+    it('Handles empty arrays', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          arr: [],
+        })
+      ).to.equal('');
+    });
+
+    it('Handles arrays with mixed types', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          arr: ['a', 1, true],
+        })
+      ).to.equal('arr[0]=a&arr[1]=1&arr[2]=true');
+    });
+
+    it('Handles special characters in values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          special: '!@#$%^&*()+=',
+        })
+      ).to.equal('special=%21%40%23%24%25%5E%26%2A%28%29%2B%3D');
+    });
+
+    it('Handles unicode characters', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          emoji: '\u{1F600}',
+          chinese: '\u4E2D\u6587',
+        })
+      ).to.equal('emoji=%F0%9F%98%80&chinese=%E4%B8%AD%E6%96%87');
+    });
+
+    it('Handles keys with special characters', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          'key with spaces': 'value',
+        })
+      ).to.equal('key%20with%20spaces=value');
+    });
+
+    it('Handles nested arrays of objects', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          items: [
+            {name: 'a', qty: 1},
+            {name: 'b', qty: 2},
+          ],
+        })
+      ).to.equal(
+        'items[0][name]=a&items[0][qty]=1&items[1][name]=b&items[1][qty]=2'
+      );
+    });
+
+    it('Handles deeply nested arrays', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: {
+            b: [{c: 1}, {c: 2}],
+          },
+        })
+      ).to.equal('a[b][0][c]=1&a[b][1][c]=2');
+    });
+
+    it('Handles Date at midnight UTC', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          date: new Date('2000-01-01T00:00:00Z'),
+        })
+      ).to.equal('date=946684800');
+    });
+
+    it('Handles nested empty objects', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: {},
+        })
+      ).to.equal('');
+    });
+
+    it('Handles mixed nested structures', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          user: {
+            name: 'John',
+            emails: ['a@b.com', 'c@d.com'],
+            address: {
+              city: 'NYC',
+            },
+          },
+        })
+      ).to.equal(
+        'user[name]=John&user[emails][0]=a%40b.com&user[emails][1]=c%40d.com&user[address][city]=NYC'
+      );
+    });
+
+    it('Handles sparse arrays by including indices', () => {
+      const sparseArray: (number | undefined)[] = [];
+      sparseArray[0] = 1;
+      sparseArray[2] = 3;
+      expect(
+        utils.queryStringifyRequestData({
+          arr: sparseArray,
+        })
+      ).to.equal('arr[0]=1&arr[2]=3');
+    });
+
+    it('Handles objects with numeric string keys', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          obj: {
+            '0': 'zero',
+            '1': 'one',
+          },
+        })
+      ).to.equal('obj[0]=zero&obj[1]=one');
+    });
+
+    it('Preserves order of object keys', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          z: 1,
+          a: 2,
+          m: 3,
+        })
+      ).to.equal('z=1&a=2&m=3');
+    });
+
+    it('Handles URL-like values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          url: 'https://example.com/path?query=1',
+        })
+      ).to.equal('url=https%3A%2F%2Fexample.com%2Fpath%3Fquery%3D1');
+    });
+
+    it('Handles newlines and tabs in values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          text: 'line1\nline2\ttab',
+        })
+      ).to.equal('text=line1%0Aline2%09tab');
+    });
+
+    // Additional edge cases from qs library patterns
+    it('Handles currency symbols and extended unicode', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          euro: '€',
+          hebrew: 'א',
+          surrogate: '𐐷',
+        })
+      ).to.equal('euro=%E2%82%AC&hebrew=%D7%90&surrogate=%F0%90%90%B7');
+    });
+
+    // This is important behavior to enforce since this is how users can
+    // unset emptyable fields. Client-side they are set to `null`, and
+    // we send them to the server as empty strings. The server will then
+    // unset that field.
+    it('Handles nested null values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: {
+            b: null,
+            c: 'value',
+          },
+        })
+      ).to.equal('a[b]=&a[c]=value');
+    });
+
+    it('Handles nested undefined values by omitting them', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: {
+            b: undefined,
+            c: 'value',
+          },
+        })
+      ).to.equal('a[c]=value');
+    });
+
+    it('Handles arrays with null elements', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          arr: [1, null, 3],
+        })
+      ).to.equal('arr[0]=1&arr[1]=&arr[2]=3');
+    });
+
+    it('Handles arrays with undefined elements by omitting them', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          arr: [1, undefined, 3],
+        })
+      ).to.equal('arr[0]=1&arr[2]=3');
+    });
+
+    it('Handles very large numbers', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          big: Number.MAX_SAFE_INTEGER,
+          scientific: 1e10,
+        })
+      ).to.equal('big=9007199254740991&scientific=10000000000');
+    });
+
+    it('Handles keys with brackets', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          'a[b]': 'c',
+        })
+      ).to.equal('a[b]=c');
+    });
+
+    it('Handles keys with equals signs', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          'a=b': 'c',
+        })
+      ).to.equal('a%3Db=c');
+    });
+
+    it('Handles keys with ampersands', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          'a&b': 'c',
+        })
+      ).to.equal('a%26b=c');
+    });
+
+    it('Handles values with equals signs', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: 'b=c',
+        })
+      ).to.equal('a=b%3Dc');
+    });
+
+    it('Handles values with ampersands', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: 'b&c',
+        })
+      ).to.equal('a=b%26c');
+    });
+
+    it('Handles empty string keys', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          '': 'value',
+        })
+      ).to.equal('=value');
+    });
+
+    it('Handles multiple levels of empty objects', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: {b: {}},
+        })
+      ).to.equal('');
+    });
+
+    it('Handles arrays containing empty objects', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          arr: [{}, {a: 1}],
+        })
+      ).to.equal('arr[1][a]=1');
+    });
+
+    it('Handles arrays containing empty arrays', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          arr: [[], [1, 2]],
+        })
+      ).to.equal('arr[1][0]=1&arr[1][1]=2');
+    });
+
+    it('Handles dates before Unix epoch (negative timestamps)', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          date: new Date('1960-01-01T00:00:00Z'),
+        })
+      ).to.equal('date=-315619200');
+    });
+
+    it('Handles single element arrays', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          arr: ['only'],
+        })
+      ).to.equal('arr[0]=only');
+    });
+
+    it('Handles only own properties, not inherited ones', () => {
+      const parent = {inherited: 'should not appear'};
+      const child = Object.create(parent);
+      child.own = 'should appear';
+      expect(utils.queryStringifyRequestData(child)).to.equal(
+        'own=should%20appear'
+      );
+    });
+
+    it('Handles plus signs in values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: 'b+c',
+        })
+      ).to.equal('a=b%2Bc');
+    });
+
+    it('Handles tilde characters (should not encode)', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: '~test~',
+        })
+      ).to.equal('a=~test~');
+    });
+
+    it('Handles very deeply nested structures (6+ levels)', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: {b: {c: {d: {e: {f: 'deep'}}}}},
+        })
+      ).to.equal('a[b][c][d][e][f]=deep');
+    });
+
+    it('Handles arrays at different nesting depths', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: {
+            shallow: ['x'],
+            deep: {
+              arr: ['y', 'z'],
+            },
+          },
+        })
+      ).to.equal('a[shallow][0]=x&a[deep][arr][0]=y&a[deep][arr][1]=z');
+    });
+
+    it('Handles carriage returns', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          text: 'line1\r\nline2',
+        })
+      ).to.equal('text=line1%0D%0Aline2');
+    });
+
+    it('Handles backslashes', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          path: 'C:\\Users\\test',
+        })
+      ).to.equal('path=C%3A%5CUsers%5Ctest');
+    });
+
+    it('Handles quotes in values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          single: "it's",
+          double: 'say "hello"',
+        })
+      ).to.equal('single=it%27s&double=say%20%22hello%22');
+    });
+
+    it('Handles mixed array with all falsy values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          arr: [0, false, '', null],
+        })
+      ).to.equal('arr[0]=0&arr[1]=false&arr[2]=&arr[3]=');
+    });
+
+    it('Handles object with all undefined values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          a: undefined,
+          b: undefined,
+        })
+      ).to.equal('');
+    });
+
+    it('Handles realistic Stripe metadata pattern', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          metadata: {
+            order_id: '12345',
+            customer_email: 'test@example.com',
+          },
+        })
+      ).to.equal(
+        'metadata[order_id]=12345&metadata[customer_email]=test%40example.com'
+      );
+    });
+
+    it('Handles realistic Stripe expand pattern', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          expand: ['customer', 'invoice.subscription'],
+        })
+      ).to.equal('expand[0]=customer&expand[1]=invoice.subscription');
+    });
+
+    it('Handles realistic Stripe line_items pattern', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          line_items: [
+            {price: 'price_123', quantity: 2},
+            {price: 'price_456', quantity: 1},
+          ],
+        })
+      ).to.equal(
+        'line_items[0][price]=price_123&line_items[0][quantity]=2&line_items[1][price]=price_456&line_items[1][quantity]=1'
+      );
+    });
+
+    it('Handles realistic Stripe date filter pattern', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          created: {
+            gte: 1609459200,
+            lte: 1640995199,
+          },
+          limit: 100,
+        })
+      ).to.equal('created[gte]=1609459200&created[lte]=1640995199&limit=100');
+    });
+
+    it('Handles percent signs in values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          discount: '20%',
+        })
+      ).to.equal('discount=20%25');
+    });
+
+    it('Handles hash/pound signs in values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          color: '#ffffff',
+        })
+      ).to.equal('color=%23ffffff');
+    });
+
+    it('Handles at signs in values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          email: 'test@test.com',
+        })
+      ).to.equal('email=test%40test.com');
+    });
+
+    it('Handles colons in values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          time: '12:30:00',
+        })
+      ).to.equal('time=12%3A30%3A00');
+    });
+
+    it('Handles semicolons in values', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          list: 'a;b;c',
+        })
+      ).to.equal('list=a%3Bb%3Bc');
+    });
+
+    it('Handles nested arrays at top level', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          matrix: [
+            [1, 2],
+            [3, 4],
+          ],
+        })
+      ).to.equal('matrix[0][0]=1&matrix[0][1]=2&matrix[1][0]=3&matrix[1][1]=4');
+    });
+
+    it('Handles Date objects with milliseconds precision', () => {
+      // 1234567890123 ms = 1234567890 seconds (floor)
+      expect(
+        utils.queryStringifyRequestData({
+          date: new Date(1234567890123),
+        })
+      ).to.equal('date=1234567890');
+    });
+
+    // Client-side, it is possible to set a field to `NaN` by accident.
+    // E.g. `value = undefined / 100`. When we convert this to a string,
+    // the user will get a clear error from the server:
+    // {
+    //   "error": {
+    //     "message": "Invalid decimal: NaN",
+    //     "param": "percent_off",
+    //     ...
+    //   }
+    // }
+    // In the future, we may decide to throw an error instead of converting
+    // to string.
+    it('Handles NaN by converting to string', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          value: NaN,
+        })
+      ).to.equal('value=NaN');
+    });
+
+    // Client-side, it is possible to set a field to `Infinity` by accident.
+    // E.g. `value = 1 / 0`. When we convert this to a string,
+    // the user will get a clear error from the server:
+    // {
+    //   "error": {
+    //     "message": "Invalid decimal: Infinity",
+    //     "param": "value",
+    //     ...
+    //   }
+    // }
+    // In the future, we may decide to throw an error instead of converting
+    // to string.
+    it('Handles Infinity by converting to string', () => {
+      expect(
+        utils.queryStringifyRequestData({
+          value: Infinity,
+          neg: -Infinity,
+        })
+      ).to.equal('value=Infinity&neg=-Infinity');
+    });
   });
 
   describe('protoExtend', () => {
