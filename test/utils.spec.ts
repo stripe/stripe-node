@@ -333,6 +333,10 @@ describe('utils', () => {
       ).to.equal('euro=%E2%82%AC&hebrew=%D7%90&surrogate=%F0%90%90%B7');
     });
 
+    // This is important behavior to enforce since this is how users can
+    // unset emptyable fields. Client-side they are set to `null`, and
+    // we send them to the server as empty strings. The server will then
+    // unset that field.
     it('Handles nested null values', () => {
       expect(
         utils.queryStringifyRequestData({
@@ -662,6 +666,18 @@ describe('utils', () => {
       ).to.equal('date=1234567890');
     });
 
+    // Client-side, it is possible to set a field to `NaN` by accident.
+    // E.g. `value = undefined / 100`. When we convert this to a string,
+    // the user will get a clear error from the server:
+    // {
+    //   "error": {
+    //     "message": "Invalid decimal: NaN",
+    //     "param": "percent_off",
+    //     ...
+    //   }
+    // }
+    // In the future, we may decide to throw an error instead of converting
+    // to string.
     it('Handles NaN by converting to string', () => {
       expect(
         utils.queryStringifyRequestData({
@@ -670,6 +686,18 @@ describe('utils', () => {
       ).to.equal('value=NaN');
     });
 
+    // Client-side, it is possible to set a field to `Infinity` by accident.
+    // E.g. `value = 1 / 0`. When we convert this to a string,
+    // the user will get a clear error from the server:
+    // {
+    //   "error": {
+    //     "message": "Invalid decimal: Infinity",
+    //     "param": "value",
+    //     ...
+    //   }
+    // }
+    // In the future, we may decide to throw an error instead of converting
+    // to string.
     it('Handles Infinity by converting to string', () => {
       expect(
         utils.queryStringifyRequestData({
