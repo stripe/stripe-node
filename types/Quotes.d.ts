@@ -797,7 +797,7 @@ declare module 'stripe' {
         /**
          * Configures how the subscription schedule handles billing for phase transitions when the quote is accepted.
          */
-        phase_effective_at?: SubscriptionData.PhaseEffectiveAt;
+        phase_effective_at?: SubscriptionData.PhaseEffectiveAt | null;
 
         /**
          * If specified, the invoicing for the given billing cycle iterations will be processed when the quote is accepted. Cannot be used with `effective_date`.
@@ -1132,7 +1132,7 @@ declare module 'stripe' {
         /**
          * Configures how the subscription schedule handles billing for phase transitions when the quote is accepted.
          */
-        phase_effective_at?: SubscriptionDataOverride.PhaseEffectiveAt;
+        phase_effective_at?: SubscriptionDataOverride.PhaseEffectiveAt | null;
 
         /**
          * Determines how to handle [prorations](https://docs.stripe.com/subscriptions/billing-cycle#prorations) when the quote is accepted.

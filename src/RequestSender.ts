@@ -767,7 +767,7 @@ export class RequestSender {
       if (apiMode == 'v2') {
         stringifiedData = data ? jsonStringifyRequestData(data) : '';
       } else {
-        stringifiedData = queryStringifyRequestData(data || {}, apiMode);
+        stringifiedData = queryStringifyRequestData(data || {});
       }
 
       prepareAndMakeRequest(null, stringifiedData);
