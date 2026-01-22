@@ -354,7 +354,7 @@ declare module 'stripe' {
               | 'protocol_error'
               | 'rejected';
 
-            type Version = '1.0.2' | '2.1.0' | '2.2.0';
+            type Version = '1.0.2' | '2.1.0' | '2.2.0' | '2.3.0' | '2.3.1';
           }
 
           interface Wallet {
@@ -407,7 +407,7 @@ declare module 'stripe' {
 
         interface Ideal {
           /**
-           * The customer's bank. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `finom`, `handelsbanken`, `ing`, `knab`, `mollie`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
+           * The customer's bank. Can be one of `abn_amro`, `adyen`, `asn_bank`, `bunq`, `buut`, `finom`, `handelsbanken`, `ing`, `knab`, `mollie`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
            */
           bank: Ideal.Bank | null;
 
@@ -441,6 +441,7 @@ declare module 'stripe' {
         namespace Ideal {
           type Bank =
             | 'abn_amro'
+            | 'adyen'
             | 'asn_bank'
             | 'bunq'
             | 'buut'
@@ -462,6 +463,7 @@ declare module 'stripe' {
 
           type Bic =
             | 'ABNANL2A'
+            | 'ADYBNL2A'
             | 'ASNBNL21'
             | 'BITSNL2A'
             | 'BUNQNL2A'
@@ -819,6 +821,7 @@ declare module 'stripe' {
           | 'rate_limit'
           | 'refer_to_customer'
           | 'refund_disputed_payment'
+          | 'request_blocked'
           | 'resource_already_exists'
           | 'resource_missing'
           | 'return_intent_already_processed'

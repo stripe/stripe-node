@@ -66,7 +66,7 @@ declare module 'stripe' {
       percent_off?: number;
 
       /**
-       * Unix timestamp specifying the last time at which the coupon can be redeemed. After the redeem_by date, the coupon can no longer be applied to new customers.
+       * Unix timestamp specifying the last time at which the coupon can be redeemed (cannot be set to more than 5 years in the future). After the redeem_by date, the coupon can no longer be applied to new customers.
        */
       redeem_by?: number;
     }

@@ -190,6 +190,11 @@ declare module 'stripe' {
            * Set if the ReceivedDebit was created due to a [Payout](https://api.stripe.com#payouts) object.
            */
           payout: string | null;
+
+          /**
+           * Set if the ReceivedDebit was created due to a [Topup](https://api.stripe.com#topups) object.
+           */
+          topup: string | null;
         }
 
         type Network = 'ach' | 'card' | 'stripe';

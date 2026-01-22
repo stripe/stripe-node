@@ -142,7 +142,7 @@ declare module 'stripe' {
       items: ApiList<Stripe.SubscriptionItem>;
 
       /**
-       * The most recent invoice this subscription has generated.
+       * The most recent invoice this subscription has generated over its lifecycle (for example, when it cycles or is updated).
        */
       latest_invoice: string | Stripe.Invoice | null;
 
@@ -477,7 +477,7 @@ declare module 'stripe' {
           /**
            * This sub-hash contains details about the PayTo payment method options to pass to invoices created by the subscription.
            */
-          payto?: PaymentMethodOptions.Payto | null;
+          payto: PaymentMethodOptions.Payto | null;
 
           /**
            * This sub-hash contains details about the SEPA Direct Debit payment method options to pass to invoices created by the subscription.
