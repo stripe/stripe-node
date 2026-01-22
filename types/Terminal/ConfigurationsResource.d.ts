@@ -47,7 +47,7 @@ declare module 'stripe' {
         stripe_s700?: ConfigurationCreateParams.StripeS700;
 
         /**
-         * Tipping configurations for readers. supporting on-reader tips
+         * Tipping configurations for readers that support on-reader tips.
          */
         tipping?: Stripe.Emptyable<ConfigurationCreateParams.Tipping>;
 
@@ -120,11 +120,6 @@ declare module 'stripe' {
            * Tipping configuration for AUD
            */
           aud?: Tipping.Aud;
-
-          /**
-           * Tipping configuration for BGN
-           */
-          bgn?: Tipping.Bgn;
 
           /**
            * Tipping configuration for CAD
@@ -241,23 +236,6 @@ declare module 'stripe' {
           }
 
           interface Aud {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Bgn {
             /**
              * Fixed amounts displayed when collecting a tip
              */
@@ -830,11 +808,6 @@ declare module 'stripe' {
           aud?: Tipping.Aud;
 
           /**
-           * Tipping configuration for BGN
-           */
-          bgn?: Tipping.Bgn;
-
-          /**
            * Tipping configuration for CAD
            */
           cad?: Tipping.Cad;
@@ -949,23 +922,6 @@ declare module 'stripe' {
           }
 
           interface Aud {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Bgn {
             /**
              * Fixed amounts displayed when collecting a tip
              */

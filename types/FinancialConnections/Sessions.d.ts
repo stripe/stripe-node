@@ -53,6 +53,10 @@ declare module 'stripe' {
          */
         prefetch: Array<Session.Prefetch> | null;
 
+        relink_options?: Session.RelinkOptions;
+
+        relink_result?: Session.RelinkResult;
+
         /**
          * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
          */
@@ -136,6 +140,39 @@ declare module 'stripe' {
           | 'inferred_balances'
           | 'ownership'
           | 'transactions';
+
+        interface RelinkOptions {
+          /**
+           * Requires the end user to repair this specific account during the authentication flow instead of connecting a different one.
+           */
+          account?: string | null;
+
+          /**
+           * The authorization to relink in the Session.
+           */
+          authorization: string;
+        }
+
+        interface RelinkResult {
+          /**
+           * The account relinked in the Session. Only present if `relink_options[account]` is set and relink is successful.
+           */
+          account: string | null;
+
+          /**
+           * The authorization relinked in the Session. Only present if relink is successful.
+           */
+          authorization: string | null;
+
+          /**
+           * Reason for why relink failed. One of `no_authorization`, `no_account`, or `other`.
+           */
+          failure_reason: RelinkResult.FailureReason | null;
+        }
+
+        namespace RelinkResult {
+          type FailureReason = 'no_account' | 'no_authorization' | 'other';
+        }
 
         type Status = 'cancelled' | 'failed' | 'pending' | 'succeeded';
 

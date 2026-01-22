@@ -2150,13 +2150,70 @@ declare module 'stripe' {
 
         interface PaypayPayments {
           /**
+           * Additional files that are required to support the onboarding process of your business.
+           */
+          additional_files?: Array<string>;
+
+          /**
            * Whether your business sells digital content or not.
            */
           goods_type?: PaypayPayments.GoodsType;
+
+          /**
+           * Details regarding your business's website.
+           */
+          site?: PaypayPayments.Site;
         }
 
         namespace PaypayPayments {
           type GoodsType = 'digital_content' | 'other';
+
+          interface Site {
+            /**
+             * Additional information about your business's website.
+             */
+            accessible?: Site.Accessible;
+
+            /**
+             * Additional information about your business's website.
+             */
+            in_development?: Site.InDevelopment;
+
+            /**
+             * Additional information about your business's website.
+             */
+            restricted?: Site.Restricted;
+
+            /**
+             * The status of your business's website.
+             */
+            type?: Site.Type;
+          }
+
+          namespace Site {
+            interface Accessible {}
+
+            interface InDevelopment {
+              /**
+               * The password needed to access your business's website.
+               */
+              password: string;
+
+              /**
+               * The username needed to access your business's website.
+               */
+              username?: string;
+            }
+
+            interface Restricted {
+              /**
+               * The file explaining the payment flow for your business.
+               */
+              payment_flow_file?: string;
+            }
+
+            type Type = 'accessible' | 'in_development' | 'restricted';
+          }
         }
 
         interface TaxForms {
@@ -4312,13 +4369,70 @@ declare module 'stripe' {
 
         interface PaypayPayments {
           /**
+           * Additional files that are required to support the onboarding process of your business.
+           */
+          additional_files?: Array<string>;
+
+          /**
            * Whether your business sells digital content or not.
            */
           goods_type?: PaypayPayments.GoodsType;
+
+          /**
+           * Details regarding your business's website.
+           */
+          site?: PaypayPayments.Site;
         }
 
         namespace PaypayPayments {
           type GoodsType = 'digital_content' | 'other';
+
+          interface Site {
+            /**
+             * Additional information about your business's website.
+             */
+            accessible?: Site.Accessible;
+
+            /**
+             * Additional information about your business's website.
+             */
+            in_development?: Site.InDevelopment;
+
+            /**
+             * Additional information about your business's website.
+             */
+            restricted?: Site.Restricted;
+
+            /**
+             * The status of your business's website.
+             */
+            type?: Site.Type;
+          }
+
+          namespace Site {
+            interface Accessible {}
+
+            interface InDevelopment {
+              /**
+               * The password needed to access your business's website.
+               */
+              password: string;
+
+              /**
+               * The username needed to access your business's website.
+               */
+              username?: string;
+            }
+
+            interface Restricted {
+              /**
+               * The file explaining the payment flow for your business.
+               */
+              payment_flow_file?: string;
+            }
+
+            type Type = 'accessible' | 'in_development' | 'restricted';
+          }
         }
 
         interface TaxForms {

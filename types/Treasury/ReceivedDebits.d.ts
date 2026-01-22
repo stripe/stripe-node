@@ -200,6 +200,11 @@ declare module 'stripe' {
            * The ReceivedCredit that Capital withheld from
            */
           received_credit_capital_withholding?: string | null;
+
+          /**
+           * Set if the ReceivedDebit was created due to a [Topup](https://api.stripe.com#topups) object.
+           */
+          topup: string | null;
         }
 
         type Network = 'ach' | 'card' | 'stripe';

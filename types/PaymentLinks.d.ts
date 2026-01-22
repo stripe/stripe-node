@@ -69,7 +69,7 @@ declare module 'stripe' {
       currency: string;
 
       /**
-       * Collect additional information from your customer using custom fields. Up to 3 fields are supported.
+       * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `custom`.
        */
       custom_fields: Array<PaymentLink.CustomField>;
 
