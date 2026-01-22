@@ -60,6 +60,7 @@
 ///<reference path='./FinancialConnections/SessionsResource.d.ts' />
 ///<reference path='./FinancialConnections/TransactionsResource.d.ts' />
 ///<reference path='./Forwarding/RequestsResource.d.ts' />
+///<reference path='./FrMealVouchersOnboardingsResource.d.ts' />
 ///<reference path='./FxQuotesResource.d.ts' />
 ///<reference path='./Identity/BlocklistEntriesResource.d.ts' />
 ///<reference path='./Identity/VerificationReportsResource.d.ts' />
@@ -294,6 +295,7 @@
 ///<reference path='./FinancialConnections/Sessions.d.ts' />
 ///<reference path='./FinancialConnections/Transactions.d.ts' />
 ///<reference path='./Forwarding/Requests.d.ts' />
+///<reference path='./FrMealVouchersOnboardings.d.ts' />
 ///<reference path='./FundingInstructions.d.ts' />
 ///<reference path='./FxQuotes.d.ts' />
 ///<reference path='./Identity/BlocklistEntries.d.ts' />
@@ -509,6 +511,7 @@ declare module 'stripe' {
     externalAccounts: Stripe.ExternalAccountsResource;
     fileLinks: Stripe.FileLinksResource;
     files: Stripe.FilesResource;
+    frMealVouchersOnboardings: Stripe.FrMealVouchersOnboardingsResource;
     fxQuotes: Stripe.FxQuotesResource;
     invoiceItems: Stripe.InvoiceItemsResource;
     invoicePayments: Stripe.InvoicePaymentsResource;

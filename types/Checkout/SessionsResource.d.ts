@@ -830,7 +830,7 @@ declare module 'stripe' {
           }
 
           namespace CouponData {
-            type Duration = 'forever' | 'once' | 'repeating';
+            type Duration = 'forever' | 'once' | 'repeating' | 'service_period';
           }
         }
 
@@ -3845,7 +3845,7 @@ declare module 'stripe' {
           }
 
           namespace CouponData {
-            type Duration = 'forever' | 'once' | 'repeating';
+            type Duration = 'forever' | 'once' | 'repeating' | 'service_period';
           }
         }
 

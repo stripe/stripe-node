@@ -74,6 +74,11 @@ declare module 'stripe' {
        * Configuration of the [script](https://docs.stripe.com/billing/subscriptions/script-coupons) used to calculate the discount.
        */
       script?: CouponCreateParams.Script;
+
+      /**
+       * A hash specifying the service period for the coupon.
+       */
+      service_period?: CouponCreateParams.ServicePeriod;
     }
 
     namespace CouponCreateParams {
@@ -91,7 +96,7 @@ declare module 'stripe' {
         amount_off: number;
       }
 
-      type Duration = 'forever' | 'once' | 'repeating';
+      type Duration = 'forever' | 'once' | 'repeating' | 'service_period';
 
       interface Script {
         /**
@@ -109,6 +114,22 @@ declare module 'stripe' {
         type Configuration = {
           [key: string]: unknown;
         };
+      }
+
+      interface ServicePeriod {
+        /**
+         * Specifies coupon frequency. Either `day`, `week`, `month` or `year`.
+         */
+        interval: ServicePeriod.Interval;
+
+        /**
+         * The number of intervals for which the coupon will be applied.
+         */
+        interval_count: number;
+      }
+
+      namespace ServicePeriod {
+        type Interval = 'day' | 'month' | 'week' | 'year';
       }
     }
 

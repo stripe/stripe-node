@@ -402,6 +402,11 @@ declare module 'stripe' {
              * The promotion code to redeem.
              */
             promotion_code?: string;
+
+            /**
+             * Settings for discount application including service period anchoring.
+             */
+            settings?: AddDiscount.Settings;
           }
 
           namespace AddDiscount {
@@ -410,6 +415,68 @@ declare module 'stripe' {
                * The type of calculation made to determine when the discount ends.
                */
               type: 'line_ends_at';
+            }
+
+            interface Settings {
+              /**
+               * Configures service period cycle anchoring.
+               */
+              service_period_anchor_config?: Settings.ServicePeriodAnchorConfig;
+
+              /**
+               * The start date of the discount's service period when applying a coupon or promotion code with a service period duration. Defaults to `line_start` if omitted.
+               */
+              start_date?: Settings.StartDate;
+            }
+
+            namespace Settings {
+              interface ServicePeriodAnchorConfig {
+                /**
+                 * Anchor the service period to a custom date. Type must be `custom` to specify.
+                 */
+                custom?: ServicePeriodAnchorConfig.Custom;
+
+                /**
+                 * The type of service period anchor config. Defaults to `inherit` if omitted.
+                 */
+                type?: ServicePeriodAnchorConfig.Type;
+              }
+
+              namespace ServicePeriodAnchorConfig {
+                interface Custom {
+                  /**
+                   * The day of the month the anchor should be. Ranges from 1 to 31.
+                   */
+                  day_of_month: number;
+
+                  /**
+                   * The hour of the day the anchor should be. Ranges from 0 to 23.
+                   */
+                  hour?: number;
+
+                  /**
+                   * The minute of the hour the anchor should be. Ranges from 0 to 59.
+                   */
+                  minute?: number;
+
+                  /**
+                   * The month to start full cycle periods. Ranges from 1 to 12.
+                   */
+                  month?: number;
+
+                  /**
+                   * The second of the minute the anchor should be. Ranges from 0 to 59.
+                   */
+                  second?: number;
+                }
+
+                type Type = 'custom' | 'inherit';
+              }
+
+              type StartDate =
+                | 'current_period_end'
+                | 'current_period_start'
+                | 'line_start';
             }
           }
 
@@ -471,6 +538,11 @@ declare module 'stripe' {
                * ID of the promotion code to create a new discount for.
                */
               promotion_code?: string;
+
+              /**
+               * Settings for discount application including service period anchoring.
+               */
+              settings?: Discount.Settings;
             }
 
             namespace Discount {
@@ -509,6 +581,68 @@ declare module 'stripe' {
                 }
 
                 type Type = 'duration' | 'timestamp';
+              }
+
+              interface Settings {
+                /**
+                 * Configures service period cycle anchoring.
+                 */
+                service_period_anchor_config?: Settings.ServicePeriodAnchorConfig;
+
+                /**
+                 * The start date of the discount's service period when applying a coupon or promotion code with a service period duration. Defaults to `line_start` if omitted.
+                 */
+                start_date?: Settings.StartDate;
+              }
+
+              namespace Settings {
+                interface ServicePeriodAnchorConfig {
+                  /**
+                   * Anchor the service period to a custom date. Type must be `custom` to specify.
+                   */
+                  custom?: ServicePeriodAnchorConfig.Custom;
+
+                  /**
+                   * The type of service period anchor config. Defaults to `inherit` if omitted.
+                   */
+                  type?: ServicePeriodAnchorConfig.Type;
+                }
+
+                namespace ServicePeriodAnchorConfig {
+                  interface Custom {
+                    /**
+                     * The day of the month the anchor should be. Ranges from 1 to 31.
+                     */
+                    day_of_month: number;
+
+                    /**
+                     * The hour of the day the anchor should be. Ranges from 0 to 23.
+                     */
+                    hour?: number;
+
+                    /**
+                     * The minute of the hour the anchor should be. Ranges from 0 to 59.
+                     */
+                    minute?: number;
+
+                    /**
+                     * The month to start full cycle periods. Ranges from 1 to 12.
+                     */
+                    month?: number;
+
+                    /**
+                     * The second of the minute the anchor should be. Ranges from 0 to 59.
+                     */
+                    second?: number;
+                  }
+
+                  type Type = 'custom' | 'inherit';
+                }
+
+                type StartDate =
+                  | 'current_period_end'
+                  | 'current_period_start'
+                  | 'line_start';
               }
             }
 
@@ -568,6 +702,75 @@ declare module 'stripe' {
              * An ID of an existing promotion code to replace the `discounts` array with.
              */
             promotion_code?: string;
+
+            /**
+             * Settings for discount application including service period anchoring.
+             */
+            settings?: SetDiscount.Settings;
+          }
+
+          namespace SetDiscount {
+            interface Settings {
+              /**
+               * Configures service period cycle anchoring.
+               */
+              service_period_anchor_config?: Settings.ServicePeriodAnchorConfig;
+
+              /**
+               * The start date of the discount's service period when applying a coupon or promotion code with a service period duration. Defaults to `line_start` if omitted.
+               */
+              start_date?: Settings.StartDate;
+            }
+
+            namespace Settings {
+              interface ServicePeriodAnchorConfig {
+                /**
+                 * Anchor the service period to a custom date. Type must be `custom` to specify.
+                 */
+                custom?: ServicePeriodAnchorConfig.Custom;
+
+                /**
+                 * The type of service period anchor config. Defaults to `inherit` if omitted.
+                 */
+                type?: ServicePeriodAnchorConfig.Type;
+              }
+
+              namespace ServicePeriodAnchorConfig {
+                interface Custom {
+                  /**
+                   * The day of the month the anchor should be. Ranges from 1 to 31.
+                   */
+                  day_of_month: number;
+
+                  /**
+                   * The hour of the day the anchor should be. Ranges from 0 to 23.
+                   */
+                  hour?: number;
+
+                  /**
+                   * The minute of the hour the anchor should be. Ranges from 0 to 59.
+                   */
+                  minute?: number;
+
+                  /**
+                   * The month to start full cycle periods. Ranges from 1 to 12.
+                   */
+                  month?: number;
+
+                  /**
+                   * The second of the minute the anchor should be. Ranges from 0 to 59.
+                   */
+                  second?: number;
+                }
+
+                type Type = 'custom' | 'inherit';
+              }
+
+              type StartDate =
+                | 'current_period_end'
+                | 'current_period_start'
+                | 'line_start';
+            }
           }
 
           interface SetItem {
@@ -628,6 +831,11 @@ declare module 'stripe' {
                * ID of the promotion code to create a new discount for.
                */
               promotion_code?: string;
+
+              /**
+               * Settings for discount application including service period anchoring.
+               */
+              settings?: Discount.Settings;
             }
 
             namespace Discount {
@@ -666,6 +874,68 @@ declare module 'stripe' {
                 }
 
                 type Type = 'duration' | 'timestamp';
+              }
+
+              interface Settings {
+                /**
+                 * Configures service period cycle anchoring.
+                 */
+                service_period_anchor_config?: Settings.ServicePeriodAnchorConfig;
+
+                /**
+                 * The start date of the discount's service period when applying a coupon or promotion code with a service period duration. Defaults to `line_start` if omitted.
+                 */
+                start_date?: Settings.StartDate;
+              }
+
+              namespace Settings {
+                interface ServicePeriodAnchorConfig {
+                  /**
+                   * Anchor the service period to a custom date. Type must be `custom` to specify.
+                   */
+                  custom?: ServicePeriodAnchorConfig.Custom;
+
+                  /**
+                   * The type of service period anchor config. Defaults to `inherit` if omitted.
+                   */
+                  type?: ServicePeriodAnchorConfig.Type;
+                }
+
+                namespace ServicePeriodAnchorConfig {
+                  interface Custom {
+                    /**
+                     * The day of the month the anchor should be. Ranges from 1 to 31.
+                     */
+                    day_of_month: number;
+
+                    /**
+                     * The hour of the day the anchor should be. Ranges from 0 to 23.
+                     */
+                    hour?: number;
+
+                    /**
+                     * The minute of the hour the anchor should be. Ranges from 0 to 59.
+                     */
+                    minute?: number;
+
+                    /**
+                     * The month to start full cycle periods. Ranges from 1 to 12.
+                     */
+                    month?: number;
+
+                    /**
+                     * The second of the minute the anchor should be. Ranges from 0 to 59.
+                     */
+                    second?: number;
+                  }
+
+                  type Type = 'custom' | 'inherit';
+                }
+
+                type StartDate =
+                  | 'current_period_end'
+                  | 'current_period_start'
+                  | 'line_start';
               }
             }
 
@@ -2150,6 +2420,11 @@ declare module 'stripe' {
              * The promotion code to redeem.
              */
             promotion_code?: string;
+
+            /**
+             * Settings for discount application including service period anchoring.
+             */
+            settings?: AddDiscount.Settings;
           }
 
           namespace AddDiscount {
@@ -2158,6 +2433,68 @@ declare module 'stripe' {
                * The type of calculation made to determine when the discount ends.
                */
               type: 'line_ends_at';
+            }
+
+            interface Settings {
+              /**
+               * Configures service period cycle anchoring.
+               */
+              service_period_anchor_config?: Settings.ServicePeriodAnchorConfig;
+
+              /**
+               * The start date of the discount's service period when applying a coupon or promotion code with a service period duration. Defaults to `line_start` if omitted.
+               */
+              start_date?: Settings.StartDate;
+            }
+
+            namespace Settings {
+              interface ServicePeriodAnchorConfig {
+                /**
+                 * Anchor the service period to a custom date. Type must be `custom` to specify.
+                 */
+                custom?: ServicePeriodAnchorConfig.Custom;
+
+                /**
+                 * The type of service period anchor config. Defaults to `inherit` if omitted.
+                 */
+                type?: ServicePeriodAnchorConfig.Type;
+              }
+
+              namespace ServicePeriodAnchorConfig {
+                interface Custom {
+                  /**
+                   * The day of the month the anchor should be. Ranges from 1 to 31.
+                   */
+                  day_of_month: number;
+
+                  /**
+                   * The hour of the day the anchor should be. Ranges from 0 to 23.
+                   */
+                  hour?: number;
+
+                  /**
+                   * The minute of the hour the anchor should be. Ranges from 0 to 59.
+                   */
+                  minute?: number;
+
+                  /**
+                   * The month to start full cycle periods. Ranges from 1 to 12.
+                   */
+                  month?: number;
+
+                  /**
+                   * The second of the minute the anchor should be. Ranges from 0 to 59.
+                   */
+                  second?: number;
+                }
+
+                type Type = 'custom' | 'inherit';
+              }
+
+              type StartDate =
+                | 'current_period_end'
+                | 'current_period_start'
+                | 'line_start';
             }
           }
 
@@ -2219,6 +2556,11 @@ declare module 'stripe' {
                * ID of the promotion code to create a new discount for.
                */
               promotion_code?: string;
+
+              /**
+               * Settings for discount application including service period anchoring.
+               */
+              settings?: Discount.Settings;
             }
 
             namespace Discount {
@@ -2257,6 +2599,68 @@ declare module 'stripe' {
                 }
 
                 type Type = 'duration' | 'timestamp';
+              }
+
+              interface Settings {
+                /**
+                 * Configures service period cycle anchoring.
+                 */
+                service_period_anchor_config?: Settings.ServicePeriodAnchorConfig;
+
+                /**
+                 * The start date of the discount's service period when applying a coupon or promotion code with a service period duration. Defaults to `line_start` if omitted.
+                 */
+                start_date?: Settings.StartDate;
+              }
+
+              namespace Settings {
+                interface ServicePeriodAnchorConfig {
+                  /**
+                   * Anchor the service period to a custom date. Type must be `custom` to specify.
+                   */
+                  custom?: ServicePeriodAnchorConfig.Custom;
+
+                  /**
+                   * The type of service period anchor config. Defaults to `inherit` if omitted.
+                   */
+                  type?: ServicePeriodAnchorConfig.Type;
+                }
+
+                namespace ServicePeriodAnchorConfig {
+                  interface Custom {
+                    /**
+                     * The day of the month the anchor should be. Ranges from 1 to 31.
+                     */
+                    day_of_month: number;
+
+                    /**
+                     * The hour of the day the anchor should be. Ranges from 0 to 23.
+                     */
+                    hour?: number;
+
+                    /**
+                     * The minute of the hour the anchor should be. Ranges from 0 to 59.
+                     */
+                    minute?: number;
+
+                    /**
+                     * The month to start full cycle periods. Ranges from 1 to 12.
+                     */
+                    month?: number;
+
+                    /**
+                     * The second of the minute the anchor should be. Ranges from 0 to 59.
+                     */
+                    second?: number;
+                  }
+
+                  type Type = 'custom' | 'inherit';
+                }
+
+                type StartDate =
+                  | 'current_period_end'
+                  | 'current_period_start'
+                  | 'line_start';
               }
             }
 
@@ -2316,6 +2720,75 @@ declare module 'stripe' {
              * An ID of an existing promotion code to replace the `discounts` array with.
              */
             promotion_code?: string;
+
+            /**
+             * Settings for discount application including service period anchoring.
+             */
+            settings?: SetDiscount.Settings;
+          }
+
+          namespace SetDiscount {
+            interface Settings {
+              /**
+               * Configures service period cycle anchoring.
+               */
+              service_period_anchor_config?: Settings.ServicePeriodAnchorConfig;
+
+              /**
+               * The start date of the discount's service period when applying a coupon or promotion code with a service period duration. Defaults to `line_start` if omitted.
+               */
+              start_date?: Settings.StartDate;
+            }
+
+            namespace Settings {
+              interface ServicePeriodAnchorConfig {
+                /**
+                 * Anchor the service period to a custom date. Type must be `custom` to specify.
+                 */
+                custom?: ServicePeriodAnchorConfig.Custom;
+
+                /**
+                 * The type of service period anchor config. Defaults to `inherit` if omitted.
+                 */
+                type?: ServicePeriodAnchorConfig.Type;
+              }
+
+              namespace ServicePeriodAnchorConfig {
+                interface Custom {
+                  /**
+                   * The day of the month the anchor should be. Ranges from 1 to 31.
+                   */
+                  day_of_month: number;
+
+                  /**
+                   * The hour of the day the anchor should be. Ranges from 0 to 23.
+                   */
+                  hour?: number;
+
+                  /**
+                   * The minute of the hour the anchor should be. Ranges from 0 to 59.
+                   */
+                  minute?: number;
+
+                  /**
+                   * The month to start full cycle periods. Ranges from 1 to 12.
+                   */
+                  month?: number;
+
+                  /**
+                   * The second of the minute the anchor should be. Ranges from 0 to 59.
+                   */
+                  second?: number;
+                }
+
+                type Type = 'custom' | 'inherit';
+              }
+
+              type StartDate =
+                | 'current_period_end'
+                | 'current_period_start'
+                | 'line_start';
+            }
           }
 
           interface SetItem {
@@ -2376,6 +2849,11 @@ declare module 'stripe' {
                * ID of the promotion code to create a new discount for.
                */
               promotion_code?: string;
+
+              /**
+               * Settings for discount application including service period anchoring.
+               */
+              settings?: Discount.Settings;
             }
 
             namespace Discount {
@@ -2414,6 +2892,68 @@ declare module 'stripe' {
                 }
 
                 type Type = 'duration' | 'timestamp';
+              }
+
+              interface Settings {
+                /**
+                 * Configures service period cycle anchoring.
+                 */
+                service_period_anchor_config?: Settings.ServicePeriodAnchorConfig;
+
+                /**
+                 * The start date of the discount's service period when applying a coupon or promotion code with a service period duration. Defaults to `line_start` if omitted.
+                 */
+                start_date?: Settings.StartDate;
+              }
+
+              namespace Settings {
+                interface ServicePeriodAnchorConfig {
+                  /**
+                   * Anchor the service period to a custom date. Type must be `custom` to specify.
+                   */
+                  custom?: ServicePeriodAnchorConfig.Custom;
+
+                  /**
+                   * The type of service period anchor config. Defaults to `inherit` if omitted.
+                   */
+                  type?: ServicePeriodAnchorConfig.Type;
+                }
+
+                namespace ServicePeriodAnchorConfig {
+                  interface Custom {
+                    /**
+                     * The day of the month the anchor should be. Ranges from 1 to 31.
+                     */
+                    day_of_month: number;
+
+                    /**
+                     * The hour of the day the anchor should be. Ranges from 0 to 23.
+                     */
+                    hour?: number;
+
+                    /**
+                     * The minute of the hour the anchor should be. Ranges from 0 to 59.
+                     */
+                    minute?: number;
+
+                    /**
+                     * The month to start full cycle periods. Ranges from 1 to 12.
+                     */
+                    month?: number;
+
+                    /**
+                     * The second of the minute the anchor should be. Ranges from 0 to 59.
+                     */
+                    second?: number;
+                  }
+
+                  type Type = 'custom' | 'inherit';
+                }
+
+                type StartDate =
+                  | 'current_period_end'
+                  | 'current_period_start'
+                  | 'line_start';
               }
             }
 
