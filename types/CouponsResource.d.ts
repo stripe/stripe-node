@@ -126,10 +126,31 @@ declare module 'stripe' {
          * The number of intervals for which the coupon will be applied.
          */
         interval_count: number;
+
+        /**
+         * Specifies the number of times the coupon is contiguously applied.
+         */
+        iterations?: ServicePeriod.Iterations;
       }
 
       namespace ServicePeriod {
         type Interval = 'day' | 'month' | 'week' | 'year';
+
+        interface Iterations {
+          /**
+           * The number of iterations the service period will repeat for. Only used when type is `count`, defaults to 1.
+           */
+          count?: number;
+
+          /**
+           * The type of iterations, defaults to `count` if omitted.
+           */
+          type: Iterations.Type;
+        }
+
+        namespace Iterations {
+          type Type = 'count' | 'forever';
+        }
       }
     }
 

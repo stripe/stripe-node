@@ -154,6 +154,20 @@ declare module 'stripe' {
         interval: string;
 
         interval_count: number;
+
+        iterations: ServicePeriod.Iterations;
+      }
+
+      namespace ServicePeriod {
+        interface Iterations {
+          count: number | null;
+
+          type: Iterations.Type;
+        }
+
+        namespace Iterations {
+          type Type = 'count' | 'forever';
+        }
       }
 
       type Type = 'amount_off' | 'percent_off' | 'script';
