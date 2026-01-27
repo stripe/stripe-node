@@ -94,6 +94,11 @@ declare module 'stripe' {
         tax_registrations: Components.TaxRegistrations;
 
         tax_settings: Components.TaxSettings;
+
+        /**
+         * Configuration for the [agentic commerce settings](https://docs.stripe.com/connect/supported-embedded-components/agentic-commerce-settings/) embedded component.
+         */
+        agentic_commerce_settings?: Components.AgenticCommerceSettings | null;
       }
 
       namespace Components {
@@ -141,6 +146,19 @@ declare module 'stripe' {
              */
             external_account_collection: boolean;
           }
+        }
+
+        interface AgenticCommerceSettings {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: AgenticCommerceSettings.Features;
+        }
+
+        namespace AgenticCommerceSettings {
+          interface Features {}
         }
 
         interface Balances {

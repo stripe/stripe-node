@@ -2976,6 +2976,11 @@ declare module 'stripe' {
       automatic_tax?: SubscriptionListParams.AutomaticTax;
 
       /**
+       * Filter for subscriptions that have the specified billing cadence.
+       */
+      billing_cadence?: string;
+
+      /**
        * The collection method of the subscriptions to retrieve. Either `charge_automatically` or `send_invoice`.
        */
       collection_method?: SubscriptionListParams.CollectionMethod;
