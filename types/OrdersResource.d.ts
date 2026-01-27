@@ -5382,27 +5382,6 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface OrderCancelParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    interface OrderListLineItemsParams extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    interface OrderReopenParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     interface OrderSubmitParams {
       /**
        * `expected_total` should always be set to the order's `amount_total` field. If they don't match, submitting the order will fail. This helps detect race conditions where something else concurrently modifies the order.
@@ -5454,45 +5433,6 @@ declare module 'stripe' {
         options?: RequestOptions
       ): ApiListPromise<Stripe.Order>;
       list(options?: RequestOptions): ApiListPromise<Stripe.Order>;
-
-      /**
-       * Cancels the order as well as the payment intent if one is attached.
-       */
-      cancel(
-        id: string,
-        params?: OrderCancelParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Order>>;
-      cancel(
-        id: string,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Order>>;
-
-      /**
-       * When retrieving an order, there is an includable line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
-       */
-      listLineItems(
-        id: string,
-        params?: OrderListLineItemsParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.LineItem>;
-      listLineItems(
-        id: string,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.LineItem>;
-
-      /**
-       * Reopens a submitted order.
-       */
-      reopen(
-        id: string,
-        params?: OrderReopenParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Order>>;
-      reopen(
-        id: string,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Order>>;
 
       /**
        * Submitting an Order transitions the status to processing and creates a PaymentIntent object so the order can be paid. If the Order has an amount_total of 0, no PaymentIntent object will be created. Once the order is submitted, its contents cannot be changed, unless the [reopen](https://docs.stripe.com/api#reopen_order) method is called.

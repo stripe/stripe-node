@@ -24,11 +24,6 @@ declare module 'stripe' {
       backdate_start_date?: number;
 
       /**
-       * The Billing Cadence which controls the timing of recurring invoice generation for this subscription. If unset, the subscription will bill according to its own configured schedule and create its own invoices. If set, this subscription will be billed by the cadence instead, potentially sharing invoices with the other subscriptions linked to that Cadence.
-       */
-      billing_cadence?: string;
-
-      /**
        * A future timestamp in UTC format to anchor the subscription's [billing cycle](https://docs.stripe.com/subscriptions/billing-cycle). The anchor is the reference point that aligns future billing cycle dates. It sets the day of week for `week` intervals, the day of month for `month` and `year` intervals, and the month of year for `year` intervals.
        */
       billing_cycle_anchor?: number;
@@ -1374,11 +1369,6 @@ declare module 'stripe' {
       automatic_tax?: SubscriptionUpdateParams.AutomaticTax;
 
       /**
-       * The Billing Cadence which controls the timing of recurring invoice generation for this subscription. If unset, the subscription will bill according to its own configured schedule and create its own invoices. If set, this subscription will be billed by the cadence instead, potentially sharing invoices with the other subscriptions linked to that Cadence.
-       */
-      billing_cadence?: string;
-
-      /**
        * Either `now` or `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time (in UTC). For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
        */
       billing_cycle_anchor?: SubscriptionUpdateParams.BillingCycleAnchor;
@@ -2674,11 +2664,6 @@ declare module 'stripe' {
       automatic_tax?: SubscriptionListParams.AutomaticTax;
 
       /**
-       * Filter for subscriptions that have the specified billing cadence.
-       */
-      billing_cadence?: string;
-
-      /**
        * The collection method of the subscriptions to retrieve. Either `charge_automatically` or `send_invoice`.
        */
       collection_method?: SubscriptionListParams.CollectionMethod;
@@ -2755,18 +2740,6 @@ declare module 'stripe' {
         | 'paused'
         | 'trialing'
         | 'unpaid';
-    }
-
-    interface SubscriptionAttachCadenceParams {
-      /**
-       * The Billing Cadence which controls the timing of recurring invoice generation for this subscription. If unset, the subscription will bill according to its own configured schedule and create its own invoices. If set, this subscription will be billed by the cadence instead, potentially sharing invoices with the other subscriptions linked to that Cadence.
-       */
-      billing_cadence: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
     }
 
     interface SubscriptionCancelParams {
@@ -2856,44 +2829,6 @@ declare module 'stripe' {
           type ProrationDiscounts = 'included' | 'itemized';
         }
       }
-    }
-
-    interface SubscriptionPauseParams {
-      /**
-       * The type of pause to apply.
-       */
-      type: 'subscription';
-
-      /**
-       * Controls what to bill for when pausing the subscription.
-       */
-      bill_for?: SubscriptionPauseParams.BillFor;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Determines how to handle debits and credits when pausing. The default is `pending_invoice_item`.
-       */
-      invoicing_behavior?: SubscriptionPauseParams.InvoicingBehavior;
-    }
-
-    namespace SubscriptionPauseParams {
-      interface BillFor {
-        /**
-         * Controls whether to debit for accrued metered usage in the current billing period. The default is `false`.
-         */
-        outstanding_usage?: boolean;
-
-        /**
-         * Controls whether to credit for licensed items in the current billing period. The default is `false`.
-         */
-        unused_time?: boolean;
-      }
-
-      type InvoicingBehavior = 'invoice' | 'pending_invoice_item';
     }
 
     interface SubscriptionResumeParams {
@@ -3016,15 +2951,6 @@ declare module 'stripe' {
       list(options?: RequestOptions): ApiListPromise<Stripe.Subscription>;
 
       /**
-       * Attach a Billing Cadence to an existing subscription. When attached, the subscription is billed by the Billing Cadence, potentially sharing invoices with the other subscriptions linked to the Billing Cadence.
-       */
-      attachCadence(
-        id: string,
-        params: SubscriptionAttachCadenceParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Subscription>>;
-
-      /**
        * Cancels a customer's subscription immediately. The customer won't be charged again for the subscription. After it's canceled, you can no longer update the subscription or its [metadata](https://docs.stripe.com/metadata).
        *
        * Any pending invoice items that you've created are still charged at the end of the period, unless manually [deleted](https://docs.stripe.com/api#delete_invoiceitem). If you've set the subscription to cancel at the end of the period, any pending prorations are also left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations are removed if invoice_now and prorate are both set to true.
@@ -3060,15 +2986,6 @@ declare module 'stripe' {
       migrate(
         id: string,
         params: SubscriptionMigrateParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Subscription>>;
-
-      /**
-       * Pauses a subscription by transitioning it to the paused status. A paused subscription does not generate invoices and will not advance to new billing periods. The subscription can be resumed later using the resume endpoint. Cannot pause subscriptions with attached schedules.
-       */
-      pause(
-        id: string,
-        params: SubscriptionPauseParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Subscription>>;
 

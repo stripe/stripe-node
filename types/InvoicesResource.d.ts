@@ -2342,11 +2342,6 @@ declare module 'stripe' {
       automatic_tax?: InvoiceCreatePreviewParams.AutomaticTax;
 
       /**
-       * The identifier of the billing cadence for which you'd like to retrieve the upcoming invoice. Cannot be provided when `subscription`, `schedule`, `subscription_details` or `schedule_details` are provided.
-       */
-      billing_cadence?: string;
-
-      /**
        * The currency to preview this invoice in. Defaults to that of `customer` if not specified.
        */
       currency?: string;
