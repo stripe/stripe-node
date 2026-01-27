@@ -3331,6 +3331,11 @@ declare module 'stripe' {
            * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
+
+          /**
+           * Preferred transaction settlement speed
+           */
+          preferred_settlement_speed?: UsBankAccount.PreferredSettlementSpeed;
         }
 
         namespace UsBankAccount {
@@ -3394,6 +3399,8 @@ declare module 'stripe' {
           namespace Networks {
             type Requested = 'ach' | 'us_domestic_wire';
           }
+
+          type PreferredSettlementSpeed = 'fastest' | 'standard';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
@@ -6714,6 +6721,11 @@ declare module 'stripe' {
            * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
+
+          /**
+           * Preferred transaction settlement speed
+           */
+          preferred_settlement_speed?: UsBankAccount.PreferredSettlementSpeed;
         }
 
         namespace UsBankAccount {
@@ -6777,6 +6789,8 @@ declare module 'stripe' {
           namespace Networks {
             type Requested = 'ach' | 'us_domestic_wire';
           }
+
+          type PreferredSettlementSpeed = 'fastest' | 'standard';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
@@ -10463,6 +10477,11 @@ declare module 'stripe' {
            * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
+
+          /**
+           * Preferred transaction settlement speed
+           */
+          preferred_settlement_speed?: UsBankAccount.PreferredSettlementSpeed;
         }
 
         namespace UsBankAccount {
@@ -10526,6 +10545,8 @@ declare module 'stripe' {
           namespace Networks {
             type Requested = 'ach' | 'us_domestic_wire';
           }
+
+          type PreferredSettlementSpeed = 'fastest' | 'standard';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
