@@ -28,6 +28,11 @@ declare module 'stripe' {
         account_numbers: Array<Account.AccountNumber> | null;
 
         /**
+         * The ID of the Financial Connections Authorization this account belongs to.
+         */
+        authorization?: string;
+
+        /**
          * The most recent information about the account's balance.
          */
         balance: Account.Balance | null;
@@ -96,6 +101,8 @@ declare module 'stripe' {
          * The status of the link to the account.
          */
         status: Account.Status;
+
+        status_details?: Account.StatusDetails;
 
         /**
          * If `category` is `cash`, one of:
@@ -314,6 +321,35 @@ declare module 'stripe' {
           | 'transactions';
 
         type Status = 'active' | 'disconnected' | 'inactive';
+
+        interface StatusDetails {
+          inactive?: StatusDetails.Inactive;
+        }
+
+        namespace StatusDetails {
+          interface Inactive {
+            /**
+             * The action (if any) to relink the inactive Account.
+             */
+            action: Inactive.Action;
+
+            /**
+             * The underlying cause of the Account being inactive.
+             */
+            cause: Inactive.Cause;
+          }
+
+          namespace Inactive {
+            type Action = 'none' | 'relink_required';
+
+            type Cause =
+              | 'access_denied'
+              | 'access_expired'
+              | 'account_closed'
+              | 'account_unavailable'
+              | 'unspecified';
+          }
+        }
 
         type Subcategory =
           | 'checking'

@@ -3160,6 +3160,44 @@ declare module 'stripe' {
       }
     }
 
+    interface SubscriptionPauseParams {
+      /**
+       * The type of pause to apply.
+       */
+      type: 'subscription';
+
+      /**
+       * Controls what to bill for when pausing the subscription.
+       */
+      bill_for?: SubscriptionPauseParams.BillFor;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Determines how to handle debits and credits when pausing. The default is `pending_invoice_item`.
+       */
+      invoicing_behavior?: SubscriptionPauseParams.InvoicingBehavior;
+    }
+
+    namespace SubscriptionPauseParams {
+      interface BillFor {
+        /**
+         * Controls whether to debit for accrued metered usage in the current billing period. The default is `false`.
+         */
+        outstanding_usage?: boolean;
+
+        /**
+         * Controls whether to credit for licensed items in the current billing period. The default is `false`.
+         */
+        unused_time?: boolean;
+      }
+
+      type InvoicingBehavior = 'invoice' | 'pending_invoice_item';
+    }
+
     interface SubscriptionResumeParams {
       /**
        * The billing cycle anchor that applies when the subscription is resumed. Either `now` or `unchanged`. The default is `now`. For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
@@ -3324,6 +3362,15 @@ declare module 'stripe' {
       migrate(
         id: string,
         params: SubscriptionMigrateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Subscription>>;
+
+      /**
+       * Pauses a subscription by transitioning it to the paused status. A paused subscription does not generate invoices and will not advance to new billing periods. The subscription can be resumed later using the resume endpoint. Cannot pause subscriptions with attached schedules.
+       */
+      pause(
+        id: string,
+        params: SubscriptionPauseParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Subscription>>;
 

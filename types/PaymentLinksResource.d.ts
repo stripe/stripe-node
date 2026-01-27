@@ -49,12 +49,12 @@ declare module 'stripe' {
       currency?: string;
 
       /**
-       * Collect additional information from your customer using custom fields. Up to 3 fields are supported.
+       * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `custom`.
        */
       custom_fields?: Array<PaymentLinkCreateParams.CustomField>;
 
       /**
-       * Display additional text for your customers using custom text.
+       * Display additional text for your customers using custom text. You can't set this parameter if `ui_mode` is `custom`.
        */
       custom_text?: PaymentLinkCreateParams.CustomText;
 
@@ -643,14 +643,14 @@ declare module 'stripe' {
             tax_code?: string;
 
             /**
-             * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
-             */
-            unit_label?: string;
-
-            /**
              * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
              */
             tax_details?: ProductData.TaxDetails;
+
+            /**
+             * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
+             */
+            unit_label?: string;
           }
 
           namespace ProductData {
@@ -1227,7 +1227,7 @@ declare module 'stripe' {
         enabled: boolean;
 
         /**
-         * Describes whether a tax ID is required during checkout. Defaults to `never`.
+         * Describes whether a tax ID is required during checkout. Defaults to `never`. You can't set this parameter if `ui_mode` is `custom`.
          */
         required?: TaxIdCollection.Required;
       }
@@ -1286,14 +1286,14 @@ declare module 'stripe' {
       billing_address_collection?: PaymentLinkUpdateParams.BillingAddressCollection;
 
       /**
-       * Collect additional information from your customer using custom fields. Up to 3 fields are supported.
+       * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `custom`.
        */
       custom_fields?: Stripe.Emptyable<
         Array<PaymentLinkUpdateParams.CustomField>
       >;
 
       /**
-       * Display additional text for your customers using custom text.
+       * Display additional text for your customers using custom text. You can't set this parameter if `ui_mode` is `custom`.
        */
       custom_text?: PaymentLinkUpdateParams.CustomText;
 
@@ -2230,7 +2230,7 @@ declare module 'stripe' {
         enabled: boolean;
 
         /**
-         * Describes whether a tax ID is required during checkout. Defaults to `never`.
+         * Describes whether a tax ID is required during checkout. Defaults to `never`. You can't set this parameter if `ui_mode` is `custom`.
          */
         required?: TaxIdCollection.Required;
       }

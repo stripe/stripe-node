@@ -258,7 +258,16 @@ declare module 'stripe' {
         discount_amount?: Stripe.Emptyable<number>;
 
         /**
-         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         * Set to `false` to return arithmetic validation errors in the response without failing the request. Use this when you want the operation to proceed regardless of arithmetic errors in the line item data.
+         *
+         * Omit or set to `true` to immediately return a 400 error when arithmetic validation fails. Use this for strict validation that prevents processing with line item data that has arithmetic inconsistencies.
+         *
+         * For card payments, Stripe doesn't send line item data if there's an arithmetic validation error to card networks.
+         */
+        enforce_arithmetic_validation?: boolean;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 200 line items.
          */
         line_items?: Stripe.Emptyable<Array<AmountDetails.LineItem>>;
 
@@ -3019,6 +3028,7 @@ declare module 'stripe' {
         namespace Ideal {
           type Bank =
             | 'abn_amro'
+            | 'adyen'
             | 'asn_bank'
             | 'bunq'
             | 'buut'
@@ -4337,7 +4347,7 @@ declare module 'stripe' {
               }
             }
 
-            type Version = '1.0.2' | '2.1.0' | '2.2.0';
+            type Version = '1.0.2' | '2.1.0' | '2.2.0' | '2.3.0' | '2.3.1';
           }
         }
 
@@ -6826,13 +6836,6 @@ declare module 'stripe' {
           networks?: UsBankAccount.Networks;
 
           /**
-           * Preferred transaction settlement speed
-           */
-          preferred_settlement_speed?: Stripe.Emptyable<
-            UsBankAccount.PreferredSettlementSpeed
-          >;
-
-          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -6854,6 +6857,11 @@ declare module 'stripe' {
            * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
+
+          /**
+           * Preferred transaction settlement speed
+           */
+          preferred_settlement_speed?: UsBankAccount.PreferredSettlementSpeed;
         }
 
         namespace UsBankAccount {
@@ -7258,7 +7266,16 @@ declare module 'stripe' {
         discount_amount?: Stripe.Emptyable<number>;
 
         /**
-         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         * Set to `false` to return arithmetic validation errors in the response without failing the request. Use this when you want the operation to proceed regardless of arithmetic errors in the line item data.
+         *
+         * Omit or set to `true` to immediately return a 400 error when arithmetic validation fails. Use this for strict validation that prevents processing with line item data that has arithmetic inconsistencies.
+         *
+         * For card payments, Stripe doesn't send line item data if there's an arithmetic validation error to card networks.
+         */
+        enforce_arithmetic_validation?: boolean;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 200 line items.
          */
         line_items?: Stripe.Emptyable<Array<AmountDetails.LineItem>>;
 
@@ -9983,6 +10000,7 @@ declare module 'stripe' {
         namespace Ideal {
           type Bank =
             | 'abn_amro'
+            | 'adyen'
             | 'asn_bank'
             | 'bunq'
             | 'buut'
@@ -11301,7 +11319,7 @@ declare module 'stripe' {
               }
             }
 
-            type Version = '1.0.2' | '2.1.0' | '2.2.0';
+            type Version = '1.0.2' | '2.1.0' | '2.2.0' | '2.3.0' | '2.3.1';
           }
         }
 
@@ -13790,13 +13808,6 @@ declare module 'stripe' {
           networks?: UsBankAccount.Networks;
 
           /**
-           * Preferred transaction settlement speed
-           */
-          preferred_settlement_speed?: Stripe.Emptyable<
-            UsBankAccount.PreferredSettlementSpeed
-          >;
-
-          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -13818,6 +13829,11 @@ declare module 'stripe' {
            * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
+
+          /**
+           * Preferred transaction settlement speed
+           */
+          preferred_settlement_speed?: UsBankAccount.PreferredSettlementSpeed;
         }
 
         namespace UsBankAccount {
@@ -14131,7 +14147,16 @@ declare module 'stripe' {
         discount_amount?: Stripe.Emptyable<number>;
 
         /**
-         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         * Set to `false` to return arithmetic validation errors in the response without failing the request. Use this when you want the operation to proceed regardless of arithmetic errors in the line item data.
+         *
+         * Omit or set to `true` to immediately return a 400 error when arithmetic validation fails. Use this for strict validation that prevents processing with line item data that has arithmetic inconsistencies.
+         *
+         * For card payments, Stripe doesn't send line item data if there's an arithmetic validation error to card networks.
+         */
+        enforce_arithmetic_validation?: boolean;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 200 line items.
          */
         line_items?: Stripe.Emptyable<Array<AmountDetails.LineItem>>;
 
@@ -16394,7 +16419,16 @@ declare module 'stripe' {
         discount_amount?: Stripe.Emptyable<number>;
 
         /**
-         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         * Set to `false` to return arithmetic validation errors in the response without failing the request. Use this when you want the operation to proceed regardless of arithmetic errors in the line item data.
+         *
+         * Omit or set to `true` to immediately return a 400 error when arithmetic validation fails. Use this for strict validation that prevents processing with line item data that has arithmetic inconsistencies.
+         *
+         * For card payments, Stripe doesn't send line item data if there's an arithmetic validation error to card networks.
+         */
+        enforce_arithmetic_validation?: boolean;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 200 line items.
          */
         line_items?: Stripe.Emptyable<Array<AmountDetails.LineItem>>;
 
@@ -19135,6 +19169,7 @@ declare module 'stripe' {
         namespace Ideal {
           type Bank =
             | 'abn_amro'
+            | 'adyen'
             | 'asn_bank'
             | 'bunq'
             | 'buut'
@@ -20453,7 +20488,7 @@ declare module 'stripe' {
               }
             }
 
-            type Version = '1.0.2' | '2.1.0' | '2.2.0';
+            type Version = '1.0.2' | '2.1.0' | '2.2.0' | '2.3.0' | '2.3.1';
           }
         }
 
@@ -22942,13 +22977,6 @@ declare module 'stripe' {
           networks?: UsBankAccount.Networks;
 
           /**
-           * Preferred transaction settlement speed
-           */
-          preferred_settlement_speed?: Stripe.Emptyable<
-            UsBankAccount.PreferredSettlementSpeed
-          >;
-
-          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -22970,6 +22998,11 @@ declare module 'stripe' {
            * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
+
+          /**
+           * Preferred transaction settlement speed
+           */
+          preferred_settlement_speed?: UsBankAccount.PreferredSettlementSpeed;
         }
 
         namespace UsBankAccount {
@@ -23288,7 +23321,16 @@ declare module 'stripe' {
         discount_amount?: Stripe.Emptyable<number>;
 
         /**
-         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         * Set to `false` to return arithmetic validation errors in the response without failing the request. Use this when you want the operation to proceed regardless of arithmetic errors in the line item data.
+         *
+         * Omit or set to `true` to immediately return a 400 error when arithmetic validation fails. Use this for strict validation that prevents processing with line item data that has arithmetic inconsistencies.
+         *
+         * For card payments, Stripe doesn't send line item data if there's an arithmetic validation error to card networks.
+         */
+        enforce_arithmetic_validation?: boolean;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 200 line items.
          */
         line_items?: Stripe.Emptyable<Array<AmountDetails.LineItem>>;
 

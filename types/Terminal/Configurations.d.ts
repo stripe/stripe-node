@@ -110,8 +110,6 @@ declare module 'stripe' {
 
           aud?: Tipping.Aud;
 
-          bgn?: Tipping.Bgn;
-
           cad?: Tipping.Cad;
 
           chf?: Tipping.Chf;
@@ -170,23 +168,6 @@ declare module 'stripe' {
           }
 
           interface Aud {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number> | null;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number> | null;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Bgn {
             /**
              * Fixed amounts displayed when collecting a tip
              */
