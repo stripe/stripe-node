@@ -261,6 +261,8 @@ declare module 'stripe' {
          */
         discount_amount?: number;
 
+        error?: AmountDetails.Error;
+
         /**
          * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 200 line items.
          */
@@ -274,6 +276,24 @@ declare module 'stripe' {
       }
 
       namespace AmountDetails {
+        interface Error {
+          /**
+           * The code of the error that occurred when validating the current amount details.
+           */
+          code: Error.Code | null;
+
+          /**
+           * A message providing more details about the error.
+           */
+          message: string | null;
+        }
+
+        namespace Error {
+          type Code =
+            | 'amount_details_amount_mismatch'
+            | 'amount_details_tax_shipping_discount_greater_than_amount';
+        }
+
         interface Shipping {
           /**
            * If a physical good is being shipped, the cost of shipping represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than or equal to 0.
@@ -670,6 +690,7 @@ declare module 'stripe' {
           | 'rate_limit'
           | 'refer_to_customer'
           | 'refund_disputed_payment'
+          | 'request_blocked'
           | 'resource_already_exists'
           | 'resource_missing'
           | 'return_intent_already_processed'
@@ -2870,11 +2891,6 @@ declare module 'stripe' {
           mandate_options?: UsBankAccount.MandateOptions;
 
           /**
-           * Preferred transaction settlement speed
-           */
-          preferred_settlement_speed?: UsBankAccount.PreferredSettlementSpeed;
-
-          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -2894,6 +2910,11 @@ declare module 'stripe' {
            * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
+
+          /**
+           * Preferred transaction settlement speed
+           */
+          preferred_settlement_speed?: UsBankAccount.PreferredSettlementSpeed;
         }
 
         namespace UsBankAccount {

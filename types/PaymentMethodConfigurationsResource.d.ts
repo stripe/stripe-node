@@ -114,7 +114,7 @@ declare module 'stripe' {
       fpx?: PaymentMethodConfigurationCreateParams.Fpx;
 
       /**
-       * Meal vouchers in France, or “titres-restaurant”, is a local benefits program commonly offered by employers for their employees to purchase prepared food and beverages on working days. Check this [page](https://docs.stripe.com/payments/benefits/fr-meal-vouchers) for more details.
+       * Meal vouchers in France, or “titres-restaurant”, is a local benefits program commonly offered by employers for their employees to purchase prepared food and beverages on working days. Check this [page](https://docs.stripe.com/payments/meal-vouchers/fr-meal-vouchers) for more details.
        */
       fr_meal_voucher_conecs?: PaymentMethodConfigurationCreateParams.FrMealVoucherConecs;
 
@@ -1545,7 +1545,7 @@ declare module 'stripe' {
       fpx?: PaymentMethodConfigurationUpdateParams.Fpx;
 
       /**
-       * Meal vouchers in France, or “titres-restaurant”, is a local benefits program commonly offered by employers for their employees to purchase prepared food and beverages on working days. Check this [page](https://docs.stripe.com/payments/benefits/fr-meal-vouchers) for more details.
+       * Meal vouchers in France, or “titres-restaurant”, is a local benefits program commonly offered by employers for their employees to purchase prepared food and beverages on working days. Check this [page](https://docs.stripe.com/payments/meal-vouchers/fr-meal-vouchers) for more details.
        */
       fr_meal_voucher_conecs?: PaymentMethodConfigurationUpdateParams.FrMealVoucherConecs;
 

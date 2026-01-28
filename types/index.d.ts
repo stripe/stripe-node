@@ -80,6 +80,7 @@
 ///<reference path='./PromotionCodesResource.d.ts' />
 ///<reference path='./QuotesResource.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarningsResource.d.ts' />
+///<reference path='./Radar/PaymentEvaluationsResource.d.ts' />
 ///<reference path='./Radar/ValueListItemsResource.d.ts' />
 ///<reference path='./Radar/ValueListsResource.d.ts' />
 ///<reference path='./RefundsResource.d.ts' />
@@ -242,6 +243,7 @@
 ///<reference path='./PromotionCodes.d.ts' />
 ///<reference path='./Quotes.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarnings.d.ts' />
+///<reference path='./Radar/PaymentEvaluations.d.ts' />
 ///<reference path='./Radar/ValueListItems.d.ts' />
 ///<reference path='./Radar/ValueLists.d.ts' />
 ///<reference path='./Refunds.d.ts' />
@@ -430,6 +432,7 @@ declare module 'stripe' {
     };
     radar: {
       earlyFraudWarnings: Stripe.Radar.EarlyFraudWarningsResource;
+      paymentEvaluations: Stripe.Radar.PaymentEvaluationsResource;
       valueLists: Stripe.Radar.ValueListsResource;
       valueListItems: Stripe.Radar.ValueListItemsResource;
     };

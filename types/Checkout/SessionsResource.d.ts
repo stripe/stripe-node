@@ -10,7 +10,7 @@ declare module 'stripe' {
         adaptive_pricing?: SessionCreateParams.AdaptivePricing;
 
         /**
-         * Configure actions after a Checkout Session has expired.
+         * Configure actions after a Checkout Session has expired. You can't set this parameter if `ui_mode` is `custom`.
          */
         after_expiration?: SessionCreateParams.AfterExpiration;
 
@@ -57,12 +57,12 @@ declare module 'stripe' {
         currency?: string;
 
         /**
-         * Collect additional information from your customer using custom fields. Up to 3 fields are supported.
+         * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `custom`.
          */
         custom_fields?: Array<SessionCreateParams.CustomField>;
 
         /**
-         * Display additional text for your customers using custom text.
+         * Display additional text for your customers using custom text. You can't set this parameter if `ui_mode` is `custom`.
          */
         custom_text?: SessionCreateParams.CustomText;
 
@@ -170,6 +170,8 @@ declare module 'stripe' {
          * You can configure Checkout to collect your customers' business names, individual names, or both. Each name field can be either required or optional.
          *
          * If a [Customer](https://docs.stripe.com/api/customers) is created or provided, the names can be saved to the Customer object as well.
+         *
+         * You can't set this parameter if `ui_mode` is `custom`.
          */
         name_collection?: SessionCreateParams.NameCollection;
 
@@ -181,11 +183,13 @@ declare module 'stripe' {
          * For `payment` mode, there is a maximum of 100 combined line items and optional items, however it is recommended to consolidate items if there are more than a few dozen.
          *
          * For `subscription` mode, there is a maximum of 20 line items and optional items with recurring Prices and 20 line items and optional items with one-time Prices.
+         *
+         * You can't set this parameter if `ui_mode` is `custom`.
          */
         optional_items?: Array<SessionCreateParams.OptionalItem>;
 
         /**
-         * Where the user is coming from. This informs the optimizations that are applied to the session.
+         * Where the user is coming from. This informs the optimizations that are applied to the session. You can't set this parameter if `ui_mode` is `custom`.
          */
         origin_context?: SessionCreateParams.OriginContext;
 
@@ -286,6 +290,7 @@ declare module 'stripe' {
          * to customize relevant text on the page, such as the submit button.
          *  `submit_type` can only be specified on Checkout Sessions in
          * `payment` or `subscription` mode. If blank or `auto`, `pay` is used.
+         * You can't set this parameter if `ui_mode` is `custom`.
          */
         submit_type?: SessionCreateParams.SubmitType;
 
@@ -898,7 +903,7 @@ declare module 'stripe' {
           adjustable_quantity?: LineItem.AdjustableQuantity;
 
           /**
-           * The [tax rates](https://docs.stripe.com/api/tax_rates) that will be applied to this line item depending on the customer's billing/shipping address. We currently support the following countries: US, GB, AU, and all countries in the EU.
+           * The [tax rates](https://docs.stripe.com/api/tax_rates) that will be applied to this line item depending on the customer's billing/shipping address. We currently support the following countries: US, GB, AU, and all countries in the EU. You can't set this parameter if `ui_mode` is `custom`.
            */
           dynamic_tax_rates?: Array<string>;
 
@@ -1306,7 +1311,7 @@ declare module 'stripe' {
 
         interface PaymentMethodOptions {
           /**
-           * contains details about the ACSS Debit payment method options.
+           * contains details about the ACSS Debit payment method options. You can't set this parameter if `ui_mode` is `custom`.
            */
           acss_debit?: PaymentMethodOptions.AcssDebit;
 
@@ -1819,7 +1824,7 @@ declare module 'stripe' {
             request_three_d_secure?: Card.RequestThreeDSecure;
 
             /**
-             * Restrictions to apply to the card payment method. For example, you can block specific card brands.
+             * Restrictions to apply to the card payment method. For example, you can block specific card brands. You can't set this parameter if `ui_mode` is `custom`.
              */
             restrictions?: Card.Restrictions;
 
@@ -3203,7 +3208,7 @@ declare module 'stripe' {
           application_fee_percent?: number;
 
           /**
-           * A future timestamp to anchor the subscription's billing cycle for new subscriptions.
+           * A future timestamp to anchor the subscription's billing cycle for new subscriptions. You can't set this parameter if `ui_mode` is `custom`.
            */
           billing_cycle_anchor?: number;
 
@@ -3362,7 +3367,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * Describes whether a tax ID is required during checkout. Defaults to `never`.
+           * Describes whether a tax ID is required during checkout. Defaults to `never`. You can't set this parameter if `ui_mode` is `custom`.
            */
           required?: TaxIdCollection.Required;
         }
@@ -3882,7 +3887,7 @@ declare module 'stripe' {
         /**
          * Updates a Checkout Session object.
          *
-         * Related guide: [Dynamically update Checkout](https://docs.stripe.com/payments/checkout/dynamic-updates)
+         * Related guide: [Dynamically update a Checkout Session](https://docs.stripe.com/payments/advanced/dynamic-updates)
          */
         update(
           id: string,

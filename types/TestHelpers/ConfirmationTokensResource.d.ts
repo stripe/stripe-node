@@ -513,6 +513,7 @@ declare module 'stripe' {
           namespace Ideal {
             type Bank =
               | 'abn_amro'
+              | 'adyen'
               | 'asn_bank'
               | 'bunq'
               | 'buut'

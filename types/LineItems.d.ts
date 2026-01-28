@@ -16,6 +16,8 @@ declare module 'stripe' {
        */
       object: 'item';
 
+      adjustable_quantity: LineItem.AdjustableQuantity | null;
+
       /**
        * Total discount amount applied. If no discounts were applied, defaults to 0.
        */
@@ -73,6 +75,14 @@ declare module 'stripe' {
     }
 
     namespace LineItem {
+      interface AdjustableQuantity {
+        enabled: boolean;
+
+        maximum: number | null;
+
+        minimum: number | null;
+      }
+
       interface Discount {
         /**
          * The amount discounted.

@@ -11,6 +11,11 @@ declare module 'stripe' {
           contact_email?: string;
 
           /**
+           * The default contact phone for the Account.
+           */
+          contact_phone?: string;
+
+          /**
            * A descriptive name for the Account. This name will be surfaced in the Stripe Dashboard and on any invoices sent to the Account.
            */
           display_name?: string;
@@ -179,6 +184,11 @@ declare module 'stripe' {
                * The business legal name.
                */
               registered_name?: string;
+
+              /**
+               * When the business was incorporated or registered.
+               */
+              registration_date?: BusinessDetails.RegistrationDate;
 
               /**
                * The business registration address of the business entity in non latin script.
@@ -477,6 +487,7 @@ declare module 'stripe' {
                   | 'fr_siren'
                   | 'fr_vat'
                   | 'gb_crn'
+                  | 'gb_vat'
                   | 'gi_crn'
                   | 'gr_afm'
                   | 'gr_gemi'
@@ -565,6 +576,23 @@ declare module 'stripe' {
                    */
                   currency?: string;
                 }
+              }
+
+              interface RegistrationDate {
+                /**
+                 * The day of registration, between 1 and 31.
+                 */
+                day: number;
+
+                /**
+                 * The month of registration, between 1 and 12.
+                 */
+                month: number;
+
+                /**
+                 * The four-digit year of registration.
+                 */
+                year: number;
               }
 
               interface ScriptAddresses {
