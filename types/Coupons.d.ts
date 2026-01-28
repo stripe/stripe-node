@@ -92,6 +92,8 @@ declare module 'stripe' {
        */
       script?: Coupon.Script | null;
 
+      service_period?: Coupon.ServicePeriod;
+
       /**
        * Number of times this coupon has been applied to a customer.
        */
@@ -123,7 +125,7 @@ declare module 'stripe' {
         amount_off: number;
       }
 
-      type Duration = 'forever' | 'once' | 'repeating';
+      type Duration = 'forever' | 'once' | 'repeating' | 'service_period';
 
       interface Script {
         /**
@@ -146,6 +148,26 @@ declare module 'stripe' {
         type Configuration = {
           [key: string]: unknown;
         };
+      }
+
+      interface ServicePeriod {
+        interval: string;
+
+        interval_count: number;
+
+        iterations: ServicePeriod.Iterations;
+      }
+
+      namespace ServicePeriod {
+        interface Iterations {
+          count: number | null;
+
+          type: Iterations.Type;
+        }
+
+        namespace Iterations {
+          type Type = 'count' | 'forever';
+        }
       }
 
       type Type = 'amount_off' | 'percent_off' | 'script';

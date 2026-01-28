@@ -1,0 +1,23 @@
+// File generated from our OpenAPI spec
+
+import {StripeResource} from '../StripeResource.js';
+const stripeMethod = StripeResource.method;
+export const FrMealVouchersOnboardings = StripeResource.extend({
+  create: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/fr_meal_vouchers_onboardings',
+  }),
+  retrieve: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/fr_meal_vouchers_onboardings/{id}',
+  }),
+  update: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/fr_meal_vouchers_onboardings/{id}',
+  }),
+  list: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/fr_meal_vouchers_onboardings',
+    methodType: 'list',
+  }),
+});

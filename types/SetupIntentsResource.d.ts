@@ -780,6 +780,7 @@ declare module 'stripe' {
         namespace Ideal {
           type Bank =
             | 'abn_amro'
+            | 'adyen'
             | 'asn_bank'
             | 'bunq'
             | 'buut'
@@ -1462,7 +1463,7 @@ declare module 'stripe' {
               }
             }
 
-            type Version = '1.0.2' | '2.1.0' | '2.2.0';
+            type Version = '1.0.2' | '2.1.0' | '2.2.0' | '2.3.0' | '2.3.1';
           }
         }
 
@@ -2616,6 +2617,7 @@ declare module 'stripe' {
         namespace Ideal {
           type Bank =
             | 'abn_amro'
+            | 'adyen'
             | 'asn_bank'
             | 'bunq'
             | 'buut'
@@ -3298,7 +3300,7 @@ declare module 'stripe' {
               }
             }
 
-            type Version = '1.0.2' | '2.1.0' | '2.2.0';
+            type Version = '1.0.2' | '2.1.0' | '2.2.0' | '2.3.0' | '2.3.1';
           }
         }
 
@@ -4434,6 +4436,7 @@ declare module 'stripe' {
         namespace Ideal {
           type Bank =
             | 'abn_amro'
+            | 'adyen'
             | 'asn_bank'
             | 'bunq'
             | 'buut'
@@ -5116,7 +5119,7 @@ declare module 'stripe' {
               }
             }
 
-            type Version = '1.0.2' | '2.1.0' | '2.2.0';
+            type Version = '1.0.2' | '2.1.0' | '2.2.0' | '2.3.0' | '2.3.1';
           }
         }
 

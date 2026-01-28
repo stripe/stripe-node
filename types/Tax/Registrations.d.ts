@@ -1583,22 +1583,6 @@ declare module 'stripe' {
           }
 
           interface Us {
-            local_amusement_tax?: Us.LocalAmusementTax;
-
-            local_lease_tax?: Us.LocalLeaseTax;
-
-            /**
-             * Two-letter US state code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-             */
-            state: string;
-
-            state_sales_tax?: Us.StateSalesTax;
-
-            /**
-             * Type of registration in the US.
-             */
-            type: Us.Type;
-
             admissions_tax?: Us.AdmissionsTax;
 
             attendance_tax?: Us.AttendanceTax;
@@ -1609,11 +1593,27 @@ declare module 'stripe' {
 
             hospitality_tax?: Us.HospitalityTax;
 
+            local_amusement_tax?: Us.LocalAmusementTax;
+
+            local_lease_tax?: Us.LocalLeaseTax;
+
             luxury_tax?: Us.LuxuryTax;
 
             resort_tax?: Us.ResortTax;
 
+            /**
+             * Two-letter US state code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+             */
+            state: string;
+
+            state_sales_tax?: Us.StateSalesTax;
+
             tourism_tax?: Us.TourismTax;
+
+            /**
+             * Type of registration in the US.
+             */
+            type: Us.Type;
           }
 
           namespace Us {

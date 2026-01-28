@@ -66,7 +66,7 @@ declare module 'stripe' {
       percent_off?: number;
 
       /**
-       * Unix timestamp specifying the last time at which the coupon can be redeemed. After the redeem_by date, the coupon can no longer be applied to new customers.
+       * Unix timestamp specifying the last time at which the coupon can be redeemed (cannot be set to more than 5 years in the future). After the redeem_by date, the coupon can no longer be applied to new customers.
        */
       redeem_by?: number;
 
@@ -74,6 +74,11 @@ declare module 'stripe' {
        * Configuration of the [script](https://docs.stripe.com/billing/subscriptions/script-coupons) used to calculate the discount.
        */
       script?: CouponCreateParams.Script;
+
+      /**
+       * A hash specifying the service period for the coupon.
+       */
+      service_period?: CouponCreateParams.ServicePeriod;
     }
 
     namespace CouponCreateParams {
@@ -91,7 +96,7 @@ declare module 'stripe' {
         amount_off: number;
       }
 
-      type Duration = 'forever' | 'once' | 'repeating';
+      type Duration = 'forever' | 'once' | 'repeating' | 'service_period';
 
       interface Script {
         /**
@@ -109,6 +114,43 @@ declare module 'stripe' {
         type Configuration = {
           [key: string]: unknown;
         };
+      }
+
+      interface ServicePeriod {
+        /**
+         * Specifies coupon frequency. Either `day`, `week`, `month` or `year`.
+         */
+        interval: ServicePeriod.Interval;
+
+        /**
+         * The number of intervals for which the coupon will be applied.
+         */
+        interval_count: number;
+
+        /**
+         * Specifies the number of times the coupon is contiguously applied.
+         */
+        iterations?: ServicePeriod.Iterations;
+      }
+
+      namespace ServicePeriod {
+        type Interval = 'day' | 'month' | 'week' | 'year';
+
+        interface Iterations {
+          /**
+           * The number of iterations the service period will repeat for. Only used when type is `count`, defaults to 1.
+           */
+          count?: number;
+
+          /**
+           * The type of iterations, defaults to `count` if omitted.
+           */
+          type: Iterations.Type;
+        }
+
+        namespace Iterations {
+          type Type = 'count' | 'forever';
+        }
       }
     }
 

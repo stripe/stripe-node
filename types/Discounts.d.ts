@@ -150,6 +150,8 @@ declare module 'stripe' {
        */
       schedule?: string | null;
 
+      service_period_details?: Discount.ServicePeriodDetails;
+
       source: Discount.Source;
 
       /**
@@ -169,6 +171,18 @@ declare module 'stripe' {
     }
 
     namespace Discount {
+      interface ServicePeriodDetails {
+        /**
+         * The date that the service period was anchored to.
+         */
+        service_period_anchored_at: number;
+
+        /**
+         * The date that the service period started.
+         */
+        start_date: number;
+      }
+
       interface Source {
         /**
          * The coupon that was redeemed to create this discount.

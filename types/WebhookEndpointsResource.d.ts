@@ -159,7 +159,8 @@ declare module 'stripe' {
         | '2025-09-30.clover'
         | '2025-10-29.clover'
         | '2025-11-17.clover'
-        | '2025-12-15.clover';
+        | '2025-12-15.clover'
+        | '2026-01-28.clover';
 
       type EnabledEvent =
         | '*'
@@ -190,6 +191,7 @@ declare module 'stripe' {
         | 'capital.financing_offer.paid_out'
         | 'capital.financing_offer.rejected'
         | 'capital.financing_offer.replacement_created'
+        | 'capital.financing_summary.line_of_credit_update'
         | 'capital.financing_transaction.created'
         | 'cash_balance.funds_available'
         | 'charge.captured'
@@ -447,6 +449,7 @@ declare module 'stripe' {
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
         | 'treasury.received_debit.created'
+        | 'invoice_payment.detached'
         | 'billing.credit_balance_transaction.created'
         | 'billing.credit_grant.created'
         | 'billing.credit_grant.updated'
@@ -525,6 +528,7 @@ declare module 'stripe' {
         | 'capital.financing_offer.paid_out'
         | 'capital.financing_offer.rejected'
         | 'capital.financing_offer.replacement_created'
+        | 'capital.financing_summary.line_of_credit_update'
         | 'capital.financing_transaction.created'
         | 'cash_balance.funds_available'
         | 'charge.captured'
@@ -782,6 +786,7 @@ declare module 'stripe' {
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
         | 'treasury.received_debit.created'
+        | 'invoice_payment.detached'
         | 'billing.credit_balance_transaction.created'
         | 'billing.credit_grant.created'
         | 'billing.credit_grant.updated'

@@ -98,6 +98,11 @@ declare module 'stripe' {
       subscription: string | Stripe.Subscription | null;
 
       /**
+       * The subtotal of the line item, in cents (or local equivalent), before any discounts or taxes.
+       */
+      subtotal: number;
+
+      /**
        * The tax calculation identifiers of the line item.
        */
       tax_calculation_reference?: InvoiceLineItem.TaxCalculationReference | null;
@@ -416,7 +421,7 @@ declare module 'stripe' {
           /**
            * The ID of the price this item is associated with.
            */
-          price: string;
+          price: string | Stripe.Price;
 
           /**
            * The ID of the product this item is associated with.
