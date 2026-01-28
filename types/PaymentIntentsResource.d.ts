@@ -6861,7 +6861,9 @@ declare module 'stripe' {
           /**
            * Preferred transaction settlement speed
            */
-          preferred_settlement_speed?: UsBankAccount.PreferredSettlementSpeed;
+          preferred_settlement_speed?: Stripe.Emptyable<
+            UsBankAccount.PreferredSettlementSpeed
+          >;
         }
 
         namespace UsBankAccount {
@@ -13833,7 +13835,9 @@ declare module 'stripe' {
           /**
            * Preferred transaction settlement speed
            */
-          preferred_settlement_speed?: UsBankAccount.PreferredSettlementSpeed;
+          preferred_settlement_speed?: Stripe.Emptyable<
+            UsBankAccount.PreferredSettlementSpeed
+          >;
         }
 
         namespace UsBankAccount {
@@ -23002,7 +23006,9 @@ declare module 'stripe' {
           /**
            * Preferred transaction settlement speed
            */
-          preferred_settlement_speed?: UsBankAccount.PreferredSettlementSpeed;
+          preferred_settlement_speed?: Stripe.Emptyable<
+            UsBankAccount.PreferredSettlementSpeed
+          >;
         }
 
         namespace UsBankAccount {
