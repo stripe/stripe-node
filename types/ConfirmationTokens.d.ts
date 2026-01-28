@@ -1144,7 +1144,7 @@ declare module 'stripe' {
 
         interface Ideal {
           /**
-           * The customer's bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `finom`, `handelsbanken`, `ing`, `knab`, `mollie`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
+           * The customer's bank, if provided. Can be one of `abn_amro`, `adyen`, `asn_bank`, `bunq`, `buut`, `finom`, `handelsbanken`, `ing`, `knab`, `mollie`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
            */
           bank: Ideal.Bank | null;
 
@@ -1157,6 +1157,7 @@ declare module 'stripe' {
         namespace Ideal {
           type Bank =
             | 'abn_amro'
+            | 'adyen'
             | 'asn_bank'
             | 'bunq'
             | 'buut'
@@ -1178,6 +1179,7 @@ declare module 'stripe' {
 
           type Bic =
             | 'ABNANL2A'
+            | 'ADYBNL2A'
             | 'ASNBNL21'
             | 'BITSNL2A'
             | 'BUNQNL2A'
@@ -1621,7 +1623,7 @@ declare module 'stripe' {
           /**
            * The [source_type](https://docs.stripe.com/api/balance/balance_object#balance_object-available-source_types) of the balance
            */
-          source_type: StripeBalance.SourceType;
+          source_type: StripeBalance.SourceType | null;
         }
 
         namespace StripeBalance {

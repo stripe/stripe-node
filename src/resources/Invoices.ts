@@ -24,6 +24,10 @@ export const Invoices = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/invoices/create_preview',
   }),
+  detachPayment: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/invoices/{invoice}/detach_payment',
+  }),
   finalizeInvoice: stripeMethod({
     method: 'POST',
     fullPath: '/v1/invoices/{invoice}/finalize',

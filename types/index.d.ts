@@ -54,6 +54,7 @@
 ///<reference path='./FileLinksResource.d.ts' />
 ///<reference path='./FilesResource.d.ts' />
 ///<reference path='./FinancialConnections/AccountsResource.d.ts' />
+///<reference path='./FinancialConnections/AuthorizationsResource.d.ts' />
 ///<reference path='./FinancialConnections/InstitutionsResource.d.ts' />
 ///<reference path='./FinancialConnections/SessionsResource.d.ts' />
 ///<reference path='./FinancialConnections/TransactionsResource.d.ts' />
@@ -94,6 +95,7 @@
 ///<reference path='./PromotionCodesResource.d.ts' />
 ///<reference path='./QuotesResource.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarningsResource.d.ts' />
+///<reference path='./Radar/PaymentEvaluationsResource.d.ts' />
 ///<reference path='./Radar/ValueListItemsResource.d.ts' />
 ///<reference path='./Radar/ValueListsResource.d.ts' />
 ///<reference path='./RefundsResource.d.ts' />
@@ -252,6 +254,7 @@
 ///<reference path='./FinancialConnections/AccountOwners.d.ts' />
 ///<reference path='./FinancialConnections/AccountOwnerships.d.ts' />
 ///<reference path='./FinancialConnections/Accounts.d.ts' />
+///<reference path='./FinancialConnections/Authorizations.d.ts' />
 ///<reference path='./FinancialConnections/Institutions.d.ts' />
 ///<reference path='./FinancialConnections/Sessions.d.ts' />
 ///<reference path='./FinancialConnections/Transactions.d.ts' />
@@ -304,6 +307,7 @@
 ///<reference path='./QuotePreviewSubscriptionSchedules.d.ts' />
 ///<reference path='./Quotes.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarnings.d.ts' />
+///<reference path='./Radar/PaymentEvaluations.d.ts' />
 ///<reference path='./Radar/ValueListItems.d.ts' />
 ///<reference path='./Radar/ValueLists.d.ts' />
 ///<reference path='./Refunds.d.ts' />
@@ -512,6 +516,7 @@ declare module 'stripe' {
     };
     financialConnections: {
       accounts: Stripe.FinancialConnections.AccountsResource;
+      authorizations: Stripe.FinancialConnections.AuthorizationsResource;
       institutions: Stripe.FinancialConnections.InstitutionsResource;
       sessions: Stripe.FinancialConnections.SessionsResource;
       transactions: Stripe.FinancialConnections.TransactionsResource;
@@ -541,6 +546,7 @@ declare module 'stripe' {
     };
     radar: {
       earlyFraudWarnings: Stripe.Radar.EarlyFraudWarningsResource;
+      paymentEvaluations: Stripe.Radar.PaymentEvaluationsResource;
       valueLists: Stripe.Radar.ValueListsResource;
       valueListItems: Stripe.Radar.ValueListItemsResource;
     };

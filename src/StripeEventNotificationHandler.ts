@@ -21,6 +21,7 @@ const KNOWN_EVENT_TYPES = new Set([
   'v2.core.account[configuration.storer].capability_status_updated',
   'v2.core.account[configuration.storer].updated',
   'v2.core.account[defaults].updated',
+  'v2.core.account[future_requirements].updated',
   'v2.core.account[identity].updated',
   'v2.core.account[requirements].updated',
   'v2.core.account_link.returned',

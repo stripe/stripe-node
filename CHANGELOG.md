@@ -1,8 +1,14 @@
 # Changelog
 
+## 20.2.0 - 2026-01-16
+* [#2551](https://github.com/stripe/stripe-node/pull/2551) Update generated code
+  * Add support for event notifications `V2CoreAccountClosedEvent`, `V2CoreAccountCreatedEvent`, `V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent`, `V2CoreAccountIncludingConfigurationCustomerUpdatedEvent`, `V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent`, `V2CoreAccountIncludingConfigurationMerchantUpdatedEvent`, `V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent`, `V2CoreAccountIncludingConfigurationRecipientUpdatedEvent`, `V2CoreAccountIncludingDefaultsUpdatedEvent`, `V2CoreAccountIncludingFutureRequirementsUpdatedEvent`, `V2CoreAccountIncludingIdentityUpdatedEvent`, `V2CoreAccountIncludingRequirementsUpdatedEvent`, and `V2CoreAccountUpdatedEvent` with related object `V2.Core.Account`
+  * Add support for event notification `V2CoreAccountLinkReturnedEvent`
+  * Add support for event notifications `V2CoreAccountPersonCreatedEvent`, `V2CoreAccountPersonDeletedEvent`, and `V2CoreAccountPersonUpdatedEvent` with related object `V2.Core.AccountPerson`
+
 ## 20.2.0-beta.2 - 2026-01-08
 
-This release is purely for pulling in fixes from the releases 20.1.1 and 20.1.2 into the public preview release. 
+This release is purely for pulling in fixes from the releases 20.1.1 and 20.1.2 into the public preview release.
 
 ## 20.2.0-beta.1 - 2025-12-16
 This release changes the pinned API version to `2025-12-15.preview`.

@@ -1,3 +1,3 @@
 // File generated from our OpenAPI spec
 
-export const ApiVersion = '2025-12-15.preview';
+export const ApiVersion = '2026-01-28.preview';

@@ -140,6 +140,16 @@ declare module 'stripe' {
 
             interface UsBankAccount {
               /**
+               * The address of the account holder.
+               */
+              account_holder_address?: Stripe.JapanAddress;
+
+              /**
+               * The name of the account holder.
+               */
+              account_holder_name?: string;
+
+              /**
                * The account number of the US Bank Account.
                */
               account_number?: string;

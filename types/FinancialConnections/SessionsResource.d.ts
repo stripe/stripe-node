@@ -5,16 +5,16 @@ declare module 'stripe' {
     namespace FinancialConnections {
       interface SessionCreateParams {
         /**
-         * The account holder to link accounts for.
-         */
-        account_holder: SessionCreateParams.AccountHolder;
-
-        /**
          * List of data features that you would like to request access to.
          *
          * Possible values are `balances`, `transactions`, `ownership`, and `payment_method`.
          */
         permissions: Array<SessionCreateParams.Permission>;
+
+        /**
+         * The account holder to link accounts for.
+         */
+        account_holder?: SessionCreateParams.AccountHolder;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -40,6 +40,11 @@ declare module 'stripe' {
          * List of data features that you would like to retrieve upon account creation.
          */
         prefetch?: Array<SessionCreateParams.Prefetch>;
+
+        /**
+         * Options for specifying a Session targeted to relinking an authorization.
+         */
+        relink_options?: SessionCreateParams.RelinkOptions;
 
         /**
          * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
@@ -129,6 +134,18 @@ declare module 'stripe' {
           | 'inferred_balances'
           | 'ownership'
           | 'transactions';
+
+        interface RelinkOptions {
+          /**
+           * The account to relink. Must belong to the authorization specified in `authorization`.
+           */
+          account?: string;
+
+          /**
+           * The authorization to relink.
+           */
+          authorization: string;
+        }
       }
 
       interface SessionRetrieveParams {

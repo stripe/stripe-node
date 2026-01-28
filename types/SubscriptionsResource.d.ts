@@ -24,11 +24,6 @@ declare module 'stripe' {
       backdate_start_date?: number;
 
       /**
-       * The Billing Cadence which controls the timing of recurring invoice generation for this subscription. If unset, the subscription will bill according to its own configured schedule and create its own invoices. If set, this subscription will be billed by the cadence instead, potentially sharing invoices with the other subscriptions linked to that Cadence.
-       */
-      billing_cadence?: string;
-
-      /**
        * A future timestamp in UTC format to anchor the subscription's [billing cycle](https://docs.stripe.com/subscriptions/billing-cycle). The anchor is the reference point that aligns future billing cycle dates. It sets the day of week for `week` intervals, the day of month for `month` and `year` intervals, and the month of year for `year` intervals.
        */
       billing_cycle_anchor?: number;
@@ -1372,11 +1367,6 @@ declare module 'stripe' {
        * Automatic tax settings for this subscription. We recommend you only include this parameter when the existing value is being changed.
        */
       automatic_tax?: SubscriptionUpdateParams.AutomaticTax;
-
-      /**
-       * The Billing Cadence which controls the timing of recurring invoice generation for this subscription. If unset, the subscription will bill according to its own configured schedule and create its own invoices. If set, this subscription will be billed by the cadence instead, potentially sharing invoices with the other subscriptions linked to that Cadence.
-       */
-      billing_cadence?: string;
 
       /**
        * Either `now` or `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time (in UTC). For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
@@ -2752,18 +2742,6 @@ declare module 'stripe' {
         | 'unpaid';
     }
 
-    interface SubscriptionAttachCadenceParams {
-      /**
-       * The Billing Cadence which controls the timing of recurring invoice generation for this subscription. If unset, the subscription will bill according to its own configured schedule and create its own invoices. If set, this subscription will be billed by the cadence instead, potentially sharing invoices with the other subscriptions linked to that Cadence.
-       */
-      billing_cadence: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     interface SubscriptionCancelParams {
       /**
        * Details about why this subscription was cancelled
@@ -2971,15 +2949,6 @@ declare module 'stripe' {
         options?: RequestOptions
       ): ApiListPromise<Stripe.Subscription>;
       list(options?: RequestOptions): ApiListPromise<Stripe.Subscription>;
-
-      /**
-       * Attach a Billing Cadence to an existing subscription. When attached, the subscription is billed by the Billing Cadence, potentially sharing invoices with the other subscriptions linked to the Billing Cadence.
-       */
-      attachCadence(
-        id: string,
-        params: SubscriptionAttachCadenceParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Subscription>>;
 
       /**
        * Cancels a customer's subscription immediately. The customer won't be charged again for the subscription. After it's canceled, you can no longer update the subscription or its [metadata](https://docs.stripe.com/metadata).

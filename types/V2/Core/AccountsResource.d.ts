@@ -21,6 +21,11 @@ declare module 'stripe' {
           contact_email?: string;
 
           /**
+           * The default contact phone for the Account.
+           */
+          contact_phone?: string;
+
+          /**
            * A value indicating the Stripe dashboard this Account has access to. This will depend on which configurations are enabled for this account.
            */
           dashboard?: AccountCreateParams.Dashboard;
@@ -1649,6 +1654,11 @@ declare module 'stripe' {
               registered_name?: string;
 
               /**
+               * When the business was incorporated or registered.
+               */
+              registration_date?: BusinessDetails.RegistrationDate;
+
+              /**
                * The business registration address of the business entity in non latin script.
                */
               script_addresses?: BusinessDetails.ScriptAddresses;
@@ -1982,6 +1992,7 @@ declare module 'stripe' {
                   | 'fr_siren'
                   | 'fr_vat'
                   | 'gb_crn'
+                  | 'gb_vat'
                   | 'gi_crn'
                   | 'gr_afm'
                   | 'gr_gemi'
@@ -2070,6 +2081,23 @@ declare module 'stripe' {
                    */
                   currency?: string;
                 }
+              }
+
+              interface RegistrationDate {
+                /**
+                 * The day of registration, between 1 and 31.
+                 */
+                day: number;
+
+                /**
+                 * The month of registration, between 1 and 12.
+                 */
+                month: number;
+
+                /**
+                 * The four-digit year of registration.
+                 */
+                year: number;
               }
 
               interface ScriptAddresses {
@@ -2852,6 +2880,11 @@ declare module 'stripe' {
            * The default contact email address for the Account. Required when configuring the account as a merchant or recipient.
            */
           contact_email?: string;
+
+          /**
+           * The default contact phone for the Account.
+           */
+          contact_phone?: string;
 
           /**
            * A value indicating the Stripe dashboard this Account has access to. This will depend on which configurations are enabled for this account.
@@ -4502,6 +4535,11 @@ declare module 'stripe' {
               registered_name?: string;
 
               /**
+               * When the business was incorporated or registered.
+               */
+              registration_date?: BusinessDetails.RegistrationDate;
+
+              /**
                * The business registration address of the business entity in non latin script.
                */
               script_addresses?: BusinessDetails.ScriptAddresses;
@@ -4798,6 +4836,7 @@ declare module 'stripe' {
                   | 'fr_siren'
                   | 'fr_vat'
                   | 'gb_crn'
+                  | 'gb_vat'
                   | 'gi_crn'
                   | 'gr_afm'
                   | 'gr_gemi'
@@ -4886,6 +4925,23 @@ declare module 'stripe' {
                    */
                   currency?: string;
                 }
+              }
+
+              interface RegistrationDate {
+                /**
+                 * The day of registration, between 1 and 31.
+                 */
+                day: number;
+
+                /**
+                 * The month of registration, between 1 and 12.
+                 */
+                month: number;
+
+                /**
+                 * The four-digit year of registration.
+                 */
+                year: number;
               }
 
               interface ScriptAddresses {
@@ -5497,6 +5553,7 @@ declare module 'stripe' {
 
           /**
            * An Account is a representation of a company, individual or other entity that a user interacts with. Accounts contain identifying information about the entity, and configurations that store the features an account has access to. An account can be configured as any or all of the following configurations: Customer, Merchant and/or Recipient.
+           * @throws Stripe.RateLimitError
            */
           create(
             params?: AccountCreateParams,
@@ -5508,6 +5565,7 @@ declare module 'stripe' {
 
           /**
            * Retrieves the details of an Account.
+           * @throws Stripe.RateLimitError
            */
           retrieve(
             id: string,
@@ -5521,6 +5579,7 @@ declare module 'stripe' {
 
           /**
            * Updates the details of an Account.
+           * @throws Stripe.RateLimitError
            */
           update(
             id: string,
@@ -5530,6 +5589,7 @@ declare module 'stripe' {
 
           /**
            * Returns a list of Accounts.
+           * @throws Stripe.RateLimitError
            */
           list(
             params?: AccountListParams,
@@ -5541,6 +5601,7 @@ declare module 'stripe' {
 
           /**
            * Removes access to the Account and its associated resources. Closed Accounts can no longer be operated on, but limited information can still be retrieved through the API in order to be able to track their history.
+           * @throws Stripe.RateLimitError
            */
           close(
             id: string,

@@ -165,7 +165,7 @@ declare module 'stripe' {
             external_account_collection: boolean;
 
             /**
-             * Whether to allow creation of instant payouts. Defaults to `true` when `controller.losses.payments` is set to `stripe` for the account, otherwise `false`.
+             * Whether to allow creation of instant payouts. The default value is `enabled` when Stripe is responsible for negative account balances, and `use_dashboard_rules` otherwise.
              */
             instant_payouts: boolean;
 
@@ -334,7 +334,7 @@ declare module 'stripe' {
             external_account_collection: boolean;
 
             /**
-             * Whether to allow creation of instant payouts. Defaults to `true` when `controller.losses.payments` is set to `stripe` for the account, otherwise `false`.
+             * Whether to allow creation of instant payouts. The default value is `enabled` when Stripe is responsible for negative account balances, and `use_dashboard_rules` otherwise.
              */
             instant_payouts: boolean;
           }
@@ -568,7 +568,7 @@ declare module 'stripe' {
             external_account_collection: boolean;
 
             /**
-             * Whether to allow creation of instant payouts. Defaults to `true` when `controller.losses.payments` is set to `stripe` for the account, otherwise `false`.
+             * Whether to allow creation of instant payouts. The default value is `enabled` when Stripe is responsible for negative account balances, and `use_dashboard_rules` otherwise.
              */
             instant_payouts: boolean;
 
