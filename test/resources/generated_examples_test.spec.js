@@ -4553,6 +4553,20 @@ describe('Generated tests', function() {
     expect(accountToken).not.to.be.null;
   });
 
+  it('test_v2_core_batch_job_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/core/batch_jobs',
+        response: '{"id":"obj_123","object":"v2.core.batch_job","url":"url"}',
+      },
+    ]);
+    const batchJob = await stripe.v2.core.batchJobs.create({
+      endpoint: '/v1/subscription_schedules',
+    });
+    expect(batchJob).not.to.be.null;
+  });
+
   it('test_v2_core_event_get', async function() {
     const stripe = testUtils.createMockClient([
       {
