@@ -99,6 +99,11 @@ declare module 'stripe' {
         tax_registrations: Components.TaxRegistrations;
 
         tax_settings: Components.TaxSettings;
+
+        /**
+         * Configuration for the [network cost passthrough report](https://docs.stripe.com/connect/supported-embedded-components/network-cost-passthrough-report/) embedded component.
+         */
+        network_cost_passthrough_report?: Components.NetworkCostPassthroughReport | null;
       }
 
       namespace Components {
@@ -445,6 +450,19 @@ declare module 'stripe' {
              */
             spend_control_management: boolean;
           }
+        }
+
+        interface NetworkCostPassthroughReport {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: NetworkCostPassthroughReport.Features;
+        }
+
+        namespace NetworkCostPassthroughReport {
+          interface Features {}
         }
 
         interface NotificationBanner {
