@@ -10,6 +10,8 @@ on:
       - opened
       - reopened
 
+permissions: {}
+
 jobs:
   check_auto_merge_method_if_enabled:
     name: Check auto-merge method if enabled

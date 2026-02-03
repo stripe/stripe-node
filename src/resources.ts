@@ -1,9 +1,13 @@
 // File generated from our OpenAPI spec
 
 import {resourceNamespace} from './ResourceNamespace.js';
+import {AccountLinks as V2CoreAccountLinks} from './resources/V2/Core/AccountLinks.js';
+import {AccountTokens as V2CoreAccountTokens} from './resources/V2/Core/AccountTokens.js';
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
+import {Accounts as V2CoreAccounts} from './resources/V2/Core/Accounts.js';
 import {ActiveEntitlements as EntitlementsActiveEntitlements} from './resources/Entitlements/ActiveEntitlements.js';
 import {Alerts as BillingAlerts} from './resources/Billing/Alerts.js';
+import {Associations as TaxAssociations} from './resources/Tax/Associations.js';
 import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {Authorizations as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
 import {Calculations as TaxCalculations} from './resources/Tax/Calculations.js';
@@ -36,11 +40,13 @@ import {MeterEventStream as V2BillingMeterEventStream} from './resources/V2/Bill
 import {MeterEvents as BillingMeterEvents} from './resources/Billing/MeterEvents.js';
 import {MeterEvents as V2BillingMeterEvents} from './resources/V2/Billing/MeterEvents.js';
 import {Meters as BillingMeters} from './resources/Billing/Meters.js';
+import {OnboardingLinks as TerminalOnboardingLinks} from './resources/Terminal/OnboardingLinks.js';
 import {Orders as ClimateOrders} from './resources/Climate/Orders.js';
 import {OutboundPayments as TestHelpersTreasuryOutboundPayments} from './resources/TestHelpers/Treasury/OutboundPayments.js';
 import {OutboundPayments as TreasuryOutboundPayments} from './resources/Treasury/OutboundPayments.js';
 import {OutboundTransfers as TestHelpersTreasuryOutboundTransfers} from './resources/TestHelpers/Treasury/OutboundTransfers.js';
 import {OutboundTransfers as TreasuryOutboundTransfers} from './resources/Treasury/OutboundTransfers.js';
+import {PaymentEvaluations as RadarPaymentEvaluations} from './resources/Radar/PaymentEvaluations.js';
 import {PersonalizationDesigns as IssuingPersonalizationDesigns} from './resources/Issuing/PersonalizationDesigns.js';
 import {PersonalizationDesigns as TestHelpersIssuingPersonalizationDesigns} from './resources/TestHelpers/Issuing/PersonalizationDesigns.js';
 import {PhysicalBundles as IssuingPhysicalBundles} from './resources/Issuing/PhysicalBundles.js';
@@ -182,6 +188,7 @@ export const Issuing = resourceNamespace('issuing', {
 });
 export const Radar = resourceNamespace('radar', {
   EarlyFraudWarnings: RadarEarlyFraudWarnings,
+  PaymentEvaluations: RadarPaymentEvaluations,
   ValueListItems: RadarValueListItems,
   ValueLists: RadarValueLists,
 });
@@ -193,6 +200,7 @@ export const Sigma = resourceNamespace('sigma', {
   ScheduledQueryRuns: SigmaScheduledQueryRuns,
 });
 export const Tax = resourceNamespace('tax', {
+  Associations: TaxAssociations,
   Calculations: TaxCalculations,
   Registrations: TaxRegistrations,
   Settings: TaxSettings,
@@ -202,6 +210,7 @@ export const Terminal = resourceNamespace('terminal', {
   Configurations: TerminalConfigurations,
   ConnectionTokens: TerminalConnectionTokens,
   Locations: TerminalLocations,
+  OnboardingLinks: TerminalOnboardingLinks,
   Readers: TerminalReaders,
 });
 export const TestHelpers = resourceNamespace('testHelpers', {
@@ -246,6 +255,9 @@ export const V2 = resourceNamespace('v2', {
     MeterEvents: V2BillingMeterEvents,
   }),
   Core: resourceNamespace('core', {
+    AccountLinks: V2CoreAccountLinks,
+    AccountTokens: V2CoreAccountTokens,
+    Accounts: V2CoreAccounts,
     EventDestinations: V2CoreEventDestinations,
     Events: V2CoreEvents,
   }),

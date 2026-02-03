@@ -30,14 +30,19 @@ declare module 'stripe' {
       namespace AccountListParams {
         interface AccountHolder {
           /**
-           * The ID of the Stripe account whose accounts will be retrieved.
+           * The ID of the Stripe account whose accounts you will retrieve.
            */
           account?: string;
 
           /**
-           * The ID of the Stripe customer whose accounts will be retrieved.
+           * The ID of the Stripe customer whose accounts you will retrieve.
            */
           customer?: string;
+
+          /**
+           * The ID of the Account representing a customer whose accounts you will retrieve.
+           */
+          customer_account?: string;
         }
       }
 

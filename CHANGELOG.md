@@ -1,4 +1,111 @@
 # Changelog
+## 20.3.0 - 2026-01-28
+This release changes the pinned API version to `2026-01-28.clover`.
+
+* [#2564](https://github.com/stripe/stripe-node/pull/2564) Update generated code
+  * Add support for new resource `Radar.PaymentEvaluation`
+  * Add support for `create` method on resource `Radar.PaymentEvaluation`
+  * Add support for `adjustable_quantity` on `LineItem`
+  * Add support for new value `risk_reserved` on enum `BalanceTransaction.balance_type`
+  * Add support for new values `reserve_hold` and `reserve_release` on enum `BalanceTransaction.type`
+  * Add support for new values `2.3.0` and `2.3.1` on enums `Charge.payment_method_details.card.three_d_secure.version`, `PaymentIntentConfirmParams.payment_method_options.card.three_d_secure.version`, `PaymentIntentCreateParams.payment_method_options.card.three_d_secure.version`, `PaymentIntentUpdateParams.payment_method_options.card.three_d_secure.version`, `SetupAttempt.payment_method_details.card.three_d_secure.version`, `SetupIntentConfirmParams.payment_method_options.card.three_d_secure.version`, `SetupIntentCreateParams.payment_method_options.card.three_d_secure.version`, and `SetupIntentUpdateParams.payment_method_options.card.three_d_secure.version`
+  * Add support for new value `adyen` on enums `Charge.payment_method_details.ideal.bank`, `ConfirmationToken.payment_method_preview.ideal.bank`, `ConfirmationTokenCreateParams.testHelpers.payment_method_data.ideal.bank`, `PaymentAttemptRecord.payment_method_details.ideal.bank`, `PaymentIntentConfirmParams.payment_method_data.ideal.bank`, `PaymentIntentCreateParams.payment_method_data.ideal.bank`, `PaymentIntentUpdateParams.payment_method_data.ideal.bank`, `PaymentMethod.ideal.bank`, `PaymentMethodCreateParams.ideal.bank`, `PaymentRecord.payment_method_details.ideal.bank`, `SetupAttempt.payment_method_details.ideal.bank`, `SetupIntentConfirmParams.payment_method_data.ideal.bank`, `SetupIntentCreateParams.payment_method_data.ideal.bank`, and `SetupIntentUpdateParams.payment_method_data.ideal.bank`
+  * Add support for new value `ADYBNL2A` on enums `Charge.payment_method_details.ideal.bic`, `ConfirmationToken.payment_method_preview.ideal.bic`, `PaymentAttemptRecord.payment_method_details.ideal.bic`, `PaymentMethod.ideal.bic`, `PaymentRecord.payment_method_details.ideal.bic`, and `SetupAttempt.payment_method_details.ideal.bic`
+  * Add support for new value `pl_nip` on enums `Checkout.Session.customer_details.tax_ids[].type`, `Invoice.customer_tax_ids[].type`, `Tax.Calculation.customer_details.tax_ids[].type`, `Tax.Transaction.customer_details.tax_ids[].type`, and `TaxId.type`
+  * Add support for new value `pl_nip` on enums `CustomerCreateParams.tax_id_data[].type`, `CustomerCreateTaxIdParams.type`, `InvoiceCreatePreviewParams.customer_details.tax_ids[].type`, `Tax.CalculationCreateParams.customer_details.tax_ids[].type`, and `TaxIdCreateParams.type`
+  * Change `Invoice.payment_settings.payment_method_options.payto` and `Subscription.payment_settings.payment_method_options.payto` to be required
+  * Add support for `enforce_arithmetic_validation` on `PaymentIntentCaptureParams.amount_details`, `PaymentIntentConfirmParams.amount_details`, `PaymentIntentCreateParams.amount_details`, `PaymentIntentIncrementAuthorizationParams.amount_details`, and `PaymentIntentUpdateParams.amount_details`
+  * Add support for `error` on `PaymentIntent.amount_details`
+  * Remove support for `bgn` on `Terminal.Configuration.tipping`, `Terminal.ConfigurationCreateParams.tipping`, and `Terminal.ConfigurationUpdateParams.tipping`
+  * Add support for `topup` on `Treasury.ReceivedDebit.linked_flows`
+  * Add support for `contact_phone` on `V2.Core.AccountCreateParams`, `V2.Core.AccountTokenCreateParams`, `V2.Core.AccountUpdateParams`, and `V2.Core.Account`
+  * Add support for `registration_date` on `V2.Core.Account.identity.business_details`, `V2.Core.AccountCreateParams.identity.business_details`, `V2.Core.AccountTokenCreateParams.identity.business_details`, and `V2.Core.AccountUpdateParams.identity.business_details`
+  * Add support for new value `gb_vat` on enums `V2.Core.Account.identity.business_details.id_numbers[].type`, `V2.Core.AccountCreateParams.identity.business_details.id_numbers[].type`, `V2.Core.AccountTokenCreateParams.identity.business_details.id_numbers[].type`, and `V2.Core.AccountUpdateParams.identity.business_details.id_numbers[].type`
+  * Add support for error code `request_blocked` on `Invoice.last_finalization_error`, `PaymentIntent.last_payment_error`, `SetupAttempt.setup_error`, `SetupIntent.last_setup_error`, and `StripeError`
+* [#2558](https://github.com/stripe/stripe-node/pull/2558) Remove `qs` dependency
+  - Remove the `qs` dependency, addressing [Issue #2117](https://github.com/stripe/stripe-node/issues/2117).
+* [#2562](https://github.com/stripe/stripe-node/pull/2562) Document usage of undocumented API parameters
+
+## 20.2.0 - 2026-01-16
+* [#2551](https://github.com/stripe/stripe-node/pull/2551) Update generated code
+  * Add support for event notifications `V2CoreAccountClosedEvent`, `V2CoreAccountCreatedEvent`, `V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent`, `V2CoreAccountIncludingConfigurationCustomerUpdatedEvent`, `V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent`, `V2CoreAccountIncludingConfigurationMerchantUpdatedEvent`, `V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent`, `V2CoreAccountIncludingConfigurationRecipientUpdatedEvent`, `V2CoreAccountIncludingDefaultsUpdatedEvent`, `V2CoreAccountIncludingFutureRequirementsUpdatedEvent`, `V2CoreAccountIncludingIdentityUpdatedEvent`, `V2CoreAccountIncludingRequirementsUpdatedEvent`, and `V2CoreAccountUpdatedEvent` with related object `V2.Core.Account`
+  * Add support for event notification `V2CoreAccountLinkReturnedEvent`
+  * Add support for event notifications `V2CoreAccountPersonCreatedEvent`, `V2CoreAccountPersonDeletedEvent`, and `V2CoreAccountPersonUpdatedEvent` with related object `V2.Core.AccountPerson`
+
+## 20.1.2 - 2026-01-07
+* [#2542](https://github.com/stripe/stripe-node/pull/2542) Fix content length calculations for multipart file uploads. This fixes the bug reported in [2538](https://github.com/stripe/stripe-node/issues/2538) around file uploads.
+* [#2539](https://github.com/stripe/stripe-node/pull/2539) Delete API_VERSION file as it is no longer needed
+
+## 20.1.1 - 2026-01-06
+* [#2535](https://github.com/stripe/stripe-node/pull/2535) Update qs dependency to latest version
+
+## 20.1.0 - 2025-12-16
+This release changes the pinned API version to `2025-12-15.clover`.
+
+* [#2522](https://github.com/stripe/stripe-node/pull/2522) Update generated code
+  * Add support for new resources `V2.Core.AccountLink`, `V2.Core.AccountPersonToken`, `V2.Core.AccountPerson`, `V2.Core.AccountToken`, and `V2.Core.Account`
+  * Add support for `create` and `retrieve` methods on resources `V2.Core.AccountPersonToken` and `V2.Core.AccountToken`
+  * Add support for `create` method on resource `V2.Core.AccountLink`
+  * Add support for `close`, `create`, `list`, `retrieve`, and `update` methods on resource `V2.Core.Account`
+  * Add support for `create`, `del`, `list`, `retrieve`, and `update` methods on resource `V2.Core.AccountPerson`
+  * Add support for `payto_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
+  * Add support for `signer` on `AccountCreateParams.documents.proof_of_registration`, `AccountCreateParams.documents.proof_of_ultimate_beneficial_ownership`, `AccountUpdateParams.documents.proof_of_registration`, and `AccountUpdateParams.documents.proof_of_ultimate_beneficial_ownership`
+  * Add support for `customer_account` on `Billing.CreditBalanceSummaryRetrieveParams`, `Billing.CreditBalanceSummary`, `Billing.CreditBalanceTransactionListParams`, `Billing.CreditGrantCreateParams`, `Billing.CreditGrantListParams`, `Billing.CreditGrant`, `BillingPortal.SessionCreateParams`, `BillingPortal.Session`, `CashBalance`, `Checkout.SessionCreateParams`, `Checkout.SessionListParams`, `Checkout.Session`, `ConfirmationToken.payment_method_preview`, `CreditNoteListParams`, `CreditNote`, `CustomerBalanceTransaction`, `CustomerCashBalanceTransaction`, `CustomerSessionCreateParams`, `CustomerSession`, `Customer`, `Discount`, `FinancialConnections.Account.account_holder`, `FinancialConnections.AccountListParams.account_holder`, `FinancialConnections.Session.account_holder`, `FinancialConnections.SessionCreateParams.account_holder`, `InvoiceCreateParams`, `InvoiceCreatePreviewParams`, `InvoiceItemCreateParams`, `InvoiceItemListParams`, `InvoiceItem`, `InvoiceListParams`, `Invoice`, `PaymentIntentCreateParams`, `PaymentIntentListParams`, `PaymentIntentUpdateParams`, `PaymentIntent`, `PaymentMethodAttachParams`, `PaymentMethodListParams`, `PaymentMethod`, `PromotionCodeCreateParams`, `PromotionCodeListParams`, `PromotionCode`, `QuoteCreateParams`, `QuoteListParams`, `QuoteUpdateParams`, `Quote`, `SetupAttempt`, `SetupIntentCreateParams`, `SetupIntentListParams`, `SetupIntentUpdateParams`, `SetupIntent`, `SubscriptionCreateParams`, `SubscriptionListParams`, `SubscriptionScheduleCreateParams`, `SubscriptionScheduleListParams`, `SubscriptionSchedule`, `Subscription`, `TaxId.owner`, `TaxIdCreateParams.owner`, `TaxIdListParams.owner`, and `TaxId`
+  * Add support for `metadata` on `Checkout.SessionCreateParams.line_items[]` and `LineItem`
+  * Change `Billing.CreditBalanceSummaryRetrieveParams.customer`, `Billing.CreditBalanceTransactionListParams.customer`, `Billing.CreditGrantCreateParams.customer`, `BillingPortal.SessionCreateParams.customer`, `CustomerSessionCreateParams.customer`, `InvoiceItemCreateParams.customer`, `PaymentMethodAttachParams.customer`, and `SubscriptionCreateParams.customer` to be optional
+  * Add support for `billing_cycle_anchor` on `BillingPortal.Configuration.features.subscription_update`, `BillingPortal.ConfigurationCreateParams.features.subscription_update`, and `BillingPortal.ConfigurationUpdateParams.features.subscription_update`
+  * Add support for `payto` on `Charge.payment_method_details`, `Checkout.Session.payment_method_options`, `Checkout.SessionCreateParams.payment_method_options`, `ConfirmationToken.payment_method_preview`, `ConfirmationTokenCreateParams.testHelpers.payment_method_data`, `Invoice.payment_settings.payment_method_options`, `InvoiceCreateParams.payment_settings.payment_method_options`, `InvoiceUpdateParams.payment_settings.payment_method_options`, `Mandate.payment_method_details`, `PaymentAttemptRecord.payment_method_details`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodConfigurationCreateParams`, `PaymentMethodConfigurationUpdateParams`, `PaymentMethodConfiguration`, `PaymentMethodCreateParams`, `PaymentMethodUpdateParams`, `PaymentMethod`, `PaymentRecord.payment_method_details`, `SetupAttempt.payment_method_details`, `SetupIntent.payment_method_options`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentConfirmParams.payment_method_options`, `SetupIntentCreateParams.payment_method_data`, `SetupIntentCreateParams.payment_method_options`, `SetupIntentUpdateParams.payment_method_data`, `SetupIntentUpdateParams.payment_method_options`, `Subscription.payment_settings.payment_method_options`, `SubscriptionCreateParams.payment_settings.payment_method_options`, and `SubscriptionUpdateParams.payment_settings.payment_method_options`
+  * Add support for `expected_debit_date` on `Charge.payment_method_details.acss_debit`, `Charge.payment_method_details.au_becs_debit`, `Charge.payment_method_details.bacs_debit`, `Charge.payment_method_details.nz_bank_account`, `Charge.payment_method_details.sepa_debit`, `Charge.payment_method_details.us_bank_account`, `PaymentAttemptRecord.payment_method_details.acss_debit`, `PaymentAttemptRecord.payment_method_details.au_becs_debit`, `PaymentAttemptRecord.payment_method_details.bacs_debit`, `PaymentAttemptRecord.payment_method_details.nz_bank_account`, `PaymentAttemptRecord.payment_method_details.sepa_debit`, `PaymentAttemptRecord.payment_method_details.us_bank_account`, `PaymentRecord.payment_method_details.acss_debit`, `PaymentRecord.payment_method_details.au_becs_debit`, `PaymentRecord.payment_method_details.bacs_debit`, `PaymentRecord.payment_method_details.nz_bank_account`, `PaymentRecord.payment_method_details.sepa_debit`, and `PaymentRecord.payment_method_details.us_bank_account`
+  * Add support for new value `mollie` on enums `Charge.payment_method_details.ideal.bank`, `ConfirmationToken.payment_method_preview.ideal.bank`, `ConfirmationTokenCreateParams.testHelpers.payment_method_data.ideal.bank`, `PaymentAttemptRecord.payment_method_details.ideal.bank`, `PaymentIntentConfirmParams.payment_method_data.ideal.bank`, `PaymentIntentCreateParams.payment_method_data.ideal.bank`, `PaymentIntentUpdateParams.payment_method_data.ideal.bank`, `PaymentMethod.ideal.bank`, `PaymentMethodCreateParams.ideal.bank`, `PaymentRecord.payment_method_details.ideal.bank`, `SetupAttempt.payment_method_details.ideal.bank`, `SetupIntentConfirmParams.payment_method_data.ideal.bank`, `SetupIntentCreateParams.payment_method_data.ideal.bank`, and `SetupIntentUpdateParams.payment_method_data.ideal.bank`
+  * Add support for new value `MLLENL2A` on enums `Charge.payment_method_details.ideal.bic`, `ConfirmationToken.payment_method_preview.ideal.bic`, `PaymentAttemptRecord.payment_method_details.ideal.bic`, `PaymentMethod.ideal.bic`, `PaymentRecord.payment_method_details.ideal.bic`, and `SetupAttempt.payment_method_details.ideal.bic`
+  * Add support for new value `payto` on enums `Checkout.SessionCreateParams.excluded_payment_method_types`, `PaymentIntent.excluded_payment_method_types`, `PaymentIntentConfirmParams.excluded_payment_method_types`, `PaymentIntentCreateParams.excluded_payment_method_types`, `PaymentIntentUpdateParams.excluded_payment_method_types`, `SetupIntent.excluded_payment_method_types`, `SetupIntentCreateParams.excluded_payment_method_types`, and `SetupIntentUpdateParams.excluded_payment_method_types`
+  * Add support for new value `payto` on enum `Checkout.SessionCreateParams.payment_method_types`
+  * Add support for `line_items` on `Checkout.SessionUpdateParams`
+  * Add support for new value `payto` on enums `ConfirmationTokenCreateParams.testHelpers.payment_method_data.type`, `PaymentIntentConfirmParams.payment_method_data.type`, `PaymentIntentCreateParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`, `SetupIntentConfirmParams.payment_method_data.type`, `SetupIntentCreateParams.payment_method_data.type`, and `SetupIntentUpdateParams.payment_method_data.type`
+  * Add support for new value `payto` on enums `ConfirmationToken.payment_method_preview.type` and `PaymentMethod.type`
+  * Add support for new value `payto` on enums `CustomerListPaymentMethodsParams.type`, `PaymentMethodCreateParams.type`, and `PaymentMethodListParams.type`
+  * Add support for `invoice` on `CustomerListCustomerBalanceTransactionsParams`
+  * Add support for `related_customer_account` on `Identity.VerificationSessionCreateParams`, `Identity.VerificationSessionListParams`, and `Identity.VerificationSession`
+  * Change type of `InvoiceItem.pricing.price_details.price` and `InvoiceLineItem.pricing.price_details.price` from `string` to `expandable(Price)`
+  * Add support for new value `payto` on enums `Invoice.payment_settings.payment_method_types`, `InvoiceCreateParams.payment_settings.payment_method_types`, `InvoiceUpdateParams.payment_settings.payment_method_types`, `Subscription.payment_settings.payment_method_types`, `SubscriptionCreateParams.payment_settings.payment_method_types`, and `SubscriptionUpdateParams.payment_settings.payment_method_types`
+  * Add support for `subtotal` on `InvoiceLineItem`
+  * Add support for `authorization_code`, `description`, `iin`, `installments`, `issuer`, `network_advice_code`, `network_decline_code`, and `stored_credential_usage` on `PaymentAttemptRecord.payment_method_details.card` and `PaymentRecord.payment_method_details.card`
+  * Change `PaymentIntent.transfer_data` to be optional
+  * Add support for new value `payto` on enums `PaymentLink.payment_method_types`, `PaymentLinkCreateParams.payment_method_types`, and `PaymentLinkUpdateParams.payment_method_types`
+  * Add support for `allow_redisplay` on `PaymentMethodListParams`
+  * Add support for `reported_by` on `PaymentRecord`
+  * Change `Product.tax_code` to be optional
+  * Add support for new values `2025-12-15.clover` and `2026-01-28.clover` on enum `WebhookEndpointCreateParams.api_version`
+  * Add support for `changes` on `V2.Core.Event`
+  * Add support for error code `account_token_required_for_v2_account` on `Invoice.last_finalization_error`, `PaymentIntent.last_payment_error`, `SetupAttempt.setup_error`, `SetupIntent.last_setup_error`, and `StripeError`
+
+## 20.0.0 - 2025-11-18
+This release changes the pinned API version to `2025-11-17.clover`.
+
+* [#2502](https://github.com/stripe/stripe-node/pull/2502) Update generated code
+  * ⚠️ Remove support for `gt`, `gte`, `lt`, and `lte` on `V2.Core.EventListParams` in favor of `created`.
+* [#2497](https://github.com/stripe/stripe-node/pull/2497) Update v2 array parameter serialization to use indexed format
+  - `Retrieve` and `List` calls for `/v2` endpoints now use indexed format (e.g., `?include[0]=foo&include[1]=bar`) instead of repeated parameter format (e.g., `?include=foo&include=bar`) when communicating with the Stripe API. This may break any unit tests that expect the latter behavior when setting up a mock server. Instead, they should now expect the former.
+* [#2495](https://github.com/stripe/stripe-node/pull/2495) Update generated code
+  * Add support for new resources `Tax.Association` and `Terminal.OnboardingLink`
+  * Add support for `find` method on resource `Tax.Association`
+  * Add support for `create` method on resource `Terminal.OnboardingLink`
+  * Add support for `payment_method_configuration` on `BillingPortal.Configuration.features.payment_method_update`
+  * Add support for `transaction_id` on `Charge.payment_method_details.ideal`, `PaymentAttemptRecord.payment_method_details.ideal`, and `PaymentRecord.payment_method_details.ideal`
+  * Add support for new value `finom` on enums `Charge.payment_method_details.ideal.bank`, `ConfirmationToken.payment_method_preview.ideal.bank`, `ConfirmationTokenCreateParams.testHelpers.payment_method_data.ideal.bank`, `PaymentAttemptRecord.payment_method_details.ideal.bank`, `PaymentIntentConfirmParams.payment_method_data.ideal.bank`, `PaymentIntentCreateParams.payment_method_data.ideal.bank`, `PaymentIntentUpdateParams.payment_method_data.ideal.bank`, `PaymentMethod.ideal.bank`, `PaymentMethodCreateParams.ideal.bank`, `PaymentRecord.payment_method_details.ideal.bank`, `SetupAttempt.payment_method_details.ideal.bank`, `SetupIntentConfirmParams.payment_method_data.ideal.bank`, `SetupIntentCreateParams.payment_method_data.ideal.bank`, and `SetupIntentUpdateParams.payment_method_data.ideal.bank`
+  * Add support for new value `FNOMNL22` on enums `Charge.payment_method_details.ideal.bic`, `ConfirmationToken.payment_method_preview.ideal.bic`, `PaymentAttemptRecord.payment_method_details.ideal.bic`, `PaymentMethod.ideal.bic`, `PaymentRecord.payment_method_details.ideal.bic`, and `SetupAttempt.payment_method_details.ideal.bic`
+  * Add support for new value `tokenized_account_number_deactivated` on enums `ConfirmationToken.payment_method_preview.us_bank_account.status_details.blocked.reason` and `PaymentMethod.us_bank_account.status_details.blocked.reason`
+  * Add support for `created` on `CustomerListCustomerBalanceTransactionsParams` and `InvoicePaymentListParams`
+  * Add support for new values `financial_connections.account.account_numbers_updated` and `financial_connections.account.upcoming_account_number_expiry` on enum `Event.type`
+  * Add support for `account_numbers` on `FinancialConnections.Account`
+  * Change type of `FinancialConnections.Session.client_secret` from `string` to `string | null`
+  * Add support for `fraud_risk` on `Issuing.AuthorizationCreateParams.testHelpers.risk_assessment`
+  * Add support for `latest_fraud_warning` on `Issuing.Card`
+  * Add support for `hooks` on `PaymentIntentCaptureParams`, `PaymentIntentConfirmParams`, `PaymentIntentCreateParams`, `PaymentIntentIncrementAuthorizationParams`, `PaymentIntentUpdateParams`, and `PaymentIntent`
+  * Add support for `mb_way` and `twint` on `Refund.destination_details`
+  * Add support for new values `financial_connections.account.account_numbers_updated` and `financial_connections.account.upcoming_account_number_expiry` on enums `WebhookEndpointCreateParams.enabled_events` and `WebhookEndpointUpdateParams.enabled_events`
+  * Add support for snapshot events `FinancialConnectionsAccountAccountNumbersUpdatedEvent` and `FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent` with resource `FinancialConnections.Account`
+
 ## 19.3.1 - 2025-11-12
 * [#2500](https://github.com/stripe/stripe-node/pull/2500) Use `TextEncoder` instead of `Buffer` to ensure support in other JS environments
   * Fixes issues like [#2499](https://github.com/stripe/stripe-node/issues/2499) and [#2493](https://github.com/stripe/stripe-node/issues/2493) where use of `Buffer.byteLength` was causing errors in some runtime environments.
@@ -62,7 +169,7 @@ This release changes the pinned API version to `2025-10-29.clover`.
 
 ## 19.1.0 - 2025-10-03
 * [#2453](https://github.com/stripe/stripe-node/pull/2453) add missing fetchEvent type for UnknownEventNotification
-  
+
   - Add missing `fetchEvent()` declaration to the `Stripe.Events.UnknownEventNotification` interface
   - Tweak `Stripe.Events.fetchRelatedObject` so that it's always defined and returns `null` if there's no `related_object`. This fixes the situation where the `UnknownEventNotification` says that `fetchRelatedObject()` is defined, but calling it throws an error.
 * [#2447](https://github.com/stripe/stripe-node/pull/2447) Update param in deprecation docs link

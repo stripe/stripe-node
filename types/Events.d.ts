@@ -5,7 +5,7 @@ declare module 'stripe' {
     namespace Event {
       interface Data {
         /**
-         * Object containing the API resource relevant to the event. For example, an `invoice.created` event will have a full [invoice object](https://stripe.com/docs/api#invoice_object) as the value of the object key.
+         * Object containing the API resource relevant to the event. For example, an `invoice.created` event will have a full [invoice object](https://api.stripe.com#invoice_object) as the value of the object key.
          */
         object: Data.Object;
 
@@ -105,6 +105,7 @@ declare module 'stripe' {
         | 'customer_cash_balance_transaction.created'
         | 'entitlements.active_entitlement_summary.updated'
         | 'file.created'
+        | 'financial_connections.account.account_numbers_updated'
         | 'financial_connections.account.created'
         | 'financial_connections.account.deactivated'
         | 'financial_connections.account.disconnected'
@@ -112,6 +113,7 @@ declare module 'stripe' {
         | 'financial_connections.account.refreshed_balance'
         | 'financial_connections.account.refreshed_ownership'
         | 'financial_connections.account.refreshed_transactions'
+        | 'financial_connections.account.upcoming_account_number_expiry'
         | 'identity.verification_session.canceled'
         | 'identity.verification_session.created'
         | 'identity.verification_session.processing'

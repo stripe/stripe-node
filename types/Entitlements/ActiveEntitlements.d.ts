@@ -18,7 +18,7 @@ declare module 'stripe' {
         object: 'entitlements.active_entitlement';
 
         /**
-         * The [Feature](https://stripe.com/docs/api/entitlements/feature) that the customer is entitled to.
+         * The [Feature](https://docs.stripe.com/api/entitlements/feature) that the customer is entitled to.
          */
         feature: string | Stripe.Entitlements.Feature;
 

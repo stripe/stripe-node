@@ -26,7 +26,7 @@ declare module 'stripe' {
       /**
        * Value lists allow you to group values together which can then be referenced in rules.
        *
-       * Related guide: [Default Stripe lists](https://stripe.com/docs/radar/lists#managing-list-items)
+       * Related guide: [Default Stripe lists](https://docs.stripe.com/radar/lists#managing-list-items)
        */
       interface ValueList {
         /**
@@ -75,7 +75,7 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
          */
         metadata: Stripe.Metadata;
 

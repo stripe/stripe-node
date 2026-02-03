@@ -8,11 +8,11 @@ declare module 'stripe' {
      *
      * Before April 6, 2017, transfers also represented movement of funds from a
      * Stripe account to a card or bank account. This behavior has since been split
-     * out into a [Payout](https://stripe.com/docs/api#payout_object) object, with corresponding payout endpoints. For more
+     * out into a [Payout](https://api.stripe.com#payout_object) object, with corresponding payout endpoints. For more
      * information, read about the
-     * [transfer/payout split](https://stripe.com/docs/transfer-payout-split).
+     * [transfer/payout split](https://docs.stripe.com/transfer-payout-split).
      *
-     * Related guide: [Creating separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers)
+     * Related guide: [Creating separate charges and transfers](https://docs.stripe.com/connect/separate-charges-and-transfers)
      */
     interface Transfer {
       /**
@@ -71,7 +71,7 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata;
 
@@ -96,7 +96,7 @@ declare module 'stripe' {
       source_type?: string;
 
       /**
-       * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/separate-charges-and-transfers#transfer-options) for details.
+       * A string that identifies this transaction as part of a group. See the [Connect documentation](https://docs.stripe.com/connect/separate-charges-and-transfers#transfer-options) for details.
        */
       transfer_group: string | null;
     }

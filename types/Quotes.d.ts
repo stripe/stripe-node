@@ -66,9 +66,14 @@ declare module 'stripe' {
       currency: string | null;
 
       /**
-       * The customer which this quote belongs to. A customer is required before finalizing the quote. Once specified, it cannot be changed.
+       * The customer who received this quote. A customer is required to finalize the quote. Once specified, you can't change it.
        */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
+
+      /**
+       * The account representing the customer who received this quote. A customer or account is required to finalize the quote. Once specified, you can't change it.
+       */
+      customer_account: string | null;
 
       /**
        * The tax rates applied to this quote.
@@ -96,7 +101,7 @@ declare module 'stripe' {
       footer: string | null;
 
       /**
-       * Details of the quote that was cloned. See the [cloning documentation](https://stripe.com/docs/quotes/clone) for more details.
+       * Details of the quote that was cloned. See the [cloning documentation](https://docs.stripe.com/quotes/clone) for more details.
        */
       from_quote: Quote.FromQuote | null;
 
@@ -123,12 +128,12 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata;
 
       /**
-       * A unique number that identifies this particular quote. This number is assigned once the quote is [finalized](https://stripe.com/docs/quotes/overview#finalize).
+       * A unique number that identifies this particular quote. This number is assigned once the quote is [finalized](https://docs.stripe.com/quotes/overview#finalize).
        */
       number: string | null;
 
@@ -291,10 +296,10 @@ declare module 'stripe' {
                 amount: number;
 
                 /**
-                 * A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
+                 * A discount represents the actual application of a [coupon](https://api.stripe.com#coupons) or [promotion code](https://api.stripe.com#promotion_codes).
                  * It contains information about when the discount began, when it will end, and what it is applied to.
                  *
-                 * Related guide: [Applying discounts to subscriptions](https://stripe.com/docs/billing/subscriptions/discounts)
+                 * Related guide: [Applying discounts to subscriptions](https://docs.stripe.com/billing/subscriptions/discounts)
                  */
                 discount: Stripe.Discount;
               }
@@ -405,10 +410,10 @@ declare module 'stripe' {
                 amount: number;
 
                 /**
-                 * A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
+                 * A discount represents the actual application of a [coupon](https://api.stripe.com#coupons) or [promotion code](https://api.stripe.com#promotion_codes).
                  * It contains information about when the discount began, when it will end, and what it is applied to.
                  *
-                 * Related guide: [Applying discounts to subscriptions](https://stripe.com/docs/billing/subscriptions/discounts)
+                 * Related guide: [Applying discounts to subscriptions](https://docs.stripe.com/billing/subscriptions/discounts)
                  */
                 discount: Stripe.Discount;
               }
@@ -535,7 +540,7 @@ declare module 'stripe' {
         effective_date: number | null;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on the subscription or subscription schedule when the quote is accepted. If a recurring price is included in `line_items`, this field will be passed to the resulting subscription's `metadata` field. If `subscription_data.effective_date` is used, this field will be passed to the resulting subscription schedule's `phases.metadata` field. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will set metadata on the subscription or subscription schedule when the quote is accepted. If a recurring price is included in `line_items`, this field will be passed to the resulting subscription's `metadata` field. If `subscription_data.effective_date` is used, this field will be passed to the resulting subscription schedule's `phases.metadata` field. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
          */
         metadata: Stripe.Metadata | null;
 
@@ -611,10 +616,10 @@ declare module 'stripe' {
             amount: number;
 
             /**
-             * A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
+             * A discount represents the actual application of a [coupon](https://api.stripe.com#coupons) or [promotion code](https://api.stripe.com#promotion_codes).
              * It contains information about when the discount began, when it will end, and what it is applied to.
              *
-             * Related guide: [Applying discounts to subscriptions](https://stripe.com/docs/billing/subscriptions/discounts)
+             * Related guide: [Applying discounts to subscriptions](https://docs.stripe.com/billing/subscriptions/discounts)
              */
             discount: Stripe.Discount;
           }

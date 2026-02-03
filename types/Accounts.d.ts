@@ -100,7 +100,7 @@ declare module 'stripe' {
       individual?: Stripe.Person;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata?: Stripe.Metadata;
 
@@ -447,6 +447,11 @@ declare module 'stripe' {
         paynow_payments?: Capabilities.PaynowPayments;
 
         /**
+         * The status of the PayTo capability of the account, or whether the account can directly process PayTo charges.
+         */
+        payto_payments?: Capabilities.PaytoPayments;
+
+        /**
          * The status of the pix payments capability of the account, or whether the account can directly process pix charges.
          */
         pix_payments?: Capabilities.PixPayments;
@@ -619,6 +624,8 @@ declare module 'stripe' {
 
         type PaynowPayments = 'active' | 'inactive' | 'pending';
 
+        type PaytoPayments = 'active' | 'inactive' | 'pending';
+
         type PixPayments = 'active' | 'inactive' | 'pending';
 
         type PromptpayPayments = 'active' | 'inactive' | 'pending';
@@ -668,7 +675,7 @@ declare module 'stripe' {
         address_kanji?: Company.AddressKanji | null;
 
         /**
-         * Whether the company's directors have been provided. This Boolean will be `true` if you've manually indicated that all directors are provided via [the `directors_provided` parameter](https://stripe.com/docs/api/accounts/update#update_account-company-directors_provided).
+         * Whether the company's directors have been provided. This Boolean will be `true` if you've manually indicated that all directors are provided via [the `directors_provided` parameter](https://docs.stripe.com/api/accounts/update#update_account-company-directors_provided).
          */
         directors_provided?: boolean;
 
@@ -678,7 +685,7 @@ declare module 'stripe' {
         directorship_declaration?: Company.DirectorshipDeclaration | null;
 
         /**
-         * Whether the company's executives have been provided. This Boolean will be `true` if you've manually indicated that all executives are provided via [the `executives_provided` parameter](https://stripe.com/docs/api/accounts/update#update_account-company-executives_provided), or if Stripe determined that sufficient executives were provided.
+         * Whether the company's executives have been provided. This Boolean will be `true` if you've manually indicated that all executives are provided via [the `executives_provided` parameter](https://docs.stripe.com/api/accounts/update#update_account-company-executives_provided), or if Stripe determined that sufficient executives were provided.
          */
         executives_provided?: boolean;
 
@@ -708,7 +715,7 @@ declare module 'stripe' {
         name_kanji?: string | null;
 
         /**
-         * Whether the company's owners have been provided. This Boolean will be `true` if you've manually indicated that all owners are provided via [the `owners_provided` parameter](https://stripe.com/docs/api/accounts/update#update_account-company-owners_provided), or if Stripe determined that sufficient owners were provided. Stripe determines ownership requirements using both the number of owners provided and their total percent ownership (calculated by adding the `percent_ownership` of each owner together).
+         * Whether the company's owners have been provided. This Boolean will be `true` if you've manually indicated that all owners are provided via [the `owners_provided` parameter](https://docs.stripe.com/api/accounts/update#update_account-company-owners_provided), or if Stripe determined that sufficient owners were provided. Stripe determines ownership requirements using both the number of owners provided and their total percent ownership (calculated by adding the `percent_ownership` of each owner together).
          */
         owners_provided?: boolean;
 
@@ -735,7 +742,7 @@ declare module 'stripe' {
         representative_declaration?: Company.RepresentativeDeclaration | null;
 
         /**
-         * The category identifying the legal structure of the company or legal entity. Also available for accounts where [controller.requirement_collection](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details.
+         * The category identifying the legal structure of the company or legal entity. Also available for accounts where [controller.requirement_collection](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`. See [Business structure](https://docs.stripe.com/connect/identity-verification#business-structure) for more details.
          */
         structure?: Company.Structure;
 
@@ -939,7 +946,7 @@ declare module 'stripe' {
         namespace Verification {
           interface Document {
             /**
-             * The back of a document returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `additional_verification`. Note that `additional_verification` files are [not downloadable](https://docs.stripe.com/file-upload#uploading-a-file).
+             * The back of a document returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `additional_verification`. Note that `additional_verification` files are [not downloadable](https://docs.stripe.com/file-upload#uploading-a-file).
              */
             back: string | Stripe.File | null;
 
@@ -954,7 +961,7 @@ declare module 'stripe' {
             details_code: string | null;
 
             /**
-             * The front of a document returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `additional_verification`. Note that `additional_verification` files are [not downloadable](https://docs.stripe.com/file-upload#uploading-a-file).
+             * The front of a document returned by a [file upload](https://api.stripe.com#create_file) with a `purpose` value of `additional_verification`. Note that `additional_verification` files are [not downloadable](https://docs.stripe.com/file-upload#uploading-a-file).
              */
             front: string | Stripe.File | null;
           }
@@ -965,7 +972,7 @@ declare module 'stripe' {
         fees?: Controller.Fees;
 
         /**
-         * `true` if the Connect application retrieving the resource controls the account and can therefore exercise [platform controls](https://stripe.com/docs/connect/platform-controls-for-standard-accounts). Otherwise, this field is null.
+         * `true` if the Connect application retrieving the resource controls the account and can therefore exercise [platform controls](https://docs.stripe.com/connect/platform-controls-for-standard-accounts). Otherwise, this field is null.
          */
         is_controller?: boolean;
 
@@ -1029,7 +1036,7 @@ declare module 'stripe' {
 
       interface FutureRequirements {
         /**
-         * Fields that are due and can be satisfied by providing the corresponding alternative fields instead.
+         * Fields that are due and can be resolved by providing the corresponding alternative fields instead. Many alternatives can list the same `original_fields_due`, and any of these alternatives can serve as a pathway for attempting to resolve the fields again. Re-providing `original_fields_due` also serves as a pathway for attempting to resolve the fields again.
          */
         alternatives: Array<FutureRequirements.Alternative> | null;
 
@@ -1039,7 +1046,7 @@ declare module 'stripe' {
         current_deadline: number | null;
 
         /**
-         * Fields that need to be collected to keep the account enabled. If not collected by `future_requirements[current_deadline]`, these fields will transition to the main `requirements` hash.
+         * Fields that need to be resolved to keep the account enabled. If not resolved by `future_requirements[current_deadline]`, these fields will transition to the main `requirements` hash.
          */
         currently_due: Array<string> | null;
 
@@ -1049,7 +1056,7 @@ declare module 'stripe' {
         disabled_reason: FutureRequirements.DisabledReason | null;
 
         /**
-         * Fields that are `currently_due` and need to be collected again because validation or verification failed.
+         * Details about validation and verification failures for `due` requirements that must be resolved.
          */
         errors: Array<FutureRequirements.Error> | null;
 
@@ -1059,12 +1066,12 @@ declare module 'stripe' {
         eventually_due: Array<string> | null;
 
         /**
-         * Fields that weren't collected by `requirements.current_deadline`. These fields need to be collected to enable the capability on the account. New fields will never appear here; `future_requirements.past_due` will always be a subset of `requirements.past_due`.
+         * Fields that haven't been resolved by `requirements.current_deadline`. These fields need to be resolved to enable the capability on the account. `future_requirements.past_due` is a subset of `requirements.past_due`.
          */
         past_due: Array<string> | null;
 
         /**
-         * Fields that might become required depending on the results of verification or review. It's an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due` or `currently_due`. Fields might appear in `eventually_due` or `currently_due` and in `pending_verification` if verification fails but another verification is still pending.
+         * Fields that are being reviewed, or might become required depending on the results of a review. If the review fails, these fields can move to `eventually_due`, `currently_due`, `past_due` or `alternatives`. Fields might appear in `eventually_due`, `currently_due`, `past_due` or `alternatives` and in `pending_verification` if one verification fails but another is still pending.
          */
         pending_verification: Array<string> | null;
       }
@@ -1072,12 +1079,12 @@ declare module 'stripe' {
       namespace FutureRequirements {
         interface Alternative {
           /**
-           * Fields that can be provided to satisfy all fields in `original_fields_due`.
+           * Fields that can be provided to resolve all fields in `original_fields_due`.
            */
           alternative_fields_due: Array<string>;
 
           /**
-           * Fields that are due and can be satisfied by providing all fields in `alternative_fields_due`.
+           * Fields that are due and can be resolved by providing all fields in `alternative_fields_due`.
            */
           original_fields_due: Array<string>;
         }
@@ -1220,14 +1227,14 @@ declare module 'stripe' {
 
       interface Groups {
         /**
-         * The group the account is in to determine their payments pricing, and null if the account is on customized pricing. [See the Platform pricing tool documentation](https://stripe.com/docs/connect/platform-pricing-tools) for details.
+         * The group the account is in to determine their payments pricing, and null if the account is on customized pricing. [See the Platform pricing tool documentation](https://docs.stripe.com/connect/platform-pricing-tools) for details.
          */
         payments_pricing: string | null;
       }
 
       interface Requirements {
         /**
-         * Fields that are due and can be satisfied by providing the corresponding alternative fields instead.
+         * Fields that are due and can be resolved by providing the corresponding alternative fields instead. Many alternatives can list the same `original_fields_due`, and any of these alternatives can serve as a pathway for attempting to resolve the fields again. Re-providing `original_fields_due` also serves as a pathway for attempting to resolve the fields again.
          */
         alternatives: Array<Requirements.Alternative> | null;
 
@@ -1237,17 +1244,17 @@ declare module 'stripe' {
         current_deadline: number | null;
 
         /**
-         * Fields that need to be collected to keep the account enabled. If not collected by `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
+         * Fields that need to be resolved to keep the account enabled. If not resolved by `current_deadline`, these fields will appear in `past_due` as well, and the account is disabled.
          */
         currently_due: Array<string> | null;
 
         /**
-         * If the account is disabled, this enum describes why. [Learn more about handling verification issues](https://stripe.com/docs/connect/handling-api-verification).
+         * If the account is disabled, this enum describes why. [Learn more about handling verification issues](https://docs.stripe.com/connect/handling-api-verification).
          */
         disabled_reason: Requirements.DisabledReason | null;
 
         /**
-         * Fields that are `currently_due` and need to be collected again because validation or verification failed.
+         * Details about validation and verification failures for `due` requirements that must be resolved.
          */
         errors: Array<Requirements.Error> | null;
 
@@ -1257,12 +1264,12 @@ declare module 'stripe' {
         eventually_due: Array<string> | null;
 
         /**
-         * Fields that weren't collected by `current_deadline`. These fields need to be collected to enable the account.
+         * Fields that haven't been resolved by `current_deadline`. These fields need to be resolved to enable the account.
          */
         past_due: Array<string> | null;
 
         /**
-         * Fields that might become required depending on the results of verification or review. It's an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`. Fields might appear in `eventually_due`, `currently_due`, or `past_due` and in `pending_verification` if verification fails but another verification is still pending.
+         * Fields that are being reviewed, or might become required depending on the results of a review. If the review fails, these fields can move to `eventually_due`, `currently_due`, `past_due` or `alternatives`. Fields might appear in `eventually_due`, `currently_due`, `past_due` or `alternatives` and in `pending_verification` if one verification fails but another is still pending.
          */
         pending_verification: Array<string> | null;
       }
@@ -1270,12 +1277,12 @@ declare module 'stripe' {
       namespace Requirements {
         interface Alternative {
           /**
-           * Fields that can be provided to satisfy all fields in `original_fields_due`.
+           * Fields that can be provided to resolve all fields in `original_fields_due`.
            */
           alternative_fields_due: Array<string>;
 
           /**
-           * Fields that are due and can be satisfied by providing all fields in `alternative_fields_due`.
+           * Fields that are due and can be resolved by providing all fields in `alternative_fields_due`.
            */
           original_fields_due: Array<string>;
         }

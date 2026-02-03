@@ -4,12 +4,12 @@ declare module 'stripe' {
   namespace Stripe {
     /**
      * This object represents files hosted on Stripe's servers. You can upload
-     * files with the [create file](https://stripe.com/docs/api#create_file) request
+     * files with the [create file](https://api.stripe.com#create_file) request
      * (for example, when uploading dispute evidence). Stripe also
      * creates files independently (for example, the results of a [Sigma scheduled
      * query](https://docs.stripe.com/api#scheduled_queries)).
      *
-     * Related guide: [File upload guide](https://stripe.com/docs/file-upload)
+     * Related guide: [File upload guide](https://docs.stripe.com/file-upload)
      */
     interface File {
       /**
@@ -38,12 +38,12 @@ declare module 'stripe' {
       filename: string | null;
 
       /**
-       * A list of [file links](https://stripe.com/docs/api#file_links) that point at this file.
+       * A list of [file links](https://api.stripe.com#file_links) that point at this file.
        */
       links?: ApiList<Stripe.FileLink> | null;
 
       /**
-       * The [purpose](https://stripe.com/docs/file-upload#uploading-a-file) of the uploaded file.
+       * The [purpose](https://docs.stripe.com/file-upload#uploading-a-file) of the uploaded file.
        */
       purpose: File.Purpose;
 

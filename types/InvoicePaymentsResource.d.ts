@@ -11,6 +11,11 @@ declare module 'stripe' {
 
     interface InvoicePaymentListParams extends PaginationParams {
       /**
+       * Only return invoice payments that were created during the given date interval.
+       */
+      created?: Stripe.RangeQueryParam | number;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;

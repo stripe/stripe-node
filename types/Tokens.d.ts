@@ -7,7 +7,7 @@ declare module 'stripe' {
      * account details, or personally identifiable information (PII), directly from
      * your customers in a secure manner. A token representing this information is
      * returned to your server to use. Use our
-     * [recommended payments integrations](https://stripe.com/docs/payments) to perform this process
+     * [recommended payments integrations](https://docs.stripe.com/payments) to perform this process
      * on the client-side. This guarantees that no sensitive card data touches your server,
      * and allows your integration to operate in a PCI-compliant way.
      *
@@ -19,9 +19,9 @@ declare module 'stripe' {
      * Stripe, so we can't determine how it's handled or stored.
      *
      * You can't store or use tokens more than once. To store card or bank account
-     * information for later use, create [Customer](https://stripe.com/docs/api#customers)
+     * information for later use, create [Customer](https://docs.stripe.com/api#customers)
      * objects or [External accounts](https://docs.stripe.com/api#external_accounts).
-     * [Radar](https://stripe.com/docs/radar), our integrated solution for automatic fraud protection,
+     * [Radar](https://docs.stripe.com/radar), our integrated solution for automatic fraud protection,
      * performs best with integrations that use client-side tokenization.
      */
     interface Token {
@@ -51,7 +51,7 @@ declare module 'stripe' {
        * later. You can also store multiple debit cards on a recipient in order to
        * transfer to those cards later.
        *
-       * Related guide: [Card payments with Sources](https://stripe.com/docs/sources/cards)
+       * Related guide: [Card payments with Sources](https://docs.stripe.com/sources/cards)
        */
       card?: Stripe.Card;
 

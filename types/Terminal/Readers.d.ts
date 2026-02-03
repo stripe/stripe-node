@@ -26,7 +26,7 @@ declare module 'stripe' {
       /**
        * A Reader represents a physical device for accepting payment details.
        *
-       * Related guide: [Connecting to a reader](https://stripe.com/docs/terminal/payments/connect-reader)
+       * Related guide: [Connecting to a reader](https://docs.stripe.com/terminal/payments/connect-reader)
        */
       interface Reader {
         /**
@@ -70,7 +70,7 @@ declare module 'stripe' {
         label: string;
 
         /**
-         * The last time this reader reported to Stripe backend.
+         * The last time this reader reported to Stripe backend. Timestamp is measured in milliseconds since the Unix epoch. Unlike most other Stripe timestamp fields which use seconds, this field uses milliseconds.
          */
         last_seen_at: number | null;
 
@@ -85,7 +85,7 @@ declare module 'stripe' {
         location: string | Stripe.Terminal.Location | null;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
          */
         metadata: Stripe.Metadata;
 
@@ -166,7 +166,7 @@ declare module 'stripe' {
             inputs: Array<CollectInputs.Input>;
 
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
              */
             metadata: Stripe.Metadata | null;
           }
@@ -378,10 +378,10 @@ declare module 'stripe' {
 
             /**
              * PaymentMethod objects represent your customer's payment instruments.
-             * You can use them with [PaymentIntents](https://stripe.com/docs/payments/payment-intents) to collect payments or save them to
+             * You can use them with [PaymentIntents](https://docs.stripe.com/payments/payment-intents) to collect payments or save them to
              * Customer objects to store instrument details for future payments.
              *
-             * Related guides: [Payment Methods](https://stripe.com/docs/payments/payment-methods) and [More Payment Scenarios](https://stripe.com/docs/payments/more-payment-scenarios).
+             * Related guides: [Payment Methods](https://docs.stripe.com/payments/payment-methods) and [More Payment Scenarios](https://docs.stripe.com/payments/more-payment-scenarios).
              */
             payment_method?: Stripe.PaymentMethod;
           }
@@ -518,7 +518,7 @@ declare module 'stripe' {
             charge?: string | Stripe.Charge;
 
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
              */
             metadata?: Stripe.Metadata;
 
@@ -589,12 +589,12 @@ declare module 'stripe' {
               line_items: Array<Cart.LineItem>;
 
               /**
-               * Tax amount for the entire cart. A positive integer in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+               * Tax amount for the entire cart. A positive integer in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
                */
               tax: number | null;
 
               /**
-               * Total amount for the entire cart, including tax. A positive integer in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+               * Total amount for the entire cart, including tax. A positive integer in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
                */
               total: number;
             }
@@ -602,7 +602,7 @@ declare module 'stripe' {
             namespace Cart {
               interface LineItem {
                 /**
-                 * The amount of the line item. A positive integer in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+                 * The amount of the line item. A positive integer in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
                  */
                 amount: number;
 
