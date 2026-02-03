@@ -6,6 +6,7 @@ import {makeAutoPaginationMethods} from '../src/autoPagination.js';
 import {StripeResource} from '../src/StripeResource.js';
 import {getMockStripe} from './testUtils.js';
 import {MethodSpec} from '../src/Types.js';
+import {StripeAPIError} from '../src/Error.js';
 
 describe('auto pagination', () => {
   const testCase = (mockPaginationFn) => ({
@@ -840,6 +841,52 @@ describe('auto pagination', () => {
           '?limit=10&page=blubble',
         ],
       });
+    });
+
+    it('handles firstPagePromise rejection without unhandled promise rejection', async () => {
+      const spec = {
+        method: 'GET',
+        fullPath: '/v2/items',
+        methodType: 'list',
+      };
+
+      const mockStripe = getMockStripe({}, () => {});
+      const resource = new StripeResource(mockStripe);
+
+      // Track unhandled rejections
+      const unhandledRejections: Error[] = [];
+      const unhandledRejectionHandler = (reason: Error): void => {
+        unhandledRejections.push(reason);
+      };
+      process.on('unhandledRejection', unhandledRejectionHandler);
+
+      const error = new StripeAPIError({message: 'Something went wrong'});
+      const rejectingPromise = Promise.reject(error);
+
+      const paginator = makeAutoPaginationMethods(
+        resource,
+        {},
+        spec,
+        rejectingPromise
+      );
+
+      // User code catches the error via autoPagingToArray
+      try {
+        await paginator.autoPagingToArray({limit: 10});
+        expect.fail('Should have thrown an error');
+      } catch (e) {
+        expect(e.message).to.equal('Something went wrong');
+      }
+
+      // Give the event loop a chance to process any unhandled rejections
+      await new Promise((resolve) => setTimeout(resolve, 10));
+
+      process.off('unhandledRejection', unhandledRejectionHandler);
+
+      expect(
+        unhandledRejections,
+        'Should not have any unhandled promise rejections'
+      ).to.have.length(0);
     });
   });
 });
