@@ -17,7 +17,7 @@ declare module 'stripe' {
       object: 'payment_intent_amount_details_line_item';
 
       /**
-       * The discount applied on this line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+       * The discount applied on this line item represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than 0.
        *
        * This field is mutually exclusive with the `amount_details[discount_amount]` field.
        */
@@ -51,7 +51,7 @@ declare module 'stripe' {
       tax: PaymentIntentAmountDetailsLineItem.Tax | null;
 
       /**
-       * The unit cost of the line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+       * The unit cost of the line item represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
        */
       unit_cost: number;
 
@@ -115,7 +115,7 @@ declare module 'stripe' {
 
       interface Tax {
         /**
-         * The total amount of tax on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
+         * The total amount of tax on the transaction represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
          *
          * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
          */

@@ -80,6 +80,7 @@
 ///<reference path='./PromotionCodesResource.d.ts' />
 ///<reference path='./QuotesResource.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarningsResource.d.ts' />
+///<reference path='./Radar/PaymentEvaluationsResource.d.ts' />
 ///<reference path='./Radar/ValueListItemsResource.d.ts' />
 ///<reference path='./Radar/ValueListsResource.d.ts' />
 ///<reference path='./RefundsResource.d.ts' />
@@ -94,6 +95,7 @@
 ///<reference path='./SubscriptionItemsResource.d.ts' />
 ///<reference path='./SubscriptionSchedulesResource.d.ts' />
 ///<reference path='./SubscriptionsResource.d.ts' />
+///<reference path='./Tax/AssociationsResource.d.ts' />
 ///<reference path='./Tax/CalculationsResource.d.ts' />
 ///<reference path='./Tax/RegistrationsResource.d.ts' />
 ///<reference path='./Tax/SettingsResource.d.ts' />
@@ -104,6 +106,7 @@
 ///<reference path='./Terminal/ConfigurationsResource.d.ts' />
 ///<reference path='./Terminal/ConnectionTokensResource.d.ts' />
 ///<reference path='./Terminal/LocationsResource.d.ts' />
+///<reference path='./Terminal/OnboardingLinksResource.d.ts' />
 ///<reference path='./Terminal/ReadersResource.d.ts' />
 ///<reference path='./TestHelpers/ConfirmationTokensResource.d.ts' />
 ///<reference path='./TestHelpers/CustomersResource.d.ts' />
@@ -136,6 +139,11 @@
 ///<reference path='./V2/Billing/MeterEventSessionResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventStreamResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
+///<reference path='./V2/Core/AccountLinksResource.d.ts' />
+///<reference path='./V2/Core/AccountTokensResource.d.ts' />
+///<reference path='./V2/Core/Accounts/PersonTokensResource.d.ts' />
+///<reference path='./V2/Core/Accounts/PersonsResource.d.ts' />
+///<reference path='./V2/Core/AccountsResource.d.ts' />
 ///<reference path='./V2/Core/EventDestinationsResource.d.ts' />
 ///<reference path='./V2/Core/EventsResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
@@ -235,6 +243,7 @@
 ///<reference path='./PromotionCodes.d.ts' />
 ///<reference path='./Quotes.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarnings.d.ts' />
+///<reference path='./Radar/PaymentEvaluations.d.ts' />
 ///<reference path='./Radar/ValueListItems.d.ts' />
 ///<reference path='./Radar/ValueLists.d.ts' />
 ///<reference path='./Refunds.d.ts' />
@@ -252,6 +261,7 @@
 ///<reference path='./SubscriptionItems.d.ts' />
 ///<reference path='./SubscriptionSchedules.d.ts' />
 ///<reference path='./Subscriptions.d.ts' />
+///<reference path='./Tax/Associations.d.ts' />
 ///<reference path='./Tax/CalculationLineItems.d.ts' />
 ///<reference path='./Tax/Calculations.d.ts' />
 ///<reference path='./Tax/Registrations.d.ts' />
@@ -265,6 +275,7 @@
 ///<reference path='./Terminal/Configurations.d.ts' />
 ///<reference path='./Terminal/ConnectionTokens.d.ts' />
 ///<reference path='./Terminal/Locations.d.ts' />
+///<reference path='./Terminal/OnboardingLinks.d.ts' />
 ///<reference path='./Terminal/Readers.d.ts' />
 ///<reference path='./TestHelpers/TestClocks.d.ts' />
 ///<reference path='./Tokens.d.ts' />
@@ -285,6 +296,11 @@
 ///<reference path='./V2/Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
+///<reference path='./V2/Core/AccountLinks.d.ts' />
+///<reference path='./V2/Core/AccountPersonTokens.d.ts' />
+///<reference path='./V2/Core/AccountPersons.d.ts' />
+///<reference path='./V2/Core/AccountTokens.d.ts' />
+///<reference path='./V2/Core/Accounts.d.ts' />
 ///<reference path='./V2/Core/EventDestinations.d.ts' />
 ///<reference path='./V2/Core/Events.d.ts' />
 ///<reference path='./V2/DeletedObject.d.ts' />
@@ -416,6 +432,7 @@ declare module 'stripe' {
     };
     radar: {
       earlyFraudWarnings: Stripe.Radar.EarlyFraudWarningsResource;
+      paymentEvaluations: Stripe.Radar.PaymentEvaluationsResource;
       valueLists: Stripe.Radar.ValueListsResource;
       valueListItems: Stripe.Radar.ValueListItemsResource;
     };
@@ -427,6 +444,7 @@ declare module 'stripe' {
       scheduledQueryRuns: Stripe.Sigma.ScheduledQueryRunsResource;
     };
     tax: {
+      associations: Stripe.Tax.AssociationsResource;
       calculations: Stripe.Tax.CalculationsResource;
       registrations: Stripe.Tax.RegistrationsResource;
       settings: Stripe.Tax.SettingsResource;
@@ -436,6 +454,7 @@ declare module 'stripe' {
       configurations: Stripe.Terminal.ConfigurationsResource;
       connectionTokens: Stripe.Terminal.ConnectionTokensResource;
       locations: Stripe.Terminal.LocationsResource;
+      onboardingLinks: Stripe.Terminal.OnboardingLinksResource;
       readers: Stripe.Terminal.ReadersResource;
     };
     testHelpers: {
@@ -480,6 +499,9 @@ declare module 'stripe' {
         meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
       };
       core: {
+        accounts: Stripe.V2.Core.AccountsResource;
+        accountLinks: Stripe.V2.Core.AccountLinksResource;
+        accountTokens: Stripe.V2.Core.AccountTokensResource;
         events: Stripe.V2.Core.EventsResource;
         eventDestinations: Stripe.V2.Core.EventDestinationsResource;
       };

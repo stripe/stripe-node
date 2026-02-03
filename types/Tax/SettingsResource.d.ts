@@ -35,7 +35,7 @@ declare module 'stripe' {
           tax_behavior?: Defaults.TaxBehavior;
 
           /**
-           * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+           * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
            */
           tax_code?: string;
         }

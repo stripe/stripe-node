@@ -15,14 +15,19 @@ declare module 'stripe' {
         applicability_config: CreditGrantCreateParams.ApplicabilityConfig;
 
         /**
-         * ID of the customer to receive the billing credits.
-         */
-        customer: string;
-
-        /**
          * The category of this credit grant. It defaults to `paid` if not specified.
          */
         category?: CreditGrantCreateParams.Category;
+
+        /**
+         * ID of the customer receiving the billing credits.
+         */
+        customer?: string;
+
+        /**
+         * ID of the account representing the customer receiving the billing credits.
+         */
+        customer_account?: string;
 
         /**
          * The time when the billing credits become effective-when they're eligible for use. It defaults to the current timestamp if not specified.
@@ -144,6 +149,11 @@ declare module 'stripe' {
          * Only return credit grants for this customer.
          */
         customer?: string;
+
+        /**
+         * Only return credit grants for this account representing the customer.
+         */
+        customer_account?: string;
 
         /**
          * Specifies which fields in the response should be expanded.

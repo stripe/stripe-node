@@ -3,9 +3,9 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * Invoice Line Items represent the individual lines within an [invoice](https://stripe.com/docs/api/invoices) and only exist within the context of an invoice.
+     * Invoice Line Items represent the individual lines within an [invoice](https://docs.stripe.com/api/invoices) and only exist within the context of an invoice.
      *
-     * Each line item is backed by either an [invoice item](https://stripe.com/docs/api/invoiceitems) or a [subscription item](https://stripe.com/docs/api/subscription_items).
+     * Each line item is backed by either an [invoice item](https://docs.stripe.com/api/invoiceitems) or a [subscription item](https://docs.stripe.com/api/subscription_items).
      */
     interface InvoiceLineItem {
       /**
@@ -59,7 +59,7 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription`, `metadata` reflects the current metadata from the subscription associated with the line item, unless the invoice line was directly updated with different metadata after creation.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription`, `metadata` reflects the current metadata from the subscription associated with the line item, unless the invoice line was directly updated with different metadata after creation.
        */
       metadata: Stripe.Metadata;
 
@@ -86,6 +86,11 @@ declare module 'stripe' {
       quantity: number | null;
 
       subscription: string | Stripe.Subscription | null;
+
+      /**
+       * The subtotal of the line item, in cents (or local equivalent), before any discounts or taxes.
+       */
+      subtotal: number;
 
       /**
        * The tax information of the line item.
@@ -282,7 +287,7 @@ declare module 'stripe' {
           /**
            * The ID of the price this item is associated with.
            */
-          price: string;
+          price: string | Stripe.Price;
 
           /**
            * The ID of the product this item is associated with.
@@ -345,6 +350,9 @@ declare module 'stripe' {
         type TaxBehavior = 'exclusive' | 'inclusive';
 
         interface TaxRateDetails {
+          /**
+           * ID of the tax rate
+           */
           tax_rate: string;
         }
       }

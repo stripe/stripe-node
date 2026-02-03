@@ -6,7 +6,7 @@ declare module 'stripe' {
       /**
        * A Tax Calculation allows you to calculate the tax to collect from your customer.
        *
-       * Related guide: [Calculate tax in your custom payment flow](https://stripe.com/docs/tax/custom)
+       * Related guide: [Calculate tax in your custom payment flow](https://docs.stripe.com/tax/custom)
        */
       interface Calculation {
         /**
@@ -20,7 +20,7 @@ declare module 'stripe' {
         object: 'tax.calculation';
 
         /**
-         * Total amount after taxes in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+         * Total amount after taxes in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
          */
         amount_total: number;
 
@@ -30,7 +30,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * The ID of an existing [Customer](https://stripe.com/docs/api/customers/object) used for the resource.
+         * The ID of an existing [Customer](https://docs.stripe.com/api/customers/object) used for the resource.
          */
         customer: string | null;
 
@@ -120,7 +120,7 @@ declare module 'stripe' {
 
           interface TaxId {
             /**
-             * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, or `unknown`
+             * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, or `unknown`
              */
             type: TaxId.Type;
 
@@ -215,6 +215,7 @@ declare module 'stripe' {
               | 'om_vat'
               | 'pe_ruc'
               | 'ph_tin'
+              | 'pl_nip'
               | 'ro_tin'
               | 'rs_pib'
               | 'ru_inn'
@@ -252,17 +253,17 @@ declare module 'stripe' {
 
         interface ShippingCost {
           /**
-           * The shipping amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes were calculated on top of this amount.
+           * The shipping amount in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes were calculated on top of this amount.
            */
           amount: number;
 
           /**
-           * The amount of tax calculated for shipping, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * The amount of tax calculated for shipping, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           amount_tax: number;
 
           /**
-           * The ID of an existing [ShippingRate](https://stripe.com/docs/api/shipping_rates/object).
+           * The ID of an existing [ShippingRate](https://docs.stripe.com/api/shipping_rates/object).
            */
           shipping_rate?: string;
 
@@ -277,7 +278,7 @@ declare module 'stripe' {
           tax_breakdown?: Array<ShippingCost.TaxBreakdown>;
 
           /**
-           * The [tax code](https://stripe.com/docs/tax/tax-categories) ID used for shipping.
+           * The [tax code](https://docs.stripe.com/tax/tax-categories) ID used for shipping.
            */
           tax_code: string;
         }
@@ -287,7 +288,7 @@ declare module 'stripe' {
 
           interface TaxBreakdown {
             /**
-             * The amount of tax, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The amount of tax, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             amount: number;
 
@@ -309,7 +310,7 @@ declare module 'stripe' {
             taxability_reason: TaxBreakdown.TaxabilityReason;
 
             /**
-             * The amount on which tax is calculated, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * The amount on which tax is calculated, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             taxable_amount: number;
           }
@@ -399,7 +400,7 @@ declare module 'stripe' {
 
         interface TaxBreakdown {
           /**
-           * The amount of tax, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * The amount of tax, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           amount: number;
 
@@ -416,7 +417,7 @@ declare module 'stripe' {
           taxability_reason: TaxBreakdown.TaxabilityReason;
 
           /**
-           * The amount on which tax is calculated, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * The amount on which tax is calculated, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           taxable_amount: number;
         }
@@ -461,7 +462,7 @@ declare module 'stripe' {
             rate_type: TaxRateDetails.RateType | null;
 
             /**
-             * State, county, province, or region.
+             * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
              */
             state: string | null;
 

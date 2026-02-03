@@ -6,7 +6,7 @@ declare module 'stripe' {
       namespace Issuing {
         interface TransactionCreateForceCaptureParams {
           /**
-           * The total amount to attempt to capture. This amount is in the provided currency, or defaults to the cards currency, and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * The total amount to attempt to capture. This amount is in the provided currency, or defaults to the cards currency, and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           amount: number;
 
@@ -39,7 +39,7 @@ declare module 'stripe' {
         namespace TransactionCreateForceCaptureParams {
           interface MerchantData {
             /**
-             * A categorization of the seller's type of business. See our [merchant categories guide](https://stripe.com/docs/issuing/merchant-categories) for a list of possible values.
+             * A categorization of the seller's type of business. See our [merchant categories guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
              */
             category?: MerchantData.Category;
 
@@ -656,7 +656,7 @@ declare module 'stripe' {
       namespace Issuing {
         interface TransactionCreateUnlinkedRefundParams {
           /**
-           * The total amount to attempt to refund. This amount is in the provided currency, or defaults to the cards currency, and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * The total amount to attempt to refund. This amount is in the provided currency, or defaults to the cards currency, and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           amount: number;
 
@@ -689,7 +689,7 @@ declare module 'stripe' {
         namespace TransactionCreateUnlinkedRefundParams {
           interface MerchantData {
             /**
-             * A categorization of the seller's type of business. See our [merchant categories guide](https://stripe.com/docs/issuing/merchant-categories) for a list of possible values.
+             * A categorization of the seller's type of business. See our [merchant categories guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
              */
             category?: MerchantData.Category;
 
@@ -1311,7 +1311,7 @@ declare module 'stripe' {
           expand?: Array<string>;
 
           /**
-           * The total amount to attempt to refund. This amount is in the provided currency, or defaults to the cards currency, and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * The total amount to attempt to refund. This amount is in the provided currency, or defaults to the cards currency, and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           refund_amount?: number;
         }

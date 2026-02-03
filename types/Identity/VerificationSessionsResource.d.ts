@@ -15,7 +15,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
 
@@ -35,6 +35,11 @@ declare module 'stripe' {
         related_customer?: string;
 
         /**
+         * The ID of the Account representing a customer.
+         */
+        related_customer_account?: string;
+
+        /**
          * Tokens referencing a Person resource and it's associated account.
          */
         related_person?: VerificationSessionCreateParams.RelatedPerson;
@@ -45,7 +50,7 @@ declare module 'stripe' {
         return_url?: string;
 
         /**
-         * The type of [verification check](https://stripe.com/docs/identity/verification-checks) to be performed. You must provide a `type` if not passing `verification_flow`.
+         * The type of [verification check](https://docs.stripe.com/identity/verification-checks) to be performed. You must provide a `type` if not passing `verification_flow`.
          */
         type?: VerificationSessionCreateParams.Type;
 
@@ -58,7 +63,7 @@ declare module 'stripe' {
       namespace VerificationSessionCreateParams {
         interface Options {
           /**
-           * Options that apply to the [document check](https://stripe.com/docs/identity/verification-checks?type=document).
+           * Options that apply to the [document check](https://docs.stripe.com/identity/verification-checks?type=document).
            */
           document?: Stripe.Emptyable<Options.Document>;
         }
@@ -71,7 +76,7 @@ declare module 'stripe' {
             allowed_types?: Array<Document.AllowedType>;
 
             /**
-             * Collect an ID number and perform an [ID number check](https://stripe.com/docs/identity/verification-checks?type=id-number) with the document's extracted name and date of birth.
+             * Collect an ID number and perform an [ID number check](https://docs.stripe.com/identity/verification-checks?type=id-number) with the document's extracted name and date of birth.
              */
             require_id_number?: boolean;
 
@@ -81,7 +86,7 @@ declare module 'stripe' {
             require_live_capture?: boolean;
 
             /**
-             * Capture a face image and perform a [selfie check](https://stripe.com/docs/identity/verification-checks?type=selfie) comparing a photo ID and a picture of your user's face. [Learn more](https://stripe.com/docs/identity/selfie).
+             * Capture a face image and perform a [selfie check](https://docs.stripe.com/identity/verification-checks?type=selfie) comparing a photo ID and a picture of your user's face. [Learn more](https://docs.stripe.com/identity/selfie).
              */
             require_matching_selfie?: boolean;
           }
@@ -132,7 +137,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
 
@@ -147,7 +152,7 @@ declare module 'stripe' {
         provided_details?: VerificationSessionUpdateParams.ProvidedDetails;
 
         /**
-         * The type of [verification check](https://stripe.com/docs/identity/verification-checks) to be performed.
+         * The type of [verification check](https://docs.stripe.com/identity/verification-checks) to be performed.
          */
         type?: VerificationSessionUpdateParams.Type;
       }
@@ -155,7 +160,7 @@ declare module 'stripe' {
       namespace VerificationSessionUpdateParams {
         interface Options {
           /**
-           * Options that apply to the [document check](https://stripe.com/docs/identity/verification-checks?type=document).
+           * Options that apply to the [document check](https://docs.stripe.com/identity/verification-checks?type=document).
            */
           document?: Stripe.Emptyable<Options.Document>;
         }
@@ -168,7 +173,7 @@ declare module 'stripe' {
             allowed_types?: Array<Document.AllowedType>;
 
             /**
-             * Collect an ID number and perform an [ID number check](https://stripe.com/docs/identity/verification-checks?type=id-number) with the document's extracted name and date of birth.
+             * Collect an ID number and perform an [ID number check](https://docs.stripe.com/identity/verification-checks?type=id-number) with the document's extracted name and date of birth.
              */
             require_id_number?: boolean;
 
@@ -178,7 +183,7 @@ declare module 'stripe' {
             require_live_capture?: boolean;
 
             /**
-             * Capture a face image and perform a [selfie check](https://stripe.com/docs/identity/verification-checks?type=selfie) comparing a photo ID and a picture of your user's face. [Learn more](https://stripe.com/docs/identity/selfie).
+             * Capture a face image and perform a [selfie check](https://docs.stripe.com/identity/verification-checks?type=selfie) comparing a photo ID and a picture of your user's face. [Learn more](https://docs.stripe.com/identity/selfie).
              */
             require_matching_selfie?: boolean;
           }
@@ -219,10 +224,18 @@ declare module 'stripe' {
          */
         expand?: Array<string>;
 
+        /**
+         * Customer ID
+         */
         related_customer?: string;
 
         /**
-         * Only return VerificationSessions with this status. [Learn more about the lifecycle of sessions](https://stripe.com/docs/identity/how-sessions-work).
+         * The ID of the Account representing a customer.
+         */
+        related_customer_account?: string;
+
+        /**
+         * Only return VerificationSessions with this status. [Learn more about the lifecycle of sessions](https://docs.stripe.com/identity/how-sessions-work).
          */
         status?: VerificationSessionListParams.Status;
       }

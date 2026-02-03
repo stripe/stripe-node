@@ -8,7 +8,7 @@ declare module 'stripe' {
      *
      * The top-level `available` and `pending` comprise your "payments balance."
      *
-     * Related guide: [Balances and settlement time](https://stripe.com/docs/payments/balances), [Understanding Connect account balances](https://stripe.com/docs/connect/account-balances)
+     * Related guide: [Balances and settlement time](https://docs.stripe.com/payments/balances), [Understanding Connect account balances](https://docs.stripe.com/connect/account-balances)
      */
     interface Balance {
       /**
@@ -17,7 +17,7 @@ declare module 'stripe' {
       object: 'balance';
 
       /**
-       * Available funds that you can transfer or pay out automatically by Stripe or explicitly through the [Transfers API](https://stripe.com/docs/api#transfers) or [Payouts API](https://stripe.com/docs/api#payouts). You can find the available balance for each currency and payment type in the `source_types` property.
+       * Available funds that you can transfer or pay out automatically by Stripe or explicitly through the [Transfers API](https://api.stripe.com#transfers) or [Payouts API](https://api.stripe.com#payouts). You can find the available balance for each currency and payment type in the `source_types` property.
        */
       available: Array<Balance.Available>;
 

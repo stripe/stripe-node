@@ -6,7 +6,7 @@ declare module 'stripe' {
       /**
        * You can use Tax `Settings` to manage configurations used by Stripe Tax calculations.
        *
-       * Related guide: [Using the Settings API](https://stripe.com/docs/tax/settings-api)
+       * Related guide: [Using the Settings API](https://docs.stripe.com/tax/settings-api)
        */
       interface Settings {
         /**

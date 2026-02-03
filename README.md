@@ -414,6 +414,11 @@ const event = stripe.webhooks.constructEvent(payloadString, header, secret);
 // Do something with mocked signed event
 expect(event.id).to.equal(payload.id);
 ```
+### How to use undocumented parameters and properties
+
+In some cases, you might encounter parameters on an API request or fields on an API response that aren’t available in the SDKs.
+This might happen when they’re undocumented or when they’re in preview and you aren’t using a preview SDK. 
+See [undocumented params and properties](https://docs.stripe.com/sdks/server-side?lang=node#undocumented-params-and-fields) to send those parameters or access those fields.
 
 ### Writing a Plugin
 
@@ -533,7 +538,7 @@ We would love for you to try these as we incrementally release new features and 
 The easiest way to install a public-preview release is to use the dedicated npm tag:
 
 ```
-npm install stripe@public-preview --save
+npm install stripe@public-preview --save-exact
 ```
 
 Or, to install a specific version from the [releases page](https://github.com/stripe/stripe-node/releases/), you can specify that version explicitly:
@@ -545,7 +550,7 @@ npm install stripe@<some-version>
 ```
 
 > **Note**
-> There can be breaking changes between two versions of the public preview SDKs without a bump in the major version. Therefore we recommend pinning the package version to a specific version in your package.json file. This way you can install the same version each time without breaking changes unless you are intentionally looking for the latest public preview SDK.
+> There can be breaking changes between two versions of the public preview SDKs without a bump in the major version. Therefore we recommend pinning the package version to a specific version (i.e. using --save-exact) in your package.json file. This way you can install the same version each time without breaking changes unless you are intentionally looking for the latest public preview SDK.
 
 Some preview features require a name and version to be set in the `Stripe-Version` header like `feature_beta=v3`. If your preview feature has this requirement, use the `apiVersion` property of `config` object to set it:
 
@@ -560,7 +565,7 @@ const stripe = new Stripe('sk_test_...', {
 Stripe has features in the [private preview phase](https://docs.stripe.com/release-phases) that can be accessed via versions of this package that have the `-alpha.X` suffix like `18.6.0-alpha.1`. These are invite-only features. Once invited, you can install the private preview SDKs by following the same instructions as for the [public preview SDKs](https://github.com/stripe/stripe-node?tab=readme-ov-file#public-preview-sdks) above and replacing the term `public-preview` with `private-preview`:
 
 ```
-npm install stripe@private-preview --save
+npm install stripe@private-preview --save-exact
 ```
 
 ### Custom requests

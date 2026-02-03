@@ -5,14 +5,19 @@ declare module 'stripe' {
     namespace BillingPortal {
       interface SessionCreateParams {
         /**
-         * The ID of an existing customer.
-         */
-        customer: string;
-
-        /**
-         * The ID of an existing [configuration](https://stripe.com/docs/api/customer_portal/configuration) to use for this session, describing its functionality and features. If not specified, the session uses the default configuration.
+         * The ID of an existing [configuration](https://docs.stripe.com/api/customer_portal/configuration) to use for this session, describing its functionality and features. If not specified, the session uses the default configuration.
          */
         configuration?: string;
+
+        /**
+         * The ID of an existing customer.
+         */
+        customer?: string;
+
+        /**
+         * The ID of an existing account.
+         */
+        customer_account?: string;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -20,7 +25,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * Information about a specific flow for the customer to go through. See the [docs](https://stripe.com/docs/customer-management/portal-deep-links) to learn more about using customer portal deep links and flows.
+         * Information about a specific flow for the customer to go through. See the [docs](https://docs.stripe.com/customer-management/portal-deep-links) to learn more about using customer portal deep links and flows.
          */
         flow_data?: SessionCreateParams.FlowData;
 
@@ -30,7 +35,7 @@ declare module 'stripe' {
         locale?: SessionCreateParams.Locale;
 
         /**
-         * The `on_behalf_of` account to use for this session. When specified, only subscriptions and invoices with this `on_behalf_of` account appear in the portal. For more information, see the [docs](https://stripe.com/docs/connect/separate-charges-and-transfers#settlement-merchant). Use the [Accounts API](https://stripe.com/docs/api/accounts/object#account_object-settings-branding) to modify the `on_behalf_of` account's branding settings, which the portal displays.
+         * The `on_behalf_of` account to use for this session. When specified, only subscriptions and invoices with this `on_behalf_of` account appear in the portal. For more information, see the [docs](https://docs.stripe.com/connect/separate-charges-and-transfers#settlement-merchant). Use the [Accounts API](https://docs.stripe.com/api/accounts/object#account_object-settings-branding) to modify the `on_behalf_of` account's branding settings, which the portal displays.
          */
         on_behalf_of?: string;
 
@@ -153,7 +158,7 @@ declare module 'stripe' {
             discounts?: Array<SubscriptionUpdateConfirm.Discount>;
 
             /**
-             * The [subscription item](https://stripe.com/docs/api/subscription_items) to be updated through this flow. Currently, only up to one may be specified and subscriptions with multiple items are not updatable.
+             * The [subscription item](https://docs.stripe.com/api/subscription_items) to be updated through this flow. Currently, only up to one may be specified and subscriptions with multiple items are not updatable.
              */
             items: Array<SubscriptionUpdateConfirm.Item>;
 
@@ -178,17 +183,17 @@ declare module 'stripe' {
 
             interface Item {
               /**
-               * The ID of the [subscription item](https://stripe.com/docs/api/subscriptions/object#subscription_object-items-data-id) to be updated.
+               * The ID of the [subscription item](https://docs.stripe.com/api/subscriptions/object#subscription_object-items-data-id) to be updated.
                */
               id: string;
 
               /**
-               * The price the customer should subscribe to through this flow. The price must also be included in the configuration's [`features.subscription_update.products`](https://stripe.com/docs/api/customer_portal/configuration#portal_configuration_object-features-subscription_update-products).
+               * The price the customer should subscribe to through this flow. The price must also be included in the configuration's [`features.subscription_update.products`](https://docs.stripe.com/api/customer_portal/configuration#portal_configuration_object-features-subscription_update-products).
                */
               price?: string;
 
               /**
-               * [Quantity](https://stripe.com/docs/subscriptions/quantities) for this item that the customer should subscribe to through this flow.
+               * [Quantity](https://docs.stripe.com/subscriptions/quantities) for this item that the customer should subscribe to through this flow.
                */
               quantity?: number;
             }
@@ -256,7 +261,10 @@ declare module 'stripe' {
          * Creates a session of the customer portal.
          */
         create(
-          params: SessionCreateParams,
+          params?: SessionCreateParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.BillingPortal.Session>>;
+        create(
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.BillingPortal.Session>>;
       }
