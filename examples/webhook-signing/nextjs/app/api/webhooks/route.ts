@@ -2,7 +2,9 @@ import {Stripe} from 'stripe';
 import {NextResponse} from 'next/server';
 import {headers} from 'next/headers';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  apiVersion: '2022-11-15',
+});
 
 export async function POST(req: Request) {
   let event: Stripe.Event;
