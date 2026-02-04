@@ -80,6 +80,11 @@ declare module 'stripe' {
        * A list of refunds that have been applied to the fee.
        */
       refunds: ApiList<Stripe.FeeRefund>;
+
+      /**
+       * Type of settlement for the application fee. One of `net_settled` or `gross_settled`.
+       */
+      settlement_type?: ApplicationFee.SettlementType;
     }
 
     namespace ApplicationFee {
@@ -108,6 +113,8 @@ declare module 'stripe' {
       namespace FeeSource {
         type Type = 'charge' | 'payout' | 'transfer';
       }
+
+      type SettlementType = 'gross_settled' | 'net_settled';
     }
   }
 }
