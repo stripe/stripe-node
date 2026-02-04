@@ -52,6 +52,11 @@ declare module 'stripe' {
            * A link to the Stripe-hosted receipt that is provided when money movement is considered regulated under Stripe's money transmission licenses. The receipt link remains active for 60 days from the Adjustment creation date. After this period, the link will expire and the receipt url value will be null.
            */
           receipt_url?: string;
+
+          /**
+           * A reference for the Adjustment that associates it with related records or operations.
+           */
+          reference?: string;
         }
 
         namespace Adjustment {

@@ -7,7 +7,12 @@ declare module 'stripe' {
         namespace RateCards {
           interface RateCreateParams {
             /**
-             * The custom pricing unit that this rate binds to.
+             * The Metered Item that this rate binds to.
+             */
+            metered_item: string;
+
+            /**
+             * The custom pricing unit that this rate binds to. One of `unit_amount`, `tiers`, or `custom_pricing_unit_amount` is required.
              */
             custom_pricing_unit_amount?: RateCreateParams.CustomPricingUnitAmount;
 
@@ -17,19 +22,14 @@ declare module 'stripe' {
             metadata?: Stripe.MetadataParam;
 
             /**
-             * The Metered Item that this rate binds to.
-             */
-            metered_item?: string;
-
-            /**
              * Defines whether the tiered price should be graduated or volume-based. In volume-based tiering, the maximum
              * quantity within a period determines the per-unit price. In graduated tiering, the pricing changes as the quantity
-             * grows into new tiers. Can only be set if `tiers` is set.
+             * grows into new tiers. One of `unit_amount`, `tiers`, or `custom_pricing_unit_amount` is required.
              */
             tiering_mode?: RateCreateParams.TieringMode;
 
             /**
-             * Each element represents a pricing tier. Cannot be set if `unit_amount` is provided.
+             * Each element represents a pricing tier. One of `unit_amount`, `tiers`, or `custom_pricing_unit_amount` is required.
              */
             tiers?: Array<RateCreateParams.Tier>;
 
@@ -40,7 +40,7 @@ declare module 'stripe' {
 
             /**
              * The per-unit amount to be charged, represented as a decimal string in minor currency units with at most 12 decimal
-             * places. Cannot be set if `tiers` is provided.
+             * places. One of `unit_amount`, `tiers`, or `custom_pricing_unit_amount` is required.
              */
             unit_amount?: string;
           }
@@ -145,11 +145,7 @@ declare module 'stripe' {
              */
             create(
               id: string,
-              params?: RateCreateParams,
-              options?: RequestOptions
-            ): Promise<Stripe.Response<Stripe.V2.Billing.RateCardRate>>;
-            create(
-              id: string,
+              params: RateCreateParams,
               options?: RequestOptions
             ): Promise<Stripe.Response<Stripe.V2.Billing.RateCardRate>>;
 

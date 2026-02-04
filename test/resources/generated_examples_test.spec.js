@@ -4274,6 +4274,10 @@ describe('Generated tests', function() {
             },
           },
           deactivate: {
+            cancellation_details: {
+              comment: 'comment',
+              feedback: 'other',
+            },
             collect_at: 'next_billing_date',
             effective_at: {
               timestamp: '1970-01-01T15:18:46.294Z',
@@ -5136,7 +5140,10 @@ describe('Generated tests', function() {
       },
     ]);
     const rateCardRate = await stripe.v2.billing.rateCards.rates.create(
-      'rate_card_id_123'
+      'rate_card_id_123',
+      {
+        metered_item: 'metered_item',
+      }
     );
     expect(rateCardRate).not.to.be.null;
   });
@@ -5594,6 +5601,36 @@ describe('Generated tests', function() {
       'id_123'
     );
     expect(claimableSandbox).not.to.be.null;
+  });
+
+  it('test_v2_core_connection_session_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/core/connection_sessions',
+        response:
+          '{"account":"account","client_secret":"client_secret","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.connection_session","livemode":true}',
+      },
+    ]);
+    const connectionSession = await stripe.v2.core.connectionSessions.create({
+      account: 'account',
+    });
+    expect(connectionSession).not.to.be.null;
+  });
+
+  it('test_v2_core_connection_session_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/connection_sessions/id_123',
+        response:
+          '{"account":"account","client_secret":"client_secret","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.connection_session","livemode":true}',
+      },
+    ]);
+    const connectionSession = await stripe.v2.core.connectionSessions.retrieve(
+      'id_123'
+    );
+    expect(connectionSession).not.to.be.null;
   });
 
   it('test_v2_core_event_get', async function() {
@@ -6105,7 +6142,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/financial_accounts',
         response:
-          '{"data":[{"balance":{"available":{"key":{}},"inbound_pending":{"key":{}},"outbound_pending":{"key":{}}},"country":"country","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.money_management.financial_account","status":"closed","type":"other","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"balance":{"available":{"key":{}},"inbound_pending":{"key":{}},"outbound_pending":{"key":{}}},"country":"country","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.money_management.financial_account","status":"closed","type":"payments","livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const financialAccounts = await stripe.v2.moneyManagement.financialAccounts.list();
@@ -6118,7 +6155,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/money_management/financial_accounts',
         response:
-          '{"balance":{"available":{"key":{}},"inbound_pending":{"key":{}},"outbound_pending":{"key":{}}},"country":"country","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.money_management.financial_account","status":"closed","type":"other","livemode":true}',
+          '{"balance":{"available":{"key":{}},"inbound_pending":{"key":{}},"outbound_pending":{"key":{}}},"country":"country","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.money_management.financial_account","status":"closed","type":"payments","livemode":true}',
       },
     ]);
     const financialAccount = await stripe.v2.moneyManagement.financialAccounts.create(
@@ -6135,7 +6172,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/financial_accounts/id_123',
         response:
-          '{"balance":{"available":{"key":{}},"inbound_pending":{"key":{}},"outbound_pending":{"key":{}}},"country":"country","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.money_management.financial_account","status":"closed","type":"other","livemode":true}',
+          '{"balance":{"available":{"key":{}},"inbound_pending":{"key":{}},"outbound_pending":{"key":{}}},"country":"country","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.money_management.financial_account","status":"closed","type":"payments","livemode":true}',
       },
     ]);
     const financialAccount = await stripe.v2.moneyManagement.financialAccounts.retrieve(
@@ -6150,7 +6187,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/money_management/financial_accounts/id_123',
         response:
-          '{"balance":{"available":{"key":{}},"inbound_pending":{"key":{}},"outbound_pending":{"key":{}}},"country":"country","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.money_management.financial_account","status":"closed","type":"other","livemode":true}',
+          '{"balance":{"available":{"key":{}},"inbound_pending":{"key":{}},"outbound_pending":{"key":{}}},"country":"country","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.money_management.financial_account","status":"closed","type":"payments","livemode":true}',
       },
     ]);
     const financialAccount = await stripe.v2.moneyManagement.financialAccounts.update(
@@ -6165,7 +6202,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/money_management/financial_accounts/id_123/close',
         response:
-          '{"balance":{"available":{"key":{}},"inbound_pending":{"key":{}},"outbound_pending":{"key":{}}},"country":"country","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.money_management.financial_account","status":"closed","type":"other","livemode":true}',
+          '{"balance":{"available":{"key":{}},"inbound_pending":{"key":{}},"outbound_pending":{"key":{}}},"country":"country","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.money_management.financial_account","status":"closed","type":"payments","livemode":true}',
       },
     ]);
     const financialAccount = await stripe.v2.moneyManagement.financialAccounts.close(
@@ -6611,7 +6648,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/received_credits',
         response:
-          '{"data":[{"amount":{},"created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","object":"v2.money_management.received_credit","status":"returned","type":"external_credit","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"amount":{},"created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","object":"v2.money_management.received_credit","status":"returned","type":"balance_transfer","livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const receivedCredits = await stripe.v2.moneyManagement.receivedCredits.list();
@@ -6624,7 +6661,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/received_credits/id_123',
         response:
-          '{"amount":{},"created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","object":"v2.money_management.received_credit","status":"returned","type":"external_credit","livemode":true}',
+          '{"amount":{},"created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","object":"v2.money_management.received_credit","status":"returned","type":"balance_transfer","livemode":true}',
       },
     ]);
     const receivedCredit = await stripe.v2.moneyManagement.receivedCredits.retrieve(
@@ -6639,7 +6676,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/received_debits',
         response:
-          '{"data":[{"amount":{},"created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","object":"v2.money_management.received_debit","status":"canceled","type":"external_debit","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"amount":{},"created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","object":"v2.money_management.received_debit","status":"canceled","type":"balance_transfer","livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const receivedDebits = await stripe.v2.moneyManagement.receivedDebits.list();
@@ -6652,7 +6689,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/received_debits/id_123',
         response:
-          '{"amount":{},"created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","object":"v2.money_management.received_debit","status":"canceled","type":"external_debit","livemode":true}',
+          '{"amount":{},"created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","object":"v2.money_management.received_debit","status":"canceled","type":"balance_transfer","livemode":true}',
       },
     ]);
     const receivedDebit = await stripe.v2.moneyManagement.receivedDebits.retrieve(
@@ -6714,7 +6751,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/transactions',
         response:
-          '{"data":[{"amount":{},"balance_impact":{"available":{},"inbound_pending":{},"outbound_pending":{}},"category":"received_debit","created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","flow":{"type":"fee_transaction"},"id":"obj_123","object":"v2.money_management.transaction","status":"pending","status_transitions":{},"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"amount":{},"balance_impact":{"available":{},"inbound_pending":{},"outbound_pending":{}},"category":"issuing_dispute_provisional_credit_reversal","created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","flow":{"type":"adjustment"},"id":"obj_123","object":"v2.money_management.transaction","status":"pending","status_transitions":{},"livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const transactions = await stripe.v2.moneyManagement.transactions.list();
@@ -6727,7 +6764,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/transactions/id_123',
         response:
-          '{"amount":{},"balance_impact":{"available":{},"inbound_pending":{},"outbound_pending":{}},"category":"received_debit","created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","flow":{"type":"fee_transaction"},"id":"obj_123","object":"v2.money_management.transaction","status":"pending","status_transitions":{},"livemode":true}',
+          '{"amount":{},"balance_impact":{"available":{},"inbound_pending":{},"outbound_pending":{}},"category":"issuing_dispute_provisional_credit_reversal","created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","flow":{"type":"adjustment"},"id":"obj_123","object":"v2.money_management.transaction","status":"pending","status_transitions":{},"livemode":true}',
       },
     ]);
     const transaction = await stripe.v2.moneyManagement.transactions.retrieve(
@@ -6742,7 +6779,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/transaction_entries',
         response:
-          '{"data":[{"balance_impact":{"available":{},"inbound_pending":{},"outbound_pending":{}},"created":"1970-01-12T21:42:34.472Z","effective_at":"1970-01-03T20:38:28.043Z","id":"obj_123","object":"v2.money_management.transaction_entry","transaction":"transaction","transaction_details":{"category":"received_debit","financial_account":"financial_account","flow":{"type":"fee_transaction"}},"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"balance_impact":{"available":{},"inbound_pending":{},"outbound_pending":{}},"created":"1970-01-12T21:42:34.472Z","effective_at":"1970-01-03T20:38:28.043Z","id":"obj_123","object":"v2.money_management.transaction_entry","transaction":"transaction","transaction_details":{"category":"issuing_dispute_provisional_credit_reversal","financial_account":"financial_account","flow":{"type":"adjustment"}},"livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const transactionEntries = await stripe.v2.moneyManagement.transactionEntries.list();
@@ -6755,7 +6792,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/transaction_entries/id_123',
         response:
-          '{"balance_impact":{"available":{},"inbound_pending":{},"outbound_pending":{}},"created":"1970-01-12T21:42:34.472Z","effective_at":"1970-01-03T20:38:28.043Z","id":"obj_123","object":"v2.money_management.transaction_entry","transaction":"transaction","transaction_details":{"category":"received_debit","financial_account":"financial_account","flow":{"type":"fee_transaction"}},"livemode":true}',
+          '{"balance_impact":{"available":{},"inbound_pending":{},"outbound_pending":{}},"created":"1970-01-12T21:42:34.472Z","effective_at":"1970-01-03T20:38:28.043Z","id":"obj_123","object":"v2.money_management.transaction_entry","transaction":"transaction","transaction_details":{"category":"issuing_dispute_provisional_credit_reversal","financial_account":"financial_account","flow":{"type":"adjustment"}},"livemode":true}',
       },
     ]);
     const transactionEntry = await stripe.v2.moneyManagement.transactionEntries.retrieve(
@@ -6853,6 +6890,19 @@ describe('Generated tests', function() {
     expect(offSessionPayment).not.to.be.null;
   });
 
+  it('test_v2_payments_settlement_allocation_intent_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/payments/settlement_allocation_intents',
+        response:
+          '{"data":[{"amount":{},"created":"1970-01-12T21:42:34.472Z","expected_settlement_date":"1970-01-22T14:14:13.629Z","financial_account":"financial_account","id":"obj_123","linked_credits":["linked_credits"],"object":"v2.payments.settlement_allocation_intent","reference":"reference","status":"canceled","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const settlementAllocationIntents = await stripe.v2.payment.settlementAllocationIntents.list();
+    expect(settlementAllocationIntents).not.to.be.null;
+  });
+
   it('test_v2_payments_settlement_allocation_intent_post', async function() {
     const stripe = testUtils.createMockClient([
       {
@@ -6876,7 +6926,7 @@ describe('Generated tests', function() {
     expect(settlementAllocationIntent).not.to.be.null;
   });
 
-  it('test_v2_payments_settlement_allocation_intent_get', async function() {
+  it('test_v2_payments_settlement_allocation_intent_get_2', async function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
@@ -6936,6 +6986,22 @@ describe('Generated tests', function() {
     expect(settlementAllocationIntent).not.to.be.null;
   });
 
+  it('test_v2_payments_settlement_allocation_intents_split_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path:
+          '/v2/payments/settlement_allocation_intents/settlement_allocation_intent_id_123/splits',
+        response:
+          '{"data":[{"account":"account","amount":{},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.payments.settlement_allocation_intent_split","settlement_allocation_intent":"settlement_allocation_intent","status":"canceled","type":"credit","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const settlementAllocationIntentSplits = await stripe.v2.payment.settlementAllocationIntents.splits.list(
+      'settlement_allocation_intent_id_123'
+    );
+    expect(settlementAllocationIntentSplits).not.to.be.null;
+  });
+
   it('test_v2_payments_settlement_allocation_intents_split_post', async function() {
     const stripe = testUtils.createMockClient([
       {
@@ -6943,7 +7009,7 @@ describe('Generated tests', function() {
         path:
           '/v2/payments/settlement_allocation_intents/settlement_allocation_intent_id_123/splits',
         response:
-          '{"account":"account","amount":{},"created":"1970-01-12T21:42:34.472Z","flow":{"type":"outbound_payment"},"id":"obj_123","object":"v2.payments.settlement_allocation_intent_split","settlement_allocation_intent":"settlement_allocation_intent","status":"canceled","type":"credit","livemode":true}',
+          '{"account":"account","amount":{},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.payments.settlement_allocation_intent_split","settlement_allocation_intent":"settlement_allocation_intent","status":"canceled","type":"credit","livemode":true}',
       },
     ]);
     const settlementAllocationIntentSplit = await stripe.v2.payment.settlementAllocationIntents.splits.create(
@@ -6960,14 +7026,14 @@ describe('Generated tests', function() {
     expect(settlementAllocationIntentSplit).not.to.be.null;
   });
 
-  it('test_v2_payments_settlement_allocation_intents_split_get', async function() {
+  it('test_v2_payments_settlement_allocation_intents_split_get_2', async function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
         path:
           '/v2/payments/settlement_allocation_intents/settlement_allocation_intent_id_123/splits/id_123',
         response:
-          '{"account":"account","amount":{},"created":"1970-01-12T21:42:34.472Z","flow":{"type":"outbound_payment"},"id":"obj_123","object":"v2.payments.settlement_allocation_intent_split","settlement_allocation_intent":"settlement_allocation_intent","status":"canceled","type":"credit","livemode":true}',
+          '{"account":"account","amount":{},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.payments.settlement_allocation_intent_split","settlement_allocation_intent":"settlement_allocation_intent","status":"canceled","type":"credit","livemode":true}',
       },
     ]);
     const settlementAllocationIntentSplit = await stripe.v2.payment.settlementAllocationIntents.splits.retrieve(
@@ -6984,7 +7050,7 @@ describe('Generated tests', function() {
         path:
           '/v2/payments/settlement_allocation_intents/settlement_allocation_intent_id_123/splits/id_123/cancel',
         response:
-          '{"account":"account","amount":{},"created":"1970-01-12T21:42:34.472Z","flow":{"type":"outbound_payment"},"id":"obj_123","object":"v2.payments.settlement_allocation_intent_split","settlement_allocation_intent":"settlement_allocation_intent","status":"canceled","type":"credit","livemode":true}',
+          '{"account":"account","amount":{},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.payments.settlement_allocation_intent_split","settlement_allocation_intent":"settlement_allocation_intent","status":"canceled","type":"credit","livemode":true}',
       },
     ]);
     const settlementAllocationIntentSplit = await stripe.v2.payment.settlementAllocationIntents.splits.cancel(
@@ -7251,7 +7317,7 @@ describe('Generated tests', function() {
       .reply(400, {
         error: {
           type: 'blocked_by_stripe',
-          code: 'blocked_payout_method_bank_account',
+          code: 'blocked_payout_method',
         },
       });
 

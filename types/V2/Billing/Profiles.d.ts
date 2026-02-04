@@ -5,7 +5,7 @@ declare module 'stripe' {
     namespace V2 {
       namespace Billing {
         /**
-         * The Profile object.
+         * A Billing Profile is a representation of how a bill is paid, separating payment behavior from customer identity.
          */
         interface Profile {
           /**

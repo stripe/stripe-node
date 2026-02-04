@@ -75,7 +75,7 @@ declare module 'stripe' {
         namespace FinancialAccountListParams {
           type Status = 'closed' | 'open' | 'pending';
 
-          type Type = 'payments' | 'storage';
+          type Type = 'accrued_fees' | 'payments' | 'storage';
         }
       }
 

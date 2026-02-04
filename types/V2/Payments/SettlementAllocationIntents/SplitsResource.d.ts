@@ -53,6 +53,26 @@ declare module 'stripe' {
 
       namespace Payments {
         namespace SettlementAllocationIntents {
+          interface SplitListParams {
+            /**
+             * The page size.
+             */
+            limit?: number;
+
+            /**
+             * Filter the SettlementAllocationIntentSplits by status.
+             */
+            status?: SplitListParams.Status;
+          }
+
+          namespace SplitListParams {
+            type Status = 'canceled' | 'pending' | 'settled';
+          }
+        }
+      }
+
+      namespace Payments {
+        namespace SettlementAllocationIntents {
           interface SplitCancelParams {}
         }
       }
@@ -94,6 +114,23 @@ declare module 'stripe' {
               Stripe.Response<
                 Stripe.V2.Payments.SettlementAllocationIntentSplit
               >
+            >;
+
+            /**
+             * List SettlementAllocationIntentSplits API.
+             */
+            list(
+              id: string,
+              params?: SplitListParams,
+              options?: RequestOptions
+            ): ApiListPromise<
+              Stripe.V2.Payments.SettlementAllocationIntentSplit
+            >;
+            list(
+              id: string,
+              options?: RequestOptions
+            ): ApiListPromise<
+              Stripe.V2.Payments.SettlementAllocationIntentSplit
             >;
 
             /**

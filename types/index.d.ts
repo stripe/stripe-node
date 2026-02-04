@@ -200,6 +200,7 @@
 ///<reference path='./V2/Core/Accounts/PersonsResource.d.ts' />
 ///<reference path='./V2/Core/AccountsResource.d.ts' />
 ///<reference path='./V2/Core/ClaimableSandboxesResource.d.ts' />
+///<reference path='./V2/Core/ConnectionSessionsResource.d.ts' />
 ///<reference path='./V2/Core/EventDestinationsResource.d.ts' />
 ///<reference path='./V2/Core/EventsResource.d.ts' />
 ///<reference path='./V2/Core/Vault/GbBankAccountsResource.d.ts' />
@@ -446,6 +447,7 @@
 ///<reference path='./V2/Core/AccountTokens.d.ts' />
 ///<reference path='./V2/Core/Accounts.d.ts' />
 ///<reference path='./V2/Core/ClaimableSandboxes.d.ts' />
+///<reference path='./V2/Core/ConnectionSessions.d.ts' />
 ///<reference path='./V2/Core/EventDestinations.d.ts' />
 ///<reference path='./V2/Core/Events.d.ts' />
 ///<reference path='./V2/Core/Vault/GbBankAccounts.d.ts' />
@@ -739,6 +741,7 @@ declare module 'stripe' {
         accountLinks: Stripe.V2.Core.AccountLinksResource;
         accountTokens: Stripe.V2.Core.AccountTokensResource;
         claimableSandboxes: Stripe.V2.Core.ClaimableSandboxesResource;
+        connectionSessions: Stripe.V2.Core.ConnectionSessionsResource;
         events: Stripe.V2.Core.EventsResource;
         eventDestinations: Stripe.V2.Core.EventDestinationsResource;
         vault: {

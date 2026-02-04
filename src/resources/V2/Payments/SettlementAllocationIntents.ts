@@ -20,6 +20,11 @@ export const SettlementAllocationIntents = StripeResource.extend({
     method: 'POST',
     fullPath: '/v2/payments/settlement_allocation_intents/{id}',
   }),
+  list: stripeMethod({
+    method: 'GET',
+    fullPath: '/v2/payments/settlement_allocation_intents',
+    methodType: 'list',
+  }),
   cancel: stripeMethod({
     method: 'POST',
     fullPath: '/v2/payments/settlement_allocation_intents/{id}/cancel',

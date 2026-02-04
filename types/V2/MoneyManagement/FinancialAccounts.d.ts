@@ -19,6 +19,11 @@ declare module 'stripe' {
           object: 'v2.money_management.financial_account';
 
           /**
+           * If this is a `accrued_fees` FinancialAccount, this hash include details specific to `accrued_fees` FinancialAccount.
+           */
+          accrued_fees?: FinancialAccount.AccruedFees;
+
+          /**
            * Multi-currency balance of this FinancialAccount, split by availability state. Each balance is represented as a hash where the key is the three-letter ISO currency code, in lowercase, and the value is the amount for that currency.
            */
           balance: FinancialAccount.Balance;
@@ -84,6 +89,22 @@ declare module 'stripe' {
         }
 
         namespace FinancialAccount {
+          interface AccruedFees {
+            /**
+             * The currencies enabled for fee accrual on this FinancialAccount.
+             */
+            currencies: Array<string>;
+
+            /**
+             * Direction of fee accrual for this FinancialAccount.
+             */
+            direction: AccruedFees.Direction;
+          }
+
+          namespace AccruedFees {
+            type Direction = 'payable' | 'receivable';
+          }
+
           interface Balance {
             /**
              * Balance that can be used for money movement.
@@ -169,6 +190,41 @@ declare module 'stripe' {
              * Settlement currencies enabled for this FinancialAccount. Payments in other currencies will be automatically converted to `default_currency`.
              */
             settlement_currencies: Array<string>;
+
+            /**
+             * Describes the available balance when it was projected.
+             */
+            starting_balance?: Payments.StartingBalance;
+          }
+
+          namespace Payments {
+            interface StartingBalance {
+              /**
+               * When the balance was projected.
+               */
+              at: string;
+
+              /**
+               * The available balance at the time when the balance was projected.
+               */
+              available: {
+                [key: string]: StartingBalance.Available;
+              };
+            }
+
+            namespace StartingBalance {
+              interface Available {
+                /**
+                 * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+                 */
+                value?: number;
+
+                /**
+                 * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+                 */
+                currency?: string;
+              }
+            }
           }
 
           type Status = 'closed' | 'open' | 'pending';
@@ -208,7 +264,7 @@ declare module 'stripe' {
             holds_currencies: Array<string>;
           }
 
-          type Type = 'other' | 'payments' | 'storage';
+          type Type = 'accrued_fees' | 'other' | 'payments' | 'storage';
         }
       }
     }

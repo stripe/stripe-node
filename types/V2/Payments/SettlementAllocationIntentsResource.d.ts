@@ -79,6 +79,59 @@ declare module 'stripe' {
       }
 
       namespace Payments {
+        interface SettlementAllocationIntentListParams {
+          /**
+           * Filter for objects created after the specified timestamp.
+           * Must be an RFC 3339 date & time value, for example: 2025-10-17T13:22::00Z.
+           */
+          created_gt?: string;
+
+          /**
+           * Filter for objects created on or after the specified timestamp.
+           * Must be an RFC 3339 date & time value, for example: 2025-10-17T13:22::00Z.
+           */
+          created_gte?: string;
+
+          /**
+           * Filter for objects created before the specified timestamp.
+           * Must be an RFC 3339 date & time value, for example: 2025-10-17T13:22::00Z.
+           */
+          created_lt?: string;
+
+          /**
+           * Filter for objects created on or before the specified timestamp.
+           * Must be an RFC 3339 date & time value, for example: 2025-10-17T13:22::00Z.
+           */
+          created_lte?: string;
+
+          /**
+           * Filter the SettlementAllocationIntents by FinancialAccount.
+           */
+          financial_account?: string;
+
+          /**
+           * The page size.
+           */
+          limit?: number;
+
+          /**
+           * Filter the SettlementAllocationIntents by status.
+           */
+          status?: SettlementAllocationIntentListParams.Status;
+        }
+
+        namespace SettlementAllocationIntentListParams {
+          type Status =
+            | 'canceled'
+            | 'errored'
+            | 'matched'
+            | 'pending'
+            | 'settled'
+            | 'submitted';
+        }
+      }
+
+      namespace Payments {
         interface SettlementAllocationIntentCancelParams {}
       }
 
@@ -127,6 +180,17 @@ declare module 'stripe' {
           ): Promise<
             Stripe.Response<Stripe.V2.Payments.SettlementAllocationIntent>
           >;
+
+          /**
+           * Lists all SettlementAllocationIntents.
+           */
+          list(
+            params?: SettlementAllocationIntentListParams,
+            options?: RequestOptions
+          ): ApiListPromise<Stripe.V2.Payments.SettlementAllocationIntent>;
+          list(
+            options?: RequestOptions
+          ): ApiListPromise<Stripe.V2.Payments.SettlementAllocationIntent>;
 
           /**
            * Cancels an existing SettlementAllocationIntent. Only SettlementAllocationIntent with status `pending`, `submitted` and `errored` can be `canceled`.

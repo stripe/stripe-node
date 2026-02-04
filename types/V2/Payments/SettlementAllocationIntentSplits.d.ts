@@ -36,7 +36,7 @@ declare module 'stripe' {
           /**
            * Details about the Flow object that settled the split.
            */
-          flow: SettlementAllocationIntentSplit.Flow;
+          flow?: SettlementAllocationIntentSplit.Flow;
 
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

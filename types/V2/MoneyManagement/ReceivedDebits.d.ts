@@ -34,6 +34,11 @@ declare module 'stripe' {
           bank_transfer?: ReceivedDebit.BankTransfer;
 
           /**
+           * This object stores details about the issuing transactions that resulted in the ReceivedDebit. Present if `type` field value is `card_spend`.
+           */
+          card_spend?: ReceivedDebit.CardSpend;
+
+          /**
            * The time at which the ReceivedDebit was created.
            * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
            */
@@ -161,6 +166,77 @@ declare module 'stripe' {
             }
           }
 
+          interface CardSpend {
+            /**
+             * The Issuing Authorization for this card_spend. Contains the reference id and the amount.
+             */
+            authorization?: CardSpend.Authorization;
+
+            /**
+             * The list of card spend transactions. These contain the transaction reference ID and the amount.
+             */
+            card_transactions: Array<CardSpend.CardTransaction>;
+
+            /**
+             * The reference to the card object that resulted in the debit.
+             */
+            card_v1_id: string;
+          }
+
+          namespace CardSpend {
+            interface Authorization {
+              /**
+               * Amount associated with this issuing authorization.
+               */
+              amount: Authorization.Amount;
+
+              /**
+               * The reference to the v1 issuing authorization ID.
+               */
+              issuing_authorization_v1: string;
+            }
+
+            namespace Authorization {
+              interface Amount {
+                /**
+                 * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+                 */
+                value?: number;
+
+                /**
+                 * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+                 */
+                currency?: string;
+              }
+            }
+
+            interface CardTransaction {
+              /**
+               * Amount associated with this issuing transaction.
+               */
+              amount: CardTransaction.Amount;
+
+              /**
+               * The reference to the v1 issuing transaction ID.
+               */
+              issuing_transaction_v1: string;
+            }
+
+            namespace CardTransaction {
+              interface Amount {
+                /**
+                 * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+                 */
+                value?: number;
+
+                /**
+                 * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+                 */
+                currency?: string;
+              }
+            }
+          }
+
           interface ExternalAmount {
             /**
              * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
@@ -239,6 +315,7 @@ declare module 'stripe' {
           type Type =
             | 'balance_transfer'
             | 'bank_transfer'
+            | 'card_spend'
             | 'external_debit'
             | 'stripe_balance_payment';
         }

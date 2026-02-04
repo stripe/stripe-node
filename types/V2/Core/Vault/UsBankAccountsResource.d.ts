@@ -43,7 +43,7 @@ declare module 'stripe' {
         namespace Vault {
           interface UsBankAccountUpdateParams {
             /**
-             * The bank account's fedwire routing number can be provided for update it was were empty previously.
+             * The bank account's Fedwire routing number can be provided for update if it was empty previously.
              */
             fedwire_routing_number?: string;
 
