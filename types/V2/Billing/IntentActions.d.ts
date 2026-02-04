@@ -121,6 +121,11 @@ declare module 'stripe' {
 
           interface Deactivate {
             /**
+             * Details about why the cancellation was requested by the user.
+             */
+            cancellation_details?: Deactivate.CancellationDetails;
+
+            /**
              * Allows users to override the collect at behavior.
              */
             collect_at: Deactivate.CollectAt;
@@ -142,6 +147,30 @@ declare module 'stripe' {
           }
 
           namespace Deactivate {
+            interface CancellationDetails {
+              /**
+               * Additional comments about why the user canceled the subscription, if the subscription was canceled explicitly by the user.
+               */
+              comment?: string;
+
+              /**
+               * The customer submitted reason for why they canceled, if the subscription was canceled explicitly by the user.
+               */
+              feedback?: CancellationDetails.Feedback;
+            }
+
+            namespace CancellationDetails {
+              type Feedback =
+                | 'customer_service'
+                | 'low_quality'
+                | 'missing_features'
+                | 'other'
+                | 'switched_service'
+                | 'too_complex'
+                | 'too_expensive'
+                | 'unused';
+            }
+
             type CollectAt = 'next_billing_date' | 'on_effective_at';
 
             interface EffectiveAt {

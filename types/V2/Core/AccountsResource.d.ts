@@ -21,6 +21,11 @@ declare module 'stripe' {
           contact_email?: string;
 
           /**
+           * The default contact phone for the Account.
+           */
+          contact_phone?: string;
+
+          /**
            * A value indicating the Stripe dashboard this Account has access to. This will depend on which configurations are enabled for this account.
            */
           dashboard?: AccountCreateParams.Dashboard;
@@ -2477,6 +2482,11 @@ declare module 'stripe' {
               registered_name?: string;
 
               /**
+               * When the business was incorporated or registered.
+               */
+              registration_date?: BusinessDetails.RegistrationDate;
+
+              /**
                * The business registration address of the business entity in non latin script.
                */
               script_addresses?: BusinessDetails.ScriptAddresses;
@@ -2810,6 +2820,7 @@ declare module 'stripe' {
                   | 'fr_siren'
                   | 'fr_vat'
                   | 'gb_crn'
+                  | 'gb_vat'
                   | 'gi_crn'
                   | 'gr_afm'
                   | 'gr_gemi'
@@ -2898,6 +2909,23 @@ declare module 'stripe' {
                    */
                   currency?: string;
                 }
+              }
+
+              interface RegistrationDate {
+                /**
+                 * The day of registration, between 1 and 31.
+                 */
+                day: number;
+
+                /**
+                 * The month of registration, between 1 and 12.
+                 */
+                month: number;
+
+                /**
+                 * The four-digit year of registration.
+                 */
+                year: number;
               }
 
               interface ScriptAddresses {
@@ -3682,6 +3710,11 @@ declare module 'stripe' {
            * The default contact email address for the Account. Required when configuring the account as a merchant or recipient.
            */
           contact_email?: string;
+
+          /**
+           * The default contact phone for the Account.
+           */
+          contact_phone?: string;
 
           /**
            * A value indicating the Stripe dashboard this Account has access to. This will depend on which configurations are enabled for this account.
@@ -6143,6 +6176,11 @@ declare module 'stripe' {
               registered_name?: string;
 
               /**
+               * When the business was incorporated or registered.
+               */
+              registration_date?: BusinessDetails.RegistrationDate;
+
+              /**
                * The business registration address of the business entity in non latin script.
                */
               script_addresses?: BusinessDetails.ScriptAddresses;
@@ -6439,6 +6477,7 @@ declare module 'stripe' {
                   | 'fr_siren'
                   | 'fr_vat'
                   | 'gb_crn'
+                  | 'gb_vat'
                   | 'gi_crn'
                   | 'gr_afm'
                   | 'gr_gemi'
@@ -6527,6 +6566,23 @@ declare module 'stripe' {
                    */
                   currency?: string;
                 }
+              }
+
+              interface RegistrationDate {
+                /**
+                 * The day of registration, between 1 and 31.
+                 */
+                day: number;
+
+                /**
+                 * The month of registration, between 1 and 12.
+                 */
+                month: number;
+
+                /**
+                 * The four-digit year of registration.
+                 */
+                year: number;
               }
 
               interface ScriptAddresses {

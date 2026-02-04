@@ -24,6 +24,11 @@ declare module 'stripe' {
           billing_cadence: string;
 
           /**
+           * Details about why the subscription was canceled, if applicable. Includes system-generated reason.
+           */
+          cancellation_details?: PricingPlanSubscription.CancellationDetails;
+
+          /**
            * Current collection status of this subscription.
            */
           collection_status: PricingPlanSubscription.CollectionStatus;
@@ -75,6 +80,35 @@ declare module 'stripe' {
         }
 
         namespace PricingPlanSubscription {
+          interface CancellationDetails {
+            /**
+             * Additional comments about why the user canceled the subscription, if the subscription was canceled explicitly by the user.
+             */
+            comment?: string;
+
+            /**
+             * The customer submitted reason for why they canceled, if the subscription was canceled explicitly by the user.
+             */
+            feedback?: CancellationDetails.Feedback;
+
+            /**
+             * System-generated reason for cancellation.
+             */
+            reason?: 'cancellation_requested';
+          }
+
+          namespace CancellationDetails {
+            type Feedback =
+              | 'customer_service'
+              | 'low_quality'
+              | 'missing_features'
+              | 'other'
+              | 'switched_service'
+              | 'too_complex'
+              | 'too_expensive'
+              | 'unused';
+          }
+
           type CollectionStatus =
             | 'awaiting_customer_action'
             | 'current'

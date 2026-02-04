@@ -180,6 +180,21 @@ declare module 'stripe' {
          * Configuration for the [tax threshold monitoring](https://docs.stripe.com/connect/supported-embedded-components/tax-threshold-monitoring/) embedded component.
          */
         tax_threshold_monitoring?: Components.TaxThresholdMonitoring;
+
+        /**
+         * Configuration for the [agentic commerce settings](https://docs.stripe.com/connect/supported-embedded-components/agentic-commerce-settings/) embedded component.
+         */
+        agentic_commerce_settings?: Components.AgenticCommerceSettings;
+
+        /**
+         * Configuration for the [Terminal hardware orders](https://docs.stripe.com/connect/supported-embedded-components/terminal-hardware-orders/) embedded component.
+         */
+        terminal_hardware_orders?: Components.TerminalHardwareOrders;
+
+        /**
+         * Configuration for the [Terminal hardware shop](https://docs.stripe.com/connect/supported-embedded-components/terminal-hardware-shop/) embedded component.
+         */
+        terminal_hardware_shop?: Components.TerminalHardwareShop;
       }
 
       namespace Components {
@@ -233,6 +248,22 @@ declare module 'stripe' {
              */
             external_account_collection?: boolean;
           }
+        }
+
+        interface AgenticCommerceSettings {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * An empty list, because this embedded component has no features.
+           */
+          features?: AgenticCommerceSettings.Features;
+        }
+
+        namespace AgenticCommerceSettings {
+          interface Features {}
         }
 
         interface AppInstall {
@@ -944,6 +975,38 @@ declare module 'stripe' {
         }
 
         namespace TaxThresholdMonitoring {
+          interface Features {}
+        }
+
+        interface TerminalHardwareOrders {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * An empty list, because this embedded component has no features.
+           */
+          features?: TerminalHardwareOrders.Features;
+        }
+
+        namespace TerminalHardwareOrders {
+          interface Features {}
+        }
+
+        interface TerminalHardwareShop {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * An empty list, because this embedded component has no features.
+           */
+          features?: TerminalHardwareShop.Features;
+        }
+
+        namespace TerminalHardwareShop {
           interface Features {}
         }
       }

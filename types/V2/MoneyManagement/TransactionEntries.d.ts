@@ -125,14 +125,51 @@ declare module 'stripe' {
           namespace TransactionDetails {
             type Category =
               | 'adjustment'
+              | 'advance'
+              | 'anticipation_repayment'
+              | 'balance_transfer'
+              | 'charge'
+              | 'charge_failure'
+              | 'climate_order_purchase'
+              | 'climate_order_refund'
+              | 'connect_collection_transfer'
+              | 'connect_reserved_funds'
+              | 'contribution'
               | 'currency_conversion'
+              | 'dispute_reversal'
+              | 'financing_paydown'
+              | 'financing_paydown_reversal'
               | 'inbound_transfer'
+              | 'inbound_transfer_reversal'
+              | 'issuing_dispute'
+              | 'issuing_dispute_fraud_liability_debit'
+              | 'issuing_dispute_provisional_credit'
+              | 'issuing_dispute_provisional_credit_reversal'
+              | 'minimum_balance_hold'
+              | 'network_cost'
+              | 'obligation'
               | 'outbound_payment'
+              | 'outbound_payment_reversal'
               | 'outbound_transfer'
+              | 'outbound_transfer_reversal'
+              | 'partial_capture_reversal'
+              | 'payment_network_reserved_funds'
+              | 'platform_earning'
+              | 'platform_earning_refund'
+              | 'platform_fee'
               | 'received_credit'
+              | 'received_credit_reversal'
               | 'received_debit'
+              | 'received_debit_reversal'
+              | 'refund_failure'
               | 'return'
-              | 'stripe_fee';
+              | 'risk_reserved_funds'
+              | 'stripe_balance_payment_debit'
+              | 'stripe_balance_payment_debit_reversal'
+              | 'stripe_fee'
+              | 'stripe_fee_tax'
+              | 'transfer_reversal'
+              | 'unreconciled_customer_funds';
 
             interface Flow {
               /**
@@ -146,9 +183,29 @@ declare module 'stripe' {
               adjustment?: string;
 
               /**
+               * If applicable, the ID of the Application Fee that created this Transaction.
+               */
+              application_fee?: string;
+
+              /**
+               * If applicable, the ID of the Application Fee Refund that created this Transaction.
+               */
+              application_fee_refund?: string;
+
+              /**
+               * If applicable, the ID of the Charge that created this Transaction.
+               */
+              charge?: string;
+
+              /**
                * In the future, this will be the ID of the currency conversion that created this Transaction. For now, this field is always null.
                */
               currency_conversion?: string;
+
+              /**
+               * If applicable, the ID of the Dispute that created this Transaction.
+               */
+              dispute?: string;
 
               /**
                * If applicable, the ID of the FeeTransaction that created this Transaction.
@@ -171,6 +228,11 @@ declare module 'stripe' {
               outbound_transfer?: string;
 
               /**
+               * If applicable, the ID of the Payout that created this Transaction.
+               */
+              payout?: string;
+
+              /**
                * If applicable, the ID of the ReceivedCredit that created this Transaction.
                */
               received_credit?: string;
@@ -179,18 +241,59 @@ declare module 'stripe' {
                * If applicable, the ID of the ReceivedDebit that created this Transaction.
                */
               received_debit?: string;
+
+              /**
+               * If applicable, the ID of the Refund that created this Transaction.
+               */
+              refund?: string;
+
+              /**
+               * If applicable, the ID of the Reserve Hold that created this Transaction.
+               */
+              reserve_hold?: string;
+
+              /**
+               * If applicable, the ID of the Reserve Release that created this Transaction.
+               */
+              reserve_release?: string;
+
+              /**
+               * If applicable, the ID of the Topup that created this Transaction.
+               */
+              topup?: string;
+
+              /**
+               * If applicable, the ID of the Transfer that created this Transaction.
+               */
+              transfer?: string;
+
+              /**
+               * If applicable, the ID of the Transfer Reversal that created this Transaction.
+               */
+              transfer_reversal?: string;
             }
 
             namespace Flow {
               type Type =
                 | 'adjustment'
+                | 'application_fee'
+                | 'application_fee_refund'
+                | 'charge'
                 | 'currency_conversion'
+                | 'dispute'
                 | 'fee_transaction'
                 | 'inbound_transfer'
                 | 'outbound_payment'
                 | 'outbound_transfer'
+                | 'payout'
                 | 'received_credit'
-                | 'received_debit';
+                | 'received_debit'
+                | 'refund'
+                | 'reserve_hold'
+                | 'reserve_release'
+                | 'topup'
+                | 'transfer'
+                | 'transfer_reversal';
             }
           }
         }

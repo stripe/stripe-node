@@ -99,6 +99,21 @@ declare module 'stripe' {
         tax_registrations: Components.TaxRegistrations;
 
         tax_settings: Components.TaxSettings;
+
+        /**
+         * Configuration for the [network cost passthrough report](https://docs.stripe.com/connect/supported-embedded-components/network-cost-passthrough-report/) embedded component.
+         */
+        network_cost_passthrough_report?: Components.NetworkCostPassthroughReport | null;
+
+        /**
+         * Configuration for the [Terminal hardware orders](https://docs.stripe.com/connect/supported-embedded-components/terminal-hardware-orders/) embedded component.
+         */
+        terminal_hardware_orders?: Components.TerminalHardwareOrders | null;
+
+        /**
+         * Configuration for the [Terminal hardware shop](https://docs.stripe.com/connect/supported-embedded-components/terminal-hardware-shop/) embedded component.
+         */
+        terminal_hardware_shop?: Components.TerminalHardwareShop | null;
       }
 
       namespace Components {
@@ -447,6 +462,19 @@ declare module 'stripe' {
           }
         }
 
+        interface NetworkCostPassthroughReport {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: NetworkCostPassthroughReport.Features;
+        }
+
+        namespace NetworkCostPassthroughReport {
+          interface Features {}
+        }
+
         interface NotificationBanner {
           /**
            * Whether the embedded component is enabled.
@@ -651,6 +679,32 @@ declare module 'stripe' {
         }
 
         namespace TaxSettings {
+          interface Features {}
+        }
+
+        interface TerminalHardwareOrders {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: TerminalHardwareOrders.Features;
+        }
+
+        namespace TerminalHardwareOrders {
+          interface Features {}
+        }
+
+        interface TerminalHardwareShop {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: TerminalHardwareShop.Features;
+        }
+
+        namespace TerminalHardwareShop {
           interface Features {}
         }
       }

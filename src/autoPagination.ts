@@ -146,8 +146,9 @@ class V1SearchIterator<T> extends V1Iterator<T> {
 }
 
 class V2ListIterator<T> implements AsyncIterator<T> {
-  private currentPageIterator: Promise<Iterator<T>>;
-  private nextPageUrl: Promise<string | null>;
+  private firstPagePromise: Promise<PageResult<T>> | null;
+  private currentPageIterator: Iterator<T> | null;
+  private nextPageUrl: string | null;
   private requestArgs: RequestArgs;
   private spec: MethodSpec;
   private stripeResource: StripeResourceObject;
@@ -157,32 +158,33 @@ class V2ListIterator<T> implements AsyncIterator<T> {
     spec: MethodSpec,
     stripeResource: StripeResourceObject
   ) {
-    this.currentPageIterator = (async (): Promise<Iterator<T>> => {
-      const page = await firstPagePromise;
-      return page.data[Symbol.iterator]();
-    })();
-
-    this.nextPageUrl = (async (): Promise<string | null> => {
-      const page = await firstPagePromise;
-      return page.next_page_url || null;
-    })();
-
+    this.firstPagePromise = firstPagePromise;
+    this.currentPageIterator = null;
+    this.nextPageUrl = null;
     this.requestArgs = requestArgs;
     this.spec = spec;
     this.stripeResource = stripeResource;
   }
+  private async initFirstPage(): Promise<void> {
+    if (this.firstPagePromise) {
+      const page = await this.firstPagePromise;
+      this.firstPagePromise = null;
+      this.currentPageIterator = page.data[Symbol.iterator]();
+      this.nextPageUrl = page.next_page_url || null;
+    }
+  }
   private async turnPage(): Promise<Iterator<T> | null> {
-    const nextPageUrl = await this.nextPageUrl;
-    if (!nextPageUrl) return null;
-    this.spec.fullPath = nextPageUrl;
+    if (!this.nextPageUrl) return null;
+    this.spec.fullPath = this.nextPageUrl;
     const page = await this.stripeResource._makeRequest([], this.spec, {});
-    this.nextPageUrl = Promise.resolve(page.next_page_url);
-    this.currentPageIterator = Promise.resolve(page.data[Symbol.iterator]());
+    this.nextPageUrl = page.next_page_url || null;
+    this.currentPageIterator = page.data[Symbol.iterator]();
     return this.currentPageIterator;
   }
   async next(): Promise<IteratorResult<T>> {
-    {
-      const result = (await this.currentPageIterator).next();
+    await this.initFirstPage();
+    if (this.currentPageIterator) {
+      const result = this.currentPageIterator.next();
       if (!result.done) return {done: false, value: result.value};
     }
     const nextPageIterator = await this.turnPage();

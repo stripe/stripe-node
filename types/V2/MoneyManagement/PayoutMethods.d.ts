@@ -160,6 +160,12 @@ declare module 'stripe' {
             exp_year: string;
 
             /**
+             * Uniquely identifies this particular card number. You can use this attribute to check whether two
+             * recipients who've signed up with you are using the same card number, for example.
+             */
+            fingerprint: string;
+
+            /**
              * The last 4 digits of the card number.
              */
             last4: string;

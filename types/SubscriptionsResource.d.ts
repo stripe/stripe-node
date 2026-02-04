@@ -3185,12 +3185,12 @@ declare module 'stripe' {
     namespace SubscriptionPauseParams {
       interface BillFor {
         /**
-         * Controls whether to debit for accrued metered usage in the current billing period. The default is `false`.
+         * Controls whether to debit for accrued metered usage in the current billing period. The default is `true`.
          */
         outstanding_usage?: boolean;
 
         /**
-         * Controls whether to credit for licensed items in the current billing period. The default is `false`.
+         * Controls whether to credit for licensed items in the current billing period. The default is `true`.
          */
         unused_time?: boolean;
       }

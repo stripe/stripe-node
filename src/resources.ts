@@ -26,6 +26,7 @@ import {CollectionSettings as V2BillingCollectionSettings} from './resources/V2/
 import {Configurations as BillingPortalConfigurations} from './resources/BillingPortal/Configurations.js';
 import {Configurations as TerminalConfigurations} from './resources/Terminal/Configurations.js';
 import {ConfirmationTokens as TestHelpersConfirmationTokens} from './resources/TestHelpers/ConfirmationTokens.js';
+import {ConnectionSessions as V2CoreConnectionSessions} from './resources/V2/Core/ConnectionSessions.js';
 import {ConnectionTokens as TerminalConnectionTokens} from './resources/Terminal/ConnectionTokens.js';
 import {CreditBalanceSummary as BillingCreditBalanceSummary} from './resources/Billing/CreditBalanceSummary.js';
 import {CreditBalanceTransactions as BillingCreditBalanceTransactions} from './resources/Billing/CreditBalanceTransactions.js';
@@ -389,6 +390,7 @@ export const V2 = resourceNamespace('v2', {
     AccountTokens: V2CoreAccountTokens,
     Accounts: V2CoreAccounts,
     ClaimableSandboxes: V2CoreClaimableSandboxes,
+    ConnectionSessions: V2CoreConnectionSessions,
     EventDestinations: V2CoreEventDestinations,
     Events: V2CoreEvents,
     Vault: resourceNamespace('vault', {

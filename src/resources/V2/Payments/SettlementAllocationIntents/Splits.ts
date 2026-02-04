@@ -13,6 +13,12 @@ export const Splits = StripeResource.extend({
     fullPath:
       '/v2/payments/settlement_allocation_intents/{settlement_allocation_intent_id}/splits/{id}',
   }),
+  list: stripeMethod({
+    method: 'GET',
+    fullPath:
+      '/v2/payments/settlement_allocation_intents/{settlement_allocation_intent_id}/splits',
+    methodType: 'list',
+  }),
   cancel: stripeMethod({
     method: 'POST',
     fullPath:
