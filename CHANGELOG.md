@@ -1,5 +1,9 @@
 # Changelog
 
+## 20.4.0-beta.2 - 2026-02-05
+* [#2571](https://github.com/stripe/stripe-node/pull/2571) Fix `UnhandledPromiseRejection` error on failed V2 List operations
+  - Fixes a bug where any error returned from the Stripe API on a V2 List call (e.g. a 4xx or 5xx) would crash Node due to an `UnhandledPromiseRejection`
+
 ## 20.4.0-beta.1 - 2026-01-28
 This release changes the pinned API version to `2026-01-28.preview`.
 
