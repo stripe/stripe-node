@@ -35,6 +35,10 @@ This release changes the pinned API version to `2026-01-28.preview`.
   * Add support for error code `invalid_payout_method_data` on `InvalidPayoutMethodError`
   * Add support for error code `limit_payout_method` on `QuotaExceededError`
 
+## 20.3.1 - 2026-02-05
+* [#2571](https://github.com/stripe/stripe-node/pull/2571) Fix `UnhandledPromiseRejection` error on failed V2 List operations
+  - Fixes a bug where any error returned from the Stripe API on a V2 List call (e.g. a 4xx or 5xx) would crash Node due to an `UnhandledPromiseRejection`
+
 ## 20.3.0 - 2026-01-28
 This release changes the pinned API version to `2026-01-28.clover`.
 
