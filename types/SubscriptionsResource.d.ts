@@ -3210,6 +3210,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * Controls when the subscription transitions from `paused` to `active`. Determines how payment on the invoice affects the resumption process.The default is `pending_if_incomplete`.
+       */
+      payment_behavior?: SubscriptionResumeParams.PaymentBehavior;
+
+      /**
        * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) resulting from the `billing_cycle_anchor` being `unchanged`. When the `billing_cycle_anchor` is set to `now` (default value), no prorations are generated. If no value is passed, the default is `create_prorations`.
        */
       proration_behavior?: SubscriptionResumeParams.ProrationBehavior;
@@ -3222,6 +3227,8 @@ declare module 'stripe' {
 
     namespace SubscriptionResumeParams {
       type BillingCycleAnchor = 'now' | 'unchanged';
+
+      type PaymentBehavior = 'allow_incomplete' | 'pending_if_incomplete';
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
     }
