@@ -3032,6 +3032,11 @@ declare module 'stripe' {
          * In cases where the `schedule_details` params update the currently active phase, specifies if and how to prorate at the time of the request.
          */
         proration_behavior?: ScheduleDetails.ProrationBehavior;
+
+        /**
+         * Object representing the subscription schedule's default settings.
+         */
+        default_settings?: ScheduleDetails.DefaultSettings;
       }
 
       namespace ScheduleDetails {
@@ -4045,6 +4050,17 @@ declare module 'stripe' {
 
             type Type = 'duration' | 'timestamp';
           }
+        }
+
+        interface DefaultSettings {
+          /**
+           * Configures how the subscription schedule handles billing for phase transitions.
+           */
+          phase_effective_at?: DefaultSettings.PhaseEffectiveAt;
+        }
+
+        namespace DefaultSettings {
+          type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
         }
 
         type EndBehavior = 'cancel' | 'release';

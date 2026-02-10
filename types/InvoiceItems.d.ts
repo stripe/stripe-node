@@ -275,6 +275,8 @@ declare module 'stripe' {
          * The unit amount (in the `currency` specified) of the item which contains a decimal value with at most 12 decimal places.
          */
         unit_amount_decimal: string | null;
+
+        rate_card_custom_pricing_unit_overage_rate_details?: Pricing.RateCardCustomPricingUnitOverageRateDetails;
       }
 
       namespace Pricing {
@@ -307,6 +309,28 @@ declare module 'stripe' {
           product: string;
         }
 
+        interface RateCardCustomPricingUnitOverageRateDetails {
+          /**
+           * The ID of the custom pricing unit this item is associated with
+           */
+          custom_pricing_unit: string;
+
+          /**
+           * The ID of the custom pricing unit overage rate this item is associated with
+           */
+          custom_pricing_unit_overage_rate: string;
+
+          /**
+           * The ID of the one-time item this custom pricing unit overage rate is associated with
+           */
+          one_time_item: string;
+
+          /**
+           * The ID of the rate card this item is associated with
+           */
+          rate_card: string;
+        }
+
         interface RateCardRateDetails {
           /**
            * The ID of billable item this item is associated with
@@ -327,6 +351,7 @@ declare module 'stripe' {
         type Type =
           | 'license_fee_details'
           | 'price_details'
+          | 'rate_card_custom_pricing_unit_overage_rate_details'
           | 'rate_card_rate_details';
       }
 
