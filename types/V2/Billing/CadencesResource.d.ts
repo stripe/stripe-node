@@ -456,6 +456,8 @@ declare module 'stripe' {
 
       namespace Billing {
         class CadencesResource {
+          spendModifierRules: Stripe.V2.Billing.Cadences.SpendModifierRulesResource;
+
           /**
            * Create a Billing Cadence object.
            */

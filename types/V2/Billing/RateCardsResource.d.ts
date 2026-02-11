@@ -112,6 +112,7 @@ declare module 'stripe' {
 
       namespace Billing {
         class RateCardsResource {
+          customPricingUnitOverageRates: Stripe.V2.Billing.RateCards.CustomPricingUnitOverageRatesResource;
           rates: Stripe.V2.Billing.RateCards.RatesResource;
           versions: Stripe.V2.Billing.RateCards.VersionsResource;
 

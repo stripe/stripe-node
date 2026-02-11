@@ -3697,9 +3697,7 @@ declare module 'stripe' {
         /**
          * Billing schedules that will be applied to the subscription or subscription schedule created when the quote is accepted.
          */
-        billing_schedules?: Stripe.Emptyable<
-          Array<SubscriptionDataOverride.BillingSchedule>
-        >;
+        billing_schedules?: Array<SubscriptionDataOverride.BillingSchedule>;
 
         /**
          * The customer the Subscription Data override applies to.

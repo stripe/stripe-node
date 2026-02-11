@@ -62,17 +62,38 @@ declare module 'stripe' {
           namespace Action {
             interface Apply {
               /**
+               * When the apply action will take effect. Defaults to on_reserve if not specified.
+               */
+              effective_at?: Apply.EffectiveAt;
+
+              /**
                * Type of the apply action details.
                */
-              type: 'invoice_discount_rule';
+              type: Apply.Type;
 
               /**
                * Details for applying a discount rule to future invoices.
                */
               invoice_discount_rule?: Apply.InvoiceDiscountRule;
+
+              /**
+               * Details for applying a spend modifier rule. Only present if type is spend_modifier_rule.
+               */
+              spend_modifier_rule?: Apply.SpendModifierRule;
             }
 
             namespace Apply {
+              interface EffectiveAt {
+                /**
+                 * When the apply action will take effect.
+                 */
+                type: EffectiveAt.Type;
+              }
+
+              namespace EffectiveAt {
+                type Type = 'current_billing_period_end' | 'on_reserve';
+              }
+
               interface InvoiceDiscountRule {
                 /**
                  * The entity that the discount rule applies to, for example, the cadence.
@@ -112,6 +133,69 @@ declare module 'stripe' {
                   }
                 }
               }
+
+              interface SpendModifierRule {
+                /**
+                 * What the spend modifier applies to.
+                 */
+                applies_to: 'cadence';
+
+                /**
+                 * Type of the spend modifier.
+                 */
+                type: 'max_billing_period_spend';
+
+                /**
+                 * Details for max billing period spend modifier. Only present if type is max_billing_period_spend.
+                 */
+                max_billing_period_spend?: SpendModifierRule.MaxBillingPeriodSpend;
+              }
+
+              namespace SpendModifierRule {
+                interface MaxBillingPeriodSpend {
+                  /**
+                   * The maximum amount allowed for the billing period.
+                   */
+                  amount: MaxBillingPeriodSpend.Amount;
+
+                  /**
+                   * The configration for the overage rate for the custom pricing unit.
+                   */
+                  custom_pricing_unit_overage_rate: MaxBillingPeriodSpend.CustomPricingUnitOverageRate;
+                }
+
+                namespace MaxBillingPeriodSpend {
+                  interface Amount {
+                    /**
+                     * The type of the amount.
+                     */
+                    type: 'custom_pricing_unit';
+
+                    /**
+                     * The custom pricing unit amount.
+                     */
+                    custom_pricing_unit?: Amount.CustomPricingUnit;
+                  }
+
+                  namespace Amount {
+                    interface CustomPricingUnit {
+                      /**
+                       * The value of the custom pricing unit.
+                       */
+                      value: string;
+                    }
+                  }
+
+                  interface CustomPricingUnitOverageRate {
+                    /**
+                     * ID of the custom pricing unit overage rate.
+                     */
+                    id: string;
+                  }
+                }
+              }
+
+              type Type = 'invoice_discount_rule' | 'spend_modifier_rule';
             }
 
             interface Deactivate {
@@ -385,14 +469,39 @@ declare module 'stripe' {
 
             interface Remove {
               /**
+               * When the remove action will take effect. Defaults to on_reserve if not specified.
+               */
+              effective_at?: Remove.EffectiveAt;
+
+              /**
                * Type of the remove action.
                */
-              type: 'invoice_discount_rule';
+              type: Remove.Type;
 
               /**
                * The ID of the discount rule to remove for future invoices.
                */
               invoice_discount_rule?: string;
+
+              /**
+               * The ID of the spend modifier rule to remove.
+               */
+              spend_modifier_rule?: string;
+            }
+
+            namespace Remove {
+              interface EffectiveAt {
+                /**
+                 * When the remove action will take effect.
+                 */
+                type: EffectiveAt.Type;
+              }
+
+              namespace EffectiveAt {
+                type Type = 'current_billing_period_end' | 'on_reserve';
+              }
+
+              type Type = 'invoice_discount_rule' | 'spend_modifier_rule';
             }
 
             interface Subscribe {

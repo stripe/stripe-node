@@ -168,6 +168,7 @@
 ///<reference path='./Treasury/TransactionsResource.d.ts' />
 ///<reference path='./V2/Billing/BillSettings/VersionsResource.d.ts' />
 ///<reference path='./V2/Billing/BillSettingsResource.d.ts' />
+///<reference path='./V2/Billing/Cadences/SpendModifierRulesResource.d.ts' />
 ///<reference path='./V2/Billing/CadencesResource.d.ts' />
 ///<reference path='./V2/Billing/CollectionSettings/VersionsResource.d.ts' />
 ///<reference path='./V2/Billing/CollectionSettingsResource.d.ts' />
@@ -183,6 +184,7 @@
 ///<reference path='./V2/Billing/MeterEventStreamResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
 ///<reference path='./V2/Billing/MeteredItemsResource.d.ts' />
+///<reference path='./V2/Billing/OneTimeItemsResource.d.ts' />
 ///<reference path='./V2/Billing/PricingPlanSubscriptions/ComponentsResource.d.ts' />
 ///<reference path='./V2/Billing/PricingPlanSubscriptionsResource.d.ts' />
 ///<reference path='./V2/Billing/PricingPlans/ComponentsResource.d.ts' />
@@ -190,6 +192,7 @@
 ///<reference path='./V2/Billing/PricingPlansResource.d.ts' />
 ///<reference path='./V2/Billing/ProfilesResource.d.ts' />
 ///<reference path='./V2/Billing/RateCardSubscriptionsResource.d.ts' />
+///<reference path='./V2/Billing/RateCards/CustomPricingUnitOverageRatesResource.d.ts' />
 ///<reference path='./V2/Billing/RateCards/RatesResource.d.ts' />
 ///<reference path='./V2/Billing/RateCards/VersionsResource.d.ts' />
 ///<reference path='./V2/Billing/RateCardsResource.d.ts' />
@@ -416,6 +419,7 @@
 ///<reference path='./Treasury/Transactions.d.ts' />
 ///<reference path='./V2/Billing/BillSettingVersions.d.ts' />
 ///<reference path='./V2/Billing/BillSettings.d.ts' />
+///<reference path='./V2/Billing/CadenceSpendModifiers.d.ts' />
 ///<reference path='./V2/Billing/Cadences.d.ts' />
 ///<reference path='./V2/Billing/CollectionSettingVersions.d.ts' />
 ///<reference path='./V2/Billing/CollectionSettings.d.ts' />
@@ -430,12 +434,14 @@
 ///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
 ///<reference path='./V2/Billing/MeteredItems.d.ts' />
+///<reference path='./V2/Billing/OneTimeItems.d.ts' />
 ///<reference path='./V2/Billing/PricingPlanComponents.d.ts' />
 ///<reference path='./V2/Billing/PricingPlanSubscriptionComponents.d.ts' />
 ///<reference path='./V2/Billing/PricingPlanSubscriptions.d.ts' />
 ///<reference path='./V2/Billing/PricingPlanVersions.d.ts' />
 ///<reference path='./V2/Billing/PricingPlans.d.ts' />
 ///<reference path='./V2/Billing/Profiles.d.ts' />
+///<reference path='./V2/Billing/RateCardCustomPricingUnitOverageRates.d.ts' />
 ///<reference path='./V2/Billing/RateCardRates.d.ts' />
 ///<reference path='./V2/Billing/RateCardSubscriptions.d.ts' />
 ///<reference path='./V2/Billing/RateCardVersions.d.ts' />
@@ -729,6 +735,7 @@ declare module 'stripe' {
         meterEventSession: Stripe.V2.Billing.MeterEventSessionResource;
         meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
         meteredItems: Stripe.V2.Billing.MeteredItemsResource;
+        oneTimeItems: Stripe.V2.Billing.OneTimeItemsResource;
         pricingPlans: Stripe.V2.Billing.PricingPlansResource;
         pricingPlanSubscriptions: Stripe.V2.Billing.PricingPlanSubscriptionsResource;
         profiles: Stripe.V2.Billing.ProfilesResource;

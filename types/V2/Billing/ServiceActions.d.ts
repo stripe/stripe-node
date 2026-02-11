@@ -132,12 +132,12 @@ declare module 'stripe' {
                 /**
                  * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
                  */
-                value?: number;
+                value: number;
 
                 /**
                  * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
                  */
-                currency?: string;
+                currency: string;
               }
 
               type Type = 'custom_pricing_unit' | 'monetary';
@@ -246,12 +246,12 @@ declare module 'stripe' {
                 /**
                  * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
                  */
-                value?: number;
+                value: number;
 
                 /**
                  * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
                  */
-                currency?: string;
+                currency: string;
               }
 
               type Type = 'custom_pricing_unit' | 'monetary';
