@@ -3,8 +3,14 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The French Meal Vouchers Onboarding resource encapsulates the onboarding status and other related information
+     * The `French Meal Vouchers Onboarding` resource encapsulates the onboarding status and other related information
      * for a single restaurant (SIRET number) in the context of the French Meal Vouchers program.
+     *
+     * To onboard a restaurant for the French Meal Vouchers program, you create a `French Meal Vouchers Onboarding` object.
+     * You can retrieve individual objects, list all such objects, or update objects to correct the postal code of the restaurant.
+     * We identify `French Meal Vouchers Onboarding` objects with a unique, random ID.
+     *
+     * Related guide: [Set up a restaurant for titres-restaurant payments](https://docs.stripe.com/payments/meal-vouchers/fr-meal-vouchers/set-up-restaurant)
      */
     interface FrMealVouchersOnboarding {
       /**

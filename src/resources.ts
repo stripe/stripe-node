@@ -80,6 +80,7 @@ import {Meters as BillingMeters} from './resources/Billing/Meters.js';
 import {MoneyManagement as V2TestHelpersMoneyManagement} from './resources/V2/TestHelpers/MoneyManagement.js';
 import {OffSessionPayments as V2PaymentsOffSessionPayments} from './resources/V2/Payments/OffSessionPayments.js';
 import {OnboardingLinks as TerminalOnboardingLinks} from './resources/Terminal/OnboardingLinks.js';
+import {OneTimeItems as V2BillingOneTimeItems} from './resources/V2/Billing/OneTimeItems.js';
 import {Orders as ClimateOrders} from './resources/Climate/Orders.js';
 import {OutboundPaymentQuotes as V2MoneyManagementOutboundPaymentQuotes} from './resources/V2/MoneyManagement/OutboundPaymentQuotes.js';
 import {OutboundPayments as TestHelpersTreasuryOutboundPayments} from './resources/TestHelpers/Treasury/OutboundPayments.js';
@@ -378,6 +379,7 @@ export const V2 = resourceNamespace('v2', {
     MeterEventStream: V2BillingMeterEventStream,
     MeterEvents: V2BillingMeterEvents,
     MeteredItems: V2BillingMeteredItems,
+    OneTimeItems: V2BillingOneTimeItems,
     PricingPlanSubscriptions: V2BillingPricingPlanSubscriptions,
     PricingPlans: V2BillingPricingPlans,
     Profiles: V2BillingProfiles,
