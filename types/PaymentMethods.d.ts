@@ -944,6 +944,11 @@ declare module 'stripe' {
          * ID of the Dashboard-only CustomPaymentMethodType. Not expandable.
          */
         type: string;
+
+        /**
+         * A reference to an external payment method, such as a PayPal Billing Agreement ID.
+         */
+        payment_method_reference?: string | null;
       }
 
       namespace Custom {
