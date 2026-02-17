@@ -1063,6 +1063,11 @@ declare module 'stripe' {
          * A reference to an external payment method, such as a PayPal Billing Agreement ID.
          */
         payment_method_reference?: string;
+
+        /**
+         * Indicates whether the payment method supports off-session payments.
+         */
+        usage?: 'off_session';
       }
 
       interface Payto {
