@@ -557,3 +557,13 @@ export function parseHeadersForFetch(
     return [key, parseHttpHeaderAsString(value)];
   });
 }
+
+/**
+ * Extracts the ID from a Stripe object or string.
+ * Handles both expanded objects with an 'id' property and simple string IDs.
+ * @param stripeObject - A Stripe object (with an id property) or an ID string
+ * @returns The ID as a string
+ */
+export function getId(stripeObject: {id: string} | string): string {
+  return typeof stripeObject === 'string' ? stripeObject : stripeObject.id;
+}

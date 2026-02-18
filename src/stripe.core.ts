@@ -19,6 +19,7 @@ import * as resources from './resources.js';
 import {
   createApiKeyAuthenticator,
   determineProcessUserAgentProperties,
+  getId,
   pascalToCamelCase,
   validateInteger,
 } from './utils.js';
@@ -542,6 +543,10 @@ export function createStripe(
       };
 
       return eventNotification;
+    },
+
+    getId(stripeObject: {id: string} | string): string {
+      return getId(stripeObject);
     },
   } as StripeObject;
 

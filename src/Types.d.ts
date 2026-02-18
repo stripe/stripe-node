@@ -143,6 +143,7 @@ export type StripeObject = {
   StripeResource: StripeResourceConstructor;
   errors: any;
   webhooks: any;
+  getId: (stripeObject: {id: string} | string) => string;
   _prepResources: () => void;
   _setAppInfo: (appInfo: AppInfo) => void;
   _prevRequestMetrics: Array<{

@@ -1093,6 +1093,33 @@ describe('utils', () => {
       expect(mergedBufToString).to.equal('foobar');
     });
   });
+
+  describe('getId', () => {
+    it('should return the string when given a string', () => {
+      expect(utils.getId('prod_12345')).to.equal('prod_12345');
+    });
+
+    it('should return the id property when given an object with an id property', () => {
+      expect(utils.getId({id: 'prod_12345'})).to.equal('prod_12345');
+    });
+
+    it('should work with various object types that have an id property', () => {
+      const product = {
+        id: 'prod_xyz',
+        name: 'Awesome Product',
+        price: 99.99,
+      };
+      expect(utils.getId(product)).to.equal('prod_xyz');
+    });
+
+    it('should handle empty strings', () => {
+      expect(utils.getId('')).to.equal('');
+    });
+
+    it('should handle objects with empty string id', () => {
+      expect(utils.getId({id: ''})).to.equal('');
+    });
+  });
 });
 
 function handleWarnings(doWithShimmedConsoleWarn, onWarn): void {

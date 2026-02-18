@@ -587,6 +587,26 @@ declare module 'stripe' {
        */
       receivedAt?: number
     ) => Stripe.V2.Core.EventNotification;
+
+    /**
+     * Extracts the ID from a Stripe object or string.
+     * Handles both expanded objects with an 'id' property and simple string IDs.
+     * @param stripeObject - A Stripe object (with an id property) or an ID string
+     * @returns The ID as a string
+     *
+     * @example
+     * ```typescript
+     * const price = await stripe.prices.retrieve(priceId);
+     * const { product } = price;
+     *
+     * // Instead of:
+     * // const productId = typeof product === 'string' ? product : product.id;
+     *
+     * // You can now use:
+     * const productId = stripe.getId(product);
+     * ```
+     */
+    getId(stripeObject: {id: string} | string): string;
   }
 
   export default Stripe;
