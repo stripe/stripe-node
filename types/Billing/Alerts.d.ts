@@ -33,6 +33,11 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
+         * Encapsulates the alert's configuration to monitor spend on pricing plan subscriptions.
+         */
+        spend_threshold?: Alert.SpendThreshold | null;
+
+        /**
          * Status of the alert. This can be active, inactive or archived.
          */
         status: Alert.Status | null;
@@ -49,7 +54,10 @@ declare module 'stripe' {
       }
 
       namespace Alert {
-        type AlertType = 'credit_balance_threshold' | 'usage_threshold';
+        type AlertType =
+          | 'credit_balance_threshold'
+          | 'spend_threshold'
+          | 'usage_threshold';
 
         interface CreditBalanceThreshold {
           /**
@@ -156,6 +164,136 @@ declare module 'stripe' {
                */
               value: number;
             }
+          }
+        }
+
+        interface SpendThreshold {
+          /**
+           * Defines the period over which spend is aggregated.
+           */
+          aggregation_period: 'billing';
+
+          /**
+           * Filters to scope the spend calculation.
+           */
+          filters: SpendThreshold.Filters | null;
+
+          /**
+           * Defines the granularity of spend aggregation.
+           */
+          group_by: 'pricing_plan_subscription' | null;
+
+          /**
+           * The threshold value configuration for a spend threshold alert.
+           */
+          gte: SpendThreshold.Gte;
+        }
+
+        namespace SpendThreshold {
+          interface Filters {
+            /**
+             * Filter by billable item IDs.
+             */
+            billable_items: Array<string> | null;
+
+            /**
+             * Filter by billing cadence ID.
+             */
+            billing_cadence: string | null;
+
+            /**
+             * Filter by pricing plan ID.
+             */
+            pricing_plan: string | null;
+
+            /**
+             * Filter by pricing plan subscription ID.
+             */
+            pricing_plan_subscription: string | null;
+          }
+
+          interface Gte {
+            /**
+             * The monetary amount. Present when type is `amount`.
+             */
+            amount: Gte.Amount | null;
+
+            /**
+             * The custom pricing unit amount. Present when type is `custom_pricing_unit`.
+             */
+            custom_pricing_unit: Gte.CustomPricingUnit | null;
+
+            /**
+             * The type of the threshold amount.
+             */
+            type: Gte.Type;
+          }
+
+          namespace Gte {
+            interface Amount {
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+
+              /**
+               * A positive integer representing the amount.
+               */
+              value: number;
+            }
+
+            interface CustomPricingUnit {
+              /**
+               * The custom pricing unit object.
+               */
+              custom_pricing_unit_details: CustomPricingUnit.CustomPricingUnitDetails | null;
+
+              /**
+               * Unique identifier for the object.
+               */
+              id: string;
+
+              /**
+               * A positive decimal string representing the amount.
+               */
+              value: string;
+            }
+
+            namespace CustomPricingUnit {
+              interface CustomPricingUnitDetails {
+                /**
+                 * Time at which the object was created. Measured in seconds since the Unix epoch.
+                 */
+                created: number;
+
+                /**
+                 * The name of the custom pricing unit.
+                 */
+                display_name: string;
+
+                /**
+                 * Unique identifier for the object.
+                 */
+                id: string;
+
+                /**
+                 * A lookup key for the custom pricing unit.
+                 */
+                lookup_key: string | null;
+
+                /**
+                 * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+                 */
+                metadata: Stripe.Metadata;
+
+                /**
+                 * The status of the custom pricing unit.
+                 */
+                status: string;
+              }
+            }
+
+            type Type = 'amount' | 'custom_pricing_unit';
           }
         }
 

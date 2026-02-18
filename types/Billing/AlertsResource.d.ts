@@ -25,13 +25,21 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
+         * The configuration of the spend threshold.
+         */
+        spend_threshold?: AlertCreateParams.SpendThreshold;
+
+        /**
          * The configuration of the usage threshold.
          */
         usage_threshold?: AlertCreateParams.UsageThreshold;
       }
 
       namespace AlertCreateParams {
-        type AlertType = 'credit_balance_threshold' | 'usage_threshold';
+        type AlertType =
+          | 'credit_balance_threshold'
+          | 'spend_threshold'
+          | 'usage_threshold';
 
         interface CreditBalanceThreshold {
           /**
@@ -164,6 +172,97 @@ declare module 'stripe' {
           }
         }
 
+        interface SpendThreshold {
+          /**
+           * Defines the period over which spend is aggregated.
+           */
+          aggregation_period: 'billing';
+
+          /**
+           * Filters to scope the spend calculation.
+           */
+          filters?: SpendThreshold.Filters;
+
+          /**
+           * Defines the granularity of spend aggregation. Defaults to `pricing_plan_subscription`.
+           */
+          group_by?: 'pricing_plan_subscription';
+
+          /**
+           * Defines at which value the alert will fire.
+           */
+          gte: SpendThreshold.Gte;
+        }
+
+        namespace SpendThreshold {
+          interface Filters {
+            /**
+             * Filter by billable item IDs. Maximum of 20 billable items.
+             */
+            billable_items?: Array<string>;
+
+            /**
+             * Filter by billing cadence ID.
+             */
+            billing_cadence?: string;
+
+            /**
+             * Filter by pricing plan ID.
+             */
+            pricing_plan?: string;
+
+            /**
+             * Filter by pricing plan subscription ID.
+             */
+            pricing_plan_subscription?: string;
+          }
+
+          interface Gte {
+            /**
+             * The monetary amount. Required when type is `amount`.
+             */
+            amount?: Gte.Amount;
+
+            /**
+             * The custom pricing unit amount. Required when type is `custom_pricing_unit`.
+             */
+            custom_pricing_unit?: Gte.CustomPricingUnit;
+
+            /**
+             * The type of the threshold amount.
+             */
+            type: Gte.Type;
+          }
+
+          namespace Gte {
+            interface Amount {
+              /**
+               * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) of the `value` parameter.
+               */
+              currency: string;
+
+              /**
+               * An integer representing the amount of the threshold.
+               */
+              value: number;
+            }
+
+            interface CustomPricingUnit {
+              /**
+               * The ID of the custom pricing unit.
+               */
+              id: string;
+
+              /**
+               * A positive decimal string representing the amount of the custom pricing unit threshold.
+               */
+              value: string;
+            }
+
+            type Type = 'amount' | 'custom_pricing_unit';
+          }
+        }
+
         interface UsageThreshold {
           /**
            * The filters allows limiting the scope of this usage alert. You can only specify up to one filter at this time.
@@ -231,7 +330,10 @@ declare module 'stripe' {
       }
 
       namespace AlertListParams {
-        type AlertType = 'credit_balance_threshold' | 'usage_threshold';
+        type AlertType =
+          | 'credit_balance_threshold'
+          | 'spend_threshold'
+          | 'usage_threshold';
       }
 
       interface AlertActivateParams {

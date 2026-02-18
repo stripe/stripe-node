@@ -3185,14 +3185,38 @@ declare module 'stripe' {
     namespace SubscriptionPauseParams {
       interface BillFor {
         /**
-         * Controls whether to debit for accrued metered usage in the current billing period. The default is `true`.
+         * Controls when to bill for metered usage in the current period. Defaults to `{ type: "now" }`.
          */
-        outstanding_usage?: boolean;
+        outstanding_usage_through?: BillFor.OutstandingUsageThrough;
 
         /**
-         * Controls whether to credit for licensed items in the current billing period. The default is `true`.
+         * Controls when to credit for unused time on licensed items. Defaults to `{ type: "now" }`.
          */
-        unused_time?: boolean;
+        unused_time_from?: BillFor.UnusedTimeFrom;
+      }
+
+      namespace BillFor {
+        interface OutstandingUsageThrough {
+          /**
+           * When to bill metered usage in the current period.
+           */
+          type: OutstandingUsageThrough.Type;
+        }
+
+        namespace OutstandingUsageThrough {
+          type Type = 'none' | 'now';
+        }
+
+        interface UnusedTimeFrom {
+          /**
+           * When to credit for unused time.
+           */
+          type: UnusedTimeFrom.Type;
+        }
+
+        namespace UnusedTimeFrom {
+          type Type = 'item_current_period_start' | 'none' | 'now';
+        }
       }
 
       type InvoicingBehavior = 'invoice' | 'pending_invoice_item';
@@ -3210,11 +3234,6 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Controls when the subscription transitions from `paused` to `active`. Determines how payment on the invoice affects the resumption process.The default is `pending_if_incomplete`.
-       */
-      payment_behavior?: SubscriptionResumeParams.PaymentBehavior;
-
-      /**
        * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) resulting from the `billing_cycle_anchor` being `unchanged`. When the `billing_cycle_anchor` is set to `now` (default value), no prorations are generated. If no value is passed, the default is `create_prorations`.
        */
       proration_behavior?: SubscriptionResumeParams.ProrationBehavior;
@@ -3227,8 +3246,6 @@ declare module 'stripe' {
 
     namespace SubscriptionResumeParams {
       type BillingCycleAnchor = 'now' | 'unchanged';
-
-      type PaymentBehavior = 'allow_incomplete' | 'pending_if_incomplete';
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
     }

@@ -272,9 +272,52 @@ declare module 'stripe' {
 
         interface ScheduleDetails {
           /**
-           * The subscription schedule that generated this line item
+           * The subscription schedule that generated this line item.
            */
           schedule: string;
+
+          /**
+           * The invoice item that generated this line item.
+           */
+          invoice_item: string | null;
+
+          /**
+           * Whether this is a proration.
+           */
+          proration: boolean;
+
+          /**
+           * Additional details for proration line items.
+           */
+          proration_details: ScheduleDetails.ProrationDetails | null;
+
+          /**
+           * The subscription that the schedule belongs to.
+           */
+          subscription: string | null;
+        }
+
+        namespace ScheduleDetails {
+          interface ProrationDetails {
+            /**
+             * For a credit proration `line_item`, the original debit line_items to which the credit proration applies.
+             */
+            credited_items: ProrationDetails.CreditedItems | null;
+          }
+
+          namespace ProrationDetails {
+            interface CreditedItems {
+              /**
+               * Invoice containing the credited invoice line items
+               */
+              invoice: string;
+
+              /**
+               * Credited invoice line items
+               */
+              invoice_line_items: Array<string>;
+            }
+          }
         }
 
         interface SubscriptionItemDetails {

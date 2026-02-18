@@ -973,6 +973,11 @@ declare module 'stripe' {
       card?: PaymentMethodUpdateParams.Card;
 
       /**
+       * If this is a `custom` PaymentMethod, this hash contains details about the Custom payment method.
+       */
+      custom?: PaymentMethodUpdateParams.Custom;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -1051,6 +1056,18 @@ declare module 'stripe' {
         namespace Networks {
           type Preferred = 'cartes_bancaires' | 'mastercard' | 'visa';
         }
+      }
+
+      interface Custom {
+        /**
+         * A reference to an external payment method, such as a PayPal Billing Agreement ID.
+         */
+        payment_method_reference?: string;
+
+        /**
+         * Indicates whether the payment method supports off-session payments.
+         */
+        usage?: 'off_session';
       }
 
       interface Payto {
