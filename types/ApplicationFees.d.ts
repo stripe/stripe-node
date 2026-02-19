@@ -62,6 +62,11 @@ declare module 'stripe' {
       fee_source: ApplicationFee.FeeSource | null;
 
       /**
+       * Polymorphic funding source of the application fee. Includes the type and details of the funding source.
+       */
+      funding_source?: ApplicationFee.FundingSource | null;
+
+      /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;
@@ -112,6 +117,18 @@ declare module 'stripe' {
 
       namespace FeeSource {
         type Type = 'charge' | 'payout' | 'transfer';
+      }
+
+      interface FundingSource {
+        /**
+         * The invoice ID associated with this funding source, if applicable.
+         */
+        invoice?: string;
+
+        /**
+         * The type of funding source.
+         */
+        type: string;
       }
 
       type SettlementType = 'gross_settled' | 'net_settled';
