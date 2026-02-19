@@ -1,5 +1,16 @@
 # Changelog
 
+## 20.4.0-alpha.4 - 2026-02-19
+* [#2574](https://github.com/stripe/stripe-node/pull/2574) Update generated code for private-preview
+  * ⚠️ Add support for new value `spend_threshold` on enums `Billing.Alert.alert_type`, `Billing.AlertCreateParams.alert_type`, and `Billing.AlertListParams.alert_type`
+  * Add support for `spend_threshold` on `Billing.AlertCreateParams` and `Billing.Alert`
+  * Add support for `invoice_item`, `proration_details`, `proration`, and `subscription` on `InvoiceLineItem.parent.schedule_details`
+  * Add support for `custom` on `PaymentMethodUpdateParams`
+  * Add support for `payment_method_reference` and `usage` on `PaymentMethod.custom`
+  * Add support for `outstanding_usage_through` and `unused_time_from` on `SubscriptionPauseParams.bill_for`
+  * ⚠️ Remove support for `outstanding_usage` and `unused_time` on `SubscriptionPauseParams.bill_for`
+  * ⚠️ Remove support for `payment_behavior` on `SubscriptionResumeParams`
+
 ## 20.4.0-alpha.3 - 2026-02-11
 * [#2572](https://github.com/stripe/stripe-node/pull/2572) Update generated code for private-preview
   * Add support for new resources `V2.Billing.CadenceSpendModifier`, `V2.Billing.OneTimeItem`, and `V2.Billing.RateCardCustomPricingUnitOverageRate`
