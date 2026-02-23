@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace V2 {
       /**
-       * The FinancialAddressCreditSimulation object.
+       * Credit Simulations represent simulated credit transactions applied to financial addresses for testing purposes.
        */
       interface FinancialAddressCreditSimulation {
         /**

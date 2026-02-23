@@ -5,7 +5,7 @@ declare module 'stripe' {
     namespace V2 {
       namespace MoneyManagement {
         /**
-         * A FinancialAddress contains information needed to transfer money to a Financial Account. A Financial Account can have more than one Financial Address.
+         * A Financial Address contains information needed to transfer money to a Financial Account. A Financial Account can have more than one Financial Address.
          */
         interface FinancialAddress {
           /**

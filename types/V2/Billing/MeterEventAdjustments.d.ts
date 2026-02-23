@@ -5,7 +5,7 @@ declare module 'stripe' {
     namespace V2 {
       namespace Billing {
         /**
-         * The MeterEventAdjustment object.
+         * A Meter Event Adjustment is used to cancel or modify previously recorded meter events. Meter Event Adjustments allow you to correct billing data by canceling individual events or event ranges, with tracking of adjustment status and creation time.
          */
         interface MeterEventAdjustment {
           /**

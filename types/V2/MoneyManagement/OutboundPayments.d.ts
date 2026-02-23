@@ -71,6 +71,11 @@ declare module 'stripe' {
           outbound_payment_quote?: string;
 
           /**
+           * The purpose of the OutboundPayment.
+           */
+          purpose?: 'payroll';
+
+          /**
            * A link to the Stripe-hosted receipt for this OutboundPayment. The receipt link remains active for 60 days from the OutboundPayment creation date. After this period, the link will expire and the receipt url value will be null.
            */
           receipt_url?: string;
@@ -119,12 +124,12 @@ declare module 'stripe' {
             /**
              * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
              */
-            value?: number;
+            value: number;
 
             /**
              * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
              */
-            currency?: string;
+            currency: string;
           }
 
           interface DeliveryOptions {
@@ -155,12 +160,12 @@ declare module 'stripe' {
               /**
                * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
                */
-              value?: number;
+              value: number;
 
               /**
                * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
                */
-              currency?: string;
+              currency: string;
             }
           }
 
@@ -284,12 +289,12 @@ declare module 'stripe' {
               /**
                * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
                */
-              value?: number;
+              value: number;
 
               /**
                * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
                */
-              currency?: string;
+              currency: string;
             }
           }
 
