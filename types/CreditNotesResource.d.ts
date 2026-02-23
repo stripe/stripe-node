@@ -99,17 +99,17 @@ declare module 'stripe' {
         quantity?: number;
 
         /**
-         * A list of up to 10 tax amounts for the credit note line item. Cannot be mixed with `tax_rates`.
+         * A list of up to 10 tax amounts for the credit note line item. Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
          */
         tax_amounts?: Stripe.Emptyable<Array<Line.TaxAmount>>;
 
         /**
-         * The tax rates which apply to the credit note line item. Only valid when the `type` is `custom_line_item` and cannot be mixed with `tax_amounts`.
+         * The tax rates which apply to the credit note line item. Only valid when the `type` is `custom_line_item` and `tax_amounts` is not used.
          */
         tax_rates?: Stripe.Emptyable<Array<string>>;
 
         /**
-         * Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`
+         * Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`. `custom_line_item` is not valid when the invoice is set up with `automatic_tax[enabled]=true`.
          */
         type: Line.Type;
 
@@ -352,17 +352,17 @@ declare module 'stripe' {
         quantity?: number;
 
         /**
-         * A list of up to 10 tax amounts for the credit note line item. Cannot be mixed with `tax_rates`.
+         * A list of up to 10 tax amounts for the credit note line item. Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
          */
         tax_amounts?: Stripe.Emptyable<Array<Line.TaxAmount>>;
 
         /**
-         * The tax rates which apply to the credit note line item. Only valid when the `type` is `custom_line_item` and cannot be mixed with `tax_amounts`.
+         * The tax rates which apply to the credit note line item. Only valid when the `type` is `custom_line_item` and `tax_amounts` is not used.
          */
         tax_rates?: Stripe.Emptyable<Array<string>>;
 
         /**
-         * Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`
+         * Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`. `custom_line_item` is not valid when the invoice is set up with `automatic_tax[enabled]=true`.
          */
         type: Line.Type;
 
@@ -547,17 +547,17 @@ declare module 'stripe' {
         quantity?: number;
 
         /**
-         * A list of up to 10 tax amounts for the credit note line item. Cannot be mixed with `tax_rates`.
+         * A list of up to 10 tax amounts for the credit note line item. Not valid when `tax_rates` is used or if invoice is set up with `automatic_tax[enabled]=true`.
          */
         tax_amounts?: Stripe.Emptyable<Array<Line.TaxAmount>>;
 
         /**
-         * The tax rates which apply to the credit note line item. Only valid when the `type` is `custom_line_item` and cannot be mixed with `tax_amounts`.
+         * The tax rates which apply to the credit note line item. Only valid when the `type` is `custom_line_item` and `tax_amounts` is not used.
          */
         tax_rates?: Stripe.Emptyable<Array<string>>;
 
         /**
-         * Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`
+         * Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`. `custom_line_item` is not valid when the invoice is set up with `automatic_tax[enabled]=true`.
          */
         type: Line.Type;
 

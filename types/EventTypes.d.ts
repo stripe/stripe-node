@@ -185,6 +185,13 @@ declare module 'stripe' {
       | ReportingReportRunFailedEvent
       | ReportingReportRunSucceededEvent
       | ReportingReportTypeUpdatedEvent
+      | ReserveHoldCreatedEvent
+      | ReserveHoldUpdatedEvent
+      | ReservePlanCreatedEvent
+      | ReservePlanDisabledEvent
+      | ReservePlanExpiredEvent
+      | ReservePlanUpdatedEvent
+      | ReserveReleaseCreatedEvent
       | ReviewClosedEvent
       | ReviewOpenedEvent
       | SetupIntentCanceledEvent
@@ -3177,6 +3184,118 @@ declare module 'stripe' {
         object: Stripe.Reporting.ReportType;
 
         previous_attributes?: Partial<Stripe.Reporting.ReportType>;
+      }
+    }
+
+    /**
+     * Occurs when a reserve hold is created.
+     */
+    interface ReserveHoldCreatedEvent extends EventBase {
+      type: 'reserve.hold.created';
+      data: ReserveHoldCreatedEvent.Data;
+    }
+
+    namespace ReserveHoldCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Reserve.Hold;
+
+        previous_attributes?: Partial<Stripe.Reserve.Hold>;
+      }
+    }
+
+    /**
+     * Occurs when a reserve hold is updated.
+     */
+    interface ReserveHoldUpdatedEvent extends EventBase {
+      type: 'reserve.hold.updated';
+      data: ReserveHoldUpdatedEvent.Data;
+    }
+
+    namespace ReserveHoldUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Reserve.Hold;
+
+        previous_attributes?: Partial<Stripe.Reserve.Hold>;
+      }
+    }
+
+    /**
+     * Occurs when a reserve plan is created.
+     */
+    interface ReservePlanCreatedEvent extends EventBase {
+      type: 'reserve.plan.created';
+      data: ReservePlanCreatedEvent.Data;
+    }
+
+    namespace ReservePlanCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Reserve.Plan;
+
+        previous_attributes?: Partial<Stripe.Reserve.Plan>;
+      }
+    }
+
+    /**
+     * Occurs when a reserve plan is disabled.
+     */
+    interface ReservePlanDisabledEvent extends EventBase {
+      type: 'reserve.plan.disabled';
+      data: ReservePlanDisabledEvent.Data;
+    }
+
+    namespace ReservePlanDisabledEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Reserve.Plan;
+
+        previous_attributes?: Partial<Stripe.Reserve.Plan>;
+      }
+    }
+
+    /**
+     * Occurs when a reserve plan expires.
+     */
+    interface ReservePlanExpiredEvent extends EventBase {
+      type: 'reserve.plan.expired';
+      data: ReservePlanExpiredEvent.Data;
+    }
+
+    namespace ReservePlanExpiredEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Reserve.Plan;
+
+        previous_attributes?: Partial<Stripe.Reserve.Plan>;
+      }
+    }
+
+    /**
+     * Occurs when a reserve plan is updated.
+     */
+    interface ReservePlanUpdatedEvent extends EventBase {
+      type: 'reserve.plan.updated';
+      data: ReservePlanUpdatedEvent.Data;
+    }
+
+    namespace ReservePlanUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Reserve.Plan;
+
+        previous_attributes?: Partial<Stripe.Reserve.Plan>;
+      }
+    }
+
+    /**
+     * Occurs when a reserve release is created.
+     */
+    interface ReserveReleaseCreatedEvent extends EventBase {
+      type: 'reserve.release.created';
+      data: ReserveReleaseCreatedEvent.Data;
+    }
+
+    namespace ReserveReleaseCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Reserve.Release;
+
+        previous_attributes?: Partial<Stripe.Reserve.Release>;
       }
     }
 

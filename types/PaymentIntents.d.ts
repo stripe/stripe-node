@@ -709,6 +709,8 @@ declare module 'stripe' {
           | 'sku_inactive'
           | 'state_unsupported'
           | 'status_transition_invalid'
+          | 'storer_capability_missing'
+          | 'storer_capability_not_active'
           | 'stripe_tax_inactive'
           | 'tax_id_invalid'
           | 'tax_id_prohibited'
@@ -2230,7 +2232,7 @@ declare module 'stripe' {
           namespace BankTransfer {
             interface EuBankTransfer {
               /**
-               * The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
+               * The desired country code of the bank account information. Permitted values include: `DE`, `FR`, `IE`, or `NL`.
                */
               country: EuBankTransfer.Country;
             }
@@ -2907,6 +2909,11 @@ declare module 'stripe' {
           target_date?: string;
 
           /**
+           * The purpose of the transaction.
+           */
+          transaction_purpose?: UsBankAccount.TransactionPurpose;
+
+          /**
            * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
@@ -2968,6 +2975,12 @@ declare module 'stripe' {
           type PreferredSettlementSpeed = 'fastest' | 'standard';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          type TransactionPurpose =
+            | 'goods'
+            | 'other'
+            | 'services'
+            | 'unspecified';
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }

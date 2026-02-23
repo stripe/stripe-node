@@ -230,7 +230,7 @@ declare module 'stripe' {
          *
          * Omit or set to `true` to immediately return a 400 error when arithmetic validation fails. Use this for strict validation that prevents processing with line item data that has arithmetic inconsistencies.
          *
-         * For card payments, Stripe doesn't send line item data if there's an arithmetic validation error to card networks.
+         * For card payments, Stripe doesn't send line item data to card networks if there's an arithmetic validation error.
          */
         enforce_arithmetic_validation?: boolean;
 
@@ -272,7 +272,7 @@ declare module 'stripe' {
           /**
            * The product name of the line item. Required for L3 rates. At most 1024 characters long.
            *
-           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For Paypal, this field is truncated to 127 characters.
+           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For PayPal, this field is truncated to 127 characters.
            */
           product_name: string;
 
@@ -300,22 +300,22 @@ declare module 'stripe' {
         namespace LineItem {
           interface PaymentMethodOptions {
             /**
-             * This sub-hash contains line item details that are specific to `card` payment method."
+             * This sub-hash contains line item details that are specific to the `card` payment method.
              */
             card?: PaymentMethodOptions.Card;
 
             /**
-             * This sub-hash contains line item details that are specific to `card_present` payment method."
+             * This sub-hash contains line item details that are specific to the `card_present` payment method.
              */
             card_present?: PaymentMethodOptions.CardPresent;
 
             /**
-             * This sub-hash contains line item details that are specific to `klarna` payment method."
+             * This sub-hash contains line item details that are specific to the `klarna` payment method.
              */
             klarna?: PaymentMethodOptions.Klarna;
 
             /**
-             * This sub-hash contains line item details that are specific to `paypal` payment method."
+             * This sub-hash contains line item details that are specific to the `paypal` payment method.
              */
             paypal?: PaymentMethodOptions.Paypal;
           }
@@ -323,14 +323,14 @@ declare module 'stripe' {
           namespace PaymentMethodOptions {
             interface Card {
               /**
-               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
                */
               commodity_code?: string;
             }
 
             interface CardPresent {
               /**
-               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
                */
               commodity_code?: string;
             }
@@ -2385,7 +2385,7 @@ declare module 'stripe' {
           namespace BankTransfer {
             interface EuBankTransfer {
               /**
-               * The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
+               * The desired country code of the bank account information. Permitted values include: `DE`, `FR`, `IE`, or `NL`.
                */
               country: string;
             }
@@ -3328,6 +3328,13 @@ declare module 'stripe' {
           target_date?: string;
 
           /**
+           * The purpose of the transaction.
+           */
+          transaction_purpose?: Stripe.Emptyable<
+            UsBankAccount.TransactionPurpose
+          >;
+
+          /**
            * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
@@ -3405,6 +3412,12 @@ declare module 'stripe' {
           type PreferredSettlementSpeed = 'fastest' | 'standard';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          type TransactionPurpose =
+            | 'goods'
+            | 'other'
+            | 'services'
+            | 'unspecified';
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
@@ -3693,7 +3706,7 @@ declare module 'stripe' {
          *
          * Omit or set to `true` to immediately return a 400 error when arithmetic validation fails. Use this for strict validation that prevents processing with line item data that has arithmetic inconsistencies.
          *
-         * For card payments, Stripe doesn't send line item data if there's an arithmetic validation error to card networks.
+         * For card payments, Stripe doesn't send line item data to card networks if there's an arithmetic validation error.
          */
         enforce_arithmetic_validation?: boolean;
 
@@ -3735,7 +3748,7 @@ declare module 'stripe' {
           /**
            * The product name of the line item. Required for L3 rates. At most 1024 characters long.
            *
-           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For Paypal, this field is truncated to 127 characters.
+           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For PayPal, this field is truncated to 127 characters.
            */
           product_name: string;
 
@@ -3763,22 +3776,22 @@ declare module 'stripe' {
         namespace LineItem {
           interface PaymentMethodOptions {
             /**
-             * This sub-hash contains line item details that are specific to `card` payment method."
+             * This sub-hash contains line item details that are specific to the `card` payment method.
              */
             card?: PaymentMethodOptions.Card;
 
             /**
-             * This sub-hash contains line item details that are specific to `card_present` payment method."
+             * This sub-hash contains line item details that are specific to the `card_present` payment method.
              */
             card_present?: PaymentMethodOptions.CardPresent;
 
             /**
-             * This sub-hash contains line item details that are specific to `klarna` payment method."
+             * This sub-hash contains line item details that are specific to the `klarna` payment method.
              */
             klarna?: PaymentMethodOptions.Klarna;
 
             /**
-             * This sub-hash contains line item details that are specific to `paypal` payment method."
+             * This sub-hash contains line item details that are specific to the `paypal` payment method.
              */
             paypal?: PaymentMethodOptions.Paypal;
           }
@@ -3786,14 +3799,14 @@ declare module 'stripe' {
           namespace PaymentMethodOptions {
             interface Card {
               /**
-               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
                */
               commodity_code?: string;
             }
 
             interface CardPresent {
               /**
-               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
                */
               commodity_code?: string;
             }
@@ -5777,7 +5790,7 @@ declare module 'stripe' {
           namespace BankTransfer {
             interface EuBankTransfer {
               /**
-               * The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
+               * The desired country code of the bank account information. Permitted values include: `DE`, `FR`, `IE`, or `NL`.
                */
               country: string;
             }
@@ -6720,6 +6733,13 @@ declare module 'stripe' {
           target_date?: string;
 
           /**
+           * The purpose of the transaction.
+           */
+          transaction_purpose?: Stripe.Emptyable<
+            UsBankAccount.TransactionPurpose
+          >;
+
+          /**
            * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
@@ -6797,6 +6817,12 @@ declare module 'stripe' {
           type PreferredSettlementSpeed = 'fastest' | 'standard';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          type TransactionPurpose =
+            | 'goods'
+            | 'other'
+            | 'services'
+            | 'unspecified';
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
@@ -7022,7 +7048,7 @@ declare module 'stripe' {
          *
          * Omit or set to `true` to immediately return a 400 error when arithmetic validation fails. Use this for strict validation that prevents processing with line item data that has arithmetic inconsistencies.
          *
-         * For card payments, Stripe doesn't send line item data if there's an arithmetic validation error to card networks.
+         * For card payments, Stripe doesn't send line item data to card networks if there's an arithmetic validation error.
          */
         enforce_arithmetic_validation?: boolean;
 
@@ -7064,7 +7090,7 @@ declare module 'stripe' {
           /**
            * The product name of the line item. Required for L3 rates. At most 1024 characters long.
            *
-           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For Paypal, this field is truncated to 127 characters.
+           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For PayPal, this field is truncated to 127 characters.
            */
           product_name: string;
 
@@ -7092,22 +7118,22 @@ declare module 'stripe' {
         namespace LineItem {
           interface PaymentMethodOptions {
             /**
-             * This sub-hash contains line item details that are specific to `card` payment method."
+             * This sub-hash contains line item details that are specific to the `card` payment method.
              */
             card?: PaymentMethodOptions.Card;
 
             /**
-             * This sub-hash contains line item details that are specific to `card_present` payment method."
+             * This sub-hash contains line item details that are specific to the `card_present` payment method.
              */
             card_present?: PaymentMethodOptions.CardPresent;
 
             /**
-             * This sub-hash contains line item details that are specific to `klarna` payment method."
+             * This sub-hash contains line item details that are specific to the `klarna` payment method.
              */
             klarna?: PaymentMethodOptions.Klarna;
 
             /**
-             * This sub-hash contains line item details that are specific to `paypal` payment method."
+             * This sub-hash contains line item details that are specific to the `paypal` payment method.
              */
             paypal?: PaymentMethodOptions.Paypal;
           }
@@ -7115,14 +7141,14 @@ declare module 'stripe' {
           namespace PaymentMethodOptions {
             interface Card {
               /**
-               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
                */
               commodity_code?: string;
             }
 
             interface CardPresent {
               /**
-               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
                */
               commodity_code?: string;
             }
@@ -7400,7 +7426,7 @@ declare module 'stripe' {
          *
          * Omit or set to `true` to immediately return a 400 error when arithmetic validation fails. Use this for strict validation that prevents processing with line item data that has arithmetic inconsistencies.
          *
-         * For card payments, Stripe doesn't send line item data if there's an arithmetic validation error to card networks.
+         * For card payments, Stripe doesn't send line item data to card networks if there's an arithmetic validation error.
          */
         enforce_arithmetic_validation?: boolean;
 
@@ -7442,7 +7468,7 @@ declare module 'stripe' {
           /**
            * The product name of the line item. Required for L3 rates. At most 1024 characters long.
            *
-           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For Paypal, this field is truncated to 127 characters.
+           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For PayPal, this field is truncated to 127 characters.
            */
           product_name: string;
 
@@ -7470,22 +7496,22 @@ declare module 'stripe' {
         namespace LineItem {
           interface PaymentMethodOptions {
             /**
-             * This sub-hash contains line item details that are specific to `card` payment method."
+             * This sub-hash contains line item details that are specific to the `card` payment method.
              */
             card?: PaymentMethodOptions.Card;
 
             /**
-             * This sub-hash contains line item details that are specific to `card_present` payment method."
+             * This sub-hash contains line item details that are specific to the `card_present` payment method.
              */
             card_present?: PaymentMethodOptions.CardPresent;
 
             /**
-             * This sub-hash contains line item details that are specific to `klarna` payment method."
+             * This sub-hash contains line item details that are specific to the `klarna` payment method.
              */
             klarna?: PaymentMethodOptions.Klarna;
 
             /**
-             * This sub-hash contains line item details that are specific to `paypal` payment method."
+             * This sub-hash contains line item details that are specific to the `paypal` payment method.
              */
             paypal?: PaymentMethodOptions.Paypal;
           }
@@ -7493,14 +7519,14 @@ declare module 'stripe' {
           namespace PaymentMethodOptions {
             interface Card {
               /**
-               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
                */
               commodity_code?: string;
             }
 
             interface CardPresent {
               /**
-               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
                */
               commodity_code?: string;
             }
@@ -9535,7 +9561,7 @@ declare module 'stripe' {
           namespace BankTransfer {
             interface EuBankTransfer {
               /**
-               * The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
+               * The desired country code of the bank account information. Permitted values include: `DE`, `FR`, `IE`, or `NL`.
                */
               country: string;
             }
@@ -10478,6 +10504,13 @@ declare module 'stripe' {
           target_date?: string;
 
           /**
+           * The purpose of the transaction.
+           */
+          transaction_purpose?: Stripe.Emptyable<
+            UsBankAccount.TransactionPurpose
+          >;
+
+          /**
            * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
@@ -10555,6 +10588,12 @@ declare module 'stripe' {
           type PreferredSettlementSpeed = 'fastest' | 'standard';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          type TransactionPurpose =
+            | 'goods'
+            | 'other'
+            | 'services'
+            | 'unspecified';
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
@@ -10708,7 +10747,7 @@ declare module 'stripe' {
          *
          * Omit or set to `true` to immediately return a 400 error when arithmetic validation fails. Use this for strict validation that prevents processing with line item data that has arithmetic inconsistencies.
          *
-         * For card payments, Stripe doesn't send line item data if there's an arithmetic validation error to card networks.
+         * For card payments, Stripe doesn't send line item data to card networks if there's an arithmetic validation error.
          */
         enforce_arithmetic_validation?: boolean;
 
@@ -10750,7 +10789,7 @@ declare module 'stripe' {
           /**
            * The product name of the line item. Required for L3 rates. At most 1024 characters long.
            *
-           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For Paypal, this field is truncated to 127 characters.
+           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For PayPal, this field is truncated to 127 characters.
            */
           product_name: string;
 
@@ -10778,22 +10817,22 @@ declare module 'stripe' {
         namespace LineItem {
           interface PaymentMethodOptions {
             /**
-             * This sub-hash contains line item details that are specific to `card` payment method."
+             * This sub-hash contains line item details that are specific to the `card` payment method.
              */
             card?: PaymentMethodOptions.Card;
 
             /**
-             * This sub-hash contains line item details that are specific to `card_present` payment method."
+             * This sub-hash contains line item details that are specific to the `card_present` payment method.
              */
             card_present?: PaymentMethodOptions.CardPresent;
 
             /**
-             * This sub-hash contains line item details that are specific to `klarna` payment method."
+             * This sub-hash contains line item details that are specific to the `klarna` payment method.
              */
             klarna?: PaymentMethodOptions.Klarna;
 
             /**
-             * This sub-hash contains line item details that are specific to `paypal` payment method."
+             * This sub-hash contains line item details that are specific to the `paypal` payment method.
              */
             paypal?: PaymentMethodOptions.Paypal;
           }
@@ -10801,14 +10840,14 @@ declare module 'stripe' {
           namespace PaymentMethodOptions {
             interface Card {
               /**
-               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
                */
               commodity_code?: string;
             }
 
             interface CardPresent {
               /**
-               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
                */
               commodity_code?: string;
             }

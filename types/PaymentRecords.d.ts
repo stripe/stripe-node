@@ -465,12 +465,12 @@ declare module 'stripe' {
 
         interface Affirm {
           /**
-           * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
+           * ID of the location that this reader is assigned to.
            */
           location?: string;
 
           /**
-           * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
+           * ID of the reader this transaction was made on.
            */
           reader?: string;
 
@@ -667,14 +667,12 @@ declare module 'stripe' {
           iban_last4: string | null;
 
           /**
-           * Preferred language of the Bancontact authorization page that the customer is redirected to.
-           * Can be one of `en`, `de`, `fr`, or `nl`
+           * Preferred language of the Bancontact authorization page that the customer is redirected to. Can be one of `en`, `de`, `fr`, or `nl`
            */
           preferred_language: Bancontact.PreferredLanguage | null;
 
           /**
-           * Owner's verified full name. Values are verified or provided by Bancontact directly
-           * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           * Owner's verified full name. Values are verified or provided by Bancontact directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
           verified_name: string | null;
         }
@@ -723,7 +721,7 @@ declare module 'stripe' {
           /**
            * The tax ID of the customer (CPF for individuals consumers or CNPJ for businesses consumers)
            */
-          tax_id: string;
+          tax_id: string | null;
         }
 
         interface Card {
@@ -861,10 +859,19 @@ declare module 'stripe' {
             | 'visa';
 
           interface Checks {
+            /**
+             * If you provide a value for `address.line1`, the check result is one of `pass`, `fail`, `unavailable`, or `unchecked`.
+             */
             address_line1_check: Checks.AddressLine1Check | null;
 
+            /**
+             * If you provide a address postal code, the check result is one of `pass`, `fail`, `unavailable`, or `unchecked`.
+             */
             address_postal_code_check: Checks.AddressPostalCodeCheck | null;
 
+            /**
+             * If you provide a CVC, the check results is one of `pass`, `fail`, `unavailable`, or `unchecked`.
+             */
             cvc_check: Checks.CvcCheck | null;
           }
 
@@ -887,6 +894,9 @@ declare module 'stripe' {
           type Funding = 'credit' | 'debit' | 'prepaid' | 'unknown';
 
           interface Installments {
+            /**
+             * Installment plan selected for the payment.
+             */
             plan: Installments.Plan | null;
           }
 
@@ -937,12 +947,24 @@ declare module 'stripe' {
           type StoredCredentialUsage = 'recurring' | 'unscheduled';
 
           interface ThreeDSecure {
+            /**
+             * For authenticated transactions: Indicates how the issuing bank authenticated the customer.
+             */
             authentication_flow: ThreeDSecure.AuthenticationFlow | null;
 
+            /**
+             * Indicates the outcome of 3D Secure authentication.
+             */
             result: ThreeDSecure.Result | null;
 
+            /**
+             * Additional information about why 3D Secure succeeded or failed, based on the `result`.
+             */
             result_reason: ThreeDSecure.ResultReason | null;
 
+            /**
+             * The version of 3D Secure that was used.
+             */
             version: ThreeDSecure.Version | null;
           }
 
@@ -1086,6 +1108,11 @@ declare module 'stripe' {
           last4: string | null;
 
           /**
+           * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
+           */
+          location?: string;
+
+          /**
            * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           network: string | null;
@@ -1114,6 +1141,11 @@ declare module 'stripe' {
            * How card details were read in this transaction.
            */
           read_method: CardPresent.ReadMethod | null;
+
+          /**
+           * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
+           */
+          reader?: string;
 
           /**
            * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
@@ -1218,7 +1250,7 @@ declare module 'stripe' {
           cashtag: string | null;
 
           /**
-           * A unique and immutable identifier of payments assigned by Cash App
+           * A unique and immutable identifier of payments assigned by Cash App.
            */
           transaction_id: string | null;
         }
@@ -1373,9 +1405,7 @@ declare module 'stripe' {
           bic: string | null;
 
           /**
-           * Owner's verified full name. Values are verified or provided by Giropay directly
-           * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-           * Giropay rarely provides this information so the attribute is usually empty.
+           * Owner's verified full name. Values are verified or provided by Giropay directly (if supported) at the time of authorization or settlement. They cannot be set or mutated. Giropay rarely provides this information so the attribute is usually empty.
            */
           verified_name: string | null;
         }
@@ -1541,6 +1571,11 @@ declare module 'stripe' {
           last4: string | null;
 
           /**
+           * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
+           */
+          location?: string;
+
+          /**
            * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           network: string | null;
@@ -1559,6 +1594,11 @@ declare module 'stripe' {
            * How card details were read in this transaction.
            */
           read_method: InteracPresent.ReadMethod | null;
+
+          /**
+           * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
+           */
+          reader?: string;
 
           /**
            * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
@@ -2254,7 +2294,7 @@ declare module 'stripe' {
           /**
            * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
            */
-          expected_debit_date?: string | null;
+          expected_debit_date?: string;
 
           /**
            * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.

@@ -602,7 +602,7 @@ declare module 'stripe' {
             namespace BankTransfer {
               interface EuBankTransfer {
                 /**
-                 * The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `FR`, `IE`, or `NL`.
                  */
                 country: EuBankTransfer.Country;
               }
@@ -736,6 +736,7 @@ declare module 'stripe' {
           | 'naver_pay'
           | 'nz_bank_account'
           | 'p24'
+          | 'pay_by_bank'
           | 'payco'
           | 'paynow'
           | 'paypal'

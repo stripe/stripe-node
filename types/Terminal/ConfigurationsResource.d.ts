@@ -15,6 +15,11 @@ declare module 'stripe' {
         bbpos_wisepos_e?: ConfigurationCreateParams.BbposWiseposE;
 
         /**
+         * Configuration for cellular connectivity.
+         */
+        cellular?: Stripe.Emptyable<ConfigurationCreateParams.Cellular>;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
@@ -68,6 +73,13 @@ declare module 'stripe' {
            * A File ID representing an image to display on the reader
            */
           splashscreen?: Stripe.Emptyable<string>;
+        }
+
+        interface Cellular {
+          /**
+           * Determines whether to allow the reader to connect to a cellular network. Defaults to false.
+           */
+          enabled: boolean;
         }
 
         interface Offline {
@@ -683,6 +695,11 @@ declare module 'stripe' {
         >;
 
         /**
+         * Configuration for cellular connectivity.
+         */
+        cellular?: Stripe.Emptyable<ConfigurationUpdateParams.Cellular>;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
@@ -710,7 +727,7 @@ declare module 'stripe' {
         stripe_s700?: Stripe.Emptyable<ConfigurationUpdateParams.StripeS700>;
 
         /**
-         * Tipping configurations for readers. supporting on-reader tips
+         * Tipping configurations for readers that support on-reader tips.
          */
         tipping?: Stripe.Emptyable<ConfigurationUpdateParams.Tipping>;
 
@@ -740,6 +757,13 @@ declare module 'stripe' {
            * A File ID representing an image to display on the reader
            */
           splashscreen?: Stripe.Emptyable<string>;
+        }
+
+        interface Cellular {
+          /**
+           * Determines whether to allow the reader to connect to a cellular network. Defaults to false.
+           */
+          enabled: boolean;
         }
 
         interface Offline {

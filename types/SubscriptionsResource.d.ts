@@ -790,7 +790,7 @@ declare module 'stripe' {
             namespace BankTransfer {
               interface EuBankTransfer {
                 /**
-                 * The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `FR`, `IE`, or `NL`.
                  */
                 country: string;
               }
@@ -922,6 +922,7 @@ declare module 'stripe' {
           | 'naver_pay'
           | 'nz_bank_account'
           | 'p24'
+          | 'pay_by_bank'
           | 'payco'
           | 'paynow'
           | 'paypal'
@@ -1765,7 +1766,7 @@ declare module 'stripe' {
             namespace BankTransfer {
               interface EuBankTransfer {
                 /**
-                 * The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `FR`, `IE`, or `NL`.
                  */
                 country: string;
               }
@@ -1897,6 +1898,7 @@ declare module 'stripe' {
           | 'naver_pay'
           | 'nz_bank_account'
           | 'p24'
+          | 'pay_by_bank'
           | 'payco'
           | 'paynow'
           | 'paypal'
@@ -2297,7 +2299,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Subscription>>;
 
       /**
-       * Initiates resumption of a paused subscription, optionally resetting the billing cycle anchor and creating prorations. If a resumption invoice is generated, it must be paid or marked uncollectible before the subscription will be unpaused. If payment succeeds the subscription will become active, and if payment fails the subscription will be past_due. The resumption invoice will void automatically if not paid by the expiration date.
+       * Initiates resumption of a paused subscription, optionally resetting the billing cycle anchor and creating prorations. If no resumption invoice is generated, the subscription becomes active immediately. If a resumption invoice is generated, the subscription remains paused until the invoice is paid or marked uncollectible. If the invoice is not paid by the expiration date, it is voided and the subscription remains paused.
        */
       resume(
         id: string,
