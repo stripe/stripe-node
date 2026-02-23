@@ -237,6 +237,7 @@
 ///<reference path='./AccountLinks.d.ts' />
 ///<reference path='./AccountNotices.d.ts' />
 ///<reference path='./AccountSessions.d.ts' />
+///<reference path='./AccountSignals.d.ts' />
 ///<reference path='./Accounts.d.ts' />
 ///<reference path='./ApplePayDomains.d.ts' />
 ///<reference path='./ApplicationFees.d.ts' />

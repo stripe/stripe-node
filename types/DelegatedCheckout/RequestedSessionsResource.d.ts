@@ -100,7 +100,7 @@ declare module 'stripe' {
             /**
              * Address line 1, such as the street, PO Box, or company name.
              */
-            line1: string;
+            line1?: string;
 
             /**
              * Address line 2, such as the apartment, suite, unit, or building.
@@ -186,7 +186,7 @@ declare module 'stripe' {
               /**
                * Address line 1, such as the street, PO Box, or company name.
                */
-              line1: string;
+              line1?: string;
 
               /**
                * Address line 2, such as the apartment, suite, unit, or building.
@@ -327,7 +327,7 @@ declare module 'stripe' {
             /**
              * Address line 1, such as the street, PO Box, or company name.
              */
-            line1: string;
+            line1?: string;
 
             /**
              * Address line 2, such as the apartment, suite, unit, or building.
@@ -434,7 +434,7 @@ declare module 'stripe' {
               /**
                * Address line 1, such as the street, PO Box, or company name.
                */
-              line1: string;
+              line1?: string;
 
               /**
                * Address line 2, such as the apartment, suite, unit, or building.
@@ -555,7 +555,7 @@ declare module 'stripe' {
               /**
                * Address line 1, such as the street, PO Box, or company name.
                */
-              line1: string;
+              line1?: string;
 
               /**
                * Address line 2, such as the apartment, suite, unit, or building.

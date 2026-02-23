@@ -5231,6 +5231,13 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
+    interface AccountRetrieveSignalsParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface AccountUpdateCapabilityParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -6043,6 +6050,19 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Person>>;
+
+      /**
+       * Retrieves the account's Signal objects
+       */
+      retrieveSignals(
+        id: string,
+        params?: AccountRetrieveSignalsParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.AccountSignals>>;
+      retrieveSignals(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.AccountSignals>>;
 
       /**
        * Updates an existing Account Capability. Request or remove a capability by updating its requested parameter.

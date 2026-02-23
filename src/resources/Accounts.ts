@@ -84,6 +84,10 @@ export const Accounts = StripeResource.extend({
     method: 'GET',
     fullPath: '/v1/accounts/{account}/persons/{person}',
   }),
+  retrieveSignals: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/accounts/{account_id}/signals',
+  }),
   updateCapability: stripeMethod({
     method: 'POST',
     fullPath: '/v1/accounts/{account}/capabilities/{capability}',

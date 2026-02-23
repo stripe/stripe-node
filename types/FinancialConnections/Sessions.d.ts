@@ -34,6 +34,11 @@ declare module 'stripe' {
 
         filters?: Session.Filters;
 
+        /**
+         * Settings for the Hosted UI mode.
+         */
+        hosted?: Session.Hosted | null;
+
         limits?: Session.Limits;
 
         /**
@@ -68,6 +73,16 @@ declare module 'stripe' {
         status?: Session.Status;
 
         status_details?: Session.StatusDetails;
+
+        /**
+         * The UI mode for this session.
+         */
+        ui_mode?: Session.UiMode;
+
+        /**
+         * The hosted URL for this Session. Redirect customers to this URL to take them to the hosted authentication flow. This value is only present when the Session is active and the `ui_mode` is `hosted`.
+         */
+        url?: string | null;
       }
 
       namespace Session {
@@ -118,6 +133,22 @@ declare module 'stripe' {
             | 'line_of_credit'
             | 'mortgage'
             | 'savings';
+        }
+
+        interface Hosted {
+          /**
+           * How the user enters the hosted flow. You can only use the values `email` and `url` if you provide `relink_options`.
+           */
+          delivery_method?: Hosted.DeliveryMethod;
+
+          /**
+           * The URL to redirect your customer back to after they link their accounts or cancel this Session. This parameter is required if `ui_mode` is `hosted`.
+           */
+          return_url: string | null;
+        }
+
+        namespace Hosted {
+          type DeliveryMethod = 'email' | 'url';
         }
 
         interface Limits {
@@ -192,6 +223,8 @@ declare module 'stripe' {
             type Reason = 'custom_manual_entry' | 'other';
           }
         }
+
+        type UiMode = 'hosted' | 'modal';
       }
     }
   }
