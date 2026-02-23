@@ -114,7 +114,7 @@ declare module 'stripe' {
 
         interface ManualEntry {
           /**
-           * Whether manual entry will be handled by Stripe during the Session.
+           * How manual entry should be handled.
            */
           mode?: ManualEntry.Mode;
         }

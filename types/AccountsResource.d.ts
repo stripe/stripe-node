@@ -1919,6 +1919,11 @@ declare module 'stripe' {
         paypay_payments?: Settings.PaypayPayments;
 
         /**
+         * Settings specific to the account's use of Smart Disputes.
+         */
+        smart_disputes?: Settings.SmartDisputes;
+
+        /**
          * Settings specific to the account's tax forms.
          */
         tax_forms?: Settings.TaxForms;
@@ -2061,6 +2066,11 @@ declare module 'stripe' {
         }
 
         interface Payments {
+          /**
+           * When you enable this parameter, the customer of this Account receives an email receipt when their payment succeeds. If this parameter isn't set, the default value is `false`.
+           */
+          email_customers_on_successful_payment?: boolean;
+
           /**
            * The default text that appears on statements for non-card charges outside of Japan. For card charges, if you don't set a `statement_descriptor_prefix`, this text is also used as the statement descriptor prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement descriptor to exceed 22 characters, we truncate the `statement_descriptor` text to limit the full descriptor to 22 characters. For more information about statement descriptors and their requirements, see the [account settings documentation](https://docs.stripe.com/get-started/account/statement-descriptors).
            */
@@ -2213,6 +2223,26 @@ declare module 'stripe' {
             }
 
             type Type = 'accessible' | 'in_development' | 'restricted';
+          }
+        }
+
+        interface SmartDisputes {
+          /**
+           * Smart Disputes auto-respond settings for the account.
+           */
+          auto_respond?: SmartDisputes.AutoRespond;
+        }
+
+        namespace SmartDisputes {
+          interface AutoRespond {
+            /**
+             * The preference setting for auto-respond. Can be 'on', 'off', or 'inherit'.
+             */
+            preference?: AutoRespond.Preference;
+          }
+
+          namespace AutoRespond {
+            type Preference = 'inherit' | 'off' | 'on';
           }
         }
 
@@ -4133,6 +4163,11 @@ declare module 'stripe' {
         paypay_payments?: Settings.PaypayPayments;
 
         /**
+         * Settings specific to the account's use of Smart Disputes.
+         */
+        smart_disputes?: Settings.SmartDisputes;
+
+        /**
          * Settings specific to the account's tax forms.
          */
         tax_forms?: Settings.TaxForms;
@@ -4280,6 +4315,11 @@ declare module 'stripe' {
         }
 
         interface Payments {
+          /**
+           * When you enable this parameter, the customer of this Account receives an email receipt when their payment succeeds. If this parameter isn't set, the default value is `false`.
+           */
+          email_customers_on_successful_payment?: boolean;
+
           /**
            * The default text that appears on statements for non-card charges outside of Japan. For card charges, if you don't set a `statement_descriptor_prefix`, this text is also used as the statement descriptor prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement descriptor to exceed 22 characters, we truncate the `statement_descriptor` text to limit the full descriptor to 22 characters. For more information about statement descriptors and their requirements, see the [account settings documentation](https://docs.stripe.com/get-started/account/statement-descriptors).
            */
@@ -4432,6 +4472,26 @@ declare module 'stripe' {
             }
 
             type Type = 'accessible' | 'in_development' | 'restricted';
+          }
+        }
+
+        interface SmartDisputes {
+          /**
+           * Smart Disputes auto-respond settings for the account.
+           */
+          auto_respond?: SmartDisputes.AutoRespond;
+        }
+
+        namespace SmartDisputes {
+          interface AutoRespond {
+            /**
+             * The preference setting for auto-respond. Can be 'on', 'off', or 'inherit'.
+             */
+            preference?: AutoRespond.Preference;
+          }
+
+          namespace AutoRespond {
+            type Preference = 'inherit' | 'off' | 'on';
           }
         }
 

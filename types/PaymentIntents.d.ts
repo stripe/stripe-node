@@ -152,6 +152,11 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
+       * Settings for Managed Payments.
+       */
+      managed_payments?: PaymentIntent.ManagedPayments | null;
+
+      /**
        * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Learn more about [storing information in metadata](https://docs.stripe.com/payments/payment-intents/creating-payment-intents#storing-information-in-metadata).
        */
       metadata: Stripe.Metadata;
@@ -749,6 +754,8 @@ declare module 'stripe' {
           | 'sku_inactive'
           | 'state_unsupported'
           | 'status_transition_invalid'
+          | 'storer_capability_missing'
+          | 'storer_capability_not_active'
           | 'stripe_tax_inactive'
           | 'tax_id_invalid'
           | 'tax_id_prohibited'
@@ -777,6 +784,13 @@ declare module 'stripe' {
           | 'card_error'
           | 'idempotency_error'
           | 'invalid_request_error';
+      }
+
+      interface ManagedPayments {
+        /**
+         * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
+         */
+        enabled: boolean;
       }
 
       interface NextAction {
@@ -3659,7 +3673,7 @@ declare module 'stripe' {
           namespace BankTransfer {
             interface EuBankTransfer {
               /**
-               * The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
+               * The desired country code of the bank account information. Permitted values include: `DE`, `FR`, `IE`, or `NL`.
                */
               country: EuBankTransfer.Country;
             }
@@ -4556,6 +4570,11 @@ declare module 'stripe' {
           target_date?: string;
 
           /**
+           * The purpose of the transaction.
+           */
+          transaction_purpose?: UsBankAccount.TransactionPurpose;
+
+          /**
            * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
@@ -4639,6 +4658,12 @@ declare module 'stripe' {
           type PreferredSettlementSpeed = 'fastest' | 'standard';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          type TransactionPurpose =
+            | 'goods'
+            | 'other'
+            | 'services'
+            | 'unspecified';
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }

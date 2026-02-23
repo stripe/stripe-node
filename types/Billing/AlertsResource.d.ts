@@ -33,7 +33,7 @@ declare module 'stripe' {
           filters?: Array<UsageThreshold.Filter>;
 
           /**
-           * Defines at which value the alert will fire.
+           * Defines the threshold value that triggers the alert.
            */
           gte: number;
 

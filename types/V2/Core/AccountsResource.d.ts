@@ -274,6 +274,11 @@ declare module 'stripe' {
               script_statement_descriptor?: Merchant.ScriptStatementDescriptor;
 
               /**
+               * Settings used for Smart Disputes.
+               */
+              smart_disputes?: Merchant.SmartDisputes;
+
+              /**
                * Statement descriptor.
                */
               statement_descriptor?: Merchant.StatementDescriptor;
@@ -942,6 +947,26 @@ declare module 'stripe' {
                    * Default text that appears on statements for card charges outside of Japan, prefixing any dynamic statement_descriptor_suffix specified on the charge. To maximize space for the dynamic part of the descriptor, keep this text short. If you don't specify this value, statement_descriptor is used as the prefix. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
                    */
                   prefix?: string;
+                }
+              }
+
+              interface SmartDisputes {
+                /**
+                 * Settings for Smart Disputes auto_respond.
+                 */
+                auto_respond?: SmartDisputes.AutoRespond;
+              }
+
+              namespace SmartDisputes {
+                interface AutoRespond {
+                  /**
+                   * The preference for Smart Disputes auto-respond.
+                   */
+                  preference?: AutoRespond.Preference;
+                }
+
+                namespace AutoRespond {
+                  type Preference = 'inherit' | 'off' | 'on';
                 }
               }
 
@@ -1729,12 +1754,12 @@ declare module 'stripe' {
                   /**
                    * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
                    */
-                  value?: number;
+                  value: number;
 
                   /**
                    * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
                    */
-                  currency?: string;
+                  currency: string;
                 }
               }
 
@@ -2074,12 +2099,12 @@ declare module 'stripe' {
                   /**
                    * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
                    */
-                  value?: number;
+                  value: number;
 
                   /**
                    * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
                    */
-                  currency?: string;
+                  currency: string;
                 }
               }
 
@@ -3157,6 +3182,11 @@ declare module 'stripe' {
               script_statement_descriptor?: Merchant.ScriptStatementDescriptor;
 
               /**
+               * Settings for Smart Disputes automatic response feature.
+               */
+              smart_disputes?: Merchant.SmartDisputes;
+
+              /**
                * Settings for the default [statement descriptor](https://docs.stripe.com/connect/statement-descriptors) text.
                */
               statement_descriptor?: Merchant.StatementDescriptor;
@@ -3825,6 +3855,26 @@ declare module 'stripe' {
                    * Default text that appears on statements for card charges outside of Japan, prefixing any dynamic statement_descriptor_suffix specified on the charge. To maximize space for the dynamic part of the descriptor, keep this text short. If you don't specify this value, statement_descriptor is used as the prefix. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
                    */
                   prefix?: string;
+                }
+              }
+
+              interface SmartDisputes {
+                /**
+                 * Settings for Smart Disputes auto_respond.
+                 */
+                auto_respond?: SmartDisputes.AutoRespond;
+              }
+
+              namespace SmartDisputes {
+                interface AutoRespond {
+                  /**
+                   * The preference for automatic dispute responses.
+                   */
+                  preference?: AutoRespond.Preference;
+                }
+
+                namespace AutoRespond {
+                  type Preference = 'inherit' | 'off' | 'on';
                 }
               }
 
@@ -4573,12 +4623,12 @@ declare module 'stripe' {
                   /**
                    * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
                    */
-                  value?: number;
+                  value: number;
 
                   /**
                    * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
                    */
-                  currency?: string;
+                  currency: string;
                 }
               }
 
@@ -4918,12 +4968,12 @@ declare module 'stripe' {
                   /**
                    * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
                    */
-                  value?: number;
+                  value: number;
 
                   /**
                    * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
                    */
-                  currency?: string;
+                  currency: string;
                 }
               }
 
