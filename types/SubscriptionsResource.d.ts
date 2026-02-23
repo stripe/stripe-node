@@ -1493,9 +1493,16 @@ declare module 'stripe' {
            * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
            */
           missing_payment_method: EndBehavior.MissingPaymentMethod;
+
+          /**
+           * Indicates how the subscription's billing cycle anchor is reset when a trial ends. Defaults to `now`.
+           */
+          billing_cycle_anchor?: EndBehavior.BillingCycleAnchor;
         }
 
         namespace EndBehavior {
+          type BillingCycleAnchor = 'now' | 'unchanged';
+
           type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
         }
       }
@@ -2961,9 +2968,16 @@ declare module 'stripe' {
            * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
            */
           missing_payment_method: EndBehavior.MissingPaymentMethod;
+
+          /**
+           * Indicates how the subscription's billing cycle anchor is reset when a trial ends. Defaults to `now`.
+           */
+          billing_cycle_anchor?: EndBehavior.BillingCycleAnchor;
         }
 
         namespace EndBehavior {
+          type BillingCycleAnchor = 'now' | 'unchanged';
+
           type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
         }
       }
