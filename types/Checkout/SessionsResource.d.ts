@@ -155,6 +155,11 @@ declare module 'stripe' {
         locale?: SessionCreateParams.Locale;
 
         /**
+         * Settings for Managed Payments for this Checkout Session and resulting [PaymentIntents](https://docs.stripe.com/api/payment_intents/object), [Invoices](https://docs.stripe.com/api/invoices/object), and [Subscriptions](https://docs.stripe.com/api/subscriptions/object).
+         */
+        managed_payments?: SessionCreateParams.ManagedPayments;
+
+        /**
          * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -607,7 +612,7 @@ declare module 'stripe' {
         namespace CustomField {
           interface Dropdown {
             /**
-             * The value that will pre-fill the field on the payment page.Must match a `value` in the `options` array.
+             * The value that pre-fills the field on the payment page.Must match a `value` in the `options` array.
              */
             default_value?: string;
 
@@ -645,7 +650,7 @@ declare module 'stripe' {
 
           interface Numeric {
             /**
-             * The value that will pre-fill the field on the payment page.
+             * The value that pre-fills the field on the payment page.
              */
             default_value?: string;
 
@@ -662,7 +667,7 @@ declare module 'stripe' {
 
           interface Text {
             /**
-             * The value that will pre-fill the field on the payment page.
+             * The value that pre-fills the field on the payment page.
              */
             default_value?: string;
 
@@ -707,28 +712,28 @@ declare module 'stripe' {
         namespace CustomText {
           interface AfterSubmit {
             /**
-             * Text may be up to 1200 characters in length.
+             * Text can be up to 1200 characters in length.
              */
             message: string;
           }
 
           interface ShippingAddress {
             /**
-             * Text may be up to 1200 characters in length.
+             * Text can be up to 1200 characters in length.
              */
             message: string;
           }
 
           interface Submit {
             /**
-             * Text may be up to 1200 characters in length.
+             * Text can be up to 1200 characters in length.
              */
             message: string;
           }
 
           interface TermsOfServiceAcceptance {
             /**
-             * Text may be up to 1200 characters in length.
+             * Text can be up to 1200 characters in length.
              */
             message: string;
           }
@@ -1131,6 +1136,13 @@ declare module 'stripe' {
           | 'zh'
           | 'zh-HK'
           | 'zh-TW';
+
+        interface ManagedPayments {
+          /**
+           * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
+           */
+          enabled?: boolean;
+        }
 
         type Mode = 'payment' | 'setup' | 'subscription';
 
@@ -2012,7 +2024,7 @@ declare module 'stripe' {
             namespace BankTransfer {
               interface EuBankTransfer {
                 /**
-                 * The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `FR`, `IE`, or `NL`.
                  */
                 country: string;
               }

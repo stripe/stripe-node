@@ -262,11 +262,6 @@ declare module 'stripe' {
 
         interface Insights {
           /**
-           * Stripe Radar's evaluation of the likelihood of a card issuer decline on this payment.
-           */
-          card_issuer_decline: Insights.CardIssuerDecline | null;
-
-          /**
            * The timestamp when the evaluation was performed.
            */
           evaluated_at: number;
@@ -278,22 +273,6 @@ declare module 'stripe' {
         }
 
         namespace Insights {
-          interface CardIssuerDecline {
-            /**
-             * Stripe Radar's evaluation of the likelihood that the payment will be declined by the card issuer. Scores range from 0 to 100, with higher values indicating a higher likelihood of decline.
-             */
-            model_score: number;
-
-            /**
-             * Recommended action based on the model score. Possible values are `block` and `continue`.
-             */
-            recommended_action: CardIssuerDecline.RecommendedAction;
-          }
-
-          namespace CardIssuerDecline {
-            type RecommendedAction = 'block' | 'continue';
-          }
-
           interface FraudulentDispute {
             /**
              * Recommended action based on the risk score. Possible values are `block` and `continue`.

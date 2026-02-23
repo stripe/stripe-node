@@ -166,6 +166,8 @@ declare module 'stripe' {
 
           la?: CountryOptions.La;
 
+          lk?: CountryOptions.Lk;
+
           lt?: CountryOptions.Lt;
 
           lu?: CountryOptions.Lu;
@@ -1045,6 +1047,13 @@ declare module 'stripe' {
           }
 
           interface La {
+            /**
+             * Type of registration in `country`.
+             */
+            type: 'simplified';
+          }
+
+          interface Lk {
             /**
              * Type of registration in `country`.
              */

@@ -22,6 +22,8 @@ declare module 'stripe' {
 
         bbpos_wisepos_e?: Configuration.BbposWiseposE;
 
+        cellular?: Configuration.Cellular;
+
         /**
          * Always true for a deleted object
          */
@@ -70,6 +72,13 @@ declare module 'stripe' {
            * A File ID representing an image to display on the reader
            */
           splashscreen?: string | Stripe.File;
+        }
+
+        interface Cellular {
+          /**
+           * Whether a cellular-capable reader can connect to the internet over cellular.
+           */
+          enabled: boolean;
         }
 
         interface Offline {
