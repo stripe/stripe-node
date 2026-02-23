@@ -52,6 +52,11 @@ declare module 'stripe' {
         stripe_s700?: ConfigurationCreateParams.StripeS700;
 
         /**
+         * An object containing device type specific settings for Stripe S710 readers.
+         */
+        stripe_s710?: ConfigurationCreateParams.StripeS710;
+
+        /**
          * Tipping configurations for readers that support on-reader tips.
          */
         tipping?: Stripe.Emptyable<ConfigurationCreateParams.Tipping>;
@@ -116,6 +121,13 @@ declare module 'stripe' {
         }
 
         interface StripeS700 {
+          /**
+           * A File ID representing an image you want to display on the reader.
+           */
+          splashscreen?: Stripe.Emptyable<string>;
+        }
+
+        interface StripeS710 {
           /**
            * A File ID representing an image you want to display on the reader.
            */
@@ -748,6 +760,11 @@ declare module 'stripe' {
         stripe_s700?: Stripe.Emptyable<ConfigurationUpdateParams.StripeS700>;
 
         /**
+         * An object containing device type specific settings for Stripe S710 readers.
+         */
+        stripe_s710?: Stripe.Emptyable<ConfigurationUpdateParams.StripeS710>;
+
+        /**
          * Tipping configurations for readers that support on-reader tips.
          */
         tipping?: Stripe.Emptyable<ConfigurationUpdateParams.Tipping>;
@@ -814,6 +831,13 @@ declare module 'stripe' {
         }
 
         interface StripeS700 {
+          /**
+           * A File ID representing an image you want to display on the reader.
+           */
+          splashscreen?: Stripe.Emptyable<string>;
+        }
+
+        interface StripeS710 {
           /**
            * A File ID representing an image you want to display on the reader.
            */

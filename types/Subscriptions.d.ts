@@ -1083,7 +1083,7 @@ declare module 'stripe' {
 
       interface TrialSettings {
         /**
-         * Defines how a subscription behaves when a free trial ends.
+         * Defines how a subscription behaves when a trial ends.
          */
         end_behavior: TrialSettings.EndBehavior;
       }
