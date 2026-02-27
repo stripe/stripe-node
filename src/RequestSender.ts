@@ -431,8 +431,16 @@ export class RequestSender {
     const appInfo = this._stripe._appInfo
       ? this._stripe.getAppInfoAsString()
       : '';
+    const aiAgent = this._stripe.getConstant('AI_AGENT') as string;
 
-    return `Stripe/${apiMode} NodeBindings/${packageVersion} ${appInfo}`.trim();
+    let uaString = `Stripe/${apiMode} NodeBindings/${packageVersion}`;
+    if (appInfo) {
+      uaString += ` ${appInfo}`;
+    }
+    if (aiAgent) {
+      uaString += ` AIAgent/${aiAgent}`;
+    }
+    return uaString;
   }
 
   _getTelemetryHeader(): string | undefined {

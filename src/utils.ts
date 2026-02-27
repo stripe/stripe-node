@@ -476,6 +476,27 @@ export function determineProcessUserAgentProperties(): Record<string, string> {
       };
 }
 
+export const AI_AGENTS: [string, string][] = [
+  ['ANTIGRAVITY_CLI_ALIAS', 'antigravity'],
+  ['CLAUDECODE', 'claude_code'],
+  ['CLINE_ACTIVE', 'cline'],
+  ['CODEX_SANDBOX', 'codex_cli'],
+  ['CURSOR_AGENT', 'cursor'],
+  ['GEMINI_CLI', 'gemini_cli'],
+  ['OPENCODE', 'open_code'],
+];
+
+export function detectAIAgent(
+  env: Record<string, string | undefined>
+): string {
+  for (const [envVar, agentName] of AI_AGENTS) {
+    if (env[envVar]) {
+      return agentName;
+    }
+  }
+  return '';
+}
+
 export function createApiKeyAuthenticator(
   apiKey: string
 ): RequestAuthenticator {
