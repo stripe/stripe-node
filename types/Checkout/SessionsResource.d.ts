@@ -607,7 +607,7 @@ declare module 'stripe' {
         namespace CustomField {
           interface Dropdown {
             /**
-             * The value that will pre-fill the field on the payment page.Must match a `value` in the `options` array.
+             * The value that pre-fills the field on the payment page.Must match a `value` in the `options` array.
              */
             default_value?: string;
 
@@ -645,7 +645,7 @@ declare module 'stripe' {
 
           interface Numeric {
             /**
-             * The value that will pre-fill the field on the payment page.
+             * The value that pre-fills the field on the payment page.
              */
             default_value?: string;
 
@@ -662,7 +662,7 @@ declare module 'stripe' {
 
           interface Text {
             /**
-             * The value that will pre-fill the field on the payment page.
+             * The value that pre-fills the field on the payment page.
              */
             default_value?: string;
 
@@ -707,28 +707,28 @@ declare module 'stripe' {
         namespace CustomText {
           interface AfterSubmit {
             /**
-             * Text may be up to 1200 characters in length.
+             * Text can be up to 1200 characters in length.
              */
             message: string;
           }
 
           interface ShippingAddress {
             /**
-             * Text may be up to 1200 characters in length.
+             * Text can be up to 1200 characters in length.
              */
             message: string;
           }
 
           interface Submit {
             /**
-             * Text may be up to 1200 characters in length.
+             * Text can be up to 1200 characters in length.
              */
             message: string;
           }
 
           interface TermsOfServiceAcceptance {
             /**
-             * Text may be up to 1200 characters in length.
+             * Text can be up to 1200 characters in length.
              */
             message: string;
           }
@@ -1957,7 +1957,7 @@ declare module 'stripe' {
             namespace BankTransfer {
               interface EuBankTransfer {
                 /**
-                 * The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `FR`, `IE`, or `NL`.
                  */
                 country: string;
               }

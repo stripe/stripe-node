@@ -88,7 +88,9 @@ declare module 'stripe' {
         | 'sigma_scheduled_query'
         | 'tax_document_user_upload'
         | 'terminal_android_apk'
-        | 'terminal_reader_splashscreen';
+        | 'terminal_reader_splashscreen'
+        | 'terminal_wifi_certificate'
+        | 'terminal_wifi_private_key';
     }
   }
 }

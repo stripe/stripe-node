@@ -300,7 +300,7 @@ declare module 'stripe' {
       namespace CustomField {
         interface Dropdown {
           /**
-           * The value that will pre-fill on the payment page.
+           * The value that pre-fills on the payment page.
            */
           default_value: string | null;
 
@@ -338,7 +338,7 @@ declare module 'stripe' {
 
         interface Numeric {
           /**
-           * The value that will pre-fill the field on the payment page.
+           * The value that pre-fills the field on the payment page.
            */
           default_value: string | null;
 
@@ -355,7 +355,7 @@ declare module 'stripe' {
 
         interface Text {
           /**
-           * The value that will pre-fill the field on the payment page.
+           * The value that pre-fills the field on the payment page.
            */
           default_value: string | null;
 
@@ -398,28 +398,28 @@ declare module 'stripe' {
       namespace CustomText {
         interface AfterSubmit {
           /**
-           * Text may be up to 1200 characters in length.
+           * Text can be up to 1200 characters in length.
            */
           message: string;
         }
 
         interface ShippingAddress {
           /**
-           * Text may be up to 1200 characters in length.
+           * Text can be up to 1200 characters in length.
            */
           message: string;
         }
 
         interface Submit {
           /**
-           * Text may be up to 1200 characters in length.
+           * Text can be up to 1200 characters in length.
            */
           message: string;
         }
 
         interface TermsOfServiceAcceptance {
           /**
-           * Text may be up to 1200 characters in length.
+           * Text can be up to 1200 characters in length.
            */
           message: string;
         }

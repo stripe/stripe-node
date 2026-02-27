@@ -146,6 +146,13 @@ const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.retrieve
   }
 );
 const customerEmail: string = (paymentIntent.customer as Stripe.Customer).email;
+
+// Define and use this helper method if you extract `id` often
+function getId(stripeObject: {id: string} | string) {
+  return typeof stripeObject === 'string' ? stripeObject : stripeObject.id;
+}
+
+const customerId: string = getId(paymentIntent.customer);
 ```
 
 #### TypeScript and the stripe-node versioning policy
@@ -414,10 +421,11 @@ const event = stripe.webhooks.constructEvent(payloadString, header, secret);
 // Do something with mocked signed event
 expect(event.id).to.equal(payload.id);
 ```
+
 ### How to use undocumented parameters and properties
 
 In some cases, you might encounter parameters on an API request or fields on an API response that aren’t available in the SDKs.
-This might happen when they’re undocumented or when they’re in preview and you aren’t using a preview SDK. 
+This might happen when they’re undocumented or when they’re in preview and you aren’t using a preview SDK.
 See [undocumented params and properties](https://docs.stripe.com/sdks/server-side?lang=node#undocumented-params-and-fields) to send those parameters or access those fields.
 
 ### Writing a Plugin

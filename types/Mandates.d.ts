@@ -170,6 +170,11 @@ declare module 'stripe' {
 
         interface BacsDebit {
           /**
+           * The display name for the account on this mandate.
+           */
+          display_name: string | null;
+
+          /**
            * The status of the mandate on the Bacs network. Can be one of `pending`, `revoked`, `refused`, or `accepted`.
            */
           network_status: BacsDebit.NetworkStatus;
@@ -183,6 +188,11 @@ declare module 'stripe' {
            * When the mandate is revoked on the Bacs network this field displays the reason for the revocation.
            */
           revocation_reason: BacsDebit.RevocationReason | null;
+
+          /**
+           * The service user number for the account on this mandate.
+           */
+          service_user_number: string | null;
 
           /**
            * The URL that will contain the mandate that the customer has signed.

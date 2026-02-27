@@ -840,6 +840,8 @@ declare module 'stripe' {
           | 'sku_inactive'
           | 'state_unsupported'
           | 'status_transition_invalid'
+          | 'storer_capability_missing'
+          | 'storer_capability_not_active'
           | 'stripe_tax_inactive'
           | 'tax_id_invalid'
           | 'tax_id_prohibited'

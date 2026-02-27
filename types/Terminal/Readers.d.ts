@@ -21,6 +21,31 @@ declare module 'stripe' {
          * Always true for a deleted object
          */
         deleted: true;
+
+        /**
+         * Device type of the reader.
+         */
+        device_type: DeletedReader.DeviceType;
+
+        /**
+         * Serial number of the reader.
+         */
+        serial_number: string;
+      }
+
+      namespace DeletedReader {
+        type DeviceType =
+          | 'bbpos_chipper2x'
+          | 'bbpos_wisepad3'
+          | 'bbpos_wisepos_e'
+          | 'mobile_phone_reader'
+          | 'simulated_stripe_s700'
+          | 'simulated_stripe_s710'
+          | 'simulated_wisepos_e'
+          | 'stripe_m2'
+          | 'stripe_s700'
+          | 'stripe_s710'
+          | 'verifone_P400';
       }
 
       /**
@@ -637,9 +662,11 @@ declare module 'stripe' {
           | 'bbpos_wisepos_e'
           | 'mobile_phone_reader'
           | 'simulated_stripe_s700'
+          | 'simulated_stripe_s710'
           | 'simulated_wisepos_e'
           | 'stripe_m2'
           | 'stripe_s700'
+          | 'stripe_s710'
           | 'verifone_P400';
 
         type Status = 'offline' | 'online';
