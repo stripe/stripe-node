@@ -486,9 +486,7 @@ export const AI_AGENTS: [string, string][] = [
   ['OPENCODE', 'open_code'],
 ];
 
-export function detectAIAgent(
-  env: Record<string, string | undefined>
-): string {
+export function detectAIAgent(env: Record<string, string | undefined>): string {
   for (const [envVar, agentName] of AI_AGENTS) {
     if (env[envVar]) {
       return agentName;

@@ -273,9 +273,9 @@ describe('Stripe Module', function() {
     });
 
     it('detectAIAgent returns first match when multiple agent env vars are set', () => {
-      expect(
-        detectAIAgent({CURSOR_AGENT: '1', CLAUDECODE: '1'})
-      ).to.equal('claude_code');
+      expect(detectAIAgent({CURSOR_AGENT: '1', CLAUDECODE: '1'})).to.equal(
+        'claude_code'
+      );
     });
 
     it('includes AI agent in request headers', (done) => {
@@ -305,9 +305,7 @@ describe('Stripe Module', function() {
             if (err) {
               return done(err);
             }
-            expect(capturedHeaders['user-agent']).to.contain(
-              'AIAgent/cursor'
-            );
+            expect(capturedHeaders['user-agent']).to.contain('AIAgent/cursor');
             const clientUA = JSON.parse(
               capturedHeaders['x-stripe-client-user-agent']
             );
