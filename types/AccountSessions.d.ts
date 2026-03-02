@@ -82,6 +82,11 @@ declare module 'stripe' {
 
         issuing_cards_list: Components.IssuingCardsList;
 
+        /**
+         * Configuration for the [network cost passthrough report](https://docs.stripe.com/connect/supported-embedded-components/network-cost-passthrough-report/) embedded component.
+         */
+        network_cost_passthrough_report?: Components.NetworkCostPassthroughReport | null;
+
         notification_banner: Components.NotificationBanner;
 
         payment_details: Components.PaymentDetails;
@@ -99,11 +104,6 @@ declare module 'stripe' {
         tax_registrations: Components.TaxRegistrations;
 
         tax_settings: Components.TaxSettings;
-
-        /**
-         * Configuration for the [network cost passthrough report](https://docs.stripe.com/connect/supported-embedded-components/network-cost-passthrough-report/) embedded component.
-         */
-        network_cost_passthrough_report?: Components.NetworkCostPassthroughReport | null;
 
         /**
          * Configuration for the [Terminal hardware orders](https://docs.stripe.com/connect/supported-embedded-components/terminal-hardware-orders/) embedded component.

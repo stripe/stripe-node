@@ -668,6 +668,11 @@ declare module 'stripe' {
                 last4: string | null;
 
                 /**
+                 * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
+                 */
+                location?: string;
+
+                /**
                  * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
                  */
                 network: string | null;
@@ -698,11 +703,26 @@ declare module 'stripe' {
                 read_method: CardPresent.ReadMethod | null;
 
                 /**
+                 * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
+                 */
+                reader?: string;
+
+                /**
                  * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
                  */
                 receipt: CardPresent.Receipt | null;
 
                 wallet?: CardPresent.Wallet;
+
+                /**
+                 * Whether the PaymentIntent can be reauthorized or not.
+                 */
+                reauthorization?: CardPresent.Reauthorization | null;
+
+                /**
+                 * The time at which the associated PaymentIntent will transition to a terminal state if it is not reauthorized.
+                 */
+                reauthorize_before?: number | null;
               }
 
               namespace CardPresent {
@@ -724,6 +744,17 @@ declare module 'stripe' {
                   | 'contactless_magstripe_mode'
                   | 'magnetic_stripe_fallback'
                   | 'magnetic_stripe_track2';
+
+                interface Reauthorization {
+                  /**
+                   * Indicates whether or not the reauthorization feature is supported.
+                   */
+                  status: Reauthorization.Status;
+                }
+
+                namespace Reauthorization {
+                  type Status = 'available' | 'unavailable';
+                }
 
                 interface Receipt {
                   /**

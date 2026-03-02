@@ -272,11 +272,6 @@ declare module 'stripe' {
 
         interface ScheduleDetails {
           /**
-           * The subscription schedule that generated this line item.
-           */
-          schedule: string;
-
-          /**
            * The invoice item that generated this line item.
            */
           invoice_item: string | null;
@@ -290,6 +285,11 @@ declare module 'stripe' {
            * Additional details for proration line items.
            */
           proration_details: ScheduleDetails.ProrationDetails | null;
+
+          /**
+           * The subscription schedule that generated this line item.
+           */
+          schedule: string;
 
           /**
            * The subscription that the schedule belongs to.
@@ -429,6 +429,8 @@ declare module 'stripe' {
 
         price_details?: Pricing.PriceDetails;
 
+        rate_card_custom_pricing_unit_overage_rate_details?: Pricing.RateCardCustomPricingUnitOverageRateDetails;
+
         rate_card_rate_details?: Pricing.RateCardRateDetails;
 
         /**
@@ -440,8 +442,6 @@ declare module 'stripe' {
          * The unit amount (in the `currency` specified) of the item which contains a decimal value with at most 12 decimal places.
          */
         unit_amount_decimal: string | null;
-
-        rate_card_custom_pricing_unit_overage_rate_details?: Pricing.RateCardCustomPricingUnitOverageRateDetails;
       }
 
       namespace Pricing {

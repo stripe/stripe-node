@@ -713,6 +713,7 @@ declare module 'stripe' {
             type Type =
               | 'accept_failed_validations'
               | 'bill_on_acceptance_invalid'
+              | 'billing_schedules_invalid'
               | 'line_invalid'
               | 'lines_invalid'
               | 'marked_stale'

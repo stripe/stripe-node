@@ -167,6 +167,11 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
+       * Settings for Managed Payments for this Subscription and resulting [Invoices](https://docs.stripe.com/api/invoices/object) and [PaymentIntents](https://docs.stripe.com/api/payment_intents/object).
+       */
+      managed_payments?: Subscription.ManagedPayments | null;
+
+      /**
        * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata;
@@ -560,6 +565,13 @@ declare module 'stripe' {
         }
       }
 
+      interface ManagedPayments {
+        /**
+         * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
+         */
+        enabled: boolean;
+      }
+
       interface PauseCollection {
         /**
          * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
@@ -763,7 +775,7 @@ declare module 'stripe' {
             namespace BankTransfer {
               interface EuBankTransfer {
                 /**
-                 * The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `FR`, `IE`, or `NL`.
                  */
                 country: EuBankTransfer.Country;
               }
@@ -881,7 +893,7 @@ declare module 'stripe' {
               description: string | null;
 
               /**
-               * End date of the mandate or subscription. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+               * End date of the mandate or subscription.
                */
               end_date: number | null;
             }
@@ -980,6 +992,7 @@ declare module 'stripe' {
           | 'naver_pay'
           | 'nz_bank_account'
           | 'p24'
+          | 'pay_by_bank'
           | 'payco'
           | 'paynow'
           | 'paypal'
@@ -1097,7 +1110,7 @@ declare module 'stripe' {
 
       interface TrialSettings {
         /**
-         * Defines how a subscription behaves when a free trial ends.
+         * Defines how a subscription behaves when a trial ends.
          */
         end_behavior: TrialSettings.EndBehavior;
       }
@@ -1105,12 +1118,19 @@ declare module 'stripe' {
       namespace TrialSettings {
         interface EndBehavior {
           /**
+           * Indicates how the subscription's billing cycle anchor is reset when a trial ends. If not set, the default is `now`.
+           */
+          billing_cycle_anchor?: EndBehavior.BillingCycleAnchor | null;
+
+          /**
            * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
            */
           missing_payment_method: EndBehavior.MissingPaymentMethod;
         }
 
         namespace EndBehavior {
+          type BillingCycleAnchor = 'now' | 'unchanged';
+
           type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
         }
       }

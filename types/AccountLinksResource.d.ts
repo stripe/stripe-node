@@ -46,6 +46,11 @@ declare module 'stripe' {
 
       interface CollectionOptions {
         /**
+         * Specifies whether the platform collects external account information from connected accounts during Connect Onboarding. When set to `true`, the platform only collects external account information if the connected account has capabilities which require it. Some capabilities, such as `treasury`, don't require external account collection. When set to `false`, external account collection is skipped. Defaults to `true`.
+         */
+        external_account_collection?: boolean;
+
+        /**
          * Specifies whether the platform collects only currently_due requirements (`currently_due`) or both currently_due and eventually_due requirements (`eventually_due`). If you don't specify `collection_options`, the default value is `currently_due`.
          */
         fields?: CollectionOptions.Fields;
@@ -54,11 +59,6 @@ declare module 'stripe' {
          * Specifies whether the platform collects future_requirements in addition to requirements in Connect Onboarding. The default value is `omit`.
          */
         future_requirements?: CollectionOptions.FutureRequirements;
-
-        /**
-         * Specifies whether the platform collects external account information from connected accounts during Connect Onboarding. When set to `false`, external account collection is skipped. Defaults to `true`.
-         */
-        external_account_collection?: boolean;
       }
 
       namespace CollectionOptions {

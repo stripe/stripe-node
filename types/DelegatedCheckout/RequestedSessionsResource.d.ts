@@ -349,15 +349,27 @@ declare module 'stripe' {
             /**
              * The shipping fulfillment option.
              */
-            shipping: SelectedFulfillmentOption.Shipping;
+            shipping?: SelectedFulfillmentOption.Shipping;
 
             /**
              * The type of fulfillment option.
              */
             type: string;
+
+            /**
+             * The digital fulfillment option.
+             */
+            digital?: SelectedFulfillmentOption.Digital;
           }
 
           namespace SelectedFulfillmentOption {
+            interface Digital {
+              /**
+               * The digital option identifier.
+               */
+              digital_option: string;
+            }
+
             interface Shipping {
               /**
                * The shipping option identifer.

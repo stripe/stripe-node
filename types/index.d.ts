@@ -353,6 +353,7 @@
 ///<reference path='./ProductCatalog/TrialOffers.d.ts' />
 ///<reference path='./ProductFeatures.d.ts' />
 ///<reference path='./Products.d.ts' />
+///<reference path='./Profiles.d.ts' />
 ///<reference path='./PromotionCodes.d.ts' />
 ///<reference path='./QuoteLines.d.ts' />
 ///<reference path='./QuotePreviewInvoices.d.ts' />

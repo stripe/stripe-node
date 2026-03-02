@@ -25,7 +25,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * The configuration of the spend threshold.
+         * The configuration of the spend threshold. An event fires when the amount consumed exceeds the threshold, after all credits and discounts are applied but before tax is applied.
          */
         spend_threshold?: AlertCreateParams.SpendThreshold;
 
@@ -219,7 +219,7 @@ declare module 'stripe' {
 
           interface Gte {
             /**
-             * The monetary amount. Required when type is `amount`.
+             * The monetary amount. Required when type is `amount`. The threshold is the total_before_tax, the amount consumed after all credits and discounts are applied, but before tax is applied.
              */
             amount?: Gte.Amount;
 
@@ -270,7 +270,7 @@ declare module 'stripe' {
           filters?: Array<UsageThreshold.Filter>;
 
           /**
-           * Defines at which value the alert will fire.
+           * Defines the threshold value that triggers the alert.
            */
           gte: number;
 

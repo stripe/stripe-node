@@ -38,6 +38,8 @@ declare module 'stripe' {
           available_balance: Balance.AvailableBalance;
 
           ledger_balance: Balance.LedgerBalance;
+
+          balance_update_details?: Balance.BalanceUpdateDetails;
         }
 
         namespace Balance {
@@ -123,6 +125,27 @@ declare module 'stripe' {
             }
 
             type Type = 'custom_pricing_unit' | 'monetary';
+          }
+
+          interface BalanceUpdateDetails {
+            /**
+             * The details of the most recent meter event included in the balance update.
+             */
+            latest_meter_event: BalanceUpdateDetails.LatestMeterEvent | null;
+          }
+
+          namespace BalanceUpdateDetails {
+            interface LatestMeterEvent {
+              /**
+               * Time at which the object was created. Measured in seconds since the Unix epoch.
+               */
+              created?: number;
+
+              /**
+               * Maximum event time across all meter events that were processed and included in the balance update. Measured in seconds since the Unix epoch.
+               */
+              timestamp?: number;
+            }
           }
 
           interface LedgerBalance {

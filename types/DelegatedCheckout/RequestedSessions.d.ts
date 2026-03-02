@@ -58,7 +58,7 @@ declare module 'stripe' {
         line_item_details: Array<RequestedSession.LineItemDetail>;
 
         /**
-         * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+         * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
          */
         livemode: boolean;
 
@@ -165,9 +165,45 @@ declare module 'stripe' {
              * The type of the fulfillment option.
              */
             type: string;
+
+            /**
+             * The digital fulfillment option.
+             */
+            digital: FulfillmentOption.Digital | null;
           }
 
           namespace FulfillmentOption {
+            interface Digital {
+              /**
+               * The digital options.
+               */
+              digital_options: Array<Digital.DigitalOption> | null;
+            }
+
+            namespace Digital {
+              interface DigitalOption {
+                /**
+                 * The description of the digital fulfillment option.
+                 */
+                description: string | null;
+
+                /**
+                 * The digital amount of the digital fulfillment option.
+                 */
+                digital_amount: number;
+
+                /**
+                 * The display name of the digital fulfillment option.
+                 */
+                display_name: string;
+
+                /**
+                 * The key of the digital fulfillment option.
+                 */
+                key: string;
+              }
+            }
+
             interface Shipping {
               /**
                * The shipping options.
@@ -220,9 +256,21 @@ declare module 'stripe' {
              * The type of the selected fulfillment option.
              */
             type: string;
+
+            /**
+             * The digital fulfillment option.
+             */
+            digital: SelectedFulfillmentOption.Digital | null;
           }
 
           namespace SelectedFulfillmentOption {
+            interface Digital {
+              /**
+               * The digital option.
+               */
+              digital_option: string | null;
+            }
+
             interface Shipping {
               /**
                * The shipping option.
@@ -264,6 +312,11 @@ declare module 'stripe' {
            * The per-unit amount of the item before any discounts or taxes are applied.
            */
           unit_amount: number;
+
+          /**
+           * The fulfillment type of the line item.
+           */
+          fulfillment_type: string;
         }
 
         namespace LineItemDetail {
@@ -436,7 +489,41 @@ declare module 'stripe' {
           }
         }
 
-        interface SellerDetails {}
+        interface SellerDetails {
+          /**
+           * The marketplace seller details.
+           */
+          marketplace_seller_details: SellerDetails.MarketplaceSellerDetails | null;
+
+          /**
+           * The network profile of the seller.
+           */
+          network_profile: string | Stripe.Profile;
+
+          /**
+           * The URL to the seller's privacy notice.
+           */
+          privacy_notice_url: string | null;
+
+          /**
+           * The URL to the seller's return policy.
+           */
+          return_policy_url: string | null;
+
+          /**
+           * The URL to the seller's store policy.
+           */
+          store_policy_url: string | null;
+
+          /**
+           * The URL to the seller's terms of service.
+           */
+          terms_of_service_url: string | null;
+        }
+
+        namespace SellerDetails {
+          interface MarketplaceSellerDetails {}
+        }
 
         type Status = 'completed' | 'expired' | 'open';
 
