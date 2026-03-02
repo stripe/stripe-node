@@ -71,6 +71,11 @@ declare module 'stripe' {
           outbound_payment_quote?: string;
 
           /**
+           * The purpose of the OutboundPayment.
+           */
+          purpose?: 'payroll';
+
+          /**
            * A link to the Stripe-hosted receipt for this OutboundPayment. The receipt link remains active for 60 days from the OutboundPayment creation date. After this period, the link will expire and the receipt url value will be null.
            */
           receipt_url?: string;
@@ -114,7 +119,7 @@ declare module 'stripe' {
           to: OutboundPayment.To;
 
           /**
-           * A unique identifier that can be used to track this OutboundPayment with recipient bank. Banks might call this a “reference number” or something similar.
+           * A unique identifier that can be used to track this OutboundPayment with recipient bank. Banks might call this a "reference number" or something similar.
            */
           trace_id: OutboundPayment.TraceId;
 

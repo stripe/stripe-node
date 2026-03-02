@@ -29,9 +29,18 @@ declare module 'stripe' {
         namespace FinancialAccountCreateParams {
           interface Storage {
             /**
+             * The usage type for funds in this FinancialAccount. Can be used to specify that the funds are for Consumer activity.
+             */
+            funds_usage_type?: Storage.FundsUsageType;
+
+            /**
              * The currencies that this FinancialAccount can hold.
              */
             holds_currencies: Array<string>;
+          }
+
+          namespace Storage {
+            type FundsUsageType = 'business' | 'consumer';
           }
         }
       }

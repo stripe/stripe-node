@@ -5,7 +5,7 @@ declare module 'stripe' {
     namespace V2 {
       namespace Iam {
         /**
-         * An API key.
+         * An API key is used to authenticate API requests.
          */
         interface ApiKey {
           /**

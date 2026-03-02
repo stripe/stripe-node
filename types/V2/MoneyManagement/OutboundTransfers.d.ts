@@ -104,7 +104,7 @@ declare module 'stripe' {
           to: OutboundTransfer.To;
 
           /**
-           * A unique identifier that can be used to track this OutboundTransfer with recipient bank. Banks might call this a “reference number” or something similar.
+           * A unique identifier that can be used to track this OutboundTransfer with recipient bank. Banks might call this a "reference number" or something similar.
            */
           trace_id: OutboundTransfer.TraceId;
         }

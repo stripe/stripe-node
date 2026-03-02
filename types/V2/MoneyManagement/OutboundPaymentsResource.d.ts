@@ -41,6 +41,11 @@ declare module 'stripe' {
           outbound_payment_quote?: string;
 
           /**
+           * The purpose of the OutboundPayment.
+           */
+          purpose?: 'payroll';
+
+          /**
            * Details about the notification settings for the OutboundPayment recipient.
            */
           recipient_notification?: OutboundPaymentCreateParams.RecipientNotification;

@@ -5689,13 +5689,13 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/core/account_links',
         response:
-          '{"account":"account","created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","object":"v2.core.account_link","url":"url","use_case":{"type":"account_onboarding"},"livemode":true}',
+          '{"account":"account","created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","object":"v2.core.account_link","url":"url","use_case":{"type":"recipient_onboarding"},"livemode":true}',
       },
     ]);
     const accountLink = await stripe.v2.core.accountLinks.create({
       account: 'account',
       use_case: {
-        type: 'account_onboarding',
+        type: 'recipient_onboarding',
         account_onboarding: {
           collection_options: {
             fields: 'eventually_due',
@@ -5711,6 +5711,24 @@ describe('Generated tests', function() {
             future_requirements: 'include',
           },
           configurations: ['storer'],
+          refresh_url: 'refresh_url',
+          return_url: 'return_url',
+        },
+        recipient_onboarding: {
+          collection_options: {
+            fields: 'eventually_due',
+            future_requirements: 'include',
+          },
+          configurations: ['recipient'],
+          refresh_url: 'refresh_url',
+          return_url: 'return_url',
+        },
+        recipient_update: {
+          collection_options: {
+            fields: 'eventually_due',
+            future_requirements: 'include',
+          },
+          configurations: ['recipient'],
           refresh_url: 'refresh_url',
           return_url: 'return_url',
         },
@@ -6928,7 +6946,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/transactions',
         response:
-          '{"data":[{"amount":{"value":111972721,"currency":"usd"},"balance_impact":{"available":{"value":111972721,"currency":"usd"},"inbound_pending":{"value":111972721,"currency":"usd"},"outbound_pending":{"value":111972721,"currency":"usd"}},"category":"issuing_dispute_provisional_credit_reversal","created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","flow":{"type":"adjustment"},"id":"obj_123","object":"v2.money_management.transaction","status":"pending","status_transitions":{},"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"amount":{"value":111972721,"currency":"usd"},"balance_impact":{"available":{"value":111972721,"currency":"usd"},"inbound_pending":{"value":111972721,"currency":"usd"},"outbound_pending":{"value":111972721,"currency":"usd"}},"category":"received_debit_reversal","created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","object":"v2.money_management.transaction","status":"pending","status_transitions":{},"livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const transactions = await stripe.v2.moneyManagement.transactions.list();
@@ -6941,7 +6959,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/transactions/id_123',
         response:
-          '{"amount":{"value":111972721,"currency":"usd"},"balance_impact":{"available":{"value":111972721,"currency":"usd"},"inbound_pending":{"value":111972721,"currency":"usd"},"outbound_pending":{"value":111972721,"currency":"usd"}},"category":"issuing_dispute_provisional_credit_reversal","created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","flow":{"type":"adjustment"},"id":"obj_123","object":"v2.money_management.transaction","status":"pending","status_transitions":{},"livemode":true}',
+          '{"amount":{"value":111972721,"currency":"usd"},"balance_impact":{"available":{"value":111972721,"currency":"usd"},"inbound_pending":{"value":111972721,"currency":"usd"},"outbound_pending":{"value":111972721,"currency":"usd"}},"category":"received_debit_reversal","created":"1970-01-12T21:42:34.472Z","financial_account":"financial_account","id":"obj_123","object":"v2.money_management.transaction","status":"pending","status_transitions":{},"livemode":true}',
       },
     ]);
     const transaction = await stripe.v2.moneyManagement.transactions.retrieve(
@@ -6956,7 +6974,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/transaction_entries',
         response:
-          '{"data":[{"balance_impact":{"available":{"value":111972721,"currency":"usd"},"inbound_pending":{"value":111972721,"currency":"usd"},"outbound_pending":{"value":111972721,"currency":"usd"}},"created":"1970-01-12T21:42:34.472Z","effective_at":"1970-01-03T20:38:28.043Z","id":"obj_123","object":"v2.money_management.transaction_entry","transaction":"transaction","transaction_details":{"category":"issuing_dispute_provisional_credit_reversal","financial_account":"financial_account","flow":{"type":"adjustment"}},"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"balance_impact":{"available":{"value":111972721,"currency":"usd"},"inbound_pending":{"value":111972721,"currency":"usd"},"outbound_pending":{"value":111972721,"currency":"usd"}},"created":"1970-01-12T21:42:34.472Z","effective_at":"1970-01-03T20:38:28.043Z","id":"obj_123","object":"v2.money_management.transaction_entry","transaction":"transaction","transaction_details":{"category":"received_debit_reversal","financial_account":"financial_account"},"livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const transactionEntries = await stripe.v2.moneyManagement.transactionEntries.list();
@@ -6969,7 +6987,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/transaction_entries/id_123',
         response:
-          '{"balance_impact":{"available":{"value":111972721,"currency":"usd"},"inbound_pending":{"value":111972721,"currency":"usd"},"outbound_pending":{"value":111972721,"currency":"usd"}},"created":"1970-01-12T21:42:34.472Z","effective_at":"1970-01-03T20:38:28.043Z","id":"obj_123","object":"v2.money_management.transaction_entry","transaction":"transaction","transaction_details":{"category":"issuing_dispute_provisional_credit_reversal","financial_account":"financial_account","flow":{"type":"adjustment"}},"livemode":true}',
+          '{"balance_impact":{"available":{"value":111972721,"currency":"usd"},"inbound_pending":{"value":111972721,"currency":"usd"},"outbound_pending":{"value":111972721,"currency":"usd"}},"created":"1970-01-12T21:42:34.472Z","effective_at":"1970-01-03T20:38:28.043Z","id":"obj_123","object":"v2.money_management.transaction_entry","transaction":"transaction","transaction_details":{"category":"received_debit_reversal","financial_account":"financial_account"},"livemode":true}',
       },
     ]);
     const transactionEntry = await stripe.v2.moneyManagement.transactionEntries.retrieve(

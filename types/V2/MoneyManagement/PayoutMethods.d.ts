@@ -107,6 +107,11 @@ declare module 'stripe' {
             bank_name: string;
 
             /**
+             * The branch number of the bank account, if present.
+             */
+            branch_number?: string;
+
+            /**
              * The country code of the bank account.
              */
             country: string;
@@ -135,6 +140,11 @@ declare module 'stripe' {
              * The list of currencies supported by this bank account.
              */
             supported_currencies: Array<string>;
+
+            /**
+             * The swift code of the bank or financial institution.
+             */
+            swift_code?: string;
           }
 
           namespace BankAccount {

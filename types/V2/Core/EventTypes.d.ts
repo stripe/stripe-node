@@ -30,6 +30,7 @@ declare module 'stripe' {
       | Stripe.Events.V2BillingPricingPlanVersionCreatedEvent
       | Stripe.Events.V2BillingRateCardCreatedEvent
       | Stripe.Events.V2BillingRateCardUpdatedEvent
+      | Stripe.Events.V2BillingRateCardCustomPricingUnitOverageRateCreatedEvent
       | Stripe.Events.V2BillingRateCardRateCreatedEvent
       | Stripe.Events.V2BillingRateCardSubscriptionActivatedEvent
       | Stripe.Events.V2BillingRateCardSubscriptionCanceledEvent
@@ -95,6 +96,12 @@ declare module 'stripe' {
       | Stripe.Events.V2IamApiKeyPermissionsUpdatedEvent
       | Stripe.Events.V2IamApiKeyRotatedEvent
       | Stripe.Events.V2IamApiKeyUpdatedEvent
+      | Stripe.Events.V2IamStripeAccessGrantApprovedEvent
+      | Stripe.Events.V2IamStripeAccessGrantCanceledEvent
+      | Stripe.Events.V2IamStripeAccessGrantDeniedEvent
+      | Stripe.Events.V2IamStripeAccessGrantRemovedEvent
+      | Stripe.Events.V2IamStripeAccessGrantRequestedEvent
+      | Stripe.Events.V2IamStripeAccessGrantUpdatedEvent
       | Stripe.Events.V2MoneyManagementAdjustmentCreatedEvent
       | Stripe.Events.V2MoneyManagementFinancialAccountCreatedEvent
       | Stripe.Events.V2MoneyManagementFinancialAccountUpdatedEvent
@@ -186,6 +193,7 @@ declare module 'stripe' {
       | Stripe.Events.V2BillingPricingPlanVersionCreatedEventNotification
       | Stripe.Events.V2BillingRateCardCreatedEventNotification
       | Stripe.Events.V2BillingRateCardUpdatedEventNotification
+      | Stripe.Events.V2BillingRateCardCustomPricingUnitOverageRateCreatedEventNotification
       | Stripe.Events.V2BillingRateCardRateCreatedEventNotification
       | Stripe.Events.V2BillingRateCardSubscriptionActivatedEventNotification
       | Stripe.Events.V2BillingRateCardSubscriptionCanceledEventNotification
@@ -251,6 +259,12 @@ declare module 'stripe' {
       | Stripe.Events.V2IamApiKeyPermissionsUpdatedEventNotification
       | Stripe.Events.V2IamApiKeyRotatedEventNotification
       | Stripe.Events.V2IamApiKeyUpdatedEventNotification
+      | Stripe.Events.V2IamStripeAccessGrantApprovedEventNotification
+      | Stripe.Events.V2IamStripeAccessGrantCanceledEventNotification
+      | Stripe.Events.V2IamStripeAccessGrantDeniedEventNotification
+      | Stripe.Events.V2IamStripeAccessGrantRemovedEventNotification
+      | Stripe.Events.V2IamStripeAccessGrantRequestedEventNotification
+      | Stripe.Events.V2IamStripeAccessGrantUpdatedEventNotification
       | Stripe.Events.V2MoneyManagementAdjustmentCreatedEventNotification
       | Stripe.Events.V2MoneyManagementFinancialAccountCreatedEventNotification
       | Stripe.Events.V2MoneyManagementFinancialAccountUpdatedEventNotification
@@ -1147,6 +1161,59 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs when a RateCardCustomPricingUnitOverageRate is created.
+     */
+    export interface V2BillingRateCardCustomPricingUnitOverageRateCreatedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.billing.rate_card_custom_pricing_unit_overage_rate.created';
+      // Retrieves data specific to this event.
+      data: V2BillingRateCardCustomPricingUnitOverageRateCreatedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<
+        V2.Billing.RateCardCustomPricingUnitOverageRate
+      >;
+    }
+    export interface V2BillingRateCardCustomPricingUnitOverageRateCreatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.billing.rate_card_custom_pricing_unit_overage_rate.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<
+        V2.Billing.RateCardCustomPricingUnitOverageRate
+      >;
+      fetchEvent(): Promise<
+        V2BillingRateCardCustomPricingUnitOverageRateCreatedEvent
+      >;
+    }
+
+    namespace V2BillingRateCardCustomPricingUnitOverageRateCreatedEvent {
+      export interface Data {
+        /**
+         * Timestamp of when the object was created.
+         */
+        created: string;
+
+        /**
+         * The ID of the custom pricing unit this overage rate applies to.
+         */
+        custom_pricing_unit: string;
+
+        /**
+         * The ID of the RateCard which this custom pricing unit overage rate belongs to.
+         */
+        rate_card: string;
+
+        /**
+         * The ID of the RateCard Version when the custom pricing unit overage rate was created.
+         */
+        rate_card_version: string;
+      }
+    }
+
+    /**
      * Occurs when a RateCardRate is created.
      */
     export interface V2BillingRateCardRateCreatedEvent
@@ -1840,6 +1907,7 @@ declare module 'stripe' {
 
       namespace Data {
         export type UpdatedCapability =
+          | 'consumer.holds_currencies.usd'
           | 'financial_addressses.bank_accounts'
           | 'financial_addressses.crypto_wallets'
           | 'holds_currencies.eur'
@@ -4251,6 +4319,84 @@ declare module 'stripe' {
       extends V2.Core.EventNotificationBase {
       type: 'v2.iam.api_key.updated';
       fetchEvent(): Promise<V2IamApiKeyUpdatedEvent>;
+    }
+
+    /**
+     * Occurs when a Stripe Access Grant is approved.
+     */
+    export interface V2IamStripeAccessGrantApprovedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.iam.stripe_access_grant.approved';
+    }
+    export interface V2IamStripeAccessGrantApprovedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.iam.stripe_access_grant.approved';
+      fetchEvent(): Promise<V2IamStripeAccessGrantApprovedEvent>;
+    }
+
+    /**
+     * Occurs when a Stripe Access Grant is canceled by the requesting Stripe.
+     */
+    export interface V2IamStripeAccessGrantCanceledEvent
+      extends V2.Core.EventBase {
+      type: 'v2.iam.stripe_access_grant.canceled';
+    }
+    export interface V2IamStripeAccessGrantCanceledEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.iam.stripe_access_grant.canceled';
+      fetchEvent(): Promise<V2IamStripeAccessGrantCanceledEvent>;
+    }
+
+    /**
+     * Occurs when a Stripe Access Grant is denied (was pending, then denied by the customer).
+     */
+    export interface V2IamStripeAccessGrantDeniedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.iam.stripe_access_grant.denied';
+    }
+    export interface V2IamStripeAccessGrantDeniedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.iam.stripe_access_grant.denied';
+      fetchEvent(): Promise<V2IamStripeAccessGrantDeniedEvent>;
+    }
+
+    /**
+     * Occurs when a Stripe Access Grant is removed (was approved, and then removed by the customer).
+     */
+    export interface V2IamStripeAccessGrantRemovedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.iam.stripe_access_grant.removed';
+    }
+    export interface V2IamStripeAccessGrantRemovedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.iam.stripe_access_grant.removed';
+      fetchEvent(): Promise<V2IamStripeAccessGrantRemovedEvent>;
+    }
+
+    /**
+     * Occurs when a Stripe Access Grant is requested.
+     */
+    export interface V2IamStripeAccessGrantRequestedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.iam.stripe_access_grant.requested';
+    }
+    export interface V2IamStripeAccessGrantRequestedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.iam.stripe_access_grant.requested';
+      fetchEvent(): Promise<V2IamStripeAccessGrantRequestedEvent>;
+    }
+
+    /**
+     * Occurs when a Stripe Access Grant is updated.
+     */
+    export interface V2IamStripeAccessGrantUpdatedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.iam.stripe_access_grant.updated';
+    }
+    export interface V2IamStripeAccessGrantUpdatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.iam.stripe_access_grant.updated';
+      fetchEvent(): Promise<V2IamStripeAccessGrantUpdatedEvent>;
     }
 
     /**

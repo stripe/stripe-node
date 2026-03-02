@@ -5,7 +5,9 @@ declare module 'stripe' {
     namespace V2 {
       namespace Billing {
         /**
-         * The LicenseFee object.
+         * A License Fee represents a versioned recurring charge for a Licensed Item, typically used for seat-based or quantity-based
+         * pricing. Each License Fee defines the pricing structure (flat unit amount or tiered pricing) and service interval. After
+         * creating a License Fee, you can subscribe customers to it by creating a License Fee Subscription.
          */
         interface LicenseFee {
           /**

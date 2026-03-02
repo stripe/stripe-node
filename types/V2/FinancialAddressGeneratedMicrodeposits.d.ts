@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace V2 {
       /**
-       * The FinancialAddressGeneratedMicrodeposits object.
+       * Generated Microdeposits represent verification deposits sent to a financial address for ownership verification, containing the deposited amounts and status.
        */
       interface FinancialAddressGeneratedMicrodeposits {
         /**

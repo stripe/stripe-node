@@ -5,7 +5,7 @@ declare module 'stripe' {
     namespace V2 {
       namespace Billing {
         /**
-         * The ServiceAction object.
+         * Service Actions represent actions applied during service assessment periods, such as granting credits to a customer.
          */
         interface ServiceAction {
           /**
