@@ -18,6 +18,7 @@ import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import * as resources from './resources.js';
 import {
   createApiKeyAuthenticator,
+  detectAIAgent,
   determineProcessUserAgentProperties,
   pascalToCamelCase,
   validateInteger,
@@ -62,6 +63,11 @@ export function createStripe(
 ): typeof Stripe {
   Stripe.PACKAGE_VERSION = '20.4.0';
   Stripe.API_VERSION = ApiVersion;
+  const aiAgent =
+    typeof process !== 'undefined' && process.env
+      ? detectAIAgent(process.env)
+      : '';
+  Stripe.AI_AGENT = aiAgent;
   Stripe.USER_AGENT = {
     bindings_version: Stripe.PACKAGE_VERSION,
     lang: 'node',
@@ -69,6 +75,7 @@ export function createStripe(
     uname: null,
     typescript: false,
     ...determineProcessUserAgentProperties(),
+    ...(aiAgent ? {ai_agent: aiAgent} : {}),
   };
   Stripe.StripeResource = StripeResource;
   Stripe.StripeContext = StripeContext;

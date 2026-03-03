@@ -7,7 +7,7 @@ import {expect} from 'chai';
 import {StripeSignatureVerificationError} from '../src/Error.js';
 import {ApiVersion} from '../src/apiVersion.js';
 import {createStripe} from '../src/stripe.core.js';
-import {createApiKeyAuthenticator} from '../src/utils.js';
+import {createApiKeyAuthenticator, detectAIAgent} from '../src/utils.js';
 import {
   FAKE_API_KEY,
   getMockPlatformFunctions,
@@ -256,6 +256,64 @@ describe('Stripe Module', function() {
           })
         ).to.eventually.have.property('uname', 'UNKNOWN');
       });
+    });
+  });
+
+  describe('AI agent detection', () => {
+    it('detectAIAgent returns empty string when no agent env var is set', () => {
+      expect(detectAIAgent({})).to.equal('');
+    });
+
+    it('detectAIAgent detects CLAUDECODE', () => {
+      expect(detectAIAgent({CLAUDECODE: '1'})).to.equal('claude_code');
+    });
+
+    it('detectAIAgent detects CURSOR_AGENT', () => {
+      expect(detectAIAgent({CURSOR_AGENT: '1'})).to.equal('cursor');
+    });
+
+    it('detectAIAgent returns first match when multiple agent env vars are set', () => {
+      expect(detectAIAgent({CURSOR_AGENT: '1', CLAUDECODE: '1'})).to.equal(
+        'claude_code'
+      );
+    });
+
+    it('includes AI agent in request headers', (done) => {
+      const origAIAgent = Stripe.AI_AGENT;
+      const origUserAgent = Stripe.USER_AGENT;
+      Stripe.AI_AGENT = 'cursor';
+      Stripe.USER_AGENT = {...origUserAgent, ai_agent: 'cursor'};
+      let capturedHeaders: any;
+      getTestServerStripe(
+        {},
+        (req, res) => {
+          capturedHeaders = req.headers;
+          res.writeHeader(200);
+          res.write('{}');
+          res.end();
+        },
+        (err, stripeClient, close) => {
+          if (err) {
+            Stripe.AI_AGENT = origAIAgent;
+            Stripe.USER_AGENT = origUserAgent;
+            return done(err);
+          }
+          stripeClient.customers.create((err) => {
+            Stripe.AI_AGENT = origAIAgent;
+            Stripe.USER_AGENT = origUserAgent;
+            close();
+            if (err) {
+              return done(err);
+            }
+            expect(capturedHeaders['user-agent']).to.contain('AIAgent/cursor');
+            const clientUA = JSON.parse(
+              capturedHeaders['x-stripe-client-user-agent']
+            );
+            expect(clientUA).to.have.property('ai_agent', 'cursor');
+            done();
+          });
+        }
+      );
     });
   });
 
