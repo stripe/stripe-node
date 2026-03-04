@@ -18,6 +18,13 @@ declare module 'stripe' {
         object: 'delegated_checkout.requested_session';
 
         /**
+         * Affiliate attribution data associated with this requested session.
+         */
+        affiliate_attributions?: Array<
+          RequestedSession.AffiliateAttribution
+        > | null;
+
+        /**
          * The subtotal amount of the requested session.
          */
         amount_subtotal: number | null;
@@ -120,6 +127,90 @@ declare module 'stripe' {
       }
 
       namespace RequestedSession {
+        interface AffiliateAttribution {
+          /**
+           * Agent-scoped campaign identifier.
+           */
+          campaign_id: string | null;
+
+          /**
+           * Agent-scoped creative identifier.
+           */
+          creative_id: string | null;
+
+          /**
+           * Timestamp when the attribution token expires.
+           */
+          expires_at: number;
+
+          /**
+           * Agent-issued secret to validate the legitimacy of the source of this data.
+           */
+          identification_token: string;
+
+          /**
+           * Timestamp for when the attribution token was issued.
+           */
+          issued_at: number;
+
+          /**
+           * Identifier for the attribution agent / affiliate network namespace.
+           */
+          provider: string;
+
+          /**
+           * Agent-scoped affiliate/publisher identifier.
+           */
+          publisher_id: string | null;
+
+          /**
+           * Freeform key/value pairs for additional non-sensitive per-agent data.
+           */
+          shared_metadata: {
+            [key: string]: string;
+          } | null;
+
+          /**
+           * Context about where the attribution originated.
+           */
+          source: AffiliateAttribution.Source | null;
+
+          /**
+           * Agent-scoped sub-tracking identifier.
+           */
+          sub_id: string | null;
+
+          /**
+           * Whether this is the first or last touchpoint.
+           */
+          touchpoint: AffiliateAttribution.Touchpoint;
+        }
+
+        namespace AffiliateAttribution {
+          interface Source {
+            /**
+             * The platform of the attribution source.
+             */
+            platform: string | null;
+
+            /**
+             * The type of the attribution source.
+             */
+            type: Source.Type;
+
+            /**
+             * The URL of the attribution source.
+             */
+            url: string | null;
+          }
+
+          namespace Source {
+            type Type = 'platform' | 'url';
+          }
+
+          type Touchpoint = 'first' | 'last';
+        }
+
         interface FulfillmentDetails {
           /**
            * The fulfillment address.

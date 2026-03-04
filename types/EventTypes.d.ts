@@ -16,6 +16,7 @@ declare module 'stripe' {
       | ApplicationFeeRefundedEvent
       | BalanceAvailableEvent
       | BalanceSettingsUpdatedEvent
+      | BillingAlertRecoveredEvent
       | BillingAlertTriggeredEvent
       | BillingCreditBalanceTransactionCreatedEvent
       | BillingCreditGrantCreatedEvent
@@ -509,6 +510,22 @@ declare module 'stripe' {
         object: Stripe.BalanceSettings;
 
         previous_attributes?: Partial<Stripe.BalanceSettings>;
+      }
+    }
+
+    /**
+     * Occurs whenever your custom alert threshold is recovered from a previous exceeded state.
+     */
+    interface BillingAlertRecoveredEvent extends EventBase {
+      type: 'billing.alert.recovered';
+      data: BillingAlertRecoveredEvent.Data;
+    }
+
+    namespace BillingAlertRecoveredEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.AlertRecovered;
+
+        previous_attributes?: Partial<Stripe.Billing.AlertRecovered>;
       }
     }
 

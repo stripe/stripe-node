@@ -249,6 +249,7 @@
 ///<reference path='./BalanceTransactions.d.ts' />
 ///<reference path='./BalanceTransfers.d.ts' />
 ///<reference path='./BankAccounts.d.ts' />
+///<reference path='./Billing/AlertRecovereds.d.ts' />
 ///<reference path='./Billing/AlertTriggereds.d.ts' />
 ///<reference path='./Billing/Alerts.d.ts' />
 ///<reference path='./Billing/Analytics/MeterUsage.d.ts' />
