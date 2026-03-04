@@ -32,6 +32,11 @@ declare module 'stripe' {
         account_onboarding?: Components.AccountOnboarding;
 
         /**
+         * Configuration for the [agentic commerce settings](https://docs.stripe.com/connect/supported-embedded-components/agentic-commerce-settings/) embedded component.
+         */
+        agentic_commerce_settings?: Components.AgenticCommerceSettings;
+
+        /**
          * Configuration for the [app install](https://docs.stripe.com/connect/supported-embedded-components/app-install/) embedded component.
          */
         app_install?: Components.AppInstall;
@@ -180,11 +185,6 @@ declare module 'stripe' {
          * Configuration for the [tax threshold monitoring](https://docs.stripe.com/connect/supported-embedded-components/tax-threshold-monitoring/) embedded component.
          */
         tax_threshold_monitoring?: Components.TaxThresholdMonitoring;
-
-        /**
-         * Configuration for the [agentic commerce settings](https://docs.stripe.com/connect/supported-embedded-components/agentic-commerce-settings/) embedded component.
-         */
-        agentic_commerce_settings?: Components.AgenticCommerceSettings;
 
         /**
          * Configuration for the [Terminal hardware orders](https://docs.stripe.com/connect/supported-embedded-components/terminal-hardware-orders/) embedded component.

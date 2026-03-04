@@ -20,6 +20,13 @@ declare module 'stripe' {
         seller_details: RequestedSessionCreateParams.SellerDetails;
 
         /**
+         * Affiliate attribution data associated with this requested session.
+         */
+        affiliate_attributions?: Array<
+          RequestedSessionCreateParams.AffiliateAttribution
+        >;
+
+        /**
          * The customer for this requested session.
          */
         customer?: string;
@@ -63,6 +70,90 @@ declare module 'stripe' {
       }
 
       namespace RequestedSessionCreateParams {
+        interface AffiliateAttribution {
+          /**
+           * Agent-scoped campaign identifier.
+           */
+          campaign_id?: string;
+
+          /**
+           * Agent-scoped creative identifier.
+           */
+          creative_id?: string;
+
+          /**
+           * Timestamp when the attribution token expires.
+           */
+          expires_at: number;
+
+          /**
+           * Agent-issued secret to validate the legitimacy of the source of this data.
+           */
+          identification_token: string;
+
+          /**
+           * Timestamp for when the attribution token was issued.
+           */
+          issued_at: number;
+
+          /**
+           * Identifier for the attribution agent / affiliate network namespace.
+           */
+          provider: string;
+
+          /**
+           * Agent-scoped affiliate/publisher identifier.
+           */
+          publisher_id?: string;
+
+          /**
+           * Freeform key/value pairs for additional non-sensitive per-agent data.
+           */
+          shared_metadata?: {
+            [key: string]: string;
+          };
+
+          /**
+           * Context about where the attribution originated.
+           */
+          source?: AffiliateAttribution.Source;
+
+          /**
+           * Agent-scoped sub-tracking identifier.
+           */
+          sub_id?: string;
+
+          /**
+           * Whether this is the first or last touchpoint.
+           */
+          touchpoint: AffiliateAttribution.Touchpoint;
+        }
+
+        namespace AffiliateAttribution {
+          interface Source {
+            /**
+             * The platform where the attribution originated.
+             */
+            platform?: string;
+
+            /**
+             * The type of the attribution source.
+             */
+            type: Source.Type;
+
+            /**
+             * The URL where the attribution originated.
+             */
+            url?: string;
+          }
+
+          namespace Source {
+            type Type = 'platform' | 'url';
+          }
+
+          type Touchpoint = 'first' | 'last';
+        }
+
         interface FulfillmentDetails {
           /**
            * The customer's address.
@@ -349,15 +440,27 @@ declare module 'stripe' {
             /**
              * The shipping fulfillment option.
              */
-            shipping: SelectedFulfillmentOption.Shipping;
+            shipping?: SelectedFulfillmentOption.Shipping;
 
             /**
              * The type of fulfillment option.
              */
             type: string;
+
+            /**
+             * The digital fulfillment option.
+             */
+            digital?: SelectedFulfillmentOption.Digital;
           }
 
           namespace SelectedFulfillmentOption {
+            interface Digital {
+              /**
+               * The digital option identifier.
+               */
+              digital_option: string;
+            }
+
             interface Shipping {
               /**
                * The shipping option identifer.
@@ -479,6 +582,13 @@ declare module 'stripe' {
 
       interface RequestedSessionConfirmParams {
         /**
+         * Affiliate attribution data associated with this requested session.
+         */
+        affiliate_attributions?: Array<
+          RequestedSessionConfirmParams.AffiliateAttribution
+        >;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
@@ -500,6 +610,90 @@ declare module 'stripe' {
       }
 
       namespace RequestedSessionConfirmParams {
+        interface AffiliateAttribution {
+          /**
+           * Agent-scoped campaign identifier.
+           */
+          campaign_id?: string;
+
+          /**
+           * Agent-scoped creative identifier.
+           */
+          creative_id?: string;
+
+          /**
+           * Timestamp when the attribution token expires.
+           */
+          expires_at: number;
+
+          /**
+           * Agent-issued secret to validate the legitimacy of the source of this data.
+           */
+          identification_token: string;
+
+          /**
+           * Timestamp for when the attribution token was issued.
+           */
+          issued_at: number;
+
+          /**
+           * Identifier for the attribution agent / affiliate network namespace.
+           */
+          provider: string;
+
+          /**
+           * Agent-scoped affiliate/publisher identifier.
+           */
+          publisher_id?: string;
+
+          /**
+           * Freeform key/value pairs for additional non-sensitive per-agent data.
+           */
+          shared_metadata?: {
+            [key: string]: string;
+          };
+
+          /**
+           * Context about where the attribution originated.
+           */
+          source?: AffiliateAttribution.Source;
+
+          /**
+           * Agent-scoped sub-tracking identifier.
+           */
+          sub_id?: string;
+
+          /**
+           * Whether this is the first or last touchpoint.
+           */
+          touchpoint: AffiliateAttribution.Touchpoint;
+        }
+
+        namespace AffiliateAttribution {
+          interface Source {
+            /**
+             * The platform where the attribution originated.
+             */
+            platform?: string;
+
+            /**
+             * The type of the attribution source.
+             */
+            type: Source.Type;
+
+            /**
+             * The URL where the attribution originated.
+             */
+            url?: string;
+          }
+
+          namespace Source {
+            type Type = 'platform' | 'url';
+          }
+
+          type Touchpoint = 'first' | 'last';
+        }
+
         interface PaymentMethodData {
           /**
            * The billing details for the payment method data.

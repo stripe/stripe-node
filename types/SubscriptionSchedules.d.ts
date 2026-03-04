@@ -760,6 +760,8 @@ declare module 'stripe' {
            * ID of the promotion code to create a new discount for.
            */
           promotion_code: string | Stripe.PromotionCode | null;
+
+          settings?: Discount.Settings;
         }
 
         namespace Discount {
@@ -773,6 +775,62 @@ declare module 'stripe' {
              * The discount end type.
              */
             type: 'timestamp';
+          }
+
+          interface Settings {
+            service_period_anchor_config: Settings.ServicePeriodAnchorConfig;
+
+            /**
+             * The start date of the discount's service period when applying a coupon or promotion code with a service period duration.
+             */
+            start_date: Settings.StartDate;
+          }
+
+          namespace Settings {
+            interface ServicePeriodAnchorConfig {
+              custom?: ServicePeriodAnchorConfig.Custom;
+
+              /**
+               * The type of service period anchor config.
+               */
+              type: ServicePeriodAnchorConfig.Type;
+            }
+
+            namespace ServicePeriodAnchorConfig {
+              interface Custom {
+                /**
+                 * The day of the month the anchor should be. Ranges from 1 to 31.
+                 */
+                day_of_month: number;
+
+                /**
+                 * The hour of the day the anchor should be. Ranges from 0 to 23.
+                 */
+                hour: number | null;
+
+                /**
+                 * The minute of the hour the anchor should be. Ranges from 0 to 59.
+                 */
+                minute: number | null;
+
+                /**
+                 * The month to start full cycle periods. Ranges from 1 to 12.
+                 */
+                month: number | null;
+
+                /**
+                 * The second of the minute the anchor should be. Ranges from 0 to 59.
+                 */
+                second: number | null;
+              }
+
+              type Type = 'custom' | 'inherit';
+            }
+
+            type StartDate =
+              | 'current_period_end'
+              | 'current_period_start'
+              | 'phase_start';
           }
         }
 
@@ -890,6 +948,8 @@ declare module 'stripe' {
              * ID of the promotion code to create a new discount for.
              */
             promotion_code: string | Stripe.PromotionCode | null;
+
+            settings?: Discount.Settings;
           }
 
           namespace Discount {
@@ -903,6 +963,62 @@ declare module 'stripe' {
                * The discount end type.
                */
               type: 'timestamp';
+            }
+
+            interface Settings {
+              service_period_anchor_config: Settings.ServicePeriodAnchorConfig;
+
+              /**
+               * The start date of the discount's service period when applying a coupon or promotion code with a service period duration.
+               */
+              start_date: Settings.StartDate;
+            }
+
+            namespace Settings {
+              interface ServicePeriodAnchorConfig {
+                custom?: ServicePeriodAnchorConfig.Custom;
+
+                /**
+                 * The type of service period anchor config.
+                 */
+                type: ServicePeriodAnchorConfig.Type;
+              }
+
+              namespace ServicePeriodAnchorConfig {
+                interface Custom {
+                  /**
+                   * The day of the month the anchor should be. Ranges from 1 to 31.
+                   */
+                  day_of_month: number;
+
+                  /**
+                   * The hour of the day the anchor should be. Ranges from 0 to 23.
+                   */
+                  hour: number | null;
+
+                  /**
+                   * The minute of the hour the anchor should be. Ranges from 0 to 59.
+                   */
+                  minute: number | null;
+
+                  /**
+                   * The month to start full cycle periods. Ranges from 1 to 12.
+                   */
+                  month: number | null;
+
+                  /**
+                   * The second of the minute the anchor should be. Ranges from 0 to 59.
+                   */
+                  second: number | null;
+                }
+
+                type Type = 'custom' | 'inherit';
+              }
+
+              type StartDate =
+                | 'current_period_end'
+                | 'current_period_start'
+                | 'phase_start';
             }
           }
 

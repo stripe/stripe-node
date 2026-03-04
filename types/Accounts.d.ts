@@ -1616,6 +1616,8 @@ declare module 'stripe' {
 
         sepa_debit_payments?: Settings.SepaDebitPayments;
 
+        smart_disputes?: Settings.SmartDisputes;
+
         tax_forms?: Settings.TaxForms;
 
         treasury?: Settings.Treasury;
@@ -1753,6 +1755,11 @@ declare module 'stripe' {
         }
 
         interface Payments {
+          /**
+           * When enabled, the customer of this Account will receive an email receipt when their payment is successful. If this parameter is not set, the default value is `false`.
+           */
+          email_customers_on_successful_payment?: boolean | null;
+
           /**
            * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge.
            */
@@ -1897,6 +1904,30 @@ declare module 'stripe' {
            * SEPA creditor identifier that identifies the company making the payment.
            */
           creditor_id?: string;
+        }
+
+        interface SmartDisputes {
+          auto_respond: SmartDisputes.AutoRespond;
+        }
+
+        namespace SmartDisputes {
+          interface AutoRespond {
+            /**
+             * The preference setting for auto-respond. Can be 'on', 'off', or 'inherit'.
+             */
+            preference: AutoRespond.Preference;
+
+            /**
+             * The effective value for auto-respond. Can be 'on' or 'off'.
+             */
+            value: AutoRespond.Value;
+          }
+
+          namespace AutoRespond {
+            type Preference = 'inherit' | 'off' | 'on';
+
+            type Value = 'off' | 'on';
+          }
         }
 
         interface TaxForms {

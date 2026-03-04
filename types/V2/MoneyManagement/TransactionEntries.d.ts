@@ -119,7 +119,7 @@ declare module 'stripe' {
             /**
              * Details about the Flow object that created the Transaction.
              */
-            flow: TransactionDetails.Flow;
+            flow?: TransactionDetails.Flow;
           }
 
           namespace TransactionDetails {
@@ -128,19 +128,21 @@ declare module 'stripe' {
               | 'advance'
               | 'anticipation_repayment'
               | 'balance_transfer'
-              | 'charge'
-              | 'charge_failure'
               | 'climate_order_purchase'
               | 'climate_order_refund'
               | 'connect_collection_transfer'
               | 'connect_reserved_funds'
               | 'contribution'
               | 'currency_conversion'
+              | 'dispute'
               | 'dispute_reversal'
               | 'financing_paydown'
               | 'financing_paydown_reversal'
+              | 'inbound_payment'
+              | 'inbound_payment_failure'
               | 'inbound_transfer'
               | 'inbound_transfer_reversal'
+              | 'india_mdr_processing_fee'
               | 'issuing_dispute'
               | 'issuing_dispute_fraud_liability_debit'
               | 'issuing_dispute_provisional_credit'
@@ -153,6 +155,7 @@ declare module 'stripe' {
               | 'outbound_transfer'
               | 'outbound_transfer_reversal'
               | 'partial_capture_reversal'
+              | 'payment_method_passthrough_fee'
               | 'payment_network_reserved_funds'
               | 'platform_earning'
               | 'platform_earning_refund'
@@ -161,6 +164,7 @@ declare module 'stripe' {
               | 'received_credit_reversal'
               | 'received_debit'
               | 'received_debit_reversal'
+              | 'refund'
               | 'refund_failure'
               | 'return'
               | 'risk_reserved_funds'
@@ -168,6 +172,7 @@ declare module 'stripe' {
               | 'stripe_balance_payment_debit_reversal'
               | 'stripe_fee'
               | 'stripe_fee_tax'
+              | 'tax_withholding'
               | 'transfer_reversal'
               | 'unreconciled_customer_funds';
 

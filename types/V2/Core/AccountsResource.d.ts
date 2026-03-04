@@ -421,6 +421,11 @@ declare module 'stripe' {
               script_statement_descriptor?: Merchant.ScriptStatementDescriptor;
 
               /**
+               * Settings used for Smart Disputes.
+               */
+              smart_disputes?: Merchant.SmartDisputes;
+
+              /**
                * Statement descriptor.
                */
               statement_descriptor?: Merchant.StatementDescriptor;
@@ -1092,6 +1097,26 @@ declare module 'stripe' {
                 }
               }
 
+              interface SmartDisputes {
+                /**
+                 * Settings for Smart Disputes auto_respond.
+                 */
+                auto_respond?: SmartDisputes.AutoRespond;
+              }
+
+              namespace SmartDisputes {
+                interface AutoRespond {
+                  /**
+                   * The preference for Smart Disputes auto-respond.
+                   */
+                  preference?: AutoRespond.Preference;
+                }
+
+                namespace AutoRespond {
+                  type Preference = 'inherit' | 'off' | 'on';
+                }
+              }
+
               interface StatementDescriptor {
                 /**
                  * The default text that appears on statements for non-card charges outside of Japan. For card charges, if you don't set a statement_descriptor_prefix, this text is also used as the statement descriptor prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement descriptor to exceed 22 characters, we truncate the statement_descriptor text to limit the full descriptor to 22 characters. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
@@ -1329,6 +1354,11 @@ declare module 'stripe' {
             namespace Storer {
               interface Capabilities {
                 /**
+                 * Can provision a consumer financial account on Stripe.
+                 */
+                consumer?: Capabilities.Consumer;
+
+                /**
                  * Can provision a financial address to credit/debit a FinancialAccount.
                  */
                 financial_addresses?: Capabilities.FinancialAddresses;
@@ -1355,6 +1385,31 @@ declare module 'stripe' {
               }
 
               namespace Capabilities {
+                interface Consumer {
+                  /**
+                   * Can hold storage-type funds on Stripe in a consumer financial account.
+                   */
+                  holds_currencies?: Consumer.HoldsCurrencies;
+                }
+
+                namespace Consumer {
+                  interface HoldsCurrencies {
+                    /**
+                     * Can hold storage-type funds on Stripe in USD in a consumer financial account.
+                     */
+                    usd?: HoldsCurrencies.Usd;
+                  }
+
+                  namespace HoldsCurrencies {
+                    interface Usd {
+                      /**
+                       * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
                 interface FinancialAddresses {
                   /**
                    * Can provision a bank-account-like financial address (VBAN) to credit/debit a FinancialAccount.
@@ -4139,6 +4194,11 @@ declare module 'stripe' {
               script_statement_descriptor?: Merchant.ScriptStatementDescriptor;
 
               /**
+               * Settings for Smart Disputes automatic response feature.
+               */
+              smart_disputes?: Merchant.SmartDisputes;
+
+              /**
                * Settings for the default [statement descriptor](https://docs.stripe.com/connect/statement-descriptors) text.
                */
               statement_descriptor?: Merchant.StatementDescriptor;
@@ -4810,6 +4870,26 @@ declare module 'stripe' {
                 }
               }
 
+              interface SmartDisputes {
+                /**
+                 * Settings for Smart Disputes auto_respond.
+                 */
+                auto_respond?: SmartDisputes.AutoRespond;
+              }
+
+              namespace SmartDisputes {
+                interface AutoRespond {
+                  /**
+                   * The preference for automatic dispute responses.
+                   */
+                  preference?: AutoRespond.Preference;
+                }
+
+                namespace AutoRespond {
+                  type Preference = 'inherit' | 'off' | 'on';
+                }
+              }
+
               interface StatementDescriptor {
                 /**
                  * The default text that appears on statements for non-card charges outside of Japan. For card charges, if you don't set a statement_descriptor_prefix, this text is also used as the statement descriptor prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement descriptor to exceed 22 characters, we truncate the statement_descriptor text to limit the full descriptor to 22 characters. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
@@ -5023,6 +5103,11 @@ declare module 'stripe' {
             namespace Storer {
               interface Capabilities {
                 /**
+                 * Can provision a consumer financial account.
+                 */
+                consumer?: Capabilities.Consumer;
+
+                /**
                  * Can provision a financial address to credit/debit a FinancialAccount.
                  */
                 financial_addresses?: Capabilities.FinancialAddresses;
@@ -5049,6 +5134,31 @@ declare module 'stripe' {
               }
 
               namespace Capabilities {
+                interface Consumer {
+                  /**
+                   * Can hold storage-type funds on Stripe in a consumer financial account.
+                   */
+                  holds_currencies?: Consumer.HoldsCurrencies;
+                }
+
+                namespace Consumer {
+                  interface HoldsCurrencies {
+                    /**
+                     * Can hold storage-type funds on Stripe in USD in a consumer financial account.
+                     */
+                    usd?: HoldsCurrencies.Usd;
+                  }
+
+                  namespace HoldsCurrencies {
+                    interface Usd {
+                      /**
+                       * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                       */
+                      requested?: boolean;
+                    }
+                  }
+                }
+
                 interface FinancialAddresses {
                   /**
                    * Can provision a bank-account-like financial address (VBAN) to credit/debit a FinancialAccount.

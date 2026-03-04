@@ -22,6 +22,8 @@ declare module 'stripe' {
 
         bbpos_wisepos_e?: Configuration.BbposWiseposE;
 
+        cellular?: Configuration.Cellular;
+
         /**
          * Always true for a deleted object
          */
@@ -50,6 +52,8 @@ declare module 'stripe' {
 
         stripe_s700?: Configuration.StripeS700;
 
+        stripe_s710?: Configuration.StripeS710;
+
         tipping?: Configuration.Tipping;
 
         verifone_p400?: Configuration.VerifoneP400;
@@ -70,6 +74,13 @@ declare module 'stripe' {
            * A File ID representing an image to display on the reader
            */
           splashscreen?: string | Stripe.File;
+        }
+
+        interface Cellular {
+          /**
+           * Whether a cellular-capable reader can connect to the internet over cellular.
+           */
+          enabled: boolean;
         }
 
         interface Offline {
@@ -99,6 +110,13 @@ declare module 'stripe' {
         }
 
         interface StripeS700 {
+          /**
+           * A File ID representing an image to display on the reader
+           */
+          splashscreen?: string | Stripe.File;
+        }
+
+        interface StripeS710 {
           /**
            * A File ID representing an image to display on the reader
            */

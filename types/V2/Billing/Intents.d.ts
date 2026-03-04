@@ -5,7 +5,9 @@ declare module 'stripe' {
     namespace V2 {
       namespace Billing {
         /**
-         * The Intent object.
+         * A Billing Intent represents a proposed change to a customer's billing configuration, such as subscribing to a new service,
+         * modifying an existing subscription, or canceling service. Intents follow a draft-reserve-commit workflow where they can be
+         * previewed before committing, allowing you to see the billing impact before changes take effect.
          */
         interface Intent {
           /**

@@ -18,6 +18,13 @@ declare module 'stripe' {
         object: 'delegated_checkout.requested_session';
 
         /**
+         * Affiliate attribution data associated with this requested session.
+         */
+        affiliate_attributions?: Array<
+          RequestedSession.AffiliateAttribution
+        > | null;
+
+        /**
          * The subtotal amount of the requested session.
          */
         amount_subtotal: number | null;
@@ -58,7 +65,7 @@ declare module 'stripe' {
         line_item_details: Array<RequestedSession.LineItemDetail>;
 
         /**
-         * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+         * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
          */
         livemode: boolean;
 
@@ -120,6 +127,90 @@ declare module 'stripe' {
       }
 
       namespace RequestedSession {
+        interface AffiliateAttribution {
+          /**
+           * Agent-scoped campaign identifier.
+           */
+          campaign_id: string | null;
+
+          /**
+           * Agent-scoped creative identifier.
+           */
+          creative_id: string | null;
+
+          /**
+           * Timestamp when the attribution token expires.
+           */
+          expires_at: number;
+
+          /**
+           * Agent-issued secret to validate the legitimacy of the source of this data.
+           */
+          identification_token: string;
+
+          /**
+           * Timestamp for when the attribution token was issued.
+           */
+          issued_at: number;
+
+          /**
+           * Identifier for the attribution agent / affiliate network namespace.
+           */
+          provider: string;
+
+          /**
+           * Agent-scoped affiliate/publisher identifier.
+           */
+          publisher_id: string | null;
+
+          /**
+           * Freeform key/value pairs for additional non-sensitive per-agent data.
+           */
+          shared_metadata: {
+            [key: string]: string;
+          } | null;
+
+          /**
+           * Context about where the attribution originated.
+           */
+          source: AffiliateAttribution.Source | null;
+
+          /**
+           * Agent-scoped sub-tracking identifier.
+           */
+          sub_id: string | null;
+
+          /**
+           * Whether this is the first or last touchpoint.
+           */
+          touchpoint: AffiliateAttribution.Touchpoint;
+        }
+
+        namespace AffiliateAttribution {
+          interface Source {
+            /**
+             * The platform of the attribution source.
+             */
+            platform: string | null;
+
+            /**
+             * The type of the attribution source.
+             */
+            type: Source.Type;
+
+            /**
+             * The URL of the attribution source.
+             */
+            url: string | null;
+          }
+
+          namespace Source {
+            type Type = 'platform' | 'url';
+          }
+
+          type Touchpoint = 'first' | 'last';
+        }
+
         interface FulfillmentDetails {
           /**
            * The fulfillment address.
@@ -165,9 +256,45 @@ declare module 'stripe' {
              * The type of the fulfillment option.
              */
             type: string;
+
+            /**
+             * The digital fulfillment option.
+             */
+            digital: FulfillmentOption.Digital | null;
           }
 
           namespace FulfillmentOption {
+            interface Digital {
+              /**
+               * The digital options.
+               */
+              digital_options: Array<Digital.DigitalOption> | null;
+            }
+
+            namespace Digital {
+              interface DigitalOption {
+                /**
+                 * The description of the digital fulfillment option.
+                 */
+                description: string | null;
+
+                /**
+                 * The digital amount of the digital fulfillment option.
+                 */
+                digital_amount: number;
+
+                /**
+                 * The display name of the digital fulfillment option.
+                 */
+                display_name: string;
+
+                /**
+                 * The key of the digital fulfillment option.
+                 */
+                key: string;
+              }
+            }
+
             interface Shipping {
               /**
                * The shipping options.
@@ -220,9 +347,21 @@ declare module 'stripe' {
              * The type of the selected fulfillment option.
              */
             type: string;
+
+            /**
+             * The digital fulfillment option.
+             */
+            digital: SelectedFulfillmentOption.Digital | null;
           }
 
           namespace SelectedFulfillmentOption {
+            interface Digital {
+              /**
+               * The digital option.
+               */
+              digital_option: string | null;
+            }
+
             interface Shipping {
               /**
                * The shipping option.
@@ -264,6 +403,11 @@ declare module 'stripe' {
            * The per-unit amount of the item before any discounts or taxes are applied.
            */
           unit_amount: number;
+
+          /**
+           * The fulfillment type of the line item.
+           */
+          fulfillment_type: string;
         }
 
         namespace LineItemDetail {
@@ -436,7 +580,41 @@ declare module 'stripe' {
           }
         }
 
-        interface SellerDetails {}
+        interface SellerDetails {
+          /**
+           * The marketplace seller details.
+           */
+          marketplace_seller_details: SellerDetails.MarketplaceSellerDetails | null;
+
+          /**
+           * The network profile of the seller.
+           */
+          network_profile: string | Stripe.Profile;
+
+          /**
+           * The URL to the seller's privacy notice.
+           */
+          privacy_notice_url: string | null;
+
+          /**
+           * The URL to the seller's return policy.
+           */
+          return_policy_url: string | null;
+
+          /**
+           * The URL to the seller's store policy.
+           */
+          store_policy_url: string | null;
+
+          /**
+           * The URL to the seller's terms of service.
+           */
+          terms_of_service_url: string | null;
+        }
+
+        namespace SellerDetails {
+          interface MarketplaceSellerDetails {}
+        }
 
         type Status = 'completed' | 'expired' | 'open';
 

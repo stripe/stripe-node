@@ -5,7 +5,7 @@ declare module 'stripe' {
     namespace V2 {
       namespace Billing {
         /**
-         * The MeterEventSession object.
+         * A Meter Event Session is an authentication session for the high-throughput meter event API. Meter Event Sessions provide temporary authentication tokens with expiration times, enabling secure and efficient bulk submission of usage events.
          */
         interface MeterEventSession {
           /**

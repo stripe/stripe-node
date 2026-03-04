@@ -11,6 +11,11 @@ declare module 'stripe' {
 
     interface DisputeUpdateParams {
       /**
+       * If not countering the full disputed amount, specify an alternate amount, less than or equal to the disputed amount.
+       */
+      amount_to_counter?: number;
+
+      /**
        * Evidence to upload, to respond to a dispute. Updating any field in the hash will submit all fields in the hash for review. The combined character count of all fields is limited to 150,000.
        */
       evidence?: DisputeUpdateParams.Evidence;

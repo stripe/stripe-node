@@ -249,6 +249,7 @@
 ///<reference path='./BalanceTransactions.d.ts' />
 ///<reference path='./BalanceTransfers.d.ts' />
 ///<reference path='./BankAccounts.d.ts' />
+///<reference path='./Billing/AlertRecovereds.d.ts' />
 ///<reference path='./Billing/AlertTriggereds.d.ts' />
 ///<reference path='./Billing/Alerts.d.ts' />
 ///<reference path='./Billing/Analytics/MeterUsage.d.ts' />
@@ -353,6 +354,7 @@
 ///<reference path='./ProductCatalog/TrialOffers.d.ts' />
 ///<reference path='./ProductFeatures.d.ts' />
 ///<reference path='./Products.d.ts' />
+///<reference path='./Profiles.d.ts' />
 ///<reference path='./PromotionCodes.d.ts' />
 ///<reference path='./QuoteLines.d.ts' />
 ///<reference path='./QuotePreviewInvoices.d.ts' />

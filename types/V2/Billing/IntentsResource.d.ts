@@ -205,7 +205,7 @@ declare module 'stripe' {
               cancellation_details?: Deactivate.CancellationDetails;
 
               /**
-               * Allows users to override the collect at behavior.
+               * When the invoice will be collected. If not specified, the default behavior is on_effective_at.
                */
               collect_at?: Deactivate.CollectAt;
 
@@ -274,7 +274,7 @@ declare module 'stripe' {
 
               interface PricingPlanSubscriptionDetails {
                 /**
-                 * Allows users to override the partial period behavior.
+                 * Configurations for overriding behaviors related to the subscription.
                  */
                 overrides?: PricingPlanSubscriptionDetails.Overrides;
 
@@ -287,7 +287,7 @@ declare module 'stripe' {
               namespace PricingPlanSubscriptionDetails {
                 interface Overrides {
                   /**
-                   * Override for the partial period behavior.
+                   * Configurations for behaviors when the action takes effect during the service period.
                    */
                   partial_period_behaviors: Array<
                     Overrides.PartialPeriodBehavior
@@ -297,12 +297,12 @@ declare module 'stripe' {
                 namespace Overrides {
                   interface PartialPeriodBehavior {
                     /**
-                     * Type of the partial period behavior override.
+                     * The type of behavior to override.
                      */
                     type: 'license_fee';
 
                     /**
-                     * Override for the license fee.
+                     * Overrides the behavior for license fee components when the action takes effect during the service period.
                      */
                     license_fee?: PartialPeriodBehavior.LicenseFee;
                   }
@@ -310,7 +310,7 @@ declare module 'stripe' {
                   namespace PartialPeriodBehavior {
                     interface LicenseFee {
                       /**
-                       * The proration behavior for the partial servicing period. Defines how we prorate the license fee when the user is deactivating.
+                       * The proration behavior for the partial servicing period. Defines how we prorate the license fee when the user is deactivating. If not specified, defaults to none.
                        */
                       credit_proration_behavior: LicenseFee.CreditProrationBehavior;
                     }
@@ -329,7 +329,7 @@ declare module 'stripe' {
 
             interface Modify {
               /**
-               * Allows users to override the collect at behavior.
+               * When the invoice will be collected. If not specified, the default behavior is next_billing_date.
                */
               collect_at?: Modify.CollectAt;
 
@@ -390,7 +390,7 @@ declare module 'stripe' {
                 new_pricing_plan_version?: string;
 
                 /**
-                 * Allows users to override the partial period behavior.
+                 * Configurations for overriding behaviors related to the subscription.
                  */
                 overrides?: PricingPlanSubscriptionDetails.Overrides;
 
@@ -420,7 +420,7 @@ declare module 'stripe' {
 
                 interface Overrides {
                   /**
-                   * Override for the partial period behavior.
+                   * Configurations for behaviors when the action takes effect during the service period.
                    */
                   partial_period_behaviors: Array<
                     Overrides.PartialPeriodBehavior
@@ -430,12 +430,12 @@ declare module 'stripe' {
                 namespace Overrides {
                   interface PartialPeriodBehavior {
                     /**
-                     * Type of the partial period behavior override.
+                     * The type of behavior to override.
                      */
                     type: 'license_fee';
 
                     /**
-                     * Override for the license fee.
+                     * Overrides the behavior for license fee components when the action takes effect during the service period.
                      */
                     license_fee?: PartialPeriodBehavior.LicenseFee;
                   }
@@ -443,12 +443,12 @@ declare module 'stripe' {
                   namespace PartialPeriodBehavior {
                     interface LicenseFee {
                       /**
-                       * The proration behavior for the partial servicing period. Defines how we prorate the license fee when the user is upgrading.
+                       * The proration behavior for the partial servicing period. Defines how we prorate the license fee when the user modifies the subscription. If not specified, defaults to prorated.
                        */
                       credit_proration_behavior: LicenseFee.CreditProrationBehavior;
 
                       /**
-                       * The proration behavior for the partial servicing period. Defines how we prorate the license fee when the user is downgrading.
+                       * The proration behavior for the partial servicing period. Defines how we prorate the license fee when the user modifies the subscription. If not specified, defaults to prorated.
                        */
                       debit_proration_behavior: LicenseFee.DebitProrationBehavior;
                     }
@@ -506,7 +506,7 @@ declare module 'stripe' {
 
             interface Subscribe {
               /**
-               * Allows users to override the collect at behavior.
+               * When the invoice will be collected. If not specified, defaults to on_effective_at.
                */
               collect_at?: Subscribe.CollectAt;
 
@@ -567,7 +567,7 @@ declare module 'stripe' {
                 metadata?: Stripe.MetadataParam;
 
                 /**
-                 * Allows users to override the partial period behavior.
+                 * Configurations for overriding behaviors related to the subscription.
                  */
                 overrides?: PricingPlanSubscriptionDetails.Overrides;
 
@@ -602,7 +602,7 @@ declare module 'stripe' {
 
                 interface Overrides {
                   /**
-                   * Override for the partial period behavior.
+                   * Configurations for behaviors when the action takes effect during the service period.
                    */
                   partial_period_behaviors: Array<
                     Overrides.PartialPeriodBehavior
@@ -612,12 +612,12 @@ declare module 'stripe' {
                 namespace Overrides {
                   interface PartialPeriodBehavior {
                     /**
-                     * Type of the partial period behavior override.
+                     * The type of behavior to override.
                      */
                     type: 'license_fee';
 
                     /**
-                     * Override for the license fee.
+                     * Overrides the behavior for license fee components when the action takes effect during the service period.
                      */
                     license_fee?: PartialPeriodBehavior.LicenseFee;
                   }
@@ -625,7 +625,7 @@ declare module 'stripe' {
                   namespace PartialPeriodBehavior {
                     interface LicenseFee {
                       /**
-                       * The proration behavior for the partial servicing period. Defines how we prorate the license fee when the user is subscribing.
+                       * The proration behavior for the partial servicing period. Defines how we prorate the license fee when the user is subscribing. If not specified, defaults to prorated.
                        */
                       debit_proration_behavior: LicenseFee.DebitProrationBehavior;
                     }

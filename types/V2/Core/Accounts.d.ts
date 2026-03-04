@@ -5,7 +5,9 @@ declare module 'stripe' {
     namespace V2 {
       namespace Core {
         /**
-         * A V2 Account is a representation of a company or individual that a Stripe user does business with. Accounts contain the contact details, Legal Entity information, and configuration required to enable the Account for use across Stripe products.
+         * An Account v2 object represents a company, individual, or other entity that interacts with a platform on Stripe. It contains both identifying information and properties that control its behavior and functionality. An Account can have one or more configurations that enable sets of related features, such as allowing it to act as a merchant or customer.
+         * The Accounts v2 API supports both the Global Payouts preview feature and the Connect-Billing integration preview feature. However, a particular Account can only access one of them.
+         * The Connect-Billing integration preview feature allows an Account v2 to pay subscription fees to a platform. An Account v1 required a separate Customer object to pay subscription fees.
          */
         interface Account {
           /**
@@ -863,6 +865,11 @@ declare module 'stripe' {
                * Settings for SEPA Direct Debit payments.
                */
               sepa_debit_payments?: Merchant.SepaDebitPayments;
+
+              /**
+               * Settings for Smart Disputes automatic response feature.
+               */
+              smart_disputes?: Merchant.SmartDisputes;
 
               /**
                * Statement descriptor.
@@ -3414,6 +3421,33 @@ declare module 'stripe' {
                 creditor_id?: string;
               }
 
+              interface SmartDisputes {
+                /**
+                 * Settings for Smart Disputes auto_respond.
+                 */
+                auto_respond?: SmartDisputes.AutoRespond;
+              }
+
+              namespace SmartDisputes {
+                interface AutoRespond {
+                  /**
+                   * The preference for automatic dispute responses.
+                   */
+                  preference?: AutoRespond.Preference;
+
+                  /**
+                   * The effective value for automatic dispute responses.
+                   */
+                  value?: AutoRespond.Value;
+                }
+
+                namespace AutoRespond {
+                  type Preference = 'inherit' | 'off' | 'on';
+
+                  type Value = 'off' | 'on';
+                }
+              }
+
               interface StatementDescriptor {
                 /**
                  * The default text that appears on statements for non-card charges outside of Japan. For card charges, if you don't set a statement_descriptor_prefix, this text is also used as the statement descriptor prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement descriptor to exceed 22 characters, we truncate the statement_descriptor text to limit the full descriptor to 22 characters. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
@@ -3917,6 +3951,7 @@ declare module 'stripe' {
                   | 'ag_bank_account'
                   | 'al_bank_account'
                   | 'am_bank_account'
+                  | 'ar_bank_account'
                   | 'at_bank_account'
                   | 'au_bank_account'
                   | 'ba_bank_account'
@@ -3926,16 +3961,20 @@ declare module 'stripe' {
                   | 'bj_bank_account'
                   | 'bn_bank_account'
                   | 'bs_bank_account'
+                  | 'bt_bank_account'
                   | 'bw_bank_account'
                   | 'card'
                   | 'ca_bank_account'
                   | 'ch_bank_account'
                   | 'ci_bank_account'
+                  | 'co_bank_account'
                   | 'crypto_wallet'
+                  | 'cr_bank_account'
                   | 'cy_bank_account'
                   | 'cz_bank_account'
                   | 'de_bank_account'
                   | 'dk_bank_account'
+                  | 'do_bank_account'
                   | 'dz_bank_account'
                   | 'ec_bank_account'
                   | 'ee_bank_account'
@@ -3946,6 +3985,7 @@ declare module 'stripe' {
                   | 'gb_bank_account'
                   | 'gm_bank_account'
                   | 'gr_bank_account'
+                  | 'gt_bank_account'
                   | 'gy_bank_account'
                   | 'hk_bank_account'
                   | 'hr_bank_account'
@@ -3969,19 +4009,25 @@ declare module 'stripe' {
                   | 'lv_bank_account'
                   | 'ma_bank_account'
                   | 'mc_bank_account'
+                  | 'md_bank_account'
                   | 'mg_bank_account'
+                  | 'mk_bank_account'
                   | 'mn_bank_account'
+                  | 'mo_bank_account'
                   | 'mt_bank_account'
                   | 'mu_bank_account'
                   | 'mx_bank_account'
                   | 'my_bank_account'
+                  | 'mz_bank_account'
                   | 'na_bank_account'
                   | 'nl_bank_account'
                   | 'no_bank_account'
                   | 'nz_bank_account'
                   | 'om_bank_account'
                   | 'pa_bank_account'
+                  | 'pe_bank_account'
                   | 'ph_bank_account'
+                  | 'pk_bank_account'
                   | 'pl_bank_account'
                   | 'pt_bank_account'
                   | 'qa_bank_account'
@@ -3998,8 +4044,10 @@ declare module 'stripe' {
                   | 'tn_bank_account'
                   | 'tr_bank_account'
                   | 'tt_bank_account'
+                  | 'tw_bank_account'
                   | 'tz_bank_account'
                   | 'us_bank_account'
+                  | 'uz_bank_account'
                   | 'vn_bank_account'
                   | 'za_bank_account';
               }
@@ -4070,6 +4118,11 @@ declare module 'stripe' {
             namespace Storer {
               interface Capabilities {
                 /**
+                 * Hash containing capabilities related to consumer financial accounts.
+                 */
+                consumer?: Capabilities.Consumer;
+
+                /**
                  * Can provision a financial address to credit/debit a FinancialAccount.
                  */
                 financial_addresses?: Capabilities.FinancialAddresses;
@@ -4096,6 +4149,72 @@ declare module 'stripe' {
               }
 
               namespace Capabilities {
+                interface Consumer {
+                  /**
+                   * Can hold storage-type funds on Stripe consumer FAs in USD.
+                   */
+                  holds_currencies?: Consumer.HoldsCurrencies;
+                }
+
+                namespace Consumer {
+                  interface HoldsCurrencies {
+                    /**
+                     * Can hold storage-type funds on Stripe consumer FAs in USD.
+                     */
+                    usd?: HoldsCurrencies.Usd;
+                  }
+
+                  namespace HoldsCurrencies {
+                    interface Usd {
+                      /**
+                       * The status of the Capability.
+                       */
+                      status: Usd.Status;
+
+                      /**
+                       * Additional details about the capability's status. This value is empty when `status` is `active`.
+                       */
+                      status_details: Array<Usd.StatusDetail>;
+                    }
+
+                    namespace Usd {
+                      type Status =
+                        | 'active'
+                        | 'pending'
+                        | 'restricted'
+                        | 'unsupported';
+
+                      interface StatusDetail {
+                        /**
+                         * Machine-readable code explaining the reason for the Capability to be in its current status.
+                         */
+                        code: StatusDetail.Code;
+
+                        /**
+                         * Machine-readable code explaining how to make the Capability active.
+                         */
+                        resolution: StatusDetail.Resolution;
+                      }
+
+                      namespace StatusDetail {
+                        type Code =
+                          | 'determining_status'
+                          | 'requirements_past_due'
+                          | 'requirements_pending_verification'
+                          | 'restricted_other'
+                          | 'unsupported_business'
+                          | 'unsupported_country'
+                          | 'unsupported_entity_type';
+
+                        type Resolution =
+                          | 'contact_stripe'
+                          | 'no_resolution'
+                          | 'provide_info';
+                      }
+                    }
+                  }
+                }
+
                 interface FinancialAddresses {
                   /**
                    * Can provision a bank-account like financial address (VBAN) to credit/debit a FinancialAccount.
@@ -5310,6 +5429,7 @@ declare module 'stripe' {
                     | 'commercial.lead.prepaid_card'
                     | 'commercial.stripe.charge_card'
                     | 'commercial.stripe.prepaid_card'
+                    | 'consumer.holds_currencies.usd'
                     | 'crypto'
                     | 'eps_payments'
                     | 'financial_addresses.bank_accounts'
@@ -7706,6 +7826,7 @@ declare module 'stripe' {
                     | 'commercial.lead.prepaid_card'
                     | 'commercial.stripe.charge_card'
                     | 'commercial.stripe.prepaid_card'
+                    | 'consumer.holds_currencies.usd'
                     | 'crypto'
                     | 'eps_payments'
                     | 'financial_addresses.bank_accounts'

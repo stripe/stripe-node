@@ -259,9 +259,18 @@ declare module 'stripe' {
 
           interface Storage {
             /**
+             * The usage type for funds in this FinancialAccount. Can be used to specify that the funds are for Consumer activity.
+             */
+            funds_usage_type?: Storage.FundsUsageType;
+
+            /**
              * The currencies that this FinancialAccount can hold.
              */
             holds_currencies: Array<string>;
+          }
+
+          namespace Storage {
+            type FundsUsageType = 'business' | 'consumer';
           }
 
           type Type = 'accrued_fees' | 'other' | 'payments' | 'storage';

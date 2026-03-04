@@ -5,7 +5,7 @@ declare module 'stripe' {
     namespace V2 {
       namespace Billing {
         /**
-         * The BillSettingVersion object.
+         * A Bill Setting Version is a specific configuration of a BillSetting at a point in time. Bill Setting Versions enable you to track changes to bill generation and invoice settings over time and manage which version is active for new billing operations.
          */
         interface BillSettingVersion {
           /**

@@ -5,7 +5,9 @@ declare module 'stripe' {
     namespace V2 {
       namespace Billing {
         /**
-         * The LicenseFeeSubscription object.
+         * A License Fee Subscription represents a customer's subscription to a License Fee at a specified quantity. It tracks
+         * the number of units (such as seats or licenses) the customer has subscribed to and bills them according to the service
+         * interval defined in the License Fee and the Billing Cadence.
          */
         interface LicenseFeeSubscription {
           /**
