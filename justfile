@@ -9,6 +9,9 @@ export PATH := `pwd` + "/node_modules/.bin:" + env('PATH')
 _default:
     just --list --unsorted
 
+# ⭐ run format, lint, and tests to prepare for CI
+prepare: format lint test types-test
+
 # this uses positional-args so that mixed quoted and unquoted arguments
 # (like filtering for a certain test) work the way we expect
 # ⭐ run unit tests
