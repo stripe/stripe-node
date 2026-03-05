@@ -828,7 +828,8 @@ describe('Stripe Module', function() {
           res.setHeader('Request-Id', `req_1`);
           if (
             req.url === '/v2/core/events/evt_123' &&
-            req.headers['stripe-context'] == null
+            req.headers['stripe-context'] == null &&
+            req.headers['stripe-request-trigger'] === 'event=evt_123'
           ) {
             res.write(JSON.stringify(jsonWithData));
           } else {
@@ -897,7 +898,8 @@ describe('Stripe Module', function() {
         (req, res) => {
           if (
             req.url === '/v2/core/events/evt_123' &&
-            req.headers['stripe-context'] === 'acct_123'
+            req.headers['stripe-context'] === 'acct_123' &&
+            req.headers['stripe-request-trigger'] === 'event=evt_123'
           ) {
             res.write(JSON.stringify(jsonWithData));
           } else {
@@ -952,7 +954,8 @@ describe('Stripe Module', function() {
           res.setHeader('Request-Id', `req_1`);
           if (
             req.url === '/api/whatever/obj_123' &&
-            req.headers['stripe-context'] == null
+            req.headers['stripe-context'] == null &&
+            req.headers['stripe-request-trigger'] === 'event=evt_123'
           ) {
             res.write(JSON.stringify({id: 'obj_123', data: 'some data'}));
           } else {
@@ -1017,7 +1020,8 @@ describe('Stripe Module', function() {
         (req, res) => {
           if (
             req.url === '/api/whatever/obj_123' &&
-            req.headers['stripe-context'] === 'acct_123'
+            req.headers['stripe-context'] === 'acct_123' &&
+            req.headers['stripe-request-trigger'] === 'event=evt_123'
           ) {
             res.write(JSON.stringify({id: 'obj_123', data: 'some data'}));
           } else {
@@ -1140,7 +1144,7 @@ describe('Stripe Module', function() {
                 description: 'test meter event',
                 created: new Date('2009-02-13T23:31:30Z'),
               },
-              {additionalHeaders: {foo: 'bar'}}
+              {headers: {foo: 'bar'}}
             );
             expect(result).to.deep.equal(returnedCustomer);
             closeServer();
@@ -1204,7 +1208,7 @@ describe('Stripe Module', function() {
               'GET',
               '/v1/customers/cus_123',
               {},
-              {additionalHeaders: {foo: 'bar'}}
+              {headers: {foo: 'bar'}}
             );
             expect(result).to.deep.equal(returnedCustomer);
             closeServer();

@@ -20,6 +20,7 @@ const OPTIONS_KEYS = [
   'host',
   'authenticator',
   'stripeContext',
+  'headers',
   'additionalHeaders',
   'streaming',
 ];
@@ -282,10 +283,13 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
         }
         opts.authenticator = params.authenticator as RequestAuthenticator;
       }
+      // these are sent by us from _rawRequest, which is what powers all generated requests
+      if (params.headers) {
+        Object.assign(opts.headers, params.headers);
+      }
+      // these are sent from the user-facing RawRequest
       if (params.additionalHeaders) {
-        opts.headers = params.additionalHeaders as {
-          [headerName: string]: string;
-        };
+        Object.assign(opts.headers, params.additionalHeaders);
       }
       if (params.streaming) {
         opts.streaming = true;
