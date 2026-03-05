@@ -528,6 +528,9 @@ export function createStripe(
           undefined,
           {
             stripeContext: eventNotification.context,
+            headers: {
+              'Stripe-Request-Trigger': `event=${eventNotification.id}`,
+            },
           },
           ['fetch_event']
         );
@@ -544,6 +547,9 @@ export function createStripe(
           undefined,
           {
             stripeContext: eventNotification.context,
+            headers: {
+              'Stripe-Request-Trigger': `event=${eventNotification.id}`,
+            },
           },
           ['fetch_related_object']
         );
