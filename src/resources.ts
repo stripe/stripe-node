@@ -12,6 +12,7 @@ import {Associations as TaxAssociations} from './resources/Tax/Associations.js';
 import {Authorizations as FinancialConnectionsAuthorizations} from './resources/FinancialConnections/Authorizations.js';
 import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {Authorizations as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
+import {BatchJobs as V2CoreBatchJobs} from './resources/V2/Core/BatchJobs.js';
 import {BillSettings as V2BillingBillSettings} from './resources/V2/Billing/BillSettings.js';
 import {Cadences as V2BillingCadences} from './resources/V2/Billing/Cadences.js';
 import {Calculations as TaxCalculations} from './resources/Tax/Calculations.js';
@@ -326,6 +327,7 @@ export const V2 = resourceNamespace('v2', {
     AccountLinks: V2CoreAccountLinks,
     AccountTokens: V2CoreAccountTokens,
     Accounts: V2CoreAccounts,
+    BatchJobs: V2CoreBatchJobs,
     EventDestinations: V2CoreEventDestinations,
     Events: V2CoreEvents,
     Vault: resourceNamespace('vault', {
