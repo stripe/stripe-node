@@ -481,13 +481,18 @@ export function determineProcessUserAgentProperties(): Record<string, string> {
 }
 
 export const AI_AGENTS: [string, string][] = [
+  // The beginning of the section generated from our OpenAPI spec
   ['ANTIGRAVITY_CLI_ALIAS', 'antigravity'],
   ['CLAUDECODE', 'claude_code'],
   ['CLINE_ACTIVE', 'cline'],
   ['CODEX_SANDBOX', 'codex_cli'],
+  ['CODEX_THREAD_ID', 'codex_cli'],
+  ['CODEX_SANDBOX_NETWORK_DISABLED', 'codex_cli'],
+  ['CODEX_CI', 'codex_cli'],
   ['CURSOR_AGENT', 'cursor'],
   ['GEMINI_CLI', 'gemini_cli'],
   ['OPENCODE', 'open_code'],
+  // The end of the section generated from our OpenAPI spec
 ];
 
 export function detectAIAgent(env: Record<string, string | undefined>): string {
