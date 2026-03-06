@@ -57,6 +57,9 @@ export const Events = StripeResource.extend({
         }).apply(this, [
           {
             stripeContext: pulledEvent.context,
+            headers: {
+              'Stripe-Request-Trigger': `event=${pulledEvent.id}`,
+            },
           },
         ]),
     };
