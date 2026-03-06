@@ -20,6 +20,7 @@ const OPTIONS_KEYS = [
   'host',
   'authenticator',
   'stripeContext',
+  'headers',
   'additionalHeaders',
   'streaming',
 ];
@@ -282,10 +283,13 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
         }
         opts.authenticator = params.authenticator as RequestAuthenticator;
       }
+      // these are sent by us from _rawRequest, which is what powers all generated requests
+      if (params.headers) {
+        Object.assign(opts.headers, params.headers);
+      }
+      // these are sent from the user-facing RawRequest
       if (params.additionalHeaders) {
-        opts.headers = params.additionalHeaders as {
-          [headerName: string]: string;
-        };
+        Object.assign(opts.headers, params.additionalHeaders);
       }
       if (params.streaming) {
         opts.streaming = true;
@@ -474,6 +478,25 @@ export function determineProcessUserAgentProperties(): Record<string, string> {
         lang_version: process.version,
         platform: process.platform,
       };
+}
+
+export const AI_AGENTS: [string, string][] = [
+  ['ANTIGRAVITY_CLI_ALIAS', 'antigravity'],
+  ['CLAUDECODE', 'claude_code'],
+  ['CLINE_ACTIVE', 'cline'],
+  ['CODEX_SANDBOX', 'codex_cli'],
+  ['CURSOR_AGENT', 'cursor'],
+  ['GEMINI_CLI', 'gemini_cli'],
+  ['OPENCODE', 'open_code'],
+];
+
+export function detectAIAgent(env: Record<string, string | undefined>): string {
+  for (const [envVar, agentName] of AI_AGENTS) {
+    if (env[envVar]) {
+      return agentName;
+    }
+  }
+  return '';
 }
 
 export function createApiKeyAuthenticator(
