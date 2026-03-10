@@ -62,6 +62,7 @@ import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury
 import {InboundTransfers as V2MoneyManagementInboundTransfers} from './resources/V2/MoneyManagement/InboundTransfers.js';
 import {Institutions as FinancialConnectionsInstitutions} from './resources/FinancialConnections/Institutions.js';
 import {Intents as V2BillingIntents} from './resources/V2/Billing/Intents.js';
+import {IssuingAuthorizationEvaluations as RadarIssuingAuthorizationEvaluations} from './resources/Radar/IssuingAuthorizationEvaluations.js';
 import {LicenseFeeSubscriptions as V2BillingLicenseFeeSubscriptions} from './resources/V2/Billing/LicenseFeeSubscriptions.js';
 import {LicenseFees as V2BillingLicenseFees} from './resources/V2/Billing/LicenseFees.js';
 import {LicensedItems as V2BillingLicensedItems} from './resources/V2/Billing/LicensedItems.js';
@@ -288,6 +289,7 @@ export const ProductCatalog = resourceNamespace('productCatalog', {
 export const Radar = resourceNamespace('radar', {
   AccountEvaluations: RadarAccountEvaluations,
   EarlyFraudWarnings: RadarEarlyFraudWarnings,
+  IssuingAuthorizationEvaluations: RadarIssuingAuthorizationEvaluations,
   PaymentEvaluations: RadarPaymentEvaluations,
   ValueListItems: RadarValueListItems,
   ValueLists: RadarValueLists,
