@@ -29,11 +29,6 @@ declare module 'stripe' {
           metadata: Stripe.MetadataParam;
 
           /**
-           * ID of the payment method used in this OffSessionPayment.
-           */
-          payment_method: string;
-
-          /**
            * Details about the capture configuration for the OffSessionPayment.
            */
           capture?: OffSessionPaymentCreateParams.Capture;
@@ -42,6 +37,16 @@ declare module 'stripe' {
            * The account (if any) for which the funds of the OffSessionPayment are intended.
            */
           on_behalf_of?: string;
+
+          /**
+           * ID of the payment method used in this OffSessionPayment.
+           */
+          payment_method?: string;
+
+          /**
+           * If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the payment_method property on the OffSessionPayment.
+           */
+          payment_method_data?: OffSessionPaymentCreateParams.PaymentMethodData;
 
           /**
            * Payment method options for the off-session payment.
@@ -108,6 +113,69 @@ declare module 'stripe' {
 
           namespace Capture {
             type CaptureMethod = 'automatic' | 'manual';
+          }
+
+          interface PaymentMethodData {
+            /**
+             * Billing information associated with the payment method.
+             */
+            billing_details?: PaymentMethodData.BillingDetails;
+
+            /**
+             * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
+             */
+            type: 'card';
+
+            /**
+             * Contains card details that can be used to create a card PaymentMethod for PCI compliant users.
+             */
+            card?: PaymentMethodData.Card;
+          }
+
+          namespace PaymentMethodData {
+            interface BillingDetails {
+              /**
+               * Billing address.
+               */
+              address?: Stripe.AddressParam;
+
+              /**
+               * Email address.
+               */
+              email?: string;
+
+              /**
+               * Full name.
+               */
+              name?: string;
+
+              /**
+               * Billing phone number (including extension).
+               */
+              phone?: string;
+            }
+
+            interface Card {
+              /**
+               * The card CVC.
+               */
+              cvc?: string;
+
+              /**
+               * The card expiration month.
+               */
+              exp_month: string;
+
+              /**
+               * The card expiration year.
+               */
+              exp_year: string;
+
+              /**
+               * The card number.
+               */
+              number?: string;
+            }
           }
 
           interface PaymentMethodOptions {

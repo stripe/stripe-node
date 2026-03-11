@@ -22,9 +22,7 @@ declare module 'stripe' {
         /**
          * Affiliate attribution data associated with this requested session.
          */
-        affiliate_attributions?: Array<
-          RequestedSessionCreateParams.AffiliateAttribution
-        >;
+        affiliate_attribution?: RequestedSessionCreateParams.AffiliateAttribution;
 
         /**
          * The customer for this requested session.
@@ -584,9 +582,7 @@ declare module 'stripe' {
         /**
          * Affiliate attribution data associated with this requested session.
          */
-        affiliate_attributions?: Array<
-          RequestedSessionConfirmParams.AffiliateAttribution
-        >;
+        affiliate_attribution?: RequestedSessionConfirmParams.AffiliateAttribution;
 
         /**
          * Specifies which fields in the response should be expanded.

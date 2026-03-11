@@ -1610,10 +1610,15 @@ declare module 'stripe' {
           | 'commercial.celtic.charge_card'
           | 'commercial.celtic.spend_card'
           | 'commercial.cross_river_bank.charge_card'
+          | 'commercial.cross_river_bank.prepaid_card'
           | 'commercial.cross_river_bank.spend_card'
+          | 'commercial.fifth_third.charge_card'
           | 'commercial.lead.prepaid_card'
           | 'commercial.stripe.charge_card'
-          | 'commercial.stripe.prepaid_card';
+          | 'commercial.stripe.prepaid_card'
+          | 'consumer.celtic.revolving_credit_card'
+          | 'consumer.cross_river_bank.prepaid_card'
+          | 'consumer.lead.prepaid_card';
       }
     }
 

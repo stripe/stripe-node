@@ -89,6 +89,11 @@ declare module 'stripe' {
       discounts: Array<string | Stripe.Discount> | null;
 
       /**
+       * Array of field names that can't be modified. Attempting to update a frozen field returns an error.
+       */
+      frozen_fields?: Array<InvoiceItem.FrozenField>;
+
+      /**
        * The ID of the invoice this invoice item belongs to.
        */
       invoice: string | Stripe.Invoice | null;
@@ -149,6 +154,8 @@ declare module 'stripe' {
     }
 
     namespace InvoiceItem {
+      type FrozenField = 'pricing' | 'quantity';
+
       interface Parent {
         /**
          * Details about the license fee subscription that generated this invoice item

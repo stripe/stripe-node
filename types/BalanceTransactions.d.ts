@@ -92,6 +92,7 @@ declare module 'stripe' {
 
     namespace BalanceTransaction {
       type BalanceType =
+        | 'fee_credits'
         | 'issuing'
         | 'payments'
         | 'refund_and_dispute_prefunding'

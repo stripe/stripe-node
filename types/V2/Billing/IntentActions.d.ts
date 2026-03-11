@@ -93,7 +93,10 @@ declare module 'stripe' {
             }
 
             namespace EffectiveAt {
-              type Type = 'current_billing_period_end' | 'on_reserve';
+              type Type =
+                | 'current_billing_period_end'
+                | 'next_billing_period_start'
+                | 'on_reserve';
             }
 
             interface InvoiceDiscountRule {
