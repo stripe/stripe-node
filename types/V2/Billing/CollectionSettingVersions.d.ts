@@ -180,7 +180,7 @@ declare module 'stripe' {
                 /**
                  * Amount to be charged for future payments.
                  */
-                amount?: string;
+                amount?: number;
 
                 /**
                  * The AmountType for the mandate. One of `fixed` or `maximum`.

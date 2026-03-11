@@ -88,7 +88,7 @@ declare module 'stripe' {
               /**
                * Divide usage by this number.
                */
-              divide_by: string;
+              divide_by: number;
 
               /**
                * After division, round the result up or down.
