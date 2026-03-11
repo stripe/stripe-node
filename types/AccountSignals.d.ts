@@ -17,9 +17,9 @@ declare module 'stripe' {
       account: string;
 
       /**
-       * The delinquency signal of the account
+       * The delinquency signal of the account.
        */
-      delinquency: AccountSignals.Delinquency | null;
+      delinquency?: AccountSignals.Delinquency | null;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
