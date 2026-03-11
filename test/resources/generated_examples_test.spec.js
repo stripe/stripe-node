@@ -7029,7 +7029,6 @@ describe('Generated tests', function() {
         metadata: {
           key: 'metadata',
         },
-        payment_method: 'payment_method',
       }
     );
     expect(offSessionPayment).not.to.be.null;
