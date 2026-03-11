@@ -84,6 +84,7 @@
 ///<reference path='./Issuing/TransactionsResource.d.ts' />
 ///<reference path='./MandatesResource.d.ts' />
 ///<reference path='./MarginsResource.d.ts' />
+///<reference path='./Orchestration/PaymentAttemptsResource.d.ts' />
 ///<reference path='./OrdersResource.d.ts' />
 ///<reference path='./PaymentAttemptRecordsResource.d.ts' />
 ///<reference path='./PaymentIntentsResource.d.ts' />
@@ -336,6 +337,7 @@
 ///<reference path='./LoginLinks.d.ts' />
 ///<reference path='./Mandates.d.ts' />
 ///<reference path='./Margins.d.ts' />
+///<reference path='./Orchestration/PaymentAttempts.d.ts' />
 ///<reference path='./Orders.d.ts' />
 ///<reference path='./PaymentAttemptRecords.d.ts' />
 ///<reference path='./PaymentIntentAmountDetailsLineItems.d.ts' />
@@ -639,6 +641,9 @@ declare module 'stripe' {
       programs: Stripe.Issuing.ProgramsResource;
       tokens: Stripe.Issuing.TokensResource;
       transactions: Stripe.Issuing.TransactionsResource;
+    };
+    orchestration: {
+      paymentAttempts: Stripe.Orchestration.PaymentAttemptsResource;
     };
     privacy: {
       redactionJobs: Stripe.Privacy.RedactionJobsResource;

@@ -2345,9 +2345,21 @@ declare module 'stripe' {
              * Type of registration to be created in the US.
              */
             type: Us.Type;
+
+            /**
+             * Options for the home rule tax registration.
+             */
+            home_rule_tax?: Us.HomeRuleTax;
           }
 
           namespace Us {
+            interface HomeRuleTax {
+              /**
+               * A jurisdiction code representing the [local jurisdiction](https://docs.stripe.com/tax/registering?type=home_rule_tax#registration-types).
+               */
+              jurisdiction: string;
+            }
+
             interface LocalAmusementTax {
               /**
                * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction. Supported FIPS codes are: `02154` (Arlington Heights), `05248` (Bensenville), `06613` (Bloomington), `10906` (Campton Hills), `14000` (Chicago), `21696` (East Dundee), `24582` (Evanston), `45421` (Lynwood), `48892` (Midlothian), `64343` (River Grove), `64421` (Riverside), `65806` (Roselle), and `68081` (Schiller Park).
@@ -2395,6 +2407,7 @@ declare module 'stripe' {
               | 'attendance_tax'
               | 'entertainment_tax'
               | 'gross_receipts_tax'
+              | 'home_rule_tax'
               | 'hospitality_tax'
               | 'local_amusement_tax'
               | 'local_lease_tax'

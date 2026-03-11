@@ -91,6 +91,7 @@ import {OutboundSetupIntents as V2MoneyManagementOutboundSetupIntents} from './r
 import {OutboundTransfers as TestHelpersTreasuryOutboundTransfers} from './resources/TestHelpers/Treasury/OutboundTransfers.js';
 import {OutboundTransfers as TreasuryOutboundTransfers} from './resources/Treasury/OutboundTransfers.js';
 import {OutboundTransfers as V2MoneyManagementOutboundTransfers} from './resources/V2/MoneyManagement/OutboundTransfers.js';
+import {PaymentAttempts as OrchestrationPaymentAttempts} from './resources/Orchestration/PaymentAttempts.js';
 import {PaymentEvaluations as RadarPaymentEvaluations} from './resources/Radar/PaymentEvaluations.js';
 import {PayoutMethods as V2MoneyManagementPayoutMethods} from './resources/V2/MoneyManagement/PayoutMethods.js';
 import {PayoutMethodsBankAccountSpec as V2MoneyManagementPayoutMethodsBankAccountSpec} from './resources/V2/MoneyManagement/PayoutMethodsBankAccountSpec.js';
@@ -279,6 +280,9 @@ export const Issuing = resourceNamespace('issuing', {
   Programs: IssuingPrograms,
   Tokens: IssuingTokens,
   Transactions: IssuingTransactions,
+});
+export const Orchestration = resourceNamespace('orchestration', {
+  PaymentAttempts: OrchestrationPaymentAttempts,
 });
 export const Privacy = resourceNamespace('privacy', {
   RedactionJobs: PrivacyRedactionJobs,
