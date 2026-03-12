@@ -170,6 +170,7 @@
 ///<reference path='./V2/Core/Accounts/PersonTokensResource.d.ts' />
 ///<reference path='./V2/Core/Accounts/PersonsResource.d.ts' />
 ///<reference path='./V2/Core/AccountsResource.d.ts' />
+///<reference path='./V2/Core/BatchJobsResource.d.ts' />
 ///<reference path='./V2/Core/EventDestinationsResource.d.ts' />
 ///<reference path='./V2/Core/EventsResource.d.ts' />
 ///<reference path='./V2/Core/Vault/GbBankAccountsResource.d.ts' />
@@ -376,6 +377,7 @@
 ///<reference path='./V2/Core/AccountPersons.d.ts' />
 ///<reference path='./V2/Core/AccountTokens.d.ts' />
 ///<reference path='./V2/Core/Accounts.d.ts' />
+///<reference path='./V2/Core/BatchJobs.d.ts' />
 ///<reference path='./V2/Core/EventDestinations.d.ts' />
 ///<reference path='./V2/Core/Events.d.ts' />
 ///<reference path='./V2/Core/Vault/GbBankAccounts.d.ts' />
@@ -627,6 +629,7 @@ declare module 'stripe' {
         accounts: Stripe.V2.Core.AccountsResource;
         accountLinks: Stripe.V2.Core.AccountLinksResource;
         accountTokens: Stripe.V2.Core.AccountTokensResource;
+        batchJobs: Stripe.V2.Core.BatchJobsResource;
         events: Stripe.V2.Core.EventsResource;
         eventDestinations: Stripe.V2.Core.EventDestinationsResource;
         vault: {
