@@ -420,13 +420,15 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * An empty list, because this embedded component has no features.
+           * The list of features enabled in the embedded component.
            */
           features?: CheckScanning.Features;
         }
 
         namespace CheckScanning {
-          interface Features {}
+          interface Features {
+            create_us_paper_check_on_application?: boolean;
+          }
         }
 
         interface DisputesList {
