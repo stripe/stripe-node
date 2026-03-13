@@ -35,6 +35,7 @@ import {CreditReversals as TreasuryCreditReversals} from './resources/Treasury/C
 import {CreditUnderwritingRecords as IssuingCreditUnderwritingRecords} from './resources/Issuing/CreditUnderwritingRecords.js';
 import {CurrencyConversions as V2MoneyManagementCurrencyConversions} from './resources/V2/MoneyManagement/CurrencyConversions.js';
 import {CustomPricingUnits as V2BillingCustomPricingUnits} from './resources/V2/Billing/CustomPricingUnits.js';
+import {CustomerEvaluations as RadarCustomerEvaluations} from './resources/Radar/CustomerEvaluations.js';
 import {Customers as TestHelpersCustomers} from './resources/TestHelpers/Customers.js';
 import {DebitReversals as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
 import {DisputeSettlementDetails as IssuingDisputeSettlementDetails} from './resources/Issuing/DisputeSettlementDetails.js';
@@ -292,6 +293,7 @@ export const ProductCatalog = resourceNamespace('productCatalog', {
 });
 export const Radar = resourceNamespace('radar', {
   AccountEvaluations: RadarAccountEvaluations,
+  CustomerEvaluations: RadarCustomerEvaluations,
   EarlyFraudWarnings: RadarEarlyFraudWarnings,
   IssuingAuthorizationEvaluations: RadarIssuingAuthorizationEvaluations,
   PaymentEvaluations: RadarPaymentEvaluations,
