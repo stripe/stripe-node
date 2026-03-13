@@ -7,4 +7,8 @@ export const CustomerEvaluations = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/radar/customer_evaluations',
   }),
+  update: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/radar/customer_evaluations/{customer_evaluation}/report',
+  }),
 });

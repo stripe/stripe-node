@@ -14,7 +14,7 @@ declare module 'stripe' {
         /**
          * The type of evaluation event.
          */
-        event_type: 'registration';
+        event_type: CustomerEvaluationCreateParams.EventType;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -81,6 +81,72 @@ declare module 'stripe' {
 
           type Type = 'client_details' | 'customer_details';
         }
+
+        type EventType = 'login' | 'registration';
+      }
+
+      interface CustomerEvaluationUpdateParams {
+        /**
+         * The type of event to report.
+         */
+        type: CustomerEvaluationUpdateParams.Type;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * Event payload for login_failed.
+         */
+        login_failed?: CustomerEvaluationUpdateParams.LoginFailed;
+
+        /**
+         * Event payload for registration_failed.
+         */
+        registration_failed?: CustomerEvaluationUpdateParams.RegistrationFailed;
+
+        /**
+         * Event payload for registration_success.
+         */
+        registration_success?: CustomerEvaluationUpdateParams.RegistrationSuccess;
+      }
+
+      namespace CustomerEvaluationUpdateParams {
+        interface LoginFailed {
+          /**
+           * The reason why this login failed.
+           */
+          reason: LoginFailed.Reason;
+        }
+
+        namespace LoginFailed {
+          type Reason = 'other' | 'suspected_account_sharing';
+        }
+
+        interface RegistrationFailed {
+          /**
+           * The reason why this registration failed.
+           */
+          reason: RegistrationFailed.Reason;
+        }
+
+        namespace RegistrationFailed {
+          type Reason = 'other' | 'suspected_multi_accounting';
+        }
+
+        interface RegistrationSuccess {
+          /**
+           * Stripe customer ID to attach to an entity-less registration evaluation.
+           */
+          customer?: string;
+        }
+
+        type Type =
+          | 'login_failed'
+          | 'login_success'
+          | 'registration_failed'
+          | 'registration_success';
       }
 
       class CustomerEvaluationsResource {
@@ -89,6 +155,15 @@ declare module 'stripe' {
          */
         create(
           params: CustomerEvaluationCreateParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Radar.CustomerEvaluation>>;
+
+        /**
+         * Reports an event on a CustomerEvaluation object.
+         */
+        update(
+          id: string,
+          params: CustomerEvaluationUpdateParams,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Radar.CustomerEvaluation>>;
       }

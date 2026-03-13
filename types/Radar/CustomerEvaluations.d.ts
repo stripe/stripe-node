@@ -33,6 +33,11 @@ declare module 'stripe' {
         event_type: string;
 
         /**
+         * A list of events that have been reported on this customer evaluation.
+         */
+        events: Array<CustomerEvaluation.Event> | null;
+
+        /**
          * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
          */
         livemode: boolean;
@@ -44,6 +49,44 @@ declare module 'stripe' {
       }
 
       namespace CustomerEvaluation {
+        interface Event {
+          /**
+           * Data about a failed login event.
+           */
+          login_failed?: Event.LoginFailed;
+
+          /**
+           * Time at which the event occurred. Measured in seconds since the Unix epoch.
+           */
+          occurred_at: number;
+
+          /**
+           * Data about a failed registration event.
+           */
+          registration_failed?: Event.RegistrationFailed;
+
+          /**
+           * The type of event that occurred.
+           */
+          type: string;
+        }
+
+        namespace Event {
+          interface LoginFailed {
+            /**
+             * The reason why this login failed.
+             */
+            reason: string;
+          }
+
+          interface RegistrationFailed {
+            /**
+             * The reason why this registration failed.
+             */
+            reason: string;
+          }
+        }
+
         interface Signals {
           account_sharing?: Signals.AccountSharing;
 
