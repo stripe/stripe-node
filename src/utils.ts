@@ -476,7 +476,6 @@ export function determineProcessUserAgentProperties(): Record<string, string> {
     ? {}
     : {
         lang_version: process.version,
-        platform: process.platform,
       };
 }
 

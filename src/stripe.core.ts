@@ -72,8 +72,6 @@ export function createStripe(
   Stripe.USER_AGENT = {
     bindings_version: Stripe.PACKAGE_VERSION,
     lang: 'node',
-    publisher: 'stripe',
-    uname: null,
     typescript: false,
     ...determineProcessUserAgentProperties(),
     ...(aiAgent ? {ai_agent: aiAgent} : {}),
@@ -385,29 +383,31 @@ export function createStripe(
       seed: Record<string, string | boolean | null>,
       cb: (userAgent: string) => void
     ): void {
-      this._platformFunctions.getUname().then((uname: string | null) => {
-        const userAgent: Record<string, string> = {};
-        for (const field in seed) {
-          if (!Object.prototype.hasOwnProperty.call(seed, field)) {
-            continue;
-          }
-          userAgent[field] = encodeURIComponent(seed[field] ?? 'null');
+      const userAgent: Record<string, string> = {};
+      for (const field in seed) {
+        if (!Object.prototype.hasOwnProperty.call(seed, field)) {
+          continue;
         }
+        userAgent[field] = encodeURIComponent(seed[field] ?? 'null');
+      }
 
-        // URI-encode in case there are unusual characters in the system's uname.
-        userAgent.uname = encodeURIComponent(uname || 'UNKNOWN');
+      const platformInfo = this._platformFunctions.getPlatformInfo();
+      if (platformInfo && this.getTelemetryEnabled()) {
+        userAgent.platform = encodeURIComponent(platformInfo);
+      } else {
+        delete userAgent.platform;
+      }
 
-        const client = this.getApiField('httpClient');
-        if (client) {
-          userAgent.httplib = encodeURIComponent(client.getClientName());
-        }
+      const client = this.getApiField('httpClient');
+      if (client) {
+        userAgent.httplib = encodeURIComponent(client.getClientName());
+      }
 
-        if (this._appInfo) {
-          userAgent.application = this._appInfo;
-        }
+      if (this._appInfo) {
+        userAgent.application = this._appInfo;
+      }
 
-        cb(JSON.stringify(userAgent));
-      });
+      cb(JSON.stringify(userAgent));
     },
 
     /**
