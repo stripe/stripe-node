@@ -118,6 +118,17 @@ declare module 'stripe' {
          * When the reported payment failed. Measured in seconds since the Unix epoch.
          */
         failed_at: number;
+
+        /**
+         * The failure code for this payment attempt. Must be one of `payment_method_customer_decline` or `payment_method_provider_unknown_outcome`.
+         */
+        failure_code?: Failed.FailureCode;
+      }
+
+      namespace Failed {
+        type FailureCode =
+          | 'payment_method_customer_decline'
+          | 'payment_method_provider_unknown_outcome';
       }
 
       interface Guaranteed {
@@ -279,6 +290,17 @@ declare module 'stripe' {
          * When the reported payment failed. Measured in seconds since the Unix epoch.
          */
         failed_at: number;
+
+        /**
+         * The failure code for this payment attempt. Must be one of `payment_method_customer_decline` or `payment_method_provider_unknown_outcome`.
+         */
+        failure_code?: Failed.FailureCode;
+      }
+
+      namespace Failed {
+        type FailureCode =
+          | 'payment_method_customer_decline'
+          | 'payment_method_provider_unknown_outcome';
       }
 
       interface Guaranteed {
@@ -370,7 +392,7 @@ declare module 'stripe' {
       /**
        * When the reported payment was canceled. Measured in seconds since the Unix epoch.
        */
-      canceled_at: number;
+      canceled_at?: number;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -385,14 +407,19 @@ declare module 'stripe' {
 
     interface PaymentRecordReportPaymentAttemptFailedParams {
       /**
-       * When the reported payment failed. Measured in seconds since the Unix epoch.
-       */
-      failed_at: number;
-
-      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * When the reported payment failed. Measured in seconds since the Unix epoch.
+       */
+      failed_at?: number;
+
+      /**
+       * The failure code for this payment attempt. Must be one of `payment_method_customer_decline` or `payment_method_provider_unknown_outcome`.
+       */
+      failure_code?: PaymentRecordReportPaymentAttemptFailedParams.FailureCode;
 
       /**
        * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -400,16 +427,22 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
     }
 
-    interface PaymentRecordReportPaymentAttemptGuaranteedParams {
-      /**
-       * When the reported payment was guaranteed. Measured in seconds since the Unix epoch.
-       */
-      guaranteed_at: number;
+    namespace PaymentRecordReportPaymentAttemptFailedParams {
+      type FailureCode =
+        | 'payment_method_customer_decline'
+        | 'payment_method_provider_unknown_outcome';
+    }
 
+    interface PaymentRecordReportPaymentAttemptGuaranteedParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * When the reported payment was guaranteed. Measured in seconds since the Unix epoch.
+       */
+      guaranteed_at?: number;
 
       /**
        * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -499,11 +532,6 @@ declare module 'stripe' {
       processor_details: PaymentRecordReportRefundParams.ProcessorDetails;
 
       /**
-       * Information about the payment attempt refund.
-       */
-      refunded: PaymentRecordReportRefundParams.Refunded;
-
-      /**
        * A positive integer in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) representing how much of this payment to refund. Can refund only up to the remaining, unrefunded amount of the payment.
        */
       amount?: PaymentRecordReportRefundParams.Amount;
@@ -522,6 +550,11 @@ declare module 'stripe' {
        * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+      /**
+       * Information about the payment attempt refund.
+       */
+      refunded?: PaymentRecordReportRefundParams.Refunded;
     }
 
     namespace PaymentRecordReportRefundParams {
@@ -606,7 +639,11 @@ declare module 'stripe' {
        */
       reportPaymentAttemptCanceled(
         id: string,
-        params: PaymentRecordReportPaymentAttemptCanceledParams,
+        params?: PaymentRecordReportPaymentAttemptCanceledParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentRecord>>;
+      reportPaymentAttemptCanceled(
+        id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.PaymentRecord>>;
 
@@ -616,7 +653,11 @@ declare module 'stripe' {
        */
       reportPaymentAttemptFailed(
         id: string,
-        params: PaymentRecordReportPaymentAttemptFailedParams,
+        params?: PaymentRecordReportPaymentAttemptFailedParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentRecord>>;
+      reportPaymentAttemptFailed(
+        id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.PaymentRecord>>;
 
@@ -626,7 +667,11 @@ declare module 'stripe' {
        */
       reportPaymentAttemptGuaranteed(
         id: string,
-        params: PaymentRecordReportPaymentAttemptGuaranteedParams,
+        params?: PaymentRecordReportPaymentAttemptGuaranteedParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentRecord>>;
+      reportPaymentAttemptGuaranteed(
+        id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.PaymentRecord>>;
 

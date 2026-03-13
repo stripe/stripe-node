@@ -17,6 +17,10 @@ export const Sessions = StripeResource.extend({
     fullPath: '/v1/checkout/sessions',
     methodType: 'list',
   }),
+  approve: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/checkout/sessions/{session}/approve',
+  }),
   expire: stripeMethod({
     method: 'POST',
     fullPath: '/v1/checkout/sessions/{session}/expire',

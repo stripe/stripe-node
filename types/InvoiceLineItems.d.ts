@@ -145,11 +145,6 @@ declare module 'stripe' {
         invoice_item_details: Parent.InvoiceItemDetails | null;
 
         /**
-         * Details about the license fee subscription that generated this line item
-         */
-        license_fee_subscription_details?: Parent.LicenseFeeSubscriptionDetails | null;
-
-        /**
          * Details about the rate card subscription that generated this line item
          */
         rate_card_subscription_details?: Parent.RateCardSubscriptionDetails | null;
@@ -168,6 +163,11 @@ declare module 'stripe' {
          * The type of parent that generated this line item
          */
         type: Parent.Type;
+
+        /**
+         * Details about the pricing plan subscription that generated this line item
+         */
+        pricing_plan_subscription_details?: Parent.PricingPlanSubscriptionDetails | null;
       }
 
       namespace Parent {
@@ -216,29 +216,19 @@ declare module 'stripe' {
           }
         }
 
-        interface LicenseFeeSubscriptionDetails {
+        interface PricingPlanSubscriptionDetails {
           /**
            * The invoice item that generated this line item
            */
           invoice_item: string;
 
           /**
-           * The license fee subscription that generated this line item
-           */
-          license_fee_subscription: string;
-
-          /**
-           * The license fee version at the time this line item was generated
-           */
-          license_fee_version: string;
-
-          /**
-           * The pricing plan subscription that manages the license fee subscription
+           * The pricing plan subscription that manages this charge
            */
           pricing_plan_subscription: string;
 
           /**
-           * The pricing plan version at the time this line item was generated
+           * The pricing plan version at the time this charge was generated
            */
           pricing_plan_version: string;
         }
@@ -248,16 +238,6 @@ declare module 'stripe' {
            * The invoice item that generated this line item
            */
           invoice_item: string;
-
-          /**
-           * The pricing plan subscription that manages the rate card subscription
-           */
-          pricing_plan_subscription?: string | null;
-
-          /**
-           * The pricing plan version at the time this line item was generated
-           */
-          pricing_plan_version?: string | null;
 
           /**
            * The rate card subscription that generated this line item
@@ -372,7 +352,7 @@ declare module 'stripe' {
 
         type Type =
           | 'invoice_item_details'
-          | 'license_fee_subscription_details'
+          | 'pricing_plan_subscription_details'
           | 'rate_card_subscription_details'
           | 'schedule_details'
           | 'subscription_item_details';

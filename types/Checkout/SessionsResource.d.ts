@@ -20,6 +20,15 @@ declare module 'stripe' {
         allow_promotion_codes?: boolean;
 
         /**
+         * Determines whether the customer's attempt to pay must be manually approved.
+         *
+         * Default is `auto`, when the customer's attempt to pay is approved automatically with no action required on your server.
+         *
+         * When set to `manual`, you must approve the customer's attempt to pay by calling [approve](api/checkout/sessions/approve) from your server.
+         */
+        approval_method?: SessionCreateParams.ApprovalMethod;
+
+        /**
          * Settings for automatic tax lookup for this session and resulting payments, invoices, and subscriptions.
          */
         automatic_tax?: SessionCreateParams.AutomaticTax;
@@ -361,6 +370,8 @@ declare module 'stripe' {
             enabled: boolean;
           }
         }
+
+        type ApprovalMethod = 'auto' | 'manual';
 
         interface AutomaticTax {
           /**
@@ -4305,6 +4316,51 @@ declare module 'stripe' {
         type Status = 'complete' | 'expired' | 'open';
       }
 
+      interface SessionApproveParams {
+        /**
+         * The ID of the customer's attempt to pay to approve.
+         */
+        attempt: string;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
+         */
+        payment_intent_data?: SessionApproveParams.PaymentIntentData;
+
+        /**
+         * The URL to redirect your customer back to after they authenticate or cancel their payment on the
+         * payment method's app or site. This parameter is allowed and required if and only if you did not
+         * set the return URL during Checkout Session creation or in `checkout.confirm()` in Stripe.js.
+         */
+        return_url?: string;
+
+        /**
+         * A subset of parameters to be passed to subscription creation for Checkout Sessions in `subscription` mode.
+         */
+        subscription_data?: SessionApproveParams.SubscriptionData;
+      }
+
+      namespace SessionApproveParams {
+        interface PaymentIntentData {
+          /**
+           * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://docs.stripe.com/payments/connected-accounts).
+           */
+          application_fee_amount?: number;
+        }
+
+        interface SubscriptionData {
+          /**
+           * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. To use an application fee percent, the request must be made on behalf of another account, using the `Stripe-Account` header or an OAuth key. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
+           */
+          application_fee_percent?: number;
+        }
+      }
+
       interface SessionExpireParams {
         /**
          * Specifies which fields in the response should be expanded.
@@ -4363,6 +4419,15 @@ declare module 'stripe' {
           options?: RequestOptions
         ): ApiListPromise<Stripe.Checkout.Session>;
         list(options?: RequestOptions): ApiListPromise<Stripe.Checkout.Session>;
+
+        /**
+         * Approves a customer's attempt to pay for a Checkout Session with approval_method set to manual.
+         */
+        approve(
+          id: string,
+          params: SessionApproveParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
 
         /**
          * A Checkout Session can be expired when it is in one of these statuses: open

@@ -146,53 +146,18 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
       });
     });
 
-    describe('getUname', () => {
-      let origGetUname;
-      beforeEach(() => {
-        origGetUname = platformFunctions.getUname;
-      });
-      afterEach(() => {
-        platformFunctions.getUname = origGetUname;
-        platformFunctions._UNAME_CACHE = null;
-      });
-
+    describe('getPlatformInfo', () => {
       if (!isNodeEnvironment) {
-        it('not implemented on non-Node environments', async () => {
-          expect(await platformFunctions.getUname()).to.be.null;
+        it('returns null on non-Node environments', () => {
+          expect(platformFunctions.getPlatformInfo()).to.be.null;
         });
-
-        // No need to run further tests on non-Node environments
-        return;
+      } else {
+        it('returns a platform info string', () => {
+          const info = platformFunctions.getPlatformInfo();
+          expect(info).to.be.a('string');
+          expect(info).to.contain(process.platform);
+        });
       }
-
-      it('runs exec', async () => {
-        const calls: any[] = [];
-        platformFunctions._exec = (cmd: string, cb: any): void => {
-          calls.push([cmd]);
-          cb();
-        };
-
-        await platformFunctions.getUname();
-        expect(calls).to.deep.equal([['uname -a']]);
-      });
-
-      it('passes along normal errors', async () => {
-        const myErr = Error('hi');
-        platformFunctions._exec = (cmd: string, cb: any): void => {
-          cb(myErr, null);
-        };
-
-        expect(await platformFunctions.getUname()).to.be.null;
-      });
-
-      it('passes along thrown errors as normal callback errors', async () => {
-        const myErr = Error('hi');
-        platformFunctions._exec = (cmd: string, cb: any): void => {
-          throw myErr;
-        };
-
-        expect(await platformFunctions.getUname()).to.be.null;
-      });
     });
 
     describe('createEmitter', () => {

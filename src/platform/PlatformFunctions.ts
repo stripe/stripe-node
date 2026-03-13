@@ -21,10 +21,10 @@ export class PlatformFunctions {
   }
 
   /**
-   * Gets uname with Node's built-in `exec` function, if available.
+   * Returns platform info string for telemetry, or null if unavailable.
    */
-  getUname(): Promise<string | null> {
-    throw new Error('getUname not implemented.');
+  getPlatformInfo(): string | null {
+    return null;
   }
 
   /**

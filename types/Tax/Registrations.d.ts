@@ -1623,6 +1623,8 @@ declare module 'stripe' {
              * Type of registration in the US.
              */
             type: Us.Type;
+
+            home_rule_tax?: Us.HomeRuleTax;
           }
 
           namespace Us {
@@ -1650,6 +1652,13 @@ declare module 'stripe' {
             interface GrossReceiptsTax {
               /**
                * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=gross_receipts_tax#registration-types) representing the local jurisdiction.
+               */
+              jurisdiction: string;
+            }
+
+            interface HomeRuleTax {
+              /**
+               * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=home_rule_tax#registration-types) representing the local jurisdiction.
                */
               jurisdiction: string;
             }
@@ -1729,6 +1738,7 @@ declare module 'stripe' {
               | 'attendance_tax'
               | 'entertainment_tax'
               | 'gross_receipts_tax'
+              | 'home_rule_tax'
               | 'hospitality_tax'
               | 'local_amusement_tax'
               | 'local_lease_tax'

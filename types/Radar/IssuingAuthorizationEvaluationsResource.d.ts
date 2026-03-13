@@ -15,7 +15,7 @@ declare module 'stripe' {
         card_details: IssuingAuthorizationEvaluationCreateParams.CardDetails;
 
         /**
-         * Details about the merchant where the authorization occurred.
+         * Details about the seller (grocery store, e-commerce website, etc.) where the card authorization happened.
          */
         merchant_details: IssuingAuthorizationEvaluationCreateParams.MerchantDetails;
 
@@ -35,17 +35,17 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * Details about the card network processing.
+         * Details about the authorization, such as identifiers, set by the card network.
          */
         network_details?: IssuingAuthorizationEvaluationCreateParams.NetworkDetails;
 
         /**
-         * Details about the token, if a tokenized payment method was used.
+         * Details about the token, if a tokenized payment method was used for the authorization.
          */
         token_details?: IssuingAuthorizationEvaluationCreateParams.TokenDetails;
 
         /**
-         * Details about verification checks performed.
+         * Details about verification data for the authorization.
          */
         verification_details?: IssuingAuthorizationEvaluationCreateParams.VerificationDetails;
       }
@@ -53,47 +53,47 @@ declare module 'stripe' {
       namespace IssuingAuthorizationEvaluationCreateParams {
         interface AuthorizationDetails {
           /**
-           * The authorization amount in the smallest currency unit.
+           * The total amount of the authorization in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
            */
           amount: number;
 
           /**
-           * The method used for authorization.
+           * How the card details were provided.
            */
           authorization_method?: AuthorizationDetails.AuthorizationMethod;
 
           /**
-           * Three-letter ISO currency code in lowercase.
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
            */
           currency: string;
 
           /**
-           * The card entry mode.
+           * Defines how the card's information was entered for the authorization.
            */
           entry_mode?: AuthorizationDetails.EntryMode;
 
           /**
-           * The raw code for the card entry mode.
+           * Raw code indicating the entry mode from the network message.
            */
           entry_mode_raw_code?: string;
 
           /**
-           * The time when the authorization was initiated (Unix timestamp).
+           * The timestamp of the authorization initiated in seconds.
            */
           initiated_at: number;
 
           /**
-           * The point of sale condition.
+           * Defines how the card was read at the point of sale.
            */
           point_of_sale_condition?: AuthorizationDetails.PointOfSaleCondition;
 
           /**
-           * The raw code for the point of sale condition.
+           * Raw code indicating the point of sale condition from the network message.
            */
           point_of_sale_condition_raw_code?: string;
 
           /**
-           * External reference for the authorization.
+           * User's specified unique ID for this authorization attempt (e.g., RRN or internal reference).
            */
           reference: string;
         }
@@ -132,32 +132,32 @@ declare module 'stripe' {
 
         interface CardDetails {
           /**
-           * Bank Identification Number (BIN) of the card.
+           * The Bank Identification Number (BIN) of the card.
            */
           bin: string;
 
           /**
-           * Two-letter ISO country code of the card's issuing bank.
+           * The two-letter country code of the BIN issuer.
            */
-          bin_country?: string;
+          bin_country: string;
 
           /**
-           * The type of card (physical or virtual).
+           * The type of the card.
            */
           card_type: CardDetails.CardType;
 
           /**
-           * The time when the card was created (Unix timestamp).
+           * The timestamp when the card was created.
            */
           created_at: number;
 
           /**
-           * Last 4 digits of the card number.
+           * The last 4 digits of the card number.
            */
           last4?: string;
 
           /**
-           * External reference for the card.
+           * User's specified unique ID of the card for this authorization attempt (e.g., RRN or internal reference).
            */
           reference: string;
         }
@@ -168,51 +168,51 @@ declare module 'stripe' {
 
         interface CardholderDetails {
           /**
-           * The time when the cardholder was created (Unix timestamp).
+           * The timestamp when the cardholder was created.
            */
           created_at?: number;
 
           /**
-           * External reference for the cardholder.
+           * User's specified unique ID of the cardholder for this authorization attempt (e.g., RRN or internal reference).
            */
           reference?: string;
         }
 
         interface MerchantDetails {
           /**
-           * Merchant Category Code (MCC).
+           * The merchant category code for the seller's business.
            */
           category_code: string;
 
           /**
-           * Two-letter ISO country code of the merchant.
+           * Country where the seller is located.
            */
           country?: string;
 
           /**
-           * Name of the merchant.
+           * Name of the seller.
            */
           name: string;
 
           /**
-           * Network merchant identifier.
+           * Identifier assigned to the seller by the card network. Different card networks may assign different network_id fields to the same merchant.
            */
           network_id: string;
 
           /**
-           * Terminal identifier.
+           * An ID assigned by the seller to the location of the sale.
            */
           terminal_id?: string;
         }
 
         interface NetworkDetails {
           /**
-           * The acquiring institution identifier.
+           * Identifier assigned to the acquirer by the card network. Sometimes this value is not provided by the network; in this case, the value will be null.
            */
           acquiring_institution_id?: string;
 
           /**
-           * The card network that routed the authorization.
+           * The card network over which Stripe received the authorization.
            */
           routed_network?: NetworkDetails.RoutedNetwork;
         }
@@ -230,17 +230,17 @@ declare module 'stripe' {
 
         interface TokenDetails {
           /**
-           * The time when the token was created (Unix timestamp).
+           * The timestamp when the network token was created.
            */
           created_at?: number;
 
           /**
-           * External reference for the token.
+           * User's specified unique ID of the card token for this authorization attempt (e.g., RRN or internal reference).
            */
           reference?: string;
 
           /**
-           * The wallet provider for the tokenized payment method.
+           * The digital wallet used for this transaction. One of `apple_pay`, `google_pay`, or `samsung_pay`.
            */
           wallet?: TokenDetails.Wallet;
         }
@@ -251,7 +251,7 @@ declare module 'stripe' {
 
         interface VerificationDetails {
           /**
-           * The result of 3D Secure verification.
+           * The outcome of the 3D Secure authentication request.
            */
           three_d_secure_result?: VerificationDetails.ThreeDSecureResult;
         }

@@ -35,6 +35,7 @@ import {CreditReversals as TreasuryCreditReversals} from './resources/Treasury/C
 import {CreditUnderwritingRecords as IssuingCreditUnderwritingRecords} from './resources/Issuing/CreditUnderwritingRecords.js';
 import {CurrencyConversions as V2MoneyManagementCurrencyConversions} from './resources/V2/MoneyManagement/CurrencyConversions.js';
 import {CustomPricingUnits as V2BillingCustomPricingUnits} from './resources/V2/Billing/CustomPricingUnits.js';
+import {CustomerEvaluations as RadarCustomerEvaluations} from './resources/Radar/CustomerEvaluations.js';
 import {Customers as TestHelpersCustomers} from './resources/TestHelpers/Customers.js';
 import {DebitReversals as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
 import {DisputeSettlementDetails as IssuingDisputeSettlementDetails} from './resources/Issuing/DisputeSettlementDetails.js';
@@ -91,6 +92,7 @@ import {OutboundSetupIntents as V2MoneyManagementOutboundSetupIntents} from './r
 import {OutboundTransfers as TestHelpersTreasuryOutboundTransfers} from './resources/TestHelpers/Treasury/OutboundTransfers.js';
 import {OutboundTransfers as TreasuryOutboundTransfers} from './resources/Treasury/OutboundTransfers.js';
 import {OutboundTransfers as V2MoneyManagementOutboundTransfers} from './resources/V2/MoneyManagement/OutboundTransfers.js';
+import {PaymentAttempts as OrchestrationPaymentAttempts} from './resources/Orchestration/PaymentAttempts.js';
 import {PaymentEvaluations as RadarPaymentEvaluations} from './resources/Radar/PaymentEvaluations.js';
 import {PayoutMethods as V2MoneyManagementPayoutMethods} from './resources/V2/MoneyManagement/PayoutMethods.js';
 import {PayoutMethodsBankAccountSpec as V2MoneyManagementPayoutMethodsBankAccountSpec} from './resources/V2/MoneyManagement/PayoutMethodsBankAccountSpec.js';
@@ -280,6 +282,9 @@ export const Issuing = resourceNamespace('issuing', {
   Tokens: IssuingTokens,
   Transactions: IssuingTransactions,
 });
+export const Orchestration = resourceNamespace('orchestration', {
+  PaymentAttempts: OrchestrationPaymentAttempts,
+});
 export const Privacy = resourceNamespace('privacy', {
   RedactionJobs: PrivacyRedactionJobs,
 });
@@ -288,6 +293,7 @@ export const ProductCatalog = resourceNamespace('productCatalog', {
 });
 export const Radar = resourceNamespace('radar', {
   AccountEvaluations: RadarAccountEvaluations,
+  CustomerEvaluations: RadarCustomerEvaluations,
   EarlyFraudWarnings: RadarEarlyFraudWarnings,
   IssuingAuthorizationEvaluations: RadarIssuingAuthorizationEvaluations,
   PaymentEvaluations: RadarPaymentEvaluations,
