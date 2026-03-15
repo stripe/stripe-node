@@ -102,7 +102,7 @@ declare module 'stripe' {
               /**
                * The total size of the file in bytes.
                */
-              size: number;
+              size: bigint;
             }
 
             namespace File {

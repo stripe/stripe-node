@@ -8,18 +8,83 @@ export const LicenseFees = StripeResource.extend({
     StripeResource.apply(this, args);
     this.versions = new Versions(...args);
   },
-  create: stripeMethod({method: 'POST', fullPath: '/v2/billing/license_fees'}),
+  create: stripeMethod({
+    method: 'POST',
+    fullPath: '/v2/billing/license_fees',
+    requestSchema: {
+      kind: 'object',
+      fields: {
+        transform_quantity: {
+          kind: 'object',
+          fields: {divide_by: {kind: 'int64_string'}},
+        },
+      },
+    },
+    responseSchema: {
+      kind: 'object',
+      fields: {
+        transform_quantity: {
+          kind: 'object',
+          fields: {divide_by: {kind: 'int64_string'}},
+        },
+      },
+    },
+  }),
   retrieve: stripeMethod({
     method: 'GET',
     fullPath: '/v2/billing/license_fees/{id}',
+    responseSchema: {
+      kind: 'object',
+      fields: {
+        transform_quantity: {
+          kind: 'object',
+          fields: {divide_by: {kind: 'int64_string'}},
+        },
+      },
+    },
   }),
   update: stripeMethod({
     method: 'POST',
     fullPath: '/v2/billing/license_fees/{id}',
+    requestSchema: {
+      kind: 'object',
+      fields: {
+        transform_quantity: {
+          kind: 'object',
+          fields: {divide_by: {kind: 'int64_string'}},
+        },
+      },
+    },
+    responseSchema: {
+      kind: 'object',
+      fields: {
+        transform_quantity: {
+          kind: 'object',
+          fields: {divide_by: {kind: 'int64_string'}},
+        },
+      },
+    },
   }),
   list: stripeMethod({
     method: 'GET',
     fullPath: '/v2/billing/license_fees',
     methodType: 'list',
+    responseSchema: {
+      kind: 'object',
+      fields: {
+        data: {
+          kind: 'array',
+          element: {
+            kind: 'object',
+            fields: {
+              transform_quantity: {
+                kind: 'object',
+                fields: {divide_by: {kind: 'int64_string'}},
+              },
+            },
+          },
+        },
+      },
+    },
   }),
 });
