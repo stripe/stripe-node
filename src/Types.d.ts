@@ -15,6 +15,11 @@ export type BufferedFile = {
   type: string;
   file: {data: Uint8Array};
 };
+export type V2RuntimeSchema =
+  | {kind: 'int64_string'}
+  | {kind: 'object'; fields: Record<string, V2RuntimeSchema>}
+  | {kind: 'array'; element: V2RuntimeSchema}
+  | {kind: 'nullable'; inner: V2RuntimeSchema};
 export type MethodSpec = {
   method: string;
   methodType?: string;
@@ -28,6 +33,8 @@ export type MethodSpec = {
   host?: string;
   transformResponseData?: (response: HttpClientResponseInterface) => any;
   usage?: Array<string>;
+  requestSchema?: V2RuntimeSchema;
+  responseSchema?: V2RuntimeSchema;
 };
 export type MultipartRequestData = RequestData | StreamingFile | BufferedFile;
 // rawErrorTypeEnum: The beginning of the section generated from our OpenAPI spec
