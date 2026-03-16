@@ -94,6 +94,7 @@ import {OutboundTransfers as TreasuryOutboundTransfers} from './resources/Treasu
 import {OutboundTransfers as V2MoneyManagementOutboundTransfers} from './resources/V2/MoneyManagement/OutboundTransfers.js';
 import {PaymentAttempts as OrchestrationPaymentAttempts} from './resources/Orchestration/PaymentAttempts.js';
 import {PaymentEvaluations as RadarPaymentEvaluations} from './resources/Radar/PaymentEvaluations.js';
+import {PaymentIntents as TestHelpersPaymentIntents} from './resources/TestHelpers/PaymentIntents.js';
 import {PayoutMethods as V2MoneyManagementPayoutMethods} from './resources/V2/MoneyManagement/PayoutMethods.js';
 import {PayoutMethodsBankAccountSpec as V2MoneyManagementPayoutMethodsBankAccountSpec} from './resources/V2/MoneyManagement/PayoutMethodsBankAccountSpec.js';
 import {PersonalizationDesigns as IssuingPersonalizationDesigns} from './resources/Issuing/PersonalizationDesigns.js';
@@ -335,6 +336,7 @@ export const Terminal = resourceNamespace('terminal', {
 export const TestHelpers = resourceNamespace('testHelpers', {
   ConfirmationTokens: TestHelpersConfirmationTokens,
   Customers: TestHelpersCustomers,
+  PaymentIntents: TestHelpersPaymentIntents,
   Refunds: TestHelpersRefunds,
   TestClocks: TestHelpersTestClocks,
   Capital: resourceNamespace('capital', {
