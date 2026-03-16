@@ -41,8 +41,7 @@ export const generateV1Error = (
 export const generateOAuthError = (
   rawStripeError: StripeRawError
 ): StripeError => {
-  // OAuth error types live outside the V1/V2 RawErrorType union
-  const oauthType = rawStripeError.type as string | undefined;
+  const oauthType = rawStripeError.type;
   switch (oauthType) {
     case 'invalid_grant':
       return new StripeInvalidGrantError(rawStripeError);
@@ -61,7 +60,6 @@ export const generateOAuthError = (
   }
 };
 
-// eslint-disable-next-line complexity
 export const generateV2Error = (
   rawStripeError: StripeRawError
 ): StripeError => {
@@ -314,15 +312,6 @@ export class StripeUnsupportedGrantTypeError extends StripeOAuthError {
 export class StripeUnsupportedResponseTypeError extends StripeOAuthError {
   constructor(raw: StripeRawError = {}) {
     super(raw, 'StripeUnsupportedResponseTypeError');
-  }
-}
-
-/**
- * Any other error from Stripe not specifically captured above
- */
-export class StripeUnknownError extends StripeError {
-  constructor(raw: StripeRawError = {}) {
-    super(raw, 'StripeUnknownError');
   }
 }
 
