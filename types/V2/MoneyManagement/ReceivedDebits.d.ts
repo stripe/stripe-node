@@ -21,7 +21,7 @@ declare module 'stripe' {
           /**
            * Amount and currency of the ReceivedDebit.
            */
-          amount: Amount;
+          amount: ReceivedDebit.Amount;
 
           /**
            * This object stores details about the balance transfer object that resulted in the ReceivedDebit.
@@ -52,7 +52,7 @@ declare module 'stripe' {
           /**
            * The amount and currency of the original/external debit request.
            */
-          external_amount?: Amount;
+          external_amount?: ReceivedDebit.ExternalAmount;
 
           /**
            * Financial Account on which funds for ReceivedDebit were debited.
@@ -96,6 +96,18 @@ declare module 'stripe' {
         }
 
         namespace ReceivedDebit {
+          interface Amount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+          }
+
           interface BalanceTransfer {
             /**
              * Open Enum. The type of balance transfer that originated the ReceivedDebit.
@@ -176,7 +188,7 @@ declare module 'stripe' {
               /**
                * Amount associated with this issuing authorization.
                */
-              amount: Amount;
+              amount: Authorization.Amount;
 
               /**
                * The reference to the v1 issuing authorization ID.
@@ -184,17 +196,57 @@ declare module 'stripe' {
               issuing_authorization_v1: string;
             }
 
+            namespace Authorization {
+              interface Amount {
+                /**
+                 * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+                 */
+                value: number;
+
+                /**
+                 * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+                 */
+                currency: string;
+              }
+            }
+
             interface CardTransaction {
               /**
                * Amount associated with this issuing transaction.
                */
-              amount: Amount;
+              amount: CardTransaction.Amount;
 
               /**
                * The reference to the v1 issuing transaction ID.
                */
               issuing_transaction_v1: string;
             }
+
+            namespace CardTransaction {
+              interface Amount {
+                /**
+                 * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+                 */
+                value: number;
+
+                /**
+                 * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+                 */
+                currency: string;
+              }
+            }
+          }
+
+          interface ExternalAmount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
           }
 
           type Status =

@@ -3172,11 +3172,23 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the impacted requests.
            */
-          realized_fraud_amount: V2.Amount;
+          realized_fraud_amount: Impact.RealizedFraudAmount;
         }
 
         namespace Impact {
           export type AttackType = 'spike' | 'sustained_attack';
+
+          export interface RealizedFraudAmount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+          }
         }
       }
     }
@@ -3226,7 +3238,7 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the approved requests.
            */
-          approved_amount?: V2.Amount;
+          approved_amount?: Impact.ApprovedAmount;
 
           /**
            * The number of approved requests which are impacted.
@@ -3236,12 +3248,38 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the declined requests.
            */
-          declined_amount?: V2.Amount;
+          declined_amount?: Impact.DeclinedAmount;
 
           /**
            * The number of declined requests which are impacted.
            */
           declined_impacted_requests?: number;
+        }
+
+        namespace Impact {
+          export interface ApprovedAmount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+          }
+
+          export interface DeclinedAmount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+          }
         }
       }
     }
@@ -3296,7 +3334,7 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the approved requests.
            */
-          approved_amount?: V2.Amount;
+          approved_amount?: Impact.ApprovedAmount;
 
           /**
            * The number of approved requests which are impacted.
@@ -3306,12 +3344,38 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the declined requests.
            */
-          declined_amount?: V2.Amount;
+          declined_amount?: Impact.DeclinedAmount;
 
           /**
            * The number of declined requests which are impacted.
            */
           declined_impacted_requests?: number;
+        }
+
+        namespace Impact {
+          export interface ApprovedAmount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+          }
+
+          export interface DeclinedAmount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+          }
         }
       }
     }
@@ -3366,7 +3430,7 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the approved requests.
            */
-          approved_amount?: V2.Amount;
+          approved_amount?: Impact.ApprovedAmount;
 
           /**
            * The number of approved requests which are impacted.
@@ -3376,12 +3440,38 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the declined requests.
            */
-          declined_amount?: V2.Amount;
+          declined_amount?: Impact.DeclinedAmount;
 
           /**
            * The number of declined requests which are impacted.
            */
           declined_impacted_requests?: number;
+        }
+
+        namespace Impact {
+          export interface ApprovedAmount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+          }
+
+          export interface DeclinedAmount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+          }
         }
       }
     }
@@ -3436,7 +3526,7 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the approved requests.
            */
-          approved_amount?: V2.Amount;
+          approved_amount?: Impact.ApprovedAmount;
 
           /**
            * The number of approved requests which are impacted.
@@ -3446,12 +3536,38 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the declined requests.
            */
-          declined_amount?: V2.Amount;
+          declined_amount?: Impact.DeclinedAmount;
 
           /**
            * The number of declined requests which are impacted.
            */
           declined_impacted_requests?: number;
+        }
+
+        namespace Impact {
+          export interface ApprovedAmount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+          }
+
+          export interface DeclinedAmount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+          }
         }
       }
     }

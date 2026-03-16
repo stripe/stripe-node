@@ -26,7 +26,7 @@ declare module 'stripe' {
             /**
              * Amount object.
              */
-            amount?: Amount;
+            amount?: From.Amount;
 
             /**
              * A lowercase alpha3 currency code like "usd".
@@ -34,16 +34,44 @@ declare module 'stripe' {
             currency?: string;
           }
 
+          namespace From {
+            interface Amount {
+              /**
+               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+               */
+              value: number;
+
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+            }
+          }
+
           interface To {
             /**
              * Amount object.
              */
-            amount?: Amount;
+            amount?: To.Amount;
 
             /**
              * A lowercase alpha3 currency code like "usd".
              */
             currency?: string;
+          }
+
+          namespace To {
+            interface Amount {
+              /**
+               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+               */
+              value: number;
+
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+            }
           }
         }
       }

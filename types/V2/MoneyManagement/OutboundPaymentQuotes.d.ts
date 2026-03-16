@@ -21,7 +21,7 @@ declare module 'stripe' {
           /**
            * The "presentment amount" for the OutboundPaymentQuote.
            */
-          amount: Amount;
+          amount: OutboundPaymentQuote.Amount;
 
           /**
            * Time at which the OutboundPaymentQuote was created.
@@ -61,6 +61,18 @@ declare module 'stripe' {
         }
 
         namespace OutboundPaymentQuote {
+          interface Amount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+          }
+
           interface DeliveryOptions {
             /**
              * Open Enum. Speed of the payout.
@@ -83,7 +95,7 @@ declare module 'stripe' {
             /**
              * The fee amount for corresponding fee type.
              */
-            amount: Amount;
+            amount: EstimatedFee.Amount;
 
             /**
              * The fee type.
@@ -92,6 +104,18 @@ declare module 'stripe' {
           }
 
           namespace EstimatedFee {
+            interface Amount {
+              /**
+               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+               */
+              value: number;
+
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+            }
+
             type Type =
               | 'cross_border_payout_fee'
               | 'foreign_exchange_fee'
@@ -105,12 +129,26 @@ declare module 'stripe' {
             /**
              * The monetary amount debited from the sender, only set on responses.
              */
-            debited: Amount;
+            debited: From.Debited;
 
             /**
              * The FinancialAccount that funds were pulled from.
              */
             financial_account: string;
+          }
+
+          namespace From {
+            interface Debited {
+              /**
+               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+               */
+              value: number;
+
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+            }
           }
 
           interface FxQuote {
@@ -159,7 +197,7 @@ declare module 'stripe' {
             /**
              * The monetary amount being credited to the destination.
              */
-            credited: Amount;
+            credited: To.Credited;
 
             /**
              * The payout method which the OutboundPayment uses to send payout.
@@ -170,6 +208,20 @@ declare module 'stripe' {
              * To which account the OutboundPayment is sent.
              */
             recipient: string;
+          }
+
+          namespace To {
+            interface Credited {
+              /**
+               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+               */
+              value: number;
+
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+            }
           }
         }
       }
