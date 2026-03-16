@@ -39,7 +39,7 @@ assert(Stripe.errors.StripeOAuthInvalidRequestError);
 assert(Stripe.errors.StripeInvalidScopeError);
 assert(Stripe.errors.StripeUnsupportedGrantTypeError);
 assert(Stripe.errors.StripeUnsupportedResponseTypeError);
-assert(Stripe.errors.StripeUnknownError);
+assert(Stripe.errors.StripeAPIError);
 
 assert(Stripe.StripeResource);
 assert(Stripe.StripeContext);

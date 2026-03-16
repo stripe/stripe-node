@@ -3,9 +3,9 @@ import assert from 'assert';
 
 // API key is null to trigger an authentication error
 const stripe = new Stripe("i'm not a real key", {
-    host: process.env.STRIPE_MOCK_HOST || 'localhost',
-    port: process.env.STRIPE_MOCK_PORT || 12111,
-    protocol: 'http',
+  host: process.env.STRIPE_MOCK_HOST || 'localhost',
+  port: process.env.STRIPE_MOCK_PORT || 12111,
+  protocol: 'http',
 });
 
 try {
@@ -14,8 +14,8 @@ try {
     unknown_prop: 'bar',
   });
 } catch (e) {
-  assert (e instanceof stripe.errors.StripeAPIError);
-  assert (e.type === 'StripeAPIError');
+  assert(e instanceof stripe.errors.StripeAPIError);
+  assert(e.type === 'StripeAPIError');
 }
 
 async function exampleFunction(args) {
@@ -23,8 +23,8 @@ async function exampleFunction(args) {
     await stripe.paymentIntents.create(args);
     throw new Error('Expected an error');
   } catch (e) {
-    assert (e instanceof stripe.errors.StripeAuthenticationError);
-    assert (e.type === 'StripeAuthenticationError');
+    assert(e instanceof stripe.errors.StripeAuthenticationError);
+    assert(e.type === 'StripeAuthenticationError');
   }
 }
 
