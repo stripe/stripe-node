@@ -399,6 +399,13 @@ declare module 'stripe' {
            * The fulfillment option to select.
            */
           selected_fulfillment_option?: FulfillmentDetails.SelectedFulfillmentOption;
+
+          /**
+           * The fulfillment option overrides for specific line items.
+           */
+          selected_fulfillment_option_overrides?: Array<
+            FulfillmentDetails.SelectedFulfillmentOptionOverride
+          >;
         }
 
         namespace FulfillmentDetails {
@@ -461,7 +468,45 @@ declare module 'stripe' {
 
             interface Shipping {
               /**
-               * The shipping option identifer.
+               * The shipping option identifier.
+               */
+              shipping_option: string;
+            }
+          }
+
+          interface SelectedFulfillmentOptionOverride {
+            /**
+             * The digital fulfillment option.
+             */
+            digital?: SelectedFulfillmentOptionOverride.Digital;
+
+            /**
+             * The line item keys that this fulfillment option override applies to.
+             */
+            line_item_keys: Array<string>;
+
+            /**
+             * The shipping fulfillment option.
+             */
+            shipping?: SelectedFulfillmentOptionOverride.Shipping;
+
+            /**
+             * The type of fulfillment option.
+             */
+            type: string;
+          }
+
+          namespace SelectedFulfillmentOptionOverride {
+            interface Digital {
+              /**
+               * The digital option identifier.
+               */
+              digital_option: string;
+            }
+
+            interface Shipping {
+              /**
+               * The shipping option identifier.
                */
               shipping_option: string;
             }

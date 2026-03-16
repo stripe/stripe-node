@@ -43,12 +43,21 @@ declare module 'stripe' {
             /**
              * Time at which this SharedPaymentToken expires and can no longer be used to confirm a PaymentIntent.
              */
-            expires_at: number;
+            expires_at?: number;
 
             /**
              * Max amount that can be captured using this SharedPaymentToken
              */
             max_amount: number;
+
+            /**
+             * The recurring interval at which the shared payment token's amount usage restrictions reset.
+             */
+            recurring_interval?: UsageLimits.RecurringInterval;
+          }
+
+          namespace UsageLimits {
+            type RecurringInterval = 'month' | 'week' | 'year';
           }
         }
       }

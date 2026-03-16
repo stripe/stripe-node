@@ -55,6 +55,15 @@ declare module 'stripe' {
          */
         amount_total: number | null;
 
+        /**
+         * Determines whether the customer's attempt to pay must be manually approved.
+         *
+         * Default is `auto`, when the customer's attempt to pay is approved automatically with no action required on your server.
+         *
+         * When set to `manual`, you must approve the customer's attempt to pay by calling [approve](api/checkout/sessions/approve) from your server.
+         */
+        approval_method?: Session.ApprovalMethod | null;
+
         automatic_tax: Session.AutomaticTax;
 
         /**
@@ -113,6 +122,11 @@ declare module 'stripe' {
          * Currency conversion details for [Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing) sessions created before 2025-03-31.
          */
         currency_conversion: Session.CurrencyConversion | null;
+
+        /**
+         * The customer's pending attempt to pay that requires your approval. Contains information about the customer and their payment details.
+         */
+        current_attempt?: Session.CurrentAttempt | null;
 
         /**
          * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `custom`.
@@ -396,6 +410,8 @@ declare module 'stripe' {
             url: string | null;
           }
         }
+
+        type ApprovalMethod = 'auto' | 'manual';
 
         interface AutomaticTax {
           /**
@@ -827,6 +843,172 @@ declare module 'stripe' {
            * Creation currency of the CheckoutSession before localization
            */
           source_currency: string;
+        }
+
+        interface CurrentAttempt {
+          /**
+           * The customer's billing information, if provided.
+           */
+          billing_details?: CurrentAttempt.BillingDetails | null;
+
+          /**
+           * The customer's email.
+           */
+          email?: string | null;
+
+          /**
+           * The attempt ID you will pass to the [Checkout Session approve](api/checkout/sessions/approve) endpoint to approve the attempt.
+           */
+          id: string;
+
+          /**
+           * Information about the payment method the customer is attempting to pay with.
+           */
+          payment_method_details?: CurrentAttempt.PaymentMethodDetails | null;
+
+          /**
+           * The customer's phone number.
+           */
+          phone?: string | null;
+
+          /**
+           * The customer's shipping information, if provided.
+           */
+          shipping_details: CurrentAttempt.ShippingDetails | null;
+        }
+
+        namespace CurrentAttempt {
+          interface BillingDetails {
+            address: Stripe.Address;
+
+            /**
+             * Customer name.
+             */
+            name: string | null;
+          }
+
+          interface PaymentMethodDetails {
+            /**
+             * Indicates whether this payment method can be shown again to its customer in a checkout flow.
+             */
+            allow_redisplay: PaymentMethodDetails.AllowRedisplay;
+
+            card?: PaymentMethodDetails.Card;
+
+            /**
+             * The type of payment method the customer is attempting to pay with. An additional hash is included in the payment method details with a name matching this value. It contains additional information specific to the payment method type.
+             */
+            type: string;
+          }
+
+          namespace PaymentMethodDetails {
+            type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+            interface Card {
+              /**
+               * The brand of the card, accounting for customer's brand choice on dual-branded cards.
+               */
+              brand: Card.Brand;
+
+              /**
+               * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
+               */
+              country: string | null;
+
+              /**
+               * Two-digit number representing the card's expiration month.
+               */
+              exp_month: number;
+
+              /**
+               * Four-digit number representing the card's expiration year.
+               */
+              exp_year: number;
+
+              /**
+               * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
+               *
+               * *As of May 1, 2021, card fingerprint in India for Connect changed to allow two fingerprints for the same card---one for India and one for the rest of the world.*
+               */
+              fingerprint: string | null;
+
+              /**
+               * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+               */
+              funding: Card.Funding;
+
+              /**
+               * Issuer identification number of the card. (For internal use only and not typically available in standard API requests.)
+               */
+              iin?: string | null;
+
+              /**
+               * The last four digits of the card.
+               */
+              last4: string;
+
+              /**
+               * If this Card is part of a card wallet, this contains the details of the card wallet.
+               */
+              wallet: Card.Wallet | null;
+            }
+
+            namespace Card {
+              type Brand =
+                | 'accel'
+                | 'amex'
+                | 'carnet'
+                | 'cartes_bancaires'
+                | 'conecs'
+                | 'diners'
+                | 'discover'
+                | 'eftpos_au'
+                | 'elo'
+                | 'girocard'
+                | 'interac'
+                | 'jcb'
+                | 'link'
+                | 'maestro'
+                | 'mastercard'
+                | 'nyce'
+                | 'pulse'
+                | 'rupay'
+                | 'star'
+                | 'unionpay'
+                | 'unknown'
+                | 'visa';
+
+              type Funding = 'credit' | 'debit' | 'prepaid' | 'unknown';
+
+              interface Wallet {
+                /**
+                 * The type of the wallet, one of `amex_express_checkout`, `apple_pay`, `google_pay`, `masterpass`, `samsung_pay`, `visa_checkout`, `meta_pay`, or `link`.
+                 */
+                type: Wallet.Type;
+              }
+
+              namespace Wallet {
+                type Type =
+                  | 'amex_express_checkout'
+                  | 'apple_pay'
+                  | 'google_pay'
+                  | 'link'
+                  | 'masterpass'
+                  | 'meta_pay'
+                  | 'samsung_pay'
+                  | 'visa_checkout';
+              }
+            }
+          }
+
+          interface ShippingDetails {
+            address: Stripe.Address;
+
+            /**
+             * Customer name.
+             */
+            name: string;
+          }
         }
 
         type CustomerCreation = 'always' | 'if_required';

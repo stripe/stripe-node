@@ -84,6 +84,7 @@
 ///<reference path='./Issuing/TransactionsResource.d.ts' />
 ///<reference path='./MandatesResource.d.ts' />
 ///<reference path='./MarginsResource.d.ts' />
+///<reference path='./Orchestration/PaymentAttemptsResource.d.ts' />
 ///<reference path='./OrdersResource.d.ts' />
 ///<reference path='./PaymentAttemptRecordsResource.d.ts' />
 ///<reference path='./PaymentIntentsResource.d.ts' />
@@ -101,6 +102,7 @@
 ///<reference path='./PromotionCodesResource.d.ts' />
 ///<reference path='./QuotesResource.d.ts' />
 ///<reference path='./Radar/AccountEvaluationsResource.d.ts' />
+///<reference path='./Radar/CustomerEvaluationsResource.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarningsResource.d.ts' />
 ///<reference path='./Radar/IssuingAuthorizationEvaluationsResource.d.ts' />
 ///<reference path='./Radar/PaymentEvaluationsResource.d.ts' />
@@ -336,6 +338,7 @@
 ///<reference path='./LoginLinks.d.ts' />
 ///<reference path='./Mandates.d.ts' />
 ///<reference path='./Margins.d.ts' />
+///<reference path='./Orchestration/PaymentAttempts.d.ts' />
 ///<reference path='./Orders.d.ts' />
 ///<reference path='./PaymentAttemptRecords.d.ts' />
 ///<reference path='./PaymentIntentAmountDetailsLineItems.d.ts' />
@@ -362,6 +365,7 @@
 ///<reference path='./QuotePreviewSubscriptionSchedules.d.ts' />
 ///<reference path='./Quotes.d.ts' />
 ///<reference path='./Radar/AccountEvaluations.d.ts' />
+///<reference path='./Radar/CustomerEvaluations.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarnings.d.ts' />
 ///<reference path='./Radar/IssuingAuthorizationEvaluations.d.ts' />
 ///<reference path='./Radar/PaymentEvaluations.d.ts' />
@@ -640,6 +644,9 @@ declare module 'stripe' {
       tokens: Stripe.Issuing.TokensResource;
       transactions: Stripe.Issuing.TransactionsResource;
     };
+    orchestration: {
+      paymentAttempts: Stripe.Orchestration.PaymentAttemptsResource;
+    };
     privacy: {
       redactionJobs: Stripe.Privacy.RedactionJobsResource;
     };
@@ -648,6 +655,7 @@ declare module 'stripe' {
     };
     radar: {
       accountEvaluations: Stripe.Radar.AccountEvaluationsResource;
+      customerEvaluations: Stripe.Radar.CustomerEvaluationsResource;
       earlyFraudWarnings: Stripe.Radar.EarlyFraudWarningsResource;
       issuingAuthorizationEvaluations: Stripe.Radar.IssuingAuthorizationEvaluationsResource;
       paymentEvaluations: Stripe.Radar.PaymentEvaluationsResource;

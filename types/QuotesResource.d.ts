@@ -1487,7 +1487,6 @@ declare module 'stripe' {
 
             type Type =
               | 'line_starts_at'
-              | 'now'
               | 'pause_collection_start'
               | 'quote_acceptance_date'
               | 'timestamp';
@@ -1825,7 +1824,6 @@ declare module 'stripe' {
 
             type Type =
               | 'line_starts_at'
-              | 'now'
               | 'pause_collection_start'
               | 'quote_acceptance_date'
               | 'timestamp';
@@ -3482,7 +3480,6 @@ declare module 'stripe' {
 
             type Type =
               | 'line_starts_at'
-              | 'now'
               | 'pause_collection_start'
               | 'quote_acceptance_date'
               | 'timestamp';
@@ -3822,7 +3819,6 @@ declare module 'stripe' {
 
             type Type =
               | 'line_starts_at'
-              | 'now'
               | 'pause_collection_start'
               | 'quote_acceptance_date'
               | 'timestamp';

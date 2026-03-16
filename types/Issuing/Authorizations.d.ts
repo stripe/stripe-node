@@ -128,6 +128,8 @@ declare module 'stripe' {
          */
         token?: string | Stripe.Issuing.Token | null;
 
+        token_details?: Authorization.TokenDetails;
+
         /**
          * List of [transactions](https://docs.stripe.com/api/issuing/transactions) associated with this authorization.
          */
@@ -583,6 +585,352 @@ declare module 'stripe' {
         }
 
         type Status = 'closed' | 'expired' | 'pending' | 'reversed';
+
+        interface TokenDetails {
+          /**
+           * The card associated with this token.
+           */
+          card: string;
+
+          /**
+           * Time at which the object was created. Measured in seconds since the Unix epoch.
+           */
+          created: number;
+
+          /**
+           * The hashed ID derived from the device ID from the card network associated with the token.
+           */
+          device_fingerprint?: string;
+
+          network_data?: TokenDetails.NetworkData;
+        }
+
+        namespace TokenDetails {
+          interface NetworkData {
+            device?: NetworkData.Device;
+
+            mastercard?: NetworkData.Mastercard;
+
+            /**
+             * The card network for this token.
+             */
+            type: NetworkData.Type;
+
+            visa?: NetworkData.Visa;
+
+            wallet_provider?: NetworkData.WalletProvider;
+          }
+
+          namespace NetworkData {
+            interface Device {
+              /**
+               * The IP address of the device at provisioning time.
+               */
+              ip_address?: string;
+
+              /**
+               * The ISO 639-1 language code of the device associated with the tokenization request.
+               */
+              language?: Device.Language;
+
+              /**
+               * The phone number of the device used for tokenization.
+               */
+              phone_number?: string;
+            }
+
+            namespace Device {
+              type Language =
+                | 'aa'
+                | 'ab'
+                | 'ae'
+                | 'af'
+                | 'ak'
+                | 'am'
+                | 'an'
+                | 'ar'
+                | 'as'
+                | 'av'
+                | 'ay'
+                | 'az'
+                | 'ba'
+                | 'be'
+                | 'bg'
+                | 'bi'
+                | 'bm'
+                | 'bn'
+                | 'bo'
+                | 'br'
+                | 'bs'
+                | 'ca'
+                | 'ce'
+                | 'ch'
+                | 'co'
+                | 'cr'
+                | 'cs'
+                | 'cu'
+                | 'cv'
+                | 'cy'
+                | 'da'
+                | 'de'
+                | 'dv'
+                | 'dz'
+                | 'ee'
+                | 'el'
+                | 'en'
+                | 'eo'
+                | 'es'
+                | 'et'
+                | 'eu'
+                | 'fa'
+                | 'ff'
+                | 'fi'
+                | 'fj'
+                | 'fo'
+                | 'fr'
+                | 'fy'
+                | 'ga'
+                | 'gd'
+                | 'gl'
+                | 'gn'
+                | 'gu'
+                | 'gv'
+                | 'ha'
+                | 'he'
+                | 'hi'
+                | 'ho'
+                | 'hr'
+                | 'ht'
+                | 'hu'
+                | 'hy'
+                | 'hz'
+                | 'ia'
+                | 'id'
+                | 'ie'
+                | 'ig'
+                | 'ii'
+                | 'ik'
+                | 'io'
+                | 'is'
+                | 'it'
+                | 'iu'
+                | 'ja'
+                | 'jv'
+                | 'ka'
+                | 'kg'
+                | 'ki'
+                | 'kj'
+                | 'kk'
+                | 'kl'
+                | 'km'
+                | 'kn'
+                | 'ko'
+                | 'kr'
+                | 'ks'
+                | 'ku'
+                | 'kv'
+                | 'kw'
+                | 'ky'
+                | 'la'
+                | 'lb'
+                | 'lg'
+                | 'li'
+                | 'ln'
+                | 'lo'
+                | 'lt'
+                | 'lu'
+                | 'lv'
+                | 'mg'
+                | 'mh'
+                | 'mi'
+                | 'mk'
+                | 'ml'
+                | 'mn'
+                | 'mr'
+                | 'ms'
+                | 'mt'
+                | 'my'
+                | 'na'
+                | 'nb'
+                | 'nd'
+                | 'ne'
+                | 'ng'
+                | 'nl'
+                | 'nn'
+                | 'no'
+                | 'nr'
+                | 'nv'
+                | 'ny'
+                | 'oc'
+                | 'oj'
+                | 'om'
+                | 'or'
+                | 'os'
+                | 'pa'
+                | 'pi'
+                | 'pl'
+                | 'ps'
+                | 'pt'
+                | 'qu'
+                | 'rm'
+                | 'rn'
+                | 'ro'
+                | 'ru'
+                | 'rw'
+                | 'sa'
+                | 'sc'
+                | 'sd'
+                | 'se'
+                | 'sg'
+                | 'si'
+                | 'sk'
+                | 'sl'
+                | 'sm'
+                | 'sn'
+                | 'so'
+                | 'sq'
+                | 'sr'
+                | 'ss'
+                | 'st'
+                | 'su'
+                | 'sv'
+                | 'sw'
+                | 'ta'
+                | 'te'
+                | 'tg'
+                | 'th'
+                | 'ti'
+                | 'tk'
+                | 'tl'
+                | 'tn'
+                | 'to'
+                | 'tr'
+                | 'ts'
+                | 'tt'
+                | 'tw'
+                | 'ty'
+                | 'ug'
+                | 'uk'
+                | 'ur'
+                | 'uz'
+                | 've'
+                | 'vi'
+                | 'vo'
+                | 'wa'
+                | 'wo'
+                | 'xh'
+                | 'yi'
+                | 'yo'
+                | 'za'
+                | 'zh'
+                | 'zu';
+            }
+
+            interface Mastercard {
+              /**
+               * A unique reference ID from the network to represent the card account number.
+               */
+              card_reference_id?: string;
+
+              /**
+               * The network-unique identifier for the token.
+               */
+              token_reference_id: string;
+
+              /**
+               * The ID of the entity requesting tokenization.
+               */
+              token_requestor_id: string;
+            }
+
+            type Type = 'mastercard' | 'visa';
+
+            interface Visa {
+              /**
+               * A unique reference ID from the network to represent the card account number.
+               */
+              card_reference_id?: string;
+
+              /**
+               * The network-unique identifier for the token.
+               */
+              token_reference_id: string;
+
+              /**
+               * The ID of the entity requesting tokenization.
+               */
+              token_requestor_id: string;
+
+              /**
+               * Degree of risk associated with the token between `01` and `99`, with higher number indicating higher risk. A `00` value indicates the token was not scored by Visa.
+               */
+              token_risk_score?: string;
+            }
+
+            interface WalletProvider {
+              /**
+               * An evaluation on the trustworthiness of the wallet account between 1 and 5. A higher score indicates more trustworthy.
+               */
+              account_trust_score?: number;
+
+              /**
+               * The method used for tokenizing a card.
+               */
+              card_number_source?: WalletProvider.CardNumberSource;
+
+              /**
+               * An evaluation on the trustworthiness of the device. A higher score indicates more trustworthy.
+               */
+              device_trust_score?: number;
+
+              /**
+               * The reasons for suggested tokenization given by the card network.
+               */
+              reason_codes?: Array<WalletProvider.ReasonCode>;
+
+              /**
+               * The recommendation on responding to the tokenization request.
+               */
+              suggested_decision?: WalletProvider.SuggestedDecision;
+            }
+
+            namespace WalletProvider {
+              type CardNumberSource = 'app' | 'manual' | 'on_file' | 'other';
+
+              type ReasonCode =
+                | 'account_card_too_new'
+                | 'account_recently_changed'
+                | 'account_too_new'
+                | 'account_too_new_since_launch'
+                | 'additional_device'
+                | 'data_expired'
+                | 'defer_id_v_decision'
+                | 'device_recently_lost'
+                | 'good_activity_history'
+                | 'has_suspended_tokens'
+                | 'high_risk'
+                | 'inactive_account'
+                | 'long_account_tenure'
+                | 'low_account_score'
+                | 'low_device_score'
+                | 'low_phone_number_score'
+                | 'network_service_error'
+                | 'outside_home_territory'
+                | 'provisioning_cardholder_mismatch'
+                | 'provisioning_device_and_cardholder_mismatch'
+                | 'provisioning_device_mismatch'
+                | 'same_device_no_prior_authentication'
+                | 'same_device_successful_prior_authentication'
+                | 'software_update'
+                | 'suspicious_activity'
+                | 'too_many_different_cardholders'
+                | 'too_many_recent_attempts'
+                | 'too_many_recent_tokens';
+
+              type SuggestedDecision = 'approve' | 'decline' | 'require_auth';
+            }
+          }
+        }
 
         interface Treasury {
           /**

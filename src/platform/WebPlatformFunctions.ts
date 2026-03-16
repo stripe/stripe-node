@@ -9,11 +9,6 @@ import {MultipartRequestData, RequestData, BufferedFile} from '../Types.js';
  */
 export class WebPlatformFunctions extends PlatformFunctions {
   /** @override */
-  getUname(): Promise<string | null> {
-    return Promise.resolve(null);
-  }
-
-  /** @override */
   createEmitter(): StripeEmitter {
     return new StripeEmitter();
   }
