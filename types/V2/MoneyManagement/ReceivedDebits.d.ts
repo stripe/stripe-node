@@ -90,7 +90,7 @@ declare module 'stripe' {
           stripe_balance_payment?: ReceivedDebit.StripeBalancePayment;
 
           /**
-           * Open enum, the type of the received debit.
+           * Open Enum. The type of the ReceivedDebit.
            */
           type: ReceivedDebit.Type;
         }
