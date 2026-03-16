@@ -7,9 +7,16 @@ import {
   StripeConnectionError,
   StripeError,
   StripeIdempotencyError,
+  StripeInvalidClientError,
+  StripeInvalidGrantError,
+  StripeInvalidRequestError,
+  StripeInvalidScopeError,
+  StripeOAuthError,
+  StripeOAuthInvalidRequestError,
   StripePermissionError,
   StripeRateLimitError,
-  StripeUnknownError,
+  StripeUnsupportedGrantTypeError,
+  StripeUnsupportedResponseTypeError,
   TemporarySessionExpiredError,
 } from '../src/Error.js';
 import {RequestSender} from '../src/RequestSender.js';
@@ -961,9 +968,9 @@ describe('RequestSender', () => {
           type: 'idempotency_error',
         };
 
-        expect(StripeError.generate(error)).to.be.an.instanceOf(
-          StripeIdempotencyError
-        );
+        expect(
+          StripeError.generate({...error, statusCode: 400})
+        ).to.be.an.instanceOf(StripeIdempotencyError);
 
         nock(`https://${options.host}`)
           .post(options.path, options.params)
@@ -1010,7 +1017,7 @@ describe('RequestSender', () => {
 
         realStripe.customers.create({}, (err) => {
           expect(err).to.be.an.instanceOf(StripeError);
-          expect(err).to.be.an.instanceOf(StripeUnknownError);
+          expect(err).to.be.an.instanceOf(StripeInvalidRequestError);
           expect(err).not.to.be.an.instanceOf(TemporarySessionExpiredError);
           expect(err.message).to.equal('you messed up');
           expect(err.raw.message).to.equal('you messed up');
@@ -1192,14 +1199,14 @@ describe('RequestSender', () => {
           .post(options.path, options.params)
           .reply(400, {
             error: {
-              type: 'card_error',
+              type: 'invalid_request_error',
             },
           });
 
         realStripe._setApiNumberField('maxNetworkRetries', 1);
 
         realStripe.charges.create(options.data, (err) => {
-          expect(err.type).to.equal('StripeCardError');
+          expect(err.type).to.equal('StripeInvalidRequestError');
           done();
         });
       });
@@ -1260,7 +1267,123 @@ describe('RequestSender', () => {
         realStripe._setApiNumberField('maxNetworkRetries', 1);
 
         realStripe.oauth.token(options.data, (err) => {
+          expect(err).to.be.an.instanceOf(StripeInvalidGrantError);
+          expect(err).to.be.an.instanceOf(StripeOAuthError);
           expect(err.type).to.equal('StripeInvalidGrantError');
+          done();
+        });
+      });
+
+      it('should handle OAuth invalid_client errors', (done) => {
+        nock('https://connect.stripe.com')
+          .post('/oauth/token')
+          .reply(401, {
+            error: 'invalid_client',
+            error_description: 'No authentication was provided.',
+          });
+
+        realStripe.oauth.token(options.data, (err) => {
+          expect(err).to.be.an.instanceOf(StripeInvalidClientError);
+          expect(err).to.be.an.instanceOf(StripeOAuthError);
+          expect(err.type).to.equal('StripeInvalidClientError');
+          done();
+        });
+      });
+
+      it('should handle OAuth invalid_request errors', (done) => {
+        nock('https://connect.stripe.com')
+          .post('/oauth/token')
+          .reply(400, {
+            error: 'invalid_request',
+            error_description: 'Missing required parameter.',
+          });
+
+        realStripe.oauth.token(options.data, (err) => {
+          expect(err).to.be.an.instanceOf(StripeOAuthInvalidRequestError);
+          expect(err).to.be.an.instanceOf(StripeOAuthError);
+          expect(err.type).to.equal('StripeOAuthInvalidRequestError');
+          done();
+        });
+      });
+
+      it('should handle OAuth invalid_scope errors', (done) => {
+        nock('https://connect.stripe.com')
+          .post('/oauth/token')
+          .reply(400, {
+            error: 'invalid_scope',
+            error_description: 'Invalid scope.',
+          });
+
+        realStripe.oauth.token(options.data, (err) => {
+          expect(err).to.be.an.instanceOf(StripeInvalidScopeError);
+          expect(err).to.be.an.instanceOf(StripeOAuthError);
+          expect(err.type).to.equal('StripeInvalidScopeError');
+          done();
+        });
+      });
+
+      it('should handle OAuth unsupported_grant_type errors', (done) => {
+        nock('https://connect.stripe.com')
+          .post('/oauth/token')
+          .reply(400, {
+            error: 'unsupported_grant_type',
+            error_description: 'Unsupported grant type.',
+          });
+
+        realStripe.oauth.token(options.data, (err) => {
+          expect(err).to.be.an.instanceOf(StripeUnsupportedGrantTypeError);
+          expect(err).to.be.an.instanceOf(StripeOAuthError);
+          expect(err.type).to.equal('StripeUnsupportedGrantTypeError');
+          done();
+        });
+      });
+
+      it('should handle OAuth unsupported_response_type errors', (done) => {
+        nock('https://connect.stripe.com')
+          .post('/oauth/token')
+          .reply(400, {
+            error: 'unsupported_response_type',
+            error_description: 'Unsupported response type.',
+          });
+
+        realStripe.oauth.token(options.data, (err) => {
+          expect(err).to.be.an.instanceOf(StripeUnsupportedResponseTypeError);
+          expect(err).to.be.an.instanceOf(StripeOAuthError);
+          expect(err.type).to.equal('StripeUnsupportedResponseTypeError');
+          done();
+        });
+      });
+
+      it('should handle unknown OAuth errors with generic StripeOAuthError', (done) => {
+        nock('https://connect.stripe.com')
+          .post('/oauth/token')
+          .reply(400, {
+            error: 'some_future_oauth_error',
+            error_description: 'Something new.',
+          });
+
+        realStripe.oauth.token(options.data, (err) => {
+          expect(err).to.be.an.instanceOf(StripeOAuthError);
+          expect(err).to.be.an.instanceOf(StripeError);
+          expect(err.type).to.equal('StripeOAuthError');
+          done();
+        });
+      });
+
+      it('V2 errors take priority over status-code dispatch', (done) => {
+        nock(`https://${options.host}`)
+          .post('/v2/billing/meter_event_session', {})
+          .reply(401, {
+            error: {
+              type: 'temporary_session_expired',
+              message: 'session expired',
+            },
+          });
+
+        realStripe.v2.billing.meterEventSession.create({}, (err) => {
+          expect(err).to.be.an.instanceOf(TemporarySessionExpiredError);
+          expect(err).not.to.be.an.instanceOf(StripeAuthenticationError);
+          expect(err.message).to.equal('session expired');
           done();
         });
       });
