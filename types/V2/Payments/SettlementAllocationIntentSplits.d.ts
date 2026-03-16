@@ -26,7 +26,7 @@ declare module 'stripe' {
           /**
            * The amount and currency of the SettlementAllocationIntentSplit.
            */
-          amount: SettlementAllocationIntentSplit.Amount;
+          amount: Amount;
 
           /**
            * Timestamp at which SettlementAllocationIntentSplit was created.
@@ -60,18 +60,6 @@ declare module 'stripe' {
         }
 
         namespace SettlementAllocationIntentSplit {
-          interface Amount {
-            /**
-             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-             */
-            value: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
-
           interface Flow {
             /**
              * Type of the flow linked to the transaction which settled the SettlementAllocationIntentSplit. The field matching this value will contain the ID of the flow.

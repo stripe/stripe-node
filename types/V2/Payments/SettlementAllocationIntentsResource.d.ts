@@ -8,7 +8,7 @@ declare module 'stripe' {
           /**
            * The amount and currency of the SettlementAllocationIntent. Allowed Currencies are `gbp` | `eur`.
            */
-          amount: SettlementAllocationIntentCreateParams.Amount;
+          amount: Amount;
 
           /**
            * Date when we expect to receive the funds. Must be in future .
@@ -30,20 +30,6 @@ declare module 'stripe' {
            */
           metadata?: Stripe.MetadataParam;
         }
-
-        namespace SettlementAllocationIntentCreateParams {
-          interface Amount {
-            /**
-             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-             */
-            value: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
-        }
       }
 
       namespace Payments {
@@ -55,26 +41,12 @@ declare module 'stripe' {
           /**
            * The new amount for the SettlementAllocationIntent. Only amount.value can be updated and currency must remain same.
            */
-          amount?: SettlementAllocationIntentUpdateParams.Amount;
+          amount?: Amount;
 
           /**
            * The new reference for the SettlementAllocationIntent.
            */
           reference?: string;
-        }
-
-        namespace SettlementAllocationIntentUpdateParams {
-          interface Amount {
-            /**
-             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-             */
-            value: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
         }
       }
 

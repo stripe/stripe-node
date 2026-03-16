@@ -54,55 +54,17 @@ declare module 'stripe' {
             /**
              * Impact to the available balance.
              */
-            available: BalanceImpact.Available;
+            available: Amount;
 
             /**
              * Impact to the inbound_pending balance.
              */
-            inbound_pending: BalanceImpact.InboundPending;
+            inbound_pending: Amount;
 
             /**
              * Impact to the outbound_pending balance.
              */
-            outbound_pending: BalanceImpact.OutboundPending;
-          }
-
-          namespace BalanceImpact {
-            interface Available {
-              /**
-               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-               */
-              value: number;
-
-              /**
-               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-               */
-              currency: string;
-            }
-
-            interface InboundPending {
-              /**
-               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-               */
-              value: number;
-
-              /**
-               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-               */
-              currency: string;
-            }
-
-            interface OutboundPending {
-              /**
-               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-               */
-              value: number;
-
-              /**
-               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-               */
-              currency: string;
-            }
+            outbound_pending: Amount;
           }
 
           interface TransactionDetails {
