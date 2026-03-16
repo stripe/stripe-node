@@ -154,7 +154,7 @@ declare module 'stripe' {
     }
 
     namespace InvoiceItem {
-      type FrozenField = 'pricing' | 'quantity';
+      type FrozenField = 'discounts' | 'pricing' | 'quantity';
 
       interface Parent {
         /**
