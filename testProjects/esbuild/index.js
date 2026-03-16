@@ -9,13 +9,13 @@ const stripe = new Stripe("i'm not a real key", {
 });
 
 try {
-  throw new stripe.errors.StripeUnknownError({
+  throw new stripe.errors.StripeAPIError({
     charge: 'foo',
     unknown_prop: 'bar',
   });
 } catch (e) {
-  assert (e instanceof stripe.errors.StripeUnknownError);
-  assert (e.type === 'StripeUnknownError');
+  assert (e instanceof stripe.errors.StripeAPIError);
+  assert (e.type === 'StripeAPIError');
 }
 
 async function exampleFunction(args) {
