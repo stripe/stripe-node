@@ -306,7 +306,7 @@ declare module 'stripe' {
       lines: ApiList<Stripe.InvoiceLineItem>;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -988,6 +988,7 @@ declare module 'stripe' {
           | 'routing_number_invalid'
           | 'secret_key_required'
           | 'sepa_unsupported_account'
+          | 'service_period_coupon_with_metered_tiered_item_unsupported'
           | 'setup_attempt_failed'
           | 'setup_intent_authentication_failure'
           | 'setup_intent_invalid_parameter'
@@ -1140,7 +1141,7 @@ declare module 'stripe' {
             mandate_options?: AcssDebit.MandateOptions;
 
             /**
-             * Bank account verification method.
+             * Bank account verification method. The default value is `automatic`.
              */
             verification_method?: AcssDebit.VerificationMethod;
           }
@@ -1272,7 +1273,7 @@ declare module 'stripe' {
             financial_connections?: UsBankAccount.FinancialConnections;
 
             /**
-             * Bank account verification method.
+             * Bank account verification method. The default value is `automatic`.
              */
             verification_method?: UsBankAccount.VerificationMethod;
           }

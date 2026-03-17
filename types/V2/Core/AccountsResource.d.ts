@@ -1468,12 +1468,12 @@ declare module 'stripe' {
                   /**
                    * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
                    */
-                  value?: number;
+                  value: number;
 
                   /**
                    * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
                    */
-                  currency?: string;
+                  currency: string;
                 }
               }
 
@@ -1813,12 +1813,12 @@ declare module 'stripe' {
                   /**
                    * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
                    */
-                  value?: number;
+                  value: number;
 
                   /**
                    * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
                    */
-                  currency?: string;
+                  currency: string;
                 }
               }
 
@@ -4061,12 +4061,12 @@ declare module 'stripe' {
                   /**
                    * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
                    */
-                  value?: number;
+                  value: number;
 
                   /**
                    * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
                    */
-                  currency?: string;
+                  currency: string;
                 }
               }
 
@@ -4406,12 +4406,12 @@ declare module 'stripe' {
                   /**
                    * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
                    */
-                  value?: number;
+                  value: number;
 
                   /**
                    * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
                    */
-                  currency?: string;
+                  currency: string;
                 }
               }
 
@@ -5032,6 +5032,7 @@ declare module 'stripe' {
 
           /**
            * An Account is a representation of a company, individual or other entity that a user interacts with. Accounts contain identifying information about the entity, and configurations that store the features an account has access to. An account can be configured as any or all of the following configurations: Customer, Merchant and/or Recipient.
+           * @throws Stripe.RateLimitError
            */
           create(
             params?: AccountCreateParams,
@@ -5043,6 +5044,7 @@ declare module 'stripe' {
 
           /**
            * Retrieves the details of an Account.
+           * @throws Stripe.RateLimitError
            */
           retrieve(
             id: string,
@@ -5056,6 +5058,7 @@ declare module 'stripe' {
 
           /**
            * Updates the details of an Account.
+           * @throws Stripe.RateLimitError
            */
           update(
             id: string,
@@ -5065,6 +5068,7 @@ declare module 'stripe' {
 
           /**
            * Returns a list of Accounts.
+           * @throws Stripe.RateLimitError
            */
           list(
             params?: AccountListParams,
@@ -5076,6 +5080,7 @@ declare module 'stripe' {
 
           /**
            * Removes access to the Account and its associated resources. Closed Accounts can no longer be operated on, but limited information can still be retrieved through the API in order to be able to track their history.
+           * @throws Stripe.RateLimitError
            */
           close(
             id: string,
