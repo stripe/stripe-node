@@ -4447,6 +4447,31 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+
+          /**
+           * Specific configuration for this PaymentIntent when the mode is `deposit`.
+           */
+          deposit_options?: Crypto.DepositOptions;
+
+          /**
+           * The mode of the crypto payment.
+           */
+          mode?: Crypto.Mode;
+        }
+
+        namespace Crypto {
+          interface DepositOptions {
+            /**
+             * The blockchain networks to support for deposits. Learn more about [supported networks and tokens](https://docs.stripe.com/payments/deposit-mode-stablecoin-payments#token-and-network-support).
+             */
+            networks: Array<DepositOptions.Network>;
+          }
+
+          namespace DepositOptions {
+            type Network = 'base' | 'solana' | 'tempo';
+          }
+
+          type Mode = 'default' | 'deposit';
         }
 
         interface CustomerBalance {
@@ -11448,6 +11473,31 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+
+          /**
+           * Specific configuration for this PaymentIntent when the mode is `deposit`.
+           */
+          deposit_options?: Crypto.DepositOptions;
+
+          /**
+           * The mode of the crypto payment.
+           */
+          mode?: Crypto.Mode;
+        }
+
+        namespace Crypto {
+          interface DepositOptions {
+            /**
+             * The blockchain networks to support for deposits. Learn more about [supported networks and tokens](https://docs.stripe.com/payments/deposit-mode-stablecoin-payments#token-and-network-support).
+             */
+            networks: Array<DepositOptions.Network>;
+          }
+
+          namespace DepositOptions {
+            type Network = 'base' | 'solana' | 'tempo';
+          }
+
+          type Mode = 'default' | 'deposit';
         }
 
         interface CustomerBalance {
@@ -20646,6 +20696,31 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+
+          /**
+           * Specific configuration for this PaymentIntent when the mode is `deposit`.
+           */
+          deposit_options?: Crypto.DepositOptions;
+
+          /**
+           * The mode of the crypto payment.
+           */
+          mode?: Crypto.Mode;
+        }
+
+        namespace Crypto {
+          interface DepositOptions {
+            /**
+             * The blockchain networks to support for deposits. Learn more about [supported networks and tokens](https://docs.stripe.com/payments/deposit-mode-stablecoin-payments#token-and-network-support).
+             */
+            networks: Array<DepositOptions.Network>;
+          }
+
+          namespace DepositOptions {
+            type Network = 'base' | 'solana' | 'tempo';
+          }
+
+          type Mode = 'default' | 'deposit';
         }
 
         interface CustomerBalance {

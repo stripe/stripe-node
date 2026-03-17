@@ -859,6 +859,8 @@ declare module 'stripe' {
         wechat_pay_redirect_to_android_app?: NextAction.WechatPayRedirectToAndroidApp;
 
         wechat_pay_redirect_to_ios_app?: NextAction.WechatPayRedirectToIosApp;
+
+        crypto_display_details?: NextAction.CryptoDisplayDetails;
       }
 
       namespace NextAction {
@@ -948,6 +950,100 @@ declare module 'stripe' {
              * The image_url_svg string used to render QR code
              */
             image_url_svg: string;
+          }
+        }
+
+        interface CryptoDisplayDetails {
+          deposit_addresses: CryptoDisplayDetails.DepositAddresses;
+        }
+
+        namespace CryptoDisplayDetails {
+          interface DepositAddresses {
+            base?: DepositAddresses.Base;
+
+            solana?: DepositAddresses.Solana;
+
+            tempo?: DepositAddresses.Tempo;
+          }
+
+          namespace DepositAddresses {
+            interface Base {
+              /**
+               * Address of the deposit address.
+               */
+              address: string;
+
+              /**
+               * The token currencies supported on this network.
+               */
+              supported_tokens: Array<Base.SupportedToken>;
+            }
+
+            namespace Base {
+              interface SupportedToken {
+                /**
+                 * The on-chain contract address for the supported token currency on this specific network.
+                 */
+                token_contract_address: string;
+
+                /**
+                 * The supported token currency. Supported token currencies include: `usdc`.
+                 */
+                token_currency: 'usdc';
+              }
+            }
+
+            interface Solana {
+              /**
+               * Address of the deposit address.
+               */
+              address: string;
+
+              /**
+               * The token currencies supported on this network.
+               */
+              supported_tokens: Array<Solana.SupportedToken>;
+            }
+
+            namespace Solana {
+              interface SupportedToken {
+                /**
+                 * The on-chain contract address for the supported token currency on this specific network.
+                 */
+                token_contract_address: string;
+
+                /**
+                 * The supported token currency. Supported token currencies include: `usdc`.
+                 */
+                token_currency: 'usdc';
+              }
+            }
+
+            interface Tempo {
+              /**
+               * Address of the deposit address.
+               */
+              address: string;
+
+              /**
+               * The token currencies supported on this network.
+               */
+              supported_tokens: Array<Tempo.SupportedToken>;
+            }
+
+            namespace Tempo {
+              interface SupportedToken {
+                /**
+                 * The on-chain contract address for the supported token currency on this specific network.
+                 */
+                token_contract_address: string;
+
+                /**
+                 * The supported token currency. Supported token currencies include: `usdc`.
+                 */
+                token_currency: 'usdc';
+              }
+            }
           }
         }
 
@@ -3682,6 +3778,28 @@ declare module 'stripe' {
            * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
            */
           setup_future_usage?: 'none';
+
+          deposit_options?: Crypto.DepositOptions;
+
+          /**
+           * The mode of the crypto payment.
+           */
+          mode?: Crypto.Mode;
+        }
+
+        namespace Crypto {
+          interface DepositOptions {
+            /**
+             * The blockchain networks to support for deposits. Learn more about [supported networks and tokens](https://docs.stripe.com/payments/deposit-mode-stablecoin-payments#token-and-network-support).
+             */
+            networks?: Array<DepositOptions.Network>;
+          }
+
+          namespace DepositOptions {
+            type Network = 'base' | 'solana' | 'tempo';
+          }
+
+          type Mode = 'default' | 'deposit';
         }
 
         interface CustomerBalance {

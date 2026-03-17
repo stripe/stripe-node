@@ -147,6 +147,7 @@
 ///<reference path='./TestHelpers/Issuing/CardsResource.d.ts' />
 ///<reference path='./TestHelpers/Issuing/PersonalizationDesignsResource.d.ts' />
 ///<reference path='./TestHelpers/Issuing/TransactionsResource.d.ts' />
+///<reference path='./TestHelpers/PaymentIntentsResource.d.ts' />
 ///<reference path='./TestHelpers/RefundsResource.d.ts' />
 ///<reference path='./TestHelpers/SharedPayment/GrantedTokensResource.d.ts' />
 ///<reference path='./TestHelpers/Terminal/ReadersResource.d.ts' />
@@ -697,6 +698,7 @@ declare module 'stripe' {
     testHelpers: {
       confirmationTokens: Stripe.TestHelpers.ConfirmationTokensResource;
       customers: Stripe.TestHelpers.CustomersResource;
+      paymentIntents: Stripe.TestHelpers.PaymentIntentsResource;
       refunds: Stripe.TestHelpers.RefundsResource;
       testClocks: Stripe.TestHelpers.TestClocksResource;
       capital: {
