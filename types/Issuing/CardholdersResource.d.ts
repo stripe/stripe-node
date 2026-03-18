@@ -154,12 +154,12 @@ declare module 'stripe' {
           namespace CardIssuing {
             interface UserTermsAcceptance {
               /**
-               * The Unix timestamp marking when the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
+               * The Unix timestamp marking when the cardholder accepted the Authorized User Terms.
                */
               date?: number;
 
               /**
-               * The IP address from which the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
+               * The IP address from which the cardholder accepted the Authorized User Terms.
                */
               ip?: string;
 
@@ -1315,12 +1315,12 @@ declare module 'stripe' {
           namespace CardIssuing {
             interface UserTermsAcceptance {
               /**
-               * The Unix timestamp marking when the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
+               * The Unix timestamp marking when the cardholder accepted the Authorized User Terms.
                */
               date?: number;
 
               /**
-               * The IP address from which the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
+               * The IP address from which the cardholder accepted the Authorized User Terms.
                */
               ip?: string;
 

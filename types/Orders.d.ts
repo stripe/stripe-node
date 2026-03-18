@@ -87,7 +87,7 @@ declare module 'stripe' {
       line_items?: ApiList<Stripe.LineItem>;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -278,7 +278,7 @@ declare module 'stripe' {
               target_date?: string;
 
               /**
-               * Bank account verification method.
+               * Bank account verification method. The default value is `automatic`.
                */
               verification_method?: AcssDebit.VerificationMethod;
             }

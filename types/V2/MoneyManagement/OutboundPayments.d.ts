@@ -21,7 +21,7 @@ declare module 'stripe' {
           /**
            * The "presentment amount" for the OutboundPayment.
            */
-          amount: OutboundPayment.Amount;
+          amount: Amount;
 
           /**
            * Returns true if the OutboundPayment can be canceled, and false otherwise.
@@ -114,24 +114,12 @@ declare module 'stripe' {
           to: OutboundPayment.To;
 
           /**
-           * A unique identifier that can be used to track this OutboundPayment with recipient bank. Banks might call this a “reference number” or something similar.
+           * A unique identifier that can be used to track this OutboundPayment with recipient bank. Banks might call this a "reference number" or something similar.
            */
           trace_id: OutboundPayment.TraceId;
         }
 
         namespace OutboundPayment {
-          interface Amount {
-            /**
-             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-             */
-            value: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
-
           interface DeliveryOptions {
             /**
              * Open Enum. Method for bank account.
@@ -147,26 +135,12 @@ declare module 'stripe' {
             /**
              * The monetary amount debited from the sender, only set on responses.
              */
-            debited: From.Debited;
+            debited: Amount;
 
             /**
              * The FinancialAccount that funds were pulled from.
              */
             financial_account: string;
-          }
-
-          namespace From {
-            interface Debited {
-              /**
-               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-               */
-              value: number;
-
-              /**
-               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-               */
-              currency: string;
-            }
           }
 
           interface RecipientNotification {
@@ -271,7 +245,7 @@ declare module 'stripe' {
             /**
              * The monetary amount being credited to the destination.
              */
-            credited: To.Credited;
+            credited: Amount;
 
             /**
              * The payout method which the OutboundPayment uses to send payout.
@@ -282,20 +256,6 @@ declare module 'stripe' {
              * To which account the OutboundPayment is sent.
              */
             recipient: string;
-          }
-
-          namespace To {
-            interface Credited {
-              /**
-               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-               */
-              value: number;
-
-              /**
-               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-               */
-              currency: string;
-            }
           }
 
           interface TraceId {

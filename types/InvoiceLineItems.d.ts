@@ -54,7 +54,7 @@ declare module 'stripe' {
       invoice: string | null;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -91,9 +91,14 @@ declare module 'stripe' {
       pricing: InvoiceLineItem.Pricing | null;
 
       /**
-       * The quantity of the subscription, if the line item is a subscription or a proration.
+       * Quantity of units for the invoice line item in integer format, with any decimal precision truncated. For the line item's full-precision decimal quantity, use `quantity_decimal`. This field will be deprecated in favor of `quantity_decimal` in a future version. If the line item is a proration or subscription, the quantity of the subscription that the proration was computed for.
        */
       quantity: number | null;
+
+      /**
+       * Non-negative decimal with at most 12 decimal places. The quantity of units for the line item.
+       */
+      quantity_decimal: string | null;
 
       subscription: string | Stripe.Subscription | null;
 

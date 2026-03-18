@@ -21,7 +21,7 @@ declare module 'stripe' {
           /**
            * The amount of the Transaction.
            */
-          amount: Transaction.Amount;
+          amount: Amount;
 
           /**
            * The delta to the FinancialAccount's balance. The balance_impact for the Transaction is equal to sum of its
@@ -35,9 +35,20 @@ declare module 'stripe' {
           category: Transaction.Category;
 
           /**
+           * Counterparty to this Transaction.
+           */
+          counterparty?: Transaction.Counterparty;
+
+          /**
            * Time at which the object was created. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
            */
           created: string;
+
+          /**
+           * Description of this Transaction. When applicable, the description is copied from the Flow object at the time
+           * of transaction creation.
+           */
+          description?: string;
 
           /**
            * Indicates the FinancialAccount affected by this Transaction.
@@ -70,71 +81,21 @@ declare module 'stripe' {
         }
 
         namespace Transaction {
-          interface Amount {
-            /**
-             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-             */
-            value: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
-
           interface BalanceImpact {
             /**
              * Impact to the available balance.
              */
-            available: BalanceImpact.Available;
+            available: Amount;
 
             /**
              * Impact to the inbound_pending balance.
              */
-            inbound_pending: BalanceImpact.InboundPending;
+            inbound_pending: Amount;
 
             /**
              * Impact to the outbound_pending balance.
              */
-            outbound_pending: BalanceImpact.OutboundPending;
-          }
-
-          namespace BalanceImpact {
-            interface Available {
-              /**
-               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-               */
-              value: number;
-
-              /**
-               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-               */
-              currency: string;
-            }
-
-            interface InboundPending {
-              /**
-               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-               */
-              value: number;
-
-              /**
-               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-               */
-              currency: string;
-            }
-
-            interface OutboundPending {
-              /**
-               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-               */
-              value: number;
-
-              /**
-               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-               */
-              currency: string;
-            }
+            outbound_pending: Amount;
           }
 
           type Category =
@@ -147,6 +108,13 @@ declare module 'stripe' {
             | 'received_debit'
             | 'return'
             | 'stripe_fee';
+
+          interface Counterparty {
+            /**
+             * Name of the counterparty.
+             */
+            name?: string;
+          }
 
           interface Flow {
             /**

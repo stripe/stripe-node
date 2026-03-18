@@ -74,9 +74,14 @@ declare module 'stripe' {
       pricing?: InvoiceItemCreateParams.Pricing;
 
       /**
-       * Non-negative integer. The quantity of units for the invoice item.
+       * Non-negative integer. The quantity of units for the invoice item. Use `quantity_decimal` instead to provide decimal precision. This field will be deprecated in favor of `quantity_decimal` in a future version.
        */
       quantity?: number;
+
+      /**
+       * Non-negative decimal with at most 12 decimal places. The quantity of units for the invoice item.
+       */
+      quantity_decimal?: string;
 
       /**
        * The ID of a subscription to add this invoice item to. When left blank, the invoice item is added to the next upcoming scheduled invoice. When set, scheduled invoices for subscriptions other than the specified subscription will ignore the invoice item. Use this when you want to express that an invoice item has been accrued within the context of a particular subscription.
@@ -278,9 +283,14 @@ declare module 'stripe' {
       pricing?: InvoiceItemUpdateParams.Pricing;
 
       /**
-       * Non-negative integer. The quantity of units for the invoice item.
+       * Non-negative integer. The quantity of units for the invoice item. Use `quantity_decimal` instead to provide decimal precision. This field will be deprecated in favor of `quantity_decimal` in a future version.
        */
       quantity?: number;
+
+      /**
+       * Non-negative decimal with at most 12 decimal places. The quantity of units for the line item.
+       */
+      quantity_decimal?: string;
 
       /**
        * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.

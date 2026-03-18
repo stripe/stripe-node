@@ -579,6 +579,11 @@ declare module 'stripe' {
         twint_payments?: Capabilities.TwintPayments;
 
         /**
+         * The upi_payments capability.
+         */
+        upi_payments?: Capabilities.UpiPayments;
+
+        /**
          * The us_bank_account_ach_payments capability.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
@@ -1086,6 +1091,13 @@ declare module 'stripe' {
         }
 
         interface TwintPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface UpiPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2165,7 +2177,7 @@ declare module 'stripe' {
           additional_files?: Array<string>;
 
           /**
-           * Whether your business sells digital content or not.
+           * The type of goods your business sells. Use `digital_content` if you sell digital content. Use `other` for all other types of goods or services.
            */
           goods_type?: PaypayPayments.GoodsType;
 
@@ -2917,6 +2929,11 @@ declare module 'stripe' {
         twint_payments?: Capabilities.TwintPayments;
 
         /**
+         * The upi_payments capability.
+         */
+        upi_payments?: Capabilities.UpiPayments;
+
+        /**
          * The us_bank_account_ach_payments capability.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
@@ -3424,6 +3441,13 @@ declare module 'stripe' {
         }
 
         interface TwintPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface UpiPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -4414,7 +4438,7 @@ declare module 'stripe' {
           additional_files?: Array<string>;
 
           /**
-           * Whether your business sells digital content or not.
+           * The type of goods your business sells. Use `digital_content` if you sell digital content. Use `other` for all other types of goods or services.
            */
           goods_type?: PaypayPayments.GoodsType;
 

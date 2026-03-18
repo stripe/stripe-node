@@ -54,7 +54,7 @@ declare module 'stripe' {
       flow_directions: Array<SetupAttempt.FlowDirection> | null;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -147,6 +147,8 @@ declare module 'stripe' {
          * The type of the payment method used in the SetupIntent (e.g., `card`). An additional hash is included on `payment_method_details` with a name matching this value. It contains confirmation-specific information for the payment method.
          */
         type: string;
+
+        upi?: PaymentMethodDetails.Upi;
 
         us_bank_account?: PaymentMethodDetails.UsBankAccount;
       }
@@ -594,6 +596,8 @@ declare module 'stripe' {
 
         interface StripeBalance {}
 
+        interface Upi {}
+
         interface UsBankAccount {}
       }
 
@@ -866,6 +870,7 @@ declare module 'stripe' {
           | 'secret_key_required'
           | 'sensitive_data_access_expired'
           | 'sepa_unsupported_account'
+          | 'service_period_coupon_with_metered_tiered_item_unsupported'
           | 'setup_attempt_failed'
           | 'setup_intent_authentication_failure'
           | 'setup_intent_invalid_parameter'

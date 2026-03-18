@@ -8,7 +8,7 @@ declare module 'stripe' {
           /**
            * The "presentment amount" to be sent to the recipient.
            */
-          amount: OutboundPaymentCreateParams.Amount;
+          amount: Amount;
 
           /**
            * From which FinancialAccount and BalanceType to pull funds from.
@@ -52,18 +52,6 @@ declare module 'stripe' {
         }
 
         namespace OutboundPaymentCreateParams {
-          interface Amount {
-            /**
-             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-             */
-            value: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
-
           interface DeliveryOptions {
             /**
              * Open Enum. Method for bank account.

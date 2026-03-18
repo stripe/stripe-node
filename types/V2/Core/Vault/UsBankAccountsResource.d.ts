@@ -12,6 +12,11 @@ declare module 'stripe' {
             account_number: string;
 
             /**
+             * The currency of the bank account.
+             */
+            currency: string;
+
+            /**
              * Closed Enum. The type of the bank account (checking or savings).
              */
             bank_account_type?: UsBankAccountCreateParams.BankAccountType;

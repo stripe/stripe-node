@@ -34,7 +34,7 @@ declare module 'stripe' {
       issuing?: Balance.Issuing;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -44,6 +44,8 @@ declare module 'stripe' {
       pending: Array<Balance.Pending>;
 
       refund_and_dispute_prefunding?: Balance.RefundAndDisputePrefunding;
+
+      risk_reserved?: Balance.RiskReserved;
     }
 
     namespace Balance {
@@ -272,6 +274,86 @@ declare module 'stripe' {
       }
 
       namespace RefundAndDisputePrefunding {
+        interface Available {
+          /**
+           * Balance amount.
+           */
+          amount: number;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          source_types?: Available.SourceTypes;
+        }
+
+        namespace Available {
+          interface SourceTypes {
+            /**
+             * Amount coming from [legacy US ACH payments](https://docs.stripe.com/ach-deprecated).
+             */
+            bank_account?: number;
+
+            /**
+             * Amount coming from most payment methods, including cards as well as [non-legacy bank debits](https://docs.stripe.com/payments/bank-debits).
+             */
+            card?: number;
+
+            /**
+             * Amount coming from [FPX](https://docs.stripe.com/payments/fpx), a Malaysian payment method.
+             */
+            fpx?: number;
+          }
+        }
+
+        interface Pending {
+          /**
+           * Balance amount.
+           */
+          amount: number;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          source_types?: Pending.SourceTypes;
+        }
+
+        namespace Pending {
+          interface SourceTypes {
+            /**
+             * Amount coming from [legacy US ACH payments](https://docs.stripe.com/ach-deprecated).
+             */
+            bank_account?: number;
+
+            /**
+             * Amount coming from most payment methods, including cards as well as [non-legacy bank debits](https://docs.stripe.com/payments/bank-debits).
+             */
+            card?: number;
+
+            /**
+             * Amount coming from [FPX](https://docs.stripe.com/payments/fpx), a Malaysian payment method.
+             */
+            fpx?: number;
+          }
+        }
+      }
+
+      interface RiskReserved {
+        /**
+         * Funds that are available for use.
+         */
+        available: Array<RiskReserved.Available>;
+
+        /**
+         * Funds that are pending
+         */
+        pending: Array<RiskReserved.Pending>;
+      }
+
+      namespace RiskReserved {
         interface Available {
           /**
            * Balance amount.

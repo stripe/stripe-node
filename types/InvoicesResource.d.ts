@@ -592,6 +592,11 @@ declare module 'stripe' {
              * Determines if the amount includes the IOF tax. Defaults to `never`.
              */
             amount_includes_iof?: Pix.AmountIncludesIof;
+
+            /**
+             * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+             */
+            expires_after_seconds?: number;
           }
 
           namespace Pix {
@@ -1512,6 +1517,11 @@ declare module 'stripe' {
              * Determines if the amount includes the IOF tax. Defaults to `never`.
              */
             amount_includes_iof?: Pix.AmountIncludesIof;
+
+            /**
+             * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+             */
+            expires_after_seconds?: number;
           }
 
           namespace Pix {
@@ -1994,9 +2004,14 @@ declare module 'stripe' {
         pricing?: Line.Pricing;
 
         /**
-         * Non-negative integer. The quantity of units for the line item.
+         * Non-negative integer. The quantity of units for the line item. Use `quantity_decimal` instead to provide decimal precision. This field will be deprecated in favor of `quantity_decimal` in a future version.
          */
         quantity?: number;
+
+        /**
+         * Non-negative decimal with at most 12 decimal places. The quantity of units for the line item.
+         */
+        quantity_decimal?: string;
 
         /**
          * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://docs.stripe.com/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://docs.stripe.com/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
@@ -2143,9 +2158,28 @@ declare module 'stripe' {
             tax_code?: string;
 
             /**
+             * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+             */
+            tax_details?: ProductData.TaxDetails;
+
+            /**
              * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
              */
             unit_label?: string;
+          }
+
+          namespace ProductData {
+            interface TaxDetails {
+              /**
+               * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+               */
+              performance_location?: string;
+
+              /**
+               * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+               */
+              tax_code: string;
+            }
           }
 
           type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
@@ -2741,9 +2775,14 @@ declare module 'stripe' {
         price_data?: InvoiceItem.PriceData;
 
         /**
-         * Non-negative integer. The quantity of units for the invoice item.
+         * Non-negative integer. The quantity of units for the invoice item. Use `quantity_decimal` instead to provide decimal precision. This field will be deprecated in favor of `quantity_decimal` in a future version.
          */
         quantity?: number;
+
+        /**
+         * Non-negative decimal with at most 12 decimal places. The quantity of units for the invoice item.
+         */
+        quantity_decimal?: string;
 
         /**
          * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
@@ -3243,6 +3282,11 @@ declare module 'stripe' {
                * Options that configure the trial on the subscription item.
                */
               trial?: Add.Trial;
+
+              /**
+               * The ID of the trial offer to apply to the configuration item.
+               */
+              trial_offer?: string;
             }
 
             namespace Add {
@@ -3361,6 +3405,11 @@ declare module 'stripe' {
                * If an item with the `price` already exists, passing this will override the `trial` configuration on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `trial`.
                */
               trial?: Set.Trial;
+
+              /**
+               * The ID of the trial offer to apply to the configuration item.
+               */
+              trial_offer?: string;
             }
 
             namespace Set {
@@ -3495,7 +3544,7 @@ declare module 'stripe' {
           namespace SetPauseCollection {
             interface Set {
               /**
-               * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+               * The payment collection behavior for this subscription while paused.
                */
               behavior: Set.Behavior;
             }
@@ -4072,6 +4121,11 @@ declare module 'stripe' {
              * Options that configure the trial on the subscription item.
              */
             trial?: Item.Trial;
+
+            /**
+             * The ID of the trial offer to apply to the configuration item.
+             */
+            trial_offer?: string;
           }
 
           namespace Item {
@@ -4214,7 +4268,7 @@ declare module 'stripe' {
 
           interface PauseCollection {
             /**
-             * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+             * The payment collection behavior for this subscription while paused.
              */
             behavior: PauseCollection.Behavior;
           }
@@ -4522,6 +4576,11 @@ declare module 'stripe' {
           clear_usage?: boolean;
 
           /**
+           * The trial offer to apply to this subscription item.
+           */
+          current_trial?: Item.CurrentTrial;
+
+          /**
            * A flag that, if set to `true`, will delete the specified item.
            */
           deleted?: boolean;
@@ -4573,6 +4632,18 @@ declare module 'stripe' {
              * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://docs.stripe.com/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
              */
             usage_gte: number;
+          }
+
+          interface CurrentTrial {
+            /**
+             * Unix timestamp representing the end of the trial offer period. Required when the trial offer has `duration.type=timestamp`. Cannot be specified when `duration.type=relative`.
+             */
+            trial_end?: number;
+
+            /**
+             * The ID of the trial offer to apply to the subscription item.
+             */
+            trial_offer: string;
           }
 
           interface Discount {
@@ -4918,9 +4989,14 @@ declare module 'stripe' {
         pricing?: Line.Pricing;
 
         /**
-         * Non-negative integer. The quantity of units for the line item.
+         * Non-negative integer. The quantity of units for the line item. Use `quantity_decimal` instead to provide decimal precision. This field will be deprecated in favor of `quantity_decimal` in a future version.
          */
         quantity?: number;
+
+        /**
+         * Non-negative decimal with at most 12 decimal places. The quantity of units for the line item.
+         */
+        quantity_decimal?: string;
 
         /**
          * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://docs.stripe.com/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://docs.stripe.com/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
@@ -5067,9 +5143,28 @@ declare module 'stripe' {
             tax_code?: string;
 
             /**
+             * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+             */
+            tax_details?: ProductData.TaxDetails;
+
+            /**
              * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
              */
             unit_label?: string;
+          }
+
+          namespace ProductData {
+            interface TaxDetails {
+              /**
+               * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+               */
+              performance_location?: string;
+
+              /**
+               * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+               */
+              tax_code: string;
+            }
           }
 
           type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
@@ -5232,7 +5327,7 @@ declare module 'stripe' {
       margins?: Stripe.Emptyable<Array<string>>;
 
       /**
-       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-type) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](api/invoices/line_item#invoice_line_item_object-type) line items, where any existing metadata on the invoice line is merged with the incoming data.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://docs.stripe.com/api/invoices/line_item) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](https://docs.stripe.com/api/invoices/line_item) line items, where any existing metadata on the invoice line is merged with the incoming data.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
@@ -5252,9 +5347,14 @@ declare module 'stripe' {
       pricing?: InvoiceUpdateLineItemParams.Pricing;
 
       /**
-       * Non-negative integer. The quantity of units for the line item.
+       * Non-negative integer. The quantity of units for the line item. Use `quantity_decimal` instead to provide decimal precision. This field will be deprecated in favor of `quantity_decimal` in a future version.
        */
       quantity?: number;
+
+      /**
+       * Non-negative decimal with at most 12 decimal places. The quantity of units for the line item.
+       */
+      quantity_decimal?: string;
 
       /**
        * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://docs.stripe.com/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://docs.stripe.com/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
@@ -5403,9 +5503,28 @@ declare module 'stripe' {
           tax_code?: string;
 
           /**
+           * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+           */
+          tax_details?: ProductData.TaxDetails;
+
+          /**
            * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
            */
           unit_label?: string;
+        }
+
+        namespace ProductData {
+          interface TaxDetails {
+            /**
+             * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+             */
+            performance_location?: string;
+
+            /**
+             * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+             */
+            tax_code: string;
+          }
         }
 
         type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
@@ -5544,7 +5663,7 @@ declare module 'stripe' {
 
     class InvoicesResource {
       /**
-       * This endpoint creates a draft invoice for a given customer. The invoice remains a draft until you [finalize the invoice, which allows you to [pay](https://docs.stripe.com/api#finalize_invoice) or <a href="/api/invoices/send">send](https://docs.stripe.com/api/invoices/pay) the invoice to your customers.
+       * This endpoint creates a draft invoice for a given customer. The invoice remains a draft until you [finalize the invoice, which allows you to [pay](/api/invoices/pay) or <a href="/api/invoices/send">send](https://docs.stripe.com/api/invoices/finalize) the invoice to your customers.
        */
       create(
         params?: InvoiceCreateParams,
@@ -5591,7 +5710,7 @@ declare module 'stripe' {
       list(options?: RequestOptions): ApiListPromise<Stripe.Invoice>;
 
       /**
-       * Permanently deletes a one-off invoice draft. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized or if an invoice is for a subscription, it must be [voided](https://docs.stripe.com/api#void_invoice).
+       * Permanently deletes a one-off invoice draft. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized or if an invoice is for a subscription, it must be [voided](https://docs.stripe.com/api/invoices/void).
        */
       del(
         id: string,
@@ -5781,9 +5900,9 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.InvoiceLineItem>>;
 
       /**
-       * Mark a finalized invoice as void. This cannot be undone. Voiding an invoice is similar to [deletion](https://docs.stripe.com/api#delete_invoice), however it only applies to finalized invoices and maintains a papertrail where the invoice can still be found.
+       * Mark a finalized invoice as void. This cannot be undone. Voiding an invoice is similar to [deletion](https://docs.stripe.com/api/invoices/delete), however it only applies to finalized invoices and maintains a papertrail where the invoice can still be found.
        *
-       * Consult with local regulations to determine whether and how an invoice might be amended, canceled, or voided in the jurisdiction you're doing business in. You might need to [issue another invoice or <a href="#create_credit_note">credit note](https://docs.stripe.com/api#create_invoice) instead. Stripe recommends that you consult with your legal counsel for advice specific to your business.
+       * Consult with local regulations to determine whether and how an invoice might be amended, canceled, or voided in the jurisdiction you're doing business in. You might need to [issue another invoice or <a href="/api/credit_notes/create">credit note](https://docs.stripe.com/api/invoices/create) instead. Stripe recommends that you consult with your legal counsel for advice specific to your business.
        */
       voidInvoice(
         id: string,

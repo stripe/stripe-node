@@ -118,7 +118,7 @@ declare module 'stripe' {
       level3?: Charge.Level3;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -515,6 +515,8 @@ declare module 'stripe' {
          * It contains information specific to the payment method.
          */
         type: string;
+
+        upi?: PaymentMethodDetails.Upi;
 
         us_bank_account?: PaymentMethodDetails.UsBankAccount;
 
@@ -1563,7 +1565,7 @@ declare module 'stripe' {
         }
 
         namespace Crypto {
-          type Network = 'base' | 'ethereum' | 'polygon' | 'solana';
+          type Network = 'base' | 'ethereum' | 'polygon' | 'solana' | 'tempo';
 
           type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
         }
@@ -2618,15 +2620,6 @@ declare module 'stripe' {
            * The connected account ID whose Stripe balance to use as the source of payment
            */
           account?: string | null;
-
-          /**
-           * The [source_type](https://docs.stripe.com/api/balance/balance_object#balance_object-available-source_types) of the balance
-           */
-          source_type: StripeBalance.SourceType | null;
-        }
-
-        namespace StripeBalance {
-          type SourceType = 'bank_account' | 'card' | 'fpx';
         }
 
         interface Swish {
@@ -2647,6 +2640,13 @@ declare module 'stripe' {
         }
 
         interface Twint {}
+
+        interface Upi {
+          /**
+           * Customer's unique Virtual Payment Address.
+           */
+          vpa: string | null;
+        }
 
         interface UsBankAccount {
           /**

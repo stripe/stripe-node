@@ -340,6 +340,11 @@ declare module 'stripe' {
           type: PaymentMethodData.Type;
 
           /**
+           * If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
+           */
+          upi?: PaymentMethodData.Upi;
+
+          /**
            * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
            */
           us_bank_account?: PaymentMethodData.UsBankAccount;
@@ -800,15 +805,6 @@ declare module 'stripe' {
              * The connected account ID whose Stripe balance to use as the source of payment
              */
             account?: string;
-
-            /**
-             * The [source_type](https://docs.stripe.com/api/balance/balance_object#balance_object-available-source_types) of the balance
-             */
-            source_type?: StripeBalance.SourceType;
-          }
-
-          namespace StripeBalance {
-            type SourceType = 'bank_account' | 'card' | 'fpx';
           }
 
           interface Swish {}
@@ -869,9 +865,45 @@ declare module 'stripe' {
             | 'stripe_balance'
             | 'swish'
             | 'twint'
+            | 'upi'
             | 'us_bank_account'
             | 'wechat_pay'
             | 'zip';
+
+          interface Upi {
+            /**
+             * Configuration options for setting up an eMandate
+             */
+            mandate_options?: Upi.MandateOptions;
+          }
+
+          namespace Upi {
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments.
+               */
+              amount?: number;
+
+              /**
+               * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+               */
+              amount_type?: MandateOptions.AmountType;
+
+              /**
+               * A description of the mandate or subscription that is meant to be displayed to the customer.
+               */
+              description?: string;
+
+              /**
+               * End date of the mandate or subscription.
+               */
+              end_date?: number;
+            }
+
+            namespace MandateOptions {
+              type AmountType = 'fixed' | 'maximum';
+            }
+          }
 
           interface UsBankAccount {
             /**

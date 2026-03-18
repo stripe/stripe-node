@@ -316,7 +316,7 @@ declare module 'stripe' {
       lines: ApiList<Stripe.InvoiceLineItem>;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -1051,6 +1051,7 @@ declare module 'stripe' {
           | 'secret_key_required'
           | 'sensitive_data_access_expired'
           | 'sepa_unsupported_account'
+          | 'service_period_coupon_with_metered_tiered_item_unsupported'
           | 'setup_attempt_failed'
           | 'setup_intent_authentication_failure'
           | 'setup_intent_invalid_parameter'
@@ -1146,7 +1147,7 @@ declare module 'stripe' {
         namespace SubscriptionDetails {
           interface PauseCollection {
             /**
-             * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+             * The payment collection behavior for this subscription while paused.
              */
             behavior: PauseCollection.Behavior | null;
 
@@ -1244,7 +1245,7 @@ declare module 'stripe' {
             mandate_options?: AcssDebit.MandateOptions;
 
             /**
-             * Bank account verification method.
+             * Bank account verification method. The default value is `automatic`.
              */
             verification_method?: AcssDebit.VerificationMethod;
           }
@@ -1377,6 +1378,11 @@ declare module 'stripe' {
              * Determines if the amount includes the IOF tax.
              */
             amount_includes_iof: Pix.AmountIncludesIof | null;
+
+            /**
+             * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+             */
+            expires_after_seconds?: number;
           }
 
           namespace Pix {
@@ -1421,7 +1427,7 @@ declare module 'stripe' {
             financial_connections?: UsBankAccount.FinancialConnections;
 
             /**
-             * Bank account verification method.
+             * Bank account verification method. The default value is `automatic`.
              */
             verification_method?: UsBankAccount.VerificationMethod;
           }

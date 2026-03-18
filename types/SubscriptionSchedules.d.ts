@@ -80,7 +80,7 @@ declare module 'stripe' {
       last_price_migration_error?: SubscriptionSchedule.LastPriceMigrationError | null;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -736,6 +736,11 @@ declare module 'stripe' {
            * Options that configure the trial on the subscription item.
            */
           trial?: Item.Trial | null;
+
+          /**
+           * The ID of the trial offer to apply to the configuration item.
+           */
+          trial_offer?: string | null;
         }
 
         namespace Item {
@@ -801,7 +806,7 @@ declare module 'stripe' {
 
         interface PauseCollection {
           /**
-           * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+           * The payment collection behavior for this subscription while paused.
            */
           behavior: PauseCollection.Behavior;
         }

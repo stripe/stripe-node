@@ -7,14 +7,14 @@ declare module 'stripe' {
         namespace Vault {
           interface GbBankAccountCreateParams {
             /**
-             * The Account Number of the bank account.
+             * The currency of the bank account.
              */
-            account_number: string;
+            currency: string;
 
             /**
-             * The Sort Code of the bank account.
+             * The Account Number of the bank account.
              */
-            sort_code: string;
+            account_number?: string;
 
             /**
              * Closed Enum. The type of the bank account (checking or savings).
@@ -27,6 +27,16 @@ declare module 'stripe' {
              * by you before making domestic UK OutboundPayments.
              */
             confirmation_of_payee?: GbBankAccountCreateParams.ConfirmationOfPayee;
+
+            /**
+             * The IBAN of the bank account.
+             */
+            iban?: string;
+
+            /**
+             * The Sort Code of the bank account.
+             */
+            sort_code?: string;
           }
 
           namespace GbBankAccountCreateParams {

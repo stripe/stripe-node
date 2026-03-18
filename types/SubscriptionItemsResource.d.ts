@@ -16,6 +16,11 @@ declare module 'stripe' {
       >;
 
       /**
+       * The trial offer to apply to this subscription item.
+       */
+      current_trial?: SubscriptionItemCreateParams.CurrentTrial;
+
+      /**
        * The coupons to redeem into discounts for the subscription item.
        */
       discounts?: Stripe.Emptyable<
@@ -64,7 +69,7 @@ declare module 'stripe' {
       proration_behavior?: SubscriptionItemCreateParams.ProrationBehavior;
 
       /**
-       * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the [upcoming invoice](https://api.stripe.com#retrieve_customer_invoice) endpoint.
+       * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the [upcoming invoice](https://docs.stripe.com/api/invoices/create_preview) endpoint.
        */
       proration_date?: number;
 
@@ -90,6 +95,18 @@ declare module 'stripe' {
          * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://docs.stripe.com/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
          */
         usage_gte: number;
+      }
+
+      interface CurrentTrial {
+        /**
+         * Unix timestamp representing the end of the trial offer period. Required when the trial offer has `duration.type=timestamp`. Cannot be specified when `duration.type=relative`.
+         */
+        trial_end?: number;
+
+        /**
+         * The ID of the trial offer to apply to the subscription item.
+         */
+        trial_offer: string;
       }
 
       interface Discount {
@@ -246,6 +263,11 @@ declare module 'stripe' {
       >;
 
       /**
+       * The trial offer to apply to this subscription item.
+       */
+      current_trial?: SubscriptionItemUpdateParams.CurrentTrial;
+
+      /**
        * The coupons to redeem into discounts for the subscription item.
        */
       discounts?: Stripe.Emptyable<
@@ -299,7 +321,7 @@ declare module 'stripe' {
       proration_behavior?: SubscriptionItemUpdateParams.ProrationBehavior;
 
       /**
-       * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the [upcoming invoice](https://api.stripe.com#retrieve_customer_invoice) endpoint.
+       * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the [upcoming invoice](https://docs.stripe.com/api/invoices/create_preview) endpoint.
        */
       proration_date?: number;
 
@@ -320,6 +342,18 @@ declare module 'stripe' {
          * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://docs.stripe.com/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
          */
         usage_gte: number;
+      }
+
+      interface CurrentTrial {
+        /**
+         * Unix timestamp representing the end of the trial offer period. Required when the trial offer has `duration.type=timestamp`. Cannot be specified when `duration.type=relative`.
+         */
+        trial_end?: number;
+
+        /**
+         * The ID of the trial offer to apply to the subscription item.
+         */
+        trial_offer: string;
       }
 
       interface Discount {
@@ -479,7 +513,7 @@ declare module 'stripe' {
       proration_behavior?: SubscriptionItemDeleteParams.ProrationBehavior;
 
       /**
-       * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the [upcoming invoice](https://api.stripe.com#retrieve_customer_invoice) endpoint.
+       * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the [upcoming invoice](https://docs.stripe.com/api/invoices/create_preview) endpoint.
        */
       proration_date?: number;
     }
