@@ -8,7 +8,7 @@ import {NodeHttpClient} from '../net/NodeHttpClient.js';
 import {PlatformFunctions} from './PlatformFunctions.js';
 import {StripeError} from '../Error.js';
 import {concat} from '../utils.js';
-import {exec} from 'child_process';
+import {arch, release} from 'os';
 import {MultipartRequestData, RequestData, BufferedFile} from '../Types.js';
 
 class StreamProcessingError extends StripeError {}
@@ -17,17 +17,6 @@ class StreamProcessingError extends StripeError {}
  * Specializes WebPlatformFunctions using APIs available in Node.js.
  */
 export class NodePlatformFunctions extends PlatformFunctions {
-  /** For mocking in tests */
-  _exec: any;
-  _UNAME_CACHE: Promise<string | null> | null;
-
-  constructor() {
-    super();
-
-    this._exec = exec;
-    this._UNAME_CACHE = null;
-  }
-
   /** @override */
   uuid4(): string {
     // available in: v14.17.x+
@@ -37,31 +26,9 @@ export class NodePlatformFunctions extends PlatformFunctions {
     return super.uuid4();
   }
 
-  /**
-   * @override
-   * Node's built in `exec` function sometimes throws outright,
-   * and sometimes has a callback with an error,
-   * depending on the type of error.
-   *
-   * This unifies that interface by resolving with a null uname
-   * if an error is encountered.
-   */
-  getUname(): Promise<string | null> {
-    if (!this._UNAME_CACHE) {
-      this._UNAME_CACHE = new Promise<string | null>((resolve, reject) => {
-        try {
-          this._exec('uname -a', (err: unknown, uname: string | null) => {
-            if (err) {
-              return resolve(null);
-            }
-            resolve(uname!);
-          });
-        } catch (e) {
-          resolve(null);
-        }
-      });
-    }
-    return this._UNAME_CACHE;
+  /** @override */
+  getPlatformInfo(): string {
+    return `${process.platform} ${release()} ${arch()}`;
   }
 
   /**

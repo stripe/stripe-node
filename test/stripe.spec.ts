@@ -6,11 +6,9 @@
 import {expect} from 'chai';
 import {StripeSignatureVerificationError} from '../src/Error.js';
 import {ApiVersion} from '../src/apiVersion.js';
-import {createStripe} from '../src/stripe.core.js';
 import {createApiKeyAuthenticator, detectAIAgent} from '../src/utils.js';
 import {
   FAKE_API_KEY,
-  getMockPlatformFunctions,
   getRandomString,
   getStripeMockClient,
   getTestServerStripe,
@@ -150,10 +148,9 @@ describe('Stripe Module', function() {
         })
       ).to.eventually.have.property('lang', 'node'));
 
-    it('Should return platform and version in the serialized user agent JSON object', async () => {
+    it('Should return lang_version and platform in the serialized user agent JSON object', async () => {
       // Check that the testing environment actually has a process global.
       expect(process.version).to.not.be.empty;
-      expect(process.platform).to.not.be.empty;
 
       const userAgent = await new Promise((resolve, reject) => {
         stripe.getClientUserAgent((c) => {
@@ -162,7 +159,25 @@ describe('Stripe Module', function() {
       });
 
       expect(userAgent).to.have.property('lang_version', process.version);
-      expect(userAgent).to.have.property('platform', process.platform);
+      // platform is populated from getPlatformInfo() and URI-encoded
+      expect(userAgent).to.have.property('platform');
+      expect(decodeURIComponent(userAgent.platform)).to.contain(
+        process.platform
+      );
+    });
+
+    it('Should omit platform when telemetry is disabled', async () => {
+      const noTelemetryStripe = new Stripe(FAKE_API_KEY, {
+        telemetry: false,
+      });
+
+      const userAgent = await new Promise((resolve, reject) => {
+        noTelemetryStripe.getClientUserAgent((c) => {
+          resolve(JSON.parse(c));
+        });
+      });
+
+      expect(userAgent).to.not.have.property('platform');
     });
 
     it('Should include whether typescript: true was passed, respecting reinstantiations', () => {
@@ -224,38 +239,6 @@ describe('Stripe Module', function() {
           });
         })
       ).to.eventually.have.property('httplib', 'node');
-    });
-
-    describe('uname', () => {
-      it('gets added to the user-agent', () => {
-        const stripe = createStripe(
-          getMockPlatformFunctions((cmd: string, cb: any): void => {
-            cb(null, 'foøname');
-          })
-        )(FAKE_API_KEY, 'latest');
-        return expect(
-          new Promise((resolve, reject) => {
-            stripe.getClientUserAgentSeeded({lang: 'node'}, (c) => {
-              resolve(JSON.parse(c));
-            });
-          })
-        ).to.eventually.have.property('uname', 'fo%C3%B8name');
-      });
-
-      it('sets uname to UNKNOWN in case of an error', () => {
-        const stripe = createStripe(
-          getMockPlatformFunctions((cmd: string, cb: any): void => {
-            cb(new Error('security'), null);
-          })
-        )(FAKE_API_KEY, 'latest');
-        return expect(
-          new Promise((resolve, reject) => {
-            stripe.getClientUserAgentSeeded({lang: 'node'}, (c) => {
-              resolve(JSON.parse(c));
-            });
-          })
-        ).to.eventually.have.property('uname', 'UNKNOWN');
-      });
     });
   });
 
@@ -828,7 +811,8 @@ describe('Stripe Module', function() {
           res.setHeader('Request-Id', `req_1`);
           if (
             req.url === '/v2/core/events/evt_123' &&
-            req.headers['stripe-context'] == null
+            req.headers['stripe-context'] == null &&
+            req.headers['stripe-request-trigger'] === 'event=evt_123'
           ) {
             res.write(JSON.stringify(jsonWithData));
           } else {
@@ -897,7 +881,8 @@ describe('Stripe Module', function() {
         (req, res) => {
           if (
             req.url === '/v2/core/events/evt_123' &&
-            req.headers['stripe-context'] === 'acct_123'
+            req.headers['stripe-context'] === 'acct_123' &&
+            req.headers['stripe-request-trigger'] === 'event=evt_123'
           ) {
             res.write(JSON.stringify(jsonWithData));
           } else {
@@ -952,7 +937,8 @@ describe('Stripe Module', function() {
           res.setHeader('Request-Id', `req_1`);
           if (
             req.url === '/api/whatever/obj_123' &&
-            req.headers['stripe-context'] == null
+            req.headers['stripe-context'] == null &&
+            req.headers['stripe-request-trigger'] === 'event=evt_123'
           ) {
             res.write(JSON.stringify({id: 'obj_123', data: 'some data'}));
           } else {
@@ -1017,7 +1003,8 @@ describe('Stripe Module', function() {
         (req, res) => {
           if (
             req.url === '/api/whatever/obj_123' &&
-            req.headers['stripe-context'] === 'acct_123'
+            req.headers['stripe-context'] === 'acct_123' &&
+            req.headers['stripe-request-trigger'] === 'event=evt_123'
           ) {
             res.write(JSON.stringify({id: 'obj_123', data: 'some data'}));
           } else {
@@ -1140,7 +1127,7 @@ describe('Stripe Module', function() {
                 description: 'test meter event',
                 created: new Date('2009-02-13T23:31:30Z'),
               },
-              {additionalHeaders: {foo: 'bar'}}
+              {headers: {foo: 'bar'}}
             );
             expect(result).to.deep.equal(returnedCustomer);
             closeServer();
@@ -1204,7 +1191,7 @@ describe('Stripe Module', function() {
               'GET',
               '/v1/customers/cus_123',
               {},
-              {additionalHeaders: {foo: 'bar'}}
+              {headers: {foo: 'bar'}}
             );
             expect(result).to.deep.equal(returnedCustomer);
             closeServer();

@@ -65,6 +65,7 @@ jobs:
         node:
           # should include even numbers >= 16
           # see: https://docs.stripe.com/sdks/versioning?lang=node#stripe-sdk-language-version-support-policy
+          - '24'
           - '22'
           - '20'
           - '18'
@@ -121,7 +122,7 @@ jobs:
     runs-on: 'ubuntu-24.04'
     permissions:
       contents: read
-      id-token: write  # Required for OIDC
+      id-token: write # Required for OIDC
     steps:
       # just is called in `yarn prepack`, which is called during the `publish` operation
       - uses: extractions/setup-just@v2
