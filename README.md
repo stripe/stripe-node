@@ -5,6 +5,9 @@
 [![Downloads](https://img.shields.io/npm/dm/stripe.svg)](https://www.npmjs.com/package/stripe)
 [![Try on RunKit](https://badge.runkitcdn.com/stripe.svg)](https://runkit.com/npm/stripe)
 
+> [!TIP]
+> Want to chat live with Stripe engineers? Join us on our [Discord server](https://stripe.com/go/discord/node).
+
 The Stripe Node library provides convenient access to the Stripe API from
 applications written in server-side JavaScript.
 

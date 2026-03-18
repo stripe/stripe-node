@@ -97,19 +97,6 @@ export const getStripeMockClient = (): StripeClient => {
   });
 };
 
-export const getMockPlatformFunctions = (
-  cb: CallableFunction
-): NodePlatformFunctions => {
-  class MockPlatformFunctions extends NodePlatformFunctions {
-    constructor(cb: CallableFunction) {
-      super();
-      this._exec = cb;
-    }
-  }
-
-  return new MockPlatformFunctions(cb);
-};
-
 export const getMockStripe = (
   config: Record<string, unknown>,
   request: RequestSender['_request']
