@@ -227,15 +227,19 @@ StripeResource.prototype = {
         if (err) {
           reject(err);
         } else {
-          // Coerce int64_string fields in response: string → number
-          if (apiMode === 'v2' && spec.responseSchema) {
-            coerceV2ResponseData(response, spec.responseSchema);
+          // Coerce int64_string fields in response: string → bigint
+          try {
+            if (apiMode === 'v2' && spec.responseSchema) {
+              coerceV2ResponseData(response, spec.responseSchema);
+            }
+            resolve(
+              spec.transformResponseData
+                ? spec.transformResponseData(response)
+                : response
+            );
+          } catch (e) {
+            reject(e);
           }
-          resolve(
-            spec.transformResponseData
-              ? spec.transformResponseData(response)
-              : response
-          );
         }
       }
 

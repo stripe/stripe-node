@@ -67,7 +67,16 @@ export const coerceV2ResponseData = (
 
   switch (schema.kind) {
     case 'int64_string':
-      return typeof data === 'string' ? BigInt(data) : data;
+      if (typeof data === 'string') {
+        try {
+          return BigInt(data);
+        } catch {
+          throw new Error(
+            `Failed to coerce int64_string value: expected an integer string, got '${data}'`
+          );
+        }
+      }
+      return data;
 
     case 'object': {
       if (typeof data !== 'object' || Array.isArray(data)) {
