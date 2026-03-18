@@ -22,7 +22,7 @@
   },
   "bugs": "https://github.com/stripe/stripe-node/issues",
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "main": "cjs/stripe.cjs.node.js",
   "types": "types/index.d.ts",
@@ -56,7 +56,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "@types/node": ">=16"
+    "@types/node": ">=18"
   },
   "peerDependenciesMeta": {
     "@types/node": {
