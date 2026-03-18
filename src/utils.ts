@@ -50,11 +50,7 @@ export function isOptionsHash(o: unknown): boolean | unknown {
  * Stringifies an Object, accommodating nested objects
  * (forming the conventional key 'parent[child]=value')
  */
-export function queryStringifyRequestData(
-  data: RequestData | string,
-  /** @deprecated Will be removed in a future release. */
-  _apiMode?: ApiMode
-): string {
+export function queryStringifyRequestData(data: RequestData | string): string {
   return stringifyRequestData(data);
 }
 
