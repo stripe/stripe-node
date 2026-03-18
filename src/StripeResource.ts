@@ -1,4 +1,5 @@
 import {
+  getAPIMode,
   getDataFromArgs,
   getOptionsFromArgs,
   makeURLInterpolator,
@@ -211,7 +212,8 @@ StripeResource.prototype = {
       }
 
       // Coerce int64_string fields in request body: number → string
-      if (spec.requestSchema && opts.bodyData) {
+      const apiMode = getAPIMode(spec.fullPath || spec.path);
+      if (apiMode === 'v2' && spec.requestSchema && opts.bodyData) {
         opts.bodyData = coerceV2RequestData(
           opts.bodyData,
           spec.requestSchema
@@ -226,7 +228,7 @@ StripeResource.prototype = {
           reject(err);
         } else {
           // Coerce int64_string fields in response: string → number
-          if (spec.responseSchema) {
+          if (apiMode === 'v2' && spec.responseSchema) {
             coerceV2ResponseData(response, spec.responseSchema);
           }
           resolve(

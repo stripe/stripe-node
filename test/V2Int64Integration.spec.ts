@@ -277,8 +277,6 @@ describe('V2 int64_string integration', () => {
     const stripe = getSpyableStripe();
 
     it('does not coerce V1 request data even with schemas', () => {
-      // V1 methods should never have schemas in practice, but verify
-      // that if one somehow did, it still works
       const resource = new (StripeResource.extend({
         create: stripeMethod({
           method: 'POST',
@@ -292,10 +290,8 @@ describe('V2 int64_string integration', () => {
         }),
       }))(stripe);
 
-      // The coercion happens regardless of v1/v2 since it's driven by schema presence
-      // This is fine — V1 methods won't have schemas in generated code
       resource.create({amount: 42});
-      expect(stripe.LAST_REQUEST.data).to.deep.equal({amount: '42'});
+      expect(stripe.LAST_REQUEST.data).to.deep.equal({amount: 42});
     });
   });
 });
