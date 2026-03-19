@@ -300,14 +300,73 @@ declare module 'stripe' {
       }
 
       /**
+       * StripeOAuthError is the base error for OAuth-specific errors.
+       */
+      class StripeOAuthError extends StripeError {
+        readonly type:
+          | 'StripeOAuthError'
+          | 'StripeInvalidGrantError'
+          | 'StripeInvalidClientError'
+          | 'StripeOAuthInvalidRequestError'
+          | 'StripeInvalidScopeError'
+          | 'StripeUnsupportedGrantTypeError'
+          | 'StripeUnsupportedResponseTypeError';
+      }
+
+      /**
        * InvalidGrantError is raised when a specified code doesn't exist, is
        * expired, has been used, or doesn't belong to you; a refresh token doesn't
        * exist, or doesn't belong to you; or if an API key's mode (live or test)
        * doesn't match the mode of a code or refresh token.
        */
-      class StripeInvalidGrantError extends StripeError {
+      class StripeInvalidGrantError extends StripeOAuthError {
         readonly type: 'StripeInvalidGrantError';
         readonly rawType: 'invalid_grant';
+      }
+
+      /**
+       * InvalidClientError is raised when the client_id does not belong to you,
+       * or an API key is required but not provided.
+       */
+      class StripeInvalidClientError extends StripeOAuthError {
+        readonly type: 'StripeInvalidClientError';
+        readonly rawType: 'invalid_client';
+      }
+
+      /**
+       * OAuthInvalidRequestError is raised when a required parameter is missing,
+       * or an unsupported parameter or value is provided in the OAuth request.
+       */
+      class StripeOAuthInvalidRequestError extends StripeOAuthError {
+        readonly type: 'StripeOAuthInvalidRequestError';
+        readonly rawType: 'invalid_request';
+      }
+
+      /**
+       * InvalidScopeError is raised when an invalid scope is provided in the
+       * OAuth request.
+       */
+      class StripeInvalidScopeError extends StripeOAuthError {
+        readonly type: 'StripeInvalidScopeError';
+        readonly rawType: 'invalid_scope';
+      }
+
+      /**
+       * UnsupportedGrantTypeError is raised when an unsupported grant_type is
+       * provided in the OAuth request.
+       */
+      class StripeUnsupportedGrantTypeError extends StripeOAuthError {
+        readonly type: 'StripeUnsupportedGrantTypeError';
+        readonly rawType: 'unsupported_grant_type';
+      }
+
+      /**
+       * UnsupportedResponseTypeError is raised when an unsupported response_type
+       * is provided in the OAuth request.
+       */
+      class StripeUnsupportedResponseTypeError extends StripeOAuthError {
+        readonly type: 'StripeUnsupportedResponseTypeError';
+        readonly rawType: 'unsupported_response_type';
       }
 
       // errorClassDefinitions: The beginning of the section generated from our OpenAPI spec
