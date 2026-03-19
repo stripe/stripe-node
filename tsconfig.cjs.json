@@ -4,6 +4,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es2017",
+    "lib": ["es2017", "dom", "dom.iterable", "scripthost", "es2020.bigint"],
     "checkJs": false,
     "alwaysStrict": true,
     "noImplicitAny": true,
