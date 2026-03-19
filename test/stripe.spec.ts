@@ -793,6 +793,26 @@ describe('Stripe Module', function() {
       }).to.throw(StripeSignatureVerificationError);
     });
 
+    it('throws an error when a v1 webhook payload is passed', () => {
+      const jsonPayload = {
+        id: 'evt_test_webhook',
+        object: 'event',
+      };
+      const payload = JSON.stringify(jsonPayload);
+      const header = stripe.webhooks.generateTestHeaderString({
+        payload,
+        secret,
+      });
+
+      try {
+        stripe.parseEventNotification(payload, header, secret);
+        expect.fail('Expected an error to be thrown');
+      } catch (e) {
+        expect(e).to.be.instanceOf(Error);
+        expect(e.message).to.contain('stripe.webhooks.constructEvent');
+      }
+    });
+
     it('should parse webhook with a functioning fetchEvent method', (done) => {
       const jsonPayload = {
         id: 'evt_123',
