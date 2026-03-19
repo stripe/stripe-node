@@ -7,31 +7,65 @@ import {RawErrorType, StripeRawError} from './Types.js';
 export const generateV1Error = (
   rawStripeError: StripeRawError
 ): StripeError => {
-  switch (rawStripeError.type) {
-    case 'card_error':
-      return new StripeCardError(rawStripeError);
-    case 'invalid_request_error':
-      return new StripeInvalidRequestError(rawStripeError);
-    case 'api_error':
-      return new StripeAPIError(rawStripeError);
-    case 'authentication_error':
-      return new StripeAuthenticationError(rawStripeError);
-    case 'rate_limit_error':
-      return new StripeRateLimitError(rawStripeError);
-    case 'idempotency_error':
+  const statusCode = rawStripeError.statusCode;
+
+  if (
+    statusCode === 429 ||
+    (statusCode === 400 && rawStripeError.code === 'rate_limit')
+  ) {
+    return new StripeRateLimitError(rawStripeError);
+  }
+
+  if (statusCode === 400 || statusCode === 404) {
+    if (rawStripeError.type === 'idempotency_error') {
       return new StripeIdempotencyError(rawStripeError);
+    }
+    return new StripeInvalidRequestError(rawStripeError);
+  }
+
+  if (statusCode === 401) {
+    return new StripeAuthenticationError(rawStripeError);
+  }
+
+  if (statusCode === 402) {
+    return new StripeCardError(rawStripeError);
+  }
+
+  if (statusCode === 403) {
+    return new StripePermissionError(rawStripeError);
+  }
+
+  return new StripeAPIError(rawStripeError);
+};
+
+export const generateOAuthError = (
+  rawStripeError: StripeRawError
+): StripeError => {
+  const oauthType = rawStripeError.type;
+  switch (oauthType) {
     case 'invalid_grant':
       return new StripeInvalidGrantError(rawStripeError);
+    case 'invalid_client':
+      return new StripeInvalidClientError(rawStripeError);
+    case 'invalid_request':
+      return new StripeOAuthInvalidRequestError(rawStripeError);
+    case 'invalid_scope':
+      return new StripeInvalidScopeError(rawStripeError);
+    case 'unsupported_grant_type':
+      return new StripeUnsupportedGrantTypeError(rawStripeError);
+    case 'unsupported_response_type':
+      return new StripeUnsupportedResponseTypeError(rawStripeError);
     default:
-      return new StripeUnknownError(rawStripeError);
+      return new StripeOAuthError(rawStripeError);
   }
 };
 
-// eslint-disable-next-line complexity
 export const generateV2Error = (
   rawStripeError: StripeRawError
 ): StripeError => {
   switch (rawStripeError.type) {
+    case 'idempotency_error':
+      return new StripeIdempotencyError(rawStripeError);
     // switchCases: The beginning of the section generated from our OpenAPI spec
     case 'already_canceled':
       return new AlreadyCanceledError(rawStripeError);
@@ -241,23 +275,73 @@ export class StripeIdempotencyError extends StripeError {
 }
 
 /**
+ * StripeOAuthError is the base error for OAuth-specific errors.
+ */
+export class StripeOAuthError extends StripeError {
+  constructor(raw: StripeRawError = {}, type = 'StripeOAuthError') {
+    super(raw, type);
+  }
+}
+
+/**
  * InvalidGrantError is raised when a specified code doesn't exist, is
  * expired, has been used, or doesn't belong to you; a refresh token doesn't
  * exist, or doesn't belong to you; or if an API key's mode (live or test)
  * doesn't match the mode of a code or refresh token.
  */
-export class StripeInvalidGrantError extends StripeError {
+export class StripeInvalidGrantError extends StripeOAuthError {
   constructor(raw: StripeRawError = {}) {
     super(raw, 'StripeInvalidGrantError');
   }
 }
 
 /**
- * Any other error from Stripe not specifically captured above
+ * InvalidClientError is raised when the client_id does not belong to you,
+ * or an API key is required but not provided.
  */
-export class StripeUnknownError extends StripeError {
+export class StripeInvalidClientError extends StripeOAuthError {
   constructor(raw: StripeRawError = {}) {
-    super(raw, 'StripeUnknownError');
+    super(raw, 'StripeInvalidClientError');
+  }
+}
+
+/**
+ * OAuthInvalidRequestError is raised when a required parameter is missing,
+ * or an unsupported parameter or value is provided in the OAuth request.
+ */
+export class StripeOAuthInvalidRequestError extends StripeOAuthError {
+  constructor(raw: StripeRawError = {}) {
+    super(raw, 'StripeOAuthInvalidRequestError');
+  }
+}
+
+/**
+ * InvalidScopeError is raised when an invalid scope is provided in the
+ * OAuth request.
+ */
+export class StripeInvalidScopeError extends StripeOAuthError {
+  constructor(raw: StripeRawError = {}) {
+    super(raw, 'StripeInvalidScopeError');
+  }
+}
+
+/**
+ * UnsupportedGrantTypeError is raised when an unsupported grant_type is
+ * provided in the OAuth request.
+ */
+export class StripeUnsupportedGrantTypeError extends StripeOAuthError {
+  constructor(raw: StripeRawError = {}) {
+    super(raw, 'StripeUnsupportedGrantTypeError');
+  }
+}
+
+/**
+ * UnsupportedResponseTypeError is raised when an unsupported response_type
+ * is provided in the OAuth request.
+ */
+export class StripeUnsupportedResponseTypeError extends StripeOAuthError {
+  constructor(raw: StripeRawError = {}) {
+    super(raw, 'StripeUnsupportedResponseTypeError');
   }
 }
 
