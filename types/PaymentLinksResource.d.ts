@@ -836,6 +836,7 @@ declare module 'stripe' {
         | 'sofort'
         | 'swish'
         | 'twint'
+        | 'upi'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
@@ -1891,6 +1892,7 @@ declare module 'stripe' {
         | 'sofort'
         | 'swish'
         | 'twint'
+        | 'upi'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';

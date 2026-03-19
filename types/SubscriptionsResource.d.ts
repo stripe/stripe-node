@@ -156,7 +156,7 @@ declare module 'stripe' {
       payment_settings?: SubscriptionCreateParams.PaymentSettings;
 
       /**
-       * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://docs.stripe.com/api#create_invoice) for the given subscription at the specified interval.
+       * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://docs.stripe.com/api/invoices/create) for the given subscription at the specified interval.
        */
       pending_invoice_item_interval?: Stripe.Emptyable<
         SubscriptionCreateParams.PendingInvoiceItemInterval
@@ -725,7 +725,7 @@ declare module 'stripe' {
           namespace Card {
             interface MandateOptions {
               /**
-               * Amount to be charged for future payments.
+               * Amount to be charged for future payments, specified in the presentment currency.
                */
               amount?: number;
 
@@ -1129,7 +1129,7 @@ declare module 'stripe' {
       payment_settings?: SubscriptionUpdateParams.PaymentSettings;
 
       /**
-       * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://docs.stripe.com/api#create_invoice) for the given subscription at the specified interval.
+       * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://docs.stripe.com/api/invoices/create) for the given subscription at the specified interval.
        */
       pending_invoice_item_interval?: Stripe.Emptyable<
         SubscriptionUpdateParams.PendingInvoiceItemInterval
@@ -1556,7 +1556,7 @@ declare module 'stripe' {
 
       interface PauseCollection {
         /**
-         * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+         * The payment collection behavior for this subscription while paused.
          */
         behavior: PauseCollection.Behavior;
 
@@ -1701,7 +1701,7 @@ declare module 'stripe' {
           namespace Card {
             interface MandateOptions {
               /**
-               * Amount to be charged for future payments.
+               * Amount to be charged for future payments, specified in the presentment currency.
                */
               amount?: number;
 
@@ -2262,7 +2262,7 @@ declare module 'stripe' {
       /**
        * Cancels a customer's subscription immediately. The customer won't be charged again for the subscription. After it's canceled, you can no longer update the subscription or its [metadata](https://docs.stripe.com/metadata).
        *
-       * Any pending invoice items that you've created are still charged at the end of the period, unless manually [deleted](https://docs.stripe.com/api#delete_invoiceitem). If you've set the subscription to cancel at the end of the period, any pending prorations are also left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations are removed if invoice_now and prorate are both set to true.
+       * Any pending invoice items that you've created are still charged at the end of the period, unless manually [deleted](https://docs.stripe.com/api/invoiceitems/delete). If you've set the subscription to cancel at the end of the period, any pending prorations are also left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations are removed if invoice_now and prorate are both set to true.
        *
        * By default, upon subscription cancellation, Stripe stops automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
        */

@@ -504,6 +504,11 @@ declare module 'stripe' {
         twint_payments?: Capabilities.TwintPayments;
 
         /**
+         * The upi_payments capability.
+         */
+        upi_payments?: Capabilities.UpiPayments;
+
+        /**
          * The us_bank_account_ach_payments capability.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
@@ -920,6 +925,13 @@ declare module 'stripe' {
         }
 
         interface TwintPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface UpiPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2455,6 +2467,11 @@ declare module 'stripe' {
         twint_payments?: Capabilities.TwintPayments;
 
         /**
+         * The upi_payments capability.
+         */
+        upi_payments?: Capabilities.UpiPayments;
+
+        /**
          * The us_bank_account_ach_payments capability.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
@@ -2871,6 +2888,13 @@ declare module 'stripe' {
         }
 
         interface TwintPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface UpiPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */

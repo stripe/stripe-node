@@ -44,9 +44,13 @@ declare module 'stripe' {
           event_payload: EventDestination.EventPayload;
 
           /**
-           * Where events should be routed from.
+           * Specifies which accounts' events route to this destination.
+           * `@self`: Receive events from the account that owns the event destination.
+           * `@accounts`: Receive events emitted from other accounts you manage which includes your v1 and v2 accounts.
+           * `@organization_members`: Receive events from accounts directly linked to the organization.
+           * `@organization_members/@accounts`: Receive events from all accounts connected to any platform accounts in the organization.
            */
-          events_from?: Array<EventDestination.EventsFrom>;
+          events_from?: Array<string>;
 
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -121,8 +125,6 @@ declare module 'stripe' {
           }
 
           type EventPayload = 'snapshot' | 'thin';
-
-          type EventsFrom = 'other_accounts' | 'self';
 
           type Status = 'disabled' | 'enabled';
 

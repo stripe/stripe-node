@@ -51,7 +51,7 @@ declare module 'stripe' {
       expected_availability_date: number | null;
 
       /**
-       * Error code explaining reason for top-up failure if available (see [the errors section](https://docs.stripe.com/api#errors) for a list of codes).
+       * Error code explaining reason for top-up failure if available (see [the errors section](https://docs.stripe.com/api/errors) for a list of codes).
        */
       failure_code: string | null;
 
@@ -61,7 +61,7 @@ declare module 'stripe' {
       failure_message: string | null;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
