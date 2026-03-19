@@ -1455,26 +1455,12 @@ declare module 'stripe' {
                 /**
                  * A non-negative integer representing the amount in the smallest currency unit.
                  */
-                amount?: AnnualRevenue.Amount;
+                amount?: Amount;
 
                 /**
                  * The close-out date of the preceding fiscal year in ISO 8601 format. E.g. 2023-12-31 for the 31st of December, 2023.
                  */
                 fiscal_year_end?: string;
-              }
-
-              namespace AnnualRevenue {
-                interface Amount {
-                  /**
-                   * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-                   */
-                  value?: number;
-
-                  /**
-                   * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-                   */
-                  currency?: string;
-                }
               }
 
               interface Documents {
@@ -1805,21 +1791,7 @@ declare module 'stripe' {
                 /**
                  * A non-negative integer representing the amount in the smallest currency unit.
                  */
-                amount?: MonthlyEstimatedRevenue.Amount;
-              }
-
-              namespace MonthlyEstimatedRevenue {
-                interface Amount {
-                  /**
-                   * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-                   */
-                  value?: number;
-
-                  /**
-                   * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-                   */
-                  currency?: string;
-                }
+                amount?: Amount;
               }
 
               interface RegistrationDate {
@@ -4048,26 +4020,12 @@ declare module 'stripe' {
                 /**
                  * A non-negative integer representing the amount in the smallest currency unit.
                  */
-                amount?: AnnualRevenue.Amount;
+                amount?: Amount;
 
                 /**
                  * The close-out date of the preceding fiscal year in ISO 8601 format. E.g. 2023-12-31 for the 31st of December, 2023.
                  */
                 fiscal_year_end?: string;
-              }
-
-              namespace AnnualRevenue {
-                interface Amount {
-                  /**
-                   * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-                   */
-                  value?: number;
-
-                  /**
-                   * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-                   */
-                  currency?: string;
-                }
               }
 
               interface Documents {
@@ -4398,21 +4356,7 @@ declare module 'stripe' {
                 /**
                  * A non-negative integer representing the amount in the smallest currency unit.
                  */
-                amount?: MonthlyEstimatedRevenue.Amount;
-              }
-
-              namespace MonthlyEstimatedRevenue {
-                interface Amount {
-                  /**
-                   * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-                   */
-                  value?: number;
-
-                  /**
-                   * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-                   */
-                  currency?: string;
-                }
+                amount?: Amount;
               }
 
               interface RegistrationDate {
@@ -5032,6 +4976,7 @@ declare module 'stripe' {
 
           /**
            * An Account is a representation of a company, individual or other entity that a user interacts with. Accounts contain identifying information about the entity, and configurations that store the features an account has access to. An account can be configured as any or all of the following configurations: Customer, Merchant and/or Recipient.
+           * @throws Stripe.RateLimitError
            */
           create(
             params?: AccountCreateParams,
@@ -5043,6 +4988,7 @@ declare module 'stripe' {
 
           /**
            * Retrieves the details of an Account.
+           * @throws Stripe.RateLimitError
            */
           retrieve(
             id: string,
@@ -5056,6 +5002,7 @@ declare module 'stripe' {
 
           /**
            * Updates the details of an Account.
+           * @throws Stripe.RateLimitError
            */
           update(
             id: string,
@@ -5065,6 +5012,7 @@ declare module 'stripe' {
 
           /**
            * Returns a list of Accounts.
+           * @throws Stripe.RateLimitError
            */
           list(
             params?: AccountListParams,
@@ -5076,6 +5024,7 @@ declare module 'stripe' {
 
           /**
            * Removes access to the Account and its associated resources. Closed Accounts can no longer be operated on, but limited information can still be retrieved through the API in order to be able to track their history.
+           * @throws Stripe.RateLimitError
            */
           close(
             id: string,

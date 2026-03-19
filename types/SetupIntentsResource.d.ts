@@ -195,6 +195,7 @@ declare module 'stripe' {
         | 'sofort'
         | 'swish'
         | 'twint'
+        | 'upi'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
@@ -512,6 +513,11 @@ declare module 'stripe' {
         type: PaymentMethodData.Type;
 
         /**
+         * If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
+         */
+        upi?: PaymentMethodData.Upi;
+
+        /**
          * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
          */
         us_bank_account?: PaymentMethodData.UsBankAccount;
@@ -973,9 +979,45 @@ declare module 'stripe' {
           | 'sofort'
           | 'swish'
           | 'twint'
+          | 'upi'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
+
+        interface Upi {
+          /**
+           * Configuration options for setting up an eMandate
+           */
+          mandate_options?: Upi.MandateOptions;
+        }
+
+        namespace Upi {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount?: number;
+
+            /**
+             * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * A description of the mandate or subscription that is meant to be displayed to the customer.
+             */
+            description?: string;
+
+            /**
+             * End date of the mandate or subscription.
+             */
+            end_date?: number;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+          }
+        }
 
         interface UsBankAccount {
           /**
@@ -1067,6 +1109,11 @@ declare module 'stripe' {
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
         /**
+         * If this is a `upi` SetupIntent, this sub-hash contains details about the UPI payment method options.
+         */
+        upi?: PaymentMethodOptions.Upi;
+
+        /**
          * If this is a `us_bank_account` SetupIntent, this sub-hash contains details about the US bank account payment method options.
          */
         us_bank_account?: PaymentMethodOptions.UsBankAccount;
@@ -1085,7 +1132,7 @@ declare module 'stripe' {
           mandate_options?: AcssDebit.MandateOptions;
 
           /**
-           * Bank account verification method.
+           * Bank account verification method. The default value is `automatic`.
            */
           verification_method?: AcssDebit.VerificationMethod;
         }
@@ -1184,7 +1231,7 @@ declare module 'stripe' {
         namespace Card {
           interface MandateOptions {
             /**
-             * Amount to be charged for future payments.
+             * Amount to be charged for future payments, specified in the presentment currency.
              */
             amount: number;
 
@@ -1599,6 +1646,45 @@ declare module 'stripe' {
           }
         }
 
+        interface Upi {
+          /**
+           * Configuration options for setting up an eMandate
+           */
+          mandate_options?: Upi.MandateOptions;
+
+          setup_future_usage?: Stripe.Emptyable<Upi.SetupFutureUsage>;
+        }
+
+        namespace Upi {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount?: number;
+
+            /**
+             * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * A description of the mandate or subscription that is meant to be displayed to the customer.
+             */
+            description?: string;
+
+            /**
+             * End date of the mandate or subscription.
+             */
+            end_date?: number;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+          }
+
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+        }
+
         interface UsBankAccount {
           /**
            * Additional fields for Financial Connections Session creation
@@ -1616,7 +1702,7 @@ declare module 'stripe' {
           networks?: UsBankAccount.Networks;
 
           /**
-           * Bank account verification method.
+           * Bank account verification method. The default value is `automatic`.
            */
           verification_method?: UsBankAccount.VerificationMethod;
         }
@@ -1840,6 +1926,7 @@ declare module 'stripe' {
         | 'sofort'
         | 'swish'
         | 'twint'
+        | 'upi'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
@@ -2108,6 +2195,11 @@ declare module 'stripe' {
         type: PaymentMethodData.Type;
 
         /**
+         * If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
+         */
+        upi?: PaymentMethodData.Upi;
+
+        /**
          * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
          */
         us_bank_account?: PaymentMethodData.UsBankAccount;
@@ -2569,9 +2661,45 @@ declare module 'stripe' {
           | 'sofort'
           | 'swish'
           | 'twint'
+          | 'upi'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
+
+        interface Upi {
+          /**
+           * Configuration options for setting up an eMandate
+           */
+          mandate_options?: Upi.MandateOptions;
+        }
+
+        namespace Upi {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount?: number;
+
+            /**
+             * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * A description of the mandate or subscription that is meant to be displayed to the customer.
+             */
+            description?: string;
+
+            /**
+             * End date of the mandate or subscription.
+             */
+            end_date?: number;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+          }
+        }
 
         interface UsBankAccount {
           /**
@@ -2663,6 +2791,11 @@ declare module 'stripe' {
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
         /**
+         * If this is a `upi` SetupIntent, this sub-hash contains details about the UPI payment method options.
+         */
+        upi?: PaymentMethodOptions.Upi;
+
+        /**
          * If this is a `us_bank_account` SetupIntent, this sub-hash contains details about the US bank account payment method options.
          */
         us_bank_account?: PaymentMethodOptions.UsBankAccount;
@@ -2681,7 +2814,7 @@ declare module 'stripe' {
           mandate_options?: AcssDebit.MandateOptions;
 
           /**
-           * Bank account verification method.
+           * Bank account verification method. The default value is `automatic`.
            */
           verification_method?: AcssDebit.VerificationMethod;
         }
@@ -2780,7 +2913,7 @@ declare module 'stripe' {
         namespace Card {
           interface MandateOptions {
             /**
-             * Amount to be charged for future payments.
+             * Amount to be charged for future payments, specified in the presentment currency.
              */
             amount: number;
 
@@ -3195,6 +3328,45 @@ declare module 'stripe' {
           }
         }
 
+        interface Upi {
+          /**
+           * Configuration options for setting up an eMandate
+           */
+          mandate_options?: Upi.MandateOptions;
+
+          setup_future_usage?: Stripe.Emptyable<Upi.SetupFutureUsage>;
+        }
+
+        namespace Upi {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount?: number;
+
+            /**
+             * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * A description of the mandate or subscription that is meant to be displayed to the customer.
+             */
+            description?: string;
+
+            /**
+             * End date of the mandate or subscription.
+             */
+            end_date?: number;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+          }
+
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+        }
+
         interface UsBankAccount {
           /**
            * Additional fields for Financial Connections Session creation
@@ -3212,7 +3384,7 @@ declare module 'stripe' {
           networks?: UsBankAccount.Networks;
 
           /**
-           * Bank account verification method.
+           * Bank account verification method. The default value is `automatic`.
            */
           verification_method?: UsBankAccount.VerificationMethod;
         }
@@ -3693,6 +3865,11 @@ declare module 'stripe' {
         type: PaymentMethodData.Type;
 
         /**
+         * If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
+         */
+        upi?: PaymentMethodData.Upi;
+
+        /**
          * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
          */
         us_bank_account?: PaymentMethodData.UsBankAccount;
@@ -4154,9 +4331,45 @@ declare module 'stripe' {
           | 'sofort'
           | 'swish'
           | 'twint'
+          | 'upi'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
+
+        interface Upi {
+          /**
+           * Configuration options for setting up an eMandate
+           */
+          mandate_options?: Upi.MandateOptions;
+        }
+
+        namespace Upi {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount?: number;
+
+            /**
+             * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * A description of the mandate or subscription that is meant to be displayed to the customer.
+             */
+            description?: string;
+
+            /**
+             * End date of the mandate or subscription.
+             */
+            end_date?: number;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+          }
+        }
 
         interface UsBankAccount {
           /**
@@ -4248,6 +4461,11 @@ declare module 'stripe' {
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
         /**
+         * If this is a `upi` SetupIntent, this sub-hash contains details about the UPI payment method options.
+         */
+        upi?: PaymentMethodOptions.Upi;
+
+        /**
          * If this is a `us_bank_account` SetupIntent, this sub-hash contains details about the US bank account payment method options.
          */
         us_bank_account?: PaymentMethodOptions.UsBankAccount;
@@ -4266,7 +4484,7 @@ declare module 'stripe' {
           mandate_options?: AcssDebit.MandateOptions;
 
           /**
-           * Bank account verification method.
+           * Bank account verification method. The default value is `automatic`.
            */
           verification_method?: AcssDebit.VerificationMethod;
         }
@@ -4365,7 +4583,7 @@ declare module 'stripe' {
         namespace Card {
           interface MandateOptions {
             /**
-             * Amount to be charged for future payments.
+             * Amount to be charged for future payments, specified in the presentment currency.
              */
             amount: number;
 
@@ -4780,6 +4998,45 @@ declare module 'stripe' {
           }
         }
 
+        interface Upi {
+          /**
+           * Configuration options for setting up an eMandate
+           */
+          mandate_options?: Upi.MandateOptions;
+
+          setup_future_usage?: Stripe.Emptyable<Upi.SetupFutureUsage>;
+        }
+
+        namespace Upi {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount?: number;
+
+            /**
+             * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * A description of the mandate or subscription that is meant to be displayed to the customer.
+             */
+            description?: string;
+
+            /**
+             * End date of the mandate or subscription.
+             */
+            end_date?: number;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+          }
+
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+        }
+
         interface UsBankAccount {
           /**
            * Additional fields for Financial Connections Session creation
@@ -4797,7 +5054,7 @@ declare module 'stripe' {
           networks?: UsBankAccount.Networks;
 
           /**
-           * Bank account verification method.
+           * Bank account verification method. The default value is `automatic`.
            */
           verification_method?: UsBankAccount.VerificationMethod;
         }

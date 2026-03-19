@@ -284,6 +284,11 @@ declare module 'stripe' {
       twint?: PaymentMethodConfigurationCreateParams.Twint;
 
       /**
+       * Unified Payment Interface (UPI) is India's leading payment method with exponential growth since it launched in 2016.
+       */
+      upi?: PaymentMethodConfigurationCreateParams.Upi;
+
+      /**
        * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://docs.stripe.com/payments/ach-direct-debit) for more details.
        */
       us_bank_account?: PaymentMethodConfigurationCreateParams.UsBankAccount;
@@ -1360,6 +1365,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Upi {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Upi.DisplayPreference;
+      }
+
+      namespace Upi {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface UsBankAccount {
         /**
          * Whether or not the payment method should be displayed.
@@ -1708,6 +1733,11 @@ declare module 'stripe' {
        * Twint is a payment method popular in Switzerland. It allows customers to pay using their mobile phone. Check this [page](https://docs.stripe.com/payments/twint) for more details.
        */
       twint?: PaymentMethodConfigurationUpdateParams.Twint;
+
+      /**
+       * Unified Payment Interface (UPI) is India's leading payment method with exponential growth since it launched in 2016.
+       */
+      upi?: PaymentMethodConfigurationUpdateParams.Upi;
 
       /**
        * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://docs.stripe.com/payments/ach-direct-debit) for more details.
@@ -2774,6 +2804,26 @@ declare module 'stripe' {
       }
 
       namespace Twint {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Upi {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Upi.DisplayPreference;
+      }
+
+      namespace Upi {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.

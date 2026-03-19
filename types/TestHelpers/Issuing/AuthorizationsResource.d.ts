@@ -653,11 +653,11 @@ declare module 'stripe' {
               /**
                * The likelihood that this authorization is associated with card testing activity. This is assessed by evaluating decline activity over the last hour.
                */
-              risk_level: CardTestingRisk.RiskLevel;
+              level: CardTestingRisk.Level;
             }
 
             namespace CardTestingRisk {
-              type RiskLevel =
+              type Level =
                 | 'elevated'
                 | 'highest'
                 | 'low'
@@ -697,11 +697,11 @@ declare module 'stripe' {
               /**
                * The likelihood that authorizations from this merchant will result in a dispute based on their history on Stripe Issuing.
                */
-              risk_level: MerchantDisputeRisk.RiskLevel;
+              level: MerchantDisputeRisk.Level;
             }
 
             namespace MerchantDisputeRisk {
-              type RiskLevel =
+              type Level =
                 | 'elevated'
                 | 'highest'
                 | 'low'

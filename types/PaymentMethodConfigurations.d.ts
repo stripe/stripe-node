@@ -105,7 +105,7 @@ declare module 'stripe' {
       link?: PaymentMethodConfiguration.Link;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -160,6 +160,8 @@ declare module 'stripe' {
       swish?: PaymentMethodConfiguration.Swish;
 
       twint?: PaymentMethodConfiguration.Twint;
+
+      upi?: PaymentMethodConfiguration.Upi;
 
       us_bank_account?: PaymentMethodConfiguration.UsBankAccount;
 
@@ -1879,6 +1881,40 @@ declare module 'stripe' {
       }
 
       namespace Twint {
+        interface DisplayPreference {
+          /**
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
+      interface Upi {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: Upi.DisplayPreference;
+      }
+
+      namespace Upi {
         interface DisplayPreference {
           /**
            * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.

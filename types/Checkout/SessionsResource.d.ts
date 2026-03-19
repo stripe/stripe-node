@@ -136,6 +136,11 @@ declare module 'stripe' {
         expires_at?: number;
 
         /**
+         * The integration identifier for this Checkout Session. Multiple Checkout Sessions can have the same integration identifier.
+         */
+        integration_identifier?: string;
+
+        /**
          * Generate a post-purchase Invoice for one-time payments.
          */
         invoice_creation?: SessionCreateParams.InvoiceCreation;
@@ -793,6 +798,7 @@ declare module 'stripe' {
           | 'sofort'
           | 'swish'
           | 'twint'
+          | 'upi'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
@@ -1376,6 +1382,11 @@ declare module 'stripe' {
           cashapp?: PaymentMethodOptions.Cashapp;
 
           /**
+           * contains details about the Crypto payment method options.
+           */
+          crypto?: PaymentMethodOptions.Crypto;
+
+          /**
            * contains details about the Customer Balance payment method options.
            */
           customer_balance?: PaymentMethodOptions.CustomerBalance;
@@ -1524,6 +1535,11 @@ declare module 'stripe' {
            * contains details about the TWINT payment method options.
            */
           twint?: PaymentMethodOptions.Twint;
+
+          /**
+           * contains details about the UPI payment method options.
+           */
+          upi?: PaymentMethodOptions.Upi;
 
           /**
            * contains details about the Us Bank Account payment method options.
@@ -1907,6 +1923,19 @@ declare module 'stripe' {
 
           namespace Cashapp {
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          }
+
+          interface Crypto {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
           }
 
           interface CustomerBalance {
@@ -2605,6 +2634,45 @@ declare module 'stripe' {
             setup_future_usage?: 'none';
           }
 
+          interface Upi {
+            /**
+             * Additional fields for Mandate creation
+             */
+            mandate_options?: Upi.MandateOptions;
+
+            setup_future_usage?: Stripe.Emptyable<Upi.SetupFutureUsage>;
+          }
+
+          namespace Upi {
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments.
+               */
+              amount?: number;
+
+              /**
+               * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+               */
+              amount_type?: MandateOptions.AmountType;
+
+              /**
+               * A description of the mandate or subscription that is meant to be displayed to the customer.
+               */
+              description?: string;
+
+              /**
+               * End date of the mandate or subscription.
+               */
+              end_date?: number;
+            }
+
+            namespace MandateOptions {
+              type AmountType = 'fixed' | 'maximum';
+            }
+
+            type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          }
+
           interface UsBankAccount {
             /**
              * Additional fields for Financial Connections Session creation
@@ -2737,6 +2805,7 @@ declare module 'stripe' {
           | 'sofort'
           | 'swish'
           | 'twint'
+          | 'upi'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
@@ -3247,6 +3316,11 @@ declare module 'stripe' {
           on_behalf_of?: string;
 
           /**
+           * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://docs.stripe.com/api#create_invoice) for the given subscription at the specified interval.
+           */
+          pending_invoice_item_interval?: SubscriptionData.PendingInvoiceItemInterval;
+
+          /**
            * Determines how to handle prorations resulting from the `billing_cycle_anchor`. If no value is passed, the default is `create_prorations`.
            */
           proration_behavior?: SubscriptionData.ProrationBehavior;
@@ -3325,6 +3399,22 @@ declare module 'stripe' {
             }
           }
 
+          interface PendingInvoiceItemInterval {
+            /**
+             * Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
+             */
+            interval: PendingInvoiceItemInterval.Interval;
+
+            /**
+             * The number of intervals between invoices. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+             */
+            interval_count?: number;
+          }
+
+          namespace PendingInvoiceItemInterval {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
           type ProrationBehavior = 'create_prorations' | 'none';
 
           interface TransferData {
@@ -3376,7 +3466,14 @@ declare module 'stripe' {
           type Required = 'if_supported' | 'never';
         }
 
-        type UiMode = 'custom' | 'embedded' | 'hosted';
+        type UiMode =
+          | 'custom'
+          | 'elements'
+          | 'embedded'
+          | 'embedded_page'
+          | 'form'
+          | 'hosted'
+          | 'hosted_page';
 
         interface WalletOptions {
           /**

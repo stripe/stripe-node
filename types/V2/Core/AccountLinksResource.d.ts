@@ -132,6 +132,7 @@ declare module 'stripe' {
         class AccountLinksResource {
           /**
            * Creates an AccountLink object that includes a single-use URL that an account can use to access a Stripe-hosted flow for collecting or updating required information.
+           * @throws Stripe.RateLimitError
            */
           create(
             params: AccountLinkCreateParams,

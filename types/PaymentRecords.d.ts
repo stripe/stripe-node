@@ -85,7 +85,7 @@ declare module 'stripe' {
       latest_payment_attempt_record: string | null;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -357,6 +357,8 @@ declare module 'stripe' {
          * It contains information specific to the payment method.
          */
         type: string;
+
+        upi?: PaymentMethodDetails.Upi;
 
         us_bank_account?: PaymentMethodDetails.UsBankAccount;
 
@@ -733,7 +735,7 @@ declare module 'stripe' {
           /**
            * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
            */
-          brand: Card.Brand;
+          brand: Card.Brand | null;
 
           /**
            * When using manual capture, a future timestamp at which the charge will be automatically refunded if uncaptured.
@@ -758,12 +760,12 @@ declare module 'stripe' {
           /**
            * Two-digit number representing the card's expiration month.
            */
-          exp_month: number;
+          exp_month: number | null;
 
           /**
            * Four-digit number representing the card's expiration year.
            */
-          exp_year: number;
+          exp_year: number | null;
 
           /**
            * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
@@ -775,7 +777,7 @@ declare module 'stripe' {
           /**
            * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
            */
-          funding: Card.Funding;
+          funding: Card.Funding | null;
 
           /**
            * Issuer identification number of the card.
@@ -795,12 +797,12 @@ declare module 'stripe' {
           /**
            * The last four digits of the card.
            */
-          last4: string;
+          last4: string | null;
 
           /**
            * True if this payment was marked as MOTO and out of scope for SCA.
            */
-          moto?: boolean;
+          moto?: boolean | null;
 
           /**
            * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
@@ -953,6 +955,26 @@ declare module 'stripe' {
             authentication_flow: ThreeDSecure.AuthenticationFlow | null;
 
             /**
+             * The 3D Secure cryptogram, also known as the "authentication value" (AAV, CAVV or AEVV).
+             */
+            cryptogram: string | null;
+
+            /**
+             * The Electronic Commerce Indicator (ECI). A protocol-level field indicating what degree of authentication was performed.
+             */
+            electronic_commerce_indicator: ThreeDSecure.ElectronicCommerceIndicator | null;
+
+            /**
+             * The exemption requested via 3DS and accepted by the issuer at authentication time.
+             */
+            exemption_indicator: ThreeDSecure.ExemptionIndicator | null;
+
+            /**
+             * Whether Stripe requested the value of `exemption_indicator` in the transaction. This will depend on the outcome of Stripe's internal risk assessment.
+             */
+            exemption_indicator_applied: boolean | null;
+
+            /**
              * Indicates the outcome of 3D Secure authentication.
              */
             result: ThreeDSecure.Result | null;
@@ -970,6 +992,17 @@ declare module 'stripe' {
 
           namespace ThreeDSecure {
             type AuthenticationFlow = 'challenge' | 'frictionless';
+
+            type ElectronicCommerceIndicator =
+              | '01'
+              | '02'
+              | '03'
+              | '04'
+              | '05'
+              | '06'
+              | '07';
+
+            type ExemptionIndicator = 'low_risk' | 'none';
 
             type Result =
               | 'attempt_acknowledged'
@@ -1278,7 +1311,7 @@ declare module 'stripe' {
         }
 
         namespace Crypto {
-          type Network = 'base' | 'ethereum' | 'polygon' | 'solana';
+          type Network = 'base' | 'ethereum' | 'polygon' | 'solana' | 'tempo';
 
           type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
         }
@@ -1449,8 +1482,7 @@ declare module 'stripe' {
           transaction_id: string | null;
 
           /**
-           * Owner's verified full name. Values are verified or provided by iDEAL directly
-           * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           * Owner's verified full name. Values are verified or provided by iDEAL directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
           verified_name: string | null;
         }
@@ -2231,14 +2263,12 @@ declare module 'stripe' {
           iban_last4: string | null;
 
           /**
-           * Preferred language of the SOFORT authorization page that the customer is redirected to.
-           * Can be one of `de`, `en`, `es`, `fr`, `it`, `nl`, or `pl`
+           * Preferred language of the SOFORT authorization page that the customer is redirected to. Can be one of `de`, `en`, `es`, `fr`, `it`, `nl`, or `pl`
            */
           preferred_language: Sofort.PreferredLanguage | null;
 
           /**
-           * Owner's verified full name. Values are verified or provided by SOFORT directly
-           * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           * Owner's verified full name. Values are verified or provided by SOFORT directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
           verified_name: string | null;
         }
@@ -2274,6 +2304,13 @@ declare module 'stripe' {
         }
 
         interface Twint {}
+
+        interface Upi {
+          /**
+           * Customer's unique Virtual Payment Address.
+           */
+          vpa: string | null;
+        }
 
         interface UsBankAccount {
           /**
