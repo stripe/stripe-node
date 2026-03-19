@@ -8,7 +8,7 @@ declare module 'stripe' {
           /**
            * The “presentment amount” to be collected from the customer.
            */
-          amount: OffSessionPaymentCreateParams.Amount;
+          amount: Amount;
 
           /**
            * The frequency of the underlying payment.
@@ -90,18 +90,6 @@ declare module 'stripe' {
         }
 
         namespace OffSessionPaymentCreateParams {
-          interface Amount {
-            /**
-             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-             */
-            value: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
-
           type Cadence = 'recurring' | 'unscheduled';
 
           interface Capture {
