@@ -121,7 +121,7 @@ declare module 'stripe' {
               /**
                * The total number of records that failed processing.
                */
-              failure_count: number;
+              failure_count: bigint;
 
               /**
                * The output file details. If BatchJob is cancelled it's provided only if there is already output at this point.
@@ -131,7 +131,7 @@ declare module 'stripe' {
               /**
                * The total number of records that were successfully processed.
                */
-              success_count: number;
+              success_count: bigint;
             }
 
             namespace Canceled {
@@ -149,7 +149,7 @@ declare module 'stripe' {
                 /**
                  * The total size of the file in bytes.
                  */
-                size: number;
+                size: bigint;
               }
 
               namespace OutputFile {
@@ -171,7 +171,7 @@ declare module 'stripe' {
               /**
                * The total number of records that failed processing.
                */
-              failure_count: number;
+              failure_count: bigint;
 
               /**
                * The output file details. If BatchJob is cancelled it's provided only if there is already output at this point.
@@ -181,7 +181,7 @@ declare module 'stripe' {
               /**
                * The total number of records that were successfully processed.
                */
-              success_count: number;
+              success_count: bigint;
             }
 
             namespace Complete {
@@ -199,7 +199,7 @@ declare module 'stripe' {
                 /**
                  * The total size of the file in bytes.
                  */
-                size: number;
+                size: bigint;
               }
 
               namespace OutputFile {
@@ -221,12 +221,12 @@ declare module 'stripe' {
               /**
                * The number of records that failed processing so far.
                */
-              failure_count: number;
+              failure_count: bigint;
 
               /**
                * The number of records that were successfully processed so far.
                */
-              success_count: number;
+              success_count: bigint;
             }
 
             interface ReadyForUpload {
@@ -254,7 +254,7 @@ declare module 'stripe' {
               /**
                * The total number of records that failed processing.
                */
-              failure_count: number;
+              failure_count: bigint;
 
               /**
                * The output file details. If BatchJob is cancelled it's provided only if there is already output at this point.
@@ -264,7 +264,7 @@ declare module 'stripe' {
               /**
                * The total number of records that were successfully processed.
                */
-              success_count: number;
+              success_count: bigint;
             }
 
             namespace Timeout {
@@ -282,7 +282,7 @@ declare module 'stripe' {
                 /**
                  * The total size of the file in bytes.
                  */
-                size: number;
+                size: bigint;
               }
 
               namespace OutputFile {
@@ -305,14 +305,14 @@ declare module 'stripe' {
                * The number of records that were validated. Note that there is no failure counter here;
                * once we have any validation failures we give up.
                */
-              validated_count: number;
+              validated_count: bigint;
             }
 
             interface ValidationFailed {
               /**
                * The total number of records that failed processing.
                */
-              failure_count: number;
+              failure_count: bigint;
 
               /**
                * The output file details. If BatchJob is cancelled it's provided only if there is already output at this point.
@@ -322,7 +322,7 @@ declare module 'stripe' {
               /**
                * The total number of records that were successfully processed.
                */
-              success_count: number;
+              success_count: bigint;
             }
 
             namespace ValidationFailed {
@@ -340,7 +340,7 @@ declare module 'stripe' {
                 /**
                  * The total size of the file in bytes.
                  */
-                size: number;
+                size: bigint;
               }
 
               namespace OutputFile {

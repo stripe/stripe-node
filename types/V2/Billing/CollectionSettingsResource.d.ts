@@ -169,7 +169,7 @@ declare module 'stripe' {
                 /**
                  * Amount to be charged for future payments.
                  */
-                amount?: number;
+                amount?: bigint;
 
                 /**
                  * The AmountType for the mandate. One of `fixed` or `maximum`.
@@ -480,7 +480,7 @@ declare module 'stripe' {
                 /**
                  * Amount to be charged for future payments.
                  */
-                amount?: number;
+                amount?: bigint;
 
                 /**
                  * The AmountType for the mandate. One of `fixed` or `maximum`.
