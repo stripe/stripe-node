@@ -1,10 +1,8 @@
 import {
   StripeAPIError,
-  StripeAuthenticationError,
   StripeConnectionError,
   StripeError,
-  StripePermissionError,
-  StripeRateLimitError,
+  generateOAuthError,
   generateV1Error,
   generateV2Error,
 } from './Error.js';
@@ -172,11 +170,9 @@ export class RequestSender {
         .then(
           (jsonResponse) => {
             if (jsonResponse.error) {
-              let err;
+              const isOAuth = typeof jsonResponse.error === 'string';
 
-              // Convert OAuth error responses into a standard format
-              // so that the rest of the error logic can be shared
-              if (typeof jsonResponse.error === 'string') {
+              if (isOAuth) {
                 jsonResponse.error = {
                   type: jsonResponse.error,
                   message: jsonResponse.error_description,
@@ -187,12 +183,10 @@ export class RequestSender {
               jsonResponse.error.statusCode = statusCode;
               jsonResponse.error.requestId = requestId;
 
-              if (statusCode === 401) {
-                err = new StripeAuthenticationError(jsonResponse.error);
-              } else if (statusCode === 403) {
-                err = new StripePermissionError(jsonResponse.error);
-              } else if (statusCode === 429) {
-                err = new StripeRateLimitError(jsonResponse.error);
+              let err;
+
+              if (isOAuth) {
+                err = generateOAuthError(jsonResponse.error);
               } else if (apiMode === 'v2') {
                 err = generateV2Error(jsonResponse.error);
               } else {
