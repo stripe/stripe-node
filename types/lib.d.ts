@@ -318,6 +318,55 @@ declare module 'stripe' {
       type?: string;
     }
 
+    /**
+     * Arbitrary-precision decimal number for working with Stripe decimal_string fields
+     * without floating-point precision loss.
+     *
+     * Use `Decimal.from(value)` to construct instances. Instances are immutable.
+     *
+     * @example
+     * import { Decimal } from 'stripe';
+     * const price = Decimal.from("99.99");
+     * const tax = Decimal.from("0.08");
+     * const total = price.mul(tax.add(Decimal.from("1")));
+     */
+    interface Decimal {
+      add(other: Decimal): Decimal;
+      sub(other: Decimal): Decimal;
+      mul(other: Decimal): Decimal;
+      div(
+        other: Decimal,
+        precision?: number,
+        roundingMode?: Stripe.RoundingMode
+      ): Decimal;
+      cmp(other: Decimal): -1 | 0 | 1;
+      eq(other: Decimal): boolean;
+      lt(other: Decimal): boolean;
+      lte(other: Decimal): boolean;
+      gt(other: Decimal): boolean;
+      gte(other: Decimal): boolean;
+      isZero(): boolean;
+      isNegative(): boolean;
+      isPositive(): boolean;
+      neg(): Decimal;
+      abs(): Decimal;
+      toFixed(digits: number, roundingMode?: Stripe.RoundingMode): string;
+      toNumber(): number;
+      toString(): string;
+      toJSON(): string;
+    }
+    namespace Decimal {
+      function from(value: string | number | bigint): Stripe.Decimal;
+      const zero: Stripe.Decimal;
+    }
+
+    /**
+     * Rounding modes for Decimal arithmetic.
+     * - `HALF_UP`: Round half away from zero (e.g. 2.5 → 3, -2.5 → -3)
+     * - `HALF_EVEN`: Round half to nearest even number / banker's rounding (e.g. 2.5 → 2, 3.5 → 4)
+     */
+    type RoundingMode = 'HALF_UP' | 'HALF_EVEN';
+
     namespace V2 {
       /**
        * Represents a monetary amount with associated currency
