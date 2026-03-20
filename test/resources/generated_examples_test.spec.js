@@ -4303,7 +4303,7 @@ describe('Generated tests', function() {
                 maximum_applications: {
                   type: 'indefinite',
                 },
-                percent_off: 'percent_off',
+                percent_off: '991934883.3333334',
               },
             },
             spend_modifier_rule: {
@@ -7312,7 +7312,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/tax/manual_rules',
         response:
-          '{"data":[{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.manual_rule","products":[{"type":"licensed_item"}],"scheduled_tax_rates":[{"rates":[{"display_name":"display_name","percentage":"percentage"}]}],"status":"active","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.manual_rule","products":[{"type":"licensed_item"}],"scheduled_tax_rates":[{"rates":[{"display_name":"display_name","percentage":"614555204"}]}],"status":"active","livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const manualRules = await stripe.v2.tax.manualRules.list();
@@ -7325,7 +7325,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/tax/manual_rules',
         response:
-          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.manual_rule","products":[{"type":"licensed_item"}],"scheduled_tax_rates":[{"rates":[{"display_name":"display_name","percentage":"percentage"}]}],"status":"active","livemode":true}',
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.manual_rule","products":[{"type":"licensed_item"}],"scheduled_tax_rates":[{"rates":[{"display_name":"display_name","percentage":"614555204"}]}],"status":"active","livemode":true}',
       },
     ]);
     const manualRule = await stripe.v2.tax.manualRules.create({
@@ -7337,7 +7337,7 @@ describe('Generated tests', function() {
               description: 'description',
               display_name: 'display_name',
               jurisdiction: 'jurisdiction',
-              percentage: 'percentage',
+              percentage: '614555204',
               state: 'state',
             },
           ],
@@ -7354,7 +7354,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/tax/manual_rules/id_123',
         response:
-          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.manual_rule","products":[{"type":"licensed_item"}],"scheduled_tax_rates":[{"rates":[{"display_name":"display_name","percentage":"percentage"}]}],"status":"active","livemode":true}',
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.manual_rule","products":[{"type":"licensed_item"}],"scheduled_tax_rates":[{"rates":[{"display_name":"display_name","percentage":"614555204"}]}],"status":"active","livemode":true}',
       },
     ]);
     const manualRule = await stripe.v2.tax.manualRules.retrieve('id_123');
@@ -7367,7 +7367,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/tax/manual_rules/id_123',
         response:
-          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.manual_rule","products":[{"type":"licensed_item"}],"scheduled_tax_rates":[{"rates":[{"display_name":"display_name","percentage":"percentage"}]}],"status":"active","livemode":true}',
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.manual_rule","products":[{"type":"licensed_item"}],"scheduled_tax_rates":[{"rates":[{"display_name":"display_name","percentage":"614555204"}]}],"status":"active","livemode":true}',
       },
     ]);
     const manualRule = await stripe.v2.tax.manualRules.update('id_123', {
@@ -7379,7 +7379,7 @@ describe('Generated tests', function() {
               description: 'description',
               display_name: 'display_name',
               jurisdiction: 'jurisdiction',
-              percentage: 'percentage',
+              percentage: '614555204',
               state: 'state',
             },
           ],
@@ -7396,7 +7396,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/tax/manual_rules/id_123/deactivate',
         response:
-          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.manual_rule","products":[{"type":"licensed_item"}],"scheduled_tax_rates":[{"rates":[{"display_name":"display_name","percentage":"percentage"}]}],"status":"active","livemode":true}',
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.manual_rule","products":[{"type":"licensed_item"}],"scheduled_tax_rates":[{"rates":[{"display_name":"display_name","percentage":"614555204"}]}],"status":"active","livemode":true}',
       },
     ]);
     const manualRule = await stripe.v2.tax.manualRules.deactivate('id_123');
