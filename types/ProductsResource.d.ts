@@ -129,7 +129,7 @@ declare module 'stripe' {
         /**
          * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
-        unit_amount_decimal?: string;
+        unit_amount_decimal?: Decimal;
       }
 
       namespace DefaultPriceData {
@@ -157,7 +157,7 @@ declare module 'stripe' {
           /**
            * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
-          unit_amount_decimal?: string;
+          unit_amount_decimal?: Decimal;
         }
 
         namespace CurrencyOptions {
@@ -194,7 +194,7 @@ declare module 'stripe' {
             /**
              * Same as `flat_amount`, but accepts a decimal value representing an integer in the minor units of the currency. Only one of `flat_amount` and `flat_amount_decimal` can be set.
              */
-            flat_amount_decimal?: string;
+            flat_amount_decimal?: Decimal;
 
             /**
              * The per unit billing amount for each individual unit for which this tier applies.
@@ -204,7 +204,7 @@ declare module 'stripe' {
             /**
              * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
              */
-            unit_amount_decimal?: string;
+            unit_amount_decimal?: Decimal;
 
             /**
              * Specifies the upper bound of this tier. The lower bound of a tier is the upper bound of the previous tier adding one. Use `inf` to define a fallback tier.

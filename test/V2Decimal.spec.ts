@@ -146,7 +146,9 @@ describe('V2Decimal (via coerceV2RequestData / coerceV2ResponseData)', () => {
           id: 'abc',
         };
         const result = coerceV2ResponseData(input, schema) as any;
-        expect((result.pricing.unit_amount as Decimal).toString()).to.equal('99.99');
+        expect((result.pricing.unit_amount as Decimal).toString()).to.equal(
+          '99.99'
+        );
         expect(result.pricing.currency).to.equal('usd');
         expect((result.label as Decimal).toString()).to.equal('1.5');
         expect(result.id).to.equal('abc');
@@ -184,7 +186,9 @@ describe('V2Decimal (via coerceV2RequestData / coerceV2ResponseData)', () => {
       });
 
       it('preserves the full precision string', () => {
-        const decimal = Decimal.from('12345678901234567890.1234567890123456789');
+        const decimal = Decimal.from(
+          '12345678901234567890.1234567890123456789'
+        );
         const result = coerceV2RequestData(decimal, schema);
         expect(result).to.equal('12345678901234567890.1234567890123456789');
       });
@@ -353,10 +357,7 @@ describe('V2Decimal (via coerceV2RequestData / coerceV2ResponseData)', () => {
           tax_rate: '0.0825',
           currency: 'usd',
         };
-        const decoded = coerceV2ResponseData(
-          apiResponse,
-          requestSchema
-        ) as any;
+        const decoded = coerceV2ResponseData(apiResponse, requestSchema) as any;
         expect((decoded.unit_amount as Decimal).toString()).to.equal('19.99');
         expect((decoded.tax_rate as Decimal).toString()).to.equal('0.0825');
         expect(decoded.currency).to.equal('usd');

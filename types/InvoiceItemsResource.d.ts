@@ -76,7 +76,7 @@ declare module 'stripe' {
       /**
        * Non-negative decimal with at most 12 decimal places. The quantity of units for the invoice item.
        */
-      quantity_decimal?: string;
+      quantity_decimal?: Decimal;
 
       /**
        * The ID of a subscription to add this invoice item to. When left blank, the invoice item is added to the next upcoming scheduled invoice. When set, scheduled invoices for subscriptions other than the specified subscription will ignore the invoice item. Use this when you want to express that an invoice item has been accrued within the context of a particular subscription.
@@ -101,7 +101,7 @@ declare module 'stripe' {
       /**
        * The decimal unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This `unit_amount_decimal` will be multiplied by the quantity to get the full amount. Passing in a negative `unit_amount_decimal` will reduce the `amount_due` on the invoice. Accepts at most 12 decimal places.
        */
-      unit_amount_decimal?: string;
+      unit_amount_decimal?: Decimal;
     }
 
     namespace InvoiceItemCreateParams {
@@ -158,7 +158,7 @@ declare module 'stripe' {
         /**
          * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
-        unit_amount_decimal?: string;
+        unit_amount_decimal?: Decimal;
       }
 
       namespace PriceData {
@@ -236,7 +236,7 @@ declare module 'stripe' {
       /**
        * Non-negative decimal with at most 12 decimal places. The quantity of units for the line item.
        */
-      quantity_decimal?: string;
+      quantity_decimal?: Decimal;
 
       /**
        * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
@@ -256,7 +256,7 @@ declare module 'stripe' {
       /**
        * The decimal unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This `unit_amount_decimal` will be multiplied by the quantity to get the full amount. Passing in a negative `unit_amount_decimal` will reduce the `amount_due` on the invoice. Accepts at most 12 decimal places.
        */
-      unit_amount_decimal?: string;
+      unit_amount_decimal?: Decimal;
     }
 
     namespace InvoiceItemUpdateParams {
@@ -313,7 +313,7 @@ declare module 'stripe' {
         /**
          * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
-        unit_amount_decimal?: string;
+        unit_amount_decimal?: Decimal;
       }
 
       namespace PriceData {

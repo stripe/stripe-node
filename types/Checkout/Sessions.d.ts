@@ -619,7 +619,7 @@ declare module 'stripe' {
           /**
            * Exchange rate used to convert source currency amounts to customer currency amounts
            */
-          fx_rate: string;
+          fx_rate: Decimal;
 
           /**
            * Creation currency of the CheckoutSession before localization

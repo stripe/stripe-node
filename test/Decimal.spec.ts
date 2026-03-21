@@ -52,8 +52,12 @@ describe('Decimal', () => {
     });
 
     it('throws on empty string', () => {
-      expect(() => Decimal.from('')).to.throw('Cannot parse empty string as Decimal');
-      expect(() => Decimal.from('   ')).to.throw('Cannot parse empty string as Decimal');
+      expect(() => Decimal.from('')).to.throw(
+        'Cannot parse empty string as Decimal'
+      );
+      expect(() => Decimal.from('   ')).to.throw(
+        'Cannot parse empty string as Decimal'
+      );
     });
 
     it('throws on invalid format', () => {
@@ -106,82 +110,194 @@ describe('Decimal', () => {
 
   describe('addition', () => {
     it('adds integers', () => {
-      expect(Decimal.from('42').add(Decimal.from('8')).toString()).to.equal('50');
-      expect(Decimal.from('100').add(Decimal.from('200')).toString()).to.equal('300');
+      expect(
+        Decimal.from('42')
+          .add(Decimal.from('8'))
+          .toString()
+      ).to.equal('50');
+      expect(
+        Decimal.from('100')
+          .add(Decimal.from('200'))
+          .toString()
+      ).to.equal('300');
     });
 
     it('adds decimals', () => {
-      expect(Decimal.from('1.2').add(Decimal.from('3.4')).toString()).to.equal('4.6');
-      expect(Decimal.from('0.1').add(Decimal.from('0.2')).toString()).to.equal('0.3');
+      expect(
+        Decimal.from('1.2')
+          .add(Decimal.from('3.4'))
+          .toString()
+      ).to.equal('4.6');
+      expect(
+        Decimal.from('0.1')
+          .add(Decimal.from('0.2'))
+          .toString()
+      ).to.equal('0.3');
     });
 
     it('adds with different scales', () => {
-      expect(Decimal.from('1.5').add(Decimal.from('2')).toString()).to.equal('3.5');
-      expect(Decimal.from('1.23').add(Decimal.from('4.5')).toString()).to.equal('5.73');
+      expect(
+        Decimal.from('1.5')
+          .add(Decimal.from('2'))
+          .toString()
+      ).to.equal('3.5');
+      expect(
+        Decimal.from('1.23')
+          .add(Decimal.from('4.5'))
+          .toString()
+      ).to.equal('5.73');
     });
 
     it('handles negative operands', () => {
-      expect(Decimal.from('-1').add(Decimal.from('2')).toString()).to.equal('1');
-      expect(Decimal.from('1').add(Decimal.from('-2')).toString()).to.equal('-1');
-      expect(Decimal.from('-1').add(Decimal.from('-2')).toString()).to.equal('-3');
+      expect(
+        Decimal.from('-1')
+          .add(Decimal.from('2'))
+          .toString()
+      ).to.equal('1');
+      expect(
+        Decimal.from('1')
+          .add(Decimal.from('-2'))
+          .toString()
+      ).to.equal('-1');
+      expect(
+        Decimal.from('-1')
+          .add(Decimal.from('-2'))
+          .toString()
+      ).to.equal('-3');
     });
 
     it('handles zero', () => {
-      expect(Decimal.from('42').add(Decimal.zero).toString()).to.equal('42');
+      expect(
+        Decimal.from('42')
+          .add(Decimal.zero)
+          .toString()
+      ).to.equal('42');
       expect(Decimal.zero.add(Decimal.from('42')).toString()).to.equal('42');
     });
   });
 
   describe('subtraction', () => {
     it('subtracts integers', () => {
-      expect(Decimal.from('50').sub(Decimal.from('8')).toString()).to.equal('42');
-      expect(Decimal.from('200').sub(Decimal.from('100')).toString()).to.equal('100');
+      expect(
+        Decimal.from('50')
+          .sub(Decimal.from('8'))
+          .toString()
+      ).to.equal('42');
+      expect(
+        Decimal.from('200')
+          .sub(Decimal.from('100'))
+          .toString()
+      ).to.equal('100');
     });
 
     it('subtracts decimals', () => {
-      expect(Decimal.from('5.5').sub(Decimal.from('2.3')).toString()).to.equal('3.2');
-      expect(Decimal.from('0.3').sub(Decimal.from('0.1')).toString()).to.equal('0.2');
+      expect(
+        Decimal.from('5.5')
+          .sub(Decimal.from('2.3'))
+          .toString()
+      ).to.equal('3.2');
+      expect(
+        Decimal.from('0.3')
+          .sub(Decimal.from('0.1'))
+          .toString()
+      ).to.equal('0.2');
     });
 
     it('handles negative results', () => {
-      expect(Decimal.from('1').sub(Decimal.from('2')).toString()).to.equal('-1');
-      expect(Decimal.from('-1').sub(Decimal.from('2')).toString()).to.equal('-3');
+      expect(
+        Decimal.from('1')
+          .sub(Decimal.from('2'))
+          .toString()
+      ).to.equal('-1');
+      expect(
+        Decimal.from('-1')
+          .sub(Decimal.from('2'))
+          .toString()
+      ).to.equal('-3');
     });
 
     it('handles zero', () => {
-      expect(Decimal.from('42').sub(Decimal.zero).toString()).to.equal('42');
+      expect(
+        Decimal.from('42')
+          .sub(Decimal.zero)
+          .toString()
+      ).to.equal('42');
       expect(Decimal.zero.sub(Decimal.from('42')).toString()).to.equal('-42');
     });
   });
 
   describe('multiplication', () => {
     it('multiplies integers', () => {
-      expect(Decimal.from('6').mul(Decimal.from('7')).toString()).to.equal('42');
-      expect(Decimal.from('10').mul(Decimal.from('20')).toString()).to.equal('200');
+      expect(
+        Decimal.from('6')
+          .mul(Decimal.from('7'))
+          .toString()
+      ).to.equal('42');
+      expect(
+        Decimal.from('10')
+          .mul(Decimal.from('20'))
+          .toString()
+      ).to.equal('200');
     });
 
     it('multiplies decimals', () => {
-      expect(Decimal.from('1.5').mul(Decimal.from('2')).toString()).to.equal('3');
-      expect(Decimal.from('2.5').mul(Decimal.from('4')).toString()).to.equal('10');
-      expect(Decimal.from('0.1').mul(Decimal.from('0.2')).toString()).to.equal('0.02');
+      expect(
+        Decimal.from('1.5')
+          .mul(Decimal.from('2'))
+          .toString()
+      ).to.equal('3');
+      expect(
+        Decimal.from('2.5')
+          .mul(Decimal.from('4'))
+          .toString()
+      ).to.equal('10');
+      expect(
+        Decimal.from('0.1')
+          .mul(Decimal.from('0.2'))
+          .toString()
+      ).to.equal('0.02');
     });
 
     it('handles negative operands', () => {
-      expect(Decimal.from('-6').mul(Decimal.from('7')).toString()).to.equal('-42');
-      expect(Decimal.from('6').mul(Decimal.from('-7')).toString()).to.equal('-42');
-      expect(Decimal.from('-6').mul(Decimal.from('-7')).toString()).to.equal('42');
+      expect(
+        Decimal.from('-6')
+          .mul(Decimal.from('7'))
+          .toString()
+      ).to.equal('-42');
+      expect(
+        Decimal.from('6')
+          .mul(Decimal.from('-7'))
+          .toString()
+      ).to.equal('-42');
+      expect(
+        Decimal.from('-6')
+          .mul(Decimal.from('-7'))
+          .toString()
+      ).to.equal('42');
     });
 
     it('handles zero', () => {
-      expect(Decimal.from('42').mul(Decimal.zero).toString()).to.equal('0');
+      expect(
+        Decimal.from('42')
+          .mul(Decimal.zero)
+          .toString()
+      ).to.equal('0');
       expect(Decimal.zero.mul(Decimal.from('42')).toString()).to.equal('0');
     });
   });
 
   describe('division', () => {
     it('divides integers evenly', () => {
-      expect(Decimal.from('42').div(Decimal.from('6')).toString()).to.equal('7');
-      expect(Decimal.from('100').div(Decimal.from('10')).toString()).to.equal('10');
+      expect(
+        Decimal.from('42')
+          .div(Decimal.from('6'))
+          .toString()
+      ).to.equal('7');
+      expect(
+        Decimal.from('100')
+          .div(Decimal.from('10'))
+          .toString()
+      ).to.equal('10');
     });
 
     it('divides with decimal results', () => {
@@ -196,13 +312,27 @@ describe('Decimal', () => {
     });
 
     it('handles negative operands', () => {
-      expect(Decimal.from('-42').div(Decimal.from('6')).toString()).to.equal('-7');
-      expect(Decimal.from('42').div(Decimal.from('-6')).toString()).to.equal('-7');
-      expect(Decimal.from('-42').div(Decimal.from('-6')).toString()).to.equal('7');
+      expect(
+        Decimal.from('-42')
+          .div(Decimal.from('6'))
+          .toString()
+      ).to.equal('-7');
+      expect(
+        Decimal.from('42')
+          .div(Decimal.from('-6'))
+          .toString()
+      ).to.equal('-7');
+      expect(
+        Decimal.from('-42')
+          .div(Decimal.from('-6'))
+          .toString()
+      ).to.equal('7');
     });
 
     it('throws on division by zero', () => {
-      expect(() => Decimal.from('42').div(Decimal.zero)).to.throw('Division by zero');
+      expect(() => Decimal.from('42').div(Decimal.zero)).to.throw(
+        'Division by zero'
+      );
     });
 
     it('throws on negative precision', () => {
@@ -218,16 +348,28 @@ describe('Decimal', () => {
     });
 
     it('uses HALF_UP rounding by default', () => {
-      expect(Decimal.from('5').div(Decimal.from('2'), 0).toString()).to.equal('3');
-      expect(Decimal.from('3').div(Decimal.from('2'), 0).toString()).to.equal('2');
+      expect(
+        Decimal.from('5')
+          .div(Decimal.from('2'), 0)
+          .toString()
+      ).to.equal('3');
+      expect(
+        Decimal.from('3')
+          .div(Decimal.from('2'), 0)
+          .toString()
+      ).to.equal('2');
     });
 
     it('supports HALF_EVEN rounding', () => {
       expect(
-        Decimal.from('5').div(Decimal.from('2'), 0, RoundingMode.HALF_EVEN).toString()
+        Decimal.from('5')
+          .div(Decimal.from('2'), 0, RoundingMode.HALF_EVEN)
+          .toString()
       ).to.equal('2');
       expect(
-        Decimal.from('7').div(Decimal.from('2'), 0, RoundingMode.HALF_EVEN).toString()
+        Decimal.from('7')
+          .div(Decimal.from('2'), 0, RoundingMode.HALF_EVEN)
+          .toString()
       ).to.equal('4');
     });
   });
@@ -368,13 +510,29 @@ describe('Decimal', () => {
   describe('unary operations', () => {
     describe('neg', () => {
       it('negates positive values', () => {
-        expect(Decimal.from('42').neg().toString()).to.equal('-42');
-        expect(Decimal.from('1.23').neg().toString()).to.equal('-1.23');
+        expect(
+          Decimal.from('42')
+            .neg()
+            .toString()
+        ).to.equal('-42');
+        expect(
+          Decimal.from('1.23')
+            .neg()
+            .toString()
+        ).to.equal('-1.23');
       });
 
       it('negates negative values', () => {
-        expect(Decimal.from('-42').neg().toString()).to.equal('42');
-        expect(Decimal.from('-1.23').neg().toString()).to.equal('1.23');
+        expect(
+          Decimal.from('-42')
+            .neg()
+            .toString()
+        ).to.equal('42');
+        expect(
+          Decimal.from('-1.23')
+            .neg()
+            .toString()
+        ).to.equal('1.23');
       });
 
       it('negates zero', () => {
@@ -384,13 +542,29 @@ describe('Decimal', () => {
 
     describe('abs', () => {
       it('returns absolute value of negative', () => {
-        expect(Decimal.from('-42').abs().toString()).to.equal('42');
-        expect(Decimal.from('-1.23').abs().toString()).to.equal('1.23');
+        expect(
+          Decimal.from('-42')
+            .abs()
+            .toString()
+        ).to.equal('42');
+        expect(
+          Decimal.from('-1.23')
+            .abs()
+            .toString()
+        ).to.equal('1.23');
       });
 
       it('returns same value for positive', () => {
-        expect(Decimal.from('42').abs().toString()).to.equal('42');
-        expect(Decimal.from('1.23').abs().toString()).to.equal('1.23');
+        expect(
+          Decimal.from('42')
+            .abs()
+            .toString()
+        ).to.equal('42');
+        expect(
+          Decimal.from('1.23')
+            .abs()
+            .toString()
+        ).to.equal('1.23');
       });
 
       it('returns zero for zero', () => {
@@ -475,8 +649,12 @@ describe('Decimal', () => {
     });
 
     it('supports HALF_EVEN rounding', () => {
-      expect(Decimal.from('1.235').toFixed(2, RoundingMode.HALF_EVEN)).to.equal('1.24');
-      expect(Decimal.from('1.225').toFixed(2, RoundingMode.HALF_EVEN)).to.equal('1.22');
+      expect(Decimal.from('1.235').toFixed(2, RoundingMode.HALF_EVEN)).to.equal(
+        '1.24'
+      );
+      expect(Decimal.from('1.225').toFixed(2, RoundingMode.HALF_EVEN)).to.equal(
+        '1.22'
+      );
     });
 
     it('throws on negative decimal places', () => {
@@ -545,8 +723,16 @@ describe('Decimal', () => {
     });
 
     it('normalizes zero from subtraction', () => {
-      expect(Decimal.from('1').sub(Decimal.from('1')).toString()).to.equal('0');
-      expect(Decimal.from('1.23').sub(Decimal.from('1.23')).isZero()).to.equal(true);
+      expect(
+        Decimal.from('1')
+          .sub(Decimal.from('1'))
+          .toString()
+      ).to.equal('0');
+      expect(
+        Decimal.from('1.23')
+          .sub(Decimal.from('1.23'))
+          .isZero()
+      ).to.equal(true);
     });
 
     it('div does not crash when divisor exponent exceeds dividend exponent plus precision', () => {
@@ -609,15 +795,19 @@ describe('Decimal', () => {
     });
 
     it('0.3 - 0.1 === 0.2', () => {
-      expect(Decimal.from('0.3').sub(Decimal.from('0.1')).eq(Decimal.from('0.2'))).to.equal(
-        true
-      );
+      expect(
+        Decimal.from('0.3')
+          .sub(Decimal.from('0.1'))
+          .eq(Decimal.from('0.2'))
+      ).to.equal(true);
     });
 
     it('0.1 × 3 === 0.3', () => {
-      expect(Decimal.from('0.1').mul(Decimal.from('3')).eq(Decimal.from('0.3'))).to.equal(
-        true
-      );
+      expect(
+        Decimal.from('0.1')
+          .mul(Decimal.from('3'))
+          .eq(Decimal.from('0.3'))
+      ).to.equal(true);
     });
   });
 
@@ -635,17 +825,33 @@ describe('Decimal', () => {
     });
 
     it('HALF_EVEN: rounds 0.5 to even', () => {
-      expect(Decimal.from('0.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal('0');
-      expect(Decimal.from('1.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal('2');
-      expect(Decimal.from('2.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal('2');
-      expect(Decimal.from('3.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal('4');
+      expect(Decimal.from('0.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal(
+        '0'
+      );
+      expect(Decimal.from('1.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal(
+        '2'
+      );
+      expect(Decimal.from('2.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal(
+        '2'
+      );
+      expect(Decimal.from('3.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal(
+        '4'
+      );
     });
 
     it('HALF_EVEN: rounds negative 0.5 to even', () => {
-      expect(Decimal.from('-0.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal('0');
-      expect(Decimal.from('-1.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal('-2');
-      expect(Decimal.from('-2.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal('-2');
-      expect(Decimal.from('-3.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal('-4');
+      expect(Decimal.from('-0.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal(
+        '0'
+      );
+      expect(Decimal.from('-1.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal(
+        '-2'
+      );
+      expect(Decimal.from('-2.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal(
+        '-2'
+      );
+      expect(Decimal.from('-3.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal(
+        '-4'
+      );
     });
 
     it('division precision does not lose significance', () => {

@@ -6,6 +6,43 @@ export const SubscriptionSchedules = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
     fullPath: '/v1/subscription_schedules',
+    requestSchema: {
+      kind: 'object',
+      fields: {
+        phases: {
+          kind: 'array',
+          element: {
+            kind: 'object',
+            fields: {
+              add_invoice_items: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    price_data: {
+                      kind: 'object',
+                      fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+                    },
+                  },
+                },
+              },
+              items: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    price_data: {
+                      kind: 'object',
+                      fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   }),
   retrieve: stripeMethod({
     method: 'GET',
@@ -14,6 +51,43 @@ export const SubscriptionSchedules = StripeResource.extend({
   update: stripeMethod({
     method: 'POST',
     fullPath: '/v1/subscription_schedules/{schedule}',
+    requestSchema: {
+      kind: 'object',
+      fields: {
+        phases: {
+          kind: 'array',
+          element: {
+            kind: 'object',
+            fields: {
+              add_invoice_items: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    price_data: {
+                      kind: 'object',
+                      fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+                    },
+                  },
+                },
+              },
+              items: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    price_data: {
+                      kind: 'object',
+                      fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   }),
   list: stripeMethod({
     method: 'GET',
