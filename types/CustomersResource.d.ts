@@ -1500,6 +1500,15 @@ declare module 'stripe' {
       ): ApiSearchResultPromise<Stripe.Customer>;
 
       /**
+       * Serializes a Customer update request into a batch job JSONL line.
+       */
+      serializeBatchUpdate(
+        customer: string,
+        params?: CustomerUpdateParams,
+        options?: RequestOptions
+      ): string;
+
+      /**
        * Most credit balance transaction fields are immutable, but you may update its description and metadata.
        */
       updateBalanceTransaction(

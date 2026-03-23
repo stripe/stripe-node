@@ -3072,6 +3072,24 @@ declare module 'stripe' {
         params: SubscriptionSearchParams,
         options?: RequestOptions
       ): ApiSearchResultPromise<Stripe.Subscription>;
+
+      /**
+       * Serializes a Subscription migrate request into a batch job JSONL line.
+       */
+      serializeBatchMigrate(
+        subscription: string,
+        params?: SubscriptionMigrateParams,
+        options?: RequestOptions
+      ): string;
+
+      /**
+       * Serializes a Subscription update request into a batch job JSONL line.
+       */
+      serializeBatchUpdate(
+        subscription_exposed_id: string,
+        params?: SubscriptionUpdateParams,
+        options?: RequestOptions
+      ): string;
     }
   }
 }

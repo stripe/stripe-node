@@ -2798,6 +2798,32 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.SubscriptionSchedule>>;
+
+      /**
+       * Serializes a SubscriptionSchedule cancel request into a batch job JSONL line.
+       */
+      serializeBatchCancel(
+        schedule: string,
+        params?: SubscriptionScheduleCancelParams,
+        options?: RequestOptions
+      ): string;
+
+      /**
+       * Serializes a SubscriptionSchedule create request into a batch job JSONL line.
+       */
+      serializeBatchCreate(
+        params?: SubscriptionScheduleCreateParams,
+        options?: RequestOptions
+      ): string;
+
+      /**
+       * Serializes a SubscriptionSchedule update request into a batch job JSONL line.
+       */
+      serializeBatchUpdate(
+        schedule: string,
+        params?: SubscriptionScheduleUpdateParams,
+        options?: RequestOptions
+      ): string;
     }
   }
 }

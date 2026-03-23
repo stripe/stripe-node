@@ -749,6 +749,14 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.CreditNote>>;
 
       /**
+       * Serializes a CreditNote create request into a batch job JSONL line.
+       */
+      serializeBatchCreate(
+        params?: CreditNoteCreateParams,
+        options?: RequestOptions
+      ): string;
+
+      /**
        * Marks a credit note as void. Learn more about [voiding credit notes](https://docs.stripe.com/docs/billing/invoices/credit-notes#voiding).
        */
       voidCreditNote(

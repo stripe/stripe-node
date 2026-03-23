@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import {randomUUID} from 'crypto';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
 export const Subscriptions = StripeResource.extend({
@@ -38,4 +39,44 @@ export const Subscriptions = StripeResource.extend({
     fullPath: '/v1/subscriptions/search',
     methodType: 'search',
   }),
+  serializeBatchMigrate(
+    subscription: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = randomUUID();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const item: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    item.path_params = {subscription: subscription};
+    if (options.stripeContext) {
+      item.context = options.stripeContext;
+    }
+    return JSON.stringify(item);
+  },
+  serializeBatchUpdate(
+    subscriptionExposedId: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = randomUUID();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const item: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    item.path_params = {subscription_exposed_id: subscriptionExposedId};
+    if (options.stripeContext) {
+      item.context = options.stripeContext;
+    }
+    return JSON.stringify(item);
+  },
 });
