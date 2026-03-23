@@ -338,7 +338,7 @@ declare module 'stripe' {
         total_details: Session.TotalDetails | null;
 
         /**
-         * The UI mode of the Session. Defaults to `hosted`.
+         * The UI mode of the Session. Defaults to `hosted_page`.
          */
         ui_mode: Session.UiMode | null;
 
@@ -2854,14 +2854,7 @@ declare module 'stripe' {
           }
         }
 
-        type UiMode =
-          | 'custom'
-          | 'elements'
-          | 'embedded'
-          | 'embedded_page'
-          | 'form'
-          | 'hosted'
-          | 'hosted_page';
+        type UiMode = 'elements' | 'embedded_page' | 'form' | 'hosted_page';
 
         interface WalletOptions {
           link?: WalletOptions.Link;
