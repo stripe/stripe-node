@@ -7,13 +7,16 @@ import {expect} from 'chai';
 import {StripeSignatureVerificationError} from '../src/Error.js';
 import {ApiVersion} from '../src/apiVersion.js';
 import {createApiKeyAuthenticator, detectAIAgent} from '../src/utils.js';
+import {Stripe} from '../src/stripe.core.js';
+import {NodePlatformFunctions} from '../src/platform/NodePlatformFunctions.js';
+
 import {
   FAKE_API_KEY,
   getRandomString,
   getStripeMockClient,
   getTestServerStripe,
 } from './testUtils.js';
-import Stripe = require('../src/stripe.cjs.node.js');
+import StripeModule = require('../src/stripe.cjs.node.js');
 import crypto = require('crypto');
 import {StripeContext} from '../src/StripeContext.js';
 
@@ -26,36 +29,39 @@ const CUSTOMER_DETAILS = {
 
 describe('Stripe Module', function() {
   describe('config object', () => {
+    /* eslint-disable no-warning-comments, no-new */
     it('should only accept either an object or a string', () => {
       expect(() => {
-        Stripe(FAKE_API_KEY, 123);
+        new StripeModule(FAKE_API_KEY, 123);
       }).to.throw(/Config must either be an object or a string/);
 
       expect(() => {
-        Stripe(FAKE_API_KEY, ['2019-12-12']);
+        new StripeModule(FAKE_API_KEY, ['2019-12-12']);
       }).to.throw(/Config must either be an object or a string/);
 
       expect(() => {
-        Stripe(FAKE_API_KEY, '2019-12-12');
+        new StripeModule(FAKE_API_KEY, '2019-12-12');
       }).to.not.throw();
 
       expect(() => {
-        Stripe(FAKE_API_KEY, {
+        new StripeModule(FAKE_API_KEY, {
           apiVersion: 'latest',
         });
       }).to.not.throw();
     });
+    /* eslint-enable no-warning-comments, no-new */
 
+    /* eslint-disable no-warning-comments, no-new */
     it('should only contain allowed properties', () => {
       expect(() => {
-        Stripe(FAKE_API_KEY, {
+        new StripeModule(FAKE_API_KEY, {
           foo: 'bar',
           apiVersion: 'latest',
         });
       }).to.throw(/Config object may only contain the following:/);
 
       expect(() => {
-        Stripe(FAKE_API_KEY, {
+        new StripeModule(FAKE_API_KEY, {
           apiVersion: '2019-12-12',
           maxNetworkRetries: 2,
           httpAgent: 'agent',
@@ -65,24 +71,27 @@ describe('Stripe Module', function() {
         });
       }).to.not.throw();
     });
+    /* eslint-enable no-warning-comments, no-new */
 
+    /* eslint-disable no-warning-comments, no-new */
     it('API should use the default version when undefined or empty values are passed', () => {
       const cases = [null, undefined, '', {}];
 
       cases.forEach((item) => {
         expect(() => {
-          Stripe(FAKE_API_KEY, item);
+          new StripeModule(FAKE_API_KEY, item);
         }).to.not.throw();
       });
 
       cases.forEach((item) => {
-        const newStripe = Stripe(FAKE_API_KEY, item);
+        const newStripe = new StripeModule(FAKE_API_KEY, item);
         expect(newStripe.getApiField('version')).to.equal(ApiVersion);
       });
     });
+    /* eslint-enable no-warning-comments, no-new */
 
     it('should enable telemetry if not explicitly set', () => {
-      const newStripe = Stripe(FAKE_API_KEY);
+      const newStripe = new StripeModule(FAKE_API_KEY);
 
       expect(newStripe.getTelemetryEnabled()).to.equal(true);
     });
@@ -92,14 +101,14 @@ describe('Stripe Module', function() {
       let newStripe;
 
       vals.forEach((val) => {
-        newStripe = Stripe(FAKE_API_KEY, {
+        newStripe = new StripeModule(FAKE_API_KEY, {
           telemetry: val,
         });
 
         expect(newStripe.getTelemetryEnabled()).to.equal(true);
       });
 
-      newStripe = Stripe(FAKE_API_KEY, {
+      newStripe = new StripeModule(FAKE_API_KEY, {
         telemetry: false,
       });
 
@@ -113,7 +122,7 @@ describe('Stripe Module', function() {
     });
 
     it('should throw if no api key or authenticator provided', () => {
-      expect(() => new Stripe(null)).to.throw(
+      expect(() => new StripeModule(null)).to.throw(
         'Neither apiKey nor config.authenticator provided'
       );
     });
@@ -122,7 +131,7 @@ describe('Stripe Module', function() {
   describe('authenticator', () => {
     it('should throw an error when specifying both key and authenticator', () => {
       expect(() => {
-        return new Stripe('key', {
+        return new StripeModule('key', {
           authenticator: createApiKeyAuthenticator('...'),
         });
       }).to.throw("Can't specify both apiKey and authenticator");
@@ -130,7 +139,7 @@ describe('Stripe Module', function() {
 
     it('can create client using authenticator', () => {
       const authenticator = createApiKeyAuthenticator('...');
-      const stripe = new Stripe(null, {
+      const stripe = new StripeModule(null, {
         authenticator: authenticator,
       });
 
@@ -183,7 +192,7 @@ describe('Stripe Module', function() {
     it('Should include whether typescript: true was passed, respecting reinstantiations', () => {
       return new Promise((resolve) => resolve(null))
         .then(() => {
-          const newStripe = new Stripe(FAKE_API_KEY, {
+          const newStripe = new StripeModule(FAKE_API_KEY, {
             typescript: true,
           });
           return expect(
@@ -195,7 +204,7 @@ describe('Stripe Module', function() {
           ).to.eventually.have.property('typescript', 'true');
         })
         .then(() => {
-          const newStripe = new Stripe(FAKE_API_KEY, {});
+          const newStripe = new StripeModule(FAKE_API_KEY, {});
           return expect(
             new Promise((resolve, reject) => {
               newStripe.getClientUserAgent((c) => {
@@ -306,13 +315,13 @@ describe('Stripe Module', function() {
       expect(stripe.getApiField('timeout')).to.equal(defaultTimeout);
     });
     it('Should allow me to set a custom timeout', () => {
-      const newStripe = Stripe(FAKE_API_KEY, {
+      const newStripe = new StripeModule(FAKE_API_KEY, {
         timeout: 900,
       });
       expect(newStripe.getApiField('timeout')).to.equal(900);
     });
     it('Should allow me to set null, to reset to the default', () => {
-      const newStripe = Stripe(FAKE_API_KEY, {
+      const newStripe = new StripeModule(FAKE_API_KEY, {
         timeout: null,
       });
       expect(newStripe.getApiField('timeout')).to.equal(defaultTimeout);
@@ -333,25 +342,28 @@ describe('Stripe Module', function() {
     });
 
     describe('when given a non-object variable', () => {
+      /* eslint-disable no-warning-comments, no-new */
       it('should throw an error', () => {
         expect(() => {
-          Stripe(FAKE_API_KEY, {
+          new StripeModule(FAKE_API_KEY, {
             appInfo: 'foo',
           });
         }).to.throw(/AppInfo must be an object./);
       });
+      /* eslint-enable no-warning-comments, no-new */
     });
 
     describe('when given an object with no `name`', () => {
+      /* eslint-disable no-warning-comments, no-new */
       it('should throw an error', () => {
         expect(() => {
-          Stripe(FAKE_API_KEY, {
+          new StripeModule(FAKE_API_KEY, {
             appInfo: {},
           });
         }).to.throw(/AppInfo.name is required/);
 
         expect(() => {
-          Stripe(FAKE_API_KEY, {
+          new StripeModule(FAKE_API_KEY, {
             appInfo: {
               version: '1.2.3',
             },
@@ -359,18 +371,19 @@ describe('Stripe Module', function() {
         }).to.throw(/AppInfo.name is required/);
 
         expect(() => {
-          Stripe(FAKE_API_KEY, {
+          new StripeModule(FAKE_API_KEY, {
             appInfo: {
               cats: '42',
             },
           });
         }).to.throw(/AppInfo.name is required/);
       });
+      /* eslint-enable no-warning-comments, no-new */
     });
 
     describe('when given at least a `name`', () => {
       it('should set name, partner ID, url, and version of stripe._appInfo', () => {
-        let newStripe = Stripe(FAKE_API_KEY, {
+        let newStripe = new StripeModule(FAKE_API_KEY, {
           appInfo: {
             name: 'MyAwesomeApp',
           },
@@ -379,7 +392,7 @@ describe('Stripe Module', function() {
           name: 'MyAwesomeApp',
         });
 
-        newStripe = Stripe(FAKE_API_KEY, {
+        newStripe = new StripeModule(FAKE_API_KEY, {
           appInfo: {
             name: 'MyAwesomeApp',
             version: '1.2.345',
@@ -390,7 +403,7 @@ describe('Stripe Module', function() {
           version: '1.2.345',
         });
 
-        newStripe = Stripe(FAKE_API_KEY, {
+        newStripe = new StripeModule(FAKE_API_KEY, {
           appInfo: {
             name: 'MyAwesomeApp',
             url: 'https://myawesomeapp.info',
@@ -401,7 +414,7 @@ describe('Stripe Module', function() {
           url: 'https://myawesomeapp.info',
         });
 
-        newStripe = Stripe(FAKE_API_KEY, {
+        newStripe = new StripeModule(FAKE_API_KEY, {
           appInfo: {
             name: 'MyAwesomeApp',
             partner_id: 'partner_1234',
@@ -414,7 +427,7 @@ describe('Stripe Module', function() {
       });
 
       it('should ignore any invalid properties', () => {
-        const newStripe = Stripe(FAKE_API_KEY, {
+        const newStripe = new StripeModule(FAKE_API_KEY, {
           appInfo: {
             name: 'MyAwesomeApp',
             partner_id: 'partner_1234',
@@ -439,7 +452,7 @@ describe('Stripe Module', function() {
         url: 'https://myawesomeapp.info',
       };
 
-      const newStripe = Stripe(FAKE_API_KEY, {
+      const newStripe = new StripeModule(FAKE_API_KEY, {
         appInfo,
       });
 
@@ -534,13 +547,15 @@ describe('Stripe Module', function() {
   });
 
   describe('errors', () => {
+    /* eslint-disable no-warning-comments, no-new */
     it('Exports errors as types', () => {
       expect(
-        new Stripe.errors.StripeInvalidRequestError({
+        new StripeModule.errors.StripeInvalidRequestError({
           message: 'error',
         }).type
       ).to.equal('StripeInvalidRequestError');
     });
+    /* eslint-enable no-warning-comments, no-new */
   });
 
   describe('stripeAccount', () => {
@@ -648,7 +663,7 @@ describe('Stripe Module', function() {
   describe('context', () => {
     describe('when passed in via the config object', () => {
       let headers;
-      let stripeClient;
+      let stripeClient: Stripe;
       let closeServer;
       beforeEach((callback) => {
         getTestServerStripe(
@@ -723,22 +738,24 @@ describe('Stripe Module', function() {
     });
 
     describe('when passed in via the config object', () => {
+      /* eslint-disable no-warning-comments, no-new */
       it('should default to 2 if a non-integer is passed', () => {
-        const newStripe = Stripe(FAKE_API_KEY, {
+        const newStripe = new StripeModule(FAKE_API_KEY, {
           maxNetworkRetries: 'foo',
         });
 
         expect(newStripe.getMaxNetworkRetries()).to.equal(2);
 
         expect(() => {
-          Stripe(FAKE_API_KEY, {
+          new StripeModule(FAKE_API_KEY, {
             maxNetworkRetries: 2,
           });
         }).to.not.throw();
       });
+      /* eslint-enable no-warning-comments, no-new */
 
       it('should correctly set the amount of network retries', () => {
-        const newStripe = Stripe(FAKE_API_KEY, {
+        const newStripe = new StripeModule(FAKE_API_KEY, {
           maxNetworkRetries: 5,
         });
 
@@ -748,7 +765,7 @@ describe('Stripe Module', function() {
 
     describe('when not set', () => {
       it('should use the default', () => {
-        const newStripe = Stripe(FAKE_API_KEY);
+        const newStripe = new StripeModule(FAKE_API_KEY);
 
         expect(newStripe.getMaxNetworkRetries()).to.equal(2);
       });
@@ -757,9 +774,9 @@ describe('Stripe Module', function() {
 
   describe('VERSION', () => {
     it('should return the current package version', () => {
-      const newStripe = Stripe(FAKE_API_KEY);
+      const newStripe = new StripeModule(FAKE_API_KEY);
 
-      expect(newStripe.VERSION).to.equal(Stripe.PACKAGE_VERSION);
+      expect(newStripe.VERSION).to.equal(StripeModule.PACKAGE_VERSION);
     });
   });
 

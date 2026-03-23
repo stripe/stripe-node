@@ -8,7 +8,6 @@ import {
 } from './Error.js';
 import {StripeContext} from './StripeContext.js';
 import {
-  StripeObject,
   RequestHeaders,
   RequestEvent,
   ResponseEvent,
@@ -25,6 +24,7 @@ import {
   ApiMode,
 } from './Types.js';
 import {HttpClient, HttpClientResponseInterface} from './net/HttpClient.js';
+import {Stripe} from './stripe.core.js';
 import {
   emitWarning,
   jsonStringifyRequestData,
@@ -43,10 +43,10 @@ export type HttpClientResponseError = {code: string};
 const MAX_RETRY_AFTER_WAIT = 60;
 
 export class RequestSender {
-  protected _stripe: StripeObject;
+  protected _stripe: Stripe;
   private readonly _maxBufferedRequestMetric: number;
 
-  constructor(stripe: StripeObject, maxBufferedRequestMetric: number) {
+  constructor(stripe: Stripe, maxBufferedRequestMetric: number) {
     this._stripe = stripe;
     this._maxBufferedRequestMetric = maxBufferedRequestMetric;
   }
@@ -571,14 +571,14 @@ export class RequestSender {
     host: string | null,
     path: string,
     data: RequestData | null,
-    authenticator: RequestAuthenticator,
+    authenticator: RequestAuthenticator | null,
     options: RequestOptions,
     usage: Array<string> = [],
     callback: RequestCallback,
     requestDataProcessor: RequestDataProcessor | null = null
   ): void {
     let requestData: string | Uint8Array;
-    authenticator = authenticator ?? this._stripe._authenticator ?? null;
+    authenticator = authenticator ?? this._stripe._authenticator;
     const apiMode: ApiMode = getAPIMode(path);
     const retryRequest = (
       requestFn: typeof makeRequest,
@@ -619,6 +619,12 @@ export class RequestSender {
         body: requestData,
         protocol: this._stripe.getApiField('protocol'),
       };
+
+      if (!authenticator) {
+        throw Error(
+          "Authenticator was't initialized. Please pass an API Key or an Authenticator when initializing StripeClient."
+        );
+      }
 
       authenticator(request)
         .then(() => {

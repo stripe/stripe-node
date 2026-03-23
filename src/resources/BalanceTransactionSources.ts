@@ -1,0 +1,34 @@
+// File generated from our OpenAPI spec
+
+import {ApplicationFee} from './ApplicationFees.js';
+import {Charge} from './Charges.js';
+import {ConnectCollectionTransfer} from './ConnectCollectionTransfers.js';
+import {CustomerCashBalanceTransaction} from './CustomerCashBalanceTransactions.js';
+import {Dispute} from './Disputes.js';
+import {FeeRefund} from './FeeRefunds.js';
+import {Payout} from './Payouts.js';
+import {Refund} from './Refunds.js';
+import {ReserveTransaction} from './ReserveTransactions.js';
+import {TaxDeductedAtSource} from './TaxDeductedAtSources.js';
+import {Topup} from './Topups.js';
+import {Transfer} from './Transfers.js';
+import {TransferReversal} from './TransferReversals.js';
+import * as Issuing from './Issuing/index.js';
+import {RequestOptions} from '../lib.js';
+export type BalanceTransactionSource =
+  | ApplicationFee
+  | Charge
+  | ConnectCollectionTransfer
+  | CustomerCashBalanceTransaction
+  | Dispute
+  | FeeRefund
+  | Issuing.Authorization
+  | Issuing.Dispute
+  | Issuing.Transaction
+  | Payout
+  | Refund
+  | ReserveTransaction
+  | TaxDeductedAtSource
+  | Topup
+  | Transfer
+  | TransferReversal;
