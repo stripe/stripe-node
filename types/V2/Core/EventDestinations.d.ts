@@ -24,6 +24,11 @@ declare module 'stripe' {
           amazon_eventbridge?: EventDestination.AmazonEventbridge;
 
           /**
+           * Azure Event Grid configuration.
+           */
+          azure_event_grid?: EventDestination.AzureEventGrid;
+
+          /**
            * Time at which the object was created.
            */
           created: string;
@@ -44,9 +49,13 @@ declare module 'stripe' {
           event_payload: EventDestination.EventPayload;
 
           /**
-           * Where events should be routed from.
+           * Specifies which accounts' events route to this destination.
+           * `@self`: Receive events from the account that owns the event destination.
+           * `@accounts`: Receive events emitted from other accounts you manage which includes your v1 and v2 accounts.
+           * `@organization_members`: Receive events from accounts directly linked to the organization.
+           * `@organization_members/@accounts`: Receive events from all accounts connected to any platform accounts in the organization.
            */
-          events_from?: Array<EventDestination.EventsFrom>;
+          events_from?: Array<string>;
 
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -120,9 +129,42 @@ declare module 'stripe' {
               | 'unknown';
           }
 
-          type EventPayload = 'snapshot' | 'thin';
+          interface AzureEventGrid {
+            /**
+             * The name of the Azure partner topic.
+             */
+            azure_partner_topic_name: string;
 
-          type EventsFrom = 'other_accounts' | 'self';
+            /**
+             * The status of the Azure partner topic.
+             */
+            azure_partner_topic_status: AzureEventGrid.AzurePartnerTopicStatus;
+
+            /**
+             * The Azure region.
+             */
+            azure_region: string;
+
+            /**
+             * The name of the Azure resource group.
+             */
+            azure_resource_group_name: string;
+
+            /**
+             * The Azure subscription ID.
+             */
+            azure_subscription_id: string;
+          }
+
+          namespace AzureEventGrid {
+            type AzurePartnerTopicStatus =
+              | 'activated'
+              | 'deleted'
+              | 'never_activated'
+              | 'unknown';
+          }
+
+          type EventPayload = 'snapshot' | 'thin';
 
           type Status = 'disabled' | 'enabled';
 
@@ -142,11 +184,17 @@ declare module 'stripe' {
             }
 
             namespace Disabled {
-              type Reason = 'no_aws_event_source_exists' | 'user';
+              type Reason =
+                | 'no_aws_event_source_exists'
+                | 'no_azure_partner_topic_exists'
+                | 'user';
             }
           }
 
-          type Type = 'amazon_eventbridge' | 'webhook_endpoint';
+          type Type =
+            | 'amazon_eventbridge'
+            | 'azure_event_grid'
+            | 'webhook_endpoint';
 
           interface WebhookEndpoint {
             /**

@@ -147,7 +147,7 @@ declare module 'stripe' {
       latest_charge: string | Stripe.Charge | null;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -287,6 +287,8 @@ declare module 'stripe' {
 
         shipping?: AmountDetails.Shipping;
 
+        surcharge?: AmountDetails.Surcharge;
+
         tax?: AmountDetails.Tax;
 
         tip?: AmountDetails.Tip;
@@ -326,6 +328,32 @@ declare module 'stripe' {
            * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
            */
           to_postal_code: string | null;
+        }
+
+        interface Surcharge {
+          /**
+           * Portion of the amount that corresponds to a surcharge.
+           */
+          amount?: number;
+
+          /**
+           * Indicate whether to enforce validations on the surcharge amount.
+           */
+          enforce_validation?: Surcharge.EnforceValidation;
+
+          /**
+           * The maximum amount allowed for the surcharge.
+           */
+          maximum_amount?: number;
+
+          /**
+           * The status of the surcharge.
+           */
+          status?: string;
+        }
+
+        namespace Surcharge {
+          type EnforceValidation = 'automatic' | 'disabled' | 'enabled';
         }
 
         interface Tax {
@@ -450,6 +478,7 @@ declare module 'stripe' {
         | 'stripe_balance'
         | 'swish'
         | 'twint'
+        | 'upi'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
@@ -742,6 +771,7 @@ declare module 'stripe' {
           | 'secret_key_required'
           | 'sensitive_data_access_expired'
           | 'sepa_unsupported_account'
+          | 'service_period_coupon_with_metered_tiered_item_unsupported'
           | 'setup_attempt_failed'
           | 'setup_intent_authentication_failure'
           | 'setup_intent_invalid_parameter'
@@ -824,6 +854,8 @@ declare module 'stripe' {
          * Type of the next action to perform. Refer to the other child attributes under `next_action` for available values. Examples include: `redirect_to_url`, `use_stripe_sdk`, `alipay_handle_redirect`, `oxxo_display_details`, or `verify_with_microdeposits`.
          */
         type: string;
+
+        upi_handle_redirect_or_display_qr_code?: NextAction.UpiHandleRedirectOrDisplayQrCode;
 
         /**
          * When confirming a PaymentIntent with Stripe.js, Stripe.js depends on the contents of this dictionary to invoke authentication flows. The shape of the contents is subject to change and is only intended to be used by Stripe.js.
@@ -1453,6 +1485,34 @@ declare module 'stripe' {
           }
         }
 
+        interface UpiHandleRedirectOrDisplayQrCode {
+          /**
+           * The URL to the hosted UPI instructions page, which allows customers to view the QR code.
+           */
+          hosted_instructions_url: string;
+
+          qr_code: UpiHandleRedirectOrDisplayQrCode.QrCode;
+        }
+
+        namespace UpiHandleRedirectOrDisplayQrCode {
+          interface QrCode {
+            /**
+             * The date (unix timestamp) when the QR code expires.
+             */
+            expires_at: number;
+
+            /**
+             * The image_url_png string used to render QR code
+             */
+            image_url_png: string;
+
+            /**
+             * The image_url_svg string used to render QR code
+             */
+            image_url_svg: string;
+          }
+        }
+
         type UseStripeSdk = {
           [key: string]: unknown;
         };
@@ -1570,8 +1630,6 @@ declare module 'stripe' {
 
         /**
          * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
-         *
-         * Required when the Payment Method Types array contains `card`, including when [automatic_payment_methods.enabled](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-automatic_payment_methods-enabled) is set to `true`.
          *
          * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
          */
@@ -3006,6 +3064,8 @@ declare module 'stripe' {
 
         twint?: PaymentMethodOptions.Twint;
 
+        upi?: PaymentMethodOptions.Upi;
+
         us_bank_account?: PaymentMethodOptions.UsBankAccount;
 
         wechat_pay?: PaymentMethodOptions.WechatPay;
@@ -3034,7 +3094,7 @@ declare module 'stripe' {
           target_date?: string;
 
           /**
-           * Bank account verification method.
+           * Bank account verification method. The default value is `automatic`.
            */
           verification_method?: AcssDebit.VerificationMethod;
         }
@@ -3438,7 +3498,7 @@ declare module 'stripe' {
 
           interface MandateOptions {
             /**
-             * Amount to be charged for future payments.
+             * Amount to be charged for future payments, specified in the presentment currency.
              */
             amount: number;
 
@@ -4501,6 +4561,8 @@ declare module 'stripe' {
         }
 
         interface StripeBalance {
+          mandate_options?: StripeBalance.MandateOptions;
+
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -4514,6 +4576,13 @@ declare module 'stripe' {
         }
 
         namespace StripeBalance {
+          interface MandateOptions {
+            /**
+             * The ID of the Stripe Balance Debit Agreement used for this mandate.
+             */
+            stripe_balance_debit_agreement?: string;
+          }
+
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
@@ -4548,6 +4617,23 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Upi {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+           */
+          setup_future_usage?: Upi.SetupFutureUsage;
+        }
+
+        namespace Upi {
+          type SetupFutureUsage = 'off_session' | 'on_session';
+        }
+
         interface UsBankAccount {
           financial_connections?: UsBankAccount.FinancialConnections;
 
@@ -4575,14 +4661,9 @@ declare module 'stripe' {
           transaction_purpose?: UsBankAccount.TransactionPurpose;
 
           /**
-           * Bank account verification method.
+           * Bank account verification method. The default value is `automatic`.
            */
           verification_method?: UsBankAccount.VerificationMethod;
-
-          /**
-           * Preferred transaction settlement speed
-           */
-          preferred_settlement_speed?: UsBankAccount.PreferredSettlementSpeed;
         }
 
         namespace UsBankAccount {
@@ -4654,8 +4735,6 @@ declare module 'stripe' {
              */
             collection_method?: 'paper';
           }
-
-          type PreferredSettlementSpeed = 'fastest' | 'standard';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 

@@ -12,6 +12,7 @@ import {Associations as TaxAssociations} from './resources/Tax/Associations.js';
 import {Authorizations as FinancialConnectionsAuthorizations} from './resources/FinancialConnections/Authorizations.js';
 import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {Authorizations as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
+import {BatchJobs as V2CoreBatchJobs} from './resources/V2/Core/BatchJobs.js';
 import {BillSettings as V2BillingBillSettings} from './resources/V2/Billing/BillSettings.js';
 import {Cadences as V2BillingCadences} from './resources/V2/Billing/Cadences.js';
 import {Calculations as TaxCalculations} from './resources/Tax/Calculations.js';
@@ -51,6 +52,7 @@ import {InboundTransfers as TestHelpersTreasuryInboundTransfers} from './resourc
 import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {InboundTransfers as V2MoneyManagementInboundTransfers} from './resources/V2/MoneyManagement/InboundTransfers.js';
 import {Institutions as FinancialConnectionsInstitutions} from './resources/FinancialConnections/Institutions.js';
+import {Locations as TaxLocations} from './resources/Tax/Locations.js';
 import {Locations as TerminalLocations} from './resources/Terminal/Locations.js';
 import {MeterEventAdjustments as BillingMeterEventAdjustments} from './resources/Billing/MeterEventAdjustments.js';
 import {MeterEventAdjustments as V2BillingMeterEventAdjustments} from './resources/V2/Billing/MeterEventAdjustments.js';
@@ -112,6 +114,7 @@ import {Transactions as TaxTransactions} from './resources/Tax/Transactions.js';
 import {Transactions as TestHelpersIssuingTransactions} from './resources/TestHelpers/Issuing/Transactions.js';
 import {Transactions as TreasuryTransactions} from './resources/Treasury/Transactions.js';
 import {Transactions as V2MoneyManagementTransactions} from './resources/V2/MoneyManagement/Transactions.js';
+import {TrialOffers as ProductCatalogTrialOffers} from './resources/ProductCatalog/TrialOffers.js';
 import {UsBankAccounts as V2CoreVaultUsBankAccounts} from './resources/V2/Core/Vault/UsBankAccounts.js';
 import {ValueListItems as RadarValueListItems} from './resources/Radar/ValueListItems.js';
 import {ValueLists as RadarValueLists} from './resources/Radar/ValueLists.js';
@@ -243,6 +246,9 @@ export const Issuing = resourceNamespace('issuing', {
 export const Privacy = resourceNamespace('privacy', {
   RedactionJobs: PrivacyRedactionJobs,
 });
+export const ProductCatalog = resourceNamespace('productCatalog', {
+  TrialOffers: ProductCatalogTrialOffers,
+});
 export const Radar = resourceNamespace('radar', {
   EarlyFraudWarnings: RadarEarlyFraudWarnings,
   PaymentEvaluations: RadarPaymentEvaluations,
@@ -265,6 +271,7 @@ export const Tax = resourceNamespace('tax', {
   Associations: TaxAssociations,
   Calculations: TaxCalculations,
   Forms: TaxForms,
+  Locations: TaxLocations,
   Registrations: TaxRegistrations,
   Settings: TaxSettings,
   Transactions: TaxTransactions,
@@ -326,6 +333,7 @@ export const V2 = resourceNamespace('v2', {
     AccountLinks: V2CoreAccountLinks,
     AccountTokens: V2CoreAccountTokens,
     Accounts: V2CoreAccounts,
+    BatchJobs: V2CoreBatchJobs,
     EventDestinations: V2CoreEventDestinations,
     Events: V2CoreEvents,
     Vault: resourceNamespace('vault', {

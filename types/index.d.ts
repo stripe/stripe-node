@@ -91,6 +91,7 @@
 ///<reference path='./PlansResource.d.ts' />
 ///<reference path='./PricesResource.d.ts' />
 ///<reference path='./Privacy/RedactionJobsResource.d.ts' />
+///<reference path='./ProductCatalog/TrialOffersResource.d.ts' />
 ///<reference path='./ProductsResource.d.ts' />
 ///<reference path='./PromotionCodesResource.d.ts' />
 ///<reference path='./QuotesResource.d.ts' />
@@ -116,6 +117,7 @@
 ///<reference path='./Tax/AssociationsResource.d.ts' />
 ///<reference path='./Tax/CalculationsResource.d.ts' />
 ///<reference path='./Tax/FormsResource.d.ts' />
+///<reference path='./Tax/LocationsResource.d.ts' />
 ///<reference path='./Tax/RegistrationsResource.d.ts' />
 ///<reference path='./Tax/SettingsResource.d.ts' />
 ///<reference path='./Tax/TransactionsResource.d.ts' />
@@ -170,6 +172,7 @@
 ///<reference path='./V2/Core/Accounts/PersonTokensResource.d.ts' />
 ///<reference path='./V2/Core/Accounts/PersonsResource.d.ts' />
 ///<reference path='./V2/Core/AccountsResource.d.ts' />
+///<reference path='./V2/Core/BatchJobsResource.d.ts' />
 ///<reference path='./V2/Core/EventDestinationsResource.d.ts' />
 ///<reference path='./V2/Core/EventsResource.d.ts' />
 ///<reference path='./V2/Core/Vault/GbBankAccountsResource.d.ts' />
@@ -299,6 +302,7 @@
 ///<reference path='./Prices.d.ts' />
 ///<reference path='./Privacy/RedactionJobValidationErrors.d.ts' />
 ///<reference path='./Privacy/RedactionJobs.d.ts' />
+///<reference path='./ProductCatalog/TrialOffers.d.ts' />
 ///<reference path='./ProductFeatures.d.ts' />
 ///<reference path='./Products.d.ts' />
 ///<reference path='./PromotionCodes.d.ts' />
@@ -332,6 +336,7 @@
 ///<reference path='./Tax/CalculationLineItems.d.ts' />
 ///<reference path='./Tax/Calculations.d.ts' />
 ///<reference path='./Tax/Forms.d.ts' />
+///<reference path='./Tax/Locations.d.ts' />
 ///<reference path='./Tax/Registrations.d.ts' />
 ///<reference path='./Tax/Settings.d.ts' />
 ///<reference path='./Tax/TransactionLineItems.d.ts' />
@@ -376,6 +381,7 @@
 ///<reference path='./V2/Core/AccountPersons.d.ts' />
 ///<reference path='./V2/Core/AccountTokens.d.ts' />
 ///<reference path='./V2/Core/Accounts.d.ts' />
+///<reference path='./V2/Core/BatchJobs.d.ts' />
 ///<reference path='./V2/Core/EventDestinations.d.ts' />
 ///<reference path='./V2/Core/Events.d.ts' />
 ///<reference path='./V2/Core/Vault/GbBankAccounts.d.ts' />
@@ -544,6 +550,9 @@ declare module 'stripe' {
     privacy: {
       redactionJobs: Stripe.Privacy.RedactionJobsResource;
     };
+    productCatalog: {
+      trialOffers: Stripe.ProductCatalog.TrialOffersResource;
+    };
     radar: {
       earlyFraudWarnings: Stripe.Radar.EarlyFraudWarningsResource;
       paymentEvaluations: Stripe.Radar.PaymentEvaluationsResource;
@@ -566,6 +575,7 @@ declare module 'stripe' {
       associations: Stripe.Tax.AssociationsResource;
       calculations: Stripe.Tax.CalculationsResource;
       forms: Stripe.Tax.FormsResource;
+      locations: Stripe.Tax.LocationsResource;
       registrations: Stripe.Tax.RegistrationsResource;
       settings: Stripe.Tax.SettingsResource;
       transactions: Stripe.Tax.TransactionsResource;
@@ -627,6 +637,7 @@ declare module 'stripe' {
         accounts: Stripe.V2.Core.AccountsResource;
         accountLinks: Stripe.V2.Core.AccountLinksResource;
         accountTokens: Stripe.V2.Core.AccountTokensResource;
+        batchJobs: Stripe.V2.Core.BatchJobsResource;
         events: Stripe.V2.Core.EventsResource;
         eventDestinations: Stripe.V2.Core.EventDestinationsResource;
         vault: {

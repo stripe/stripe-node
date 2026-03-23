@@ -54,6 +54,12 @@ declare module 'stripe' {
           livemode: boolean;
 
           /**
+           * Whether the Payout Method is currently unusable for money movement, despite potentially being correctly set up.
+           * Please reach out to Stripe Support for more information.
+           */
+          restricted: boolean;
+
+          /**
            * Closed Enum. The type of payout method.
            */
           type: PayoutMethod.Type;
@@ -174,6 +180,11 @@ declare module 'stripe' {
              * The last 4 digits of the card number.
              */
             last4: string;
+
+            /**
+             * The list of currencies supported by this bank account.
+             */
+            supported_currencies: Array<string>;
           }
 
           type Type = 'bank_account' | 'card' | 'crypto_wallet';

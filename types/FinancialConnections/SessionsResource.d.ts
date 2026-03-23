@@ -27,6 +27,11 @@ declare module 'stripe' {
         filters?: SessionCreateParams.Filters;
 
         /**
+         * Settings for hosted Sessions. Required if `ui_mode` is `hosted`.
+         */
+        hosted?: SessionCreateParams.Hosted;
+
+        /**
          * Settings for configuring Session-specific limits.
          */
         limits?: SessionCreateParams.Limits;
@@ -50,6 +55,11 @@ declare module 'stripe' {
          * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
          */
         return_url?: string;
+
+        /**
+         * The UI mode of the Session. Defaults to `modal`.
+         */
+        ui_mode?: SessionCreateParams.UiMode;
       }
 
       namespace SessionCreateParams {
@@ -105,6 +115,17 @@ declare module 'stripe' {
             | 'savings';
         }
 
+        interface Hosted {
+          /**
+           * How the user should enter the hosted flow. The values `email` and `url` can only be used if `relink_options` is provided.
+           */
+          delivery_method?: Hosted.DeliveryMethod;
+        }
+
+        namespace Hosted {
+          type DeliveryMethod = 'email' | 'url';
+        }
+
         interface Limits {
           /**
            * The number of accounts that can be linked in this Session.
@@ -146,6 +167,8 @@ declare module 'stripe' {
            */
           authorization: string;
         }
+
+        type UiMode = 'hosted' | 'modal';
       }
 
       interface SessionRetrieveParams {

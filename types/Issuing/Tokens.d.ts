@@ -38,7 +38,7 @@ declare module 'stripe' {
         last4?: string;
 
         /**
-         * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+         * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
          */
         livemode: boolean;
 
@@ -148,7 +148,7 @@ declare module 'stripe' {
             /**
              * A unique reference ID from Visa to represent the card account number.
              */
-            card_reference_id: string;
+            card_reference_id: string | null;
 
             /**
              * The network-unique identifier for the token.

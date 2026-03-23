@@ -70,6 +70,11 @@ declare module 'stripe' {
             routing_number?: string;
 
             /**
+             * The list of currencies supported by this bank account.
+             */
+            supported_currencies: Array<string>;
+
+            /**
              * The bank account verification details.
              */
             verification: UsBankAccount.Verification;

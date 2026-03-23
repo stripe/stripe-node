@@ -504,15 +504,28 @@ export function createStripe(
       receivedAt?: number
       // this return type is ignored?? picks up types from `types/index.d.ts` instead
     ): unknown {
-      // parses and validates the event payload all in one go
-      const eventNotification = this.webhooks.constructEvent(
+      // Verify the signature using the internal signature helper directly,
+      // bypassing constructEvent's v2 payload check (since v2 payloads are
+      // expected here).
+      this.webhooks.signature.verifyHeader(
         payload,
         header,
         secret,
-        tolerance,
+        tolerance || this.webhooks.DEFAULT_TOLERANCE,
         cryptoProvider,
         receivedAt
       );
+
+      const eventNotification =
+        payload instanceof Uint8Array
+          ? JSON.parse(new TextDecoder('utf8').decode(payload))
+          : JSON.parse(payload as string);
+
+      if (eventNotification && eventNotification.object === 'event') {
+        throw new Error(
+          'You passed a webhook payload to stripe.parseEventNotification, which expects an event notification. Use stripe.webhooks.constructEvent instead.'
+        );
+      }
 
       // Parse string context into StripeContext object if present
       if (eventNotification.context) {

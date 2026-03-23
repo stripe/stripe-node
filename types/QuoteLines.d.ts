@@ -191,6 +191,11 @@ declare module 'stripe' {
            * Options that configure the trial on the subscription item.
            */
           trial?: AddItem.Trial | null;
+
+          /**
+           * The ID of the trial offer to apply to the configuration item.
+           */
+          trial_offer?: string | null;
         }
 
         namespace AddItem {
@@ -356,6 +361,11 @@ declare module 'stripe' {
            * Options that configure the trial on the subscription item.
            */
           trial?: SetItem.Trial | null;
+
+          /**
+           * The ID of the trial offer to apply to the configuration item.
+           */
+          trial_offer?: string | null;
         }
 
         namespace SetItem {
@@ -544,7 +554,7 @@ declare module 'stripe' {
       namespace SetPauseCollection {
         interface Set {
           /**
-           * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+           * The payment collection behavior for this subscription while paused.
            */
           behavior: Set.Behavior;
         }

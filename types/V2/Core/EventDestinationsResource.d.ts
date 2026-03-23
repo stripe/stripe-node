@@ -31,14 +31,23 @@ declare module 'stripe' {
           amazon_eventbridge?: EventDestinationCreateParams.AmazonEventbridge;
 
           /**
+           * Azure Event Grid configuration.
+           */
+          azure_event_grid?: EventDestinationCreateParams.AzureEventGrid;
+
+          /**
            * An optional description of what the event destination is used for.
            */
           description?: string;
 
           /**
-           * Where events should be routed from.
+           * Specifies which accounts' events route to this destination.
+           * `@self`: Receive events from the account that owns the event destination.
+           * `@accounts`: Receive events emitted from other accounts you manage which includes your v1 and v2 accounts.
+           * `@organization_members`: Receive events from accounts directly linked to the organization.
+           * `@organization_members/@accounts`: Receive events from all accounts connected to any platform accounts in the organization.
            */
-          events_from?: Array<EventDestinationCreateParams.EventsFrom>;
+          events_from?: Array<string>;
 
           /**
            * Additional fields to include in the response.
@@ -74,15 +83,33 @@ declare module 'stripe' {
             aws_region: string;
           }
 
-          type EventPayload = 'snapshot' | 'thin';
+          interface AzureEventGrid {
+            /**
+             * The Azure region.
+             */
+            azure_region: string;
 
-          type EventsFrom = 'other_accounts' | 'self';
+            /**
+             * The name of the Azure resource group.
+             */
+            azure_resource_group_name: string;
+
+            /**
+             * The Azure subscription ID.
+             */
+            azure_subscription_id: string;
+          }
+
+          type EventPayload = 'snapshot' | 'thin';
 
           type Include =
             | 'webhook_endpoint.signing_secret'
             | 'webhook_endpoint.url';
 
-          type Type = 'amazon_eventbridge' | 'webhook_endpoint';
+          type Type =
+            | 'amazon_eventbridge'
+            | 'azure_event_grid'
+            | 'webhook_endpoint';
 
           interface WebhookEndpoint {
             /**

@@ -65,7 +65,12 @@ declare module 'stripe' {
             /**
              * The Sort Code of the bank account.
              */
-            sort_code: string;
+            sort_code?: string;
+
+            /**
+             * The list of currencies supported by this bank account.
+             */
+            supported_currencies: Array<string>;
           }
 
           namespace GbBankAccount {

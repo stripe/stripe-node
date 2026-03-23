@@ -438,6 +438,11 @@ declare module 'stripe' {
              * Options that configure the trial on the subscription item.
              */
             trial?: AddItem.Trial;
+
+            /**
+             * The ID of the trial offer to apply to the configuration item.
+             */
+            trial_offer?: string;
           }
 
           namespace AddItem {
@@ -590,6 +595,11 @@ declare module 'stripe' {
              * If an item with the `price` already exists, passing this will override the `trial` configuration on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `trial`.
              */
             trial?: SetItem.Trial;
+
+            /**
+             * The ID of the trial offer to apply to the configuration item.
+             */
+            trial_offer?: string;
           }
 
           namespace SetItem {
@@ -801,7 +811,7 @@ declare module 'stripe' {
         namespace SetPauseCollection {
           interface Set {
             /**
-             * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+             * The payment collection behavior for this subscription while paused.
              */
             behavior: Set.Behavior;
           }
@@ -1879,6 +1889,11 @@ declare module 'stripe' {
              * Options that configure the trial on the subscription item.
              */
             trial?: AddItem.Trial;
+
+            /**
+             * The ID of the trial offer to apply to the configuration item.
+             */
+            trial_offer?: string;
           }
 
           namespace AddItem {
@@ -2031,6 +2046,11 @@ declare module 'stripe' {
              * If an item with the `price` already exists, passing this will override the `trial` configuration on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `trial`.
              */
             trial?: SetItem.Trial;
+
+            /**
+             * The ID of the trial offer to apply to the configuration item.
+             */
+            trial_offer?: string;
           }
 
           namespace SetItem {
@@ -2242,7 +2262,7 @@ declare module 'stripe' {
         namespace SetPauseCollection {
           interface Set {
             /**
-             * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+             * The payment collection behavior for this subscription while paused.
              */
             behavior: Set.Behavior;
           }
