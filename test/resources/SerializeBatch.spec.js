@@ -113,7 +113,7 @@ describe('serializeBatch methods', () => {
   });
 
   describe('subscriptionSchedules.serializeBatchCreate', () => {
-    it('produces correct structure with null path_params', () => {
+    it('produces correct structure without path_params', () => {
       const result = JSON.parse(
         stripe.subscriptionSchedules.serializeBatchCreate({
           customer: 'cus_123',
@@ -121,7 +121,7 @@ describe('serializeBatch methods', () => {
       );
 
       expect(result.id).to.match(UUID_REGEX);
-      expect(result.path_params).to.be.null;
+      expect(result).to.not.have.property('path_params');
       expect(result.params).to.deep.equal({customer: 'cus_123'});
       expect(result.stripe_version).to.be.a('string').and.not.be.empty;
     });
