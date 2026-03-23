@@ -768,6 +768,8 @@ declare module 'stripe' {
 
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
+        stripe_balance?: PaymentMethodOptions.StripeBalance;
+
         upi?: PaymentMethodOptions.Upi;
 
         us_bank_account?: PaymentMethodOptions.UsBankAccount;
@@ -1118,6 +1120,19 @@ declare module 'stripe' {
              * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'STRIPE'.
              */
             reference_prefix?: string;
+          }
+        }
+
+        interface StripeBalance {
+          mandate_options?: StripeBalance.MandateOptions;
+        }
+
+        namespace StripeBalance {
+          interface MandateOptions {
+            /**
+             * The ID of the Stripe Balance Debit Agreement used for this mandate.
+             */
+            stripe_balance_debit_agreement?: string;
           }
         }
 

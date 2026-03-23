@@ -211,6 +211,8 @@ declare module 'stripe' {
        */
       prebilling?: Subscription.Prebilling | null;
 
+      presentment_details?: Subscription.PresentmentDetails;
+
       /**
        * The schedule attached to the subscription
        */
@@ -1063,6 +1065,13 @@ declare module 'stripe' {
 
       namespace Prebilling {
         type UpdateBehavior = 'prebill' | 'reset';
+      }
+
+      interface PresentmentDetails {
+        /**
+         * Currency used for customer payments.
+         */
+        presentment_currency: string;
       }
 
       type Status =

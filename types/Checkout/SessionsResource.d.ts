@@ -1095,7 +1095,7 @@ declare module 'stripe' {
                 /**
                  * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
                  */
-                tax_code: string;
+                tax_code?: Stripe.Emptyable<string>;
               }
             }
 
@@ -3684,14 +3684,7 @@ declare module 'stripe' {
           type Required = 'if_supported' | 'never';
         }
 
-        type UiMode =
-          | 'custom'
-          | 'elements'
-          | 'embedded'
-          | 'embedded_page'
-          | 'form'
-          | 'hosted'
-          | 'hosted_page';
+        type UiMode = 'elements' | 'embedded_page' | 'form' | 'hosted_page';
 
         interface WalletOptions {
           /**
@@ -4087,7 +4080,7 @@ declare module 'stripe' {
                 /**
                  * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
                  */
-                tax_code: string;
+                tax_code?: Stripe.Emptyable<string>;
               }
             }
 

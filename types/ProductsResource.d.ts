@@ -297,7 +297,7 @@ declare module 'stripe' {
         /**
          * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
          */
-        tax_code: string;
+        tax_code?: Stripe.Emptyable<string>;
       }
 
       type Type = 'good' | 'service';
@@ -433,7 +433,7 @@ declare module 'stripe' {
         /**
          * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
          */
-        tax_code: string;
+        tax_code?: Stripe.Emptyable<string>;
       }
     }
 
