@@ -191,6 +191,8 @@ declare module 'stripe' {
        */
       pending_update: Subscription.PendingUpdate | null;
 
+      presentment_details?: Subscription.PresentmentDetails;
+
       /**
        * The schedule attached to the subscription
        */
@@ -795,6 +797,13 @@ declare module 'stripe' {
          * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed. See [Using trial periods on subscriptions](https://docs.stripe.com/billing/subscriptions/trials) to learn more.
          */
         trial_from_plan: boolean | null;
+      }
+
+      interface PresentmentDetails {
+        /**
+         * Currency used for customer payments.
+         */
+        presentment_currency: string;
       }
 
       type Status =
