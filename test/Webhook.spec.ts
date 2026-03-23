@@ -10,6 +10,13 @@ const EVENT_PAYLOAD = {
   object: 'event',
 };
 const EVENT_PAYLOAD_STRING = JSON.stringify(EVENT_PAYLOAD, null, 2);
+
+const V2_EVENT_PAYLOAD = {
+  id: 'evt_test_webhook',
+  object: 'v2.core.event',
+};
+const V2_EVENT_PAYLOAD_STRING = JSON.stringify(V2_EVENT_PAYLOAD, null, 2);
+
 const SECRET = 'whsec_test_secret';
 
 describe('Webhooks on static Stripe factory', () => {
@@ -182,6 +189,21 @@ function createWebhooksTestSuite(stripe) {
         );
 
         expect(event.id).to.equal(EVENT_PAYLOAD.id);
+      });
+
+      it('should throw when a v2 webhook payload is passed', async () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: V2_EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        const err = await constructEventFn(
+          V2_EVENT_PAYLOAD_STRING,
+          header,
+          SECRET
+        ).catch((e: Error) => e);
+        expect(err).to.be.instanceOf(Error);
+        expect(err.message).to.contain('stripe.parseEventNotification');
       });
     };
   };

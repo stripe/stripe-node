@@ -109,6 +109,11 @@ export function createWebhooks(
         payload instanceof Uint8Array
           ? JSON.parse(new TextDecoder('utf8').decode(payload))
           : JSON.parse(payload);
+      if (jsonPayload && jsonPayload.object === 'v2.core.event') {
+        throw new Error(
+          'You passed an event notification to stripe.webhooks.constructEvent, which expects a webhook payload. Use stripe.parseEventNotification instead.'
+        );
+      }
       return jsonPayload;
     },
 
@@ -137,6 +142,11 @@ export function createWebhooks(
         payload instanceof Uint8Array
           ? JSON.parse(new TextDecoder('utf8').decode(payload))
           : JSON.parse(payload);
+      if (jsonPayload && jsonPayload.object === 'v2.core.event') {
+        throw new Error(
+          'You passed an event notification to stripe.webhooks.constructEvent, which expects a webhook payload. Use stripe.parseEventNotification instead.'
+        );
+      }
       return jsonPayload;
     },
 
