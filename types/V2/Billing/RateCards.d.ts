@@ -43,11 +43,6 @@ declare module 'stripe' {
           display_name: string;
 
           /**
-           * The ID of this rate card's most recently created version.
-           */
-          latest_version: string;
-
-          /**
            * The ID of the Rate Card Version that will be used by all subscriptions when no specific version is specified.
            */
           live_version: string;
@@ -68,18 +63,12 @@ declare module 'stripe' {
           metadata?: Stripe.Metadata;
 
           /**
-           * The interval for assessing service. For example, a monthly Rate Card with a rate of $1 for the first 10 "workloads"
-           * and $2 thereafter means "$1 per workload up to 10 workloads during a month of service." This is similar to but
-           * distinct from billing interval; the service interval deals with the rate at which the customer accumulates fees,
-           * while the billing interval in Cadence deals with the rate the customer is billed.
+           * The service cycle configuration for this Rate Card. For example, a monthly Rate Card with a rate of $1 for the
+           * first 10 "workloads" and $2 thereafter means "$1 per workload up to 10 workloads during a month of service."
+           * This is similar to but distinct from billing interval; the service interval deals with the rate at which the
+           * customer accumulates fees, while the billing interval in Cadence deals with the rate the customer is billed.
            */
-          service_interval: RateCard.ServiceInterval;
-
-          /**
-           * The length of the interval for assessing service. For example, set this to 3 and `service_interval` to `"month"` in
-           * order to specify quarterly service.
-           */
-          service_interval_count: number;
+          service_cycle: RateCard.ServiceCycle;
 
           /**
            * The Stripe Tax tax behavior - whether the rates are inclusive or exclusive of tax.
@@ -88,7 +77,22 @@ declare module 'stripe' {
         }
 
         namespace RateCard {
-          type ServiceInterval = 'day' | 'month' | 'week' | 'year';
+          interface ServiceCycle {
+            /**
+             * The interval for assessing service.
+             */
+            interval: ServiceCycle.Interval;
+
+            /**
+             * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"` in
+             * order to specify quarterly service.
+             */
+            interval_count: number;
+          }
+
+          namespace ServiceCycle {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
 
           type TaxBehavior = 'exclusive' | 'inclusive';
         }

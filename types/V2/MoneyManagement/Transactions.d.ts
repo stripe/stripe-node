@@ -35,9 +35,20 @@ declare module 'stripe' {
           category: Transaction.Category;
 
           /**
+           * Counterparty to this Transaction.
+           */
+          counterparty?: Transaction.Counterparty;
+
+          /**
            * Time at which the object was created. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
            */
           created: string;
+
+          /**
+           * Description of this Transaction. When applicable, the description is copied from the Flow object at the time
+           * of transaction creation.
+           */
+          description?: string;
 
           /**
            * Indicates the FinancialAccount affected by this Transaction.
@@ -67,6 +78,11 @@ declare module 'stripe' {
            * Timestamps for when the Transaction transitioned to a particular status.
            */
           status_transitions: Transaction.StatusTransitions;
+
+          /**
+           * The v1 Treasury transaction associated with this transaction.
+           */
+          treasury_transaction?: string;
         }
 
         namespace Transaction {
@@ -139,6 +155,13 @@ declare module 'stripe' {
             | 'tax_withholding'
             | 'transfer_reversal'
             | 'unreconciled_customer_funds';
+
+          interface Counterparty {
+            /**
+             * Name of the counterparty.
+             */
+            name?: string;
+          }
 
           interface Flow {
             /**
@@ -240,6 +263,46 @@ declare module 'stripe' {
              * If applicable, the ID of the Transfer Reversal that created this Transaction.
              */
             transfer_reversal?: string;
+
+            /**
+             * If applicable, the ID of the Treasury CreditReversal that created this Transaction.
+             */
+            treasury_credit_reversal?: string;
+
+            /**
+             * If applicable, the ID of the Treasury DebitReversal that created this Transaction.
+             */
+            treasury_debit_reversal?: string;
+
+            /**
+             * If applicable, the ID of the Treasury InboundTransfer that created this Transaction.
+             */
+            treasury_inbound_transfer?: string;
+
+            /**
+             * If applicable, the ID of the Treasury IssuingAuthorization that created this Transaction.
+             */
+            treasury_issuing_authorization?: string;
+
+            /**
+             * If applicable, the ID of the Treasury OutboundPayment that created this Transaction.
+             */
+            treasury_outbound_payment?: string;
+
+            /**
+             * If applicable, the ID of the Treasury OutboundTransfer that created this Transaction.
+             */
+            treasury_outbound_transfer?: string;
+
+            /**
+             * If applicable, the ID of the Treasury ReceivedCredit that created this Transaction.
+             */
+            treasury_received_credit?: string;
+
+            /**
+             * If applicable, the ID of the Treasury ReceivedDebit that created this Transaction.
+             */
+            treasury_received_debit?: string;
           }
 
           namespace Flow {
@@ -262,7 +325,16 @@ declare module 'stripe' {
               | 'reserve_release'
               | 'topup'
               | 'transfer'
-              | 'transfer_reversal';
+              | 'transfer_reversal'
+              | 'treasury_credit_reversal'
+              | 'treasury_debit_reversal'
+              | 'treasury_inbound_transfer'
+              | 'treasury_issuing_authorization'
+              | 'treasury_other'
+              | 'treasury_outbound_payment'
+              | 'treasury_outbound_transfer'
+              | 'treasury_received_credit'
+              | 'treasury_received_debit';
           }
 
           type Status = 'pending' | 'posted' | 'void';

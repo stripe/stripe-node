@@ -64,7 +64,7 @@ declare module 'stripe' {
         namespace IntentAction {
           interface Apply {
             /**
-             * When the apply action will take effect. Defaults to on_reserve if not specified.
+             * When the apply action will take effect. If not specified, defaults to on_reserve.
              */
             effective_at?: Apply.EffectiveAt;
 
@@ -72,6 +72,11 @@ declare module 'stripe' {
              * Type of the apply action details.
              */
             type: Apply.Type;
+
+            /**
+             * Details for applying a discount.
+             */
+            discount?: Apply.Discount;
 
             /**
              * Details for applying a discount rule to future invoices.
@@ -85,7 +90,38 @@ declare module 'stripe' {
           }
 
           namespace Apply {
+            interface Discount {
+              /**
+               * The ID of the Coupon applied.
+               */
+              coupon?: string;
+
+              /**
+               * The ID of the created Discount.
+               */
+              discount?: string;
+
+              /**
+               * The ID of the PromotionCode applied.
+               */
+              promotion_code?: string;
+
+              /**
+               * Type of the discount.
+               */
+              type: Discount.Type;
+            }
+
+            namespace Discount {
+              type Type = 'coupon' | 'promotion_code';
+            }
+
             interface EffectiveAt {
+              /**
+               * The timestamp at which the apply action will take effect. Only present if type is timestamp. Only allowed for discount actions.
+               */
+              timestamp?: string;
+
               /**
                * When the apply action will take effect.
                */
@@ -95,8 +131,10 @@ declare module 'stripe' {
             namespace EffectiveAt {
               type Type =
                 | 'current_billing_period_end'
+                | 'current_billing_period_start'
                 | 'next_billing_period_start'
-                | 'on_reserve';
+                | 'on_reserve'
+                | 'timestamp';
             }
 
             interface InvoiceDiscountRule {
@@ -174,7 +212,7 @@ declare module 'stripe' {
                 amount: MaxBillingPeriodSpend.Amount;
 
                 /**
-                 * The configration for the overage rate for the custom pricing unit.
+                 * The configuration for the overage rate for the custom pricing unit.
                  */
                 custom_pricing_unit_overage_rate: MaxBillingPeriodSpend.CustomPricingUnitOverageRate;
               }
@@ -210,7 +248,10 @@ declare module 'stripe' {
               }
             }
 
-            type Type = 'invoice_discount_rule' | 'spend_modifier_rule';
+            type Type =
+              | 'discount'
+              | 'invoice_discount_rule'
+              | 'spend_modifier_rule';
           }
 
           interface Deactivate {
@@ -314,7 +355,7 @@ declare module 'stripe' {
                   /**
                    * The type of behavior to override.
                    */
-                  type: 'license_fee';
+                  type: PartialPeriodBehavior.Type;
 
                   /**
                    * Overrides the behavior for license fee components when the action takes effect during the service period.
@@ -333,6 +374,8 @@ declare module 'stripe' {
                   namespace LicenseFee {
                     type CreditProrationBehavior = 'none' | 'prorated';
                   }
+
+                  type Type = 'license_fee' | 'recurring_credit_grant';
                 }
               }
             }
@@ -447,7 +490,7 @@ declare module 'stripe' {
                   /**
                    * The type of behavior to override.
                    */
-                  type: 'license_fee';
+                  type: PartialPeriodBehavior.Type;
 
                   /**
                    * Overrides the behavior for license fee components when the action takes effect during the service period.
@@ -473,6 +516,8 @@ declare module 'stripe' {
 
                     type DebitProrationBehavior = 'none' | 'prorated';
                   }
+
+                  type Type = 'license_fee' | 'recurring_credit_grant';
                 }
               }
             }
@@ -484,7 +529,7 @@ declare module 'stripe' {
 
           interface Remove {
             /**
-             * When the remove action will take effect. Defaults to on_reserve if not specified.
+             * When the remove action will take effect. If not specified, defaults to on_reserve.
              */
             effective_at?: Remove.EffectiveAt;
 
@@ -634,7 +679,7 @@ declare module 'stripe' {
                   /**
                    * The type of behavior to override.
                    */
-                  type: 'license_fee';
+                  type: PartialPeriodBehavior.Type;
 
                   /**
                    * Overrides the behavior for license fee components when the action takes effect during the service period.
@@ -653,6 +698,8 @@ declare module 'stripe' {
                   namespace LicenseFee {
                     type DebitProrationBehavior = 'none' | 'prorated';
                   }
+
+                  type Type = 'license_fee' | 'recurring_credit_grant';
                 }
               }
             }
@@ -692,7 +739,7 @@ declare module 'stripe' {
                 price: string;
 
                 /**
-                 * Quantity for this item. If not provided, will default to 1.
+                 * Quantity for this item. If not provided, defaults to 1.
                  */
                 quantity?: number;
               }

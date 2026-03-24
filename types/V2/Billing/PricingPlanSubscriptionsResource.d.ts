@@ -4,7 +4,16 @@ declare module 'stripe' {
   namespace Stripe {
     namespace V2 {
       namespace Billing {
-        interface PricingPlanSubscriptionRetrieveParams {}
+        interface PricingPlanSubscriptionRetrieveParams {
+          /**
+           * Expand to include additional data such as discount_details.
+           */
+          include?: Array<PricingPlanSubscriptionRetrieveParams.Include>;
+        }
+
+        namespace PricingPlanSubscriptionRetrieveParams {
+          type Include = 'discount_details' | 'pricing_plan_component_details';
+        }
       }
 
       namespace Billing {
@@ -29,6 +38,11 @@ declare module 'stripe' {
           billing_cadence?: string;
 
           /**
+           * Expand to include additional data such as discount_details, billing_cadence_details, or pricing_plan_component_details.
+           */
+          include?: Array<PricingPlanSubscriptionListParams.Include>;
+
+          /**
            * Optionally set the maximum number of results per page. Defaults to 20.
            */
           limit?: number;
@@ -39,12 +53,12 @@ declare module 'stripe' {
           payer?: PricingPlanSubscriptionListParams.Payer;
 
           /**
-           * Filter by PricingPlan ID. Mutually exlcusive with `billing_cadence`, `payer`, and `pricing_plan_version`.
+           * Filter by PricingPlan ID. Mutually exclusive with `billing_cadence`, `payer`, and `pricing_plan_version`.
            */
           pricing_plan?: string;
 
           /**
-           * Filter by Pricing Plan Version ID. Mutually exlcusive with `billing_cadence`, `payer`, and `pricing_plan`.
+           * Filter by Pricing Plan Version ID. Mutually exclusive with `billing_cadence`, `payer`, and `pricing_plan`.
            */
           pricing_plan_version?: string;
 
@@ -55,6 +69,8 @@ declare module 'stripe' {
         }
 
         namespace PricingPlanSubscriptionListParams {
+          type Include = 'discount_details' | 'pricing_plan_component_details';
+
           interface Payer {
             /**
              * The ID of the Customer object. If provided, only Pricing Plan Subscriptions that are subscribed on the cadences with the specified payer will be returned.
@@ -72,9 +88,20 @@ declare module 'stripe' {
       }
 
       namespace Billing {
-        class PricingPlanSubscriptionsResource {
-          components: Stripe.V2.Billing.PricingPlanSubscriptions.ComponentsResource;
+        interface PricingPlanSubscriptionRemoveDiscountsParams {
+          /**
+           * Expand to include additional data such as discount_details.
+           */
+          include?: Array<PricingPlanSubscriptionRemoveDiscountsParams.Include>;
+        }
 
+        namespace PricingPlanSubscriptionRemoveDiscountsParams {
+          type Include = 'discount_details' | 'pricing_plan_component_details';
+        }
+      }
+
+      namespace Billing {
+        class PricingPlanSubscriptionsResource {
           /**
            * Retrieve a Pricing Plan Subscription object.
            */
@@ -113,6 +140,23 @@ declare module 'stripe' {
           list(
             options?: RequestOptions
           ): ApiListPromise<Stripe.V2.Billing.PricingPlanSubscription>;
+
+          /**
+           * Remove Discounts from a Pricing Plan Subscription.
+           */
+          removeDiscounts(
+            id: string,
+            params?: PricingPlanSubscriptionRemoveDiscountsParams,
+            options?: RequestOptions
+          ): Promise<
+            Stripe.Response<Stripe.V2.Billing.PricingPlanSubscription>
+          >;
+          removeDiscounts(
+            id: string,
+            options?: RequestOptions
+          ): Promise<
+            Stripe.Response<Stripe.V2.Billing.PricingPlanSubscription>
+          >;
         }
       }
     }

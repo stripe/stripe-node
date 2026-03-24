@@ -46,6 +46,11 @@ declare module 'stripe' {
           currency: string;
 
           /**
+           * Invoice resources associated with this Billing Intent. Populated when include parameters are specified.
+           */
+          invoice_resources?: Intent.InvoiceResources;
+
+          /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
            */
           livemode: boolean;
@@ -64,9 +69,19 @@ declare module 'stripe' {
         namespace Intent {
           interface AmountDetails {
             /**
+             * The outstanding amount after discount, tax, and customer balance application.
+             */
+            amount_due: string;
+
+            /**
              * Three-letter ISO currency code, in lowercase. Must be a supported currency.
              */
             currency: string;
+
+            /**
+             * The customer's account balance applied to the amount.
+             */
+            customer_balance_applied: string;
 
             /**
              * Amount of discount applied.
@@ -365,6 +380,13 @@ declare module 'stripe' {
             }
           }
 
+          interface InvoiceResources {
+            /**
+             * ID of a preview invoice showing the breakdown of line items. Null if the billing intent will not create an invoice. Only present when "invoice_resources.preview_invoice" is included.
+             */
+            preview_invoice?: string;
+          }
+
           type Status = 'canceled' | 'committed' | 'draft' | 'reserved';
 
           interface StatusTransitions {
@@ -382,6 +404,11 @@ declare module 'stripe' {
              * Time at which the Billing Intent was drafted.
              */
             drafted_at?: string;
+
+            /**
+             * Time at which the Billing Intent will expire.
+             */
+            expires_at: string;
 
             /**
              * Time at which the Billing Intent was reserved.

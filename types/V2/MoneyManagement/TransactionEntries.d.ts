@@ -47,6 +47,11 @@ declare module 'stripe' {
            * Details copied from the transaction that this TransactionEntry belongs to.
            */
           transaction_details: TransactionEntry.TransactionDetails;
+
+          /**
+           * The v1 Treasury transaction entry associated with this transaction entry.
+           */
+          treasury_transaction_entry?: string;
         }
 
         namespace TransactionEntry {
@@ -238,6 +243,46 @@ declare module 'stripe' {
                * If applicable, the ID of the Transfer Reversal that created this Transaction.
                */
               transfer_reversal?: string;
+
+              /**
+               * If applicable, the ID of the Treasury CreditReversal that created this Transaction.
+               */
+              treasury_credit_reversal?: string;
+
+              /**
+               * If applicable, the ID of the Treasury DebitReversal that created this Transaction.
+               */
+              treasury_debit_reversal?: string;
+
+              /**
+               * If applicable, the ID of the Treasury InboundTransfer that created this Transaction.
+               */
+              treasury_inbound_transfer?: string;
+
+              /**
+               * If applicable, the ID of the Treasury IssuingAuthorization that created this Transaction.
+               */
+              treasury_issuing_authorization?: string;
+
+              /**
+               * If applicable, the ID of the Treasury OutboundPayment that created this Transaction.
+               */
+              treasury_outbound_payment?: string;
+
+              /**
+               * If applicable, the ID of the Treasury OutboundTransfer that created this Transaction.
+               */
+              treasury_outbound_transfer?: string;
+
+              /**
+               * If applicable, the ID of the Treasury ReceivedCredit that created this Transaction.
+               */
+              treasury_received_credit?: string;
+
+              /**
+               * If applicable, the ID of the Treasury ReceivedDebit that created this Transaction.
+               */
+              treasury_received_debit?: string;
             }
 
             namespace Flow {
@@ -260,7 +305,16 @@ declare module 'stripe' {
                 | 'reserve_release'
                 | 'topup'
                 | 'transfer'
-                | 'transfer_reversal';
+                | 'transfer_reversal'
+                | 'treasury_credit_reversal'
+                | 'treasury_debit_reversal'
+                | 'treasury_inbound_transfer'
+                | 'treasury_issuing_authorization'
+                | 'treasury_other'
+                | 'treasury_outbound_payment'
+                | 'treasury_outbound_transfer'
+                | 'treasury_received_credit'
+                | 'treasury_received_debit';
             }
           }
         }

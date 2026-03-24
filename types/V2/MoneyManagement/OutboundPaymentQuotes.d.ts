@@ -96,6 +96,7 @@ declare module 'stripe' {
               | 'cross_border_payout_fee'
               | 'foreign_exchange_fee'
               | 'instant_payout_fee'
+              | 'next_day_payout_fee'
               | 'real_time_payout_fee'
               | 'standard_payout_fee'
               | 'wire_payout_fee';

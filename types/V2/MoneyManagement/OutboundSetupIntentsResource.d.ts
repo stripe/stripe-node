@@ -70,6 +70,11 @@ declare module 'stripe' {
               country: string;
 
               /**
+               * The currency of the bank account.
+               */
+              currency: string;
+
+              /**
                * The routing number of the bank account, if present.
                */
               routing_number?: string;
@@ -85,6 +90,11 @@ declare module 'stripe' {
             }
 
             interface Card {
+              /**
+               * The currency of the card.
+               */
+              currency: string;
+
               /**
                * The expiration month of the card.
                */
@@ -196,6 +206,11 @@ declare module 'stripe' {
               country: string;
 
               /**
+               * The currency of the bank account.
+               */
+              currency: string;
+
+              /**
                * The routing number of the bank account, if present.
                */
               routing_number?: string;
@@ -211,6 +226,11 @@ declare module 'stripe' {
             }
 
             interface Card {
+              /**
+               * The currency of the card.
+               */
+              currency?: string;
+
               /**
                * The expiration month of the card.
                */

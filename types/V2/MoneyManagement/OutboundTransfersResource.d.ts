@@ -39,6 +39,11 @@ declare module 'stripe' {
            * The recipient verification id for this OutboundTransfer. Only required for countries with regulatory mandates to verify recipient names before OutboundTransfer creation.
            */
           recipient_verification?: string;
+
+          /**
+           * The description that appears on the receiving end for an OutboundTransfer (for example, on a bank statement). Must be between 3 and 22 characters long, and not contain profanity.
+           */
+          statement_descriptor?: string;
         }
 
         namespace OutboundTransferCreateParams {

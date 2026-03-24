@@ -165,6 +165,7 @@ declare module 'stripe' {
 
           type FailureReason =
             | 'authorization_expired'
+            | 'no_valid_payment_method'
             | 'rejected_by_partner'
             | 'retries_exhausted';
 

@@ -88,7 +88,7 @@ declare module 'stripe' {
               /**
                * Divide usage by this number.
                */
-              divide_by: number;
+              divide_by: bigint;
 
               /**
                * After division, round the result up or down.
@@ -165,7 +165,7 @@ declare module 'stripe' {
             ): Promise<Stripe.Response<Stripe.V2.Billing.RateCardRate>>;
 
             /**
-             * List all Rates associated with a Rate Card for a specific version (defaults to latest). Rates remain active for all subsequent versions until a new rate is created for the same Metered Item.
+             * List all Rates associated with a Rate Card for a specific version. Defaults to latest. Rates remain active for all subsequent versions until a new rate is created for the same Metered Item.
              */
             list(
               id: string,

@@ -44,7 +44,12 @@ declare module 'stripe' {
           livemode: boolean;
 
           /**
-           * The ID of the SettlementAllocationIntent that this split belongs too.
+           * Metadata associated with the SettlementAllocationIntentSplit.
+           */
+          metadata?: Stripe.Metadata;
+
+          /**
+           * The ID of the SettlementAllocationIntent that this split belongs to.
            */
           settlement_allocation_intent: string;
 

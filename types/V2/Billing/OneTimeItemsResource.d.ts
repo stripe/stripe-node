@@ -13,7 +13,7 @@ declare module 'stripe' {
 
           /**
            * An internal key you can use to search for a particular one-time item.
-           * Must be unique among billable items.
+           * Must be unique among one-time items.
            * Maximum length of 200 characters.
            */
           lookup_key?: string;

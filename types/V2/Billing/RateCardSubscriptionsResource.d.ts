@@ -48,7 +48,7 @@ declare module 'stripe' {
           billing_cadence?: string;
 
           /**
-           * The page size limit, if not provided the default is 20.
+           * The page size limit. Defaults to 20.
            */
           limit?: number;
 

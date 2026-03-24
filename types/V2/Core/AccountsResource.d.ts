@@ -1796,6 +1796,11 @@ declare module 'stripe' {
              * Default responsibilities held by either Stripe or the platform.
              */
             responsibilities?: Defaults.Responsibilities;
+
+            /**
+             * The Account's local timezone. A list of possible time zone values is maintained at the [IANA Time Zone Database](https://www.iana.org/time-zones).
+             */
+            timezone?: string;
           }
 
           namespace Defaults {
@@ -6108,6 +6113,11 @@ declare module 'stripe' {
              * Default responsibilities held by either Stripe or the platform.
              */
             responsibilities?: Defaults.Responsibilities;
+
+            /**
+             * The Account's local timezone. A list of possible time zone values is maintained at the [IANA Time Zone Database](https://www.iana.org/time-zones).
+             */
+            timezone?: string;
           }
 
           namespace Defaults {

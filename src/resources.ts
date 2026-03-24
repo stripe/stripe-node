@@ -2,6 +2,7 @@
 
 import {resourceNamespace} from './ResourceNamespace.js';
 import {AccountEvaluations as RadarAccountEvaluations} from './resources/Radar/AccountEvaluations.js';
+import {AccountEvaluations as V2CoreAccountEvaluations} from './resources/V2/Core/AccountEvaluations.js';
 import {AccountLinks as V2CoreAccountLinks} from './resources/V2/Core/AccountLinks.js';
 import {AccountTokens as V2CoreAccountTokens} from './resources/V2/Core/AccountTokens.js';
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
@@ -14,6 +15,7 @@ import {Associations as TaxAssociations} from './resources/Tax/Associations.js';
 import {Authorizations as FinancialConnectionsAuthorizations} from './resources/FinancialConnections/Authorizations.js';
 import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {Authorizations as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
+import {BatchJobs as V2CoreBatchJobs} from './resources/V2/Core/BatchJobs.js';
 import {BillSettings as V2BillingBillSettings} from './resources/V2/Billing/BillSettings.js';
 import {BlocklistEntries as IdentityBlocklistEntries} from './resources/Identity/BlocklistEntries.js';
 import {Cadences as V2BillingCadences} from './resources/V2/Billing/Cadences.js';
@@ -64,7 +66,6 @@ import {InboundTransfers as V2MoneyManagementInboundTransfers} from './resources
 import {Institutions as FinancialConnectionsInstitutions} from './resources/FinancialConnections/Institutions.js';
 import {Intents as V2BillingIntents} from './resources/V2/Billing/Intents.js';
 import {IssuingAuthorizationEvaluations as RadarIssuingAuthorizationEvaluations} from './resources/Radar/IssuingAuthorizationEvaluations.js';
-import {LicenseFeeSubscriptions as V2BillingLicenseFeeSubscriptions} from './resources/V2/Billing/LicenseFeeSubscriptions.js';
 import {LicenseFees as V2BillingLicenseFees} from './resources/V2/Billing/LicenseFees.js';
 import {LicensedItems as V2BillingLicensedItems} from './resources/V2/Billing/LicensedItems.js';
 import {Locations as TaxLocations} from './resources/Tax/Locations.js';
@@ -381,7 +382,6 @@ export const V2 = resourceNamespace('v2', {
     CollectionSettings: V2BillingCollectionSettings,
     CustomPricingUnits: V2BillingCustomPricingUnits,
     Intents: V2BillingIntents,
-    LicenseFeeSubscriptions: V2BillingLicenseFeeSubscriptions,
     LicenseFees: V2BillingLicenseFees,
     LicensedItems: V2BillingLicensedItems,
     MeterEventAdjustments: V2BillingMeterEventAdjustments,
@@ -398,9 +398,11 @@ export const V2 = resourceNamespace('v2', {
     ServiceActions: V2BillingServiceActions,
   }),
   Core: resourceNamespace('core', {
+    AccountEvaluations: V2CoreAccountEvaluations,
     AccountLinks: V2CoreAccountLinks,
     AccountTokens: V2CoreAccountTokens,
     Accounts: V2CoreAccounts,
+    BatchJobs: V2CoreBatchJobs,
     ClaimableSandboxes: V2CoreClaimableSandboxes,
     ConnectionSessions: V2CoreConnectionSessions,
     EventDestinations: V2CoreEventDestinations,
