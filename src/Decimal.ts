@@ -132,16 +132,20 @@ export const DEFAULT_DIV_PRECISION = 34;
 const PLAIN_NOTATION_DIGIT_LIMIT = 30;
 
 /**
- * Maximum absolute value for the internal exponent. Exponents beyond
- * this limit cannot be represented exactly as a JavaScript `number`
- * (IEEE 754 double) and would silently lose precision in arithmetic.
+ * Maximum absolute value for the internal exponent.
  *
- * Using `Number.MAX_SAFE_INTEGER` (2^53 − 1) as the bound ensures
- * every exponent value participates in exact integer arithmetic.
+ * @remarks
+ * This bound also implicitly limits exponent differences used in
+ * arithmetic (e.g., scaling by `10^exponentDiff`), preventing
+ * astronomically large BigInt allocations that could hang or
+ * exhaust the process.
+ *
+ * The chosen limit is intentionally conservative but still far beyond
+ * any magnitude needed for typical financial or billing calculations.
  *
  * @internal
  */
-const MAX_EXPONENT = Number.MAX_SAFE_INTEGER;
+const MAX_EXPONENT = 1_000_000;
 
 /**
  * Internal implementation of arbitrary-precision decimal arithmetic.
