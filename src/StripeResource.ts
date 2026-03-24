@@ -16,7 +16,7 @@ import {
   UrlInterpolator,
 } from './Types.js';
 import {HttpClientResponseInterface} from './net/HttpClient.js';
-import {coerceV2RequestData, coerceV2ResponseData} from './V2Int64.js';
+import {coerceV2RequestData, coerceV2ResponseData} from './V2Coercion.js';
 
 // Provide extension mechanism for Stripe Resource Sub-Classes
 StripeResource.extend = protoExtend;

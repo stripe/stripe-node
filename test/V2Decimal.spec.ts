@@ -1,6 +1,6 @@
 // @ts-nocheck
 import {Decimal} from '../src/Decimal.js';
-import {coerceV2RequestData, coerceV2ResponseData} from '../src/V2Int64.js';
+import {coerceV2RequestData, coerceV2ResponseData} from '../src/V2Coercion.js';
 import {V2RuntimeSchema} from '../src/Types.js';
 import {expect} from 'chai';
 
