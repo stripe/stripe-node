@@ -3466,14 +3466,7 @@ declare module 'stripe' {
           type Required = 'if_supported' | 'never';
         }
 
-        type UiMode =
-          | 'custom'
-          | 'elements'
-          | 'embedded'
-          | 'embedded_page'
-          | 'form'
-          | 'hosted'
-          | 'hosted_page';
+        type UiMode = 'elements' | 'embedded_page' | 'form' | 'hosted_page';
 
         interface WalletOptions {
           /**
