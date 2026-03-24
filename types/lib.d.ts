@@ -392,7 +392,9 @@ declare module 'stripe' {
       abs(): Decimal;
       round(
         direction: Stripe.RoundDirection,
-        options: keyof Stripe.DecimalRoundingPresets | Stripe.DecimalRoundingOptions
+        options:
+          | keyof Stripe.DecimalRoundingPresets
+          | Stripe.DecimalRoundingOptions
       ): Decimal;
       toFixed(decimalPlaces: number, direction: Stripe.RoundDirection): string;
       toNumber(): number;
