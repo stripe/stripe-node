@@ -1,6 +1,6 @@
 // @ts-nocheck
 import {expect} from 'chai';
-import {coerceV2RequestData, coerceV2ResponseData} from '../src/V2Int64.js';
+import {coerceV2RequestData, coerceV2ResponseData} from '../src/V2Coercion.js';
 import {V2RuntimeSchema} from '../src/Types.js';
 
 describe('V2Int64', () => {

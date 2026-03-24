@@ -273,10 +273,10 @@ describe('V2 int64_string integration', () => {
     });
   });
 
-  describe('V1 requests are unaffected', () => {
+  describe('V1 requests with schemas are coerced', () => {
     const stripe = getSpyableStripe();
 
-    it('does not coerce V1 request data even with schemas', () => {
+    it('coerces V1 request data when schemas are present', () => {
       const resource = new (StripeResource.extend({
         create: stripeMethod({
           method: 'POST',
@@ -291,7 +291,7 @@ describe('V2 int64_string integration', () => {
       }))(stripe);
 
       resource.create({amount: 42});
-      expect(stripe.LAST_REQUEST.data).to.deep.equal({amount: 42});
+      expect(stripe.LAST_REQUEST.data).to.deep.equal({amount: '42'});
     });
   });
 });
