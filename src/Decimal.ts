@@ -1,57 +1,126 @@
-// Vendored from apps-extensibility-sdk/libs/apps-extensibility-sdk/src/stdlib/decimal.ts
-// Brand symbol declarations (inlined from brand.ts)
+// Brand symbol declarations (inlined — no external brand.ts in stripe-node)
 declare const __brand: unique symbol;
 declare const __stripeType: unique symbol;
 
 type BrandSymbol = typeof __brand;
 type StripeTypeSymbol = typeof __stripeType;
 
+// =============================================================================
+// Rounding direction
+// =============================================================================
+
 /**
- * Rounding mode for division and fixed-precision operations.
+ * Rounding direction for Decimal operations.
  *
  * @remarks
- * Controls how values are rounded when the exact result cannot be
- * represented at the requested precision. Both modes agree when the
- * discarded portion is not exactly half; they differ only at the
- * midpoint.
+ * Seven modes corresponding to
+ * {@link https://standards.ieee.org/ieee/754/6210/ | IEEE 754-2019} §4.3
+ * rounding-direction attributes:
+ *
+ * | Direction      | IEEE 754 name           | Behavior                          | Examples (→ integer)                  |
+ * | -------------- | ----------------------- | --------------------------------- | ------------------------------------- |
+ * | `'ceil'`       | `roundTowardPositive`   | Toward +∞                         |  1.1→2, -1.1→-1                       |
+ * | `'floor'`      | `roundTowardNegative`   | Toward -∞                         |  1.9→1, -1.1→-2                       |
+ * | `'round-down'` | `roundTowardZero`       | Toward zero (truncate)            |  1.9→1, -1.9→-1                       |
+ * | `'round-up'`   | —                       | Away from zero                    |  1.1→2, -1.1→-2                       |
+ * | `'half-up'`    | `roundTiesToAway`       | Nearest; ties away from zero      |  0.5→1, -0.5→-1, 1.4→1               |
+ * | `'half-down'`  | —                       | Nearest; ties toward zero         |  0.5→0, -0.5→0, 1.6→2                |
+ * | `'half-even'`  | `roundTiesToEven`       | Nearest; ties to even (banker's)  |  0.5→0, 1.5→2, 2.5→2, 3.5→4          |
  *
  * @public
  */
-export enum RoundingMode {
-  /**
-   * Round half away from zero (standard rounding).
-   *
-   * @remarks
-   * This is the default rounding mode and matches the behavior of
-   * Java's {@link https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/RoundingMode.html#HALF_UP | RoundingMode.HALF\_UP}.
-   *
-   * Examples: `0.5 → 1`, `1.5 → 2`, `-0.5 → -1`, `-1.5 → -2`.
-   */
-  HALF_UP = 'HALF_UP',
+export type RoundDirection =
+  | 'ceil' // toward +∞
+  | 'floor' // toward -∞
+  | 'round-down' // toward zero (truncate)
+  | 'round-up' // away from zero
+  | 'half-up' // nearest; ties away from zero
+  | 'half-down' // nearest; ties toward zero
+  | 'half-even'; // nearest; ties to even (banker's rounding)
 
-  /**
-   * Round half to nearest even digit (banker's rounding).
-   *
-   * @remarks
-   * Minimises cumulative rounding bias over many operations.
-   * Matches Java's {@link https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/RoundingMode.html#HALF_EVEN | RoundingMode.HALF\_EVEN}.
-   *
-   * Examples: `0.5 → 0`, `1.5 → 2`, `2.5 → 2`, `3.5 → 4`.
-   */
-  HALF_EVEN = 'HALF_EVEN',
+/**
+ * Precision specification for {@link DecimalImpl.round}.
+ *
+ * @remarks
+ * Two modes are supported:
+ * - `"decimal-places"` — round to a fixed number of digits after the decimal point.
+ * - `"significant-figures"` — round to a fixed number of significant digits.
+ *
+ * @example
+ * ```ts
+ * // Round to 2 decimal places
+ * amount.round('half-even', { mode: 'decimal-places', value: 2 });
+ *
+ * // Round to 4 significant figures
+ * amount.round('half-up', { mode: 'significant-figures', value: 4 });
+ * ```
+ *
+ * @public
+ */
+export interface DecimalRoundingOptions {
+  mode: 'decimal-places' | 'significant-figures';
+  value: number;
 }
 
 /**
- * Default number of significant decimal digits used by {@link DecimalImpl.div}
- * when the caller does not specify a precision.
+ * Built-in rounding presets keyed by semantic name.
  *
  * @remarks
- * 34 matches the coefficient size of IEEE 754 decimal128, which is
- * more than sufficient for any billing calculation.
+ * This is an **open interface** — consumers can extend it via declaration
+ * merging to register custom presets that are accepted by
+ * {@link DecimalImpl.round}:
+ *
+ * ```ts
+ * declare module '@stripe/apps-extensibility-sdk/stdlib' {
+ *   interface DecimalRoundingPresets {
+ *     'my-custom-preset': DecimalRoundingOptions;
+ *   }
+ * }
+ * ```
+ *
+ * Built-in presets:
+ *
+ * | Preset              | Equivalent DecimalRoundingOptions                      |
+ * | ------------------- | ------------------------------------------------------ |
+ * | `"ubb-usage-count"` | `{ mode: "significant-figures", value: 15 }`          |
+ * | `"v1-api"`          | `{ mode: "decimal-places", value: 12 }`               |
+ *
+ * @public
+ */
+export interface DecimalRoundingPresets {
+  'ubb-usage-count': DecimalRoundingOptions;
+  'v1-api': DecimalRoundingOptions;
+}
+
+/**
+ * Maps built-in preset names to their {@link DecimalRoundingOptions}.
+ * Used internally by {@link DecimalImpl.round}.
  *
  * @internal
  */
-const DEFAULT_DIV_PRECISION = 34;
+const ROUNDING_PRESETS: DecimalRoundingPresets = {
+  'ubb-usage-count': { mode: 'significant-figures', value: 15 },
+  'v1-api': { mode: 'decimal-places', value: 12 },
+};
+
+/**
+ * The IEEE 754 decimal128 coefficient size (34 digits) — the recommended
+ * precision for {@link DecimalImpl.div} when full precision is desired.
+ *
+ * @remarks
+ * Pass this as the `precision` argument to `div()` when you want the
+ * maximum available precision. Division requires explicit precision —
+ * no invisible defaults in financial code.
+ *
+ * @example
+ * ```ts
+ * // Use the full decimal128 precision explicitly
+ * a.div(b, DEFAULT_DIV_PRECISION, 'half-even');
+ * ```
+ *
+ * @public
+ */
+export const DEFAULT_DIV_PRECISION = 34;
 
 /**
  * Maximum number of digits in plain (non-exponential) notation produced
@@ -143,7 +212,7 @@ class DecimalImpl {
    * @remarks
    * BigInt division truncates toward zero. This helper inspects the
    * `remainder` to decide whether to adjust the truncated `quotient`
-   * by ±1 according to the chosen {@link RoundingMode}.
+   * by ±1 according to the chosen {@link RoundDirection}.
    *
    * The rounding direction is derived from the signs of `remainder`
    * and `divisor`: when they agree the exact fractional part is
@@ -154,7 +223,7 @@ class DecimalImpl {
    * @param quotient - Truncated integer quotient (`dividend / divisor`).
    * @param remainder - Division remainder (`dividend % divisor`).
    * @param divisor - The divisor used in the division.
-   * @param roundingMode - The rounding strategy to apply.
+   * @param direction - The rounding strategy to apply.
    * @returns The rounded quotient.
    *
    * @internal
@@ -163,12 +232,43 @@ class DecimalImpl {
     quotient: bigint,
     remainder: bigint,
     divisor: bigint,
-    roundingMode: RoundingMode
+    direction: RoundDirection
   ): bigint {
     if (remainder === 0n) {
       return quotient;
     }
 
+    // 'round-down': truncate toward zero — BigInt division already does this.
+    if (direction === 'round-down') {
+      return quotient;
+    }
+
+    // The sign of remainder/divisor tells us which side of the truncation
+    // point the exact value lies on.
+    // Same sign → fractional part is positive (exact value > quotient) → +1 adjusts upward.
+    // Opposite sign → fractional part is negative (exact value < quotient) → -1 adjusts downward.
+    const roundDir = remainder > 0n === divisor > 0n ? 1n : -1n;
+
+    // 'round-up': away from zero whenever there is any remainder.
+    if (direction === 'round-up') {
+      return quotient + roundDir;
+    }
+
+    // 'ceil': toward positive infinity.
+    // If the fractional part is positive (roundDir === 1n), round up.
+    // If the fractional part is negative (roundDir === -1n), truncation already went toward +∞.
+    if (direction === 'ceil') {
+      return roundDir === 1n ? quotient + 1n : quotient;
+    }
+
+    // 'floor': toward negative infinity.
+    // If the fractional part is negative (roundDir === -1n), round down.
+    // If the fractional part is positive (roundDir === 1n), truncation already went toward -∞.
+    if (direction === 'floor') {
+      return roundDir === -1n ? quotient - 1n : quotient;
+    }
+
+    // For the half-* modes we need to compare the remainder to exactly half the divisor.
     const absRemainder = remainder < 0n ? -remainder : remainder;
     const absDivisor = divisor < 0n ? -divisor : divisor;
     const doubled = absRemainder * 2n;
@@ -180,30 +280,29 @@ class DecimalImpl {
       return quotient;
     }
 
-    // Determine rounding direction: the sign of remainder/divisor tells us
-    // which side of the truncation point the exact value lies on.
-    // Same sign → fractional part is positive → round up (+1).
-    // Opposite sign → fractional part is negative → round down (-1).
-    const roundDir = remainder > 0n === divisor > 0n ? 1n : -1n;
-
     if (cmp > 0) {
       // More than half — round to nearest (away from truncation point).
       return quotient + roundDir;
     }
 
-    // Exactly half.
-    if (roundingMode === RoundingMode.HALF_UP) {
+    // Exactly half — tie-breaking depends on the chosen mode.
+    if (direction === 'half-up') {
       // Round away from zero.
       return quotient + roundDir;
+    }
+
+    if (direction === 'half-down') {
+      // Round toward zero — stay at the truncated quotient.
+      return quotient;
+    }
+
+    // HALF_EVEN: round to nearest even.
+    if (quotient % 2n === 0n) {
+      // Already even — stay at truncation.
+      return quotient;
     } else {
-      // HALF_EVEN: round to nearest even.
-      if (quotient % 2n === 0n) {
-        // Already even — stay at truncation.
-        return quotient;
-      } else {
-        // Odd — adjust to make even.
-        return quotient + roundDir;
-      }
+      // Odd — adjust to make even.
+      return quotient + roundDir;
     }
   }
 
@@ -300,22 +399,23 @@ class DecimalImpl {
    * @remarks
    * Division scales the dividend to produce `precision` decimal digits
    * in the result, then applies integer division and rounds the
-   * remainder according to `roundingMode`.
+   * remainder according to `direction`.
+   *
+   * Division requires explicit rounding control — no invisible defaults
+   * in financial code. For full precision use {@link DEFAULT_DIV_PRECISION}
+   * (34, matching the IEEE 754 decimal128 coefficient size).
    *
    * @example
    * ```ts
-   * Decimal.from('1').div(Decimal.from('3'), 5);          // "0.33333"
-   * Decimal.from('5').div(Decimal.from('2'), 0);           // "3"  (HALF_UP)
-   * Decimal.from('5').div(Decimal.from('2'), 0,
-   *   RoundingMode.HALF_EVEN);                             // "2"
+   * Decimal.from('1').div(Decimal.from('3'), 5, 'half-up');   // "0.33333"
+   * Decimal.from('5').div(Decimal.from('2'), 0, 'half-up');   // "3"
+   * Decimal.from('5').div(Decimal.from('2'), 0, 'half-even'); // "2"
    * ```
    *
    * @param other - The divisor. Must not be zero.
    * @param precision - Maximum number of decimal digits in the result.
-   *   Defaults to 34 (IEEE 754 decimal128 coefficient size).
-   * @param roundingMode - How to round when the exact quotient cannot
+   * @param direction - How to round when the exact quotient cannot
    *   be represented at the requested precision.
-   *   Defaults to {@link RoundingMode.HALF_UP}.
    * @returns A new {@link Decimal} equal to `this ÷ other`, rounded to
    *   `precision` decimal places.
    * @throws {@link Error} if `other` is zero.
@@ -323,11 +423,7 @@ class DecimalImpl {
    *
    * @public
    */
-  div(
-    other: Decimal,
-    precision: number = DEFAULT_DIV_PRECISION,
-    roundingMode: RoundingMode = RoundingMode.HALF_UP
-  ): Decimal {
+  div(other: Decimal, precision: number, direction: RoundDirection): Decimal {
     if (precision < 0 || !Number.isInteger(precision)) {
       throw new Error('precision must be a non-negative integer');
     }
@@ -364,7 +460,7 @@ class DecimalImpl {
       quotient,
       remainder,
       roundingDivisor,
-      roundingMode
+      direction
     );
 
     return new DecimalImpl(roundedQuotient, -precision) as unknown as Decimal;
@@ -545,6 +641,114 @@ class DecimalImpl {
   }
 
   // -------------------------------------------------------------------
+  // Rounding
+  // -------------------------------------------------------------------
+
+  /**
+   * Round this value to a specified precision.
+   *
+   * @remarks
+   * **Rounding directions** (IEEE 754-2019 §4.3):
+   *
+   * | Direction      | Behavior                                       |
+   * | -------------- | ---------------------------------------------- |
+   * | `'ceil'`       |  1.1→2, -1.1→-1, 1.0→1 (toward +∞)             |
+   * | `'floor'`      |  1.9→1, -1.1→-2, 1.0→1 (toward -∞)             |
+   * | `'round-down'` |  1.9→1, -1.9→-1 (toward zero / truncate)       |
+   * | `'round-up'`   |  1.1→2, -1.1→-2 (away from zero)               |
+   * | `'half-up'`    |  0.5→1, 1.5→2, -0.5→-1 (ties away from zero)   |
+   * | `'half-down'`  |  0.5→0, 1.5→1, -0.5→0 (ties toward zero)       |
+   * | `'half-even'`  |  0.5→0, 1.5→2, 2.5→2, 3.5→4 (ties to even)     |
+   *
+   * **Precision** is specified as a {@link DecimalRoundingOptions} object
+   * or a preset name from {@link DecimalRoundingPresets}:
+   *
+   * @example
+   * ```ts
+   * // Using a preset
+   * amount.round('half-even', 'v1-api');
+   *
+   * // Using explicit options
+   * amount.round('half-even', { mode: 'decimal-places', value: 2 });
+   * amount.round('half-up', { mode: 'significant-figures', value: 4 });
+   * ```
+   *
+   * @param direction - How to round.
+   * @param options - A {@link DecimalRoundingOptions} object or key of {@link DecimalRoundingPresets}.
+   * @returns A new {@link Decimal} rounded to the specified precision.
+   * @throws {@link Error} if `options.value` is negative or non-integer.
+   * @throws {@link Error} if the preset name is not recognized.
+   *
+   * @public
+   */
+  round(
+    direction: RoundDirection,
+    options: keyof DecimalRoundingPresets | DecimalRoundingOptions
+  ): Decimal {
+    const resolved: DecimalRoundingOptions | undefined =
+      typeof options === 'string'
+        ? // Declaration merging allows consumers to add keys at compile time, but
+          // ROUNDING_PRESETS only knows about built-in keys at runtime.  The double
+          // cast through `unknown` is intentional: we want an undefined-safe lookup
+          // so the runtime guard below can produce a clear error for unrecognised
+          // (e.g. declaration-merged) preset names that were not also added to
+          // ROUNDING_PRESETS.
+          (
+            ROUNDING_PRESETS as unknown as Record<
+              string,
+              DecimalRoundingOptions | undefined
+            >
+          )[options]
+        : options;
+
+    if (resolved === undefined) {
+      throw new Error(`Unknown rounding preset: "${options as string}"`);
+    }
+
+    if (resolved.value < 0 || !Number.isInteger(resolved.value)) {
+      throw new Error('DecimalRoundingOptions.value must be a non-negative integer');
+    }
+
+    if (resolved.mode === 'decimal-places') {
+      // Reuse toFixed logic: round to resolved.value decimal places then re-parse.
+      const fixed = this.toFixed(resolved.value, direction);
+      return Decimal.from(fixed);
+    }
+
+    // significant-figures: round to resolved.value total significant digits.
+    if (this.#coefficient === 0n) {
+      return this as unknown as Decimal;
+    }
+
+    const coeffStr =
+      this.#coefficient < 0n
+        ? (-this.#coefficient).toString()
+        : this.#coefficient.toString();
+    const currentSigFigs = coeffStr.length;
+
+    if (resolved.value === 0) {
+      // 0 significant figures is a degenerate case — return zero.
+      return Decimal.zero;
+    }
+
+    if (currentSigFigs <= resolved.value) {
+      // Already at or below requested precision — no rounding needed.
+      return this as unknown as Decimal;
+    }
+
+    // We need to reduce the number of significant figures.
+    // The number of digits to drop from the coefficient:
+    const digitsToTrim = currentSigFigs - resolved.value;
+    const divisor = 10n ** BigInt(digitsToTrim);
+    const quotient = this.#coefficient / divisor;
+    const remainder = this.#coefficient % divisor;
+
+    const rounded = DecimalImpl.roundDivision(quotient, remainder, divisor, direction);
+    // The new exponent shifts to account for trimmed digits.
+    return new DecimalImpl(rounded, this.#exponent + digitsToTrim) as unknown as Decimal;
+  }
+
+  // -------------------------------------------------------------------
   // Conversion / serialisation
   // -------------------------------------------------------------------
 
@@ -552,9 +756,7 @@ class DecimalImpl {
    * Return a human-readable string representation.
    *
    * @remarks
-   * Output is compatible with Java's
-   * {@link https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html#toString() | BigDecimal.toString()}:
-   * plain notation for values whose digit count is at most 30, and
+   * Plain notation for values whose digit count is at most 30, and
    * scientific notation (`1.23E+40`) for larger values. Trailing zeros
    * are never present because the internal representation is normalised.
    *
@@ -651,29 +853,27 @@ class DecimalImpl {
    * `decimalPlaces` digits after the decimal point.
    *
    * @remarks
-   * Values are rounded according to `roundingMode` when the internal
+   * Values are rounded according to `direction` when the internal
    * precision exceeds the requested number of decimal places.
+   * The rounding direction is always required — no invisible defaults
+   * in financial code.
    *
    * @example
    * ```ts
-   * Decimal.from('1.235').toFixed(2);                         // "1.24"
-   * Decimal.from('1.225').toFixed(2, RoundingMode.HALF_EVEN); // "1.22"
-   * Decimal.from('42').toFixed(3);                            // "42.000"
+   * Decimal.from('1.235').toFixed(2, 'half-up');   // "1.24"
+   * Decimal.from('1.225').toFixed(2, 'half-even'); // "1.22"
+   * Decimal.from('42').toFixed(3, 'half-up');      // "42.000"
    * ```
    *
    * @param decimalPlaces - Number of digits after the decimal point.
    *   Must be a non-negative integer.
-   * @param roundingMode - How to round when truncating excess digits.
-   *   Defaults to {@link RoundingMode.HALF_UP}.
+   * @param direction - How to round when truncating excess digits.
    * @returns A string with exactly `decimalPlaces` fractional digits.
    * @throws {@link Error} if `decimalPlaces` is negative or non-integer.
    *
    * @public
    */
-  toFixed(
-    decimalPlaces: number,
-    roundingMode: RoundingMode = RoundingMode.HALF_UP
-  ): string {
+  toFixed(decimalPlaces: number, direction: RoundDirection): string {
     if (decimalPlaces < 0 || !Number.isInteger(decimalPlaces)) {
       throw new Error('decimalPlaces must be a non-negative integer');
     }
@@ -709,12 +909,7 @@ class DecimalImpl {
       const quotient = this.#coefficient / divisor;
       const remainder = this.#coefficient % divisor;
 
-      const rounded = DecimalImpl.roundDivision(
-        quotient,
-        remainder,
-        divisor,
-        roundingMode
-      );
+      const rounded = DecimalImpl.roundDivision(quotient, remainder, divisor, direction);
       return formatFixed(rounded);
     } else {
       // Need to increase precision — pad with trailing zeros.
@@ -766,15 +961,15 @@ class DecimalImpl {
  *
  * @example
  * ```ts
- * import { Decimal, RoundingMode } from './Decimal';
+ * import { Decimal, RoundDirection } from '@stripe/apps-extensibility-sdk/stdlib';
  *
  * const price = Decimal.from('19.99');
  * const tax   = price.mul(Decimal.from('0.0825'));
  * const total = price.add(tax);
  *
- * console.log(total.toFixed(2));                         // "21.64"
- * console.log(JSON.stringify({ total }));                // '{"total":"21.639175"}'
- * console.log(total.toFixed(2, RoundingMode.HALF_EVEN)); // "21.64"
+ * console.log(total.toFixed(2, 'half-up'));   // "21.64"
+ * console.log(JSON.stringify({ total }));          // '{"total":"21.639175"}'
+ * console.log(total.toFixed(2, 'half-even')); // "21.64"
  * ```
  *
  * @public
@@ -783,6 +978,27 @@ export type Decimal = DecimalImpl & {
   readonly [__brand]: 'Decimal';
   readonly [__stripeType]: 'decimal';
 };
+
+/**
+ * Check whether a value is a {@link Decimal} instance.
+ *
+ * @remarks
+ * Use this instead of `instanceof` — the underlying class is not
+ * publicly exported, so `instanceof` checks are not available to
+ * consumers.
+ *
+ * @example
+ * ```ts
+ * if (isDecimal(value)) {
+ *   value.add(Decimal.from('1')); // value is Decimal
+ * }
+ * ```
+ *
+ * @public
+ */
+export function isDecimal(value: unknown): value is Decimal {
+  return value instanceof DecimalImpl;
+}
 
 /**
  * Companion object for creating {@link Decimal} instances.

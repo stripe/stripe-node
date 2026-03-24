@@ -88,7 +88,13 @@ export const coerceV2ResponseData = (
 
     case 'decimal_string':
       if (typeof data === 'string') {
-        return Decimal.from(data);
+        try {
+          return Decimal.from(data);
+        } catch {
+          throw new Error(
+            `Failed to coerce decimal_string value: expected a decimal string, got '${data}'`
+          );
+        }
       }
       return data;
 

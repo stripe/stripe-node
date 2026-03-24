@@ -319,6 +319,46 @@ declare module 'stripe' {
     }
 
     /**
+     * Rounding direction for Decimal operations (IEEE 754-2019 §4.3).
+     */
+    type RoundDirection =
+      | 'ceil'
+      | 'floor'
+      | 'round-down'
+      | 'round-up'
+      | 'half-up'
+      | 'half-down'
+      | 'half-even';
+
+    /**
+     * Precision specification for {@link Decimal.round}.
+     */
+    interface DecimalRoundingOptions {
+      mode: 'decimal-places' | 'significant-figures';
+      value: number;
+    }
+
+    /**
+     * Built-in rounding presets accepted by {@link Decimal.round}.
+     * Extensible via declaration merging.
+     */
+    interface DecimalRoundingPresets {
+      'ubb-usage-count': DecimalRoundingOptions;
+      'v1-api': DecimalRoundingOptions;
+    }
+
+    /**
+     * IEEE 754 decimal128 coefficient size (34 digits) — the recommended
+     * precision for {@link Decimal.div} when full precision is desired.
+     */
+    const DEFAULT_DIV_PRECISION: 34;
+
+    /**
+     * Check whether a value is a {@link Decimal} instance.
+     */
+    function isDecimal(value: unknown): value is Stripe.Decimal;
+
+    /**
      * Arbitrary-precision decimal number for working with Stripe decimal_string fields
      * without floating-point precision loss.
      *
@@ -336,8 +376,8 @@ declare module 'stripe' {
       mul(other: Decimal): Decimal;
       div(
         other: Decimal,
-        precision?: number,
-        roundingMode?: Stripe.RoundingMode
+        precision: number,
+        direction: Stripe.RoundDirection
       ): Decimal;
       cmp(other: Decimal): -1 | 0 | 1;
       eq(other: Decimal): boolean;
@@ -350,22 +390,20 @@ declare module 'stripe' {
       isPositive(): boolean;
       neg(): Decimal;
       abs(): Decimal;
-      toFixed(digits: number, roundingMode?: Stripe.RoundingMode): string;
+      round(
+        direction: Stripe.RoundDirection,
+        options: keyof Stripe.DecimalRoundingPresets | Stripe.DecimalRoundingOptions
+      ): Decimal;
+      toFixed(decimalPlaces: number, direction: Stripe.RoundDirection): string;
       toNumber(): number;
       toString(): string;
       toJSON(): string;
+      valueOf(): string;
     }
     namespace Decimal {
       function from(value: string | number | bigint): Stripe.Decimal;
       const zero: Stripe.Decimal;
     }
-
-    /**
-     * Rounding modes for Decimal arithmetic.
-     * - `HALF_UP`: Round half away from zero (e.g. 2.5 → 3, -2.5 → -3)
-     * - `HALF_EVEN`: Round half to nearest even number / banker's rounding (e.g. 2.5 → 2, 3.5 → 4)
-     */
-    type RoundingMode = 'HALF_UP' | 'HALF_EVEN';
 
     namespace V2 {
       /**
