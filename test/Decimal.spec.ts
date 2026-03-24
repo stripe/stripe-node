@@ -330,21 +330,21 @@ describe('Decimal', () => {
     });
 
     it('throws on division by zero', () => {
-      expect(() => Decimal.from('42').div(Decimal.zero, 34, 'half-up')).to.throw(
-        'Division by zero'
-      );
+      expect(() =>
+        Decimal.from('42').div(Decimal.zero, 34, 'half-up')
+      ).to.throw('Division by zero');
     });
 
     it('throws on negative precision', () => {
-      expect(() => Decimal.from('10').div(Decimal.from('3'), -5, 'half-up')).to.throw(
-        'precision must be a non-negative integer'
-      );
+      expect(() =>
+        Decimal.from('10').div(Decimal.from('3'), -5, 'half-up')
+      ).to.throw('precision must be a non-negative integer');
     });
 
     it('throws on non-integer precision', () => {
-      expect(() => Decimal.from('10').div(Decimal.from('3'), 2.5, 'half-up')).to.throw(
-        'precision must be a non-negative integer'
-      );
+      expect(() =>
+        Decimal.from('10').div(Decimal.from('3'), 2.5, 'half-up')
+      ).to.throw('precision must be a non-negative integer');
     });
 
     it('half-up rounding', () => {
@@ -649,12 +649,8 @@ describe('Decimal', () => {
     });
 
     it('rounds with half-even', () => {
-      expect(Decimal.from('1.235').toFixed(2, 'half-even')).to.equal(
-        '1.24'
-      );
-      expect(Decimal.from('1.225').toFixed(2, 'half-even')).to.equal(
-        '1.22'
-      );
+      expect(Decimal.from('1.235').toFixed(2, 'half-even')).to.equal('1.24');
+      expect(Decimal.from('1.225').toFixed(2, 'half-even')).to.equal('1.22');
     });
 
     it('throws on negative decimal places', () => {
