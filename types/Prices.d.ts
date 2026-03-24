@@ -146,7 +146,7 @@ declare module 'stripe' {
       /**
        * The unit amount in cents (or local equivalent) to be charged, represented as a decimal string with at most 12 decimal places. Only set if `billing_scheme=per_unit`.
        */
-      unit_amount_decimal: string | null;
+      unit_amount_decimal: Decimal | null;
     }
 
     namespace Price {
@@ -176,7 +176,7 @@ declare module 'stripe' {
         /**
          * The unit amount in cents (or local equivalent) to be charged, represented as a decimal string with at most 12 decimal places. Only set if `billing_scheme=per_unit`.
          */
-        unit_amount_decimal: string | null;
+        unit_amount_decimal: Decimal | null;
       }
 
       namespace CurrencyOptions {
@@ -208,7 +208,7 @@ declare module 'stripe' {
           /**
            * Same as `flat_amount`, but contains a decimal value with at most 12 decimal places.
            */
-          flat_amount_decimal: string | null;
+          flat_amount_decimal: Decimal | null;
 
           /**
            * Per unit price for units relevant to the tier.
@@ -218,7 +218,7 @@ declare module 'stripe' {
           /**
            * Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
            */
-          unit_amount_decimal: string | null;
+          unit_amount_decimal: Decimal | null;
 
           /**
            * Up to and including to this quantity will be contained in the tier.
@@ -305,7 +305,7 @@ declare module 'stripe' {
         /**
          * Same as `flat_amount`, but contains a decimal value with at most 12 decimal places.
          */
-        flat_amount_decimal: string | null;
+        flat_amount_decimal: Decimal | null;
 
         /**
          * Per unit price for units relevant to the tier.
@@ -315,7 +315,7 @@ declare module 'stripe' {
         /**
          * Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
          */
-        unit_amount_decimal: string | null;
+        unit_amount_decimal: Decimal | null;
 
         /**
          * Up to and including to this quantity will be contained in the tier.

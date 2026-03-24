@@ -6,6 +6,15 @@ export const PersonTokens = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
     fullPath: '/v2/core/accounts/{account_id}/person_tokens',
+    requestSchema: {
+      kind: 'object',
+      fields: {
+        relationship: {
+          kind: 'object',
+          fields: {percent_ownership: {kind: 'decimal_string'}},
+        },
+      },
+    },
   }),
   retrieve: stripeMethod({
     method: 'GET',
