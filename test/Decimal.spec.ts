@@ -1,5 +1,5 @@
 // @ts-nocheck
-import {Decimal, RoundingMode} from '../src/Decimal.js';
+import {Decimal} from '../src/Decimal.js';
 import {expect} from 'chai';
 
 describe('Decimal', () => {
@@ -290,23 +290,23 @@ describe('Decimal', () => {
     it('divides integers evenly', () => {
       expect(
         Decimal.from('42')
-          .div(Decimal.from('6'))
+          .div(Decimal.from('6'), 34, 'half-up')
           .toString()
       ).to.equal('7');
       expect(
         Decimal.from('100')
-          .div(Decimal.from('10'))
+          .div(Decimal.from('10'), 34, 'half-up')
           .toString()
       ).to.equal('10');
     });
 
     it('divides with decimal results', () => {
-      const result = Decimal.from('1').div(Decimal.from('3'), 5);
+      const result = Decimal.from('1').div(Decimal.from('3'), 5, 'half-up');
       expect(result.toString()).to.equal('0.33333');
     });
 
-    it('uses default precision of 34', () => {
-      const result = Decimal.from('1').div(Decimal.from('3'));
+    it('divides with full precision', () => {
+      const result = Decimal.from('1').div(Decimal.from('3'), 34, 'half-up');
       const str = result.toString();
       expect(str).to.match(/^0\.3+$/);
     });
@@ -314,61 +314,61 @@ describe('Decimal', () => {
     it('handles negative operands', () => {
       expect(
         Decimal.from('-42')
-          .div(Decimal.from('6'))
+          .div(Decimal.from('6'), 34, 'half-up')
           .toString()
       ).to.equal('-7');
       expect(
         Decimal.from('42')
-          .div(Decimal.from('-6'))
+          .div(Decimal.from('-6'), 34, 'half-up')
           .toString()
       ).to.equal('-7');
       expect(
         Decimal.from('-42')
-          .div(Decimal.from('-6'))
+          .div(Decimal.from('-6'), 34, 'half-up')
           .toString()
       ).to.equal('7');
     });
 
     it('throws on division by zero', () => {
-      expect(() => Decimal.from('42').div(Decimal.zero)).to.throw(
+      expect(() => Decimal.from('42').div(Decimal.zero, 34, 'half-up')).to.throw(
         'Division by zero'
       );
     });
 
     it('throws on negative precision', () => {
-      expect(() => Decimal.from('10').div(Decimal.from('3'), -5)).to.throw(
+      expect(() => Decimal.from('10').div(Decimal.from('3'), -5, 'half-up')).to.throw(
         'precision must be a non-negative integer'
       );
     });
 
     it('throws on non-integer precision', () => {
-      expect(() => Decimal.from('10').div(Decimal.from('3'), 2.5)).to.throw(
+      expect(() => Decimal.from('10').div(Decimal.from('3'), 2.5, 'half-up')).to.throw(
         'precision must be a non-negative integer'
       );
     });
 
-    it('uses HALF_UP rounding by default', () => {
+    it('half-up rounding', () => {
       expect(
         Decimal.from('5')
-          .div(Decimal.from('2'), 0)
+          .div(Decimal.from('2'), 0, 'half-up')
           .toString()
       ).to.equal('3');
       expect(
         Decimal.from('3')
-          .div(Decimal.from('2'), 0)
+          .div(Decimal.from('2'), 0, 'half-up')
           .toString()
       ).to.equal('2');
     });
 
-    it('supports HALF_EVEN rounding', () => {
+    it('half-even rounding', () => {
       expect(
         Decimal.from('5')
-          .div(Decimal.from('2'), 0, RoundingMode.HALF_EVEN)
+          .div(Decimal.from('2'), 0, 'half-even')
           .toString()
       ).to.equal('2');
       expect(
         Decimal.from('7')
-          .div(Decimal.from('2'), 0, RoundingMode.HALF_EVEN)
+          .div(Decimal.from('2'), 0, 'half-even')
           .toString()
       ).to.equal('4');
     });
@@ -632,39 +632,39 @@ describe('Decimal', () => {
 
   describe('toFixed', () => {
     it('formats with specified decimal places', () => {
-      expect(Decimal.from('1.23456').toFixed(2)).to.equal('1.23');
-      expect(Decimal.from('1.5').toFixed(3)).to.equal('1.500');
-      expect(Decimal.from('42').toFixed(0)).to.equal('42');
+      expect(Decimal.from('1.23456').toFixed(2, 'half-up')).to.equal('1.23');
+      expect(Decimal.from('1.5').toFixed(3, 'half-up')).to.equal('1.500');
+      expect(Decimal.from('42').toFixed(0, 'half-up')).to.equal('42');
     });
 
     it('formats zero with decimal places', () => {
-      expect(Decimal.zero.toFixed(5)).to.equal('0.00000');
-      expect(Decimal.from('0').toFixed(2)).to.equal('0.00');
-      expect(Decimal.zero.toFixed(0)).to.equal('0');
+      expect(Decimal.zero.toFixed(5, 'half-up')).to.equal('0.00000');
+      expect(Decimal.from('0').toFixed(2, 'half-up')).to.equal('0.00');
+      expect(Decimal.zero.toFixed(0, 'half-up')).to.equal('0');
     });
 
-    it('rounds with HALF_UP by default', () => {
-      expect(Decimal.from('1.235').toFixed(2)).to.equal('1.24');
-      expect(Decimal.from('1.225').toFixed(2)).to.equal('1.23');
+    it('rounds with half-up', () => {
+      expect(Decimal.from('1.235').toFixed(2, 'half-up')).to.equal('1.24');
+      expect(Decimal.from('1.225').toFixed(2, 'half-up')).to.equal('1.23');
     });
 
-    it('supports HALF_EVEN rounding', () => {
-      expect(Decimal.from('1.235').toFixed(2, RoundingMode.HALF_EVEN)).to.equal(
+    it('rounds with half-even', () => {
+      expect(Decimal.from('1.235').toFixed(2, 'half-even')).to.equal(
         '1.24'
       );
-      expect(Decimal.from('1.225').toFixed(2, RoundingMode.HALF_EVEN)).to.equal(
+      expect(Decimal.from('1.225').toFixed(2, 'half-even')).to.equal(
         '1.22'
       );
     });
 
     it('throws on negative decimal places', () => {
-      expect(() => Decimal.from('1.23').toFixed(-1)).to.throw(
+      expect(() => Decimal.from('1.23').toFixed(-1, 'half-up')).to.throw(
         'decimalPlaces must be a non-negative integer'
       );
     });
 
     it('throws on non-integer decimal places', () => {
-      expect(() => Decimal.from('1.23').toFixed(1.5)).to.throw(
+      expect(() => Decimal.from('1.23').toFixed(1.5, 'half-up')).to.throw(
         'decimalPlaces must be a non-negative integer'
       );
     });
@@ -736,7 +736,7 @@ describe('Decimal', () => {
     });
 
     it('div does not crash when divisor exponent exceeds dividend exponent plus precision', () => {
-      const result = Decimal.from('1').div(Decimal.from('1e100'), 0);
+      const result = Decimal.from('1').div(Decimal.from('1e100'), 0, 'half-up');
       expect(result.toString()).to.equal('0');
     });
 
@@ -760,15 +760,15 @@ describe('Decimal', () => {
       const tax = subtotal.mul(taxRate);
       const total = subtotal.add(tax);
 
-      expect(tax.toFixed(2)).to.equal('8.25');
-      expect(total.toFixed(2)).to.equal('108.24');
+      expect(tax.toFixed(2, 'half-up')).to.equal('8.25');
+      expect(total.toFixed(2, 'half-up')).to.equal('108.24');
     });
 
     it('splits bill evenly', () => {
       const total = Decimal.from('100.00');
       const people = Decimal.from('3');
-      const perPerson = total.div(people, 2);
-      expect(perPerson.toFixed(2)).to.equal('33.33');
+      const perPerson = total.div(people, 2, 'half-up');
+      expect(perPerson.toFixed(2, 'half-up')).to.equal('33.33');
     });
 
     it('accumulates small amounts without floating-point errors', () => {
@@ -812,51 +812,35 @@ describe('Decimal', () => {
   });
 
   describe('division rounding edge cases', () => {
-    it('HALF_UP: rounds 0.5 up', () => {
-      expect(Decimal.from('0.5').toFixed(0)).to.equal('1');
-      expect(Decimal.from('1.5').toFixed(0)).to.equal('2');
-      expect(Decimal.from('2.5').toFixed(0)).to.equal('3');
+    it('half-up: rounds 0.5 up', () => {
+      expect(Decimal.from('0.5').toFixed(0, 'half-up')).to.equal('1');
+      expect(Decimal.from('1.5').toFixed(0, 'half-up')).to.equal('2');
+      expect(Decimal.from('2.5').toFixed(0, 'half-up')).to.equal('3');
     });
 
-    it('HALF_UP: rounds negative 0.5 away from zero', () => {
-      expect(Decimal.from('-0.5').toFixed(0)).to.equal('-1');
-      expect(Decimal.from('-1.5').toFixed(0)).to.equal('-2');
-      expect(Decimal.from('-2.5').toFixed(0)).to.equal('-3');
+    it('half-up: rounds negative 0.5 away from zero', () => {
+      expect(Decimal.from('-0.5').toFixed(0, 'half-up')).to.equal('-1');
+      expect(Decimal.from('-1.5').toFixed(0, 'half-up')).to.equal('-2');
+      expect(Decimal.from('-2.5').toFixed(0, 'half-up')).to.equal('-3');
     });
 
-    it('HALF_EVEN: rounds 0.5 to even', () => {
-      expect(Decimal.from('0.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal(
-        '0'
-      );
-      expect(Decimal.from('1.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal(
-        '2'
-      );
-      expect(Decimal.from('2.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal(
-        '2'
-      );
-      expect(Decimal.from('3.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal(
-        '4'
-      );
+    it('half-even: rounds 0.5 to even', () => {
+      expect(Decimal.from('0.5').toFixed(0, 'half-even')).to.equal('0');
+      expect(Decimal.from('1.5').toFixed(0, 'half-even')).to.equal('2');
+      expect(Decimal.from('2.5').toFixed(0, 'half-even')).to.equal('2');
+      expect(Decimal.from('3.5').toFixed(0, 'half-even')).to.equal('4');
     });
 
-    it('HALF_EVEN: rounds negative 0.5 to even', () => {
-      expect(Decimal.from('-0.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal(
-        '0'
-      );
-      expect(Decimal.from('-1.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal(
-        '-2'
-      );
-      expect(Decimal.from('-2.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal(
-        '-2'
-      );
-      expect(Decimal.from('-3.5').toFixed(0, RoundingMode.HALF_EVEN)).to.equal(
-        '-4'
-      );
+    it('half-even: rounds negative 0.5 to even', () => {
+      expect(Decimal.from('-0.5').toFixed(0, 'half-even')).to.equal('0');
+      expect(Decimal.from('-1.5').toFixed(0, 'half-even')).to.equal('-2');
+      expect(Decimal.from('-2.5').toFixed(0, 'half-even')).to.equal('-2');
+      expect(Decimal.from('-3.5').toFixed(0, 'half-even')).to.equal('-4');
     });
 
     it('division precision does not lose significance', () => {
-      const result = Decimal.from('1').div(Decimal.from('7'), 10);
-      expect(result.toFixed(10)).to.equal('0.1428571429');
+      const result = Decimal.from('1').div(Decimal.from('7'), 10, 'half-up');
+      expect(result.toFixed(10, 'half-up')).to.equal('0.1428571429');
     });
   });
 });
