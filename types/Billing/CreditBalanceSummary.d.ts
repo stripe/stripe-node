@@ -75,7 +75,7 @@ declare module 'stripe' {
               /**
                * A positive integer representing the amount.
                */
-              value: string;
+              value: Decimal;
             }
 
             namespace CustomPricingUnit {
@@ -180,7 +180,7 @@ declare module 'stripe' {
               /**
                * A positive integer representing the amount.
                */
-              value: string;
+              value: Decimal;
             }
 
             namespace CustomPricingUnit {

@@ -494,7 +494,7 @@ declare module 'stripe' {
               /**
                * The percentage of ownership the person has in the associated legal entity.
                */
-              percent_ownership?: string;
+              percent_ownership?: Decimal;
 
               /**
                * Indicates whether the person is a representative of the associated legal entity.
@@ -1096,7 +1096,7 @@ declare module 'stripe' {
               /**
                * The percentage of ownership the person has in the associated legal entity.
                */
-              percent_ownership?: string;
+              percent_ownership?: Decimal;
 
               /**
                * Indicates whether the person is a representative of the associated legal entity.

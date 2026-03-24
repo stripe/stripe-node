@@ -88,7 +88,7 @@ declare module 'stripe' {
             /**
              * A positive integer representing the amount of the credit grant.
              */
-            value: string;
+            value: Decimal;
           }
 
           interface Monetary {

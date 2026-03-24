@@ -14,6 +14,18 @@ export const Cadences = StripeResource.extend({
     responseSchema: {
       kind: 'object',
       fields: {
+        invoice_discount_rules: {
+          kind: 'array',
+          element: {
+            kind: 'object',
+            fields: {
+              percent_off: {
+                kind: 'object',
+                fields: {percent_off: {kind: 'decimal_string'}},
+              },
+            },
+          },
+        },
         settings_data: {
           kind: 'object',
           fields: {
@@ -47,6 +59,18 @@ export const Cadences = StripeResource.extend({
     responseSchema: {
       kind: 'object',
       fields: {
+        invoice_discount_rules: {
+          kind: 'array',
+          element: {
+            kind: 'object',
+            fields: {
+              percent_off: {
+                kind: 'object',
+                fields: {percent_off: {kind: 'decimal_string'}},
+              },
+            },
+          },
+        },
         settings_data: {
           kind: 'object',
           fields: {
@@ -80,6 +104,18 @@ export const Cadences = StripeResource.extend({
     responseSchema: {
       kind: 'object',
       fields: {
+        invoice_discount_rules: {
+          kind: 'array',
+          element: {
+            kind: 'object',
+            fields: {
+              percent_off: {
+                kind: 'object',
+                fields: {percent_off: {kind: 'decimal_string'}},
+              },
+            },
+          },
+        },
         settings_data: {
           kind: 'object',
           fields: {
@@ -119,6 +155,18 @@ export const Cadences = StripeResource.extend({
           element: {
             kind: 'object',
             fields: {
+              invoice_discount_rules: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    percent_off: {
+                      kind: 'object',
+                      fields: {percent_off: {kind: 'decimal_string'}},
+                    },
+                  },
+                },
+              },
               settings_data: {
                 kind: 'object',
                 fields: {
@@ -155,6 +203,18 @@ export const Cadences = StripeResource.extend({
     responseSchema: {
       kind: 'object',
       fields: {
+        invoice_discount_rules: {
+          kind: 'array',
+          element: {
+            kind: 'object',
+            fields: {
+              percent_off: {
+                kind: 'object',
+                fields: {percent_off: {kind: 'decimal_string'}},
+              },
+            },
+          },
+        },
         settings_data: {
           kind: 'object',
           fields: {

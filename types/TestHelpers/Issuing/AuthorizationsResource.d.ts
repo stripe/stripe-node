@@ -188,26 +188,26 @@ declare module 'stripe' {
                 /**
                  * Gross fuel amount that should equal Fuel Volume multipled by Fuel Unit Cost, inclusive of taxes.
                  */
-                gross_amount_decimal?: string;
+                gross_amount_decimal?: Decimal;
               }
 
               interface NonFuel {
                 /**
                  * Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
                  */
-                gross_amount_decimal?: string;
+                gross_amount_decimal?: Decimal;
               }
 
               interface Tax {
                 /**
                  * Amount of state or provincial Sales Tax included in the transaction amount. Null if not reported by merchant or not subject to tax.
                  */
-                local_amount_decimal?: string;
+                local_amount_decimal?: Decimal;
 
                 /**
                  * Amount of national Sales Tax or VAT included in the transaction amount. Null if not reported by merchant or not subject to tax.
                  */
-                national_amount_decimal?: string;
+                national_amount_decimal?: Decimal;
               }
             }
 
@@ -232,7 +232,7 @@ declare module 'stripe' {
             /**
              * The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12 decimal places.
              */
-            quantity_decimal?: string;
+            quantity_decimal?: Decimal;
 
             /**
              * The type of fuel that was purchased. One of `diesel`, `unleaded_plus`, `unleaded_regular`, `unleaded_super`, or `other`.
@@ -247,7 +247,7 @@ declare module 'stripe' {
             /**
              * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
              */
-            unit_cost_decimal?: string;
+            unit_cost_decimal?: Decimal;
           }
 
           namespace Fuel {
@@ -927,26 +927,26 @@ declare module 'stripe' {
                   /**
                    * Gross fuel amount that should equal Fuel Volume multipled by Fuel Unit Cost, inclusive of taxes.
                    */
-                  gross_amount_decimal?: string;
+                  gross_amount_decimal?: Decimal;
                 }
 
                 interface NonFuel {
                   /**
                    * Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
                    */
-                  gross_amount_decimal?: string;
+                  gross_amount_decimal?: Decimal;
                 }
 
                 interface Tax {
                   /**
                    * Amount of state or provincial Sales Tax included in the transaction amount. Null if not reported by merchant or not subject to tax.
                    */
-                  local_amount_decimal?: string;
+                  local_amount_decimal?: Decimal;
 
                   /**
                    * Amount of national Sales Tax or VAT included in the transaction amount. Null if not reported by merchant or not subject to tax.
                    */
-                  national_amount_decimal?: string;
+                  national_amount_decimal?: Decimal;
                 }
               }
 
@@ -1026,7 +1026,7 @@ declare module 'stripe' {
               /**
                * The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12 decimal places.
                */
-              quantity_decimal?: string;
+              quantity_decimal?: Decimal;
 
               /**
                * The type of fuel that was purchased. One of `diesel`, `unleaded_plus`, `unleaded_regular`, `unleaded_super`, or `other`.
@@ -1041,7 +1041,7 @@ declare module 'stripe' {
               /**
                * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
                */
-              unit_cost_decimal?: string;
+              unit_cost_decimal?: Decimal;
             }
 
             namespace Fuel {
@@ -1078,7 +1078,7 @@ declare module 'stripe' {
             interface Receipt {
               description?: string;
 
-              quantity?: string;
+              quantity?: Decimal;
 
               total?: number;
 
@@ -1198,26 +1198,26 @@ declare module 'stripe' {
                 /**
                  * Gross fuel amount that should equal Fuel Volume multipled by Fuel Unit Cost, inclusive of taxes.
                  */
-                gross_amount_decimal?: string;
+                gross_amount_decimal?: Decimal;
               }
 
               interface NonFuel {
                 /**
                  * Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
                  */
-                gross_amount_decimal?: string;
+                gross_amount_decimal?: Decimal;
               }
 
               interface Tax {
                 /**
                  * Amount of state or provincial Sales Tax included in the transaction amount. Null if not reported by merchant or not subject to tax.
                  */
-                local_amount_decimal?: string;
+                local_amount_decimal?: Decimal;
 
                 /**
                  * Amount of national Sales Tax or VAT included in the transaction amount. Null if not reported by merchant or not subject to tax.
                  */
-                national_amount_decimal?: string;
+                national_amount_decimal?: Decimal;
               }
             }
 
@@ -1236,7 +1236,7 @@ declare module 'stripe' {
             /**
              * The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12 decimal places.
              */
-            quantity_decimal?: string;
+            quantity_decimal?: Decimal;
 
             /**
              * The type of fuel that was purchased. One of `diesel`, `unleaded_plus`, `unleaded_regular`, `unleaded_super`, or `other`.
@@ -1251,7 +1251,7 @@ declare module 'stripe' {
             /**
              * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
              */
-            unit_cost_decimal?: string;
+            unit_cost_decimal?: Decimal;
           }
 
           namespace Fuel {

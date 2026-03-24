@@ -125,7 +125,7 @@ declare module 'stripe' {
                 /**
                  * The value of the credit grant, decimal value represented as a string.
                  */
-                value: string;
+                value: Decimal;
               }
 
               type Type = 'custom_pricing_unit' | 'monetary';
@@ -227,7 +227,7 @@ declare module 'stripe' {
                 /**
                  * The value of the credit grant, decimal value represented as a string.
                  */
-                value: string;
+                value: Decimal;
               }
 
               type Type = 'custom_pricing_unit' | 'monetary';

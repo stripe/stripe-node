@@ -101,7 +101,7 @@ declare module 'stripe' {
       /**
        * The decimal unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This `unit_amount_decimal` will be multiplied by the quantity to get the full amount. Passing in a negative `unit_amount_decimal` will reduce the `amount_due` on the invoice. Accepts at most 12 decimal places.
        */
-      unit_amount_decimal?: string;
+      unit_amount_decimal?: Decimal;
     }
 
     namespace InvoiceItemCreateParams {
@@ -202,7 +202,7 @@ declare module 'stripe' {
         /**
          * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
-        unit_amount_decimal?: string;
+        unit_amount_decimal?: Decimal;
       }
 
       namespace PriceData {
@@ -300,7 +300,7 @@ declare module 'stripe' {
       /**
        * The decimal unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This `unit_amount_decimal` will be multiplied by the quantity to get the full amount. Passing in a negative `unit_amount_decimal` will reduce the `amount_due` on the invoice. Accepts at most 12 decimal places.
        */
-      unit_amount_decimal?: string;
+      unit_amount_decimal?: Decimal;
     }
 
     namespace InvoiceItemUpdateParams {
@@ -401,7 +401,7 @@ declare module 'stripe' {
         /**
          * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
-        unit_amount_decimal?: string;
+        unit_amount_decimal?: Decimal;
       }
 
       namespace PriceData {

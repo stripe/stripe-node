@@ -50,7 +50,7 @@ declare module 'stripe' {
         /**
          * The value at which the alert recovered
          */
-        value: string;
+        value: Decimal;
       }
     }
   }

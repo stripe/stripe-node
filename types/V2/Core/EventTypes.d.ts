@@ -391,7 +391,7 @@ declare module 'stripe' {
         /**
          * The probability of delinquency. Can be between 0.00 and 100.00.
          */
-        probability?: string;
+        probability?: Decimal;
 
         /**
          * Categorical assessment of the delinquency risk based on probability.
@@ -2763,7 +2763,7 @@ declare module 'stripe' {
           /**
            * The percentage of impacted requests.
            */
-          impacted_requests_percentage?: string;
+          impacted_requests_percentage?: Decimal;
 
           /**
            * The top impacted connected accounts (only for platforms).
@@ -2788,7 +2788,7 @@ declare module 'stripe' {
             /**
              * The percentage of impacted requests.
              */
-            impacted_requests_percentage?: string;
+            impacted_requests_percentage?: Decimal;
           }
         }
       }
@@ -2867,7 +2867,7 @@ declare module 'stripe' {
           /**
            * The percentage of impacted requests.
            */
-          impacted_requests_percentage?: string;
+          impacted_requests_percentage?: Decimal;
 
           /**
            * The top impacted connected accounts (only for platforms).
@@ -2892,7 +2892,7 @@ declare module 'stripe' {
             /**
              * The percentage of impacted requests.
              */
-            impacted_requests_percentage?: string;
+            impacted_requests_percentage?: Decimal;
           }
         }
       }
@@ -2966,7 +2966,7 @@ declare module 'stripe' {
           /**
            * The percentage of impacted requests.
            */
-          impacted_requests_percentage?: string;
+          impacted_requests_percentage?: Decimal;
 
           /**
            * The top impacted connected accounts (only for platforms).
@@ -2991,7 +2991,7 @@ declare module 'stripe' {
             /**
              * The percentage of impacted requests.
              */
-            impacted_requests_percentage?: string;
+            impacted_requests_percentage?: Decimal;
           }
         }
       }
@@ -3065,7 +3065,7 @@ declare module 'stripe' {
           /**
            * The percentage of impacted requests.
            */
-          impacted_requests_percentage?: string;
+          impacted_requests_percentage?: Decimal;
 
           /**
            * The top impacted connected accounts (only for platforms).
@@ -3090,7 +3090,7 @@ declare module 'stripe' {
             /**
              * The percentage of impacted requests.
              */
-            impacted_requests_percentage?: string;
+            impacted_requests_percentage?: Decimal;
           }
         }
       }
@@ -3149,7 +3149,7 @@ declare module 'stripe' {
           /**
            * The current authorization rate percentage.
            */
-          current_percentage: string;
+          current_percentage: Decimal;
 
           /**
            * Dimensions that describe what subset of payments are impacted.
@@ -3164,7 +3164,7 @@ declare module 'stripe' {
           /**
            * The previous authorization rate percentage.
            */
-          previous_percentage: string;
+          previous_percentage: Decimal;
         }
 
         namespace Impact {
@@ -3309,7 +3309,7 @@ declare module 'stripe' {
           /**
            * The current authorization rate percentage.
            */
-          current_percentage: string;
+          current_percentage: Decimal;
 
           /**
            * Dimensions that describe what subset of payments are impacted.
@@ -3324,7 +3324,7 @@ declare module 'stripe' {
           /**
            * The previous authorization rate percentage.
            */
-          previous_percentage: string;
+          previous_percentage: Decimal;
         }
 
         namespace Impact {
@@ -3903,7 +3903,7 @@ declare module 'stripe' {
           /**
            * The percentage of impacted requests.
            */
-          impacted_requests_percentage?: string;
+          impacted_requests_percentage?: Decimal;
 
           /**
            * The type of the payment method.
@@ -4002,7 +4002,7 @@ declare module 'stripe' {
             /**
              * The percentage of impacted requests.
              */
-            impacted_requests_percentage?: string;
+            impacted_requests_percentage?: Decimal;
           }
         }
       }
@@ -4066,7 +4066,7 @@ declare module 'stripe' {
           /**
            * The percentage of impacted requests.
            */
-          impacted_requests_percentage?: string;
+          impacted_requests_percentage?: Decimal;
 
           /**
            * The type of the payment method.
@@ -4165,7 +4165,7 @@ declare module 'stripe' {
             /**
              * The percentage of impacted requests.
              */
-            impacted_requests_percentage?: string;
+            impacted_requests_percentage?: Decimal;
           }
         }
       }
@@ -4219,7 +4219,7 @@ declare module 'stripe' {
           /**
            * The percentage of impacted payments.
            */
-          impacted_payments_percentage: string;
+          impacted_payments_percentage: Decimal;
         }
       }
     }
@@ -4277,7 +4277,7 @@ declare module 'stripe' {
           /**
            * The percentage of impacted payments.
            */
-          impacted_payments_percentage: string;
+          impacted_payments_percentage: Decimal;
         }
       }
     }
@@ -6159,7 +6159,7 @@ declare module 'stripe' {
           /**
            * The probability of the merchant being fraudulent. Can be between 0.00 and 100.00. May be empty if the risk_level is UNKNOWN or NOT_ASSESSED.
            */
-          probability?: string;
+          probability?: Decimal;
 
           /**
            * Categorical assessment of the fraudulent merchant risk based on probability.

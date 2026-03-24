@@ -3,7 +3,40 @@
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
 export const Products = StripeResource.extend({
-  create: stripeMethod({method: 'POST', fullPath: '/v1/products'}),
+  create: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/products',
+    requestSchema: {
+      kind: 'object',
+      fields: {
+        default_price_data: {
+          kind: 'object',
+          fields: {
+            currency_options: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  tiers: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {
+                        flat_amount_decimal: {kind: 'decimal_string'},
+                        unit_amount_decimal: {kind: 'decimal_string'},
+                      },
+                    },
+                  },
+                  unit_amount_decimal: {kind: 'decimal_string'},
+                },
+              },
+            },
+            unit_amount_decimal: {kind: 'decimal_string'},
+          },
+        },
+      },
+    },
+  }),
   retrieve: stripeMethod({method: 'GET', fullPath: '/v1/products/{id}'}),
   update: stripeMethod({method: 'POST', fullPath: '/v1/products/{id}'}),
   list: stripeMethod({

@@ -162,7 +162,7 @@ declare module 'stripe' {
                   /**
                    * Percent that will be taken off of the amount. For example, percent_off of 50.0 will make $100 amount $50 instead.
                    */
-                  percent_off: string;
+                  percent_off: Decimal;
                 }
 
                 namespace PercentOff {

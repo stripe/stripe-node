@@ -4146,7 +4146,7 @@ declare module 'stripe' {
                 /**
                  * The percent owned by the person of the account's legal entity.
                  */
-                percent_ownership?: string;
+                percent_ownership?: Decimal;
 
                 /**
                  * The person's title (e.g., CEO, Support Engineer).
@@ -8313,7 +8313,7 @@ declare module 'stripe' {
                 /**
                  * The percent owned by the person of the account's legal entity.
                  */
-                percent_ownership?: string;
+                percent_ownership?: Decimal;
 
                 /**
                  * The person's title (e.g., CEO, Support Engineer).

@@ -8,7 +8,37 @@ export const Intents = StripeResource.extend({
     StripeResource.apply(this, args);
     this.actions = new Actions(...args);
   },
-  create: stripeMethod({method: 'POST', fullPath: '/v2/billing/intents'}),
+  create: stripeMethod({
+    method: 'POST',
+    fullPath: '/v2/billing/intents',
+    requestSchema: {
+      kind: 'object',
+      fields: {
+        actions: {
+          kind: 'array',
+          element: {
+            kind: 'object',
+            fields: {
+              apply: {
+                kind: 'object',
+                fields: {
+                  invoice_discount_rule: {
+                    kind: 'object',
+                    fields: {
+                      percent_off: {
+                        kind: 'object',
+                        fields: {percent_off: {kind: 'decimal_string'}},
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  }),
   retrieve: stripeMethod({method: 'GET', fullPath: '/v2/billing/intents/{id}'}),
   list: stripeMethod({
     method: 'GET',

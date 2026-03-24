@@ -96,7 +96,7 @@ declare module 'stripe' {
              * Up to and including this quantity will be contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
              * be set.
              */
-            up_to_decimal?: string;
+            up_to_decimal?: Decimal;
 
             /**
              * No upper bound to this tier. Only one of `up_to_decimal` and `up_to_inf` may be set.
@@ -194,7 +194,7 @@ declare module 'stripe' {
              * Up to and including this quantity will be contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
              * be set.
              */
-            up_to_decimal?: string;
+            up_to_decimal?: Decimal;
 
             /**
              * No upper bound to this tier. Only one of `up_to_decimal` and `up_to_inf` may be set.

@@ -256,26 +256,26 @@ declare module 'stripe' {
               /**
                * Gross fuel amount that should equal Fuel Quantity multiplied by Fuel Unit Cost, inclusive of taxes.
                */
-              gross_amount_decimal: string | null;
+              gross_amount_decimal: Decimal | null;
             }
 
             interface NonFuel {
               /**
                * Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
                */
-              gross_amount_decimal: string | null;
+              gross_amount_decimal: Decimal | null;
             }
 
             interface Tax {
               /**
                * Amount of state or provincial Sales Tax included in the transaction amount. `null` if not reported by merchant or not subject to tax.
                */
-              local_amount_decimal: string | null;
+              local_amount_decimal: Decimal | null;
 
               /**
                * Amount of national Sales Tax or VAT included in the transaction amount. `null` if not reported by merchant or not subject to tax.
                */
-              national_amount_decimal: string | null;
+              national_amount_decimal: Decimal | null;
             }
           }
 
@@ -324,7 +324,7 @@ declare module 'stripe' {
           /**
            * The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12 decimal places.
            */
-          quantity_decimal: string | null;
+          quantity_decimal: Decimal | null;
 
           /**
            * The type of fuel that was purchased.
@@ -339,7 +339,7 @@ declare module 'stripe' {
           /**
            * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
            */
-          unit_cost_decimal: string | null;
+          unit_cost_decimal: Decimal | null;
         }
 
         namespace Fuel {

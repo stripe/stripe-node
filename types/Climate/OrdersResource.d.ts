@@ -37,7 +37,7 @@ declare module 'stripe' {
         /**
          * Requested number of tons for the order. Either this or `amount` must be specified.
          */
-        metric_tons?: string;
+        metric_tons?: Decimal;
       }
 
       namespace OrderCreateParams {
