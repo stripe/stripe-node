@@ -1,5 +1,7 @@
 // Brand symbol declarations (inlined — no external brand.ts in stripe-node)
+// eslint-disable-next-line @typescript-eslint/naming-convention
 declare const __brand: unique symbol;
+// eslint-disable-next-line @typescript-eslint/naming-convention
 declare const __stripeType: unique symbol;
 
 type BrandSymbol = typeof __brand;
@@ -209,8 +211,8 @@ class DecimalImpl {
     let exp = exponent;
 
     while (coef !== 0n && coef % 10n === 0n) {
-      coef = coef / 10n;
-      exp++;
+      coef /= 10n;
+      exp += 1;
     }
 
     return [coef, exp];
@@ -283,7 +285,14 @@ class DecimalImpl {
     const absDivisor = divisor < 0n ? -divisor : divisor;
     const doubled = absRemainder * 2n;
 
-    const cmp = doubled === absDivisor ? 0 : doubled < absDivisor ? -1 : 1;
+    let cmp: -1 | 0 | 1;
+    if (doubled === absDivisor) {
+      cmp = 0;
+    } else if (doubled < absDivisor) {
+      cmp = -1;
+    } else {
+      cmp = 1;
+    }
 
     if (cmp < 0) {
       // Less than half — truncation is already the nearest value.
