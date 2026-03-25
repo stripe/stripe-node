@@ -22,8 +22,8 @@ declare module 'stripe' {
           invoice_presentation_dimensions?: Array<string>;
 
           /**
-           * An internal key you can use to search for a particular billable item.
-           * Must be unique among billable items.
+           * An internal key you can use to search for a particular metered item.
+           * Must be unique among metered items.
            * Maximum length of 200 characters.
            */
           lookup_key?: string;
@@ -89,7 +89,7 @@ declare module 'stripe' {
           display_name?: string;
 
           /**
-           * An internal key you can use to search for a particular billable item.
+           * An internal key you can use to search for a particular metered item.
            * Maximum length of 200 characters.
            * To remove the lookup_key from the object, set it to null in the request.
            */

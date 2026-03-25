@@ -624,7 +624,7 @@ declare module 'stripe' {
             /**
              * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
              */
-            unit_amount_decimal?: string;
+            unit_amount_decimal?: Decimal;
           }
 
           namespace PriceData {
@@ -1076,7 +1076,7 @@ declare module 'stripe' {
             /**
              * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
              */
-            unit_amount_decimal?: string;
+            unit_amount_decimal?: Decimal;
           }
 
           namespace PriceData {
@@ -1771,7 +1771,7 @@ declare module 'stripe' {
             /**
              * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
              */
-            unit_amount_decimal?: string;
+            unit_amount_decimal?: Decimal;
           }
 
           namespace PriceData {
@@ -2223,7 +2223,7 @@ declare module 'stripe' {
             /**
              * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
              */
-            unit_amount_decimal?: string;
+            unit_amount_decimal?: Decimal;
           }
 
           namespace PriceData {
@@ -3554,6 +3554,32 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.SubscriptionSchedule>>;
+
+      /**
+       * Serializes a SubscriptionSchedule cancel request into a batch job JSONL line.
+       */
+      serializeBatchCancel(
+        schedule: string,
+        params?: SubscriptionScheduleCancelParams,
+        options?: RequestOptions
+      ): string;
+
+      /**
+       * Serializes a SubscriptionSchedule create request into a batch job JSONL line.
+       */
+      serializeBatchCreate(
+        params?: SubscriptionScheduleCreateParams,
+        options?: RequestOptions
+      ): string;
+
+      /**
+       * Serializes a SubscriptionSchedule update request into a batch job JSONL line.
+       */
+      serializeBatchUpdate(
+        schedule: string,
+        params?: SubscriptionScheduleUpdateParams,
+        options?: RequestOptions
+      ): string;
     }
   }
 }

@@ -4747,11 +4747,6 @@ declare module 'stripe' {
            * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
-
-          /**
-           * Preferred transaction settlement speed
-           */
-          preferred_settlement_speed?: UsBankAccount.PreferredSettlementSpeed;
         }
 
         namespace UsBankAccount {
@@ -4823,8 +4818,6 @@ declare module 'stripe' {
              */
             collection_method?: 'paper';
           }
-
-          type PreferredSettlementSpeed = 'fastest' | 'standard';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 

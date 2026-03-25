@@ -1796,6 +1796,11 @@ declare module 'stripe' {
              * Default responsibilities held by either Stripe or the platform.
              */
             responsibilities?: Defaults.Responsibilities;
+
+            /**
+             * The Account's local timezone. A list of possible time zone values is maintained at the [IANA Time Zone Database](https://www.iana.org/time-zones).
+             */
+            timezone?: string;
           }
 
           namespace Defaults {
@@ -3190,26 +3195,12 @@ declare module 'stripe' {
                 /**
                  * A non-negative integer representing the amount in the smallest currency unit.
                  */
-                amount?: AnnualRevenue.Amount;
+                amount?: Amount;
 
                 /**
                  * The close-out date of the preceding fiscal year in ISO 8601 format. E.g. 2023-12-31 for the 31st of December, 2023.
                  */
                 fiscal_year_end?: string;
-              }
-
-              namespace AnnualRevenue {
-                interface Amount {
-                  /**
-                   * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-                   */
-                  value: number;
-
-                  /**
-                   * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-                   */
-                  currency: string;
-                }
               }
 
               interface Documents {
@@ -3540,21 +3531,7 @@ declare module 'stripe' {
                 /**
                  * A non-negative integer representing the amount in the smallest currency unit.
                  */
-                amount?: MonthlyEstimatedRevenue.Amount;
-              }
-
-              namespace MonthlyEstimatedRevenue {
-                interface Amount {
-                  /**
-                   * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-                   */
-                  value: number;
-
-                  /**
-                   * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-                   */
-                  currency: string;
-                }
+                amount?: Amount;
               }
 
               interface RegistrationDate {
@@ -4169,7 +4146,7 @@ declare module 'stripe' {
                 /**
                  * The percent owned by the person of the account's legal entity.
                  */
-                percent_ownership?: string;
+                percent_ownership?: Decimal;
 
                 /**
                  * The person's title (e.g., CEO, Support Engineer).
@@ -6136,6 +6113,11 @@ declare module 'stripe' {
              * Default responsibilities held by either Stripe or the platform.
              */
             responsibilities?: Defaults.Responsibilities;
+
+            /**
+             * The Account's local timezone. A list of possible time zone values is maintained at the [IANA Time Zone Database](https://www.iana.org/time-zones).
+             */
+            timezone?: string;
           }
 
           namespace Defaults {
@@ -7493,26 +7475,12 @@ declare module 'stripe' {
                 /**
                  * A non-negative integer representing the amount in the smallest currency unit.
                  */
-                amount?: AnnualRevenue.Amount;
+                amount?: Amount;
 
                 /**
                  * The close-out date of the preceding fiscal year in ISO 8601 format. E.g. 2023-12-31 for the 31st of December, 2023.
                  */
                 fiscal_year_end?: string;
-              }
-
-              namespace AnnualRevenue {
-                interface Amount {
-                  /**
-                   * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-                   */
-                  value: number;
-
-                  /**
-                   * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-                   */
-                  currency: string;
-                }
               }
 
               interface Documents {
@@ -7843,21 +7811,7 @@ declare module 'stripe' {
                 /**
                  * A non-negative integer representing the amount in the smallest currency unit.
                  */
-                amount?: MonthlyEstimatedRevenue.Amount;
-              }
-
-              namespace MonthlyEstimatedRevenue {
-                interface Amount {
-                  /**
-                   * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-                   */
-                  value: number;
-
-                  /**
-                   * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-                   */
-                  currency: string;
-                }
+                amount?: Amount;
               }
 
               interface RegistrationDate {
@@ -8359,7 +8313,7 @@ declare module 'stripe' {
                 /**
                  * The percent owned by the person of the account's legal entity.
                  */
-                percent_ownership?: string;
+                percent_ownership?: Decimal;
 
                 /**
                  * The person's title (e.g., CEO, Support Engineer).

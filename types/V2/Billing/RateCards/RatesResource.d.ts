@@ -74,7 +74,7 @@ declare module 'stripe' {
                * Up to and including this quantity will be contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
                * be set.
                */
-              up_to_decimal?: string;
+              up_to_decimal?: Decimal;
 
               /**
                * No upper bound to this tier. Only one of `up_to_decimal` and `up_to_inf` may be set.
@@ -88,7 +88,7 @@ declare module 'stripe' {
               /**
                * Divide usage by this number.
                */
-              divide_by: number;
+              divide_by: bigint;
 
               /**
                * After division, round the result up or down.
@@ -165,7 +165,7 @@ declare module 'stripe' {
             ): Promise<Stripe.Response<Stripe.V2.Billing.RateCardRate>>;
 
             /**
-             * List all Rates associated with a Rate Card for a specific version (defaults to latest). Rates remain active for all subsequent versions until a new rate is created for the same Metered Item.
+             * List all Rates associated with a Rate Card for a specific version. Defaults to latest. Rates remain active for all subsequent versions until a new rate is created for the same Metered Item.
              */
             list(
               id: string,

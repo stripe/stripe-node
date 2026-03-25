@@ -6125,6 +6125,15 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.AccountSignals>>;
 
       /**
+       * Serializes an Account update request into a batch job JSONL line.
+       */
+      serializeBatchUpdate(
+        account: string,
+        params?: AccountUpdateParams,
+        options?: RequestOptions
+      ): string;
+
+      /**
        * Updates an existing Account Capability. Request or remove a capability by updating its requested parameter.
        */
       updateCapability(

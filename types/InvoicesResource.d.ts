@@ -2117,7 +2117,7 @@ declare module 'stripe' {
           /**
            * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
-          unit_amount_decimal?: string;
+          unit_amount_decimal?: Decimal;
         }
 
         namespace PriceData {
@@ -2864,7 +2864,7 @@ declare module 'stripe' {
         /**
          * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
-        unit_amount_decimal?: string;
+        unit_amount_decimal?: Decimal;
       }
 
       namespace InvoiceItem {
@@ -2965,7 +2965,7 @@ declare module 'stripe' {
           /**
            * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
-          unit_amount_decimal?: string;
+          unit_amount_decimal?: Decimal;
         }
 
         namespace PriceData {
@@ -4373,7 +4373,7 @@ declare module 'stripe' {
               /**
                * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
                */
-              unit_amount_decimal?: string;
+              unit_amount_decimal?: Decimal;
             }
 
             namespace PriceData {
@@ -4825,7 +4825,7 @@ declare module 'stripe' {
               /**
                * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
                */
-              unit_amount_decimal?: string;
+              unit_amount_decimal?: Decimal;
             }
 
             namespace PriceData {
@@ -5402,7 +5402,7 @@ declare module 'stripe' {
             /**
              * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
              */
-            unit_amount_decimal?: string;
+            unit_amount_decimal?: Decimal;
           }
 
           namespace PriceData {
@@ -5773,7 +5773,7 @@ declare module 'stripe' {
           /**
            * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
-          unit_amount_decimal?: string;
+          unit_amount_decimal?: Decimal;
         }
 
         namespace PriceData {
@@ -6128,7 +6128,7 @@ declare module 'stripe' {
         /**
          * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
-        unit_amount_decimal?: string;
+        unit_amount_decimal?: Decimal;
       }
 
       namespace PriceData {
@@ -6527,6 +6527,24 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Invoice>>;
+
+      /**
+       * Serializes an Invoice pay request into a batch job JSONL line.
+       */
+      serializeBatchPay(
+        invoice: string,
+        params?: InvoicePayParams,
+        options?: RequestOptions
+      ): string;
+
+      /**
+       * Serializes an Invoice update request into a batch job JSONL line.
+       */
+      serializeBatchUpdate(
+        invoice: string,
+        params?: InvoiceUpdateParams,
+        options?: RequestOptions
+      ): string;
 
       /**
        * Updates multiple line items on an invoice. This is only possible when an invoice is still a draft.

@@ -101,7 +101,7 @@ declare module 'stripe' {
        *
        * Include `inbound` if you intend to use the payment method as the origin to pull funds from. Include `outbound` if you intend to use the payment method as the destination to send funds to. You can include both if you intend to use the payment method for both purposes.
        */
-      flow_directions: Array<SetupIntent.FlowDirection> | null;
+      flow_directions?: Array<SetupIntent.FlowDirection> | null;
 
       /**
        * The error encountered in the previous SetupIntent confirmation.

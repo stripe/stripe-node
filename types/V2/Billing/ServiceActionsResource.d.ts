@@ -84,7 +84,7 @@ declare module 'stripe' {
               /**
                * The monetary amount of the credit grant. Required if `type` is `monetary`.
                */
-              monetary?: Amount.Monetary;
+              monetary?: V2.Amount;
             }
 
             namespace Amount {
@@ -97,19 +97,7 @@ declare module 'stripe' {
                 /**
                  * The value of the credit grant, decimal value represented as a string.
                  */
-                value: string;
-              }
-
-              interface Monetary {
-                /**
-                 * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-                 */
-                value: number;
-
-                /**
-                 * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-                 */
-                currency: string;
+                value: Decimal;
               }
 
               type Type = 'custom_pricing_unit' | 'monetary';
@@ -198,7 +186,7 @@ declare module 'stripe' {
               /**
                * The monetary amount of the credit grant. Required if `type` is `monetary`.
                */
-              monetary?: Amount.Monetary;
+              monetary?: V2.Amount;
             }
 
             namespace Amount {
@@ -211,19 +199,7 @@ declare module 'stripe' {
                 /**
                  * The value of the credit grant, decimal value represented as a string.
                  */
-                value: string;
-              }
-
-              interface Monetary {
-                /**
-                 * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-                 */
-                value: number;
-
-                /**
-                 * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-                 */
-                currency: string;
+                value: Decimal;
               }
 
               type Type = 'custom_pricing_unit' | 'monetary';

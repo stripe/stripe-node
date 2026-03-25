@@ -28,4 +28,32 @@ export const RateCards = StripeResource.extend({
     fullPath: '/v2/billing/rate_cards',
     methodType: 'list',
   }),
+  modifyRates: stripeMethod({
+    method: 'POST',
+    fullPath: '/v2/billing/rate_cards/{id}/modify_rates',
+    requestSchema: {
+      kind: 'object',
+      fields: {
+        rates_to_create: {
+          kind: 'array',
+          element: {
+            kind: 'object',
+            fields: {
+              tiers: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {up_to_decimal: {kind: 'decimal_string'}},
+                },
+              },
+              transform_quantity: {
+                kind: 'object',
+                fields: {divide_by: {kind: 'int64_string'}},
+              },
+            },
+          },
+        },
+      },
+    },
+  }),
 });

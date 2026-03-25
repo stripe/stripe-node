@@ -155,7 +155,7 @@ declare module 'stripe' {
               /**
                * A positive decimal string representing the amount of the custom pricing unit threshold.
                */
-              value: string;
+              value: Decimal;
             }
 
             interface Monetary {
@@ -256,7 +256,7 @@ declare module 'stripe' {
               /**
                * A positive decimal string representing the amount of the custom pricing unit threshold.
                */
-              value: string;
+              value: Decimal;
             }
 
             type Type = 'amount' | 'custom_pricing_unit';

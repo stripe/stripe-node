@@ -179,7 +179,6 @@
 ///<reference path='./V2/Billing/CustomPricingUnitsResource.d.ts' />
 ///<reference path='./V2/Billing/Intents/ActionsResource.d.ts' />
 ///<reference path='./V2/Billing/IntentsResource.d.ts' />
-///<reference path='./V2/Billing/LicenseFeeSubscriptionsResource.d.ts' />
 ///<reference path='./V2/Billing/LicenseFees/VersionsResource.d.ts' />
 ///<reference path='./V2/Billing/LicenseFeesResource.d.ts' />
 ///<reference path='./V2/Billing/LicensedItemsResource.d.ts' />
@@ -189,7 +188,6 @@
 ///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
 ///<reference path='./V2/Billing/MeteredItemsResource.d.ts' />
 ///<reference path='./V2/Billing/OneTimeItemsResource.d.ts' />
-///<reference path='./V2/Billing/PricingPlanSubscriptions/ComponentsResource.d.ts' />
 ///<reference path='./V2/Billing/PricingPlanSubscriptionsResource.d.ts' />
 ///<reference path='./V2/Billing/PricingPlans/ComponentsResource.d.ts' />
 ///<reference path='./V2/Billing/PricingPlans/VersionsResource.d.ts' />
@@ -201,11 +199,13 @@
 ///<reference path='./V2/Billing/RateCards/VersionsResource.d.ts' />
 ///<reference path='./V2/Billing/RateCardsResource.d.ts' />
 ///<reference path='./V2/Billing/ServiceActionsResource.d.ts' />
+///<reference path='./V2/Core/AccountEvaluationsResource.d.ts' />
 ///<reference path='./V2/Core/AccountLinksResource.d.ts' />
 ///<reference path='./V2/Core/AccountTokensResource.d.ts' />
 ///<reference path='./V2/Core/Accounts/PersonTokensResource.d.ts' />
 ///<reference path='./V2/Core/Accounts/PersonsResource.d.ts' />
 ///<reference path='./V2/Core/AccountsResource.d.ts' />
+///<reference path='./V2/Core/BatchJobsResource.d.ts' />
 ///<reference path='./V2/Core/ClaimableSandboxesResource.d.ts' />
 ///<reference path='./V2/Core/ConnectionSessionsResource.d.ts' />
 ///<reference path='./V2/Core/EventDestinationsResource.d.ts' />
@@ -436,7 +436,6 @@
 ///<reference path='./V2/Billing/CustomPricingUnits.d.ts' />
 ///<reference path='./V2/Billing/IntentActions.d.ts' />
 ///<reference path='./V2/Billing/Intents.d.ts' />
-///<reference path='./V2/Billing/LicenseFeeSubscriptions.d.ts' />
 ///<reference path='./V2/Billing/LicenseFeeVersions.d.ts' />
 ///<reference path='./V2/Billing/LicenseFees.d.ts' />
 ///<reference path='./V2/Billing/LicensedItems.d.ts' />
@@ -446,7 +445,6 @@
 ///<reference path='./V2/Billing/MeteredItems.d.ts' />
 ///<reference path='./V2/Billing/OneTimeItems.d.ts' />
 ///<reference path='./V2/Billing/PricingPlanComponents.d.ts' />
-///<reference path='./V2/Billing/PricingPlanSubscriptionComponents.d.ts' />
 ///<reference path='./V2/Billing/PricingPlanSubscriptions.d.ts' />
 ///<reference path='./V2/Billing/PricingPlanVersions.d.ts' />
 ///<reference path='./V2/Billing/PricingPlans.d.ts' />
@@ -457,11 +455,13 @@
 ///<reference path='./V2/Billing/RateCardVersions.d.ts' />
 ///<reference path='./V2/Billing/RateCards.d.ts' />
 ///<reference path='./V2/Billing/ServiceActions.d.ts' />
+///<reference path='./V2/Core/AccountEvaluations.d.ts' />
 ///<reference path='./V2/Core/AccountLinks.d.ts' />
 ///<reference path='./V2/Core/AccountPersonTokens.d.ts' />
 ///<reference path='./V2/Core/AccountPersons.d.ts' />
 ///<reference path='./V2/Core/AccountTokens.d.ts' />
 ///<reference path='./V2/Core/Accounts.d.ts' />
+///<reference path='./V2/Core/BatchJobs.d.ts' />
 ///<reference path='./V2/Core/ClaimableSandboxes.d.ts' />
 ///<reference path='./V2/Core/ConnectionSessions.d.ts' />
 ///<reference path='./V2/Core/EventDestinations.d.ts' />
@@ -744,7 +744,6 @@ declare module 'stripe' {
         customPricingUnits: Stripe.V2.Billing.CustomPricingUnitsResource;
         intents: Stripe.V2.Billing.IntentsResource;
         licenseFees: Stripe.V2.Billing.LicenseFeesResource;
-        licenseFeeSubscriptions: Stripe.V2.Billing.LicenseFeeSubscriptionsResource;
         licensedItems: Stripe.V2.Billing.LicensedItemsResource;
         meterEvents: Stripe.V2.Billing.MeterEventsResource;
         meterEventAdjustments: Stripe.V2.Billing.MeterEventAdjustmentsResource;
@@ -761,8 +760,10 @@ declare module 'stripe' {
       };
       core: {
         accounts: Stripe.V2.Core.AccountsResource;
+        accountEvaluations: Stripe.V2.Core.AccountEvaluationsResource;
         accountLinks: Stripe.V2.Core.AccountLinksResource;
         accountTokens: Stripe.V2.Core.AccountTokensResource;
+        batchJobs: Stripe.V2.Core.BatchJobsResource;
         claimableSandboxes: Stripe.V2.Core.ClaimableSandboxesResource;
         connectionSessions: Stripe.V2.Core.ConnectionSessionsResource;
         events: Stripe.V2.Core.EventsResource;

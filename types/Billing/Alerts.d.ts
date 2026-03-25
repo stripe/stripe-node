@@ -116,7 +116,7 @@ declare module 'stripe' {
               /**
                * A positive decimal string representing the amount.
                */
-              value: string;
+              value: Decimal;
             }
 
             namespace CustomPricingUnit {
@@ -256,7 +256,7 @@ declare module 'stripe' {
               /**
                * A positive decimal string representing the amount.
                */
-              value: string;
+              value: Decimal;
             }
 
             namespace CustomPricingUnit {

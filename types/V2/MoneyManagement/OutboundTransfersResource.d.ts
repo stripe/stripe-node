@@ -8,7 +8,7 @@ declare module 'stripe' {
           /**
            * The "presentment amount" for the OutboundPayment.
            */
-          amount: OutboundTransferCreateParams.Amount;
+          amount: Amount;
 
           /**
            * The FinancialAccount to pull funds from.
@@ -39,21 +39,14 @@ declare module 'stripe' {
            * The recipient verification id for this OutboundTransfer. Only required for countries with regulatory mandates to verify recipient names before OutboundTransfer creation.
            */
           recipient_verification?: string;
+
+          /**
+           * The description that appears on the receiving end for an OutboundTransfer (for example, on a bank statement). Must be between 3 and 22 characters long, and not contain profanity.
+           */
+          statement_descriptor?: string;
         }
 
         namespace OutboundTransferCreateParams {
-          interface Amount {
-            /**
-             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-             */
-            value: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
-
           interface DeliveryOptions {
             /**
              * Open Enum. Method for bank account.

@@ -43,11 +43,6 @@ declare module 'stripe' {
           display_name: string;
 
           /**
-           * The ID of the license fee's most recently created version.
-           */
-          latest_version: string;
-
-          /**
            * A Licensed Item represents a billable item whose pricing is based on license fees. You can use license fees
            * to specify the pricing and create subscriptions to these items.
            */
@@ -74,15 +69,9 @@ declare module 'stripe' {
           metadata?: Stripe.Metadata;
 
           /**
-           * The interval for assessing service.
+           * The service cycle configuration for this License Fee.
            */
-          service_interval: LicenseFee.ServiceInterval;
-
-          /**
-           * The length of the interval for assessing service. For example, set this to 3 and `service_interval` to `"month"` in
-           * order to specify quarterly service.
-           */
-          service_interval_count: number;
+          service_cycle: LicenseFee.ServiceCycle;
 
           /**
            * The Stripe Tax tax behavior - whether the license fee is inclusive or exclusive of tax.
@@ -114,7 +103,22 @@ declare module 'stripe' {
         }
 
         namespace LicenseFee {
-          type ServiceInterval = 'day' | 'month' | 'week' | 'year';
+          interface ServiceCycle {
+            /**
+             * The interval for assessing service.
+             */
+            interval: ServiceCycle.Interval;
+
+            /**
+             * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"` in
+             * order to specify quarterly service.
+             */
+            interval_count: number;
+          }
+
+          namespace ServiceCycle {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
 
           type TaxBehavior = 'exclusive' | 'inclusive';
 
@@ -134,7 +138,7 @@ declare module 'stripe' {
              * Up to and including this quantity will be contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
              * be set.
              */
-            up_to_decimal?: string;
+            up_to_decimal?: Decimal;
 
             /**
              * No upper bound to this tier. Only one of `up_to_decimal` and `up_to_inf` may be set.
@@ -148,7 +152,7 @@ declare module 'stripe' {
             /**
              * Divide usage by this number.
              */
-            divide_by: number;
+            divide_by: bigint;
 
             /**
              * After division, round the result up or down.

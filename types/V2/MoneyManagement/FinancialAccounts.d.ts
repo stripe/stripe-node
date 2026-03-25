@@ -74,6 +74,9 @@ declare module 'stripe' {
            */
           status: FinancialAccount.Status;
 
+          /**
+           * Additional details related to the status of the FinancialAccount.
+           */
           status_details?: FinancialAccount.StatusDetails;
 
           /**
@@ -110,60 +113,22 @@ declare module 'stripe' {
              * Balance that can be used for money movement.
              */
             available: {
-              [key: string]: Balance.Available;
+              [key: string]: Amount;
             };
 
             /**
              * Balance of inbound funds that will later transition to the `available` balance.
              */
             inbound_pending: {
-              [key: string]: Balance.InboundPending;
+              [key: string]: Amount;
             };
 
             /**
              * Balance of funds that are being used for a pending outbound money movement.
              */
             outbound_pending: {
-              [key: string]: Balance.OutboundPending;
+              [key: string]: Amount;
             };
-          }
-
-          namespace Balance {
-            interface Available {
-              /**
-               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-               */
-              value: number;
-
-              /**
-               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-               */
-              currency: string;
-            }
-
-            interface InboundPending {
-              /**
-               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-               */
-              value: number;
-
-              /**
-               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-               */
-              currency: string;
-            }
-
-            interface OutboundPending {
-              /**
-               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-               */
-              value: number;
-
-              /**
-               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-               */
-              currency: string;
-            }
           }
 
           interface ManagedBy {
@@ -182,6 +147,12 @@ declare module 'stripe' {
 
           interface Payments {
             /**
+             * The balance of the `payments` FinancialAccount is a mix of payment processing and stored value funds, and this field
+             * describes the breakdown between the two. The sum will match the balance of the FinancialAccount.
+             */
+            balance_by_funds_type?: Payments.BalanceByFundsType;
+
+            /**
              * The currency that non-settlement currency payments will be converted to.
              */
             default_currency: string;
@@ -198,6 +169,66 @@ declare module 'stripe' {
           }
 
           namespace Payments {
+            interface BalanceByFundsType {
+              /**
+               * Payment processing funds are those that are received for goods or services and may only be used for payouts to self. These funds may be converted to stored value funds.
+               */
+              payment_processing: BalanceByFundsType.PaymentProcessing;
+
+              /**
+               * Stored value funds may be used for either payouts to self or payments to others.
+               */
+              stored_value: BalanceByFundsType.StoredValue;
+            }
+
+            namespace BalanceByFundsType {
+              interface PaymentProcessing {
+                /**
+                 * Balance that can be used for money movement.
+                 */
+                available: {
+                  [key: string]: Amount;
+                };
+
+                /**
+                 * Balance of inbound funds that will later transition to the `available` balance.
+                 */
+                inbound_pending: {
+                  [key: string]: Amount;
+                };
+
+                /**
+                 * Balance of funds that are being used for a pending outbound money movement.
+                 */
+                outbound_pending: {
+                  [key: string]: Amount;
+                };
+              }
+
+              interface StoredValue {
+                /**
+                 * Balance that can be used for money movement.
+                 */
+                available: {
+                  [key: string]: Amount;
+                };
+
+                /**
+                 * Balance of inbound funds that will later transition to the `available` balance.
+                 */
+                inbound_pending: {
+                  [key: string]: Amount;
+                };
+
+                /**
+                 * Balance of funds that are being used for a pending outbound money movement.
+                 */
+                outbound_pending: {
+                  [key: string]: Amount;
+                };
+              }
+            }
+
             interface StartingBalance {
               /**
                * When the balance was projected.
@@ -208,35 +239,30 @@ declare module 'stripe' {
                * The available balance at the time when the balance was projected.
                */
               available: {
-                [key: string]: StartingBalance.Available;
+                [key: string]: Amount;
               };
-            }
-
-            namespace StartingBalance {
-              interface Available {
-                /**
-                 * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-                 */
-                value: number;
-
-                /**
-                 * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-                 */
-                currency: string;
-              }
             }
           }
 
           type Status = 'closed' | 'open' | 'pending';
 
           interface StatusDetails {
+            /**
+             * Details related to the closed state of the FinancialAccount.
+             */
             closed?: StatusDetails.Closed;
           }
 
           namespace StatusDetails {
             interface Closed {
+              /**
+               * The forwarding settings for the closed FinancialAccount.
+               */
               forwarding_settings?: Closed.ForwardingSettings;
 
+              /**
+               * The reason the FinancialAccount was closed.
+               */
               reason: Closed.Reason;
             }
 

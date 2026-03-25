@@ -14,7 +14,7 @@ declare module 'stripe' {
             /**
              * The amount and currency of the SettlementAllocationIntentSplit.
              */
-            amount: SplitCreateParams.Amount;
+            amount: Amount;
 
             /**
              * The type of the fund transfer.
@@ -28,18 +28,6 @@ declare module 'stripe' {
           }
 
           namespace SplitCreateParams {
-            interface Amount {
-              /**
-               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-               */
-              value: number;
-
-              /**
-               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-               */
-              currency: string;
-            }
-
             type Type = 'credit' | 'debit';
           }
         }

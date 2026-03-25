@@ -3,6 +3,7 @@
 declare module 'stripe' {
   namespace Stripe.V2.Core {
     export type Event =
+      | Stripe.Events.V1AccountSignalsIncludingDelinquencyCreatedEvent
       | Stripe.Events.V1BillingMeterErrorReportTriggeredEvent
       | Stripe.Events.V1BillingMeterNoMeterFoundEvent
       | Stripe.Events.V2BillingCadenceBilledEvent
@@ -64,6 +65,17 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreAccountPersonCreatedEvent
       | Stripe.Events.V2CoreAccountPersonDeletedEvent
       | Stripe.Events.V2CoreAccountPersonUpdatedEvent
+      | Stripe.Events.V2CoreAccountSignalsFraudulentWebsiteReadyEvent
+      | Stripe.Events.V2CoreBatchJobBatchFailedEvent
+      | Stripe.Events.V2CoreBatchJobCanceledEvent
+      | Stripe.Events.V2CoreBatchJobCompletedEvent
+      | Stripe.Events.V2CoreBatchJobCreatedEvent
+      | Stripe.Events.V2CoreBatchJobReadyForUploadEvent
+      | Stripe.Events.V2CoreBatchJobTimeoutEvent
+      | Stripe.Events.V2CoreBatchJobUpdatedEvent
+      | Stripe.Events.V2CoreBatchJobUploadTimeoutEvent
+      | Stripe.Events.V2CoreBatchJobValidatingEvent
+      | Stripe.Events.V2CoreBatchJobValidationFailedEvent
       | Stripe.Events.V2CoreClaimableSandboxClaimedEvent
       | Stripe.Events.V2CoreClaimableSandboxCreatedEvent
       | Stripe.Events.V2CoreClaimableSandboxExpiredEvent
@@ -163,9 +175,11 @@ declare module 'stripe' {
       | Stripe.Events.V2ReportingReportRunCreatedEvent
       | Stripe.Events.V2ReportingReportRunFailedEvent
       | Stripe.Events.V2ReportingReportRunSucceededEvent
-      | Stripe.Events.V2ReportingReportRunUpdatedEvent;
+      | Stripe.Events.V2ReportingReportRunUpdatedEvent
+      | Stripe.Events.V2SignalsAccountSignalFraudulentMerchantReadyEvent;
 
     export type EventNotification =
+      | Stripe.Events.V1AccountSignalsIncludingDelinquencyCreatedEventNotification
       | Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification
       | Stripe.Events.V1BillingMeterNoMeterFoundEventNotification
       | Stripe.Events.V2BillingCadenceBilledEventNotification
@@ -227,6 +241,17 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreAccountPersonCreatedEventNotification
       | Stripe.Events.V2CoreAccountPersonDeletedEventNotification
       | Stripe.Events.V2CoreAccountPersonUpdatedEventNotification
+      | Stripe.Events.V2CoreAccountSignalsFraudulentWebsiteReadyEventNotification
+      | Stripe.Events.V2CoreBatchJobBatchFailedEventNotification
+      | Stripe.Events.V2CoreBatchJobCanceledEventNotification
+      | Stripe.Events.V2CoreBatchJobCompletedEventNotification
+      | Stripe.Events.V2CoreBatchJobCreatedEventNotification
+      | Stripe.Events.V2CoreBatchJobReadyForUploadEventNotification
+      | Stripe.Events.V2CoreBatchJobTimeoutEventNotification
+      | Stripe.Events.V2CoreBatchJobUpdatedEventNotification
+      | Stripe.Events.V2CoreBatchJobUploadTimeoutEventNotification
+      | Stripe.Events.V2CoreBatchJobValidatingEventNotification
+      | Stripe.Events.V2CoreBatchJobValidationFailedEventNotification
       | Stripe.Events.V2CoreClaimableSandboxClaimedEventNotification
       | Stripe.Events.V2CoreClaimableSandboxCreatedEventNotification
       | Stripe.Events.V2CoreClaimableSandboxExpiredEventNotification
@@ -326,10 +351,112 @@ declare module 'stripe' {
       | Stripe.Events.V2ReportingReportRunCreatedEventNotification
       | Stripe.Events.V2ReportingReportRunFailedEventNotification
       | Stripe.Events.V2ReportingReportRunSucceededEventNotification
-      | Stripe.Events.V2ReportingReportRunUpdatedEventNotification;
+      | Stripe.Events.V2ReportingReportRunUpdatedEventNotification
+      | Stripe.Events.V2SignalsAccountSignalFraudulentMerchantReadyEventNotification;
   }
 
   namespace Stripe.Events {
+    /**
+     * Occurs when a delinquency signal is created for an account.
+     */
+    export interface V1AccountSignalsIncludingDelinquencyCreatedEvent
+      extends V2.Core.EventBase {
+      type: 'v1.account_signals[delinquency].created';
+      // Retrieves data specific to this event.
+      data: V1AccountSignalsIncludingDelinquencyCreatedEvent.Data;
+    }
+    export interface V1AccountSignalsIncludingDelinquencyCreatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v1.account_signals[delinquency].created';
+      fetchEvent(): Promise<V1AccountSignalsIncludingDelinquencyCreatedEvent>;
+    }
+
+    namespace V1AccountSignalsIncludingDelinquencyCreatedEvent {
+      export interface Data {
+        /**
+         * The account for which the signals belong to.
+         */
+        account: string;
+
+        /**
+         * Time at which the signal was evaluated.
+         */
+        evaluated_at: string;
+
+        /**
+         * Array of objects representing individual factors that contributed to the calculated probability of delinquency.
+         */
+        indicators: Array<Data.Indicator>;
+
+        /**
+         * The probability of delinquency. Can be between 0.00 and 100.00.
+         */
+        probability?: Decimal;
+
+        /**
+         * Categorical assessment of the delinquency risk based on probability.
+         */
+        risk_level: Data.RiskLevel;
+
+        /**
+         * Unique identifier for the delinquency signal.
+         */
+        signal_id: string;
+      }
+
+      namespace Data {
+        export interface Indicator {
+          /**
+           * A brief explanation of how this indicator contributed to the delinquency probability.
+           */
+          description: string;
+
+          /**
+           * The effect this indicator had on the overall risk level.
+           */
+          impact: Indicator.Impact;
+
+          /**
+           * The name of the specific indicator used in the risk assessment.
+           */
+          indicator: Indicator.Indicator;
+        }
+
+        export type RiskLevel =
+          | 'elevated'
+          | 'highest'
+          | 'low'
+          | 'normal'
+          | 'not_assessed'
+          | 'unknown';
+
+        namespace Indicator {
+          export type Impact =
+            | 'decrease'
+            | 'neutral'
+            | 'slight_increase'
+            | 'strong_increase';
+
+          export type Indicator =
+            | 'account_balance'
+            | 'aov'
+            | 'charge_concentration'
+            | 'disputes'
+            | 'dispute_window'
+            | 'duplicates'
+            | 'exposure'
+            | 'firmographic'
+            | 'lifetime_metrics'
+            | 'payment_processing'
+            | 'payment_volume'
+            | 'payouts'
+            | 'refunds'
+            | 'tenure'
+            | 'transfers';
+        }
+      }
+    }
+
     /**
      * Occurs when a Meter has invalid async usage events.
      */
@@ -2176,6 +2303,268 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs when a Fraudulent Website signal is ready for an account.
+     */
+    export interface V2CoreAccountSignalsFraudulentWebsiteReadyEvent
+      extends V2.Core.EventBase {
+      type: 'v2.core.account_signals.fraudulent_website_ready';
+      // Retrieves data specific to this event.
+      data: V2CoreAccountSignalsFraudulentWebsiteReadyEvent.Data;
+    }
+    export interface V2CoreAccountSignalsFraudulentWebsiteReadyEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.account_signals.fraudulent_website_ready';
+      fetchEvent(): Promise<V2CoreAccountSignalsFraudulentWebsiteReadyEvent>;
+    }
+
+    namespace V2CoreAccountSignalsFraudulentWebsiteReadyEvent {
+      export interface Data {
+        /**
+         * The account for which the signals belong to. Empty if this was an entityless request.
+         */
+        account?: string;
+
+        /**
+         * Human readable description of concerns found in the website, produced by LLM. If risk_level is unknown, this explains why evaluation could not run.
+         */
+        details: string;
+
+        /**
+         * Time at which the signal was evaluated.
+         */
+        evaluated_at: string;
+
+        /**
+         * Unique identifier for the fraudulent website evaluation request.
+         */
+        evaluation_id: string;
+
+        /**
+         * Risk level for the fraudulent website signal. If evaluation could not run (like invalid website), we return unknown.
+         */
+        risk_level: Data.RiskLevel;
+
+        /**
+         * Unique identifier for the fraudulent website signal.
+         */
+        signal_id: string;
+      }
+
+      namespace Data {
+        export type RiskLevel =
+          | 'elevated'
+          | 'highest'
+          | 'low'
+          | 'normal'
+          | 'not_assessed'
+          | 'unknown';
+      }
+    }
+
+    /**
+     * Occurs when a batch job fails.
+     */
+    export interface V2CoreBatchJobBatchFailedEvent extends V2.Core.EventBase {
+      type: 'v2.core.batch_job.batch_failed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+    }
+    export interface V2CoreBatchJobBatchFailedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.batch_job.batch_failed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+      fetchEvent(): Promise<V2CoreBatchJobBatchFailedEvent>;
+    }
+
+    /**
+     * Occurs when a batch job is canceled.
+     */
+    export interface V2CoreBatchJobCanceledEvent extends V2.Core.EventBase {
+      type: 'v2.core.batch_job.canceled';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+    }
+    export interface V2CoreBatchJobCanceledEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.batch_job.canceled';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+      fetchEvent(): Promise<V2CoreBatchJobCanceledEvent>;
+    }
+
+    /**
+     * Occurs on completion of a batch job.
+     */
+    export interface V2CoreBatchJobCompletedEvent extends V2.Core.EventBase {
+      type: 'v2.core.batch_job.completed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+    }
+    export interface V2CoreBatchJobCompletedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.batch_job.completed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+      fetchEvent(): Promise<V2CoreBatchJobCompletedEvent>;
+    }
+
+    /**
+     * Occurs on creation of a batch job.
+     */
+    export interface V2CoreBatchJobCreatedEvent extends V2.Core.EventBase {
+      type: 'v2.core.batch_job.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+    }
+    export interface V2CoreBatchJobCreatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.batch_job.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+      fetchEvent(): Promise<V2CoreBatchJobCreatedEvent>;
+    }
+
+    /**
+     * Occurs on submission of a batch job.
+     */
+    export interface V2CoreBatchJobReadyForUploadEvent
+      extends V2.Core.EventBase {
+      type: 'v2.core.batch_job.ready_for_upload';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+    }
+    export interface V2CoreBatchJobReadyForUploadEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.batch_job.ready_for_upload';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+      fetchEvent(): Promise<V2CoreBatchJobReadyForUploadEvent>;
+    }
+
+    /**
+     * Occurs when a batch job times out.
+     */
+    export interface V2CoreBatchJobTimeoutEvent extends V2.Core.EventBase {
+      type: 'v2.core.batch_job.timeout';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+    }
+    export interface V2CoreBatchJobTimeoutEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.batch_job.timeout';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+      fetchEvent(): Promise<V2CoreBatchJobTimeoutEvent>;
+    }
+
+    /**
+     * Occurs when a batch job is updated.
+     */
+    export interface V2CoreBatchJobUpdatedEvent extends V2.Core.EventBase {
+      type: 'v2.core.batch_job.updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+    }
+    export interface V2CoreBatchJobUpdatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.batch_job.updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+      fetchEvent(): Promise<V2CoreBatchJobUpdatedEvent>;
+    }
+
+    /**
+     * Occurs when merchant fails to upload a file in time.
+     */
+    export interface V2CoreBatchJobUploadTimeoutEvent
+      extends V2.Core.EventBase {
+      type: 'v2.core.batch_job.upload_timeout';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+    }
+    export interface V2CoreBatchJobUploadTimeoutEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.batch_job.upload_timeout';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+      fetchEvent(): Promise<V2CoreBatchJobUploadTimeoutEvent>;
+    }
+
+    /**
+     * Occurs when a batch job proceeds to the validation stage.
+     */
+    export interface V2CoreBatchJobValidatingEvent extends V2.Core.EventBase {
+      type: 'v2.core.batch_job.validating';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+    }
+    export interface V2CoreBatchJobValidatingEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.batch_job.validating';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+      fetchEvent(): Promise<V2CoreBatchJobValidatingEvent>;
+    }
+
+    /**
+     * Occurs when a batch job fails on validation.
+     */
+    export interface V2CoreBatchJobValidationFailedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.core.batch_job.validation_failed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+    }
+    export interface V2CoreBatchJobValidationFailedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.batch_job.validation_failed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.BatchJob>;
+      fetchEvent(): Promise<V2CoreBatchJobValidationFailedEvent>;
+    }
+
+    /**
      * Occurs when a claimable sandbox is claimed.
      */
     export interface V2CoreClaimableSandboxClaimedEvent
@@ -2374,7 +2763,7 @@ declare module 'stripe' {
           /**
            * The percentage of impacted requests.
            */
-          impacted_requests_percentage?: string;
+          impacted_requests_percentage?: Decimal;
 
           /**
            * The top impacted connected accounts (only for platforms).
@@ -2399,7 +2788,7 @@ declare module 'stripe' {
             /**
              * The percentage of impacted requests.
              */
-            impacted_requests_percentage?: string;
+            impacted_requests_percentage?: Decimal;
           }
         }
       }
@@ -2478,7 +2867,7 @@ declare module 'stripe' {
           /**
            * The percentage of impacted requests.
            */
-          impacted_requests_percentage?: string;
+          impacted_requests_percentage?: Decimal;
 
           /**
            * The top impacted connected accounts (only for platforms).
@@ -2503,7 +2892,7 @@ declare module 'stripe' {
             /**
              * The percentage of impacted requests.
              */
-            impacted_requests_percentage?: string;
+            impacted_requests_percentage?: Decimal;
           }
         }
       }
@@ -2577,7 +2966,7 @@ declare module 'stripe' {
           /**
            * The percentage of impacted requests.
            */
-          impacted_requests_percentage?: string;
+          impacted_requests_percentage?: Decimal;
 
           /**
            * The top impacted connected accounts (only for platforms).
@@ -2602,7 +2991,7 @@ declare module 'stripe' {
             /**
              * The percentage of impacted requests.
              */
-            impacted_requests_percentage?: string;
+            impacted_requests_percentage?: Decimal;
           }
         }
       }
@@ -2676,7 +3065,7 @@ declare module 'stripe' {
           /**
            * The percentage of impacted requests.
            */
-          impacted_requests_percentage?: string;
+          impacted_requests_percentage?: Decimal;
 
           /**
            * The top impacted connected accounts (only for platforms).
@@ -2701,7 +3090,7 @@ declare module 'stripe' {
             /**
              * The percentage of impacted requests.
              */
-            impacted_requests_percentage?: string;
+            impacted_requests_percentage?: Decimal;
           }
         }
       }
@@ -2760,7 +3149,7 @@ declare module 'stripe' {
           /**
            * The current authorization rate percentage.
            */
-          current_percentage: string;
+          current_percentage: Decimal;
 
           /**
            * Dimensions that describe what subset of payments are impacted.
@@ -2775,7 +3164,7 @@ declare module 'stripe' {
           /**
            * The previous authorization rate percentage.
            */
-          previous_percentage: string;
+          previous_percentage: Decimal;
         }
 
         namespace Impact {
@@ -2920,7 +3309,7 @@ declare module 'stripe' {
           /**
            * The current authorization rate percentage.
            */
-          current_percentage: string;
+          current_percentage: Decimal;
 
           /**
            * Dimensions that describe what subset of payments are impacted.
@@ -2935,7 +3324,7 @@ declare module 'stripe' {
           /**
            * The previous authorization rate percentage.
            */
-          previous_percentage: string;
+          previous_percentage: Decimal;
         }
 
         namespace Impact {
@@ -3172,23 +3561,11 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the impacted requests.
            */
-          realized_fraud_amount: Impact.RealizedFraudAmount;
+          realized_fraud_amount: V2.Amount;
         }
 
         namespace Impact {
           export type AttackType = 'spike' | 'sustained_attack';
-
-          export interface RealizedFraudAmount {
-            /**
-             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-             */
-            value: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
         }
       }
     }
@@ -3238,7 +3615,7 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the approved requests.
            */
-          approved_amount?: Impact.ApprovedAmount;
+          approved_amount?: V2.Amount;
 
           /**
            * The number of approved requests which are impacted.
@@ -3248,38 +3625,12 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the declined requests.
            */
-          declined_amount?: Impact.DeclinedAmount;
+          declined_amount?: V2.Amount;
 
           /**
            * The number of declined requests which are impacted.
            */
           declined_impacted_requests?: number;
-        }
-
-        namespace Impact {
-          export interface ApprovedAmount {
-            /**
-             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-             */
-            value: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
-
-          export interface DeclinedAmount {
-            /**
-             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-             */
-            value: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
         }
       }
     }
@@ -3334,7 +3685,7 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the approved requests.
            */
-          approved_amount?: Impact.ApprovedAmount;
+          approved_amount?: V2.Amount;
 
           /**
            * The number of approved requests which are impacted.
@@ -3344,38 +3695,12 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the declined requests.
            */
-          declined_amount?: Impact.DeclinedAmount;
+          declined_amount?: V2.Amount;
 
           /**
            * The number of declined requests which are impacted.
            */
           declined_impacted_requests?: number;
-        }
-
-        namespace Impact {
-          export interface ApprovedAmount {
-            /**
-             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-             */
-            value: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
-
-          export interface DeclinedAmount {
-            /**
-             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-             */
-            value: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
         }
       }
     }
@@ -3430,7 +3755,7 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the approved requests.
            */
-          approved_amount?: Impact.ApprovedAmount;
+          approved_amount?: V2.Amount;
 
           /**
            * The number of approved requests which are impacted.
@@ -3440,38 +3765,12 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the declined requests.
            */
-          declined_amount?: Impact.DeclinedAmount;
+          declined_amount?: V2.Amount;
 
           /**
            * The number of declined requests which are impacted.
            */
           declined_impacted_requests?: number;
-        }
-
-        namespace Impact {
-          export interface ApprovedAmount {
-            /**
-             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-             */
-            value: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
-
-          export interface DeclinedAmount {
-            /**
-             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-             */
-            value: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
         }
       }
     }
@@ -3526,7 +3825,7 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the approved requests.
            */
-          approved_amount?: Impact.ApprovedAmount;
+          approved_amount?: V2.Amount;
 
           /**
            * The number of approved requests which are impacted.
@@ -3536,38 +3835,12 @@ declare module 'stripe' {
           /**
            * Estimated aggregated amount for the declined requests.
            */
-          declined_amount?: Impact.DeclinedAmount;
+          declined_amount?: V2.Amount;
 
           /**
            * The number of declined requests which are impacted.
            */
           declined_impacted_requests?: number;
-        }
-
-        namespace Impact {
-          export interface ApprovedAmount {
-            /**
-             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-             */
-            value: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
-
-          export interface DeclinedAmount {
-            /**
-             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-             */
-            value: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
         }
       }
     }
@@ -3630,7 +3903,7 @@ declare module 'stripe' {
           /**
            * The percentage of impacted requests.
            */
-          impacted_requests_percentage?: string;
+          impacted_requests_percentage?: Decimal;
 
           /**
            * The type of the payment method.
@@ -3729,7 +4002,7 @@ declare module 'stripe' {
             /**
              * The percentage of impacted requests.
              */
-            impacted_requests_percentage?: string;
+            impacted_requests_percentage?: Decimal;
           }
         }
       }
@@ -3793,7 +4066,7 @@ declare module 'stripe' {
           /**
            * The percentage of impacted requests.
            */
-          impacted_requests_percentage?: string;
+          impacted_requests_percentage?: Decimal;
 
           /**
            * The type of the payment method.
@@ -3892,7 +4165,7 @@ declare module 'stripe' {
             /**
              * The percentage of impacted requests.
              */
-            impacted_requests_percentage?: string;
+            impacted_requests_percentage?: Decimal;
           }
         }
       }
@@ -3946,7 +4219,7 @@ declare module 'stripe' {
           /**
            * The percentage of impacted payments.
            */
-          impacted_payments_percentage: string;
+          impacted_payments_percentage: Decimal;
         }
       }
     }
@@ -4004,7 +4277,7 @@ declare module 'stripe' {
           /**
            * The percentage of impacted payments.
            */
-          impacted_payments_percentage: string;
+          impacted_payments_percentage: Decimal;
         }
       }
     }
@@ -5831,6 +6104,116 @@ declare module 'stripe' {
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Reporting.ReportRun>;
       fetchEvent(): Promise<V2ReportingReportRunUpdatedEvent>;
+    }
+
+    /**
+     * Occurs when a fraudulent merchant signal is ready for an account.
+     */
+    export interface V2SignalsAccountSignalFraudulentMerchantReadyEvent
+      extends V2.Core.EventBase {
+      type: 'v2.signals.account_signal.fraudulent_merchant_ready';
+      // Retrieves data specific to this event.
+      data: V2SignalsAccountSignalFraudulentMerchantReadyEvent.Data;
+    }
+    export interface V2SignalsAccountSignalFraudulentMerchantReadyEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.signals.account_signal.fraudulent_merchant_ready';
+      fetchEvent(): Promise<V2SignalsAccountSignalFraudulentMerchantReadyEvent>;
+    }
+
+    namespace V2SignalsAccountSignalFraudulentMerchantReadyEvent {
+      export interface Data {
+        /**
+         * Account ID that this signal is associated with.
+         */
+        account: string;
+
+        /**
+         * Timestamp when the signal was evaluated.
+         */
+        evaluated_at: string;
+
+        /**
+         * Fraudulent merchant signal data. Present when type is fraudulent_merchant.
+         */
+        fraudulent_merchant?: Data.FraudulentMerchant;
+
+        /**
+         * Unique identifier for this account signal.
+         */
+        id: string;
+
+        /**
+         * The type of account signal. Currently only fraudulent_merchant is supported.
+         */
+        type: 'fraudulent_merchant';
+      }
+
+      namespace Data {
+        export interface FraudulentMerchant {
+          /**
+           * Array of objects representing individual factors that contributed to the calculated probability. Maximum of 3.
+           */
+          indicators: Array<FraudulentMerchant.Indicator>;
+
+          /**
+           * The probability of the merchant being fraudulent. Can be between 0.00 and 100.00. May be empty if the risk_level is UNKNOWN or NOT_ASSESSED.
+           */
+          probability?: Decimal;
+
+          /**
+           * Categorical assessment of the fraudulent merchant risk based on probability.
+           */
+          risk_level: FraudulentMerchant.RiskLevel;
+        }
+
+        namespace FraudulentMerchant {
+          export interface Indicator {
+            /**
+             * A brief explanation of how this indicator contributed to the fraudulent merchant probability.
+             */
+            description: string;
+
+            /**
+             * The effect this indicator had on the overall risk level.
+             */
+            impact: Indicator.Impact;
+
+            /**
+             * The name of the specific indicator used in the risk assessment.
+             */
+            indicator: Indicator.Indicator;
+          }
+
+          export type RiskLevel =
+            | 'elevated'
+            | 'highest'
+            | 'low'
+            | 'normal'
+            | 'not_assessed'
+            | 'unknown';
+
+          namespace Indicator {
+            export type Impact =
+              | 'decrease'
+              | 'neutral'
+              | 'slight_increase'
+              | 'strong_increase';
+
+            export type Indicator =
+              | 'bank_account'
+              | 'business_information_and_account_activity'
+              | 'disputes'
+              | 'failures'
+              | 'geolocation'
+              | 'other'
+              | 'other_related_accounts'
+              | 'other_transaction_activity'
+              | 'owner_email'
+              | 'web_presence';
+          }
+        }
+      }
     }
   }
 }

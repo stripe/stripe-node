@@ -378,7 +378,7 @@ declare module 'stripe' {
           /**
            * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
-          unit_amount_decimal?: string;
+          unit_amount_decimal?: Decimal;
         }
 
         namespace PriceData {
@@ -941,7 +941,7 @@ declare module 'stripe' {
           /**
            * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
-          unit_amount_decimal?: string;
+          unit_amount_decimal?: Decimal;
         }
 
         namespace PriceData {
@@ -1872,7 +1872,7 @@ declare module 'stripe' {
           /**
            * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
-          unit_amount_decimal?: string;
+          unit_amount_decimal?: Decimal;
         }
 
         namespace PriceData {
@@ -2417,7 +2417,7 @@ declare module 'stripe' {
           /**
            * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
-          unit_amount_decimal?: string;
+          unit_amount_decimal?: Decimal;
         }
 
         namespace PriceData {
@@ -3437,6 +3437,24 @@ declare module 'stripe' {
         params: SubscriptionSearchParams,
         options?: RequestOptions
       ): ApiSearchResultPromise<Stripe.Subscription>;
+
+      /**
+       * Serializes a Subscription migrate request into a batch job JSONL line.
+       */
+      serializeBatchMigrate(
+        subscription: string,
+        params?: SubscriptionMigrateParams,
+        options?: RequestOptions
+      ): string;
+
+      /**
+       * Serializes a Subscription update request into a batch job JSONL line.
+       */
+      serializeBatchUpdate(
+        subscription_exposed_id: string,
+        params?: SubscriptionUpdateParams,
+        options?: RequestOptions
+      ): string;
     }
   }
 }

@@ -125,7 +125,7 @@ declare module 'stripe' {
               /**
                * Percentage of the tax rate. Must be positive and maximum of 4 decimal points.
                */
-              percentage: string;
+              percentage: Decimal;
 
               /**
                * State of the tax rate.

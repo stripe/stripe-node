@@ -37,6 +37,11 @@ declare module 'stripe' {
           namespace Countries {
             interface Field {
               /**
+               * The currencies supported by the corresponding credentials for bank accounts in the specified country.
+               */
+              currencies?: Array<string>;
+
+              /**
                * The local name of the field.
                */
               local_name: string;

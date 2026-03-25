@@ -46,7 +46,12 @@ declare module 'stripe' {
       }
 
       namespace MoneyManagement {
-        interface FinancialAccountRetrieveParams {}
+        interface FinancialAccountRetrieveParams {
+          /**
+           * Additional fields to include in the response.
+           */
+          include?: Array<'payments.balance_by_funds_type'>;
+        }
       }
 
       namespace MoneyManagement {
@@ -65,6 +70,11 @@ declare module 'stripe' {
 
       namespace MoneyManagement {
         interface FinancialAccountListParams {
+          /**
+           * Additional fields to include in the response.
+           */
+          include?: Array<'payments.balance_by_funds_type'>;
+
           /**
            * The page limit.
            */
