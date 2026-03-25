@@ -5,6 +5,7 @@
 const testUtils = require('../testUtils.js');
 const stripe = testUtils.getStripeMockClient();
 const realStripe = require('../../src/stripe.cjs.node.js')('sk_test_123');
+const {Decimal} = require('../../src/stripe.cjs.node.js');
 const nock = require('nock');
 const expect = require('chai').expect;
 
@@ -3023,8 +3024,8 @@ describe('Generated tests', function() {
           fuel: {
             type: 'diesel',
             unit: 'liter',
-            unit_cost_decimal: '3.5',
-            quantity_decimal: '10',
+            unit_cost_decimal: Decimal.from('3.5'),
+            quantity_decimal: Decimal.from('10'),
           },
           lodging: {
             check_in_at: 1633651200,
@@ -3033,7 +3034,7 @@ describe('Generated tests', function() {
           receipt: [
             {
               description: 'Room charge',
-              quantity: '1',
+              quantity: Decimal.from('1'),
               total: 200,
               unit_cost: 200,
             },
@@ -3192,8 +3193,8 @@ describe('Generated tests', function() {
           fuel: {
             type: 'diesel',
             unit: 'liter',
-            unit_cost_decimal: '3.5',
-            quantity_decimal: '10',
+            unit_cost_decimal: Decimal.from('3.5'),
+            quantity_decimal: Decimal.from('10'),
           },
           lodging: {
             check_in_at: 1533651200,
@@ -3202,7 +3203,7 @@ describe('Generated tests', function() {
           receipt: [
             {
               description: 'Room charge',
-              quantity: '1',
+              quantity: Decimal.from('1'),
               total: 200,
               unit_cost: 200,
             },
@@ -3250,8 +3251,8 @@ describe('Generated tests', function() {
           fuel: {
             type: 'diesel',
             unit: 'liter',
-            unit_cost_decimal: '3.5',
-            quantity_decimal: '10',
+            unit_cost_decimal: Decimal.from('3.5'),
+            quantity_decimal: Decimal.from('10'),
           },
           lodging: {
             check_in_at: 1533651200,
@@ -3260,7 +3261,7 @@ describe('Generated tests', function() {
           receipt: [
             {
               description: 'Room charge',
-              quantity: '1',
+              quantity: Decimal.from('1'),
               total: 200,
               unit_cost: 200,
             },
@@ -4309,7 +4310,7 @@ describe('Generated tests', function() {
                 maximum_applications: {
                   type: 'indefinite',
                 },
-                percent_off: '991934883.3333334',
+                percent_off: Decimal.from('991934883.3333334'),
               },
             },
             spend_modifier_rule: {
@@ -5248,7 +5249,7 @@ describe('Generated tests', function() {
               {
                 flat_amount: 'flat_amount',
                 unit_amount: 'unit_amount',
-                up_to_decimal: '1387931359.3333333',
+                up_to_decimal: Decimal.from('1387931359.3333333'),
                 up_to_inf: 'inf',
               },
             ],
@@ -7447,7 +7448,7 @@ describe('Generated tests', function() {
               description: 'description',
               display_name: 'display_name',
               jurisdiction: 'jurisdiction',
-              percentage: '614555204',
+              percentage: Decimal.from('614555204'),
               state: 'state',
             },
           ],
@@ -7489,7 +7490,7 @@ describe('Generated tests', function() {
               description: 'description',
               display_name: 'display_name',
               jurisdiction: 'jurisdiction',
-              percentage: '614555204',
+              percentage: Decimal.from('614555204'),
               state: 'state',
             },
           ],

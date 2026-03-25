@@ -1,5 +1,4 @@
 import {
-  getAPIMode,
   getDataFromArgs,
   getOptionsFromArgs,
   makeURLInterpolator,
@@ -17,7 +16,7 @@ import {
   UrlInterpolator,
 } from './Types.js';
 import {HttpClientResponseInterface} from './net/HttpClient.js';
-import {coerceV2RequestData, coerceV2ResponseData} from './V2Int64.js';
+import {coerceV2RequestData, coerceV2ResponseData} from './V2Coercion.js';
 
 // Provide extension mechanism for Stripe Resource Sub-Classes
 StripeResource.extend = protoExtend;
@@ -211,9 +210,8 @@ StripeResource.prototype = {
         return;
       }
 
-      // Coerce int64_string fields in request body: number → string
-      const apiMode = getAPIMode(spec.fullPath || spec.path);
-      if (apiMode === 'v2' && spec.requestSchema && opts.bodyData) {
+      // Coerce int64_string/decimal_string fields in request body: number/Decimal → string
+      if (spec.requestSchema && opts.bodyData) {
         opts.bodyData = coerceV2RequestData(
           opts.bodyData,
           spec.requestSchema
@@ -227,9 +225,9 @@ StripeResource.prototype = {
         if (err) {
           reject(err);
         } else {
-          // Coerce int64_string fields in response: string → bigint
+          // Coerce int64_string/decimal_string fields in response: string → bigint/Decimal
           try {
-            if (apiMode === 'v2' && spec.responseSchema) {
+            if (spec.responseSchema) {
               coerceV2ResponseData(response, spec.responseSchema);
             }
             resolve(
