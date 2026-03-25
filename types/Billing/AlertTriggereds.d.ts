@@ -35,7 +35,7 @@ declare module 'stripe' {
         /**
          * The value triggering the alert
          */
-        value: string;
+        value: Decimal;
       }
     }
   }

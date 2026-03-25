@@ -1,3 +1,4 @@
+import {Decimal} from './Decimal.js';
 import {V2RuntimeSchema} from './Types.js';
 
 /**
@@ -19,6 +20,13 @@ export const coerceV2RequestData = (
     case 'int64_string':
       return typeof data === 'bigint' || typeof data === 'number'
         ? String(data)
+        : data;
+
+    case 'decimal_string':
+      // Duck-type check: Decimal instances have toFixed() and isZero() methods.
+      return typeof (data as any).toFixed === 'function' &&
+        typeof (data as any).isZero === 'function'
+        ? (data as Decimal).toString()
         : data;
 
     case 'object': {
@@ -73,6 +81,18 @@ export const coerceV2ResponseData = (
         } catch {
           throw new Error(
             `Failed to coerce int64_string value: expected an integer string, got '${data}'`
+          );
+        }
+      }
+      return data;
+
+    case 'decimal_string':
+      if (typeof data === 'string') {
+        try {
+          return Decimal.from(data);
+        } catch {
+          throw new Error(
+            `Failed to coerce decimal_string value: expected a decimal string, got '${data}'`
           );
         }
       }

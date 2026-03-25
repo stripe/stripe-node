@@ -318,6 +318,95 @@ declare module 'stripe' {
       type?: string;
     }
 
+    /**
+     * Rounding direction for Decimal operations (IEEE 754-2019 §4.3).
+     */
+    type RoundDirection =
+      | 'ceil'
+      | 'floor'
+      | 'round-down'
+      | 'round-up'
+      | 'half-up'
+      | 'half-down'
+      | 'half-even';
+
+    /**
+     * Precision specification for {@link Decimal.round}.
+     */
+    interface DecimalRoundingOptions {
+      mode: 'decimal-places' | 'significant-figures';
+      value: number;
+    }
+
+    /**
+     * Built-in rounding presets accepted by {@link Decimal.round}.
+     * Extensible via declaration merging.
+     */
+    interface DecimalRoundingPresets {
+      'ubb-usage-count': DecimalRoundingOptions;
+      'v1-api': DecimalRoundingOptions;
+    }
+
+    /**
+     * IEEE 754 decimal128 coefficient size (34 digits) — the recommended
+     * precision for {@link Decimal.div} when full precision is desired.
+     */
+    const DEFAULT_DIV_PRECISION: 34;
+
+    /**
+     * Check whether a value is a {@link Decimal} instance.
+     */
+    function isDecimal(value: unknown): value is Stripe.Decimal;
+
+    /**
+     * Arbitrary-precision decimal number for working with Stripe decimal_string fields
+     * without floating-point precision loss.
+     *
+     * Use `Decimal.from(value)` to construct instances. Instances are immutable.
+     *
+     * @example
+     * import { Decimal } from 'stripe';
+     * const price = Decimal.from("99.99");
+     * const tax = Decimal.from("0.08");
+     * const total = price.mul(tax.add(Decimal.from("1")));
+     */
+    interface Decimal {
+      add(other: Decimal): Decimal;
+      sub(other: Decimal): Decimal;
+      mul(other: Decimal): Decimal;
+      div(
+        other: Decimal,
+        precision: number,
+        direction: Stripe.RoundDirection
+      ): Decimal;
+      cmp(other: Decimal): -1 | 0 | 1;
+      eq(other: Decimal): boolean;
+      lt(other: Decimal): boolean;
+      lte(other: Decimal): boolean;
+      gt(other: Decimal): boolean;
+      gte(other: Decimal): boolean;
+      isZero(): boolean;
+      isNegative(): boolean;
+      isPositive(): boolean;
+      neg(): Decimal;
+      abs(): Decimal;
+      round(
+        direction: Stripe.RoundDirection,
+        options:
+          | keyof Stripe.DecimalRoundingPresets
+          | Stripe.DecimalRoundingOptions
+      ): Decimal;
+      toFixed(decimalPlaces: number, direction: Stripe.RoundDirection): string;
+      toNumber(): number;
+      toString(): string;
+      toJSON(): string;
+      valueOf(): string;
+    }
+    namespace Decimal {
+      function from(value: string | number | bigint): Stripe.Decimal;
+      const zero: Stripe.Decimal;
+    }
+
     namespace V2 {
       /**
        * Represents a monetary amount with associated currency
