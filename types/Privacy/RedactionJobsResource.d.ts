@@ -75,6 +75,9 @@ declare module 'stripe' {
          */
         expand?: Array<string>;
 
+        /**
+         * If provided, only RedactionJob objects with the given status will be returned.
+         */
         status?: RedactionJobListParams.Status;
       }
 

@@ -1215,11 +1215,6 @@ declare module 'stripe' {
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
         /**
-         * If this is a `stripe_balance` PaymentMethod, this sub-hash contains details about the Stripe Balance payment method options.
-         */
-        stripe_balance?: PaymentMethodOptions.StripeBalance;
-
-        /**
          * If this is a `upi` SetupIntent, this sub-hash contains details about the UPI payment method options.
          */
         upi?: PaymentMethodOptions.Upi;
@@ -1827,8 +1822,6 @@ declare module 'stripe' {
             reference_prefix?: Stripe.Emptyable<string>;
           }
         }
-
-        interface StripeBalance {}
 
         interface Upi {
           /**
@@ -3106,11 +3099,6 @@ declare module 'stripe' {
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
         /**
-         * If this is a `stripe_balance` PaymentMethod, this sub-hash contains details about the Stripe Balance payment method options.
-         */
-        stripe_balance?: PaymentMethodOptions.StripeBalance;
-
-        /**
          * If this is a `upi` SetupIntent, this sub-hash contains details about the UPI payment method options.
          */
         upi?: PaymentMethodOptions.Upi;
@@ -3718,8 +3706,6 @@ declare module 'stripe' {
             reference_prefix?: Stripe.Emptyable<string>;
           }
         }
-
-        interface StripeBalance {}
 
         interface Upi {
           /**
@@ -4978,11 +4964,6 @@ declare module 'stripe' {
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
         /**
-         * If this is a `stripe_balance` PaymentMethod, this sub-hash contains details about the Stripe Balance payment method options.
-         */
-        stripe_balance?: PaymentMethodOptions.StripeBalance;
-
-        /**
          * If this is a `upi` SetupIntent, this sub-hash contains details about the UPI payment method options.
          */
         upi?: PaymentMethodOptions.Upi;
@@ -5590,8 +5571,6 @@ declare module 'stripe' {
             reference_prefix?: Stripe.Emptyable<string>;
           }
         }
-
-        interface StripeBalance {}
 
         interface Upi {
           /**
