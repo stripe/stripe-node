@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import * as crypto from 'crypto';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
 export const Customers = StripeResource.extend({
@@ -561,6 +562,26 @@ export const Customers = StripeResource.extend({
       },
     },
   }),
+  serializeBatchUpdate(
+    customer: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = crypto.randomUUID();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const item: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    item.path_params = {customer: customer};
+    if (options.stripeContext) {
+      item.context = options.stripeContext;
+    }
+    return JSON.stringify(item);
+  },
   updateBalanceTransaction: stripeMethod({
     method: 'POST',
     fullPath: '/v1/customers/{customer}/balance_transactions/{transaction}',

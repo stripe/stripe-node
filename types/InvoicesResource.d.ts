@@ -5873,6 +5873,24 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Invoice>>;
 
       /**
+       * Serializes an Invoice pay request into a batch job JSONL line.
+       */
+      serializeBatchPay(
+        invoice: string,
+        params?: InvoicePayParams,
+        options?: RequestOptions
+      ): string;
+
+      /**
+       * Serializes an Invoice update request into a batch job JSONL line.
+       */
+      serializeBatchUpdate(
+        invoice: string,
+        params?: InvoiceUpdateParams,
+        options?: RequestOptions
+      ): string;
+
+      /**
        * Updates multiple line items on an invoice. This is only possible when an invoice is still a draft.
        */
       updateLines(

@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import * as crypto from 'crypto';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
 // Since path can either be `account` or `accounts`, support both through stripeMethod path
@@ -84,6 +85,26 @@ export const Accounts = StripeResource.extend({
     method: 'GET',
     fullPath: '/v1/accounts/{account}/persons/{person}',
   }),
+  serializeBatchUpdate(
+    account: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = crypto.randomUUID();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const item: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    item.path_params = {account: account};
+    if (options.stripeContext) {
+      item.context = options.stripeContext;
+    }
+    return JSON.stringify(item);
+  },
   updateCapability: stripeMethod({
     method: 'POST',
     fullPath: '/v1/accounts/{account}/capabilities/{capability}',

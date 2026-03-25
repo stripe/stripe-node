@@ -4561,8 +4561,6 @@ declare module 'stripe' {
         }
 
         interface StripeBalance {
-          mandate_options?: StripeBalance.MandateOptions;
-
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -4576,13 +4574,6 @@ declare module 'stripe' {
         }
 
         namespace StripeBalance {
-          interface MandateOptions {
-            /**
-             * The ID of the Stripe Balance Debit Agreement used for this mandate.
-             */
-            stripe_balance_debit_agreement?: string;
-          }
-
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
