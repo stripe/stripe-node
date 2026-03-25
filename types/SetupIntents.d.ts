@@ -114,7 +114,7 @@ declare module 'stripe' {
       latest_attempt: string | Stripe.SetupAttempt | null;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -258,6 +258,7 @@ declare module 'stripe' {
         | 'stripe_balance'
         | 'swish'
         | 'twint'
+        | 'upi'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
@@ -533,6 +534,7 @@ declare module 'stripe' {
           | 'secret_key_required'
           | 'sensitive_data_access_expired'
           | 'sepa_unsupported_account'
+          | 'service_period_coupon_with_metered_tiered_item_unsupported'
           | 'setup_attempt_failed'
           | 'setup_intent_authentication_failure'
           | 'setup_intent_invalid_parameter'
@@ -595,6 +597,8 @@ declare module 'stripe' {
          * Type of the next action to perform. Refer to the other child attributes under `next_action` for available values. Examples include: `redirect_to_url`, `use_stripe_sdk`, `alipay_handle_redirect`, `oxxo_display_details`, or `verify_with_microdeposits`.
          */
         type: string;
+
+        upi_handle_redirect_or_display_qr_code?: NextAction.UpiHandleRedirectOrDisplayQrCode;
 
         /**
          * When confirming a SetupIntent with Stripe.js, Stripe.js depends on the contents of this dictionary to invoke authentication flows. The shape of the contents is subject to change and is only intended to be used by Stripe.js.
@@ -677,6 +681,34 @@ declare module 'stripe' {
           url: string | null;
         }
 
+        interface UpiHandleRedirectOrDisplayQrCode {
+          /**
+           * The URL to the hosted UPI instructions page, which allows customers to view the QR code.
+           */
+          hosted_instructions_url: string;
+
+          qr_code: UpiHandleRedirectOrDisplayQrCode.QrCode;
+        }
+
+        namespace UpiHandleRedirectOrDisplayQrCode {
+          interface QrCode {
+            /**
+             * The date (unix timestamp) when the QR code expires.
+             */
+            expires_at: number;
+
+            /**
+             * The image_url_png string used to render QR code
+             */
+            image_url_png: string;
+
+            /**
+             * The image_url_svg string used to render QR code
+             */
+            image_url_svg: string;
+          }
+        }
+
         type UseStripeSdk = {
           [key: string]: unknown;
         };
@@ -738,6 +770,10 @@ declare module 'stripe' {
 
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
+        stripe_balance?: PaymentMethodOptions.StripeBalance;
+
+        upi?: PaymentMethodOptions.Upi;
+
         us_bank_account?: PaymentMethodOptions.UsBankAccount;
       }
 
@@ -751,7 +787,7 @@ declare module 'stripe' {
           mandate_options?: AcssDebit.MandateOptions;
 
           /**
-           * Bank account verification method.
+           * Bank account verification method. The default value is `automatic`.
            */
           verification_method?: AcssDebit.VerificationMethod;
         }
@@ -832,7 +868,7 @@ declare module 'stripe' {
         namespace Card {
           interface MandateOptions {
             /**
-             * Amount to be charged for future payments.
+             * Amount to be charged for future payments, specified in the presentment currency.
              */
             amount: number;
 
@@ -1089,13 +1125,58 @@ declare module 'stripe' {
           }
         }
 
+        interface StripeBalance {
+          mandate_options?: StripeBalance.MandateOptions;
+        }
+
+        namespace StripeBalance {
+          interface MandateOptions {
+            /**
+             * The ID of the Stripe Balance Debit Agreement used for this mandate.
+             */
+            stripe_balance_debit_agreement?: string;
+          }
+        }
+
+        interface Upi {
+          mandate_options?: Upi.MandateOptions;
+        }
+
+        namespace Upi {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount: number | null;
+
+            /**
+             * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+             */
+            amount_type: MandateOptions.AmountType | null;
+
+            /**
+             * A description of the mandate or subscription that is meant to be displayed to the customer.
+             */
+            description: string | null;
+
+            /**
+             * End date of the mandate or subscription.
+             */
+            end_date: number | null;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+          }
+        }
+
         interface UsBankAccount {
           financial_connections?: UsBankAccount.FinancialConnections;
 
           mandate_options?: UsBankAccount.MandateOptions;
 
           /**
-           * Bank account verification method.
+           * Bank account verification method. The default value is `automatic`.
            */
           verification_method?: UsBankAccount.VerificationMethod;
         }

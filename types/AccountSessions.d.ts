@@ -39,7 +39,7 @@ declare module 'stripe' {
       expires_at: number;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
     }
@@ -74,6 +74,11 @@ declare module 'stripe' {
 
         financial_account: Components.FinancialAccount;
 
+        /**
+         * Configuration for the [financial account rewards](https://docs.stripe.com/connect/supported-embedded-components/financial-account-rewards/) embedded component.
+         */
+        financial_account_rewards?: Components.FinancialAccountRewards | null;
+
         financial_account_transactions: Components.FinancialAccountTransactions;
 
         instant_payouts_promotion: Components.InstantPayoutsPromotion;
@@ -81,6 +86,11 @@ declare module 'stripe' {
         issuing_card: Components.IssuingCard;
 
         issuing_cards_list: Components.IssuingCardsList;
+
+        /**
+         * Configuration for the [Nestingdemo](https://docs.stripe.com/connect/supported-embedded-components/nesting-demo/) embedded component.
+         */
+        nesting_demo?: Components.NestingDemo | null;
 
         /**
          * Configuration for the [network cost passthrough report](https://docs.stripe.com/connect/supported-embedded-components/network-cost-passthrough-report/) embedded component.
@@ -345,6 +355,19 @@ declare module 'stripe' {
           }
         }
 
+        interface FinancialAccountRewards {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: FinancialAccountRewards.Features;
+        }
+
+        namespace FinancialAccountRewards {
+          interface Features {}
+        }
+
         interface FinancialAccountTransactions {
           /**
            * Whether the embedded component is enabled.
@@ -460,6 +483,19 @@ declare module 'stripe' {
              */
             spend_control_management: boolean;
           }
+        }
+
+        interface NestingDemo {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: NestingDemo.Features;
+        }
+
+        namespace NestingDemo {
+          interface Features {}
         }
 
         interface NetworkCostPassthroughReport {

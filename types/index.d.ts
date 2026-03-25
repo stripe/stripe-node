@@ -380,6 +380,7 @@
 ///<reference path='./Reserve/Releases.d.ts' />
 ///<reference path='./ReserveTransactions.d.ts' />
 ///<reference path='./Reviews.d.ts' />
+///<reference path='./RiskSignals.d.ts' />
 ///<reference path='./SetupAttempts.d.ts' />
 ///<reference path='./SetupIntents.d.ts' />
 ///<reference path='./SharedPayment/GrantedTokens.d.ts' />

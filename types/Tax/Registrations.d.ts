@@ -44,7 +44,7 @@ declare module 'stripe' {
         expires_at: number | null;
 
         /**
-         * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+         * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
          */
         livemode: boolean;
 
@@ -1600,6 +1600,8 @@ declare module 'stripe' {
 
             gross_receipts_tax?: Us.GrossReceiptsTax;
 
+            home_rule_tax?: Us.HomeRuleTax;
+
             hospitality_tax?: Us.HospitalityTax;
 
             local_amusement_tax?: Us.LocalAmusementTax;
@@ -1623,8 +1625,6 @@ declare module 'stripe' {
              * Type of registration in the US.
              */
             type: Us.Type;
-
-            home_rule_tax?: Us.HomeRuleTax;
           }
 
           namespace Us {

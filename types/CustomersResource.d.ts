@@ -950,6 +950,7 @@ declare module 'stripe' {
         | 'stripe_balance'
         | 'swish'
         | 'twint'
+        | 'upi'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
@@ -1270,7 +1271,7 @@ declare module 'stripe' {
        *
        * If the card's owner has no default card, then the new card will become the default.
        * However, if the owner already has a default, then it will not change.
-       * To change the default, you should [update the customer](https://docs.stripe.com/docs/api#update_customer) to have a new default_source.
+       * To change the default, you should [update the customer](https://docs.stripe.com/api/customers/update) to have a new default_source.
        */
       createSource(
         id: string,

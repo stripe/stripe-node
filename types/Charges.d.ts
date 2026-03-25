@@ -123,7 +123,7 @@ declare module 'stripe' {
       level3?: Charge.Level3;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -520,6 +520,8 @@ declare module 'stripe' {
          * It contains information specific to the payment method.
          */
         type: string;
+
+        upi?: PaymentMethodDetails.Upi;
 
         us_bank_account?: PaymentMethodDetails.UsBankAccount;
 
@@ -997,6 +999,16 @@ declare module 'stripe' {
           partial_authorization?: Card.PartialAuthorization;
 
           /**
+           * Whether the PaymentIntent can be reauthorized or not.
+           */
+          reauthorization?: Card.Reauthorization | null;
+
+          /**
+           * The time at which the associated PaymentIntent will transition to a terminal state if it is not reauthorized.
+           */
+          reauthorize_before?: number | null;
+
+          /**
            * Status of a card based on the card issuer.
            */
           regulated_status: Card.RegulatedStatus | null;
@@ -1010,16 +1022,6 @@ declare module 'stripe' {
            * If this Card is part of a card wallet, this contains the details of the card wallet.
            */
           wallet: Card.Wallet | null;
-
-          /**
-           * Whether the PaymentIntent can be reauthorized or not.
-           */
-          reauthorization?: Card.Reauthorization | null;
-
-          /**
-           * The time at which the associated PaymentIntent will transition to a terminal state if it is not reauthorized.
-           */
-          reauthorize_before?: number | null;
         }
 
         namespace Card {
@@ -1468,13 +1470,6 @@ declare module 'stripe' {
           reader?: string;
 
           /**
-           * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
-           */
-          receipt: CardPresent.Receipt | null;
-
-          wallet?: CardPresent.Wallet;
-
-          /**
            * Whether the PaymentIntent can be reauthorized or not.
            */
           reauthorization?: CardPresent.Reauthorization | null;
@@ -1483,6 +1478,13 @@ declare module 'stripe' {
            * The time at which the associated PaymentIntent will transition to a terminal state if it is not reauthorized.
            */
           reauthorize_before?: number | null;
+
+          /**
+           * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
+           */
+          receipt: CardPresent.Receipt | null;
+
+          wallet?: CardPresent.Wallet;
         }
 
         namespace CardPresent {
@@ -1619,7 +1621,7 @@ declare module 'stripe' {
         }
 
         namespace Crypto {
-          type Network = 'base' | 'ethereum' | 'polygon' | 'solana';
+          type Network = 'base' | 'ethereum' | 'polygon' | 'solana' | 'tempo';
 
           type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
         }
@@ -2674,15 +2676,6 @@ declare module 'stripe' {
            * The connected account ID whose Stripe balance to use as the source of payment
            */
           account?: string | null;
-
-          /**
-           * The [source_type](https://docs.stripe.com/api/balance/balance_object#balance_object-available-source_types) of the balance
-           */
-          source_type: StripeBalance.SourceType | null;
-        }
-
-        namespace StripeBalance {
-          type SourceType = 'bank_account' | 'card' | 'fpx';
         }
 
         interface Swish {
@@ -2703,6 +2696,13 @@ declare module 'stripe' {
         }
 
         interface Twint {}
+
+        interface Upi {
+          /**
+           * Customer's unique Virtual Payment Address.
+           */
+          vpa: string | null;
+        }
 
         interface UsBankAccount {
           /**

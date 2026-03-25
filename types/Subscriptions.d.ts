@@ -162,7 +162,7 @@ declare module 'stripe' {
       latest_invoice: string | Stripe.Invoice | null;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -197,7 +197,7 @@ declare module 'stripe' {
       payment_settings: Subscription.PaymentSettings | null;
 
       /**
-       * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://docs.stripe.com/api#create_invoice) for the given subscription at the specified interval.
+       * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://docs.stripe.com/api/invoices/create) for the given subscription at the specified interval.
        */
       pending_invoice_item_interval: Subscription.PendingInvoiceItemInterval | null;
 
@@ -215,6 +215,8 @@ declare module 'stripe' {
        * Time period and invoice for a Subscription billed in advance.
        */
       prebilling?: Subscription.Prebilling | null;
+
+      presentment_details?: Subscription.PresentmentDetails;
 
       /**
        * The schedule attached to the subscription
@@ -299,7 +301,7 @@ declare module 'stripe' {
         }
 
         namespace Liability {
-          type Type = 'account' | 'self';
+          type Type = 'account' | 'application' | 'self';
         }
       }
 
@@ -498,6 +500,7 @@ declare module 'stripe' {
           | 'unused';
 
         type Reason =
+          | 'canceled_by_retention_policy'
           | 'cancellation_requested'
           | 'payment_disputed'
           | 'payment_failed';
@@ -530,7 +533,7 @@ declare module 'stripe' {
         }
 
         namespace Issuer {
-          type Type = 'account' | 'self';
+          type Type = 'account' | 'application' | 'self';
         }
       }
 
@@ -574,7 +577,7 @@ declare module 'stripe' {
 
       interface PauseCollection {
         /**
-         * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+         * The payment collection behavior for this subscription while paused.
          */
         behavior: PauseCollection.Behavior;
 
@@ -668,7 +671,7 @@ declare module 'stripe' {
             mandate_options?: AcssDebit.MandateOptions;
 
             /**
-             * Bank account verification method.
+             * Bank account verification method. The default value is `automatic`.
              */
             verification_method?: AcssDebit.VerificationMethod;
           }
@@ -716,7 +719,7 @@ declare module 'stripe' {
           namespace Card {
             interface MandateOptions {
               /**
-               * Amount to be charged for future payments.
+               * Amount to be charged for future payments, specified in the presentment currency.
                */
               amount: number | null;
 
@@ -831,6 +834,11 @@ declare module 'stripe' {
           }
 
           interface Pix {
+            /**
+             * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+             */
+            expires_after_seconds?: number;
+
             mandate_options?: Pix.MandateOptions;
           }
 
@@ -907,7 +915,7 @@ declare module 'stripe' {
             financial_connections?: UsBankAccount.FinancialConnections;
 
             /**
-             * Bank account verification method.
+             * Bank account verification method. The default value is `automatic`.
              */
             verification_method?: UsBankAccount.VerificationMethod;
           }
@@ -1084,6 +1092,13 @@ declare module 'stripe' {
 
       namespace Prebilling {
         type UpdateBehavior = 'prebill' | 'reset';
+      }
+
+      interface PresentmentDetails {
+        /**
+         * Currency used for customer payments.
+         */
+        presentment_currency: string;
       }
 
       type Status =

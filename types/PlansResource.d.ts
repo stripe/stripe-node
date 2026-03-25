@@ -150,7 +150,7 @@ declare module 'stripe' {
           /**
            * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
            */
-          tax_code: string;
+          tax_code?: Stripe.Emptyable<string>;
         }
       }
 

@@ -133,7 +133,7 @@ declare module 'stripe' {
       lines?: Array<string> | null;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -238,7 +238,7 @@ declare module 'stripe' {
         }
 
         namespace Liability {
-          type Type = 'account' | 'self';
+          type Type = 'account' | 'application' | 'self';
         }
 
         type Status = 'complete' | 'failed' | 'requires_location_inputs';
@@ -574,7 +574,7 @@ declare module 'stripe' {
         }
 
         namespace Issuer {
-          type Type = 'account' | 'self';
+          type Type = 'account' | 'application' | 'self';
         }
       }
 

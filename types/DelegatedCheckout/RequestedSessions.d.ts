@@ -240,13 +240,25 @@ declare module 'stripe' {
           phone: string | null;
 
           /**
-           * The fulfillment option.
+           * The selected fulfillment option.
            */
           selected_fulfillment_option: FulfillmentDetails.SelectedFulfillmentOption | null;
+
+          /**
+           * Per-item fulfillment option overrides.
+           */
+          selected_fulfillment_option_overrides: Array<
+            FulfillmentDetails.SelectedFulfillmentOptionOverride
+          > | null;
         }
 
         namespace FulfillmentDetails {
           interface FulfillmentOption {
+            /**
+             * The digital fulfillment option.
+             */
+            digital: FulfillmentOption.Digital | null;
+
             /**
              * The shipping option.
              */
@@ -256,11 +268,6 @@ declare module 'stripe' {
              * The type of the fulfillment option.
              */
             type: string;
-
-            /**
-             * The digital fulfillment option.
-             */
-            digital: FulfillmentOption.Digital | null;
           }
 
           namespace FulfillmentOption {
@@ -292,6 +299,11 @@ declare module 'stripe' {
                  * The key of the digital fulfillment option.
                  */
                 key: string;
+
+                /**
+                 * The line item keys associated with this digital fulfillment option.
+                 */
+                line_item_keys: Array<string> | null;
               }
             }
 
@@ -330,6 +342,11 @@ declare module 'stripe' {
                 latest_delivery_time: number | null;
 
                 /**
+                 * The line item keys associated with this shipping option.
+                 */
+                line_item_keys: Array<string> | null;
+
+                /**
                  * The shipping amount of the shipping option.
                  */
                 shipping_amount: number;
@@ -339,6 +356,11 @@ declare module 'stripe' {
 
           interface SelectedFulfillmentOption {
             /**
+             * The digital fulfillment option.
+             */
+            digital: SelectedFulfillmentOption.Digital | null;
+
+            /**
              * The shipping option.
              */
             shipping: SelectedFulfillmentOption.Shipping | null;
@@ -347,14 +369,47 @@ declare module 'stripe' {
              * The type of the selected fulfillment option.
              */
             type: string;
-
-            /**
-             * The digital fulfillment option.
-             */
-            digital: SelectedFulfillmentOption.Digital | null;
           }
 
           namespace SelectedFulfillmentOption {
+            interface Digital {
+              /**
+               * The digital option.
+               */
+              digital_option: string | null;
+            }
+
+            interface Shipping {
+              /**
+               * The shipping option.
+               */
+              shipping_option: string | null;
+            }
+          }
+
+          interface SelectedFulfillmentOptionOverride {
+            /**
+             * The digital fulfillment option.
+             */
+            digital: SelectedFulfillmentOptionOverride.Digital | null;
+
+            /**
+             * The line items this fulfillment option applies to.
+             */
+            line_item_keys: Array<string> | null;
+
+            /**
+             * The shipping option.
+             */
+            shipping: SelectedFulfillmentOptionOverride.Shipping | null;
+
+            /**
+             * The type of the selected fulfillment option.
+             */
+            type: string;
+          }
+
+          namespace SelectedFulfillmentOptionOverride {
             interface Digital {
               /**
                * The digital option.
@@ -383,6 +438,11 @@ declare module 'stripe' {
           amount_subtotal: number;
 
           /**
+           * The fulfillment type of the line item.
+           */
+          fulfillment_type: string;
+
+          /**
            * The key of the line item.
            */
           key: string;
@@ -403,11 +463,6 @@ declare module 'stripe' {
            * The per-unit amount of the item before any discounts or taxes are applied.
            */
           unit_amount: number;
-
-          /**
-           * The fulfillment type of the line item.
-           */
-          fulfillment_type: string;
         }
 
         namespace LineItemDetail {

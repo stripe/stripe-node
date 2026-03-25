@@ -444,7 +444,7 @@ declare module 'stripe' {
               target_date?: string;
 
               /**
-               * Bank account verification method.
+               * Bank account verification method. The default value is `automatic`.
                */
               verification_method?: AcssDebit.VerificationMethod;
             }
@@ -3137,7 +3137,7 @@ declare module 'stripe' {
               target_date?: string;
 
               /**
-               * Bank account verification method.
+               * Bank account verification method. The default value is `automatic`.
                */
               verification_method?: AcssDebit.VerificationMethod;
             }

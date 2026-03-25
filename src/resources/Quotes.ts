@@ -1251,6 +1251,10 @@ export const Quotes = StripeResource.extend({
                   },
                 },
               },
+              quantity_decimal: {
+                kind: 'nullable',
+                inner: {kind: 'decimal_string'},
+              },
             },
           },
         },
@@ -1441,6 +1445,10 @@ export const Quotes = StripeResource.extend({
                               },
                             },
                           },
+                        },
+                        quantity_decimal: {
+                          kind: 'nullable',
+                          inner: {kind: 'decimal_string'},
                         },
                       },
                     },

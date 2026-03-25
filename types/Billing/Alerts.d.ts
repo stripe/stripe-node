@@ -28,7 +28,7 @@ declare module 'stripe' {
         credit_balance_threshold?: Alert.CreditBalanceThreshold | null;
 
         /**
-         * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+         * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
          */
         livemode: boolean;
 
@@ -191,11 +191,6 @@ declare module 'stripe' {
 
         namespace SpendThreshold {
           interface Filters {
-            /**
-             * Filter by billable item IDs.
-             */
-            billable_items: Array<string> | null;
-
             /**
              * Filter by billing cadence ID.
              */

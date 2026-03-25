@@ -19,7 +19,7 @@ declare module 'stripe' {
       customer_acceptance: Mandate.CustomerAcceptance;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -136,6 +136,8 @@ declare module 'stripe' {
          * This mandate corresponds with a specific payment method type. The `payment_method_details` includes an additional hash with the same name and contains mandate information that's specific to that payment method.
          */
         type: string;
+
+        upi?: PaymentMethodDetails.Upi;
 
         us_bank_account?: PaymentMethodDetails.UsBankAccount;
       }
@@ -383,6 +385,32 @@ declare module 'stripe' {
            * The URL of the mandate. This URL generally contains sensitive information about the customer and should be shared with them exclusively.
            */
           url: string;
+        }
+
+        interface Upi {
+          /**
+           * Amount to be charged for future payments.
+           */
+          amount: number | null;
+
+          /**
+           * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+           */
+          amount_type: Upi.AmountType | null;
+
+          /**
+           * A description of the mandate or subscription that is meant to be displayed to the customer.
+           */
+          description: string | null;
+
+          /**
+           * End date of the mandate or subscription.
+           */
+          end_date: number | null;
+        }
+
+        namespace Upi {
+          type AmountType = 'fixed' | 'maximum';
         }
 
         interface UsBankAccount {

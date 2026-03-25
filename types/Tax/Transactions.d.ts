@@ -42,7 +42,7 @@ declare module 'stripe' {
         line_items?: ApiList<Stripe.Tax.TransactionLineItem> | null;
 
         /**
-         * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+         * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
          */
         livemode: boolean;
 
@@ -266,12 +266,12 @@ declare module 'stripe' {
 
         interface ShippingCost {
           /**
-           * The shipping amount in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes were calculated on top of this amount.
+           * The shipping amount in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units). If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes were calculated on top of this amount.
            */
           amount: number;
 
           /**
-           * The amount of tax calculated for shipping, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+           * The amount of tax calculated for shipping, in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
            */
           amount_tax: number;
 
@@ -301,7 +301,7 @@ declare module 'stripe' {
 
           interface TaxBreakdown {
             /**
-             * The amount of tax, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+             * The amount of tax, in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
              */
             amount: number;
 
@@ -323,7 +323,7 @@ declare module 'stripe' {
             taxability_reason: TaxBreakdown.TaxabilityReason;
 
             /**
-             * The amount on which tax is calculated, in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+             * The amount on which tax is calculated, in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
              */
             taxable_amount: number;
           }

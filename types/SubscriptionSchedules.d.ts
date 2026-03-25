@@ -90,7 +90,7 @@ declare module 'stripe' {
       latest_invoice?: string | Stripe.Invoice | null;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -360,7 +360,7 @@ declare module 'stripe' {
           }
 
           namespace Liability {
-            type Type = 'account' | 'self';
+            type Type = 'account' | 'application' | 'self';
           }
         }
 
@@ -410,7 +410,7 @@ declare module 'stripe' {
           }
 
           namespace Issuer {
-            type Type = 'account' | 'self';
+            type Type = 'account' | 'application' | 'self';
           }
         }
 
@@ -720,7 +720,7 @@ declare module 'stripe' {
           }
 
           namespace Liability {
-            type Type = 'account' | 'self';
+            type Type = 'account' | 'application' | 'self';
           }
         }
 
@@ -869,7 +869,7 @@ declare module 'stripe' {
           }
 
           namespace Issuer {
-            type Type = 'account' | 'self';
+            type Type = 'account' | 'application' | 'self';
           }
         }
 
@@ -1041,7 +1041,7 @@ declare module 'stripe' {
 
         interface PauseCollection {
           /**
-           * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+           * The payment collection behavior for this subscription while paused.
            */
           behavior: PauseCollection.Behavior;
         }

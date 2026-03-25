@@ -184,6 +184,11 @@ declare module 'stripe' {
         expires_at: number;
 
         /**
+         * The integration identifier for this Checkout Session. Multiple Checkout Sessions can have the same integration identifier.
+         */
+        integration_identifier: string | null;
+
+        /**
          * ID of the invoice created by the Checkout Session, if it exists.
          */
         invoice: string | Stripe.Invoice | null;
@@ -199,7 +204,7 @@ declare module 'stripe' {
         line_items?: ApiList<Stripe.LineItem>;
 
         /**
-         * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+         * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
          */
         livemode: boolean;
 
@@ -354,7 +359,7 @@ declare module 'stripe' {
         total_details: Session.TotalDetails | null;
 
         /**
-         * The UI mode of the Session. Defaults to `hosted`.
+         * The UI mode of the Session. Defaults to `hosted_page`.
          */
         ui_mode: Session.UiMode | null;
 
@@ -449,7 +454,7 @@ declare module 'stripe' {
           }
 
           namespace Liability {
-            type Type = 'account' | 'self';
+            type Type = 'account' | 'application' | 'self';
           }
 
           type Status = 'complete' | 'failed' | 'requires_location_inputs';
@@ -862,7 +867,7 @@ declare module 'stripe' {
           id: string;
 
           /**
-           * Information about the payment method the customer is attempting to pay with.
+           * Information about the payment method the customer is attempting to pay with. Relevant payment method information is provided when available. Some payment details are only available after the payment has completed and can't be returned in the manual approval flow.
            */
           payment_method_details?: CurrentAttempt.PaymentMethodDetails | null;
 
@@ -893,16 +898,49 @@ declare module 'stripe' {
              */
             allow_redisplay: PaymentMethodDetails.AllowRedisplay;
 
+            au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
+
+            bacs_debit?: PaymentMethodDetails.BacsDebit;
+
+            boleto?: PaymentMethodDetails.Boleto;
+
             card?: PaymentMethodDetails.Card;
+
+            link?: PaymentMethodDetails.Link;
+
+            sepa_debit?: PaymentMethodDetails.SepaDebit;
 
             /**
              * The type of payment method the customer is attempting to pay with. An additional hash is included in the payment method details with a name matching this value. It contains additional information specific to the payment method type.
              */
             type: string;
+
+            us_bank_account?: PaymentMethodDetails.UsBankAccount;
           }
 
           namespace PaymentMethodDetails {
             type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+            interface AuBecsDebit {
+              /**
+               * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+               */
+              fingerprint: string | null;
+            }
+
+            interface BacsDebit {
+              /**
+               * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+               */
+              fingerprint: string | null;
+            }
+
+            interface Boleto {
+              /**
+               * Uniquely identifies this particular boleto payment method. You can use this attribute to check whether two boleto payment methods are the same.
+               */
+              fingerprint: string | null;
+            }
 
             interface Card {
               /**
@@ -998,6 +1036,27 @@ declare module 'stripe' {
                   | 'samsung_pay'
                   | 'visa_checkout';
               }
+            }
+
+            interface Link {
+              /**
+               * Unique, encrypted bank account identifier.
+               */
+              fingerprint?: string | null;
+            }
+
+            interface SepaDebit {
+              /**
+               * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+               */
+              fingerprint: string | null;
+            }
+
+            interface UsBankAccount {
+              /**
+               * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+               */
+              fingerprint: string | null;
             }
           }
 
@@ -1444,7 +1503,7 @@ declare module 'stripe' {
             }
 
             namespace Issuer {
-              type Type = 'account' | 'self';
+              type Type = 'account' | 'application' | 'self';
             }
 
             interface RenderingOptions {
@@ -1671,6 +1730,8 @@ declare module 'stripe' {
 
           twint?: PaymentMethodOptions.Twint;
 
+          upi?: PaymentMethodOptions.Upi;
+
           us_bank_account?: PaymentMethodOptions.UsBankAccount;
         }
 
@@ -1700,7 +1761,7 @@ declare module 'stripe' {
             target_date?: string;
 
             /**
-             * Bank account verification method.
+             * Bank account verification method. The default value is `automatic`.
              */
             verification_method?: AcssDebit.VerificationMethod;
           }
@@ -2685,6 +2746,51 @@ declare module 'stripe' {
             setup_future_usage?: 'none';
           }
 
+          interface Upi {
+            mandate_options?: Upi.MandateOptions;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: Upi.SetupFutureUsage;
+          }
+
+          namespace Upi {
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments.
+               */
+              amount: number | null;
+
+              /**
+               * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+               */
+              amount_type: MandateOptions.AmountType | null;
+
+              /**
+               * A description of the mandate or subscription that is meant to be displayed to the customer.
+               */
+              description: string | null;
+
+              /**
+               * End date of the mandate or subscription.
+               */
+              end_date: number | null;
+            }
+
+            namespace MandateOptions {
+              type AmountType = 'fixed' | 'maximum';
+            }
+
+            type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          }
+
           interface UsBankAccount {
             financial_connections?: UsBankAccount.FinancialConnections;
 
@@ -2705,7 +2811,7 @@ declare module 'stripe' {
             target_date?: string;
 
             /**
-             * Bank account verification method.
+             * Bank account verification method. The default value is `automatic`.
              */
             verification_method?: UsBankAccount.VerificationMethod;
           }
@@ -3333,7 +3439,7 @@ declare module 'stripe' {
           }
         }
 
-        type UiMode = 'custom' | 'embedded' | 'hosted';
+        type UiMode = 'elements' | 'embedded_page' | 'form' | 'hosted_page';
 
         interface WalletOptions {
           link?: WalletOptions.Link;
