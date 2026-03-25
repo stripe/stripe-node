@@ -228,6 +228,23 @@ declare module 'stripe' {
         options?: RequestOptions
       ): ApiListPromise<Stripe.PromotionCode>;
       list(options?: RequestOptions): ApiListPromise<Stripe.PromotionCode>;
+
+      /**
+       * Serializes a PromotionCode create request into a batch job JSONL line.
+       */
+      serializeBatchCreate(
+        params?: PromotionCodeCreateParams,
+        options?: RequestOptions
+      ): string;
+
+      /**
+       * Serializes a PromotionCode update request into a batch job JSONL line.
+       */
+      serializeBatchUpdate(
+        promotion_code: string,
+        params?: PromotionCodeUpdateParams,
+        options?: RequestOptions
+      ): string;
     }
   }
 }

@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import * as crypto from 'crypto';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
 export const Invoices = StripeResource.extend({
@@ -683,6 +684,46 @@ export const Invoices = StripeResource.extend({
       },
     },
   }),
+  serializeBatchPay(
+    invoice: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = crypto.randomUUID();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const item: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    item.path_params = {invoice: invoice};
+    if (options.stripeContext) {
+      item.context = options.stripeContext;
+    }
+    return JSON.stringify(item);
+  },
+  serializeBatchUpdate(
+    invoice: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = crypto.randomUUID();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const item: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    item.path_params = {invoice: invoice};
+    if (options.stripeContext) {
+      item.context = options.stripeContext;
+    }
+    return JSON.stringify(item);
+  },
   updateLines: stripeMethod({
     method: 'POST',
     fullPath: '/v1/invoices/{invoice}/update_lines',
