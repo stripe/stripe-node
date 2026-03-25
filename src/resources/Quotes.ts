@@ -105,6 +105,86 @@ export const Quotes = StripeResource.extend({
             },
           },
         },
+        status_details: {
+          kind: 'nullable',
+          inner: {
+            kind: 'object',
+            fields: {
+              stale: {
+                kind: 'object',
+                fields: {
+                  last_reason: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        subscription_changed: {
+                          kind: 'object',
+                          fields: {
+                            previous_subscription: {
+                              kind: 'nullable',
+                              inner: {
+                                kind: 'object',
+                                fields: {
+                                  items: {
+                                    kind: 'object',
+                                    fields: {
+                                      data: {
+                                        kind: 'array',
+                                        element: {
+                                          kind: 'object',
+                                          fields: {
+                                            plan: {
+                                              kind: 'object',
+                                              fields: {
+                                                amount_decimal: {
+                                                  kind: 'nullable',
+                                                  inner: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
+                                                tiers: {
+                                                  kind: 'array',
+                                                  element: {
+                                                    kind: 'object',
+                                                    fields: {
+                                                      flat_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                      unit_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     },
   }),
@@ -180,6 +260,86 @@ export const Quotes = StripeResource.extend({
                                 unit_amount_decimal: {
                                   kind: 'nullable',
                                   inner: {kind: 'decimal_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        status_details: {
+          kind: 'nullable',
+          inner: {
+            kind: 'object',
+            fields: {
+              stale: {
+                kind: 'object',
+                fields: {
+                  last_reason: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        subscription_changed: {
+                          kind: 'object',
+                          fields: {
+                            previous_subscription: {
+                              kind: 'nullable',
+                              inner: {
+                                kind: 'object',
+                                fields: {
+                                  items: {
+                                    kind: 'object',
+                                    fields: {
+                                      data: {
+                                        kind: 'array',
+                                        element: {
+                                          kind: 'object',
+                                          fields: {
+                                            plan: {
+                                              kind: 'object',
+                                              fields: {
+                                                amount_decimal: {
+                                                  kind: 'nullable',
+                                                  inner: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
+                                                tiers: {
+                                                  kind: 'array',
+                                                  element: {
+                                                    kind: 'object',
+                                                    fields: {
+                                                      flat_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                      unit_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
                                 },
                               },
                             },
@@ -298,6 +458,86 @@ export const Quotes = StripeResource.extend({
             },
           },
         },
+        status_details: {
+          kind: 'nullable',
+          inner: {
+            kind: 'object',
+            fields: {
+              stale: {
+                kind: 'object',
+                fields: {
+                  last_reason: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        subscription_changed: {
+                          kind: 'object',
+                          fields: {
+                            previous_subscription: {
+                              kind: 'nullable',
+                              inner: {
+                                kind: 'object',
+                                fields: {
+                                  items: {
+                                    kind: 'object',
+                                    fields: {
+                                      data: {
+                                        kind: 'array',
+                                        element: {
+                                          kind: 'object',
+                                          fields: {
+                                            plan: {
+                                              kind: 'object',
+                                              fields: {
+                                                amount_decimal: {
+                                                  kind: 'nullable',
+                                                  inner: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
+                                                tiers: {
+                                                  kind: 'array',
+                                                  element: {
+                                                    kind: 'object',
+                                                    fields: {
+                                                      flat_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                      unit_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     },
   }),
@@ -383,6 +623,87 @@ export const Quotes = StripeResource.extend({
                                       unit_amount_decimal: {
                                         kind: 'nullable',
                                         inner: {kind: 'decimal_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              status_details: {
+                kind: 'nullable',
+                inner: {
+                  kind: 'object',
+                  fields: {
+                    stale: {
+                      kind: 'object',
+                      fields: {
+                        last_reason: {
+                          kind: 'nullable',
+                          inner: {
+                            kind: 'object',
+                            fields: {
+                              subscription_changed: {
+                                kind: 'object',
+                                fields: {
+                                  previous_subscription: {
+                                    kind: 'nullable',
+                                    inner: {
+                                      kind: 'object',
+                                      fields: {
+                                        items: {
+                                          kind: 'object',
+                                          fields: {
+                                            data: {
+                                              kind: 'array',
+                                              element: {
+                                                kind: 'object',
+                                                fields: {
+                                                  plan: {
+                                                    kind: 'object',
+                                                    fields: {
+                                                      amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                      tiers: {
+                                                        kind: 'array',
+                                                        element: {
+                                                          kind: 'object',
+                                                          fields: {
+                                                            flat_amount_decimal: {
+                                                              kind: 'nullable',
+                                                              inner: {
+                                                                kind:
+                                                                  'decimal_string',
+                                                              },
+                                                            },
+                                                            unit_amount_decimal: {
+                                                              kind: 'nullable',
+                                                              inner: {
+                                                                kind:
+                                                                  'decimal_string',
+                                                              },
+                                                            },
+                                                          },
+                                                        },
+                                                      },
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
                                       },
                                     },
                                   },
@@ -487,6 +808,86 @@ export const Quotes = StripeResource.extend({
             },
           },
         },
+        status_details: {
+          kind: 'nullable',
+          inner: {
+            kind: 'object',
+            fields: {
+              stale: {
+                kind: 'object',
+                fields: {
+                  last_reason: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        subscription_changed: {
+                          kind: 'object',
+                          fields: {
+                            previous_subscription: {
+                              kind: 'nullable',
+                              inner: {
+                                kind: 'object',
+                                fields: {
+                                  items: {
+                                    kind: 'object',
+                                    fields: {
+                                      data: {
+                                        kind: 'array',
+                                        element: {
+                                          kind: 'object',
+                                          fields: {
+                                            plan: {
+                                              kind: 'object',
+                                              fields: {
+                                                amount_decimal: {
+                                                  kind: 'nullable',
+                                                  inner: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
+                                                tiers: {
+                                                  kind: 'array',
+                                                  element: {
+                                                    kind: 'object',
+                                                    fields: {
+                                                      flat_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                      unit_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     },
   }),
@@ -562,6 +963,86 @@ export const Quotes = StripeResource.extend({
                                 unit_amount_decimal: {
                                   kind: 'nullable',
                                   inner: {kind: 'decimal_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        status_details: {
+          kind: 'nullable',
+          inner: {
+            kind: 'object',
+            fields: {
+              stale: {
+                kind: 'object',
+                fields: {
+                  last_reason: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        subscription_changed: {
+                          kind: 'object',
+                          fields: {
+                            previous_subscription: {
+                              kind: 'nullable',
+                              inner: {
+                                kind: 'object',
+                                fields: {
+                                  items: {
+                                    kind: 'object',
+                                    fields: {
+                                      data: {
+                                        kind: 'array',
+                                        element: {
+                                          kind: 'object',
+                                          fields: {
+                                            plan: {
+                                              kind: 'object',
+                                              fields: {
+                                                amount_decimal: {
+                                                  kind: 'nullable',
+                                                  inner: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
+                                                tiers: {
+                                                  kind: 'array',
+                                                  element: {
+                                                    kind: 'object',
+                                                    fields: {
+                                                      flat_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                      unit_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
                                 },
                               },
                             },
@@ -663,6 +1144,86 @@ export const Quotes = StripeResource.extend({
             },
           },
         },
+        status_details: {
+          kind: 'nullable',
+          inner: {
+            kind: 'object',
+            fields: {
+              stale: {
+                kind: 'object',
+                fields: {
+                  last_reason: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        subscription_changed: {
+                          kind: 'object',
+                          fields: {
+                            previous_subscription: {
+                              kind: 'nullable',
+                              inner: {
+                                kind: 'object',
+                                fields: {
+                                  items: {
+                                    kind: 'object',
+                                    fields: {
+                                      data: {
+                                        kind: 'array',
+                                        element: {
+                                          kind: 'object',
+                                          fields: {
+                                            plan: {
+                                              kind: 'object',
+                                              fields: {
+                                                amount_decimal: {
+                                                  kind: 'nullable',
+                                                  inner: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
+                                                tiers: {
+                                                  kind: 'array',
+                                                  element: {
+                                                    kind: 'object',
+                                                    fields: {
+                                                      flat_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                      unit_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     },
   }),
@@ -670,6 +1231,35 @@ export const Quotes = StripeResource.extend({
     method: 'GET',
     fullPath: '/v1/quotes/{quote}/preview_invoices/{preview_invoice}/lines',
     methodType: 'list',
+    responseSchema: {
+      kind: 'object',
+      fields: {
+        data: {
+          kind: 'array',
+          element: {
+            kind: 'object',
+            fields: {
+              pricing: {
+                kind: 'nullable',
+                inner: {
+                  kind: 'object',
+                  fields: {
+                    unit_amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                  },
+                },
+              },
+              quantity_decimal: {
+                kind: 'nullable',
+                inner: {kind: 'decimal_string'},
+              },
+            },
+          },
+        },
+      },
+    },
   }),
   listComputedUpfrontLineItems: stripeMethod({
     method: 'GET',
@@ -828,6 +1418,48 @@ export const Quotes = StripeResource.extend({
     method: 'GET',
     fullPath: '/v1/quotes/{quote}/preview_invoices',
     methodType: 'list',
+    responseSchema: {
+      kind: 'object',
+      fields: {
+        data: {
+          kind: 'array',
+          element: {
+            kind: 'object',
+            fields: {
+              lines: {
+                kind: 'object',
+                fields: {
+                  data: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {
+                        pricing: {
+                          kind: 'nullable',
+                          inner: {
+                            kind: 'object',
+                            fields: {
+                              unit_amount_decimal: {
+                                kind: 'nullable',
+                                inner: {kind: 'decimal_string'},
+                              },
+                            },
+                          },
+                        },
+                        quantity_decimal: {
+                          kind: 'nullable',
+                          inner: {kind: 'decimal_string'},
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   }),
   listPreviewSubscriptionSchedules: stripeMethod({
     method: 'GET',
@@ -837,10 +1469,338 @@ export const Quotes = StripeResource.extend({
   markDraft: stripeMethod({
     method: 'POST',
     fullPath: '/v1/quotes/{quote}/mark_draft',
+    responseSchema: {
+      kind: 'object',
+      fields: {
+        computed: {
+          kind: 'object',
+          fields: {
+            upfront: {
+              kind: 'object',
+              fields: {
+                line_items: {
+                  kind: 'object',
+                  fields: {
+                    data: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {
+                          price: {
+                            kind: 'nullable',
+                            inner: {
+                              kind: 'object',
+                              fields: {
+                                currency_options: {
+                                  kind: 'array',
+                                  element: {
+                                    kind: 'object',
+                                    fields: {
+                                      tiers: {
+                                        kind: 'array',
+                                        element: {
+                                          kind: 'object',
+                                          fields: {
+                                            flat_amount_decimal: {
+                                              kind: 'nullable',
+                                              inner: {kind: 'decimal_string'},
+                                            },
+                                            unit_amount_decimal: {
+                                              kind: 'nullable',
+                                              inner: {kind: 'decimal_string'},
+                                            },
+                                          },
+                                        },
+                                      },
+                                      unit_amount_decimal: {
+                                        kind: 'nullable',
+                                        inner: {kind: 'decimal_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                                tiers: {
+                                  kind: 'array',
+                                  element: {
+                                    kind: 'object',
+                                    fields: {
+                                      flat_amount_decimal: {
+                                        kind: 'nullable',
+                                        inner: {kind: 'decimal_string'},
+                                      },
+                                      unit_amount_decimal: {
+                                        kind: 'nullable',
+                                        inner: {kind: 'decimal_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                                unit_amount_decimal: {
+                                  kind: 'nullable',
+                                  inner: {kind: 'decimal_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        status_details: {
+          kind: 'nullable',
+          inner: {
+            kind: 'object',
+            fields: {
+              stale: {
+                kind: 'object',
+                fields: {
+                  last_reason: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        subscription_changed: {
+                          kind: 'object',
+                          fields: {
+                            previous_subscription: {
+                              kind: 'nullable',
+                              inner: {
+                                kind: 'object',
+                                fields: {
+                                  items: {
+                                    kind: 'object',
+                                    fields: {
+                                      data: {
+                                        kind: 'array',
+                                        element: {
+                                          kind: 'object',
+                                          fields: {
+                                            plan: {
+                                              kind: 'object',
+                                              fields: {
+                                                amount_decimal: {
+                                                  kind: 'nullable',
+                                                  inner: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
+                                                tiers: {
+                                                  kind: 'array',
+                                                  element: {
+                                                    kind: 'object',
+                                                    fields: {
+                                                      flat_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                      unit_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   }),
   markStale: stripeMethod({
     method: 'POST',
     fullPath: '/v1/quotes/{quote}/mark_stale',
+    responseSchema: {
+      kind: 'object',
+      fields: {
+        computed: {
+          kind: 'object',
+          fields: {
+            upfront: {
+              kind: 'object',
+              fields: {
+                line_items: {
+                  kind: 'object',
+                  fields: {
+                    data: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {
+                          price: {
+                            kind: 'nullable',
+                            inner: {
+                              kind: 'object',
+                              fields: {
+                                currency_options: {
+                                  kind: 'array',
+                                  element: {
+                                    kind: 'object',
+                                    fields: {
+                                      tiers: {
+                                        kind: 'array',
+                                        element: {
+                                          kind: 'object',
+                                          fields: {
+                                            flat_amount_decimal: {
+                                              kind: 'nullable',
+                                              inner: {kind: 'decimal_string'},
+                                            },
+                                            unit_amount_decimal: {
+                                              kind: 'nullable',
+                                              inner: {kind: 'decimal_string'},
+                                            },
+                                          },
+                                        },
+                                      },
+                                      unit_amount_decimal: {
+                                        kind: 'nullable',
+                                        inner: {kind: 'decimal_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                                tiers: {
+                                  kind: 'array',
+                                  element: {
+                                    kind: 'object',
+                                    fields: {
+                                      flat_amount_decimal: {
+                                        kind: 'nullable',
+                                        inner: {kind: 'decimal_string'},
+                                      },
+                                      unit_amount_decimal: {
+                                        kind: 'nullable',
+                                        inner: {kind: 'decimal_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                                unit_amount_decimal: {
+                                  kind: 'nullable',
+                                  inner: {kind: 'decimal_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        status_details: {
+          kind: 'nullable',
+          inner: {
+            kind: 'object',
+            fields: {
+              stale: {
+                kind: 'object',
+                fields: {
+                  last_reason: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        subscription_changed: {
+                          kind: 'object',
+                          fields: {
+                            previous_subscription: {
+                              kind: 'nullable',
+                              inner: {
+                                kind: 'object',
+                                fields: {
+                                  items: {
+                                    kind: 'object',
+                                    fields: {
+                                      data: {
+                                        kind: 'array',
+                                        element: {
+                                          kind: 'object',
+                                          fields: {
+                                            plan: {
+                                              kind: 'object',
+                                              fields: {
+                                                amount_decimal: {
+                                                  kind: 'nullable',
+                                                  inner: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
+                                                tiers: {
+                                                  kind: 'array',
+                                                  element: {
+                                                    kind: 'object',
+                                                    fields: {
+                                                      flat_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                      unit_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   }),
   pdf: stripeMethod({
     method: 'GET',
@@ -851,5 +1811,169 @@ export const Quotes = StripeResource.extend({
   reestimate: stripeMethod({
     method: 'POST',
     fullPath: '/v1/quotes/{quote}/reestimate',
+    responseSchema: {
+      kind: 'object',
+      fields: {
+        computed: {
+          kind: 'object',
+          fields: {
+            upfront: {
+              kind: 'object',
+              fields: {
+                line_items: {
+                  kind: 'object',
+                  fields: {
+                    data: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {
+                          price: {
+                            kind: 'nullable',
+                            inner: {
+                              kind: 'object',
+                              fields: {
+                                currency_options: {
+                                  kind: 'array',
+                                  element: {
+                                    kind: 'object',
+                                    fields: {
+                                      tiers: {
+                                        kind: 'array',
+                                        element: {
+                                          kind: 'object',
+                                          fields: {
+                                            flat_amount_decimal: {
+                                              kind: 'nullable',
+                                              inner: {kind: 'decimal_string'},
+                                            },
+                                            unit_amount_decimal: {
+                                              kind: 'nullable',
+                                              inner: {kind: 'decimal_string'},
+                                            },
+                                          },
+                                        },
+                                      },
+                                      unit_amount_decimal: {
+                                        kind: 'nullable',
+                                        inner: {kind: 'decimal_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                                tiers: {
+                                  kind: 'array',
+                                  element: {
+                                    kind: 'object',
+                                    fields: {
+                                      flat_amount_decimal: {
+                                        kind: 'nullable',
+                                        inner: {kind: 'decimal_string'},
+                                      },
+                                      unit_amount_decimal: {
+                                        kind: 'nullable',
+                                        inner: {kind: 'decimal_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                                unit_amount_decimal: {
+                                  kind: 'nullable',
+                                  inner: {kind: 'decimal_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        status_details: {
+          kind: 'nullable',
+          inner: {
+            kind: 'object',
+            fields: {
+              stale: {
+                kind: 'object',
+                fields: {
+                  last_reason: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        subscription_changed: {
+                          kind: 'object',
+                          fields: {
+                            previous_subscription: {
+                              kind: 'nullable',
+                              inner: {
+                                kind: 'object',
+                                fields: {
+                                  items: {
+                                    kind: 'object',
+                                    fields: {
+                                      data: {
+                                        kind: 'array',
+                                        element: {
+                                          kind: 'object',
+                                          fields: {
+                                            plan: {
+                                              kind: 'object',
+                                              fields: {
+                                                amount_decimal: {
+                                                  kind: 'nullable',
+                                                  inner: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
+                                                tiers: {
+                                                  kind: 'array',
+                                                  element: {
+                                                    kind: 'object',
+                                                    fields: {
+                                                      flat_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                      unit_amount_decimal: {
+                                                        kind: 'nullable',
+                                                        inner: {
+                                                          kind:
+                                                            'decimal_string',
+                                                        },
+                                                      },
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   }),
 });

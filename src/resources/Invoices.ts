@@ -377,6 +377,40 @@ export const Invoices = StripeResource.extend({
   detachPayment: stripeMethod({
     method: 'POST',
     fullPath: '/v1/invoices/{invoice}/detach_payment',
+    responseSchema: {
+      kind: 'object',
+      fields: {
+        lines: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  pricing: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        unit_amount_decimal: {
+                          kind: 'nullable',
+                          inner: {kind: 'decimal_string'},
+                        },
+                      },
+                    },
+                  },
+                  quantity_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   }),
   finalizeInvoice: stripeMethod({
     method: 'POST',
