@@ -98,7 +98,7 @@ declare module 'stripe' {
         /**
          * Quantity of carbon removal that is included in this order.
          */
-        metric_tons: string;
+        metric_tons: Decimal;
 
         /**
          * Unique ID for the Climate `Product` this order is purchasing.

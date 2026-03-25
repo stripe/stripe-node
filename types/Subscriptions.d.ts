@@ -206,6 +206,8 @@ declare module 'stripe' {
        */
       pending_update: Subscription.PendingUpdate | null;
 
+      presentment_details?: Subscription.PresentmentDetails;
+
       /**
        * Time period and invoice for a Subscription billed in advance.
        */

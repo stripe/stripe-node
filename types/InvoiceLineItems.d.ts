@@ -98,7 +98,7 @@ declare module 'stripe' {
       /**
        * Non-negative decimal with at most 12 decimal places. The quantity of units for the line item.
        */
-      quantity_decimal: string | null;
+      quantity_decimal: Decimal | null;
 
       subscription: string | Stripe.Subscription | null;
 
@@ -316,7 +316,7 @@ declare module 'stripe' {
         /**
          * The unit amount (in the `currency` specified) of the item which contains a decimal value with at most 12 decimal places.
          */
-        unit_amount_decimal: string | null;
+        unit_amount_decimal: Decimal | null;
       }
 
       namespace Pricing {

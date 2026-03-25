@@ -56,7 +56,7 @@ declare module 'stripe' {
       /**
        * The unit amount in cents (or local equivalent) to be charged, represented as a decimal string with at most 12 decimal places. Only set if `billing_scheme=per_unit`.
        */
-      amount_decimal: string | null;
+      amount_decimal: Decimal | null;
 
       /**
        * Describes how to compute the price per period. Either `per_unit` or `tiered`. `per_unit` indicates that the fixed amount (specified in `amount`) will be charged per unit in `quantity` (for plans with `usage_type=licensed`), or per unit of total usage (for plans with `usage_type=metered`). `tiered` indicates that the unit pricing will be computed using a tiering strategy as defined using the `tiers` and `tiers_mode` attributes.
@@ -153,7 +153,7 @@ declare module 'stripe' {
         /**
          * Same as `flat_amount`, but contains a decimal value with at most 12 decimal places.
          */
-        flat_amount_decimal: string | null;
+        flat_amount_decimal: Decimal | null;
 
         /**
          * Per unit price for units relevant to the tier.
@@ -163,7 +163,7 @@ declare module 'stripe' {
         /**
          * Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
          */
-        unit_amount_decimal: string | null;
+        unit_amount_decimal: Decimal | null;
 
         /**
          * Up to and including to this quantity will be contained in the tier.
