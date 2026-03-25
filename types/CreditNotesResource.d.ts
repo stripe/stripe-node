@@ -94,6 +94,11 @@ declare module 'stripe' {
         invoice_line_item?: string;
 
         /**
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
          * The line item quantity to credit.
          */
         quantity?: number;
@@ -347,6 +352,11 @@ declare module 'stripe' {
         invoice_line_item?: string;
 
         /**
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
          * The line item quantity to credit.
          */
         quantity?: number;
@@ -540,6 +550,11 @@ declare module 'stripe' {
          * The invoice line item to credit. Only valid when the `type` is `invoice_line_item`.
          */
         invoice_line_item?: string;
+
+        /**
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.MetadataParam;
 
         /**
          * The line item quantity to credit.

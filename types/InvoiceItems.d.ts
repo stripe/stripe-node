@@ -99,7 +99,7 @@ declare module 'stripe' {
       invoice: string | Stripe.Invoice | null;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -138,9 +138,14 @@ declare module 'stripe' {
       proration_details?: InvoiceItem.ProrationDetails;
 
       /**
-       * Quantity of units for the invoice item. If the invoice item is a proration, the quantity of the subscription that the proration was computed for.
+       * Quantity of units for the invoice item in integer format, with any decimal precision truncated. For the item's full-precision decimal quantity, use `quantity_decimal`. This field will be deprecated in favor of `quantity_decimal` in a future version. If the invoice item is a proration, the quantity of the subscription that the proration was computed for.
        */
       quantity: number;
+
+      /**
+       * Non-negative decimal with at most 12 decimal places. The quantity of units for the invoice item.
+       */
+      quantity_decimal: Decimal;
 
       /**
        * The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
@@ -157,6 +162,11 @@ declare module 'stripe' {
       type FrozenField = 'discounts' | 'pricing' | 'quantity';
 
       interface Parent {
+        /**
+         * Details about the pricing plan subscription that generated this invoice item
+         */
+        pricing_plan_subscription_details?: Parent.PricingPlanSubscriptionDetails | null;
+
         /**
          * Details about the rate card subscription that generated this invoice item
          */
@@ -176,11 +186,6 @@ declare module 'stripe' {
          * The type of parent that generated this invoice item
          */
         type: Parent.Type;
-
-        /**
-         * Details about the pricing plan subscription that generated this invoice item
-         */
-        pricing_plan_subscription_details?: Parent.PricingPlanSubscriptionDetails | null;
       }
 
       namespace Parent {

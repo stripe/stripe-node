@@ -2322,6 +2322,11 @@ declare module 'stripe' {
 
           interface Us {
             /**
+             * Options for the home rule tax registration.
+             */
+            home_rule_tax?: Us.HomeRuleTax;
+
+            /**
              * Options for the local amusement tax registration.
              */
             local_amusement_tax?: Us.LocalAmusementTax;
@@ -2345,11 +2350,6 @@ declare module 'stripe' {
              * Type of registration to be created in the US.
              */
             type: Us.Type;
-
-            /**
-             * Options for the home rule tax registration.
-             */
-            home_rule_tax?: Us.HomeRuleTax;
           }
 
           namespace Us {

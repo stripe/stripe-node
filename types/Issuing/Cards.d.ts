@@ -75,7 +75,12 @@ declare module 'stripe' {
         latest_fraud_warning: Card.LatestFraudWarning | null;
 
         /**
-         * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+         * Rules that control the lifecycle of this card, such as automatic cancellation. Refer to our [documentation](https://docs.stripe.com/issuing/controls/lifecycle-controls) for more details.
+         */
+        lifecycle_controls: Card.LifecycleControls | null;
+
+        /**
+         * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
          */
         livemode: boolean;
 
@@ -161,6 +166,19 @@ declare module 'stripe' {
             | 'fraud_dispute_filed'
             | 'third_party_reported'
             | 'user_indicated_fraud';
+        }
+
+        interface LifecycleControls {
+          cancel_after: LifecycleControls.CancelAfter;
+        }
+
+        namespace LifecycleControls {
+          interface CancelAfter {
+            /**
+             * The card is automatically cancelled when it makes this number of non-zero payment authorizations and transactions. The count includes penny authorizations, but doesn't include non-payment actions, such as authorization advice.
+             */
+            payment_count: number;
+          }
         }
 
         type ReplacementReason = 'damaged' | 'expired' | 'lost' | 'stolen';

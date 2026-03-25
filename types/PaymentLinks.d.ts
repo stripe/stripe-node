@@ -96,9 +96,14 @@ declare module 'stripe' {
       line_items?: ApiList<Stripe.LineItem>;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
+
+      /**
+       * Settings for Managed Payments for this Payment Link and resulting [CheckoutSessions](https://docs.stripe.com/api/checkout/sessions/object), [PaymentIntents](https://docs.stripe.com/api/payment_intents/object), [Invoices](https://docs.stripe.com/api/invoices/object), and [Subscriptions](https://docs.stripe.com/api/subscriptions/object).
+       */
+      managed_payments?: PaymentLink.ManagedPayments | null;
 
       /**
        * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -228,7 +233,7 @@ declare module 'stripe' {
         }
 
         namespace Liability {
-          type Type = 'account' | 'self';
+          type Type = 'account' | 'application' | 'self';
         }
       }
 
@@ -503,7 +508,7 @@ declare module 'stripe' {
           }
 
           namespace Issuer {
-            type Type = 'account' | 'self';
+            type Type = 'account' | 'application' | 'self';
           }
 
           interface RenderingOptions {
@@ -518,6 +523,13 @@ declare module 'stripe' {
             template: string | null;
           }
         }
+      }
+
+      interface ManagedPayments {
+        /**
+         * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
+         */
+        enabled: boolean;
       }
 
       interface NameCollection {
@@ -666,6 +678,7 @@ declare module 'stripe' {
         | 'sofort'
         | 'swish'
         | 'twint'
+        | 'upi'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
@@ -1001,7 +1014,7 @@ declare module 'stripe' {
           }
 
           namespace Issuer {
-            type Type = 'account' | 'self';
+            type Type = 'account' | 'application' | 'self';
           }
         }
 

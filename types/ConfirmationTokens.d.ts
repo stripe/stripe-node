@@ -33,7 +33,7 @@ declare module 'stripe' {
       expires_at: number | null;
 
       /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
        */
       livemode: boolean;
 
@@ -303,6 +303,8 @@ declare module 'stripe' {
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
          */
         type: PaymentMethodPreview.Type;
+
+        upi?: PaymentMethodPreview.Upi;
 
         us_bank_account?: PaymentMethodPreview.UsBankAccount;
 
@@ -708,13 +710,6 @@ declare module 'stripe' {
                 reader?: string;
 
                 /**
-                 * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
-                 */
-                receipt: CardPresent.Receipt | null;
-
-                wallet?: CardPresent.Wallet;
-
-                /**
                  * Whether the PaymentIntent can be reauthorized or not.
                  */
                 reauthorization?: CardPresent.Reauthorization | null;
@@ -723,6 +718,13 @@ declare module 'stripe' {
                  * The time at which the associated PaymentIntent will transition to a terminal state if it is not reauthorized.
                  */
                 reauthorize_before?: number | null;
+
+                /**
+                 * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
+                 */
+                receipt: CardPresent.Receipt | null;
+
+                wallet?: CardPresent.Wallet;
               }
 
               namespace CardPresent {
@@ -1664,15 +1666,6 @@ declare module 'stripe' {
            * The connected account ID whose Stripe balance to use as the source of payment
            */
           account?: string | null;
-
-          /**
-           * The [source_type](https://docs.stripe.com/api/balance/balance_object#balance_object-available-source_types) of the balance
-           */
-          source_type: StripeBalance.SourceType | null;
-        }
-
-        namespace StripeBalance {
-          type SourceType = 'bank_account' | 'card' | 'fpx';
         }
 
         interface Swish {}
@@ -1737,9 +1730,17 @@ declare module 'stripe' {
           | 'stripe_balance'
           | 'swish'
           | 'twint'
+          | 'upi'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
+
+        interface Upi {
+          /**
+           * Customer's unique Virtual Payment Address
+           */
+          vpa: string | null;
+        }
 
         interface UsBankAccount {
           /**

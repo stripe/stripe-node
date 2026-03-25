@@ -38,12 +38,7 @@ declare module 'stripe' {
         events?: Array<PaymentEvaluation.Event>;
 
         /**
-         * Collection of scores and insights for this payment evaluation.
-         */
-        insights: PaymentEvaluation.Insights;
-
-        /**
-         * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+         * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
          */
         livemode: boolean;
 
@@ -61,6 +56,16 @@ declare module 'stripe' {
          * Payment details attached to this payment evaluation.
          */
         payment_details?: PaymentEvaluation.PaymentDetails;
+
+        /**
+         * Recommended action based on the score of the fraudulent_payment signal. Possible values are `block` and `continue`.
+         */
+        recommended_action: PaymentEvaluation.RecommendedAction;
+
+        /**
+         * Collection of signals for this payment evaluation.
+         */
+        signals: PaymentEvaluation.Signals;
       }
 
       namespace PaymentEvaluation {
@@ -257,36 +262,6 @@ declare module 'stripe' {
 
           namespace UserInterventionResolved {
             type Outcome = 'abandoned' | 'failed' | 'passed';
-          }
-        }
-
-        interface Insights {
-          /**
-           * The timestamp when the evaluation was performed.
-           */
-          evaluated_at: number;
-
-          /**
-           * Scores, insights and recommended action for one scorer for this PaymentEvaluation.
-           */
-          fraudulent_dispute: Insights.FraudulentDispute;
-        }
-
-        namespace Insights {
-          interface FraudulentDispute {
-            /**
-             * Recommended action based on the risk score. Possible values are `block` and `continue`.
-             */
-            recommended_action: FraudulentDispute.RecommendedAction;
-
-            /**
-             * Stripe Radar's evaluation of the risk level of the payment. Possible values for evaluated payments are between 0 and 100, with higher scores indicating higher risk.
-             */
-            risk_score: number;
-          }
-
-          namespace FraudulentDispute {
-            type RecommendedAction = 'block' | 'continue';
           }
         }
 
@@ -565,6 +540,38 @@ declare module 'stripe' {
              * Shipping phone number.
              */
             phone: string | null;
+          }
+        }
+
+        type RecommendedAction = 'block' | 'continue';
+
+        interface Signals {
+          /**
+           * A payment evaluation signal with evaluated_at, risk_level, and score fields.
+           */
+          fraudulent_payment: Signals.FraudulentPayment;
+        }
+
+        namespace Signals {
+          interface FraudulentPayment {
+            /**
+             * The time when this signal was evaluated.
+             */
+            evaluated_at: number;
+
+            /**
+             * Risk level of this signal, based on the score.
+             */
+            risk_level: FraudulentPayment.RiskLevel;
+
+            /**
+             * Score for this insight. Possible values for evaluated payments are -1 and any value between 0 and 100. The value is returned with two decimal places. A score of -1 indicates a test integration and higher scores indicate a higher likelihood of the signal being true.
+             */
+            score: number;
+          }
+
+          namespace FraudulentPayment {
+            type RiskLevel = 'elevated' | 'highest' | 'normal';
           }
         }
       }

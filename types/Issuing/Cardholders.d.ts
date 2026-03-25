@@ -42,7 +42,7 @@ declare module 'stripe' {
         individual: Cardholder.Individual | null;
 
         /**
-         * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+         * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
          */
         livemode: boolean;
 
@@ -62,7 +62,7 @@ declare module 'stripe' {
         phone_number: string | null;
 
         /**
-         * The cardholder's preferred locales (languages), ordered by preference. Locales can be `de`, `en`, `es`, `fr`, or `it`.
+         * The cardholder's preferred locales (languages), ordered by preference. Locales can be `da`, `de`, `en`, `es`, `fr`, `it`, `pl`, or `sv`.
          *  This changes the language of the [3D Secure flow](https://docs.stripe.com/issuing/3d-secure) and one-time password messages sent to the cardholder.
          */
         preferred_locales: Array<Cardholder.PreferredLocale> | null;
@@ -190,7 +190,15 @@ declare module 'stripe' {
           }
         }
 
-        type PreferredLocale = 'de' | 'en' | 'es' | 'fr' | 'it';
+        type PreferredLocale =
+          | 'da'
+          | 'de'
+          | 'en'
+          | 'es'
+          | 'fr'
+          | 'it'
+          | 'pl'
+          | 'sv';
 
         interface Requirements {
           /**

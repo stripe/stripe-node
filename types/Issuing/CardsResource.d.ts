@@ -40,6 +40,11 @@ declare module 'stripe' {
         financial_account?: string;
 
         /**
+         * Rules that control the lifecycle of this card, such as automatic cancellation. Refer to our [documentation](https://docs.stripe.com/issuing/controls/lifecycle-controls) for more details.
+         */
+        lifecycle_controls?: CardCreateParams.LifecycleControls;
+
+        /**
          * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -86,6 +91,22 @@ declare module 'stripe' {
       }
 
       namespace CardCreateParams {
+        interface LifecycleControls {
+          /**
+           * Cancels the card after the specified conditions are met.
+           */
+          cancel_after: LifecycleControls.CancelAfter;
+        }
+
+        namespace LifecycleControls {
+          interface CancelAfter {
+            /**
+             * The card is automatically cancelled when it makes this number of non-zero payment authorizations and transactions. The count includes penny authorizations, but doesn't include non-payment actions, such as authorization advice.
+             */
+            payment_count: number;
+          }
+        }
+
         interface Pin {
           /**
            * The card's desired new PIN, encrypted under Stripe's public key.
