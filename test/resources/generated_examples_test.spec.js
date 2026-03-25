@@ -4272,7 +4272,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/billing/intents',
         response:
-          '{"data":[{"amount_details":{"amount_due":"amount_due","currency":"usd","customer_balance_applied":"customer_balance_applied","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"},"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"},"livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const intents = await stripe.v2.billing.intents.list();
@@ -4285,7 +4285,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/intents',
         response:
-          '{"amount_details":{"amount_due":"amount_due","currency":"usd","customer_balance_applied":"customer_balance_applied","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"},"livemode":true}',
+          '{"amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"},"livemode":true}',
       },
     ]);
     const intent = await stripe.v2.billing.intents.create({
@@ -4378,6 +4378,9 @@ describe('Generated tests', function() {
                       credit_proration_behavior: 'prorated',
                       debit_proration_behavior: 'none',
                     },
+                    recurring_credit_grant: {
+                      create_behavior: 'none',
+                    },
                   },
                 ],
               },
@@ -4418,6 +4421,9 @@ describe('Generated tests', function() {
                     license_fee: {
                       debit_proration_behavior: 'none',
                     },
+                    recurring_credit_grant: {
+                      create_behavior: 'none',
+                    },
                   },
                 ],
               },
@@ -4453,7 +4459,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/billing/intents/id_123',
         response:
-          '{"amount_details":{"amount_due":"amount_due","currency":"usd","customer_balance_applied":"customer_balance_applied","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"},"livemode":true}',
+          '{"amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"},"livemode":true}',
       },
     ]);
     const intent = await stripe.v2.billing.intents.retrieve('id_123');
@@ -4466,7 +4472,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/intents/id_123/cancel',
         response:
-          '{"amount_details":{"amount_due":"amount_due","currency":"usd","customer_balance_applied":"customer_balance_applied","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"},"livemode":true}',
+          '{"amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"},"livemode":true}',
       },
     ]);
     const intent = await stripe.v2.billing.intents.cancel('id_123');
@@ -4479,7 +4485,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/intents/id_123/commit',
         response:
-          '{"amount_details":{"amount_due":"amount_due","currency":"usd","customer_balance_applied":"customer_balance_applied","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"},"livemode":true}',
+          '{"amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"},"livemode":true}',
       },
     ]);
     const intent = await stripe.v2.billing.intents.commit('id_123');
@@ -4492,7 +4498,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/intents/id_123/release_reservation',
         response:
-          '{"amount_details":{"amount_due":"amount_due","currency":"usd","customer_balance_applied":"customer_balance_applied","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"},"livemode":true}',
+          '{"amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"},"livemode":true}',
       },
     ]);
     const intent = await stripe.v2.billing.intents.releaseReservation('id_123');
@@ -4505,7 +4511,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/intents/id_123/reserve',
         response:
-          '{"amount_details":{"amount_due":"amount_due","currency":"usd","customer_balance_applied":"customer_balance_applied","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"},"livemode":true}',
+          '{"amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"expires_at":"1970-01-10T15:36:51.170Z"},"livemode":true}',
       },
     ]);
     const intent = await stripe.v2.billing.intents.reserve('id_123');

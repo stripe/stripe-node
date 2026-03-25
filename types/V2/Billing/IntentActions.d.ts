@@ -496,6 +496,11 @@ declare module 'stripe' {
                    * Overrides the behavior for license fee components when the action takes effect during the service period.
                    */
                   license_fee?: PartialPeriodBehavior.LicenseFee;
+
+                  /**
+                   * Overrides the behavior for recurring credit grant components when the action takes effect during the service period.
+                   */
+                  recurring_credit_grant?: PartialPeriodBehavior.RecurringCreditGrant;
                 }
 
                 namespace PartialPeriodBehavior {
@@ -515,6 +520,17 @@ declare module 'stripe' {
                     type CreditProrationBehavior = 'none' | 'prorated';
 
                     type DebitProrationBehavior = 'none' | 'prorated';
+                  }
+
+                  interface RecurringCreditGrant {
+                    /**
+                     * Controls credit grant creation behavior during partial periods. If not specified, defaults to full_credits.
+                     */
+                    create_behavior: RecurringCreditGrant.CreateBehavior;
+                  }
+
+                  namespace RecurringCreditGrant {
+                    type CreateBehavior = 'full_credits' | 'none';
                   }
 
                   type Type = 'license_fee' | 'recurring_credit_grant';
@@ -685,6 +701,11 @@ declare module 'stripe' {
                    * Overrides the behavior for license fee components when the action takes effect during the service period.
                    */
                   license_fee?: PartialPeriodBehavior.LicenseFee;
+
+                  /**
+                   * Overrides the behavior for recurring credit grant components when the action takes effect during the service period.
+                   */
+                  recurring_credit_grant?: PartialPeriodBehavior.RecurringCreditGrant;
                 }
 
                 namespace PartialPeriodBehavior {
@@ -697,6 +718,17 @@ declare module 'stripe' {
 
                   namespace LicenseFee {
                     type DebitProrationBehavior = 'none' | 'prorated';
+                  }
+
+                  interface RecurringCreditGrant {
+                    /**
+                     * Controls credit grant creation behavior during partial periods. If not specified, defaults to full_credits.
+                     */
+                    create_behavior: RecurringCreditGrant.CreateBehavior;
+                  }
+
+                  namespace RecurringCreditGrant {
+                    type CreateBehavior = 'full_credits' | 'none';
                   }
 
                   type Type = 'license_fee' | 'recurring_credit_grant';

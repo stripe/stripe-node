@@ -2077,6 +2077,16 @@ declare module 'stripe' {
                 card_creator?: TermsOfService.CardCreator;
 
                 /**
+                 * Details on the Account's acceptance of Consumer-privacy-disclosures-specific terms of service.
+                 */
+                consumer_privacy_disclosures?: TermsOfService.ConsumerPrivacyDisclosures;
+
+                /**
+                 * Details on the Account's acceptance of Consumer-storer-specific terms of service.
+                 */
+                consumer_storer?: TermsOfService.ConsumerStorer;
+
+                /**
                  * Details on the Account's acceptance of Crypto-storer-specific terms of service.
                  */
                 crypto_storer?: TermsOfService.CryptoStorer;
@@ -3048,6 +3058,40 @@ declare module 'stripe' {
                       }
                     }
                   }
+                }
+
+                interface ConsumerPrivacyDisclosures {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                interface ConsumerStorer {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
                 }
 
                 interface CryptoStorer {
@@ -6394,6 +6438,16 @@ declare module 'stripe' {
                 card_creator?: TermsOfService.CardCreator;
 
                 /**
+                 * Details on the Account's acceptance of Consumer-privacy-disclosures-specific terms of service.
+                 */
+                consumer_privacy_disclosures?: TermsOfService.ConsumerPrivacyDisclosures;
+
+                /**
+                 * Details on the Account's acceptance of Consumer-storer-specific terms of service.
+                 */
+                consumer_storer?: TermsOfService.ConsumerStorer;
+
+                /**
                  * Details on the Account's acceptance of Crypto-storer-specific terms of service.
                  */
                 crypto_storer?: TermsOfService.CryptoStorer;
@@ -7365,6 +7419,40 @@ declare module 'stripe' {
                       }
                     }
                   }
+                }
+
+                interface ConsumerPrivacyDisclosures {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                interface ConsumerStorer {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
                 }
 
                 interface CryptoStorer {
