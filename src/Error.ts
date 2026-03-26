@@ -67,36 +67,8 @@ export const generateV2Error = (
     case 'idempotency_error':
       return new StripeIdempotencyError(rawStripeError);
     // switchCases: The beginning of the section generated from our OpenAPI spec
-    case 'already_canceled':
-      return new AlreadyCanceledError(rawStripeError);
-    case 'already_exists':
-      return new AlreadyExistsError(rawStripeError);
-    case 'blocked_by_stripe':
-      return new BlockedByStripeError(rawStripeError);
-    case 'controlled_by_alternate_resource':
-      return new ControlledByAlternateResourceError(rawStripeError);
-    case 'controlled_by_dashboard':
-      return new ControlledByDashboardError(rawStripeError);
-    case 'feature_not_enabled':
-      return new FeatureNotEnabledError(rawStripeError);
-    case 'financial_account_not_open':
-      return new FinancialAccountNotOpenError(rawStripeError);
-    case 'insufficient_funds':
-      return new InsufficientFundsError(rawStripeError);
-    case 'invalid_payment_method':
-      return new InvalidPaymentMethodError(rawStripeError);
-    case 'invalid_payout_method':
-      return new InvalidPayoutMethodError(rawStripeError);
-    case 'non_zero_balance':
-      return new NonZeroBalanceError(rawStripeError);
-    case 'not_cancelable':
-      return new NotCancelableError(rawStripeError);
-    case 'quota_exceeded':
-      return new QuotaExceededError(rawStripeError);
     case 'rate_limit':
       return new RateLimitError(rawStripeError);
-    case 'recipient_not_notifiable':
-      return new RecipientNotNotifiableError(rawStripeError);
     case 'temporary_session_expired':
       return new TemporarySessionExpiredError(rawStripeError);
     // switchCases: The end of the section generated from our OpenAPI spec
@@ -142,7 +114,6 @@ export class StripeError extends Error {
   constructor(raw: StripeRawError = {}, type: string | null = null) {
     super(raw.message);
     this.type = type || this.constructor.name;
-
     this.raw = raw;
     this.rawType = raw.type;
     this.code = raw.code;
@@ -176,8 +147,10 @@ export class StripeError extends Error {
  * some reason.
  */
 export class StripeCardError extends StripeError {
+  readonly decline_code: string;
   constructor(raw: StripeRawError = {}) {
     super(raw, 'StripeCardError');
+    this.decline_code = raw.decline_code ?? '';
   }
 }
 
@@ -346,82 +319,9 @@ export class StripeUnsupportedResponseTypeError extends StripeOAuthError {
 }
 
 // classDefinitions: The beginning of the section generated from our OpenAPI spec
-export class AlreadyCanceledError extends StripeError {
-  constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'AlreadyCanceledError');
-  }
-}
-export class AlreadyExistsError extends StripeError {
-  constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'AlreadyExistsError');
-  }
-}
-export class BlockedByStripeError extends StripeError {
-  constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'BlockedByStripeError');
-  }
-}
-export class ControlledByAlternateResourceError extends StripeError {
-  constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'ControlledByAlternateResourceError');
-  }
-}
-export class ControlledByDashboardError extends StripeError {
-  constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'ControlledByDashboardError');
-  }
-}
-export class FeatureNotEnabledError extends StripeError {
-  constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'FeatureNotEnabledError');
-  }
-}
-export class FinancialAccountNotOpenError extends StripeError {
-  constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'FinancialAccountNotOpenError');
-  }
-}
-export class InsufficientFundsError extends StripeError {
-  constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'InsufficientFundsError');
-  }
-}
-export class InvalidPaymentMethodError extends StripeError {
-  invalid_param: any /* TODO: support nested types in errors */;
-  constructor(rawStripeError: StripeRawError) {
-    super(rawStripeError, 'InvalidPaymentMethodError');
-    // @ts-ignore
-    this.invalid_param = this.raw.invalid_param;
-  }
-}
-export class InvalidPayoutMethodError extends StripeError {
-  constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'InvalidPayoutMethodError');
-  }
-}
-export class NonZeroBalanceError extends StripeError {
-  constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'NonZeroBalanceError');
-  }
-}
-export class NotCancelableError extends StripeError {
-  constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'NotCancelableError');
-  }
-}
-export class QuotaExceededError extends StripeError {
-  constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'QuotaExceededError');
-  }
-}
 export class RateLimitError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'RateLimitError');
-  }
-}
-export class RecipientNotNotifiableError extends StripeError {
-  constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'RecipientNotNotifiableError');
   }
 }
 export class TemporarySessionExpiredError extends StripeError {

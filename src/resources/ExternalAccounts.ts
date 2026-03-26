@@ -1,21 +1,7 @@
 // File generated from our OpenAPI spec
 
-import {StripeResource} from '../StripeResource.js';
-const stripeMethod = StripeResource.method;
-export const ExternalAccounts = StripeResource.extend({
-  create: stripeMethod({method: 'POST', fullPath: '/v1/external_accounts'}),
-  retrieve: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/external_accounts/{id}',
-  }),
-  update: stripeMethod({
-    method: 'POST',
-    fullPath: '/v1/external_accounts/{id}',
-  }),
-  list: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/external_accounts',
-    methodType: 'list',
-  }),
-  del: stripeMethod({method: 'DELETE', fullPath: '/v1/external_accounts/{id}'}),
-});
+import {BankAccount, DeletedBankAccount} from './BankAccounts.js';
+import {Card, DeletedCard} from './Cards.js';
+import {RequestOptions} from '../lib.js';
+export type ExternalAccount = BankAccount | Card;
+export type DeletedExternalAccount = DeletedBankAccount | DeletedCard;

@@ -1,4 +1,4 @@
-import {StripeObject} from './Types.js';
+import {Stripe} from './stripe.core.js';
 
 // this is an internal-only type; we write a user-facing one separately
 type HandlerCallback = (event: any, client: any) => Promise<void>;
@@ -85,7 +85,7 @@ export class StripeEventNotificationHandler {
 
   // eslint-disable-next-line no-useless-constructor
   constructor(
-    private client: StripeObject,
+    private client: Stripe,
     private webhookSecret: string,
     private fallbackCallback: (
       event: any,

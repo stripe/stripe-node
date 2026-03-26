@@ -5,6 +5,7 @@ esm
 tags
 .nyc_output
 coverage
+.DS_Store
 .idea
 testProjects/**/node_modules
 testProjects/**/dist
