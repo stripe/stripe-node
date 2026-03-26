@@ -47,3 +47,5 @@ exampleFunction({
   confirm: true,
   payment_method: 'pm_card_visa',
 });
+
+Stripe.Decimal.from('1.0');
