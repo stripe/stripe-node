@@ -8,6 +8,8 @@ const stripe = new Stripe("i'm not a real key", {
   protocol: 'http',
 });
 
+Stripe.Decimal.from('1.9');
+
 try {
   throw new stripe.errors.StripeAPIError({
     charge: 'foo',
