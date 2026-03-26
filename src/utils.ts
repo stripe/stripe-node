@@ -1,4 +1,5 @@
 import {
+  BaseAddress,
   RequestData,
   UrlInterpolator,
   RequestArgs,
@@ -17,7 +18,7 @@ const OPTIONS_KEYS = [
   'apiVersion',
   'maxNetworkRetries',
   'timeout',
-  'host',
+  'apiBase',
   'authenticator',
   'stripeContext',
   'headers',
@@ -32,7 +33,7 @@ type Settings = {
 
 type Options = {
   authenticator?: RequestAuthenticator | null;
-  host: string | null;
+  apiBase: BaseAddress | null;
   settings: Settings;
   streaming?: boolean;
   headers: RequestHeaders;
@@ -216,7 +217,7 @@ export function getDataFromArgs(args: RequestArgs): RequestData {
  */
 export function getOptionsFromArgs(args: RequestArgs): Options {
   const opts: Options = {
-    host: null,
+    apiBase: null,
     headers: {},
     settings: {},
     streaming: false,
@@ -264,8 +265,8 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
       if (Number.isInteger(params.timeout)) {
         opts.settings.timeout = params.timeout as number;
       }
-      if (params.host) {
-        opts.host = params.host as string;
+      if (params.apiBase) {
+        opts.apiBase = params.apiBase as BaseAddress;
       }
       if (params.authenticator) {
         if (params.apiKey) {

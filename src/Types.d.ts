@@ -10,6 +10,7 @@ import {StripeContext} from './StripeContext.js';
 
 export type AppInfo = {name?: string} & Record<string, unknown>;
 export type ApiMode = 'v1' | 'v2';
+export type BaseAddress = 'api' | 'files' | 'connect' | 'meter_events';
 export type BufferedFile = {
   name: string;
   type: string;
@@ -31,7 +32,7 @@ export type MethodSpec = {
   validator?: (data: RequestData, options: {headers: RequestHeaders}) => void;
   headers?: Record<string, string>;
   streaming?: boolean;
-  host?: string;
+  apiBase?: BaseAddress;
   transformResponseData?: (response: HttpClientResponseInterface) => any;
   usage?: Array<string>;
   requestSchema?: V2RuntimeSchema;
@@ -141,6 +142,7 @@ export type StripeObject = {
   getMaxNetworkRetryDelay: () => number;
   getMaxNetworkRetries: () => number;
   getConstant: <T = string>(name: string) => T;
+  resolveBaseAddress: (apiBase: string) => string;
   _setApiField: <K extends keyof StripeObject['_api']>(
     name: K,
     value: StripeObject['_api'][K]

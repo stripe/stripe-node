@@ -159,11 +159,6 @@ declare module 'stripe' {
        * Specify a timeout for this request in milliseconds.
        */
       timeout?: number;
-
-      /**
-       * Specify the host for this request.
-       */
-      host?: string;
     }
 
     export type RawRequestOptions = RequestOptions & {
@@ -171,6 +166,12 @@ declare module 'stripe' {
        * Specify additional request headers. This is an experimental interface and is not yet stable.
        */
       additionalHeaders?: {[headerName: string]: string};
+
+      /**
+       * Specify which Stripe API base address to send this request to.
+       * Allowed values: 'api', 'files', 'connect', 'meter_events'.
+       */
+      apiBase?: 'api' | 'files' | 'connect' | 'meter_events';
     };
 
     export type Response<T> = T & {

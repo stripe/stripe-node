@@ -6,6 +6,6 @@ export const MeterEventStream = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
     fullPath: '/v2/billing/meter_event_stream',
-    host: 'meter-events.stripe.com',
+    apiBase: 'meter-events.stripe.com',
   }),
 });

@@ -734,22 +734,15 @@ describe('RequestSender', () => {
         );
       });
 
-      it('allows overriding host', (done) => {
-        const scope = nock('https://myhost')
+      it('does not allow overriding host per-request', (done) => {
+        const scope = nock('https://api.stripe.com')
           .get('/v1/accounts/acct_123')
           .reply(200, '{}');
 
-        realStripe.accounts.retrieve(
-          'acct_123',
-          {},
-          {
-            host: 'myhost',
-          },
-          (err, response) => {
-            done(err);
-            scope.done();
-          }
-        );
+        realStripe.accounts.retrieve('acct_123', {}, (err, response) => {
+          done(err);
+          scope.done();
+        });
       });
 
       it('sends with APIVersion in header', (done) => {
@@ -779,7 +772,7 @@ describe('RequestSender', () => {
             '/v1/files/file_1Mr4LDLkdIwHu7ixFCz0dZiH/contents',
             {},
             {
-              host: 'files.stripe.com',
+              apiBase: 'files',
               streaming: true,
             }
           )

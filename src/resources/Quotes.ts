@@ -817,7 +817,7 @@ export const Quotes = StripeResource.extend({
   pdf: stripeMethod({
     method: 'GET',
     fullPath: '/v1/quotes/{quote}/pdf',
-    host: 'files.stripe.com',
+    apiBase: 'files.stripe.com',
     streaming: true,
   }),
 });

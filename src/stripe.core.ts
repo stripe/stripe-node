@@ -31,6 +31,13 @@ const DEFAULT_API_VERSION = ApiVersion;
 
 const DEFAULT_TIMEOUT = 80000;
 
+const DEFAULT_BASE_ADDRESSES: Record<string, string> = {
+  api: 'api.stripe.com',
+  files: 'files.stripe.com',
+  connect: 'connect.stripe.com',
+  meter_events: 'meter-events.stripe.com',
+};
+
 const MAX_NETWORK_RETRY_DELAY_SEC = 5;
 const INITIAL_NETWORK_RETRY_DELAY_SEC = 0.5;
 
@@ -320,6 +327,8 @@ export function createStripe(
           return DEFAULT_API_VERSION;
         case 'DEFAULT_TIMEOUT':
           return DEFAULT_TIMEOUT;
+        case 'DEFAULT_BASE_ADDRESSES':
+          return DEFAULT_BASE_ADDRESSES;
         case 'MAX_NETWORK_RETRY_DELAY_SEC':
           return MAX_NETWORK_RETRY_DELAY_SEC;
         case 'INITIAL_NETWORK_RETRY_DELAY_SEC':
@@ -352,6 +361,18 @@ export function createStripe(
 
     getInitialNetworkRetryDelay(): number {
       return INITIAL_NETWORK_RETRY_DELAY_SEC;
+    },
+
+    resolveBaseAddress(apiBase: string): string {
+      const host = DEFAULT_BASE_ADDRESSES[apiBase];
+      if (!host) {
+        throw new Error(
+          `Invalid apiBase "${apiBase}". Allowed values are: ${Object.keys(
+            DEFAULT_BASE_ADDRESSES
+          ).join(', ')}`
+        );
+      }
+      return host;
     },
 
     /**

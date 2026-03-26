@@ -10,7 +10,7 @@ export const Files = StripeResource.extend({
     headers: {
       'Content-Type': 'multipart/form-data',
     },
-    host: 'files.stripe.com',
+    apiBase: 'files',
   }),
   retrieve: stripeMethod({method: 'GET', fullPath: '/v1/files/{file}'}),
   list: stripeMethod({

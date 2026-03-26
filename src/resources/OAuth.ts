@@ -17,8 +17,6 @@ type OAuthDeauthorizeParams = {
 
 const stripeMethod = StripeResource.method;
 
-const oAuthHost = 'connect.stripe.com';
-
 export const OAuth = StripeResource.extend({
   basePath: '/',
 
@@ -48,13 +46,16 @@ export const OAuth = StripeResource.extend({
       params.scope = 'read_write';
     }
 
-    return `https://${oAuthHost}/${path}?${queryStringifyRequestData(params)}`;
+    const connectHost = this._stripe.resolveBaseAddress('connect');
+    return `https://${connectHost}/${path}?${queryStringifyRequestData(
+      params
+    )}`;
   },
 
   token: stripeMethod({
     method: 'POST',
     path: 'oauth/token',
-    host: oAuthHost,
+    apiBase: 'connect',
   }),
 
   deauthorize(spec: OAuthDeauthorizeParams, ...args: any[]) {
@@ -65,7 +66,7 @@ export const OAuth = StripeResource.extend({
     return stripeMethod({
       method: 'POST',
       path: 'oauth/deauthorize',
-      host: oAuthHost,
+      apiBase: 'connect',
     }).apply(this, [spec, ...args]);
   },
 });

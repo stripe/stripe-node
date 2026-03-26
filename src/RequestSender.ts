@@ -509,6 +509,9 @@ export class RequestSender {
         const headers = calculatedOptions.headers;
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const authenticator: RequestAuthenticator = calculatedOptions.authenticator!;
+        const host = calculatedOptions.apiBase
+          ? this._stripe.resolveBaseAddress(calculatedOptions.apiBase)
+          : null;
         opts = {
           requestMethod,
           requestPath: path,
@@ -516,7 +519,7 @@ export class RequestSender {
           queryData: {},
           authenticator,
           headers,
-          host: calculatedOptions.host,
+          host,
           streaming: !!calculatedOptions.streaming,
           settings: {},
           // We use this for thin event internals, so we should record the more specific `usage`, when available
@@ -610,8 +613,11 @@ export class RequestSender {
           ? options.settings.timeout
           : this._stripe.getApiField('timeout');
 
+      const instanceHost = this._stripe.getApiField('host');
+      const defaultHost = this._stripe.getConstant('DEFAULT_HOST') as string;
+      const useInstanceHost = instanceHost !== defaultHost;
       const request = <StripeRequest>{
-        host: host || this._stripe.getApiField('host'),
+        host: useInstanceHost ? instanceHost : host || instanceHost,
         port: this._stripe.getApiField('port'),
         path: path,
         method: method,

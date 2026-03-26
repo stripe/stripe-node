@@ -88,24 +88,22 @@ describe('StripeResource', () => {
     });
   });
 
-  describe('custom host on method', () => {
+  describe('custom apiBase on method', () => {
     const makeResource = (stripe) => {
       return new (StripeResource.extend({
         path: 'resourceWithHost',
 
         testMethod: stripeMethod({
           method: 'GET',
-          host: 'some.host.stripe.com',
+          apiBase: 'files',
         }),
       }))(stripe);
     };
 
-    it('is not impacted by the global host', (done) => {
-      const stripe = require('../src/stripe.cjs.node.js')('sk_test', {
-        host: 'bad.host.stripe.com',
-      });
+    it('sends to the correct base address', (done) => {
+      const stripe = require('../src/stripe.cjs.node.js')('sk_test');
 
-      const scope = nock('https://some.host.stripe.com')
+      const scope = nock('https://files.stripe.com')
         .get('/v1/resourceWithHost')
         .reply(200, '{}');
 
@@ -115,20 +113,35 @@ describe('StripeResource', () => {
       });
     });
 
-    it('still lets users override the host on a per-request basis', (done) => {
-      const stripe = require('../src/stripe.cjs.node.js')('sk_test');
+    it('custom instance host overrides apiBase', (done) => {
+      const stripe = require('../src/stripe.cjs.node.js')('sk_test', {
+        host: 'custom.host.stripe.com',
+      });
 
-      const scope = nock('https://some.other.host.stripe.com')
+      const scope = nock('https://custom.host.stripe.com')
         .get('/v1/resourceWithHost')
         .reply(200, '{}');
 
-      makeResource(stripe).testMethod(
-        {},
-        {host: 'some.other.host.stripe.com'},
-        (err, response) => {
-          done(err);
-          scope.done();
-        }
+      makeResource(stripe).testMethod({}, (err, response) => {
+        done(err);
+        scope.done();
+      });
+    });
+
+    it('rejects invalid apiBase values', () => {
+      const stripe = require('../src/stripe.cjs.node.js')('sk_test');
+
+      const resource = new (StripeResource.extend({
+        path: 'resourceWithHost',
+
+        testMethod: stripeMethod({
+          method: 'GET',
+          apiBase: 'evil.com' as any,
+        }),
+      }))(stripe);
+
+      return expect(resource.testMethod({})).to.be.rejectedWith(
+        /Invalid apiBase/
       );
     });
   });
@@ -172,7 +185,7 @@ describe('StripeResource', () => {
 
         pdf: stripeMethod({
           method: 'GET',
-          host: 'files.stripe.com',
+          apiBase: 'files',
           streaming: true,
         }),
       }))(stripe);
@@ -192,7 +205,7 @@ describe('StripeResource', () => {
           return callback(err);
         }
 
-        return foos.pdf({id: 'foo_123'}, {host: 'localhost'}, (err, res) => {
+        return foos.pdf({id: 'foo_123'}, (err, res) => {
           closeServer();
           if (err) {
             return callback(err);
@@ -228,7 +241,7 @@ describe('StripeResource', () => {
             'GET',
             '/v1/files/file_123/contents',
             {},
-            {host: 'localhost', streaming: true}
+            {streaming: true}
           )
           .then((result) => {
             closeServer();
@@ -270,17 +283,13 @@ describe('StripeResource', () => {
 
         const foos = makeResourceWithPDFMethod(stripe);
 
-        return foos.pdf(
-          {id: 'foo_123'},
-          {host: 'localhost', maxNetworkRetries: 1},
-          (err, res) => {
-            closeServer();
-            expect(err).to.exist;
-            expect(err.raw.type).to.equal('api_error');
-            expect(err.raw.message).to.equal('this is bad');
-            return callback();
-          }
-        );
+        return foos.pdf({id: 'foo_123'}, {maxNetworkRetries: 1}, (err, res) => {
+          closeServer();
+          expect(err).to.exist;
+          expect(err.raw.type).to.equal('api_error');
+          expect(err.raw.message).to.equal('this is bad');
+          return callback();
+        });
       });
     });
   });
