@@ -73,7 +73,7 @@ export interface DecimalRoundingOptions {
  * {@link DecimalImpl.round}:
  *
  * ```ts
- * declare module '@stripe/apps-extensibility-sdk/stdlib' {
+ * declare module '@stripe/extensibility-sdk/stdlib' {
  *   interface DecimalRoundingPresets {
  *     'my-custom-preset': DecimalRoundingOptions;
  *   }
@@ -1015,7 +1015,7 @@ class DecimalImpl {
  *
  * @example
  * ```ts
- * import { Decimal, RoundDirection } from '@stripe/apps-extensibility-sdk/stdlib';
+ * import { Decimal, RoundDirection } from '@stripe/extensibility-sdk/stdlib';
  *
  * const price = Decimal.from('19.99');
  * const tax   = price.mul(Decimal.from('0.0825'));
