@@ -114,7 +114,6 @@ export class StripeError extends Error {
   constructor(raw: StripeRawError = {}, type: string | null = null) {
     super(raw.message);
     this.type = type || this.constructor.name;
-
     this.raw = raw;
     this.rawType = raw.type;
     this.code = raw.code;
@@ -148,8 +147,10 @@ export class StripeError extends Error {
  * some reason.
  */
 export class StripeCardError extends StripeError {
+  readonly decline_code: string;
   constructor(raw: StripeRawError = {}) {
     super(raw, 'StripeCardError');
+    this.decline_code = raw.decline_code ?? '';
   }
 }
 
