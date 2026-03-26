@@ -1,5 +1,8 @@
 # Changelog
 
+## 21.0.1 - 2026-03-26
+* [#2626](https://github.com/stripe/stripe-node/pull/2626) Fix export for Stripe.Decimal in CJS and ESM. Resolves [#2625](https://github.com/stripe/stripe-node/issues/2625)
+
 ## 21.0.0 - 2026-03-25
 
 This release changes the pinned API version to `2026-03-25.dahlia` and contains breaking changes (prefixed with ⚠️ below). There's also a [detailed migration guide](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v21) to simplify your upgrade process.

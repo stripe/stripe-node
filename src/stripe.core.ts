@@ -62,7 +62,7 @@ export function createStripe(
   platformFunctions: PlatformFunctions,
   requestSender: RequestSenderFactory = defaultRequestSenderFactory
 ): typeof Stripe {
-  Stripe.PACKAGE_VERSION = '21.0.0';
+  Stripe.PACKAGE_VERSION = '21.0.1';
   Stripe.API_VERSION = ApiVersion;
   const aiAgent =
     typeof process !== 'undefined' && process.env
