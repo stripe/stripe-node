@@ -49,6 +49,7 @@ assert(Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
 assert(Stripe.webhooks);
 assert(Stripe.resources);
+assert(Stripe.Decimal);
 
 const stripe = new Stripe(process.argv[2], {
   host: process.env.STRIPE_MOCK_HOST || 'localhost',
@@ -74,6 +75,8 @@ assert(stripe._emitter);
 assert(stripe.on);
 assert(stripe.off);
 assert(stripe.once);
+
+Stripe.Decimal.from('1.1');
 
 try {
   throw new stripe.errors.StripeError({

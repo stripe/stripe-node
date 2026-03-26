@@ -11,7 +11,7 @@ try {
   });
 } catch (e) {
   if (e instanceof stripe.errors.StripeError) {
-    console.log("Caught StripeError");
+    console.log('Caught StripeError');
   } else {
     throw e;
   }
@@ -22,7 +22,7 @@ async function exampleFunction(args) {
     await stripe.paymentIntents.create(args);
   } catch (e) {
     if (e instanceof stripe.errors.StripeInvalidRequestError) {
-      console.log("Caught StripeInvalidRequestError");
+      console.log('Caught StripeInvalidRequestError');
     } else {
       throw e;
     }
@@ -35,3 +35,5 @@ exampleFunction({
   confirm: true,
   payment_method: 'pm_card_visa',
 });
+
+stripe.Decimal.from('1.1');

@@ -13,6 +13,7 @@ import {
 import {createWebhooks} from './Webhooks.js';
 import {ApiVersion} from './apiVersion.js';
 import {CryptoProvider} from './crypto/CryptoProvider.js';
+import {Decimal} from './Decimal.js';
 import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import * as resources from './resources.js';
@@ -83,6 +84,7 @@ export function createStripe(
   Stripe.HttpClientResponse = HttpClientResponse;
   Stripe.CryptoProvider = CryptoProvider;
   Stripe.webhooks = createWebhooks(platformFunctions);
+  Stripe.Decimal = Decimal;
 
   function Stripe(
     this: StripeObject,
@@ -163,6 +165,8 @@ export function createStripe(
     // Expose StripeResource on the instance too
     // @ts-ignore
     this.StripeResource = Stripe.StripeResource;
+    // @ts-ignore
+    this.Decimal = Stripe.Decimal;
   }
 
   Stripe.errors = _Error;
