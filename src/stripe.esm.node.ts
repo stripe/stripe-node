@@ -22,7 +22,10 @@ import {
   pascalToCamelCase,
   validateInteger,
 } from './utils.js';
-import {StripeEventNotificationHandler} from './StripeEventNotificationHandler.js';
+import {
+  StripeEventNotificationHandler,
+  UnhandledNotificationDetails,
+} from './StripeEventNotificationHandler.js';
 import {
   Response,
   RequestOptions,
@@ -50,7 +53,11 @@ import {
   Emptyable,
   Decimal,
 } from './shared.js';
-import {EventNotification as V2EventNotification} from './resources/V2/Core/Events.js';
+import {
+  Events as V2Events,
+  EventNotificationBase,
+  EventNotification as V2EventNotification,
+} from './resources/V2/Core/Events.js';
 
 // StripeInstanceImports: The beginning of the section generated from our OpenAPI spec
 import {
@@ -1607,7 +1614,11 @@ export class Stripe {
 
   notificationHandler(
     webhookSecret: string,
-    fallbackCallback: any
+    fallbackCallback: (
+      event: V2Events.UnknownEventNotification,
+      client: Stripe,
+      details: UnhandledNotificationDetails
+    ) => Promise<void>
   ): StripeEventNotificationHandler {
     return new StripeEventNotificationHandler(
       this,
@@ -2467,6 +2478,7 @@ export declare namespace Stripe {
 
   export {StripeContext as StripeContextType};
   export {StripeRawError};
+  export {UnhandledNotificationDetails};
   export import ErrorType = _Error;
   export import Events = V2.Core.Events;
 }

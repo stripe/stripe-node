@@ -1,7 +1,26 @@
 import {Stripe} from './stripe.core.js';
+import {Events, EventNotificationBase} from './resources/V2/Core/Events.js';
+
+export interface UnhandledNotificationDetails {
+  isKnownEventType: boolean;
+}
+
+type FallbackCallback = (
+  event: Events.UnknownEventNotification,
+  client: Stripe,
+  details: UnhandledNotificationDetails
+) => Promise<void>;
 
 // this is an internal-only type; we write a user-facing one separately
 type HandlerCallback = (event: any, client: any) => Promise<void>;
+
+// event-notification-map: The beginning of the section generated from our OpenAPI spec
+interface EventNotificationMap {
+  'v1.billing.meter.error_report_triggered': Events.V1BillingMeterErrorReportTriggeredEventNotification;
+  'v1.billing.meter.no_meter_found': Events.V1BillingMeterNoMeterFoundEventNotification;
+  'v2.core.event_destination.ping': Events.V2CoreEventDestinationPingEventNotification;
+}
+// event-notification-map: The end of the section generated from our OpenAPI spec
 
 // most languages can check if we have an UnknownEventNotification at runtime
 // but JS only has interfaces so we fall back to a string match to determine known events
@@ -87,14 +106,18 @@ export class StripeEventNotificationHandler {
   constructor(
     private client: Stripe,
     private webhookSecret: string,
-    private fallbackCallback: (
-      event: any,
-      client: any,
-      details: any
-    ) => Promise<void>
+    private fallbackCallback: FallbackCallback
   ) {}
 
   // these types are duplicated in the manual types
+  public on<T extends keyof EventNotificationMap>(
+    type: T,
+    callback: (event: EventNotificationMap[T], client: Stripe) => Promise<void>
+  ): this;
+  public on(
+    type: string,
+    callback: (event: EventNotificationBase, client: Stripe) => Promise<void>
+  ): this;
   public on(type: string, callback: HandlerCallback): this {
     if (this.hasHandledEvent) {
       throw new Error(
@@ -144,9 +167,13 @@ export class StripeEventNotificationHandler {
     if (handler) {
       return await handler(event, eventClient);
     } else {
-      return await this.fallbackCallback(event, eventClient, {
-        isKnownEventType: KNOWN_EVENT_TYPES.has(event.type),
-      });
+      return await this.fallbackCallback(
+        event as Events.UnknownEventNotification,
+        eventClient,
+        {
+          isKnownEventType: KNOWN_EVENT_TYPES.has(event.type),
+        }
+      );
     }
   }
 }
