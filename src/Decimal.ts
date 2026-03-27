@@ -67,19 +67,6 @@ export interface DecimalRoundingOptions {
 /**
  * Built-in rounding presets keyed by semantic name.
  *
- * @remarks
- * This is an **open interface** — consumers can extend it via declaration
- * merging to register custom presets that are accepted by
- * {@link DecimalImpl.round}:
- *
- * ```ts
- * declare module '@stripe/apps-extensibility-sdk/stdlib' {
- *   interface DecimalRoundingPresets {
- *     'my-custom-preset': DecimalRoundingOptions;
- *   }
- * }
- * ```
- *
  * Built-in presets:
  *
  * | Preset              | Equivalent DecimalRoundingOptions                      |
@@ -1010,21 +997,6 @@ class DecimalImpl {
  * `Decimal`. The type carries two brand symbols so the type system
  * prevents accidental assignment from plain `number`, `string`, or
  * `bigint`.
- *
- * Create values via the companion object:
- *
- * @example
- * ```ts
- * import { Decimal, RoundDirection } from '@stripe/apps-extensibility-sdk/stdlib';
- *
- * const price = Decimal.from('19.99');
- * const tax   = price.mul(Decimal.from('0.0825'));
- * const total = price.add(tax);
- *
- * console.log(total.toFixed(2, 'half-up'));   // "21.64"
- * console.log(JSON.stringify({ total }));          // '{"total":"21.639175"}'
- * console.log(total.toFixed(2, 'half-even')); // "21.64"
- * ```
  *
  * @public
  */
