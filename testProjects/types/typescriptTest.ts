@@ -343,4 +343,5 @@ async (): Promise<void> => {
   let g: Stripe.V2.Core.Event;
 }
 
-Stripe.Decimal.from('1.0');
+// Verify Stripe.Decimal works as both a runtime call and a type annotation.
+const decimalInstance: Stripe.Decimal = Stripe.Decimal.from('1.0');

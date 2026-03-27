@@ -48,4 +48,6 @@ exampleFunction({
   payment_method: 'pm_card_visa',
 });
 
-Stripe.Decimal.from('1.0');
+// Verify Stripe.Decimal works as both a runtime call and a type annotation.
+const decimalInstance: Stripe.Decimal = Stripe.Decimal.from('1.0');
+console.log('Decimal:', decimalInstance.toString());

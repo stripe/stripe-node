@@ -34,8 +34,8 @@ for (const key of Object.getOwnPropertyNames(Stripe)) {
     });
   }
 }
-// Re-export the Stripe namespace types so that CJS consumers can use
-// Stripe.Decimal, Stripe.Account, etc. as types (e.g., `const d: Stripe.Decimal`).
+// Re-export the Decimal type so that CJS consumers can use
+// Stripe.Decimal as a type (e.g., `const d: Stripe.Decimal`).
 // Without this, `export =` only carries the function signature, not the
 // merged namespace from stripe.core.ts.
 declare namespace StripeConstructor {
