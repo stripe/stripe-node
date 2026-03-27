@@ -1,5 +1,6 @@
 import {NodePlatformFunctions} from './platform/NodePlatformFunctions.js';
 import {Stripe} from './stripe.core.js';
+import {Decimal} from './shared.js';
 
 // Initialize the Stripe class with Node platform functions
 Stripe.initialize(new NodePlatformFunctions());
@@ -33,5 +34,12 @@ for (const key of Object.getOwnPropertyNames(Stripe)) {
       configurable: true,
     });
   }
+}
+// Re-export the Stripe namespace types so that CJS consumers can use
+// Stripe.Decimal, Stripe.Account, etc. as types (e.g., `const d: Stripe.Decimal`).
+// Without this, `export =` only carries the function signature, not the
+// merged namespace from stripe.core.ts.
+declare namespace StripeConstructor {
+  export type Decimal = import('./shared.js').Decimal;
 }
 export = StripeConstructor;

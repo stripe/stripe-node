@@ -2453,6 +2453,8 @@ export declare namespace Stripe {
     Emptyable,
   };
 
+  export type Decimal = import('./shared.js').Decimal;
+
   export {StripeContext as StripeContextType};
   export {StripeRawError};
   export import ErrorType = _Error;
@@ -2461,4 +2463,5 @@ export declare namespace Stripe {
 
 Stripe.initialize(new NodePlatformFunctions());
 
+export {Decimal} from './shared.js';
 export default Stripe;
