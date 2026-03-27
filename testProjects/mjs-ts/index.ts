@@ -1,4 +1,4 @@
-import DefaultStripe, {Stripe} from 'stripe';
+import DefaultStripe, {Stripe, type Decimal} from 'stripe';
 
 const stripe = new Stripe(process.argv[2], {
   // if we specify a version, then our smoke tests fail every time there's a new API version being prepped
@@ -50,4 +50,6 @@ exampleFunction({
 
 // Verify Stripe.Decimal works as both a runtime call and a type annotation.
 const decimalInstance: Stripe.Decimal = Stripe.Decimal.from('1.0');
-console.log('Decimal:', decimalInstance.toString());
+// Verify named type import works: import type { Decimal } from 'stripe'
+const decimalViaNamedImport: Decimal = Stripe.Decimal.from('2.0');
+console.log('Decimal:', decimalInstance.toString(), decimalViaNamedImport.toString());
