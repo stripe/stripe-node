@@ -1,6 +1,5 @@
 import {NodePlatformFunctions} from './platform/NodePlatformFunctions.js';
 import {Stripe} from './stripe.core.js';
-import {Decimal} from './shared.js';
 
 // Initialize the Stripe class with Node platform functions
 Stripe.initialize(new NodePlatformFunctions());
