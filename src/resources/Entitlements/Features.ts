@@ -9,6 +9,7 @@ import {
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class FeatureResource extends StripeResource {
   /**
    * Retrieve a list of features

@@ -1,7 +1,27 @@
 // File generated from our OpenAPI spec
 
+import {StripeResource} from '../../StripeResource.js';
 import {Metadata} from '../../shared.js';
-import {RequestOptions} from '../../lib.js';
+import {RequestOptions, Response} from '../../lib.js';
+const stripeMethod = StripeResource.method;
+
+export class PlanResource extends StripeResource {
+  /**
+   * Retrieve a ReservePlan.
+   */
+  retrieve(
+    id: string,
+    params?: Reserve.PlanRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<Plan>>;
+  retrieve(id: string, options?: RequestOptions): Promise<Response<Plan>>;
+  retrieve(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'GET',
+      fullPath: '/v1/reserve/plans/{id}',
+    }).call(this, ...args);
+  }
+}
 export interface Plan {
   /**
    * Unique identifier for the object.
@@ -93,5 +113,13 @@ export namespace Reserve {
     export type Status = 'active' | 'disabled' | 'expired';
 
     export type Type = 'fixed_release' | 'rolling_release';
+  }
+}
+export namespace Reserve {
+  export interface PlanRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
   }
 }

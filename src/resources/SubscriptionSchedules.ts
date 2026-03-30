@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import * as crypto from 'crypto';
 import {StripeResource} from '../StripeResource.js';
 import {Discount} from './Discounts.js';
 import {Application, DeletedApplication} from './Applications.js';
@@ -13,6 +14,7 @@ import {Price, DeletedPrice} from './Prices.js';
 import {Coupon} from './Coupons.js';
 import {PromotionCode} from './PromotionCodes.js';
 import {Plan, DeletedPlan} from './Plans.js';
+import {Invoice} from './Invoices.js';
 import * as TestHelpers from './TestHelpers/index.js';
 import {
   Emptyable,
@@ -24,6 +26,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class SubscriptionScheduleResource extends StripeResource {
   /**
    * Retrieves the list of your subscription schedules.
@@ -165,6 +168,25 @@ export class SubscriptionScheduleResource extends StripeResource {
   }
 
   /**
+   * Amends an existing subscription schedule.
+   */
+  amend(
+    id: string,
+    params?: SubscriptionScheduleAmendParams,
+    options?: RequestOptions
+  ): Promise<Response<SubscriptionSchedule>>;
+  amend(
+    id: string,
+    options?: RequestOptions
+  ): Promise<Response<SubscriptionSchedule>>;
+  amend(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'POST',
+      fullPath: '/v1/subscription_schedules/{schedule}/amend',
+    }).call(this, ...args);
+  }
+
+  /**
    * Cancels a subscription schedule and its associated subscription immediately (if the subscription schedule has an active subscription). A subscription schedule can only be canceled if its status is not_started or active.
    */
   cancel(
@@ -201,6 +223,64 @@ export class SubscriptionScheduleResource extends StripeResource {
       fullPath: '/v1/subscription_schedules/{schedule}/release',
     }).call(this, ...args);
   }
+  serializeBatchCreate(
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = crypto.randomUUID();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const item: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    if (options.stripeContext) {
+      item.context = options.stripeContext;
+    }
+    return JSON.stringify(item);
+  }
+  serializeBatchUpdate(
+    schedule: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = crypto.randomUUID();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const item: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    item.path_params = {schedule: schedule};
+    if (options.stripeContext) {
+      item.context = options.stripeContext;
+    }
+    return JSON.stringify(item);
+  }
+  serializeBatchCancel(
+    schedule: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = crypto.randomUUID();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const item: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    item.path_params = {schedule: schedule};
+    if (options.stripeContext) {
+      item.context = options.stripeContext;
+    }
+    return JSON.stringify(item);
+  }
 }
 export interface SubscriptionSchedule {
   /**
@@ -217,6 +297,11 @@ export interface SubscriptionSchedule {
    * ID of the Connect Application that created the schedule.
    */
   application: string | Application | DeletedApplication | null;
+
+  /**
+   * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time. `prorate_up_front` will bill for all phases within the current billing cycle up front.
+   */
+  billing_behavior?: SubscriptionSchedule.BillingBehavior;
 
   /**
    * The billing mode of the subscription.
@@ -261,6 +346,11 @@ export interface SubscriptionSchedule {
   end_behavior: SubscriptionSchedule.EndBehavior;
 
   /**
+   * Details of the most recent price migration that failed for the subscription schedule.
+   */
+  last_price_migration_error?: SubscriptionSchedule.LastPriceMigrationError | null;
+
+  /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
    */
   livemode: boolean;
@@ -274,6 +364,11 @@ export interface SubscriptionSchedule {
    * Configuration for the subscription schedule's phases.
    */
   phases: Array<SubscriptionSchedule.Phase>;
+
+  /**
+   * Time period and invoice for a Subscription billed in advance.
+   */
+  prebilling?: SubscriptionSchedule.Prebilling | null;
 
   /**
    * Time at which the subscription schedule was released. Measured in seconds since the Unix epoch.
@@ -301,6 +396,8 @@ export interface SubscriptionSchedule {
   test_clock: string | TestHelpers.TestClock | null;
 }
 export namespace SubscriptionSchedule {
+  export type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
   export interface BillingMode {
     /**
      * Configure behavior for flexible billing mode
@@ -377,6 +474,23 @@ export namespace SubscriptionSchedule {
   }
 
   export type EndBehavior = 'cancel' | 'none' | 'release' | 'renew';
+
+  export interface LastPriceMigrationError {
+    /**
+     * The time at which the price migration encountered an error.
+     */
+    errored_at: number;
+
+    /**
+     * The involved price pairs in each failed transition.
+     */
+    failed_transitions: Array<LastPriceMigrationError.FailedTransition>;
+
+    /**
+     * The type of error encountered by the price migration.
+     */
+    type: 'price_uniqueness_violation';
+  }
 
   export interface Phase {
     /**
@@ -457,6 +571,11 @@ export namespace SubscriptionSchedule {
     on_behalf_of: string | Account | null;
 
     /**
+     * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://docs.stripe.com/billing/subscriptions/pause-payment).
+     */
+    pause_collection?: Phase.PauseCollection | null;
+
+    /**
      * When transitioning phases, controls how prorations are handled (if any). Possible values are `create_prorations`, `none`, and `always_invoice`.
      */
     proration_behavior: Phase.ProrationBehavior;
@@ -472,9 +591,41 @@ export namespace SubscriptionSchedule {
     transfer_data: Phase.TransferData | null;
 
     /**
+     * Specify behavior of the trial when crossing schedule phase boundaries
+     */
+    trial_continuation?: Phase.TrialContinuation | null;
+
+    /**
      * When the trial ends within the phase.
      */
     trial_end: number | null;
+
+    /**
+     * Settings related to any trials on the subscription during this phase.
+     */
+    trial_settings?: Phase.TrialSettings | null;
+  }
+
+  export interface Prebilling {
+    /**
+     * ID of the prebilling invoice.
+     */
+    invoice: string | Invoice;
+
+    /**
+     * The end of the last period for which the invoice pre-bills.
+     */
+    period_end: number;
+
+    /**
+     * The start of the first period for which the invoice pre-bills.
+     */
+    period_start: number;
+
+    /**
+     * Whether to cancel or preserve `prebilling` if the subscription is updated during the prebilled period.
+     */
+    update_behavior?: Prebilling.UpdateBehavior;
   }
 
   export type Status =
@@ -596,6 +747,20 @@ export namespace SubscriptionSchedule {
     }
   }
 
+  export namespace LastPriceMigrationError {
+    export interface FailedTransition {
+      /**
+       * The original price to be migrated.
+       */
+      source_price: string;
+
+      /**
+       * The intended resulting price of the migration.
+       */
+      target_price: string;
+    }
+  }
+
   export namespace Phase {
     export interface AddInvoiceItem {
       /**
@@ -671,6 +836,11 @@ export namespace SubscriptionSchedule {
       discount: string | Discount | null;
 
       /**
+       * Details to determine how long the discount should be applied for.
+       */
+      discount_end?: Discount.DiscountEnd | null;
+
+      /**
        * ID of the promotion code to create a new discount for.
        */
       promotion_code: string | PromotionCode | null;
@@ -728,6 +898,23 @@ export namespace SubscriptionSchedule {
        * The tax rates which apply to this `phase_item`. When set, the `default_tax_rates` on the phase do not apply to this `phase_item`.
        */
       tax_rates?: Array<TaxRate> | null;
+
+      /**
+       * Options that configure the trial on the subscription item.
+       */
+      trial?: Item.Trial | null;
+
+      /**
+       * The ID of the trial offer to apply to the configuration item.
+       */
+      trial_offer?: string | null;
+    }
+
+    export interface PauseCollection {
+      /**
+       * The payment collection behavior for this subscription while paused.
+       */
+      behavior: PauseCollection.Behavior;
     }
 
     export type ProrationBehavior =
@@ -747,6 +934,15 @@ export namespace SubscriptionSchedule {
       destination: string | Account;
     }
 
+    export type TrialContinuation = 'continue' | 'none';
+
+    export interface TrialSettings {
+      /**
+       * Defines how the subscription should behave when a trial ends.
+       */
+      end_behavior: TrialSettings.EndBehavior | null;
+    }
+
     export namespace AddInvoiceItem {
       export interface Discount {
         /**
@@ -760,6 +956,11 @@ export namespace SubscriptionSchedule {
         discount: string | Discount | null;
 
         /**
+         * Details to determine how long the discount should be applied for.
+         */
+        discount_end?: Discount.DiscountEnd | null;
+
+        /**
          * ID of the promotion code to create a new discount for.
          */
         promotion_code: string | PromotionCode | null;
@@ -769,6 +970,20 @@ export namespace SubscriptionSchedule {
         end: Period.End;
 
         start: Period.Start;
+      }
+
+      export namespace Discount {
+        export interface DiscountEnd {
+          /**
+           * The discount end timestamp.
+           */
+          timestamp: number | null;
+
+          /**
+           * The discount end type.
+           */
+          type: 'timestamp';
+        }
       }
 
       export namespace Period {
@@ -827,6 +1042,20 @@ export namespace SubscriptionSchedule {
       }
     }
 
+    export namespace Discount {
+      export interface DiscountEnd {
+        /**
+         * The discount end timestamp.
+         */
+        timestamp: number | null;
+
+        /**
+         * The discount end type.
+         */
+        type: 'timestamp';
+      }
+    }
+
     export namespace InvoiceSettings {
       export interface Issuer {
         /**
@@ -865,14 +1094,75 @@ export namespace SubscriptionSchedule {
         discount: string | Discount | null;
 
         /**
+         * Details to determine how long the discount should be applied for.
+         */
+        discount_end?: Discount.DiscountEnd | null;
+
+        /**
          * ID of the promotion code to create a new discount for.
          */
         promotion_code: string | PromotionCode | null;
       }
+
+      export interface Trial {
+        /**
+         * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
+         */
+        converts_to?: Array<string> | null;
+
+        /**
+         * Determines the type of trial for this item.
+         */
+        type: Trial.Type;
+      }
+
+      export namespace Discount {
+        export interface DiscountEnd {
+          /**
+           * The discount end timestamp.
+           */
+          timestamp: number | null;
+
+          /**
+           * The discount end type.
+           */
+          type: 'timestamp';
+        }
+      }
+
+      export namespace Trial {
+        export type Type = 'free' | 'paid';
+      }
     }
+
+    export namespace PauseCollection {
+      export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+    }
+
+    export namespace TrialSettings {
+      export interface EndBehavior {
+        /**
+         * Configure how an opt-in following a paid trial is billed when using `billing_behavior: prorate_up_front`.
+         */
+        prorate_up_front: EndBehavior.ProrateUpFront | null;
+      }
+
+      export namespace EndBehavior {
+        export type ProrateUpFront = 'defer' | 'include';
+      }
+    }
+  }
+
+  export namespace Prebilling {
+    export type UpdateBehavior = 'prebill' | 'reset';
   }
 }
 export interface SubscriptionScheduleCreateParams {
+  /**
+   * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time. `prorate_up_front` will bill for all phases within the current billing cycle up front.
+   */
+  billing_behavior?: SubscriptionScheduleCreateParams.BillingBehavior;
+
   /**
    * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
    */
@@ -919,11 +1209,18 @@ export interface SubscriptionScheduleCreateParams {
   phases?: Array<SubscriptionScheduleCreateParams.Phase>;
 
   /**
+   * If specified, the invoicing for the given billing cycle iterations will be processed now.
+   */
+  prebilling?: SubscriptionScheduleCreateParams.Prebilling;
+
+  /**
    * When the subscription schedule starts. We recommend using `now` so that it starts the subscription immediately. You can also use a Unix timestamp to backdate the subscription so that it starts on a past date, or set a future date for the subscription to start on.
    */
   start_date?: number | 'now';
 }
 export namespace SubscriptionScheduleCreateParams {
+  export type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
   export interface BillingMode {
     /**
      * Configure behavior for flexible billing mode.
@@ -1077,6 +1374,11 @@ export namespace SubscriptionScheduleCreateParams {
     on_behalf_of?: string;
 
     /**
+     * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://docs.stripe.com/billing/subscriptions/pause-payment).
+     */
+    pause_collection?: Phase.PauseCollection;
+
+    /**
      * Controls whether the subscription schedule should create [prorations](https://docs.stripe.com/billing/subscriptions/prorations) when transitioning to this phase if there is a difference in billing configuration. It's different from the request-level [proration_behavior](https://docs.stripe.com/api/subscription_schedules/update#update_subscription_schedule-proration_behavior) parameter which controls what happens if the update request affects the billing configuration (item price, quantity, etc.) of the current phase.
      */
     proration_behavior?: Phase.ProrationBehavior;
@@ -1092,9 +1394,31 @@ export namespace SubscriptionScheduleCreateParams {
     trial?: boolean;
 
     /**
+     * Specify trial behavior when crossing phase boundaries
+     */
+    trial_continuation?: Phase.TrialContinuation;
+
+    /**
      * Sets the phase to trialing from the start date to this date. Must be before the phase end date, can not be combined with `trial`
      */
     trial_end?: number;
+
+    /**
+     * Settings related to subscription trials.
+     */
+    trial_settings?: Phase.TrialSettings;
+  }
+
+  export interface Prebilling {
+    /**
+     * This is used to determine the number of billing cycles to prebill.
+     */
+    iterations: number;
+
+    /**
+     * Whether to cancel or preserve `prebilling` if the subscription is updated during the prebilled period. The default value is `reset`.
+     */
+    update_behavior?: Prebilling.UpdateBehavior;
   }
 
   export namespace BillingMode {
@@ -1285,6 +1609,11 @@ export namespace SubscriptionScheduleCreateParams {
       discount?: string;
 
       /**
+       * Details to determine how long the discount should be applied for.
+       */
+      discount_end?: Discount.DiscountEnd;
+
+      /**
        * ID of the promotion code to create a new discount for.
        */
       promotion_code?: string;
@@ -1359,6 +1688,23 @@ export namespace SubscriptionScheduleCreateParams {
        * A list of [Tax Rate](https://docs.stripe.com/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
        */
       tax_rates?: Emptyable<Array<string>>;
+
+      /**
+       * Options that configure the trial on the subscription item.
+       */
+      trial?: Item.Trial;
+
+      /**
+       * The ID of the trial offer to apply to the configuration item.
+       */
+      trial_offer?: string;
+    }
+
+    export interface PauseCollection {
+      /**
+       * The payment collection behavior for this subscription while paused.
+       */
+      behavior: PauseCollection.Behavior;
     }
 
     export type ProrationBehavior =
@@ -1378,6 +1724,15 @@ export namespace SubscriptionScheduleCreateParams {
       destination: string;
     }
 
+    export type TrialContinuation = 'continue' | 'none';
+
+    export interface TrialSettings {
+      /**
+       * Defines how the subscription should behave when a trial ends.
+       */
+      end_behavior?: TrialSettings.EndBehavior;
+    }
+
     export namespace AddInvoiceItem {
       export interface Discount {
         /**
@@ -1389,6 +1744,11 @@ export namespace SubscriptionScheduleCreateParams {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+
+        /**
+         * Details to determine how long the discount should be applied for.
+         */
+        discount_end?: Discount.DiscountEnd;
 
         /**
          * ID of the promotion code to create a new discount for.
@@ -1433,6 +1793,45 @@ export namespace SubscriptionScheduleCreateParams {
          * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
         unit_amount_decimal?: Decimal;
+      }
+
+      export namespace Discount {
+        export interface DiscountEnd {
+          /**
+           * Time span for the redeemed discount.
+           */
+          duration?: DiscountEnd.Duration;
+
+          /**
+           * A precise Unix timestamp for the discount to end. Must be in the future.
+           */
+          timestamp?: number;
+
+          /**
+           * The type of calculation made to determine when the discount ends.
+           */
+          type: DiscountEnd.Type;
+        }
+
+        export namespace DiscountEnd {
+          export interface Duration {
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            interval_count: number;
+          }
+
+          export type Type = 'duration' | 'timestamp';
+
+          export namespace Duration {
+            export type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+        }
       }
 
       export namespace Period {
@@ -1495,6 +1894,45 @@ export namespace SubscriptionScheduleCreateParams {
       }
     }
 
+    export namespace Discount {
+      export interface DiscountEnd {
+        /**
+         * Time span for the redeemed discount.
+         */
+        duration?: DiscountEnd.Duration;
+
+        /**
+         * A precise Unix timestamp for the discount to end. Must be in the future.
+         */
+        timestamp?: number;
+
+        /**
+         * The type of calculation made to determine when the discount ends.
+         */
+        type: DiscountEnd.Type;
+      }
+
+      export namespace DiscountEnd {
+        export interface Duration {
+          /**
+           * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+           */
+          interval: Duration.Interval;
+
+          /**
+           * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+           */
+          interval_count: number;
+        }
+
+        export type Type = 'duration' | 'timestamp';
+
+        export namespace Duration {
+          export type Interval = 'day' | 'month' | 'week' | 'year';
+        }
+      }
+    }
+
     export namespace Duration {
       export type Interval = 'day' | 'month' | 'week' | 'year';
     }
@@ -1537,6 +1975,11 @@ export namespace SubscriptionScheduleCreateParams {
         discount?: string;
 
         /**
+         * Details to determine how long the discount should be applied for.
+         */
+        discount_end?: Discount.DiscountEnd;
+
+        /**
          * ID of the promotion code to create a new discount for.
          */
         promotion_code?: string;
@@ -1574,6 +2017,57 @@ export namespace SubscriptionScheduleCreateParams {
         unit_amount_decimal?: Decimal;
       }
 
+      export interface Trial {
+        /**
+         * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial. Currently only supports at most 1 price ID.
+         */
+        converts_to?: Array<string>;
+
+        /**
+         * Determines the type of trial for this item.
+         */
+        type: Trial.Type;
+      }
+
+      export namespace Discount {
+        export interface DiscountEnd {
+          /**
+           * Time span for the redeemed discount.
+           */
+          duration?: DiscountEnd.Duration;
+
+          /**
+           * A precise Unix timestamp for the discount to end. Must be in the future.
+           */
+          timestamp?: number;
+
+          /**
+           * The type of calculation made to determine when the discount ends.
+           */
+          type: DiscountEnd.Type;
+        }
+
+        export namespace DiscountEnd {
+          export interface Duration {
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            interval_count: number;
+          }
+
+          export type Type = 'duration' | 'timestamp';
+
+          export namespace Duration {
+            export type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+        }
+      }
+
       export namespace PriceData {
         export interface Recurring {
           /**
@@ -1593,7 +2087,32 @@ export namespace SubscriptionScheduleCreateParams {
           export type Interval = 'day' | 'month' | 'week' | 'year';
         }
       }
+
+      export namespace Trial {
+        export type Type = 'free' | 'paid';
+      }
     }
+
+    export namespace PauseCollection {
+      export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+    }
+
+    export namespace TrialSettings {
+      export interface EndBehavior {
+        /**
+         * Configure how an opt-in following a paid trial is billed when using `billing_behavior: prorate_up_front`.
+         */
+        prorate_up_front?: EndBehavior.ProrateUpFront;
+      }
+
+      export namespace EndBehavior {
+        export type ProrateUpFront = 'defer' | 'include';
+      }
+    }
+  }
+
+  export namespace Prebilling {
+    export type UpdateBehavior = 'prebill' | 'reset';
   }
 }
 export interface SubscriptionScheduleRetrieveParams {
@@ -1603,6 +2122,11 @@ export interface SubscriptionScheduleRetrieveParams {
   expand?: Array<string>;
 }
 export interface SubscriptionScheduleUpdateParams {
+  /**
+   * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time. `prorate_up_front` will bill for all phases within the current billing cycle up front.
+   */
+  billing_behavior?: SubscriptionScheduleUpdateParams.BillingBehavior;
+
   /**
    * Object representing the subscription schedule's default settings.
    */
@@ -1629,11 +2153,18 @@ export interface SubscriptionScheduleUpdateParams {
   phases?: Array<SubscriptionScheduleUpdateParams.Phase>;
 
   /**
+   * If specified, the invoicing for the given billing cycle iterations will be processed now.
+   */
+  prebilling?: SubscriptionScheduleUpdateParams.Prebilling;
+
+  /**
    * If the update changes the billing configuration (item price, quantity, etc.) of the current phase, indicates how prorations from this change should be handled. The default value is `create_prorations`.
    */
   proration_behavior?: SubscriptionScheduleUpdateParams.ProrationBehavior;
 }
 export namespace SubscriptionScheduleUpdateParams {
+  export type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
   export interface DefaultSettings {
     /**
      * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
@@ -1775,6 +2306,11 @@ export namespace SubscriptionScheduleUpdateParams {
     on_behalf_of?: string;
 
     /**
+     * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://docs.stripe.com/billing/subscriptions/pause-payment).
+     */
+    pause_collection?: Phase.PauseCollection;
+
+    /**
      * Controls whether the subscription schedule should create [prorations](https://docs.stripe.com/billing/subscriptions/prorations) when transitioning to this phase if there is a difference in billing configuration. It's different from the request-level [proration_behavior](https://docs.stripe.com/api/subscription_schedules/update#update_subscription_schedule-proration_behavior) parameter which controls what happens if the update request affects the billing configuration (item price, quantity, etc.) of the current phase.
      */
     proration_behavior?: Phase.ProrationBehavior;
@@ -1795,9 +2331,31 @@ export namespace SubscriptionScheduleUpdateParams {
     trial?: boolean;
 
     /**
+     * Specify trial behavior when crossing phase boundaries
+     */
+    trial_continuation?: Phase.TrialContinuation;
+
+    /**
      * Sets the phase to trialing from the start date to this date. Must be before the phase end date, can not be combined with `trial`
      */
     trial_end?: number | 'now';
+
+    /**
+     * Settings related to subscription trials.
+     */
+    trial_settings?: Phase.TrialSettings;
+  }
+
+  export interface Prebilling {
+    /**
+     * This is used to determine the number of billing cycles to prebill.
+     */
+    iterations: number;
+
+    /**
+     * Whether to cancel or preserve `prebilling` if the subscription is updated during the prebilled period. The default value is `reset`.
+     */
+    update_behavior?: Prebilling.UpdateBehavior;
   }
 
   export type ProrationBehavior =
@@ -1978,6 +2536,11 @@ export namespace SubscriptionScheduleUpdateParams {
       discount?: string;
 
       /**
+       * Details to determine how long the discount should be applied for.
+       */
+      discount_end?: Discount.DiscountEnd;
+
+      /**
        * ID of the promotion code to create a new discount for.
        */
       promotion_code?: string;
@@ -2052,6 +2615,23 @@ export namespace SubscriptionScheduleUpdateParams {
        * A list of [Tax Rate](https://docs.stripe.com/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
        */
       tax_rates?: Emptyable<Array<string>>;
+
+      /**
+       * Options that configure the trial on the subscription item.
+       */
+      trial?: Item.Trial;
+
+      /**
+       * The ID of the trial offer to apply to the configuration item.
+       */
+      trial_offer?: string;
+    }
+
+    export interface PauseCollection {
+      /**
+       * The payment collection behavior for this subscription while paused.
+       */
+      behavior: PauseCollection.Behavior;
     }
 
     export type ProrationBehavior =
@@ -2071,6 +2651,15 @@ export namespace SubscriptionScheduleUpdateParams {
       destination: string;
     }
 
+    export type TrialContinuation = 'continue' | 'none';
+
+    export interface TrialSettings {
+      /**
+       * Defines how the subscription should behave when a trial ends.
+       */
+      end_behavior?: TrialSettings.EndBehavior;
+    }
+
     export namespace AddInvoiceItem {
       export interface Discount {
         /**
@@ -2082,6 +2671,11 @@ export namespace SubscriptionScheduleUpdateParams {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+
+        /**
+         * Details to determine how long the discount should be applied for.
+         */
+        discount_end?: Discount.DiscountEnd;
 
         /**
          * ID of the promotion code to create a new discount for.
@@ -2126,6 +2720,45 @@ export namespace SubscriptionScheduleUpdateParams {
          * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
         unit_amount_decimal?: Decimal;
+      }
+
+      export namespace Discount {
+        export interface DiscountEnd {
+          /**
+           * Time span for the redeemed discount.
+           */
+          duration?: DiscountEnd.Duration;
+
+          /**
+           * A precise Unix timestamp for the discount to end. Must be in the future.
+           */
+          timestamp?: number;
+
+          /**
+           * The type of calculation made to determine when the discount ends.
+           */
+          type: DiscountEnd.Type;
+        }
+
+        export namespace DiscountEnd {
+          export interface Duration {
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            interval_count: number;
+          }
+
+          export type Type = 'duration' | 'timestamp';
+
+          export namespace Duration {
+            export type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+        }
       }
 
       export namespace Period {
@@ -2188,6 +2821,45 @@ export namespace SubscriptionScheduleUpdateParams {
       }
     }
 
+    export namespace Discount {
+      export interface DiscountEnd {
+        /**
+         * Time span for the redeemed discount.
+         */
+        duration?: DiscountEnd.Duration;
+
+        /**
+         * A precise Unix timestamp for the discount to end. Must be in the future.
+         */
+        timestamp?: number;
+
+        /**
+         * The type of calculation made to determine when the discount ends.
+         */
+        type: DiscountEnd.Type;
+      }
+
+      export namespace DiscountEnd {
+        export interface Duration {
+          /**
+           * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+           */
+          interval: Duration.Interval;
+
+          /**
+           * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+           */
+          interval_count: number;
+        }
+
+        export type Type = 'duration' | 'timestamp';
+
+        export namespace Duration {
+          export type Interval = 'day' | 'month' | 'week' | 'year';
+        }
+      }
+    }
+
     export namespace Duration {
       export type Interval = 'day' | 'month' | 'week' | 'year';
     }
@@ -2230,6 +2902,11 @@ export namespace SubscriptionScheduleUpdateParams {
         discount?: string;
 
         /**
+         * Details to determine how long the discount should be applied for.
+         */
+        discount_end?: Discount.DiscountEnd;
+
+        /**
          * ID of the promotion code to create a new discount for.
          */
         promotion_code?: string;
@@ -2267,6 +2944,57 @@ export namespace SubscriptionScheduleUpdateParams {
         unit_amount_decimal?: Decimal;
       }
 
+      export interface Trial {
+        /**
+         * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial. Currently only supports at most 1 price ID.
+         */
+        converts_to?: Array<string>;
+
+        /**
+         * Determines the type of trial for this item.
+         */
+        type: Trial.Type;
+      }
+
+      export namespace Discount {
+        export interface DiscountEnd {
+          /**
+           * Time span for the redeemed discount.
+           */
+          duration?: DiscountEnd.Duration;
+
+          /**
+           * A precise Unix timestamp for the discount to end. Must be in the future.
+           */
+          timestamp?: number;
+
+          /**
+           * The type of calculation made to determine when the discount ends.
+           */
+          type: DiscountEnd.Type;
+        }
+
+        export namespace DiscountEnd {
+          export interface Duration {
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            interval_count: number;
+          }
+
+          export type Type = 'duration' | 'timestamp';
+
+          export namespace Duration {
+            export type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+        }
+      }
+
       export namespace PriceData {
         export interface Recurring {
           /**
@@ -2286,7 +3014,32 @@ export namespace SubscriptionScheduleUpdateParams {
           export type Interval = 'day' | 'month' | 'week' | 'year';
         }
       }
+
+      export namespace Trial {
+        export type Type = 'free' | 'paid';
+      }
     }
+
+    export namespace PauseCollection {
+      export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+    }
+
+    export namespace TrialSettings {
+      export interface EndBehavior {
+        /**
+         * Configure how an opt-in following a paid trial is billed when using `billing_behavior: prorate_up_front`.
+         */
+        prorate_up_front?: EndBehavior.ProrateUpFront;
+      }
+
+      export namespace EndBehavior {
+        export type ProrateUpFront = 'defer' | 'include';
+      }
+    }
+  }
+
+  export namespace Prebilling {
+    export type UpdateBehavior = 'prebill' | 'reset';
   }
 }
 export interface SubscriptionScheduleListParams extends PaginationParams {
@@ -2330,6 +3083,762 @@ export interface SubscriptionScheduleListParams extends PaginationParams {
    */
   scheduled?: boolean;
 }
+export interface SubscriptionScheduleAmendParams {
+  /**
+   * Changes to apply to the phases of the subscription schedule, in the order provided.
+   */
+  amendments?: Array<SubscriptionScheduleAmendParams.Amendment>;
+
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+
+  /**
+   * Provide any time periods to bill in advance.
+   */
+  prebilling?: Emptyable<Array<SubscriptionScheduleAmendParams.Prebilling>>;
+
+  /**
+   * In cases where the amendment changes the currently active phase,
+   *  specifies if and how to prorate at the time of the request.
+   */
+  proration_behavior?: SubscriptionScheduleAmendParams.ProrationBehavior;
+
+  /**
+   * Changes to apply to the subscription schedule.
+   */
+  schedule_settings?: SubscriptionScheduleAmendParams.ScheduleSettings;
+}
+export namespace SubscriptionScheduleAmendParams {
+  export interface Amendment {
+    /**
+     * Details to identify the end of the time range modified by the proposed change. If not supplied, the amendment is considered a point-in-time operation that only affects the exact timestamp at `amendment_start`, and a restricted set of attributes is supported on the amendment.
+     */
+    amendment_end?: Amendment.AmendmentEnd;
+
+    /**
+     * Details to identify the earliest timestamp where the proposed change should take effect.
+     */
+    amendment_start: Amendment.AmendmentStart;
+
+    /**
+     * For point-in-time amendments (having no `amendment_end`), this attribute lets you set or remove whether the subscription's billing cycle anchor is reset at the `amendment_start` timestamp.For time-span based amendments (having both `amendment_start` and `amendment_end`), the only value valid is `automatic`, which removes any previously configured billing cycle anchor resets scheduled to occur during the window of time spanned by the amendment.
+     */
+    billing_cycle_anchor?: Amendment.BillingCycleAnchor;
+
+    /**
+     * Changes to the coupons being redeemed or discounts being applied during the amendment time span.
+     */
+    discount_actions?: Array<Amendment.DiscountAction>;
+
+    /**
+     * Changes to the subscription items during the amendment time span.
+     */
+    item_actions?: Array<Amendment.ItemAction>;
+
+    /**
+     * Instructions for how to modify phase metadata
+     */
+    metadata_actions?: Array<Amendment.MetadataAction>;
+
+    /**
+     * Changes to how Stripe handles prorations during the amendment time span. Affects if and how prorations are created when a future phase starts. In cases where the amendment changes the currently active phase, it is used to determine whether or how to prorate now, at the time of the request. Also supported as a point-in-time operation when `amendment_end` is `null`.
+     */
+    proration_behavior?: Amendment.ProrationBehavior;
+
+    /**
+     * Defines how to pause collection for the underlying subscription throughout the duration of the amendment.
+     */
+    set_pause_collection?: Amendment.SetPauseCollection;
+
+    /**
+     * Ends the subscription schedule early as dictated by either the accompanying amendment's start or end.
+     */
+    set_schedule_end?: Amendment.SetScheduleEnd;
+
+    /**
+     * Settings related to subscription trials.
+     */
+    trial_settings?: Amendment.TrialSettings;
+  }
+
+  export interface Prebilling {
+    /**
+     * The beginning of the prebilled time period. The default value is `now`.
+     */
+    bill_from?: Prebilling.BillFrom;
+
+    /**
+     * The end of the prebilled time period.
+     */
+    bill_until?: Prebilling.BillUntil;
+
+    /**
+     * When the prebilling invoice should be created. The default value is `now`.
+     */
+    invoice_at?: 'now';
+
+    /**
+     * Whether to cancel or preserve `prebilling` if the subscription is updated during the prebilled period. The default value is `reset`.
+     */
+    update_behavior?: Prebilling.UpdateBehavior;
+  }
+
+  export type ProrationBehavior =
+    | 'always_invoice'
+    | 'create_prorations'
+    | 'none';
+
+  export interface ScheduleSettings {
+    /**
+     * Behavior of the subscription schedule and underlying subscription when it ends.
+     */
+    end_behavior?: ScheduleSettings.EndBehavior;
+  }
+
+  export namespace Amendment {
+    export interface AmendmentEnd {
+      /**
+       * Use the `end` time of a given discount.
+       */
+      discount_end?: AmendmentEnd.DiscountEnd;
+
+      /**
+       * Time span for the amendment starting from the `amendment_start`.
+       */
+      duration?: AmendmentEnd.Duration;
+
+      /**
+       * A precise Unix timestamp for the amendment to end. Must be after the `amendment_start`.
+       */
+      timestamp?: number;
+
+      /**
+       * Select one of three ways to pass the `amendment_end`.
+       */
+      type: AmendmentEnd.Type;
+    }
+
+    export interface AmendmentStart {
+      /**
+       * Details of another amendment in the same array, immediately after which this amendment should begin.
+       */
+      amendment_end?: AmendmentStart.AmendmentEnd;
+
+      /**
+       * Use the `end` time of a given discount.
+       */
+      discount_end?: AmendmentStart.DiscountEnd;
+
+      /**
+       * A precise Unix timestamp for the amendment to start.
+       */
+      timestamp?: number;
+
+      /**
+       * Select one of three ways to pass the `amendment_start`.
+       */
+      type: AmendmentStart.Type;
+    }
+
+    export type BillingCycleAnchor = 'amendment_start' | 'automatic';
+
+    export interface DiscountAction {
+      /**
+       * Details of the discount to add.
+       */
+      add?: DiscountAction.Add;
+
+      /**
+       * Details of the discount to remove.
+       */
+      remove?: DiscountAction.Remove;
+
+      /**
+       * Details of the discount to replace the existing discounts with.
+       */
+      set?: DiscountAction.Set;
+
+      /**
+       * Determines the type of discount action.
+       */
+      type: DiscountAction.Type;
+    }
+
+    export interface ItemAction {
+      /**
+       * Details of the subscription item to add. If an item with the same `price` exists, it will be replaced by this new item. Otherwise, it adds the new item.
+       */
+      add?: ItemAction.Add;
+
+      /**
+       * Details of the subscription item to remove.
+       */
+      remove?: ItemAction.Remove;
+
+      /**
+       * Details of the subscription item to replace the existing items with. If an item with the `set[price]` already exists, the `items` array is not cleared. Instead, all of the other `set` properties that are passed in this request will replace the existing values for the configuration item.
+       */
+      set?: ItemAction.Set;
+
+      /**
+       * Determines the type of item action.
+       */
+      type: ItemAction.Type;
+    }
+
+    export interface MetadataAction {
+      /**
+       * Key-value pairs to add to schedule phase metadata. These values will merge with existing schedule phase metadata.
+       */
+      add?: {
+        [key: string]: string;
+      };
+
+      /**
+       * Keys to remove from schedule phase metadata.
+       */
+      remove?: Array<string>;
+
+      /**
+       * Key-value pairs to set as schedule phase metadata. Existing schedule phase metadata will be overwritten.
+       */
+      set?: Emptyable<{
+        [key: string]: string;
+      }>;
+
+      /**
+       * Select one of three ways to update phase-level `metadata` on subscription schedules.
+       */
+      type: MetadataAction.Type;
+    }
+
+    export type ProrationBehavior =
+      | 'always_invoice'
+      | 'create_prorations'
+      | 'none';
+
+    export interface SetPauseCollection {
+      /**
+       * Details of the pause_collection behavior to apply to the amendment.
+       */
+      set?: SetPauseCollection.Set;
+
+      /**
+       * Determines the type of the pause_collection amendment.
+       */
+      type: SetPauseCollection.Type;
+    }
+
+    export type SetScheduleEnd = 'amendment_end' | 'amendment_start';
+
+    export interface TrialSettings {
+      /**
+       * Defines how the subscription should behave when a trial ends.
+       */
+      end_behavior?: TrialSettings.EndBehavior;
+    }
+
+    export namespace AmendmentEnd {
+      export interface DiscountEnd {
+        /**
+         * The ID of a specific discount.
+         */
+        discount: string;
+      }
+
+      export interface Duration {
+        /**
+         * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+         */
+        interval: Duration.Interval;
+
+        /**
+         * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+         */
+        interval_count: number;
+      }
+
+      export type Type =
+        | 'discount_end'
+        | 'duration'
+        | 'schedule_end'
+        | 'timestamp'
+        | 'trial_end'
+        | 'trial_start'
+        | 'upcoming_invoice';
+
+      export namespace Duration {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+    }
+
+    export namespace AmendmentStart {
+      export interface AmendmentEnd {
+        /**
+         * The position of the previous amendment in the `amendments` array after which this amendment should begin. Indexes start from 0 and must be less than the index of the current amendment in the array.
+         */
+        index: number;
+      }
+
+      export interface DiscountEnd {
+        /**
+         * The ID of a specific discount.
+         */
+        discount: string;
+      }
+
+      export type Type =
+        | 'amendment_end'
+        | 'discount_end'
+        | 'now'
+        | 'schedule_end'
+        | 'timestamp'
+        | 'trial_end'
+        | 'trial_start'
+        | 'upcoming_invoice';
+    }
+
+    export namespace DiscountAction {
+      export interface Add {
+        /**
+         * The coupon code to redeem.
+         */
+        coupon?: string;
+
+        /**
+         * An ID of an existing discount for a coupon that was already redeemed.
+         */
+        discount?: string;
+
+        /**
+         * Details to determine how long the discount should be applied for.
+         */
+        discount_end?: Add.DiscountEnd;
+
+        /**
+         * The index, starting at 0, at which to position the new discount. When not supplied, Stripe defaults to appending the discount to the end of the `discounts` array.
+         */
+        index?: number;
+
+        /**
+         * The promotion code to redeem.
+         */
+        promotion_code?: string;
+      }
+
+      export interface Remove {
+        /**
+         * The coupon code to remove from the `discounts` array.
+         */
+        coupon?: string;
+
+        /**
+         * The ID of a discount to remove from the `discounts` array.
+         */
+        discount?: string;
+
+        /**
+         * The ID of a promotion code to remove from the `discounts` array.
+         */
+        promotion_code?: string;
+      }
+
+      export interface Set {
+        /**
+         * The coupon code to replace the `discounts` array with.
+         */
+        coupon?: string;
+
+        /**
+         * An ID of an existing discount to replace the `discounts` array with.
+         */
+        discount?: string;
+
+        /**
+         * An ID of an existing promotion code to replace the `discounts` array with.
+         */
+        promotion_code?: string;
+      }
+
+      export type Type = 'add' | 'remove' | 'set';
+
+      export namespace Add {
+        export interface DiscountEnd {
+          /**
+           * The type of calculation made to determine when the discount ends.
+           */
+          type: 'amendment_end';
+        }
+      }
+    }
+
+    export namespace ItemAction {
+      export interface Add {
+        /**
+         * The discounts applied to the item. Subscription item discounts are applied before subscription discounts.
+         */
+        discounts?: Array<Add.Discount>;
+
+        /**
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: MetadataParam;
+
+        /**
+         * The ID of the price object.
+         */
+        price: string;
+
+        /**
+         * Quantity for this item.
+         */
+        quantity?: number;
+
+        /**
+         * The tax rates that apply to this subscription item. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
+         */
+        tax_rates?: Array<string>;
+
+        /**
+         * Options that configure the trial on the subscription item.
+         */
+        trial?: Add.Trial;
+
+        /**
+         * The ID of the trial offer to apply to the configuration item.
+         */
+        trial_offer?: string;
+      }
+
+      export interface Remove {
+        /**
+         * ID of a price to remove.
+         */
+        price: string;
+      }
+
+      export interface Set {
+        /**
+         * If an item with the `price` already exists, passing this will override the `discounts` array on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `discounts`.
+         */
+        discounts?: Array<Set.Discount>;
+
+        /**
+         * If an item with the `price` already exists, passing this will override the `metadata` on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `metadata`.
+         */
+        metadata?: MetadataParam;
+
+        /**
+         * The ID of the price object.
+         */
+        price: string;
+
+        /**
+         * If an item with the `price` already exists, passing this will override the quantity on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `quantity`.
+         */
+        quantity?: number;
+
+        /**
+         * If an item with the `price` already exists, passing this will override the `tax_rates` array on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `tax_rates`.
+         */
+        tax_rates?: Array<string>;
+
+        /**
+         * If an item with the `price` already exists, passing this will override the `trial` configuration on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `trial`.
+         */
+        trial?: Set.Trial;
+
+        /**
+         * The ID of the trial offer to apply to the configuration item.
+         */
+        trial_offer?: string;
+      }
+
+      export type Type = 'add' | 'remove' | 'set';
+
+      export namespace Add {
+        export interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+
+          /**
+           * Details to determine how long the discount should be applied for.
+           */
+          discount_end?: Discount.DiscountEnd;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
+        }
+
+        export interface Trial {
+          /**
+           * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial. Currently only supports at most 1 price ID.
+           */
+          converts_to?: Array<string>;
+
+          /**
+           * Determines the type of trial for this item.
+           */
+          type: Trial.Type;
+        }
+
+        export namespace Discount {
+          export interface DiscountEnd {
+            /**
+             * Time span for the redeemed discount.
+             */
+            duration?: DiscountEnd.Duration;
+
+            /**
+             * A precise Unix timestamp for the discount to end. Must be in the future.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of calculation made to determine when the discount ends.
+             */
+            type: DiscountEnd.Type;
+          }
+
+          export namespace DiscountEnd {
+            export interface Duration {
+              /**
+               * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+               */
+              interval_count: number;
+            }
+
+            export type Type = 'duration' | 'timestamp';
+
+            export namespace Duration {
+              export type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+          }
+        }
+
+        export namespace Trial {
+          export type Type = 'free' | 'paid';
+        }
+      }
+
+      export namespace Set {
+        export interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+
+          /**
+           * Details to determine how long the discount should be applied for.
+           */
+          discount_end?: Discount.DiscountEnd;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
+        }
+
+        export interface Trial {
+          /**
+           * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial. Currently only supports at most 1 price ID.
+           */
+          converts_to?: Array<string>;
+
+          /**
+           * Determines the type of trial for this item.
+           */
+          type: Trial.Type;
+        }
+
+        export namespace Discount {
+          export interface DiscountEnd {
+            /**
+             * Time span for the redeemed discount.
+             */
+            duration?: DiscountEnd.Duration;
+
+            /**
+             * A precise Unix timestamp for the discount to end. Must be in the future.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of calculation made to determine when the discount ends.
+             */
+            type: DiscountEnd.Type;
+          }
+
+          export namespace DiscountEnd {
+            export interface Duration {
+              /**
+               * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+               */
+              interval_count: number;
+            }
+
+            export type Type = 'duration' | 'timestamp';
+
+            export namespace Duration {
+              export type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+          }
+        }
+
+        export namespace Trial {
+          export type Type = 'free' | 'paid';
+        }
+      }
+    }
+
+    export namespace MetadataAction {
+      export type Type = 'add' | 'remove' | 'set';
+    }
+
+    export namespace SetPauseCollection {
+      export interface Set {
+        /**
+         * The payment collection behavior for this subscription while paused.
+         */
+        behavior: Set.Behavior;
+      }
+
+      export type Type = 'remove' | 'set';
+
+      export namespace Set {
+        export type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+      }
+    }
+
+    export namespace TrialSettings {
+      export interface EndBehavior {
+        /**
+         * Configure how an opt-in following a paid trial is billed when using `billing_behavior: prorate_up_front`.
+         */
+        prorate_up_front?: EndBehavior.ProrateUpFront;
+      }
+
+      export namespace EndBehavior {
+        export type ProrateUpFront = 'defer' | 'include';
+      }
+    }
+  }
+
+  export namespace Prebilling {
+    export interface BillFrom {
+      /**
+       * Start the prebilled period when a specified amendment begins.
+       */
+      amendment_start?: BillFrom.AmendmentStart;
+
+      /**
+       * Start the prebilled period at a precise integer timestamp, starting from the Unix epoch.
+       */
+      timestamp?: number;
+
+      /**
+       * Select one of several ways to pass the `bill_from` value.
+       */
+      type: BillFrom.Type;
+    }
+
+    export interface BillUntil {
+      /**
+       * End the prebilled period when a specified amendment ends.
+       */
+      amendment_end?: BillUntil.AmendmentEnd;
+
+      /**
+       * Time span for prebilling, starting from `bill_from`.
+       */
+      duration?: BillUntil.Duration;
+
+      /**
+       * End the prebilled period at a precise integer timestamp, starting from the Unix epoch.
+       */
+      timestamp?: number;
+
+      /**
+       * Select one of several ways to pass the `bill_until` value.
+       */
+      type: BillUntil.Type;
+    }
+
+    export type UpdateBehavior = 'prebill' | 'reset';
+
+    export namespace BillFrom {
+      export interface AmendmentStart {
+        /**
+         * The position of the amendment in the `amendments` array with which prebilling should begin. Indexes start from 0 and must be less than the total number of supplied amendments.
+         */
+        index: number;
+      }
+
+      export type Type = 'amendment_start' | 'now' | 'timestamp';
+    }
+
+    export namespace BillUntil {
+      export interface AmendmentEnd {
+        /**
+         * The position of the amendment in the `amendments` array at which prebilling should end. Indexes start from 0 and must be less than the total number of supplied amendments.
+         */
+        index: number;
+      }
+
+      export interface Duration {
+        /**
+         * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+         */
+        interval: Duration.Interval;
+
+        /**
+         * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+         */
+        interval_count: number;
+      }
+
+      export type Type =
+        | 'amendment_end'
+        | 'duration'
+        | 'schedule_end'
+        | 'timestamp';
+
+      export namespace Duration {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+    }
+  }
+
+  export namespace ScheduleSettings {
+    export type EndBehavior = 'cancel' | 'release';
+  }
+}
 export interface SubscriptionScheduleCancelParams {
   /**
    * Specifies which fields in the response should be expanded.
@@ -2357,3 +3866,6 @@ export interface SubscriptionScheduleReleaseParams {
    */
   preserve_cancel_date?: boolean;
 }
+export interface SubscriptionScheduleSerializeBatchCancelParams {}
+export interface SubscriptionScheduleSerializeBatchCreateParams {}
+export interface SubscriptionScheduleSerializeBatchUpdateParams {}

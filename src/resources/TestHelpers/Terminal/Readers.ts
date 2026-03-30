@@ -4,6 +4,7 @@ import {StripeResource} from '../../../StripeResource.js';
 import {Reader} from './../../Terminal/Readers.js';
 import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ReaderResource extends StripeResource {
   /**
    * Presents a payment method on a simulated reader. Can be used to simulate accepting a payment, saving a card or refunding a transaction.

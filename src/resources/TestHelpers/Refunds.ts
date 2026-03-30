@@ -4,6 +4,7 @@ import {StripeResource} from '../../StripeResource.js';
 import {Refund} from './../Refunds.js';
 import {RequestOptions, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class RefundResource extends StripeResource {
   /**
    * Expire a refund with a status of requires_action.

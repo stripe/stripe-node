@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {Discount, DeletedDiscount} from './Discounts.js';
+import {Margin} from './Margins.js';
 import {Subscription} from './Subscriptions.js';
 import {Price} from './Prices.js';
 import * as Billing from './Billing/index.js';
@@ -58,6 +59,16 @@ export interface InvoiceLineItem {
   livemode: boolean;
 
   /**
+   * The amount of margin calculated per margin for this line item.
+   */
+  margin_amounts?: Array<InvoiceLineItem.MarginAmount> | null;
+
+  /**
+   * The margins applied to the line item. When set, the `default_margins` on the invoice do not apply to the line item. Use `expand[]=margins` to expand each margin.
+   */
+  margins?: Array<string | Margin> | null;
+
+  /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription`, `metadata` reflects the current metadata from the subscription associated with the line item, unless the invoice line was directly updated with different metadata after creation.
    */
   metadata: Metadata;
@@ -97,6 +108,11 @@ export interface InvoiceLineItem {
   subtotal: number;
 
   /**
+   * The tax calculation identifiers of the line item.
+   */
+  tax_calculation_reference?: InvoiceLineItem.TaxCalculationReference | null;
+
+  /**
    * The tax information of the line item.
    */
   taxes: Array<InvoiceLineItem.Tax> | null;
@@ -112,6 +128,18 @@ export namespace InvoiceLineItem {
      * The discount that was applied to get this discount amount.
      */
     discount: string | Discount | DeletedDiscount;
+  }
+
+  export interface MarginAmount {
+    /**
+     * The amount, in cents (or local equivalent), of the reduction in line item amount.
+     */
+    amount: number;
+
+    /**
+     * The margin that was applied to get this margin amount.
+     */
+    margin: string | Margin;
   }
 
   export interface Parent {
@@ -163,6 +191,11 @@ export namespace InvoiceLineItem {
     discount?: string | Discount | DeletedDiscount;
 
     /**
+     * The margin that was applied to get this pretax credit amount.
+     */
+    margin?: string | Margin;
+
+    /**
      * Type of the pretax credit amount referenced.
      */
     type: PretaxCreditAmount.Type;
@@ -180,6 +213,18 @@ export namespace InvoiceLineItem {
      * The unit amount (in the `currency` specified) of the item which contains a decimal value with at most 12 decimal places.
      */
     unit_amount_decimal: Decimal | null;
+  }
+
+  export interface TaxCalculationReference {
+    /**
+     * The calculation identifier for tax calculation response.
+     */
+    calculation_id: string | null;
+
+    /**
+     * The calculation identifier for tax calculation response line item.
+     */
+    calculation_item_id: string | null;
   }
 
   export interface Tax {
@@ -314,7 +359,7 @@ export namespace InvoiceLineItem {
   }
 
   export namespace PretaxCreditAmount {
-    export type Type = 'credit_balance_transaction' | 'discount';
+    export type Type = 'credit_balance_transaction' | 'discount' | 'margin';
   }
 
   export namespace Pricing {

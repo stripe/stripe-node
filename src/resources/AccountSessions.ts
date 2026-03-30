@@ -1,8 +1,10 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
+import {Emptyable} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class AccountSessionResource extends StripeResource {
   /**
    * Creates a AccountSession object that includes a single-use token that the platform can use on their front-end to grant client-side API access.
@@ -57,6 +59,12 @@ export namespace AccountSession {
     account_onboarding: Components.AccountOnboarding;
 
     balances: Components.Balances;
+
+    capital_financing?: Components.CapitalFinancing | null;
+
+    capital_financing_application?: Components.CapitalFinancingApplication | null;
+
+    capital_financing_promotion?: Components.CapitalFinancingPromotion | null;
 
     disputes_list: Components.DisputesList;
 
@@ -117,6 +125,33 @@ export namespace AccountSession {
       enabled: boolean;
 
       features: Balances.Features;
+    }
+
+    export interface CapitalFinancing {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: CapitalFinancing.Features;
+    }
+
+    export interface CapitalFinancingApplication {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: CapitalFinancingApplication.Features;
+    }
+
+    export interface CapitalFinancingPromotion {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: CapitalFinancingPromotion.Features;
     }
 
     export interface DisputesList {
@@ -318,6 +353,18 @@ export namespace AccountSession {
          */
         standard_payouts: boolean;
       }
+    }
+
+    export namespace CapitalFinancing {
+      export interface Features {}
+    }
+
+    export namespace CapitalFinancingApplication {
+      export interface Features {}
+    }
+
+    export namespace CapitalFinancingPromotion {
+      export interface Features {}
     }
 
     export namespace DisputesList {
@@ -609,9 +656,39 @@ export namespace AccountSessionCreateParams {
     account_onboarding?: Components.AccountOnboarding;
 
     /**
+     * Configuration for the [app install](https://docs.stripe.com/connect/supported-embedded-components/app-install/) embedded component.
+     */
+    app_install?: Components.AppInstall;
+
+    /**
+     * Configuration for the [app viewport](https://docs.stripe.com/connect/supported-embedded-components/app-viewport/) embedded component.
+     */
+    app_viewport?: Components.AppViewport;
+
+    /**
      * Configuration for the [balances](https://docs.stripe.com/connect/supported-embedded-components/balances/) embedded component.
      */
     balances?: Components.Balances;
+
+    /**
+     * Configuration for the [Capital financing](https://docs.stripe.com/connect/supported-embedded-components/capital-financing/) embedded component.
+     */
+    capital_financing?: Components.CapitalFinancing;
+
+    /**
+     * Configuration for the [Capital financing application](https://docs.stripe.com/connect/supported-embedded-components/capital-financing-application/) embedded component.
+     */
+    capital_financing_application?: Components.CapitalFinancingApplication;
+
+    /**
+     * Configuration for the [Capital financing promotion](https://docs.stripe.com/connect/supported-embedded-components/capital-financing-promotion/) embedded component.
+     */
+    capital_financing_promotion?: Components.CapitalFinancingPromotion;
+
+    /**
+     * Configuration for the [Capital overview](https://docs.stripe.com/connect/supported-embedded-components/capital-overview/) embedded component.
+     */
+    capital_overview?: Components.CapitalOverview;
 
     /**
      * Configuration for the [disputes list](https://docs.stripe.com/connect/supported-embedded-components/disputes-list/) embedded component.
@@ -622,6 +699,11 @@ export namespace AccountSessionCreateParams {
      * Configuration for the [documents](https://docs.stripe.com/connect/supported-embedded-components/documents/) embedded component.
      */
     documents?: Components.Documents;
+
+    /**
+     * Configuration for the [export tax transactions](https://docs.stripe.com/connect/supported-embedded-components/export-tax-transactions/) embedded component.
+     */
+    export_tax_transactions?: Components.ExportTaxTransactions;
 
     /**
      * Configuration for the [financial account](https://docs.stripe.com/connect/supported-embedded-components/financial-account/) embedded component.
@@ -664,6 +746,11 @@ export namespace AccountSessionCreateParams {
     payment_disputes?: Components.PaymentDisputes;
 
     /**
+     * Configuration for the [payment method settings](https://docs.stripe.com/connect/supported-embedded-components/payment-method-settings/) embedded component.
+     */
+    payment_method_settings?: Components.PaymentMethodSettings;
+
+    /**
      * Configuration for the [payments](https://docs.stripe.com/connect/supported-embedded-components/payments/) embedded component.
      */
     payments?: Components.Payments;
@@ -684,6 +771,21 @@ export namespace AccountSessionCreateParams {
     payouts_list?: Components.PayoutsList;
 
     /**
+     * Configuration for the [product tax code selector](https://docs.stripe.com/connect/supported-embedded-components/product-tax-code-selector/) embedded component.
+     */
+    product_tax_code_selector?: Components.ProductTaxCodeSelector;
+
+    /**
+     * Configuration for the [recipients](https://docs.stripe.com/connect/supported-embedded-components/recipients/) embedded component.
+     */
+    recipients?: Components.Recipients;
+
+    /**
+     * Configuration for the [reporting chart](https://docs.stripe.com/connect/supported-embedded-components/reporting-chart/) embedded component.
+     */
+    reporting_chart?: Components.ReportingChart;
+
+    /**
      * Configuration for the [tax registrations](https://docs.stripe.com/connect/supported-embedded-components/tax-registrations/) embedded component.
      */
     tax_registrations?: Components.TaxRegistrations;
@@ -692,6 +794,11 @@ export namespace AccountSessionCreateParams {
      * Configuration for the [tax settings](https://docs.stripe.com/connect/supported-embedded-components/tax-settings/) embedded component.
      */
     tax_settings?: Components.TaxSettings;
+
+    /**
+     * Configuration for the [tax threshold monitoring](https://docs.stripe.com/connect/supported-embedded-components/tax-threshold-monitoring/) embedded component.
+     */
+    tax_threshold_monitoring?: Components.TaxThresholdMonitoring;
   }
 
   export namespace Components {
@@ -719,6 +826,30 @@ export namespace AccountSessionCreateParams {
       features?: AccountOnboarding.Features;
     }
 
+    export interface AppInstall {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * The list of features enabled in the embedded component.
+       */
+      features?: AppInstall.Features;
+    }
+
+    export interface AppViewport {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * The list of features enabled in the embedded component.
+       */
+      features?: AppViewport.Features;
+    }
+
     export interface Balances {
       /**
        * Whether the embedded component is enabled.
@@ -729,6 +860,54 @@ export namespace AccountSessionCreateParams {
        * The list of features enabled in the embedded component.
        */
       features?: Balances.Features;
+    }
+
+    export interface CapitalFinancing {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * An empty list, because this embedded component has no features.
+       */
+      features?: CapitalFinancing.Features;
+    }
+
+    export interface CapitalFinancingApplication {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * An empty list, because this embedded component has no features.
+       */
+      features?: CapitalFinancingApplication.Features;
+    }
+
+    export interface CapitalFinancingPromotion {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * An empty list, because this embedded component has no features.
+       */
+      features?: CapitalFinancingPromotion.Features;
+    }
+
+    export interface CapitalOverview {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * An empty list, because this embedded component has no features.
+       */
+      features?: CapitalOverview.Features;
     }
 
     export interface DisputesList {
@@ -753,6 +932,18 @@ export namespace AccountSessionCreateParams {
        * An empty list, because this embedded component has no features.
        */
       features?: Documents.Features;
+    }
+
+    export interface ExportTaxTransactions {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * An empty list, because this embedded component has no features.
+       */
+      features?: ExportTaxTransactions.Features;
     }
 
     export interface FinancialAccount {
@@ -851,6 +1042,18 @@ export namespace AccountSessionCreateParams {
       features?: PaymentDisputes.Features;
     }
 
+    export interface PaymentMethodSettings {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * An empty list, because this embedded component has no features.
+       */
+      features?: PaymentMethodSettings.Features;
+    }
+
     export interface Payments {
       /**
        * Whether the embedded component is enabled.
@@ -899,6 +1102,39 @@ export namespace AccountSessionCreateParams {
       features?: PayoutsList.Features;
     }
 
+    export interface ProductTaxCodeSelector {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * An empty list, because this embedded component has no features.
+       */
+      features?: ProductTaxCodeSelector.Features;
+    }
+
+    export interface Recipients {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features?: Recipients.Features;
+    }
+
+    export interface ReportingChart {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * An empty list, because this embedded component has no features.
+       */
+      features?: ReportingChart.Features;
+    }
+
     export interface TaxRegistrations {
       /**
        * Whether the embedded component is enabled.
@@ -921,6 +1157,18 @@ export namespace AccountSessionCreateParams {
        * An empty list, because this embedded component has no features.
        */
       features?: TaxSettings.Features;
+    }
+
+    export interface TaxThresholdMonitoring {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * An empty list, because this embedded component has no features.
+       */
+      features?: TaxThresholdMonitoring.Features;
     }
 
     export namespace AccountManagement {
@@ -948,6 +1196,24 @@ export namespace AccountSessionCreateParams {
          * Whether external account collection is enabled. This feature can only be `false` for accounts where you're responsible for collecting updated information when requirements are due or change, like Custom accounts. The default value for this feature is `true`.
          */
         external_account_collection?: boolean;
+      }
+    }
+
+    export namespace AppInstall {
+      export interface Features {
+        /**
+         * The list of apps allowed to be enabled in the embedded component.
+         */
+        allowed_apps?: Emptyable<Array<string>>;
+      }
+    }
+
+    export namespace AppViewport {
+      export interface Features {
+        /**
+         * The list of apps allowed to be enabled in the embedded component.
+         */
+        allowed_apps?: Emptyable<Array<string>>;
       }
     }
 
@@ -980,6 +1246,22 @@ export namespace AccountSessionCreateParams {
       }
     }
 
+    export namespace CapitalFinancing {
+      export interface Features {}
+    }
+
+    export namespace CapitalFinancingApplication {
+      export interface Features {}
+    }
+
+    export namespace CapitalFinancingPromotion {
+      export interface Features {}
+    }
+
+    export namespace CapitalOverview {
+      export interface Features {}
+    }
+
     export namespace DisputesList {
       export interface Features {
         /**
@@ -1005,6 +1287,10 @@ export namespace AccountSessionCreateParams {
     }
 
     export namespace Documents {
+      export interface Features {}
+    }
+
+    export namespace ExportTaxTransactions {
       export interface Features {}
     }
 
@@ -1170,6 +1456,10 @@ export namespace AccountSessionCreateParams {
       }
     }
 
+    export namespace PaymentMethodSettings {
+      export interface Features {}
+    }
+
     export namespace Payments {
       export interface Features {
         /**
@@ -1231,11 +1521,32 @@ export namespace AccountSessionCreateParams {
       export interface Features {}
     }
 
+    export namespace ProductTaxCodeSelector {
+      export interface Features {}
+    }
+
+    export namespace Recipients {
+      export interface Features {
+        /**
+         * Whether to allow sending money.
+         */
+        send_money?: boolean;
+      }
+    }
+
+    export namespace ReportingChart {
+      export interface Features {}
+    }
+
     export namespace TaxRegistrations {
       export interface Features {}
     }
 
     export namespace TaxSettings {
+      export interface Features {}
+    }
+
+    export namespace TaxThresholdMonitoring {
       export interface Features {}
     }
   }

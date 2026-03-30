@@ -5,6 +5,7 @@ import {File} from './../Files.js';
 import {Emptyable, PaginationParams} from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ConfigurationResource extends StripeResource {
   /**
    * Deletes a Configuration object.
@@ -129,6 +130,8 @@ export interface Configuration {
 
   offline?: Terminal.Configuration.Offline;
 
+  reader_security?: Terminal.Configuration.ReaderSecurity;
+
   reboot_window?: Terminal.Configuration.RebootWindow;
 
   stripe_s700?: Terminal.Configuration.StripeS700;
@@ -186,6 +189,13 @@ export namespace Terminal {
        * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
        */
       enabled: boolean | null;
+    }
+
+    export interface ReaderSecurity {
+      /**
+       * Passcode used to access a reader's admin menu.
+       */
+      admin_menu_passcode: string;
     }
 
     export interface RebootWindow {
@@ -739,6 +749,11 @@ export namespace Terminal {
     offline?: Emptyable<ConfigurationCreateParams.Offline>;
 
     /**
+     * Configurations for reader security settings.
+     */
+    reader_security?: Emptyable<ConfigurationCreateParams.ReaderSecurity>;
+
+    /**
      * Reboot time settings for readers. that support customized reboot time configuration.
      */
     reboot_window?: ConfigurationCreateParams.RebootWindow;
@@ -796,6 +811,13 @@ export namespace Terminal {
        * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
        */
       enabled: boolean;
+    }
+
+    export interface ReaderSecurity {
+      /**
+       * Passcode used to access a reader's admin menu.
+       */
+      admin_menu_passcode?: Emptyable<string>;
     }
 
     export interface RebootWindow {
@@ -1429,6 +1451,11 @@ export namespace Terminal {
     offline?: Emptyable<ConfigurationUpdateParams.Offline>;
 
     /**
+     * Configurations for reader security settings.
+     */
+    reader_security?: Emptyable<ConfigurationUpdateParams.ReaderSecurity>;
+
+    /**
      * Reboot time settings for readers. that support customized reboot time configuration.
      */
     reboot_window?: Emptyable<ConfigurationUpdateParams.RebootWindow>;
@@ -1486,6 +1513,13 @@ export namespace Terminal {
        * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
        */
       enabled: boolean;
+    }
+
+    export interface ReaderSecurity {
+      /**
+       * Passcode used to access a reader's admin menu.
+       */
+      admin_menu_passcode?: Emptyable<string>;
     }
 
     export interface RebootWindow {

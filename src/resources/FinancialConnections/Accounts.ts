@@ -1,12 +1,15 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {AccountInferredBalance} from './AccountInferredBalances.js';
 import {AccountOwner} from './AccountOwners.js';
+import {Institution} from './Institutions.js';
 import {AccountOwnership} from './AccountOwnerships.js';
 import {Customer} from './../Customers.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class AccountResource extends StripeResource {
   /**
    * Returns a list of Financial Connections Account objects.
@@ -102,6 +105,27 @@ export class AccountResource extends StripeResource {
   }
 
   /**
+   * Lists the recorded inferred balances for a Financial Connections Account.
+   */
+  listInferredBalances(
+    id: string,
+    params?: FinancialConnections.AccountListInferredBalancesParams,
+    options?: RequestOptions
+  ): ApiListPromise<AccountInferredBalance>;
+  listInferredBalances(
+    id: string,
+    options?: RequestOptions
+  ): ApiListPromise<AccountInferredBalance>;
+  listInferredBalances(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'GET',
+      fullPath:
+        '/v1/financial_connections/accounts/{account}/inferred_balances',
+      methodType: 'list',
+    }).call(this, ...args);
+  }
+
+  /**
    * Lists all owners for a given Account
    */
   listOwners(
@@ -139,6 +163,11 @@ export interface Account {
   account_numbers: Array<FinancialConnections.Account.AccountNumber> | null;
 
   /**
+   * The ID of the Financial Connections Authorization this account belongs to.
+   */
+  authorization?: string;
+
+  /**
    * The most recent information about the account's balance.
    */
   balance: FinancialConnections.Account.Balance | null;
@@ -162,6 +191,16 @@ export interface Account {
    * A human-readable name that has been assigned to this account, either by the account holder or by the institution.
    */
   display_name: string | null;
+
+  /**
+   * The state of the most recent attempt to refresh the account's inferred balance history.
+   */
+  inferred_balances_refresh?: FinancialConnections.Account.InferredBalancesRefresh | null;
+
+  /**
+   * The ID of the Financial Connections Institution this account belongs to. Note that this relationship may sometimes change in rare circumstances (e.g. institution mergers).
+   */
+  institution?: string | Institution | null;
 
   /**
    * The name of the institution that holds this account.
@@ -198,6 +237,8 @@ export interface Account {
    */
   status: FinancialConnections.Account.Status;
 
+  status_details?: FinancialConnections.Account.StatusDetails;
+
   /**
    * If `category` is `cash`, one of:
    *
@@ -219,7 +260,7 @@ export interface Account {
   /**
    * The list of data refresh subscriptions requested on this account.
    */
-  subscriptions: Array<'transactions'> | null;
+  subscriptions: Array<FinancialConnections.Account.Subscription> | null;
 
   /**
    * The [PaymentMethod type](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type)(s) that can be created from this account.
@@ -322,6 +363,23 @@ export namespace FinancialConnections {
 
     export type Category = 'cash' | 'credit' | 'investment' | 'other';
 
+    export interface InferredBalancesRefresh {
+      /**
+       * The time at which the last refresh attempt was initiated. Measured in seconds since the Unix epoch.
+       */
+      last_attempted_at: number;
+
+      /**
+       * Time at which the next inferred balance refresh can be initiated. This value will be `null` when `status` is `pending`. Measured in seconds since the Unix epoch.
+       */
+      next_refresh_available_at: number | null;
+
+      /**
+       * The status of the last refresh attempt.
+       */
+      status: InferredBalancesRefresh.Status;
+    }
+
     export interface OwnershipRefresh {
       /**
        * The time at which the last refresh attempt was initiated. Measured in seconds since the Unix epoch.
@@ -347,6 +405,10 @@ export namespace FinancialConnections {
 
     export type Status = 'active' | 'disconnected' | 'inactive';
 
+    export interface StatusDetails {
+      inactive?: StatusDetails.Inactive;
+    }
+
     export type Subcategory =
       | 'checking'
       | 'credit_card'
@@ -354,6 +416,8 @@ export namespace FinancialConnections {
       | 'mortgage'
       | 'other'
       | 'savings';
+
+    export type Subscription = 'balance' | 'inferred_balances' | 'transactions';
 
     export type SupportedPaymentMethodType = 'link' | 'us_bank_account';
 
@@ -425,8 +489,37 @@ export namespace FinancialConnections {
       export type Status = 'failed' | 'pending' | 'succeeded';
     }
 
+    export namespace InferredBalancesRefresh {
+      export type Status = 'failed' | 'pending' | 'succeeded';
+    }
+
     export namespace OwnershipRefresh {
       export type Status = 'failed' | 'pending' | 'succeeded';
+    }
+
+    export namespace StatusDetails {
+      export interface Inactive {
+        /**
+         * The action (if any) to relink the inactive Account.
+         */
+        action: Inactive.Action;
+
+        /**
+         * The underlying cause of the Account being inactive.
+         */
+        cause: Inactive.Cause;
+      }
+
+      export namespace Inactive {
+        export type Action = 'none' | 'relink_required';
+
+        export type Cause =
+          | 'access_denied'
+          | 'access_expired'
+          | 'account_closed'
+          | 'account_unavailable'
+          | 'unspecified';
+      }
     }
 
     export namespace TransactionRefresh {
@@ -488,6 +581,14 @@ export namespace FinancialConnections {
   }
 }
 export namespace FinancialConnections {
+  export interface AccountListInferredBalancesParams extends PaginationParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+}
+export namespace FinancialConnections {
   export interface AccountListOwnersParams extends PaginationParams {
     /**
      * The ID of the ownership object to fetch owners from.
@@ -514,7 +615,11 @@ export namespace FinancialConnections {
   }
 
   export namespace AccountRefreshParams {
-    export type Feature = 'balance' | 'ownership' | 'transactions';
+    export type Feature =
+      | 'balance'
+      | 'inferred_balances'
+      | 'ownership'
+      | 'transactions';
   }
 }
 export namespace FinancialConnections {
@@ -522,12 +627,16 @@ export namespace FinancialConnections {
     /**
      * The list of account features to which you would like to subscribe.
      */
-    features: Array<'transactions'>;
+    features: Array<AccountSubscribeParams.Feature>;
 
     /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
+  }
+
+  export namespace AccountSubscribeParams {
+    export type Feature = 'balance' | 'inferred_balances' | 'transactions';
   }
 }
 export namespace FinancialConnections {
@@ -535,11 +644,15 @@ export namespace FinancialConnections {
     /**
      * The list of account features from which you would like to unsubscribe.
      */
-    features: Array<'transactions'>;
+    features: Array<AccountUnsubscribeParams.Feature>;
 
     /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
+  }
+
+  export namespace AccountUnsubscribeParams {
+    export type Feature = 'balance' | 'inferred_balances' | 'transactions';
   }
 }

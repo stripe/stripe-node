@@ -6,14 +6,20 @@ import {AccountTokenResource as V2CoreAccountTokens} from './resources/V2/Core/A
 import {AccountResource as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
 import {AccountResource as V2CoreAccounts} from './resources/V2/Core/Accounts.js';
 import {ActiveEntitlementResource as EntitlementsActiveEntitlements} from './resources/Entitlements/ActiveEntitlements.js';
+import {AdjustmentResource as V2MoneyManagementAdjustments} from './resources/V2/MoneyManagement/Adjustments.js';
 import {AlertResource as BillingAlerts} from './resources/Billing/Alerts.js';
 import {AssociationResource as TaxAssociations} from './resources/Tax/Associations.js';
+import {AuthorizationResource as FinancialConnectionsAuthorizations} from './resources/FinancialConnections/Authorizations.js';
 import {AuthorizationResource as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {AuthorizationResource as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
+import {BatchJobResource as V2CoreBatchJobs} from './resources/V2/Core/BatchJobs.js';
+import {BillSettingResource as V2BillingBillSettings} from './resources/V2/Billing/BillSettings.js';
+import {CadenceResource as V2BillingCadences} from './resources/V2/Billing/Cadences.js';
 import {CalculationResource as TaxCalculations} from './resources/Tax/Calculations.js';
 import {CardholderResource as IssuingCardholders} from './resources/Issuing/Cardholders.js';
 import {CardResource as IssuingCards} from './resources/Issuing/Cards.js';
 import {CardResource as TestHelpersIssuingCards} from './resources/TestHelpers/Issuing/Cards.js';
+import {CollectionSettingResource as V2BillingCollectionSettings} from './resources/V2/Billing/CollectionSettings.js';
 import {ConfigurationResource as BillingPortalConfigurations} from './resources/BillingPortal/Configurations.js';
 import {ConfigurationResource as TerminalConfigurations} from './resources/Terminal/Configurations.js';
 import {ConfirmationTokenResource as TestHelpersConfirmationTokens} from './resources/TestHelpers/ConfirmationTokens.js';
@@ -22,16 +28,31 @@ import {CreditBalanceSummaryResource as BillingCreditBalanceSummary} from './res
 import {CreditBalanceTransactionResource as BillingCreditBalanceTransactions} from './resources/Billing/CreditBalanceTransactions.js';
 import {CreditGrantResource as BillingCreditGrants} from './resources/Billing/CreditGrants.js';
 import {CreditReversalResource as TreasuryCreditReversals} from './resources/Treasury/CreditReversals.js';
+import {CreditUnderwritingRecordResource as IssuingCreditUnderwritingRecords} from './resources/Issuing/CreditUnderwritingRecords.js';
 import {CustomerResource as TestHelpersCustomers} from './resources/TestHelpers/Customers.js';
 import {DebitReversalResource as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
+import {DisputeSettlementDetailResource as IssuingDisputeSettlementDetails} from './resources/Issuing/DisputeSettlementDetails.js';
 import {DisputeResource as IssuingDisputes} from './resources/Issuing/Disputes.js';
 import {EarlyFraudWarningResource as RadarEarlyFraudWarnings} from './resources/Radar/EarlyFraudWarnings.js';
 import {EventDestinationResource as V2CoreEventDestinations} from './resources/V2/Core/EventDestinations.js';
 import {EventResource as V2CoreEvents} from './resources/V2/Core/Events.js';
 import {FeatureResource as EntitlementsFeatures} from './resources/Entitlements/Features.js';
 import {FinancialAccountResource as TreasuryFinancialAccounts} from './resources/Treasury/FinancialAccounts.js';
+import {FinancialAccountResource as V2MoneyManagementFinancialAccounts} from './resources/V2/MoneyManagement/FinancialAccounts.js';
+import {FinancialAddressResource as V2MoneyManagementFinancialAddresses} from './resources/V2/MoneyManagement/FinancialAddresses.js';
+import {FinancialAddressResource as V2TestHelpersFinancialAddresses} from './resources/V2/TestHelpers/FinancialAddresses.js';
+import {FinancingOfferResource as CapitalFinancingOffers} from './resources/Capital/FinancingOffers.js';
+import {FinancingSummaryResource as CapitalFinancingSummary} from './resources/Capital/FinancingSummary.js';
+import {FinancingTransactionResource as CapitalFinancingTransactions} from './resources/Capital/FinancingTransactions.js';
+import {FormResource as TaxForms} from './resources/Tax/Forms.js';
+import {FraudLiabilityDebitResource as IssuingFraudLiabilityDebits} from './resources/Issuing/FraudLiabilityDebits.js';
+import {GbBankAccountResource as V2CoreVaultGbBankAccounts} from './resources/V2/Core/Vault/GbBankAccounts.js';
+import {HoldResource as ReserveHolds} from './resources/Reserve/Holds.js';
 import {InboundTransferResource as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransferResource as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
+import {InboundTransferResource as V2MoneyManagementInboundTransfers} from './resources/V2/MoneyManagement/InboundTransfers.js';
+import {InstitutionResource as FinancialConnectionsInstitutions} from './resources/FinancialConnections/Institutions.js';
+import {LocationResource as TaxLocations} from './resources/Tax/Locations.js';
 import {LocationResource as TerminalLocations} from './resources/Terminal/Locations.js';
 import {MeterEventAdjustmentResource as BillingMeterEventAdjustments} from './resources/Billing/MeterEventAdjustments.js';
 import {MeterEventAdjustmentResource as V2BillingMeterEventAdjustments} from './resources/V2/Billing/MeterEventAdjustments.js';
@@ -39,26 +60,40 @@ import {MeterEventSessionResource as V2BillingMeterEventSession} from './resourc
 import {MeterEventStreamResource as V2BillingMeterEventStream} from './resources/V2/Billing/MeterEventStream.js';
 import {MeterEventResource as BillingMeterEvents} from './resources/Billing/MeterEvents.js';
 import {MeterEventResource as V2BillingMeterEvents} from './resources/V2/Billing/MeterEvents.js';
+import {MeterUsageResource as BillingAnalyticsMeterUsage} from './resources/Billing/Analytics/MeterUsage.js';
 import {MeterResource as BillingMeters} from './resources/Billing/Meters.js';
 import {OnboardingLinkResource as TerminalOnboardingLinks} from './resources/Terminal/OnboardingLinks.js';
 import {OrderResource as ClimateOrders} from './resources/Climate/Orders.js';
+import {OutboundPaymentQuoteResource as V2MoneyManagementOutboundPaymentQuotes} from './resources/V2/MoneyManagement/OutboundPaymentQuotes.js';
 import {OutboundPaymentResource as TestHelpersTreasuryOutboundPayments} from './resources/TestHelpers/Treasury/OutboundPayments.js';
 import {OutboundPaymentResource as TreasuryOutboundPayments} from './resources/Treasury/OutboundPayments.js';
+import {OutboundPaymentResource as V2MoneyManagementOutboundPayments} from './resources/V2/MoneyManagement/OutboundPayments.js';
+import {OutboundSetupIntentResource as V2MoneyManagementOutboundSetupIntents} from './resources/V2/MoneyManagement/OutboundSetupIntents.js';
 import {OutboundTransferResource as TestHelpersTreasuryOutboundTransfers} from './resources/TestHelpers/Treasury/OutboundTransfers.js';
 import {OutboundTransferResource as TreasuryOutboundTransfers} from './resources/Treasury/OutboundTransfers.js';
+import {OutboundTransferResource as V2MoneyManagementOutboundTransfers} from './resources/V2/MoneyManagement/OutboundTransfers.js';
 import {PaymentEvaluationResource as RadarPaymentEvaluations} from './resources/Radar/PaymentEvaluations.js';
+import {PayoutMethodResource as V2MoneyManagementPayoutMethods} from './resources/V2/MoneyManagement/PayoutMethods.js';
+import {PayoutMethodsBankAccountSpecResource as V2MoneyManagementPayoutMethodsBankAccountSpec} from './resources/V2/MoneyManagement/PayoutMethodsBankAccountSpec.js';
 import {PersonalizationDesignResource as IssuingPersonalizationDesigns} from './resources/Issuing/PersonalizationDesigns.js';
 import {PersonalizationDesignResource as TestHelpersIssuingPersonalizationDesigns} from './resources/TestHelpers/Issuing/PersonalizationDesigns.js';
 import {PhysicalBundleResource as IssuingPhysicalBundles} from './resources/Issuing/PhysicalBundles.js';
+import {PlanResource as ReservePlans} from './resources/Reserve/Plans.js';
 import {ProductResource as ClimateProducts} from './resources/Climate/Products.js';
+import {ProfileResource as V2BillingProfiles} from './resources/V2/Billing/Profiles.js';
+import {ReaderCollectedDatumResource as TerminalReaderCollectedData} from './resources/Terminal/ReaderCollectedData.js';
 import {ReaderResource as TerminalReaders} from './resources/Terminal/Readers.js';
 import {ReaderResource as TestHelpersTerminalReaders} from './resources/TestHelpers/Terminal/Readers.js';
 import {ReceivedCreditResource as TestHelpersTreasuryReceivedCredits} from './resources/TestHelpers/Treasury/ReceivedCredits.js';
 import {ReceivedCreditResource as TreasuryReceivedCredits} from './resources/Treasury/ReceivedCredits.js';
+import {ReceivedCreditResource as V2MoneyManagementReceivedCredits} from './resources/V2/MoneyManagement/ReceivedCredits.js';
 import {ReceivedDebitResource as TestHelpersTreasuryReceivedDebits} from './resources/TestHelpers/Treasury/ReceivedDebits.js';
 import {ReceivedDebitResource as TreasuryReceivedDebits} from './resources/Treasury/ReceivedDebits.js';
+import {ReceivedDebitResource as V2MoneyManagementReceivedDebits} from './resources/V2/MoneyManagement/ReceivedDebits.js';
+import {RedactionJobResource as PrivacyRedactionJobs} from './resources/Privacy/RedactionJobs.js';
 import {RefundResource as TestHelpersRefunds} from './resources/TestHelpers/Refunds.js';
 import {RegistrationResource as TaxRegistrations} from './resources/Tax/Registrations.js';
+import {ReleaseResource as ReserveReleases} from './resources/Reserve/Releases.js';
 import {ReportRunResource as ReportingReportRuns} from './resources/Reporting/ReportRuns.js';
 import {ReportTypeResource as ReportingReportTypes} from './resources/Reporting/ReportTypes.js';
 import {RequestResource as ForwardingRequests} from './resources/Forwarding/Requests.js';
@@ -72,11 +107,15 @@ import {SupplierResource as ClimateSuppliers} from './resources/Climate/Supplier
 import {TestClockResource as TestHelpersTestClocks} from './resources/TestHelpers/TestClocks.js';
 import {TokenResource as IssuingTokens} from './resources/Issuing/Tokens.js';
 import {TransactionEntryResource as TreasuryTransactionEntries} from './resources/Treasury/TransactionEntries.js';
+import {TransactionEntryResource as V2MoneyManagementTransactionEntries} from './resources/V2/MoneyManagement/TransactionEntries.js';
 import {TransactionResource as FinancialConnectionsTransactions} from './resources/FinancialConnections/Transactions.js';
 import {TransactionResource as IssuingTransactions} from './resources/Issuing/Transactions.js';
 import {TransactionResource as TaxTransactions} from './resources/Tax/Transactions.js';
 import {TransactionResource as TestHelpersIssuingTransactions} from './resources/TestHelpers/Issuing/Transactions.js';
 import {TransactionResource as TreasuryTransactions} from './resources/Treasury/Transactions.js';
+import {TransactionResource as V2MoneyManagementTransactions} from './resources/V2/MoneyManagement/Transactions.js';
+import {TrialOfferResource as ProductCatalogTrialOffers} from './resources/ProductCatalog/TrialOffers.js';
+import {UsBankAccountResource as V2CoreVaultUsBankAccounts} from './resources/V2/Core/Vault/UsBankAccounts.js';
 import {ValueListItemResource as RadarValueListItems} from './resources/Radar/ValueListItems.js';
 import {ValueListResource as RadarValueLists} from './resources/Radar/ValueLists.js';
 import {VerificationReportResource as IdentityVerificationReports} from './resources/Identity/VerificationReports.js';
@@ -84,6 +123,7 @@ import {VerificationSessionResource as IdentityVerificationSessions} from './res
 export {AccountResource as Account} from './resources/Accounts.js';
 export {AccountResource as Accounts} from './resources/Accounts.js';
 export {AccountLinkResource as AccountLinks} from './resources/AccountLinks.js';
+export {AccountNoticeResource as AccountNotices} from './resources/AccountNotices.js';
 export {AccountSessionResource as AccountSessions} from './resources/AccountSessions.js';
 export {ApplePayDomainResource as ApplePayDomains} from './resources/ApplePayDomains.js';
 export {ApplicationFeeResource as ApplicationFees} from './resources/ApplicationFees.js';
@@ -102,14 +142,18 @@ export {DisputeResource as Disputes} from './resources/Disputes.js';
 export {EphemeralKeyResource as EphemeralKeys} from './resources/EphemeralKeys.js';
 export {EventResource as Events} from './resources/Events.js';
 export {ExchangeRateResource as ExchangeRates} from './resources/ExchangeRates.js';
+export {ExternalAccountResource as ExternalAccounts} from './resources/ExternalAccounts.js';
 export {FileResource as Files} from './resources/Files.js';
 export {FileLinkResource as FileLinks} from './resources/FileLinks.js';
+export {FxQuoteResource as FxQuotes} from './resources/FxQuotes.js';
 export {InvoiceResource as Invoices} from './resources/Invoices.js';
 export {InvoiceItemResource as InvoiceItems} from './resources/InvoiceItems.js';
 export {InvoicePaymentResource as InvoicePayments} from './resources/InvoicePayments.js';
 export {InvoiceRenderingTemplateResource as InvoiceRenderingTemplates} from './resources/InvoiceRenderingTemplates.js';
 export {MandateResource as Mandates} from './resources/Mandates.js';
+export {MarginResource as Margins} from './resources/Margins.js';
 export {OAuthResource} from './resources/OAuth.js';
+export {OrderResource as Orders} from './resources/Orders.js';
 export {PaymentAttemptRecordResource as PaymentAttemptRecords} from './resources/PaymentAttemptRecords.js';
 export {PaymentIntentResource as PaymentIntents} from './resources/PaymentIntents.js';
 export {PaymentLinkResource as PaymentLinks} from './resources/PaymentLinks.js';
@@ -148,10 +192,18 @@ export const Billing = resourceNamespace('billing', {
   MeterEventAdjustments: BillingMeterEventAdjustments,
   MeterEvents: BillingMeterEvents,
   Meters: BillingMeters,
+  Analytics: resourceNamespace('analytics', {
+    MeterUsage: BillingAnalyticsMeterUsage,
+  }),
 });
 export const BillingPortal = resourceNamespace('billingPortal', {
   Configurations: BillingPortalConfigurations,
   Sessions: BillingPortalSessions,
+});
+export const Capital = resourceNamespace('capital', {
+  FinancingOffers: CapitalFinancingOffers,
+  FinancingSummary: CapitalFinancingSummary,
+  FinancingTransactions: CapitalFinancingTransactions,
 });
 export const Checkout = resourceNamespace('checkout', {
   Sessions: CheckoutSessions,
@@ -167,6 +219,8 @@ export const Entitlements = resourceNamespace('entitlements', {
 });
 export const FinancialConnections = resourceNamespace('financialConnections', {
   Accounts: FinancialConnectionsAccounts,
+  Authorizations: FinancialConnectionsAuthorizations,
+  Institutions: FinancialConnectionsInstitutions,
   Sessions: FinancialConnectionsSessions,
   Transactions: FinancialConnectionsTransactions,
 });
@@ -181,11 +235,20 @@ export const Issuing = resourceNamespace('issuing', {
   Authorizations: IssuingAuthorizations,
   Cardholders: IssuingCardholders,
   Cards: IssuingCards,
+  CreditUnderwritingRecords: IssuingCreditUnderwritingRecords,
+  DisputeSettlementDetails: IssuingDisputeSettlementDetails,
   Disputes: IssuingDisputes,
+  FraudLiabilityDebits: IssuingFraudLiabilityDebits,
   PersonalizationDesigns: IssuingPersonalizationDesigns,
   PhysicalBundles: IssuingPhysicalBundles,
   Tokens: IssuingTokens,
   Transactions: IssuingTransactions,
+});
+export const Privacy = resourceNamespace('privacy', {
+  RedactionJobs: PrivacyRedactionJobs,
+});
+export const ProductCatalog = resourceNamespace('productCatalog', {
+  TrialOffers: ProductCatalogTrialOffers,
 });
 export const Radar = resourceNamespace('radar', {
   EarlyFraudWarnings: RadarEarlyFraudWarnings,
@@ -197,12 +260,19 @@ export const Reporting = resourceNamespace('reporting', {
   ReportRuns: ReportingReportRuns,
   ReportTypes: ReportingReportTypes,
 });
+export const Reserve = resourceNamespace('reserve', {
+  Holds: ReserveHolds,
+  Plans: ReservePlans,
+  Releases: ReserveReleases,
+});
 export const Sigma = resourceNamespace('sigma', {
   ScheduledQueryRuns: SigmaScheduledQueryRuns,
 });
 export const Tax = resourceNamespace('tax', {
   Associations: TaxAssociations,
   Calculations: TaxCalculations,
+  Forms: TaxForms,
+  Locations: TaxLocations,
   Registrations: TaxRegistrations,
   Settings: TaxSettings,
   Transactions: TaxTransactions,
@@ -212,6 +282,7 @@ export const Terminal = resourceNamespace('terminal', {
   ConnectionTokens: TerminalConnectionTokens,
   Locations: TerminalLocations,
   OnboardingLinks: TerminalOnboardingLinks,
+  ReaderCollectedData: TerminalReaderCollectedData,
   Readers: TerminalReaders,
 });
 export const TestHelpers = resourceNamespace('testHelpers', {
@@ -250,16 +321,44 @@ export const Treasury = resourceNamespace('treasury', {
 });
 export const V2 = resourceNamespace('v2', {
   Billing: resourceNamespace('billing', {
+    BillSettings: V2BillingBillSettings,
+    Cadences: V2BillingCadences,
+    CollectionSettings: V2BillingCollectionSettings,
     MeterEventAdjustments: V2BillingMeterEventAdjustments,
     MeterEventSession: V2BillingMeterEventSession,
     MeterEventStream: V2BillingMeterEventStream,
     MeterEvents: V2BillingMeterEvents,
+    Profiles: V2BillingProfiles,
   }),
   Core: resourceNamespace('core', {
     AccountLinks: V2CoreAccountLinks,
     AccountTokens: V2CoreAccountTokens,
     Accounts: V2CoreAccounts,
+    BatchJobs: V2CoreBatchJobs,
     EventDestinations: V2CoreEventDestinations,
     Events: V2CoreEvents,
+    Vault: resourceNamespace('vault', {
+      GbBankAccounts: V2CoreVaultGbBankAccounts,
+      UsBankAccounts: V2CoreVaultUsBankAccounts,
+    }),
+  }),
+  MoneyManagement: resourceNamespace('moneyManagement', {
+    Adjustments: V2MoneyManagementAdjustments,
+    FinancialAccounts: V2MoneyManagementFinancialAccounts,
+    FinancialAddresses: V2MoneyManagementFinancialAddresses,
+    InboundTransfers: V2MoneyManagementInboundTransfers,
+    OutboundPaymentQuotes: V2MoneyManagementOutboundPaymentQuotes,
+    OutboundPayments: V2MoneyManagementOutboundPayments,
+    OutboundSetupIntents: V2MoneyManagementOutboundSetupIntents,
+    OutboundTransfers: V2MoneyManagementOutboundTransfers,
+    PayoutMethods: V2MoneyManagementPayoutMethods,
+    PayoutMethodsBankAccountSpec: V2MoneyManagementPayoutMethodsBankAccountSpec,
+    ReceivedCredits: V2MoneyManagementReceivedCredits,
+    ReceivedDebits: V2MoneyManagementReceivedDebits,
+    TransactionEntries: V2MoneyManagementTransactionEntries,
+    Transactions: V2MoneyManagementTransactions,
+  }),
+  TestHelpers: resourceNamespace('testHelpers', {
+    FinancialAddresses: V2TestHelpersFinancialAddresses,
   }),
 });

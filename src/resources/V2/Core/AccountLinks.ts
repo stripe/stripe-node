@@ -3,6 +3,7 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class AccountLinkResource extends StripeResource {
   /**
    * Creates an AccountLink object that includes a single-use URL that an account can use to access a Stripe-hosted flow for collecting or updating required information.
@@ -135,7 +136,11 @@ export namespace V2 {
             future_requirements?: CollectionOptions.FutureRequirements;
           }
 
-          export type Configuration = 'customer' | 'merchant' | 'recipient';
+          export type Configuration =
+            | 'customer'
+            | 'merchant'
+            | 'recipient'
+            | 'storer';
 
           export namespace CollectionOptions {
             export type Fields = 'currently_due' | 'eventually_due';
@@ -157,7 +162,11 @@ export namespace V2 {
             future_requirements?: CollectionOptions.FutureRequirements;
           }
 
-          export type Configuration = 'customer' | 'merchant' | 'recipient';
+          export type Configuration =
+            | 'customer'
+            | 'merchant'
+            | 'recipient'
+            | 'storer';
 
           export namespace CollectionOptions {
             export type Fields = 'currently_due' | 'eventually_due';
@@ -261,7 +270,11 @@ export namespace V2 {
             future_requirements?: CollectionOptions.FutureRequirements;
           }
 
-          export type Configuration = 'customer' | 'merchant' | 'recipient';
+          export type Configuration =
+            | 'customer'
+            | 'merchant'
+            | 'recipient'
+            | 'storer';
 
           export namespace CollectionOptions {
             export type Fields = 'currently_due' | 'eventually_due';
@@ -283,7 +296,11 @@ export namespace V2 {
             future_requirements?: CollectionOptions.FutureRequirements;
           }
 
-          export type Configuration = 'customer' | 'merchant' | 'recipient';
+          export type Configuration =
+            | 'customer'
+            | 'merchant'
+            | 'recipient'
+            | 'storer';
 
           export namespace CollectionOptions {
             export type Fields = 'currently_due' | 'eventually_due';

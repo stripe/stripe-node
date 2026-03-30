@@ -1,9 +1,45 @@
 // File generated from our OpenAPI spec
 
+import {StripeResource} from '../../StripeResource.js';
 import {Plan} from './Plans.js';
 import {Charge} from './../Charges.js';
-import {Metadata} from '../../shared.js';
-import {RequestOptions} from '../../lib.js';
+import {PaginationParams, Metadata} from '../../shared.js';
+import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
+const stripeMethod = StripeResource.method;
+
+export class HoldResource extends StripeResource {
+  /**
+   * Returns a list of ReserveHolds previously created. The ReserveHolds are returned in sorted order, with the most recent ReserveHolds appearing first.
+   */
+  list(
+    params?: Reserve.HoldListParams,
+    options?: RequestOptions
+  ): ApiListPromise<Hold>;
+  list(options?: RequestOptions): ApiListPromise<Hold>;
+  list(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'GET',
+      fullPath: '/v1/reserve/holds',
+      methodType: 'list',
+    }).call(this, ...args);
+  }
+
+  /**
+   * Retrieve a ReserveHold.
+   */
+  retrieve(
+    id: string,
+    params?: Reserve.HoldRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<Hold>>;
+  retrieve(id: string, options?: RequestOptions): Promise<Response<Hold>>;
+  retrieve(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'GET',
+      fullPath: '/v1/reserve/holds/{id}',
+    }).call(this, ...args);
+  }
+}
 export interface Hold {
   /**
    * Unique identifier for the object.
@@ -96,5 +132,52 @@ export namespace Reserve {
     }
 
     export type SourceType = 'bank_account' | 'card' | 'fpx';
+  }
+}
+export namespace Reserve {
+  export interface HoldRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+}
+export namespace Reserve {
+  export interface HoldListParams extends PaginationParams {
+    /**
+     * Only return ReserveHolds associated with the currency specified by this currency code. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Only return ReserveHolds that are releasable.
+     */
+    is_releasable?: boolean;
+
+    reason?: HoldListParams.Reason;
+
+    /**
+     * Only return ReserveHolds associated with the ReservePlan specified by this ReservePlan ID.
+     */
+    reserve_plan?: string;
+
+    /**
+     * Only return ReserveHolds associated with the ReserveRelease specified by this ReserveRelease ID.
+     */
+    reserve_release?: string;
+
+    /**
+     * Only return ReserveHolds associated with the Charge specified by this source charge ID.
+     */
+    source_charge?: string;
+  }
+
+  export namespace HoldListParams {
+    export type Reason = 'charge' | 'standalone';
   }
 }

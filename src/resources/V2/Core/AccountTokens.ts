@@ -5,6 +5,7 @@ import {Amount} from './../../V2/Amounts.js';
 import {JapanAddressParam, MetadataParam, Decimal} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class AccountTokenResource extends StripeResource {
   /**
    * Creates an Account Token.
@@ -371,6 +372,11 @@ export namespace V2 {
              * Details on the Account's acceptance of the [Stripe Services Agreement]; IP, date, and User Agent are expanded by Stripe.
              */
             account?: TermsOfService.Account;
+
+            /**
+             * Details on the Account's acceptance of Treasury-specific terms of service; IP, date, and User Agent are expanded by Stripe.
+             */
+            storer?: TermsOfService.Storer;
           }
 
           export namespace PersonsProvided {
@@ -381,6 +387,13 @@ export namespace V2 {
 
           export namespace TermsOfService {
             export interface Account {
+              /**
+               * The boolean value indicating if the terms of service have been accepted.
+               */
+              shown_and_accepted?: boolean;
+            }
+
+            export interface Storer {
               /**
                * The boolean value indicating if the terms of service have been accepted.
                */

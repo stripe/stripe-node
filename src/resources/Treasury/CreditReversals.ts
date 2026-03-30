@@ -5,6 +5,7 @@ import {Transaction} from './Transactions.js';
 import {MetadataParam, PaginationParams, Metadata} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class CreditReversalResource extends StripeResource {
   /**
    * Returns a list of CreditReversals.

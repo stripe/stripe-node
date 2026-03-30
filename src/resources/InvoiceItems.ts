@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {Discount, DeletedDiscount} from './Discounts.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {Invoice} from './Invoices.js';
+import {Margin} from './Margins.js';
 import {TaxRate} from './TaxRates.js';
 import {Price} from './Prices.js';
 import * as TestHelpers from './TestHelpers/index.js';
@@ -17,6 +18,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class InvoiceItemResource extends StripeResource {
   /**
    * Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they're not attached to invoices, or if it's attached to a draft invoice.
@@ -271,6 +273,11 @@ export interface InvoiceItem {
   livemode: boolean;
 
   /**
+   * The margins which apply to the invoice item. When set, the `default_margins` on the invoice do not apply to this invoice item.
+   */
+  margins?: Array<string | Margin> | null;
+
+  /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata | null;
@@ -470,6 +477,11 @@ export interface InvoiceItemCreateParams {
   invoice?: string;
 
   /**
+   * The ids of the margins to apply to the invoice item. When set, the `default_margins` on the invoice do not apply to this invoice item.
+   */
+  margins?: Array<string>;
+
+  /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
@@ -537,6 +549,11 @@ export namespace InvoiceItemCreateParams {
     discount?: string;
 
     /**
+     * Details to determine how long the discount should be applied for.
+     */
+    discount_end?: Discount.DiscountEnd;
+
+    /**
      * ID of the promotion code to create a new discount for.
      */
     promotion_code?: string;
@@ -590,6 +607,45 @@ export namespace InvoiceItemCreateParams {
 
   export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
 
+  export namespace Discount {
+    export interface DiscountEnd {
+      /**
+       * Time span for the redeemed discount.
+       */
+      duration?: DiscountEnd.Duration;
+
+      /**
+       * A precise Unix timestamp for the discount to end. Must be in the future.
+       */
+      timestamp?: number;
+
+      /**
+       * The type of calculation made to determine when the discount ends.
+       */
+      type: DiscountEnd.Type;
+    }
+
+    export namespace DiscountEnd {
+      export interface Duration {
+        /**
+         * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+         */
+        interval: Duration.Interval;
+
+        /**
+         * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+         */
+        interval_count: number;
+      }
+
+      export type Type = 'duration' | 'timestamp';
+
+      export namespace Duration {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+    }
+  }
+
   export namespace PriceData {
     export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
   }
@@ -625,6 +681,11 @@ export interface InvoiceItemUpdateParams {
    * Specifies which fields in the response should be expanded.
    */
   expand?: Array<string>;
+
+  /**
+   * The ids of the margins to apply to the invoice item. When set, the `default_margins` on the invoice do not apply to this invoice item.
+   */
+  margins?: Emptyable<Array<string>>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -689,6 +750,11 @@ export namespace InvoiceItemUpdateParams {
     discount?: string;
 
     /**
+     * Details to determine how long the discount should be applied for.
+     */
+    discount_end?: Discount.DiscountEnd;
+
+    /**
      * ID of the promotion code to create a new discount for.
      */
     promotion_code?: string;
@@ -741,6 +807,45 @@ export namespace InvoiceItemUpdateParams {
   }
 
   export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+
+  export namespace Discount {
+    export interface DiscountEnd {
+      /**
+       * Time span for the redeemed discount.
+       */
+      duration?: DiscountEnd.Duration;
+
+      /**
+       * A precise Unix timestamp for the discount to end. Must be in the future.
+       */
+      timestamp?: number;
+
+      /**
+       * The type of calculation made to determine when the discount ends.
+       */
+      type: DiscountEnd.Type;
+    }
+
+    export namespace DiscountEnd {
+      export interface Duration {
+        /**
+         * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+         */
+        interval: Duration.Interval;
+
+        /**
+         * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+         */
+        interval_count: number;
+      }
+
+      export type Type = 'duration' | 'timestamp';
+
+      export namespace Duration {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+    }
+  }
 
   export namespace PriceData {
     export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';

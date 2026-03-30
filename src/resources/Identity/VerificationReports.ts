@@ -4,6 +4,7 @@ import {StripeResource} from '../../StripeResource.js';
 import {PaginationParams, RangeQueryParam, Address} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class VerificationReportResource extends StripeResource {
   /**
    * List all verification reports.

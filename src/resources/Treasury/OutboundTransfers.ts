@@ -12,6 +12,7 @@ import {
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class OutboundTransferResource extends StripeResource {
   /**
    * Returns a list of OutboundTransfers sent from the specified FinancialAccount.
@@ -149,6 +150,11 @@ export interface OutboundTransfer {
   metadata: Metadata;
 
   /**
+   * Details about the network used for the OutboundTransfer.
+   */
+  network_details?: Treasury.OutboundTransfer.NetworkDetails | null;
+
+  /**
    * Details about a returned OutboundTransfer. Only set when the status is `returned`.
    */
   returned_details: Treasury.OutboundTransfer.ReturnedDetails | null;
@@ -188,6 +194,18 @@ export namespace Treasury {
       type: DestinationPaymentMethodDetails.Type;
 
       us_bank_account?: DestinationPaymentMethodDetails.UsBankAccount;
+    }
+
+    export interface NetworkDetails {
+      /**
+       * Details about an ACH transaction.
+       */
+      ach?: NetworkDetails.Ach | null;
+
+      /**
+       * The type of flow that originated the OutboundTransfer.
+       */
+      type: 'ach';
     }
 
     export interface ReturnedDetails {
@@ -322,6 +340,15 @@ export namespace Treasury {
       }
     }
 
+    export namespace NetworkDetails {
+      export interface Ach {
+        /**
+         * ACH Addenda record
+         */
+        addenda: string | null;
+      }
+    }
+
     export namespace ReturnedDetails {
       export type Code =
         | 'account_closed'
@@ -413,6 +440,11 @@ export namespace Treasury {
     metadata?: MetadataParam;
 
     /**
+     * Details about the network used for the OutboundTransfer.
+     */
+    network_details?: OutboundTransferCreateParams.NetworkDetails;
+
+    /**
      * Statement descriptor to be shown on the receiving end of an OutboundTransfer. Maximum 10 characters for `ach` transfers or 140 characters for `us_domestic_wire` transfers. The default value is "transfer". Can only include -#.$&*, spaces, and alphanumeric characters.
      */
     statement_descriptor?: string;
@@ -440,6 +472,18 @@ export namespace Treasury {
       >;
     }
 
+    export interface NetworkDetails {
+      /**
+       * Optional fields for `ach`.
+       */
+      ach?: NetworkDetails.Ach;
+
+      /**
+       * The type of flow that originated the OutboundTransfer.
+       */
+      type: 'ach';
+    }
+
     export namespace DestinationPaymentMethodOptions {
       export interface UsBankAccount {
         /**
@@ -450,6 +494,15 @@ export namespace Treasury {
 
       export namespace UsBankAccount {
         export type Network = 'ach' | 'us_domestic_wire';
+      }
+    }
+
+    export namespace NetworkDetails {
+      export interface Ach {
+        /**
+         * Addenda record data associated with this OutboundTransfer.
+         */
+        addenda?: string;
       }
     }
   }

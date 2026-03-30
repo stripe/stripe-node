@@ -19,6 +19,7 @@ import {
 } from './MeterEventAdjustments.js';
 import {AlertTriggered} from './AlertTriggereds.js';
 import {MeterEventSummary} from './MeterEventSummaries.js';
+import {Analytics} from './Analytics/index.js';
 
 export {Alert} from './Alerts.js';
 export {CreditBalanceSummary} from './CreditBalanceSummary.js';
@@ -36,6 +37,7 @@ export class Billing {
   meters: MeterResource;
   meterEvents: MeterEventResource;
   meterEventAdjustments: MeterEventAdjustmentResource;
+  analytics: Analytics;
 
   constructor(private readonly stripe: Stripe) {
     this.alerts = new AlertResource(stripe);
@@ -47,6 +49,7 @@ export class Billing {
     this.meters = new MeterResource(stripe);
     this.meterEvents = new MeterEventResource(stripe);
     this.meterEventAdjustments = new MeterEventAdjustmentResource(stripe);
+    this.analytics = new Analytics(stripe);
   }
 }
 
@@ -60,4 +63,5 @@ export declare namespace Billing {
   export {MeterEventAdjustment};
   export {AlertTriggered};
   export {MeterEventSummary};
+  export {Analytics};
 }

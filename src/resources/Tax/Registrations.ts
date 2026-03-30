@@ -4,6 +4,7 @@ import {StripeResource} from '../../StripeResource.js';
 import {Emptyable, PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class RegistrationResource extends StripeResource {
   /**
    * Returns a list of Tax Registration objects.
@@ -1054,9 +1055,23 @@ export namespace Tax {
       }
 
       export interface Us {
+        admissions_tax?: Us.AdmissionsTax;
+
+        attendance_tax?: Us.AttendanceTax;
+
+        entertainment_tax?: Us.EntertainmentTax;
+
+        gross_receipts_tax?: Us.GrossReceiptsTax;
+
+        hospitality_tax?: Us.HospitalityTax;
+
         local_amusement_tax?: Us.LocalAmusementTax;
 
         local_lease_tax?: Us.LocalLeaseTax;
+
+        luxury_tax?: Us.LuxuryTax;
+
+        resort_tax?: Us.ResortTax;
 
         /**
          * Two-letter US state code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
@@ -1064,6 +1079,8 @@ export namespace Tax {
         state: string;
 
         state_sales_tax?: Us.StateSalesTax;
+
+        tourism_tax?: Us.TourismTax;
 
         /**
          * Type of registration in the US.
@@ -1715,6 +1732,41 @@ export namespace Tax {
       }
 
       export namespace Us {
+        export interface AdmissionsTax {
+          /**
+           * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=admissions_tax#registration-types) representing the local jurisdiction.
+           */
+          jurisdiction: string;
+        }
+
+        export interface AttendanceTax {
+          /**
+           * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=attendance_tax#registration-types) representing the local jurisdiction.
+           */
+          jurisdiction: string;
+        }
+
+        export interface EntertainmentTax {
+          /**
+           * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=entertainment_tax#registration-types) representing the local jurisdiction.
+           */
+          jurisdiction: string;
+        }
+
+        export interface GrossReceiptsTax {
+          /**
+           * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=gross_receipts_tax#registration-types) representing the local jurisdiction.
+           */
+          jurisdiction: string;
+        }
+
+        export interface HospitalityTax {
+          /**
+           * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=hospitality_tax#registration-types) representing the local jurisdiction.
+           */
+          jurisdiction: string;
+        }
+
         export interface LocalAmusementTax {
           /**
            * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
@@ -1729,6 +1781,20 @@ export namespace Tax {
           jurisdiction: string;
         }
 
+        export interface LuxuryTax {
+          /**
+           * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=luxury_tax#registration-types) representing the local jurisdiction.
+           */
+          jurisdiction: string;
+        }
+
+        export interface ResortTax {
+          /**
+           * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=resort_tax#registration-types) representing the local jurisdiction.
+           */
+          jurisdiction: string;
+        }
+
         export interface StateSalesTax {
           /**
            * Elections for the state sales tax registration.
@@ -1736,12 +1802,27 @@ export namespace Tax {
           elections?: Array<StateSalesTax.Election>;
         }
 
+        export interface TourismTax {
+          /**
+           * A [jurisdiction code](https://docs.stripe.com/tax/registering?type=tourism_tax#registration-types) representing the local jurisdiction.
+           */
+          jurisdiction: string;
+        }
+
         export type Type =
+          | 'admissions_tax'
+          | 'attendance_tax'
+          | 'entertainment_tax'
+          | 'gross_receipts_tax'
+          | 'hospitality_tax'
           | 'local_amusement_tax'
           | 'local_lease_tax'
+          | 'luxury_tax'
+          | 'resort_tax'
           | 'state_communications_tax'
           | 'state_retail_delivery_fee'
-          | 'state_sales_tax';
+          | 'state_sales_tax'
+          | 'tourism_tax';
 
         export namespace StateSalesTax {
           export interface Election {
@@ -4192,11 +4273,19 @@ export namespace Tax {
         }
 
         export type Type =
+          | 'admissions_tax'
+          | 'attendance_tax'
+          | 'entertainment_tax'
+          | 'gross_receipts_tax'
+          | 'hospitality_tax'
           | 'local_amusement_tax'
           | 'local_lease_tax'
+          | 'luxury_tax'
+          | 'resort_tax'
           | 'state_communications_tax'
           | 'state_retail_delivery_fee'
-          | 'state_sales_tax';
+          | 'state_sales_tax'
+          | 'tourism_tax';
 
         export namespace StateSalesTax {
           export interface Election {

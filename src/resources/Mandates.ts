@@ -2,9 +2,26 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {PaymentMethod} from './PaymentMethods.js';
-import {RequestOptions, Response} from '../lib.js';
+import {PaginationParams} from '../shared.js';
+import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class MandateResource extends StripeResource {
+  /**
+   * Retrieves a list of Mandates for a given PaymentMethod.
+   */
+  list(
+    params: MandateListParams,
+    options?: RequestOptions
+  ): ApiListPromise<Mandate>;
+  list(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'GET',
+      fullPath: '/v1/mandates',
+      methodType: 'list',
+    }).call(this, ...args);
+  }
+
   /**
    * Retrieves a Mandate object.
    */
@@ -82,7 +99,17 @@ export namespace Mandate {
     type: CustomerAcceptance.Type;
   }
 
-  export interface MultiUse {}
+  export interface MultiUse {
+    /**
+     * The amount of the payment on a multi use mandate.
+     */
+    amount?: number;
+
+    /**
+     * The currency of the payment on a multi use mandate.
+     */
+    currency?: string;
+  }
 
   export interface PaymentMethodDetails {
     acss_debit?: PaymentMethodDetails.AcssDebit;
@@ -112,6 +139,8 @@ export namespace Mandate {
     paypal?: PaymentMethodDetails.Paypal;
 
     payto?: PaymentMethodDetails.Payto;
+
+    pix?: PaymentMethodDetails.Pix;
 
     revolut_pay?: PaymentMethodDetails.RevolutPay;
 
@@ -248,9 +277,20 @@ export namespace Mandate {
       billing_agreement_id: string | null;
 
       /**
+       * Uniquely identifies this particular PayPal account. You can use this attribute to check whether two PayPal accounts are the same.
+       */
+      fingerprint?: string | null;
+
+      /**
        * PayPal account PayerID. This identifier uniquely identifies the PayPal customer.
        */
       payer_id: string | null;
+
+      /**
+       * Owner's verified email. Values are verified or provided by PayPal directly
+       * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+       */
+      verified_email?: string | null;
     }
 
     export interface Payto {
@@ -288,6 +328,38 @@ export namespace Mandate {
        * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
        */
       start_date: string | null;
+    }
+
+    export interface Pix {
+      /**
+       * Determines if the amount includes the IOF tax.
+       */
+      amount_includes_iof?: Pix.AmountIncludesIof;
+
+      /**
+       * Type of amount.
+       */
+      amount_type?: Pix.AmountType;
+
+      /**
+       * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`.
+       */
+      end_date?: string;
+
+      /**
+       * Schedule at which the future payments will be charged.
+       */
+      payment_schedule?: Pix.PaymentSchedule;
+
+      /**
+       * Subscription name displayed to buyers in their bank app.
+       */
+      reference?: string;
+
+      /**
+       * Start date of the mandate, in `YYYY-MM-DD`.
+       */
+      start_date?: string;
     }
 
     export interface RevolutPay {}
@@ -383,6 +455,19 @@ export namespace Mandate {
         | 'utility';
     }
 
+    export namespace Pix {
+      export type AmountIncludesIof = 'always' | 'never';
+
+      export type AmountType = 'fixed' | 'maximum';
+
+      export type PaymentSchedule =
+        | 'halfyearly'
+        | 'monthly'
+        | 'quarterly'
+        | 'weekly'
+        | 'yearly';
+    }
+
     export namespace Upi {
       export type AmountType = 'fixed' | 'maximum';
     }
@@ -393,4 +478,25 @@ export interface MandateRetrieveParams {
    * Specifies which fields in the response should be expanded.
    */
   expand?: Array<string>;
+}
+export interface MandateListParams extends PaginationParams {
+  payment_method: string;
+
+  /**
+   * The status of the mandates to retrieve. Status indicates whether or not you can use it to initiate a payment, and can have a value of `active`, `pending`, or `inactive`.
+   */
+  status: MandateListParams.Status;
+
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+
+  /**
+   * The Stripe account ID that the mandates are intended for. Learn more about the [use case for connected accounts payments](https://docs.stripe.com/payments/connected-accounts).
+   */
+  on_behalf_of?: string;
+}
+export namespace MandateListParams {
+  export type Status = 'active' | 'inactive' | 'pending';
 }

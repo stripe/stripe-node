@@ -14,6 +14,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class SubscriptionItemResource extends StripeResource {
   /**
    * Deletes an item from the subscription. Removing a subscription item from a subscription will not cancel the subscription.
@@ -467,6 +468,11 @@ export interface SubscriptionItem {
   object: 'subscription_item';
 
   /**
+   * The time period the subscription item has been billed for.
+   */
+  billed_until?: number | null;
+
+  /**
    * Define thresholds at which an invoice will be sent, and the related subscription advanced to a new billing period
    */
   billing_thresholds: SubscriptionItem.BillingThresholds | null;
@@ -485,6 +491,11 @@ export interface SubscriptionItem {
    * The start time of this subscription item's current billing period.
    */
   current_period_start: number;
+
+  /**
+   * The current trial that is applied to this subscription item.
+   */
+  current_trial?: SubscriptionItem.CurrentTrial | null;
 
   /**
    * Always true for a deleted object
@@ -537,6 +548,11 @@ export interface SubscriptionItem {
    * The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
    */
   tax_rates: Array<TaxRate> | null;
+
+  /**
+   * Options that configure the trial on the subscription item.
+   */
+  trial?: SubscriptionItem.Trial | null;
 }
 export interface DeletedSubscriptionItem {
   /**
@@ -561,6 +577,30 @@ export namespace SubscriptionItem {
      */
     usage_gte: number | null;
   }
+
+  export interface CurrentTrial {
+    end_date: number;
+
+    start_date: number;
+
+    trial_offer: string;
+  }
+
+  export interface Trial {
+    /**
+     * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
+     */
+    converts_to?: Array<string> | null;
+
+    /**
+     * Determines the type of trial for this item.
+     */
+    type: Trial.Type;
+  }
+
+  export namespace Trial {
+    export type Type = 'free' | 'paid';
+  }
 }
 export interface SubscriptionItemCreateParams {
   /**
@@ -574,6 +614,11 @@ export interface SubscriptionItemCreateParams {
   billing_thresholds?: Emptyable<
     SubscriptionItemCreateParams.BillingThresholds
   >;
+
+  /**
+   * The trial offer to apply to this subscription item.
+   */
+  current_trial?: SubscriptionItemCreateParams.CurrentTrial;
 
   /**
    * The coupons to redeem into discounts for the subscription item.
@@ -635,6 +680,11 @@ export interface SubscriptionItemCreateParams {
    * A list of [Tax Rate](https://docs.stripe.com/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
    */
   tax_rates?: Emptyable<Array<string>>;
+
+  /**
+   * Options that configure the trial on the subscription item.
+   */
+  trial?: SubscriptionItemCreateParams.Trial;
 }
 export namespace SubscriptionItemCreateParams {
   export interface BillingThresholds {
@@ -642,6 +692,18 @@ export namespace SubscriptionItemCreateParams {
      * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://docs.stripe.com/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
      */
     usage_gte: number;
+  }
+
+  export interface CurrentTrial {
+    /**
+     * Unix timestamp representing the end of the trial offer period. Required when the trial offer has `duration.type=timestamp`. Cannot be specified when `duration.type=relative`.
+     */
+    trial_end?: number;
+
+    /**
+     * The ID of the trial offer to apply to the subscription item.
+     */
+    trial_offer: string;
   }
 
   export interface Discount {
@@ -654,6 +716,11 @@ export namespace SubscriptionItemCreateParams {
      * ID of an existing discount on the object (or one of its ancestors) to reuse.
      */
     discount?: string;
+
+    /**
+     * Details to determine how long the discount should be applied for.
+     */
+    discount_end?: Discount.DiscountEnd;
 
     /**
      * ID of the promotion code to create a new discount for.
@@ -704,6 +771,57 @@ export namespace SubscriptionItemCreateParams {
     | 'create_prorations'
     | 'none';
 
+  export interface Trial {
+    /**
+     * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial. Currently only supports at most 1 price ID.
+     */
+    converts_to?: Array<string>;
+
+    /**
+     * Determines the type of trial for this item.
+     */
+    type: Trial.Type;
+  }
+
+  export namespace Discount {
+    export interface DiscountEnd {
+      /**
+       * Time span for the redeemed discount.
+       */
+      duration?: DiscountEnd.Duration;
+
+      /**
+       * A precise Unix timestamp for the discount to end. Must be in the future.
+       */
+      timestamp?: number;
+
+      /**
+       * The type of calculation made to determine when the discount ends.
+       */
+      type: DiscountEnd.Type;
+    }
+
+    export namespace DiscountEnd {
+      export interface Duration {
+        /**
+         * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+         */
+        interval: Duration.Interval;
+
+        /**
+         * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+         */
+        interval_count: number;
+      }
+
+      export type Type = 'duration' | 'timestamp';
+
+      export namespace Duration {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+    }
+  }
+
   export namespace PriceData {
     export interface Recurring {
       /**
@@ -723,6 +841,10 @@ export namespace SubscriptionItemCreateParams {
       export type Interval = 'day' | 'month' | 'week' | 'year';
     }
   }
+
+  export namespace Trial {
+    export type Type = 'free' | 'paid';
+  }
 }
 export interface SubscriptionItemRetrieveParams {
   /**
@@ -737,6 +859,11 @@ export interface SubscriptionItemUpdateParams {
   billing_thresholds?: Emptyable<
     SubscriptionItemUpdateParams.BillingThresholds
   >;
+
+  /**
+   * The trial offer to apply to this subscription item.
+   */
+  current_trial?: SubscriptionItemUpdateParams.CurrentTrial;
 
   /**
    * The coupons to redeem into discounts for the subscription item.
@@ -812,6 +939,18 @@ export namespace SubscriptionItemUpdateParams {
     usage_gte: number;
   }
 
+  export interface CurrentTrial {
+    /**
+     * Unix timestamp representing the end of the trial offer period. Required when the trial offer has `duration.type=timestamp`. Cannot be specified when `duration.type=relative`.
+     */
+    trial_end?: number;
+
+    /**
+     * The ID of the trial offer to apply to the subscription item.
+     */
+    trial_offer: string;
+  }
+
   export interface Discount {
     /**
      * ID of the coupon to create a new discount for.
@@ -822,6 +961,11 @@ export namespace SubscriptionItemUpdateParams {
      * ID of an existing discount on the object (or one of its ancestors) to reuse.
      */
     discount?: string;
+
+    /**
+     * Details to determine how long the discount should be applied for.
+     */
+    discount_end?: Discount.DiscountEnd;
 
     /**
      * ID of the promotion code to create a new discount for.
@@ -871,6 +1015,45 @@ export namespace SubscriptionItemUpdateParams {
     | 'always_invoice'
     | 'create_prorations'
     | 'none';
+
+  export namespace Discount {
+    export interface DiscountEnd {
+      /**
+       * Time span for the redeemed discount.
+       */
+      duration?: DiscountEnd.Duration;
+
+      /**
+       * A precise Unix timestamp for the discount to end. Must be in the future.
+       */
+      timestamp?: number;
+
+      /**
+       * The type of calculation made to determine when the discount ends.
+       */
+      type: DiscountEnd.Type;
+    }
+
+    export namespace DiscountEnd {
+      export interface Duration {
+        /**
+         * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+         */
+        interval: Duration.Interval;
+
+        /**
+         * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+         */
+        interval_count: number;
+      }
+
+      export type Type = 'duration' | 'timestamp';
+
+      export namespace Duration {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+    }
+  }
 
   export namespace PriceData {
     export interface Recurring {

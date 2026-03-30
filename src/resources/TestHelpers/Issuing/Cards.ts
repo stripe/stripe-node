@@ -4,6 +4,7 @@ import {StripeResource} from '../../../StripeResource.js';
 import {Card} from './../../Issuing/Cards.js';
 import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class CardResource extends StripeResource {
   /**
    * Updates the shipping status of the specified Issuing Card object to delivered.

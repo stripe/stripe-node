@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {PaginationParams} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class TaxCodeResource extends StripeResource {
   /**
    * A list of [all tax codes available](https://stripe.com/docs/tax/tax-categories) to add to Products in order to allow specific tax calculations.
@@ -57,6 +58,23 @@ export interface TaxCode {
    * A short name for the tax code.
    */
   name: string;
+
+  /**
+   * An object that describes more information about the tax location required for this tax code. Some [tax codes](https://docs.stripe.com/tax/tax-for-tickets/integration-guide#types-of-products) require a tax location of type `performance` to calculate tax correctly.
+   */
+  requirements?: TaxCode.Requirements | null;
+}
+export namespace TaxCode {
+  export interface Requirements {
+    /**
+     * Describes whether a performance location is required for a successful tax calculation with a tax code.
+     */
+    performance_location?: Requirements.PerformanceLocation;
+  }
+
+  export namespace Requirements {
+    export type PerformanceLocation = 'optional' | 'required';
+  }
 }
 export interface TaxCodeRetrieveParams {
   /**

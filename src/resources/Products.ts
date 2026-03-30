@@ -19,6 +19,7 @@ import {
   ApiSearchResultPromise,
 } from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ProductResource extends StripeResource {
   /**
    * Delete a product. Deleting a product is only possible if it has no prices associated with it. Additionally, deleting a product with type=good is only possible if it has no SKUs associated with it.
@@ -441,6 +442,11 @@ export interface ProductCreateParams {
   tax_code?: string;
 
   /**
+   * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+   */
+  tax_details?: ProductCreateParams.TaxDetails;
+
+  /**
    * The type of the product. Defaults to `service` if not explicitly specified, enabling use of this product with Subscriptions and Plans. Set this parameter to `good` to use this product with Orders and SKUs. On API versions before `2018-02-05`, this field defaults to `good` for compatibility reasons.
    */
   type?: ProductCreateParams.Type;
@@ -527,6 +533,18 @@ export namespace ProductCreateParams {
      * Width, in inches. Maximum precision is 2 decimal places.
      */
     width: number;
+  }
+
+  export interface TaxDetails {
+    /**
+     * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+     */
+    performance_location?: string;
+
+    /**
+     * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+     */
+    tax_code?: Emptyable<string>;
   }
 
   export type Type = 'good' | 'service';
@@ -724,6 +742,11 @@ export interface ProductUpdateParams {
   tax_code?: Emptyable<string>;
 
   /**
+   * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+   */
+  tax_details?: Emptyable<ProductUpdateParams.TaxDetails>;
+
+  /**
    * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal. May only be set if `type=service`.
    */
   unit_label?: Emptyable<string>;
@@ -761,6 +784,18 @@ export namespace ProductUpdateParams {
      * Width, in inches. Maximum precision is 2 decimal places.
      */
     width: number;
+  }
+
+  export interface TaxDetails {
+    /**
+     * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+     */
+    performance_location?: string;
+
+    /**
+     * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+     */
+    tax_code?: Emptyable<string>;
   }
 }
 export interface ProductListParams extends PaginationParams {

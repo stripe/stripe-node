@@ -2,6 +2,7 @@
 
 import {Discount} from './Discounts.js';
 import {Price} from './Prices.js';
+import {Product, DeletedProduct} from './Products.js';
 import {TaxRate} from './TaxRates.js';
 import {Metadata} from '../shared.js';
 import {RequestOptions} from '../lib.js';
@@ -16,7 +17,7 @@ export interface LineItem {
    */
   object: 'item';
 
-  adjustable_quantity: LineItem.AdjustableQuantity | null;
+  adjustable_quantity?: LineItem.AdjustableQuantity | null;
 
   /**
    * Total discount amount applied. If no discounts were applied, defaults to 0.
@@ -53,10 +54,12 @@ export interface LineItem {
    */
   discounts?: Array<LineItem.Discount>;
 
+  display?: LineItem.Display;
+
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
-  metadata: Metadata | null;
+  metadata?: Metadata | null;
 
   /**
    * The price used to generate the line item.
@@ -64,9 +67,21 @@ export interface LineItem {
   price: Price | null;
 
   /**
+   * The ID of the product for this line item.
+   *
+   * This will always be the same as `price.product`.
+   */
+  product?: string | Product | DeletedProduct;
+
+  /**
    * The quantity of products being purchased.
    */
   quantity: number | null;
+
+  /**
+   * The tax calculation identifiers of the line item.
+   */
+  tax_calculation_reference?: LineItem.TaxCalculationReference | null;
 
   /**
    * The taxes applied to the line item.
@@ -95,6 +110,26 @@ export namespace LineItem {
      * Related guide: [Applying discounts to subscriptions](https://docs.stripe.com/billing/subscriptions/discounts)
      */
     discount: Discount;
+  }
+
+  export interface Display {
+    description: string | null;
+
+    images: Array<string>;
+
+    name: string;
+  }
+
+  export interface TaxCalculationReference {
+    /**
+     * The calculation identifier for tax calculation response.
+     */
+    calculation_id: string | null;
+
+    /**
+     * The calculation identifier for tax calculation response line item.
+     */
+    calculation_item_id: string | null;
   }
 
   export interface Tax {

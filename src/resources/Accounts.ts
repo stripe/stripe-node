@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import * as crypto from 'crypto';
 import {StripeResource} from '../StripeResource.js';
 import {Capability} from './Capabilities.js';
 import {DeletedExternalAccount, ExternalAccount} from './ExternalAccounts.js';
@@ -19,6 +20,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise, ApiList} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 // Since path can either be `account` or `accounts`, support both through stripeMethod path
 export class AccountResource extends StripeResource {
   /**
@@ -165,7 +167,26 @@ export class AccountResource extends StripeResource {
       fullPath: '/v1/accounts/{account}/reject',
     }).call(this, ...args);
   }
+  serializeBatchUpdate(
+    account: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = crypto.randomUUID();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
 
+    const item: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    item.path_params = {account: account};
+    if (options.stripeContext) {
+      item.context = options.stripeContext;
+    }
+    return JSON.stringify(item);
+  }
   /**
    * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
    */
@@ -545,6 +566,8 @@ export interface Account {
 
   requirements?: Account.Requirements;
 
+  risk_controls?: Account.RiskControls;
+
   /**
    * Options for customizing how the account functions within Stripe.
    */
@@ -610,6 +633,11 @@ export namespace Account {
     product_description?: string | null;
 
     /**
+     * A link to the business's publicly available terms related to the Specified Commercial Transaction Act. Only used for accounts in Japan.
+     */
+    specified_commercial_transactions_act_url?: string | null;
+
+    /**
      * A publicly available mailing address for sending support issues to.
      */
     support_address: Address | null;
@@ -671,6 +699,11 @@ export namespace Account {
      * The status of the BECS Direct Debit (AU) payments capability of the account, or whether the account can directly process BECS Direct Debit (AU) charges.
      */
     au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
+
+    /**
+     * The status of the automatic_indirect_tax capability of the account.
+     */
+    automatic_indirect_tax?: Capabilities.AutomaticIndirectTax;
 
     /**
      * The status of the Bacs Direct Debits payments capability of the account, or whether the account can directly process Bacs Direct Debits charges.
@@ -748,9 +781,24 @@ export namespace Account {
     giropay_payments?: Capabilities.GiropayPayments;
 
     /**
+     * The status of the Gopay capability of the account, or whether the account can directly process Gopay payments.
+     */
+    gopay_payments?: Capabilities.GopayPayments;
+
+    /**
      * The status of the GrabPay payments capability of the account, or whether the account can directly process GrabPay charges.
      */
     grabpay_payments?: Capabilities.GrabpayPayments;
+
+    /**
+     * The status of the Indonesia Bank Transfer payments capability of the account, or whether the account can directly process Indonesia Bank Transfer charges.
+     */
+    id_bank_transfer_payments?: Capabilities.IdBankTransferPayments;
+
+    /**
+     * The status of Bank BCA onboarding of the account.
+     */
+    id_bank_transfer_payments_bca?: Capabilities.IdBankTransferPaymentsBca;
 
     /**
      * The status of the iDEAL payments capability of the account, or whether the account can directly process iDEAL charges.
@@ -858,6 +906,16 @@ export namespace Account {
     paynow_payments?: Capabilities.PaynowPayments;
 
     /**
+     * The status of the PayPal payments capability of the account, or whether the account can directly process PayPal charges.
+     */
+    paypal_payments?: Capabilities.PaypalPayments;
+
+    /**
+     * The status of the Paypay capability of the account, or whether the account can directly process Paypay payments.
+     */
+    paypay_payments?: Capabilities.PaypayPayments;
+
+    /**
      * The status of the PayTo capability of the account, or whether the account can directly process PayTo charges.
      */
     payto_payments?: Capabilities.PaytoPayments;
@@ -871,6 +929,16 @@ export namespace Account {
      * The status of the promptpay payments capability of the account, or whether the account can directly process promptpay charges.
      */
     promptpay_payments?: Capabilities.PromptpayPayments;
+
+    /**
+     * The status of the Qris capability of the account, or whether the account can directly process Qris payments.
+     */
+    qris_payments?: Capabilities.QrisPayments;
+
+    /**
+     * The status of the Rechnung capability of the account, or whether the account can directly process Rechnung payments.
+     */
+    rechnung_payments?: Capabilities.RechnungPayments;
 
     /**
      * The status of the RevolutPay capability of the account, or whether the account can directly process RevolutPay payments.
@@ -898,9 +966,19 @@ export namespace Account {
     sepa_debit_payments?: Capabilities.SepaDebitPayments;
 
     /**
+     * The status of the ShopeePay capability of the account, or whether the account can directly process ShopeePay payments.
+     */
+    shopeepay_payments?: Capabilities.ShopeepayPayments;
+
+    /**
      * The status of the Sofort payments capability of the account, or whether the account can directly process Sofort charges.
      */
     sofort_payments?: Capabilities.SofortPayments;
+
+    /**
+     * The status of the stripe_balance payments capability of the account, or whether the account can directly process stripe_balance charges.
+     */
+    stripe_balance_payments?: Capabilities.StripeBalancePayments;
 
     /**
      * The status of the Swish capability of the account, or whether the account can directly process Swish payments.
@@ -926,6 +1004,21 @@ export namespace Account {
      * The status of the banking capability, or whether the account can have bank accounts.
      */
     treasury?: Capabilities.Treasury;
+
+    /**
+     * The status of the treasury_evolve capability of the account.
+     */
+    treasury_evolve?: Capabilities.TreasuryEvolve;
+
+    /**
+     * The status of the treasury_fifth_third capability of the account.
+     */
+    treasury_fifth_third?: Capabilities.TreasuryFifthThird;
+
+    /**
+     * The status of the treasury_goldman_sachs capability of the account.
+     */
+    treasury_goldman_sachs?: Capabilities.TreasuryGoldmanSachs;
 
     /**
      * The status of the TWINT capability of the account, or whether the account can directly process TWINT charges.
@@ -1060,6 +1153,10 @@ export namespace Account {
   }
 
   export interface Controller {
+    application?: Controller.Application;
+
+    dashboard?: Controller.Dashboard;
+
     fees?: Controller.Fees;
 
     /**
@@ -1173,8 +1270,21 @@ export namespace Account {
     pending_verification: Array<string> | null;
   }
 
+  export interface RiskControls {
+    charges: RiskControls.Charges;
+
+    payouts: RiskControls.Payouts;
+
+    /**
+     * Represents the rejected reason of the account. Empty if account is not rejected, or rejected by Stripe. Please see [this page for more details](https://docs.stripe.com/connect/)
+     */
+    rejected_reason?: RiskControls.RejectedReason | null;
+  }
+
   export interface Settings {
     bacs_debit_payments?: Settings.BacsDebitPayments;
+
+    bank_bca_onboarding?: Settings.BankBcaOnboarding;
 
     branding: Settings.Branding;
 
@@ -1190,7 +1300,13 @@ export namespace Account {
 
     payouts?: Settings.Payouts;
 
+    paypay_payments?: Settings.PaypayPayments;
+
     sepa_debit_payments?: Settings.SepaDebitPayments;
+
+    smart_disputes?: Settings.SmartDisputes;
+
+    tax_forms?: Settings.TaxForms;
 
     treasury?: Settings.Treasury;
   }
@@ -1270,6 +1386,8 @@ export namespace Account {
 
     export type AuBecsDebitPayments = 'active' | 'inactive' | 'pending';
 
+    export type AutomaticIndirectTax = 'active' | 'inactive' | 'pending';
+
     export type BacsDebitPayments = 'active' | 'inactive' | 'pending';
 
     export type BancontactPayments = 'active' | 'inactive' | 'pending';
@@ -1300,7 +1418,13 @@ export namespace Account {
 
     export type GiropayPayments = 'active' | 'inactive' | 'pending';
 
+    export type GopayPayments = 'active' | 'inactive' | 'pending';
+
     export type GrabpayPayments = 'active' | 'inactive' | 'pending';
+
+    export type IdBankTransferPayments = 'active' | 'inactive' | 'pending';
+
+    export type IdBankTransferPaymentsBca = 'active' | 'inactive' | 'pending';
 
     export type IdealPayments = 'active' | 'inactive' | 'pending';
 
@@ -1347,11 +1471,19 @@ export namespace Account {
 
     export type PaynowPayments = 'active' | 'inactive' | 'pending';
 
+    export type PaypalPayments = 'active' | 'inactive' | 'pending';
+
+    export type PaypayPayments = 'active' | 'inactive' | 'pending';
+
     export type PaytoPayments = 'active' | 'inactive' | 'pending';
 
     export type PixPayments = 'active' | 'inactive' | 'pending';
 
     export type PromptpayPayments = 'active' | 'inactive' | 'pending';
+
+    export type QrisPayments = 'active' | 'inactive' | 'pending';
+
+    export type RechnungPayments = 'active' | 'inactive' | 'pending';
 
     export type RevolutPayPayments = 'active' | 'inactive' | 'pending';
 
@@ -1363,7 +1495,11 @@ export namespace Account {
 
     export type SepaDebitPayments = 'active' | 'inactive' | 'pending';
 
+    export type ShopeepayPayments = 'active' | 'inactive' | 'pending';
+
     export type SofortPayments = 'active' | 'inactive' | 'pending';
+
+    export type StripeBalancePayments = 'active' | 'inactive' | 'pending';
 
     export type SwishPayments = 'active' | 'inactive' | 'pending';
 
@@ -1374,6 +1510,12 @@ export namespace Account {
     export type Transfers = 'active' | 'inactive' | 'pending';
 
     export type Treasury = 'active' | 'inactive' | 'pending';
+
+    export type TreasuryEvolve = 'active' | 'inactive' | 'pending';
+
+    export type TreasuryFifthThird = 'active' | 'inactive' | 'pending';
+
+    export type TreasuryGoldmanSachs = 'active' | 'inactive' | 'pending';
 
     export type TwintPayments = 'active' | 'inactive' | 'pending';
 
@@ -1588,6 +1730,30 @@ export namespace Account {
   }
 
   export namespace Controller {
+    export interface Application {
+      /**
+       * `true` if the Connect application is responsible for negative balances and should manage credit and fraud risk on the account.
+       */
+      loss_liable: boolean;
+
+      /**
+       * `true` if the Connect application is responsible for onboarding the account.
+       */
+      onboarding_owner: boolean;
+
+      /**
+       * `true` if the Connect application is responsible for paying Stripe fees on pricing-control eligible products.
+       */
+      pricing_controls: boolean;
+    }
+
+    export interface Dashboard {
+      /**
+       * Whether this account has access to the full Stripe dashboard (`full`), to the Express dashboard (`express`), or to no dashboard (`none`).
+       */
+      type: Dashboard.Type;
+    }
+
     export interface Fees {
       /**
        * A value indicating the responsible payer of a bundle of Stripe fees for pricing-control eligible products on this account. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior).
@@ -1613,12 +1779,17 @@ export namespace Account {
 
     export type Type = 'account' | 'application';
 
+    export namespace Dashboard {
+      export type Type = 'express' | 'full' | 'none';
+    }
+
     export namespace Fees {
       export type Payer =
         | 'account'
         | 'application'
         | 'application_custom'
-        | 'application_express';
+        | 'application_express'
+        | 'application_unified_accounts_beta';
     }
 
     export namespace Losses {
@@ -1723,6 +1894,7 @@ export namespace Account {
         | 'invalid_url_website_other'
         | 'invalid_value_other'
         | 'unsupported_business_type'
+        | 'verification_data_not_found'
         | 'verification_directors_mismatch'
         | 'verification_document_address_mismatch'
         | 'verification_document_address_missing'
@@ -1872,6 +2044,7 @@ export namespace Account {
         | 'invalid_url_website_other'
         | 'invalid_value_other'
         | 'unsupported_business_type'
+        | 'verification_data_not_found'
         | 'verification_directors_mismatch'
         | 'verification_document_address_mismatch'
         | 'verification_document_address_missing'
@@ -1928,6 +2101,32 @@ export namespace Account {
     }
   }
 
+  export namespace RiskControls {
+    export interface Charges {
+      /**
+       * Whether a pause of the risk control has been requested.
+       */
+      pause_requested: boolean;
+    }
+
+    export interface Payouts {
+      /**
+       * Whether a pause of the risk control has been requested.
+       */
+      pause_requested: boolean;
+    }
+
+    export type RejectedReason =
+      | 'credit'
+      | 'fraud'
+      | 'fraud_no_intent_to_fulfill'
+      | 'fraud_other'
+      | 'fraud_payment_method_casher'
+      | 'fraud_payment_method_tester'
+      | 'other'
+      | 'terms_of_service';
+  }
+
   export namespace Settings {
     export interface BacsDebitPayments {
       /**
@@ -1939,6 +2138,18 @@ export namespace Account {
        * The Bacs Direct Debit Service user number for this account. For payments made with Bacs Direct Debit, this number is a unique identifier of the account with our banking partners.
        */
       service_user_number: string | null;
+    }
+
+    export interface BankBcaOnboarding {
+      /**
+       * Bank BCA business account holder name.
+       */
+      account_holder_name?: string;
+
+      /**
+       * Bank BCA business account number.
+       */
+      business_account_number?: string;
     }
 
     export interface Branding {
@@ -2012,6 +2223,11 @@ export namespace Account {
 
     export interface Payments {
       /**
+       * When enabled, the customer of this Account will receive an email receipt when their payment is successful. If this parameter is not set, the default value is `false`.
+       */
+      email_customers_on_successful_payment?: boolean | null;
+
+      /**
        * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge.
        */
       statement_descriptor: string | null;
@@ -2051,11 +2267,36 @@ export namespace Account {
       statement_descriptor: string | null;
     }
 
+    export interface PaypayPayments {
+      /**
+       * Additional files that are required to support the onboarding process of your business.
+       */
+      additional_files?: Array<string>;
+
+      /**
+       * The type of goods your business sells. Use `digital_content` if you sell digital content. Use `other` for all other types of goods or services.
+       */
+      goods_type?: PaypayPayments.GoodsType;
+
+      site?: PaypayPayments.Site;
+    }
+
     export interface SepaDebitPayments {
       /**
        * SEPA creditor identifier that identifies the company making the payment.
        */
       creditor_id?: string;
+    }
+
+    export interface SmartDisputes {
+      auto_respond: SmartDisputes.AutoRespond;
+    }
+
+    export interface TaxForms {
+      /**
+       * Whether the account opted out of receiving their tax forms by postal delivery.
+       */
+      consented_to_paperless_delivery: boolean;
     }
 
     export interface Treasury {
@@ -2139,6 +2380,68 @@ export namespace Account {
           | 'thursday'
           | 'tuesday'
           | 'wednesday';
+      }
+    }
+
+    export namespace PaypayPayments {
+      export type GoodsType = 'digital_content' | 'other';
+
+      export interface Site {
+        accessible?: Site.Accessible;
+
+        in_development?: Site.InDevelopment;
+
+        restricted?: Site.Restricted;
+
+        /**
+         * The status of your business's website.
+         */
+        type?: Site.Type;
+      }
+
+      export namespace Site {
+        export interface Accessible {}
+
+        export interface InDevelopment {
+          /**
+           * Field to indicate that the website password has been provided.
+           */
+          password_provided?: boolean;
+
+          /**
+           * The username needed to access your business's website.
+           */
+          username: string | null;
+        }
+
+        export interface Restricted {
+          /**
+           * File explaining the payment flow for your business.
+           */
+          payment_flow_file: string | null;
+        }
+
+        export type Type = 'accessible' | 'in_development' | 'restricted';
+      }
+    }
+
+    export namespace SmartDisputes {
+      export interface AutoRespond {
+        /**
+         * The preference setting for auto-respond. Can be 'on', 'off', or 'inherit'.
+         */
+        preference: AutoRespond.Preference;
+
+        /**
+         * The effective value for auto-respond. Can be 'on' or 'off'.
+         */
+        value: AutoRespond.Value;
+      }
+
+      export namespace AutoRespond {
+        export type Preference = 'inherit' | 'off' | 'on';
+
+        export type Value = 'off' | 'on';
       }
     }
 
@@ -2248,6 +2551,11 @@ export interface AccountCreateParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
+   * A hash to configure risk controls on the account. Please see [this page for more details](https://docs.stripe.com/connect/pausing-payments-or-payouts-on-connected-accounts).
+   */
+  risk_controls?: AccountCreateParams.RiskControls;
+
+  /**
    * Options for customizing how the account functions within Stripe.
    */
   settings?: AccountCreateParams.Settings;
@@ -2300,6 +2608,11 @@ export namespace AccountCreateParams {
      * Internal-only description of the product sold by, or service provided by, the business. Used by Stripe for risk and underwriting purposes.
      */
     product_description?: string;
+
+    /**
+     * A link to the business's publicly available terms related to the Specified Commercial Transaction Act. Used by the Checkout product and for Japanese payment methods.
+     */
+    specified_commercial_transactions_act_url?: Emptyable<string>;
 
     /**
      * A publicly available mailing address for sending support issues to.
@@ -2363,6 +2676,11 @@ export namespace AccountCreateParams {
      * The au_becs_debit_payments capability.
      */
     au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
+
+    /**
+     * The automatic_indirect_tax capability.
+     */
+    automatic_indirect_tax?: Capabilities.AutomaticIndirectTax;
 
     /**
      * The bacs_debit_payments capability.
@@ -2440,9 +2758,24 @@ export namespace AccountCreateParams {
     giropay_payments?: Capabilities.GiropayPayments;
 
     /**
+     * The gopay_payments capability.
+     */
+    gopay_payments?: Capabilities.GopayPayments;
+
+    /**
      * The grabpay_payments capability.
      */
     grabpay_payments?: Capabilities.GrabpayPayments;
+
+    /**
+     * The id_bank_transfer_payments capability.
+     */
+    id_bank_transfer_payments?: Capabilities.IdBankTransferPayments;
+
+    /**
+     * The id_bank_transfer_payments_bca capability.
+     */
+    id_bank_transfer_payments_bca?: Capabilities.IdBankTransferPaymentsBca;
 
     /**
      * The ideal_payments capability.
@@ -2550,6 +2883,16 @@ export namespace AccountCreateParams {
     paynow_payments?: Capabilities.PaynowPayments;
 
     /**
+     * The paypal_payments capability.
+     */
+    paypal_payments?: Capabilities.PaypalPayments;
+
+    /**
+     * The paypay_payments capability.
+     */
+    paypay_payments?: Capabilities.PaypayPayments;
+
+    /**
      * The payto_payments capability.
      */
     payto_payments?: Capabilities.PaytoPayments;
@@ -2563,6 +2906,16 @@ export namespace AccountCreateParams {
      * The promptpay_payments capability.
      */
     promptpay_payments?: Capabilities.PromptpayPayments;
+
+    /**
+     * The qris_payments capability.
+     */
+    qris_payments?: Capabilities.QrisPayments;
+
+    /**
+     * The rechnung_payments capability.
+     */
+    rechnung_payments?: Capabilities.RechnungPayments;
 
     /**
      * The revolut_pay_payments capability.
@@ -2590,9 +2943,19 @@ export namespace AccountCreateParams {
     sepa_debit_payments?: Capabilities.SepaDebitPayments;
 
     /**
+     * The shopeepay_payments capability.
+     */
+    shopeepay_payments?: Capabilities.ShopeepayPayments;
+
+    /**
      * The sofort_payments capability.
      */
     sofort_payments?: Capabilities.SofortPayments;
+
+    /**
+     * The stripe_balance_payments capability.
+     */
+    stripe_balance_payments?: Capabilities.StripeBalancePayments;
 
     /**
      * The swish_payments capability.
@@ -2618,6 +2981,21 @@ export namespace AccountCreateParams {
      * The treasury capability.
      */
     treasury?: Capabilities.Treasury;
+
+    /**
+     * The treasury_evolve capability.
+     */
+    treasury_evolve?: Capabilities.TreasuryEvolve;
+
+    /**
+     * The treasury_fifth_third capability.
+     */
+    treasury_fifth_third?: Capabilities.TreasuryFifthThird;
+
+    /**
+     * The treasury_goldman_sachs capability.
+     */
+    treasury_goldman_sachs?: Capabilities.TreasuryGoldmanSachs;
 
     /**
      * The twint_payments capability.
@@ -2763,6 +3141,16 @@ export namespace AccountCreateParams {
   }
 
   export interface Controller {
+    /**
+     * A hash of configuration describing the Connect application that controls the account.
+     */
+    application?: Controller.Application;
+
+    /**
+     * Properties of the account's dashboard.
+     */
+    dashboard?: Controller.Dashboard;
+
     /**
      * A hash of configuration for who pays Stripe fees for product usage on this account.
      */
@@ -2992,6 +3380,18 @@ export namespace AccountCreateParams {
     verification?: Individual.Verification;
   }
 
+  export interface RiskControls {
+    /**
+     * Represents the risk control status of charges. Please see [this page for more details](https://docs.stripe.com/connect/pausing-payments-or-payouts-on-connected-accounts).
+     */
+    charges?: RiskControls.Charges;
+
+    /**
+     * Represents the risk control status of payouts. Please see [this page for more details](https://docs.stripe.com/connect/pausing-payments-or-payouts-on-connected-accounts).
+     */
+    payouts?: RiskControls.Payouts;
+  }
+
   export interface Settings {
     /**
      * Settings specific to Bacs Direct Debit.
@@ -2999,9 +3399,19 @@ export namespace AccountCreateParams {
     bacs_debit_payments?: Settings.BacsDebitPayments;
 
     /**
+     * Settings specific to bank BCA onboarding for Indonesia bank transfers payments method.
+     */
+    bank_bca_onboarding?: Settings.BankBcaOnboarding;
+
+    /**
      * Settings used to apply the account's branding to email receipts, invoices, Checkout, and other products.
      */
     branding?: Settings.Branding;
+
+    /**
+     * Settings specific to the account's use of the Capital product.
+     */
+    capital?: Settings.Capital;
 
     /**
      * Settings specific to the account's use of the Card Issuing product.
@@ -3027,6 +3437,21 @@ export namespace AccountCreateParams {
      * Settings specific to the account's payouts.
      */
     payouts?: Settings.Payouts;
+
+    /**
+     * Settings specific to the PayPay payments method.
+     */
+    paypay_payments?: Settings.PaypayPayments;
+
+    /**
+     * Settings specific to the account's use of Smart Disputes.
+     */
+    smart_disputes?: Settings.SmartDisputes;
+
+    /**
+     * Settings specific to the account's tax forms.
+     */
+    tax_forms?: Settings.TaxForms;
 
     /**
      * Settings specific to the account's Treasury FinancialAccounts.
@@ -3139,6 +3564,13 @@ export namespace AccountCreateParams {
       requested?: boolean;
     }
 
+    export interface AutomaticIndirectTax {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface BacsDebitPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -3244,7 +3676,28 @@ export namespace AccountCreateParams {
       requested?: boolean;
     }
 
+    export interface GopayPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface GrabpayPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface IdBankTransferPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface IdBankTransferPaymentsBca {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -3398,6 +3851,20 @@ export namespace AccountCreateParams {
       requested?: boolean;
     }
 
+    export interface PaypalPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface PaypayPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface PaytoPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -3413,6 +3880,20 @@ export namespace AccountCreateParams {
     }
 
     export interface PromptpayPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface QrisPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface RechnungPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -3454,7 +3935,21 @@ export namespace AccountCreateParams {
       requested?: boolean;
     }
 
+    export interface ShopeepayPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface SofortPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface StripeBalancePayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -3490,6 +3985,27 @@ export namespace AccountCreateParams {
     }
 
     export interface Treasury {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface TreasuryEvolve {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface TreasuryFifthThird {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface TreasuryGoldmanSachs {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -3653,6 +4169,30 @@ export namespace AccountCreateParams {
   }
 
   export namespace Controller {
+    export interface Application {
+      /**
+       * Whether the controller is liable for losses on this account. For details, see [Understanding Connect Account Balances](https://docs.stripe.com/connect/account-balances).
+       */
+      loss_liable: boolean;
+
+      /**
+       * Whether the controller owns onboarding for this account.
+       */
+      onboarding_owner?: boolean;
+
+      /**
+       * Whether the controller has pricing controls for this account.
+       */
+      pricing_controls?: boolean;
+    }
+
+    export interface Dashboard {
+      /**
+       * Whether this account should have access to the full Stripe Dashboard (`full`), to the Express Dashboard (`express`), or to no Stripe-hosted dashboard (`none`). Defaults to `full`.
+       */
+      type?: Dashboard.Type;
+    }
+
     export interface Fees {
       /**
        * A value indicating the responsible payer of Stripe fees on this account. Defaults to `account`. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior).
@@ -3674,6 +4214,10 @@ export namespace AccountCreateParams {
        * Whether this account should have access to the full Stripe Dashboard (`full`), to the Express Dashboard (`express`), or to no Stripe-hosted dashboard (`none`). Defaults to `full`.
        */
       type?: StripeDashboard.Type;
+    }
+
+    export namespace Dashboard {
+      export type Type = 'express' | 'full' | 'none';
     }
 
     export namespace Fees {
@@ -3868,12 +4412,42 @@ export namespace AccountCreateParams {
     }
   }
 
+  export namespace RiskControls {
+    export interface Charges {
+      /**
+       * To request to pause a risk control, pass `true`. To request to unpause a risk control, pass `false`.
+       * There can be a delay before the risk control is paused or unpaused.
+       */
+      pause_requested?: boolean;
+    }
+
+    export interface Payouts {
+      /**
+       * To request to pause a risk control, pass `true`. To request to unpause a risk control, pass `false`.
+       * There can be a delay before the risk control is paused or unpaused.
+       */
+      pause_requested?: boolean;
+    }
+  }
+
   export namespace Settings {
     export interface BacsDebitPayments {
       /**
        * The Bacs Direct Debit Display Name for this account. For payments made with Bacs Direct Debit, this name appears on the mandate as the statement descriptor. Mobile banking apps display it as the name of the business. To use custom branding, set the Bacs Direct Debit Display Name during or right after creation. Custom branding incurs an additional monthly fee for the platform. If you don't set the display name before requesting Bacs capability, it's automatically set as "Stripe" and the account is onboarded to Stripe branding, which is free.
        */
       display_name?: string;
+    }
+
+    export interface BankBcaOnboarding {
+      /**
+       * Bank BCA business account holder name
+       */
+      account_holder_name?: string;
+
+      /**
+       * Bank BCA business account number
+       */
+      business_account_number?: string;
     }
 
     export interface Branding {
@@ -3896,6 +4470,22 @@ export namespace AccountCreateParams {
        * A CSS hex color value representing the secondary branding color for this account.
        */
       secondary_color?: string;
+    }
+
+    export interface Capital {
+      /**
+       * Per-currency mapping of user-selected destination accounts used to pay out loans.
+       */
+      payout_destination?: {
+        [key: string]: string;
+      };
+
+      /**
+       * Per-currency mapping of all destination accounts eligible to receive Capital financing payouts.
+       */
+      payout_destination_selector?: {
+        [key: string]: Array<string>;
+      };
     }
 
     export interface CardIssuing {
@@ -3936,6 +4526,11 @@ export namespace AccountCreateParams {
 
     export interface Payments {
       /**
+       * When you enable this parameter, the customer of this Account receives an email receipt when their payment succeeds. If this parameter isn't set, the default value is `false`.
+       */
+      email_customers_on_successful_payment?: boolean;
+
+      /**
        * The default text that appears on statements for non-card charges outside of Japan. For card charges, if you don't set a `statement_descriptor_prefix`, this text is also used as the statement descriptor prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement descriptor to exceed 22 characters, we truncate the `statement_descriptor` text to limit the full descriptor to 22 characters. For more information about statement descriptors and their requirements, see the [account settings documentation](https://docs.stripe.com/get-started/account/statement-descriptors).
        */
       statement_descriptor?: string;
@@ -3966,6 +4561,37 @@ export namespace AccountCreateParams {
        * The text that appears on the bank account statement for payouts. If not set, this defaults to the platform's bank descriptor as set in the Dashboard.
        */
       statement_descriptor?: string;
+    }
+
+    export interface PaypayPayments {
+      /**
+       * Additional files that are required to support the onboarding process of your business.
+       */
+      additional_files?: Array<string>;
+
+      /**
+       * The type of goods your business sells. Use `digital_content` if you sell digital content. Use `other` for all other types of goods or services.
+       */
+      goods_type?: PaypayPayments.GoodsType;
+
+      /**
+       * Details regarding your business's website.
+       */
+      site?: PaypayPayments.Site;
+    }
+
+    export interface SmartDisputes {
+      /**
+       * Smart Disputes auto-respond settings for the account.
+       */
+      auto_respond?: SmartDisputes.AutoRespond;
+    }
+
+    export interface TaxForms {
+      /**
+       * Whether the account opted out of receiving their tax forms by postal delivery.
+       */
+      consented_to_paperless_delivery?: boolean;
     }
 
     export interface Treasury {
@@ -4063,6 +4689,70 @@ export namespace AccountCreateParams {
           | 'thursday'
           | 'tuesday'
           | 'wednesday';
+      }
+    }
+
+    export namespace PaypayPayments {
+      export type GoodsType = 'digital_content' | 'other';
+
+      export interface Site {
+        /**
+         * Additional information about your business's website.
+         */
+        accessible?: Site.Accessible;
+
+        /**
+         * Additional information about your business's website.
+         */
+        in_development?: Site.InDevelopment;
+
+        /**
+         * Additional information about your business's website.
+         */
+        restricted?: Site.Restricted;
+
+        /**
+         * The status of your business's website.
+         */
+        type?: Site.Type;
+      }
+
+      export namespace Site {
+        export interface Accessible {}
+
+        export interface InDevelopment {
+          /**
+           * The password needed to access your business's website.
+           */
+          password: string;
+
+          /**
+           * The username needed to access your business's website.
+           */
+          username?: string;
+        }
+
+        export interface Restricted {
+          /**
+           * The file explaining the payment flow for your business.
+           */
+          payment_flow_file?: string;
+        }
+
+        export type Type = 'accessible' | 'in_development' | 'restricted';
+      }
+    }
+
+    export namespace SmartDisputes {
+      export interface AutoRespond {
+        /**
+         * The preference setting for auto-respond. Can be 'on', 'off', or 'inherit'.
+         */
+        preference?: AutoRespond.Preference;
+      }
+
+      export namespace AutoRespond {
+        export type Preference = 'inherit' | 'off' | 'on';
       }
     }
 
@@ -4173,6 +4863,11 @@ export interface AccountUpdateParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
+   * A hash to configure risk controls on the account. Please see [this page for more details](https://docs.stripe.com/connect/pausing-payments-or-payouts-on-connected-accounts).
+   */
+  risk_controls?: AccountUpdateParams.RiskControls;
+
+  /**
    * Options for customizing how the account functions within Stripe.
    */
   settings?: AccountUpdateParams.Settings;
@@ -4220,6 +4915,11 @@ export namespace AccountUpdateParams {
      * Internal-only description of the product sold by, or service provided by, the business. Used by Stripe for risk and underwriting purposes.
      */
     product_description?: string;
+
+    /**
+     * A link to the business's publicly available terms related to the Specified Commercial Transaction Act. Only used for accounts in Japan.
+     */
+    specified_commercial_transactions_act_url?: Emptyable<string>;
 
     /**
      * A publicly available mailing address for sending support issues to.
@@ -4283,6 +4983,11 @@ export namespace AccountUpdateParams {
      * The au_becs_debit_payments capability.
      */
     au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
+
+    /**
+     * The automatic_indirect_tax capability.
+     */
+    automatic_indirect_tax?: Capabilities.AutomaticIndirectTax;
 
     /**
      * The bacs_debit_payments capability.
@@ -4360,9 +5065,24 @@ export namespace AccountUpdateParams {
     giropay_payments?: Capabilities.GiropayPayments;
 
     /**
+     * The gopay_payments capability.
+     */
+    gopay_payments?: Capabilities.GopayPayments;
+
+    /**
      * The grabpay_payments capability.
      */
     grabpay_payments?: Capabilities.GrabpayPayments;
+
+    /**
+     * The id_bank_transfer_payments capability.
+     */
+    id_bank_transfer_payments?: Capabilities.IdBankTransferPayments;
+
+    /**
+     * The id_bank_transfer_payments_bca capability.
+     */
+    id_bank_transfer_payments_bca?: Capabilities.IdBankTransferPaymentsBca;
 
     /**
      * The ideal_payments capability.
@@ -4470,6 +5190,16 @@ export namespace AccountUpdateParams {
     paynow_payments?: Capabilities.PaynowPayments;
 
     /**
+     * The paypal_payments capability.
+     */
+    paypal_payments?: Capabilities.PaypalPayments;
+
+    /**
+     * The paypay_payments capability.
+     */
+    paypay_payments?: Capabilities.PaypayPayments;
+
+    /**
      * The payto_payments capability.
      */
     payto_payments?: Capabilities.PaytoPayments;
@@ -4483,6 +5213,16 @@ export namespace AccountUpdateParams {
      * The promptpay_payments capability.
      */
     promptpay_payments?: Capabilities.PromptpayPayments;
+
+    /**
+     * The qris_payments capability.
+     */
+    qris_payments?: Capabilities.QrisPayments;
+
+    /**
+     * The rechnung_payments capability.
+     */
+    rechnung_payments?: Capabilities.RechnungPayments;
 
     /**
      * The revolut_pay_payments capability.
@@ -4510,9 +5250,19 @@ export namespace AccountUpdateParams {
     sepa_debit_payments?: Capabilities.SepaDebitPayments;
 
     /**
+     * The shopeepay_payments capability.
+     */
+    shopeepay_payments?: Capabilities.ShopeepayPayments;
+
+    /**
      * The sofort_payments capability.
      */
     sofort_payments?: Capabilities.SofortPayments;
+
+    /**
+     * The stripe_balance_payments capability.
+     */
+    stripe_balance_payments?: Capabilities.StripeBalancePayments;
 
     /**
      * The swish_payments capability.
@@ -4538,6 +5288,21 @@ export namespace AccountUpdateParams {
      * The treasury capability.
      */
     treasury?: Capabilities.Treasury;
+
+    /**
+     * The treasury_evolve capability.
+     */
+    treasury_evolve?: Capabilities.TreasuryEvolve;
+
+    /**
+     * The treasury_fifth_third capability.
+     */
+    treasury_fifth_third?: Capabilities.TreasuryFifthThird;
+
+    /**
+     * The treasury_goldman_sachs capability.
+     */
+    treasury_goldman_sachs?: Capabilities.TreasuryGoldmanSachs;
 
     /**
      * The twint_payments capability.
@@ -4927,6 +5692,18 @@ export namespace AccountUpdateParams {
     verification?: Individual.Verification;
   }
 
+  export interface RiskControls {
+    /**
+     * Represents the risk control status of charges. Please see [this page for more details](https://docs.stripe.com/connect/pausing-payments-or-payouts-on-connected-accounts).
+     */
+    charges?: RiskControls.Charges;
+
+    /**
+     * Represents the risk control status of payouts. Please see [this page for more details](https://docs.stripe.com/connect/pausing-payments-or-payouts-on-connected-accounts).
+     */
+    payouts?: RiskControls.Payouts;
+  }
+
   export interface Settings {
     /**
      * Settings specific to Bacs Direct Debit payments.
@@ -4934,9 +5711,19 @@ export namespace AccountUpdateParams {
     bacs_debit_payments?: Settings.BacsDebitPayments;
 
     /**
+     * Settings specific to bank BCA onboarding for Indonesia bank transfers payments method.
+     */
+    bank_bca_onboarding?: Settings.BankBcaOnboarding;
+
+    /**
      * Settings used to apply the account's branding to email receipts, invoices, Checkout, and other products.
      */
     branding?: Settings.Branding;
+
+    /**
+     * Settings specific to the account's use of the Capital product.
+     */
+    capital?: Settings.Capital;
 
     /**
      * Settings specific to the account's use of the Card Issuing product.
@@ -4962,6 +5749,21 @@ export namespace AccountUpdateParams {
      * Settings specific to the account's payouts.
      */
     payouts?: Settings.Payouts;
+
+    /**
+     * Settings specific to the PayPay payments method.
+     */
+    paypay_payments?: Settings.PaypayPayments;
+
+    /**
+     * Settings specific to the account's use of Smart Disputes.
+     */
+    smart_disputes?: Settings.SmartDisputes;
+
+    /**
+     * Settings specific to the account's tax forms.
+     */
+    tax_forms?: Settings.TaxForms;
 
     /**
      * Settings specific to the account's Treasury FinancialAccounts.
@@ -5076,6 +5878,13 @@ export namespace AccountUpdateParams {
       requested?: boolean;
     }
 
+    export interface AutomaticIndirectTax {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface BacsDebitPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -5181,7 +5990,28 @@ export namespace AccountUpdateParams {
       requested?: boolean;
     }
 
+    export interface GopayPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface GrabpayPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface IdBankTransferPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface IdBankTransferPaymentsBca {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -5335,6 +6165,20 @@ export namespace AccountUpdateParams {
       requested?: boolean;
     }
 
+    export interface PaypalPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface PaypayPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface PaytoPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -5350,6 +6194,20 @@ export namespace AccountUpdateParams {
     }
 
     export interface PromptpayPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface QrisPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface RechnungPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -5391,7 +6249,21 @@ export namespace AccountUpdateParams {
       requested?: boolean;
     }
 
+    export interface ShopeepayPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface SofortPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface StripeBalancePayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -5427,6 +6299,27 @@ export namespace AccountUpdateParams {
     }
 
     export interface Treasury {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface TreasuryEvolve {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface TreasuryFifthThird {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface TreasuryGoldmanSachs {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -5768,12 +6661,42 @@ export namespace AccountUpdateParams {
     }
   }
 
+  export namespace RiskControls {
+    export interface Charges {
+      /**
+       * To request to pause a risk control, pass `true`. To request to unpause a risk control, pass `false`.
+       * There can be a delay before the risk control is paused or unpaused.
+       */
+      pause_requested?: boolean;
+    }
+
+    export interface Payouts {
+      /**
+       * To request to pause a risk control, pass `true`. To request to unpause a risk control, pass `false`.
+       * There can be a delay before the risk control is paused or unpaused.
+       */
+      pause_requested?: boolean;
+    }
+  }
+
   export namespace Settings {
     export interface BacsDebitPayments {
       /**
        * The Bacs Direct Debit Display Name for this account. For payments made with Bacs Direct Debit, this name appears on the mandate as the statement descriptor. Mobile banking apps display it as the name of the business. To use custom branding, set the Bacs Direct Debit Display Name during or right after creation. Custom branding incurs an additional monthly fee for the platform. If you don't set the display name before requesting Bacs capability, it's automatically set as "Stripe" and the account is onboarded to Stripe branding, which is free.
        */
       display_name?: string;
+    }
+
+    export interface BankBcaOnboarding {
+      /**
+       * Bank BCA business account holder name
+       */
+      account_holder_name?: string;
+
+      /**
+       * Bank BCA business account number
+       */
+      business_account_number?: string;
     }
 
     export interface Branding {
@@ -5796,6 +6719,22 @@ export namespace AccountUpdateParams {
        * A CSS hex color value representing the secondary branding color for this account.
        */
       secondary_color?: string;
+    }
+
+    export interface Capital {
+      /**
+       * Per-currency mapping of user-selected destination accounts used to pay out loans.
+       */
+      payout_destination?: {
+        [key: string]: string;
+      };
+
+      /**
+       * Per-currency mapping of all destination accounts eligible to receive Capital financing payouts.
+       */
+      payout_destination_selector?: {
+        [key: string]: Array<string>;
+      };
     }
 
     export interface CardIssuing {
@@ -5841,6 +6780,11 @@ export namespace AccountUpdateParams {
 
     export interface Payments {
       /**
+       * When you enable this parameter, the customer of this Account receives an email receipt when their payment succeeds. If this parameter isn't set, the default value is `false`.
+       */
+      email_customers_on_successful_payment?: boolean;
+
+      /**
        * The default text that appears on statements for non-card charges outside of Japan. For card charges, if you don't set a `statement_descriptor_prefix`, this text is also used as the statement descriptor prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement descriptor to exceed 22 characters, we truncate the `statement_descriptor` text to limit the full descriptor to 22 characters. For more information about statement descriptors and their requirements, see the [account settings documentation](https://docs.stripe.com/get-started/account/statement-descriptors).
        */
       statement_descriptor?: string;
@@ -5871,6 +6815,37 @@ export namespace AccountUpdateParams {
        * The text that appears on the bank account statement for payouts. If not set, this defaults to the platform's bank descriptor as set in the Dashboard.
        */
       statement_descriptor?: string;
+    }
+
+    export interface PaypayPayments {
+      /**
+       * Additional files that are required to support the onboarding process of your business.
+       */
+      additional_files?: Array<string>;
+
+      /**
+       * The type of goods your business sells. Use `digital_content` if you sell digital content. Use `other` for all other types of goods or services.
+       */
+      goods_type?: PaypayPayments.GoodsType;
+
+      /**
+       * Details regarding your business's website.
+       */
+      site?: PaypayPayments.Site;
+    }
+
+    export interface SmartDisputes {
+      /**
+       * Smart Disputes auto-respond settings for the account.
+       */
+      auto_respond?: SmartDisputes.AutoRespond;
+    }
+
+    export interface TaxForms {
+      /**
+       * Whether the account opted out of receiving their tax forms by postal delivery.
+       */
+      consented_to_paperless_delivery?: boolean;
     }
 
     export interface Treasury {
@@ -5968,6 +6943,70 @@ export namespace AccountUpdateParams {
           | 'thursday'
           | 'tuesday'
           | 'wednesday';
+      }
+    }
+
+    export namespace PaypayPayments {
+      export type GoodsType = 'digital_content' | 'other';
+
+      export interface Site {
+        /**
+         * Additional information about your business's website.
+         */
+        accessible?: Site.Accessible;
+
+        /**
+         * Additional information about your business's website.
+         */
+        in_development?: Site.InDevelopment;
+
+        /**
+         * Additional information about your business's website.
+         */
+        restricted?: Site.Restricted;
+
+        /**
+         * The status of your business's website.
+         */
+        type?: Site.Type;
+      }
+
+      export namespace Site {
+        export interface Accessible {}
+
+        export interface InDevelopment {
+          /**
+           * The password needed to access your business's website.
+           */
+          password: string;
+
+          /**
+           * The username needed to access your business's website.
+           */
+          username?: string;
+        }
+
+        export interface Restricted {
+          /**
+           * The file explaining the payment flow for your business.
+           */
+          payment_flow_file?: string;
+        }
+
+        export type Type = 'accessible' | 'in_development' | 'restricted';
+      }
+    }
+
+    export namespace SmartDisputes {
+      export interface AutoRespond {
+        /**
+         * The preference setting for auto-respond. Can be 'on', 'off', or 'inherit'.
+         */
+        preference?: AutoRespond.Preference;
+      }
+
+      export namespace AutoRespond {
+        export type Preference = 'inherit' | 'off' | 'on';
       }
     }
 
@@ -6609,6 +7648,7 @@ export interface AccountRetrievePersonParams {
    */
   expand?: Array<string>;
 }
+export interface AccountSerializeBatchUpdateParams {}
 export interface AccountUpdateCapabilityParams {
   /**
    * Specifies which fields in the response should be expanded.

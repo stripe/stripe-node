@@ -34,6 +34,11 @@ export interface CalculationLineItem {
   metadata: Metadata | null;
 
   /**
+   * Indicates the line item represents a performance where the venue location might determine the tax, not the customer address. Leave empty if the tax code doesn't require a tax location. If you provide this value for tax codes with an `optional` location requirement, it overrides the customer address.
+   */
+  performance_location?: string | null;
+
+  /**
    * The ID of an existing [Product](https://docs.stripe.com/api/products/object).
    */
   product: string | null;
@@ -119,7 +124,7 @@ export namespace Tax {
         state: string | null;
       }
 
-      export type Sourcing = 'destination' | 'origin';
+      export type Sourcing = 'destination' | 'origin' | 'performance';
 
       export interface TaxRateDetails {
         /**
@@ -166,19 +171,27 @@ export namespace Tax {
 
       export namespace TaxRateDetails {
         export type TaxType =
+          | 'admissions_tax'
           | 'amusement_tax'
+          | 'attendance_tax'
           | 'communications_tax'
+          | 'entertainment_tax'
+          | 'gross_receipts_tax'
           | 'gst'
+          | 'hospitality_tax'
           | 'hst'
           | 'igst'
           | 'jct'
           | 'lease_tax'
+          | 'luxury_tax'
           | 'pst'
           | 'qst'
+          | 'resort_tax'
           | 'retail_delivery_fee'
           | 'rst'
           | 'sales_tax'
           | 'service_tax'
+          | 'tourism_tax'
           | 'vat';
       }
     }

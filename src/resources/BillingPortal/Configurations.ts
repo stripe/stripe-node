@@ -10,6 +10,7 @@ import {
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ConfigurationResource extends StripeResource {
   /**
    * Returns a list of configurations that describe the functionality of the customer portal.

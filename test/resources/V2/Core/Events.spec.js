@@ -31,7 +31,7 @@ const v2EventPayloadWithRelatedObject = `
     "created": "1970-01-12T21:42:34.472Z",
     "id": "obj_123",
     "livemode": true,
-    "object":"v2.core.event",
+    "object":"v2.core.event_destination.ping",
     "reason":
     {
       "type": "request",

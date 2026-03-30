@@ -10,6 +10,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class CouponResource extends StripeResource {
   /**
    * You can delete coupons via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can't redeem the coupon. You can also delete coupons via the API.
@@ -172,9 +173,19 @@ export interface Coupon {
   redeem_by: number | null;
 
   /**
+   * Configuration of the [script](https://docs.stripe.com/billing/subscriptions/script-coupons) used to calculate the discount.
+   */
+  script?: Coupon.Script | null;
+
+  /**
    * Number of times this coupon has been applied to a customer.
    */
   times_redeemed: number;
+
+  /**
+   * One of `amount_off`, `percent_off`, or `script`. Describes the type of coupon logic used to calculate the discount.
+   */
+  type?: Coupon.Type | null;
 
   /**
    * Taking account of the above properties, whether this coupon can still be applied to a customer.
@@ -213,6 +224,31 @@ export namespace Coupon {
   }
 
   export type Duration = 'forever' | 'once' | 'repeating';
+
+  export interface Script {
+    /**
+     * The configuration values of the script. The keys and values are specific to the script implementation.
+     */
+    configuration: Script.Configuration;
+
+    /**
+     * The name of the script used to calculate the discount.
+     */
+    display_name: string;
+
+    /**
+     * The script implementation ID for this coupon.
+     */
+    id: string;
+  }
+
+  export type Type = 'amount_off' | 'percent_off' | 'script';
+
+  export namespace Script {
+    export type Configuration = {
+      [key: string]: unknown;
+    };
+  }
 }
 export interface CouponCreateParams {
   /**
@@ -281,6 +317,11 @@ export interface CouponCreateParams {
    * Unix timestamp specifying the last time at which the coupon can be redeemed (cannot be set to more than 5 years in the future). After the redeem_by date, the coupon can no longer be applied to new customers.
    */
   redeem_by?: number;
+
+  /**
+   * Configuration of the [script](https://docs.stripe.com/billing/subscriptions/script-coupons) used to calculate the discount.
+   */
+  script?: CouponCreateParams.Script;
 }
 export namespace CouponCreateParams {
   export interface AppliesTo {
@@ -298,6 +339,24 @@ export namespace CouponCreateParams {
   }
 
   export type Duration = 'forever' | 'once' | 'repeating';
+
+  export interface Script {
+    /**
+     * The configuration values of the script. The keys and values are specific to the script implementation.
+     */
+    configuration: Script.Configuration;
+
+    /**
+     * The script implementation ID for this coupon.
+     */
+    id: string;
+  }
+
+  export namespace Script {
+    export type Configuration = {
+      [key: string]: unknown;
+    };
+  }
 }
 export interface CouponRetrieveParams {
   /**

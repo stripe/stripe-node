@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {Customer} from './Customers.js';
+import {Mandate} from './Mandates.js';
 import {SetupAttempt} from './SetupAttempts.js';
 import {Charge} from './Charges.js';
 import {
@@ -14,6 +15,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PaymentMethodResource extends StripeResource {
   /**
    * Returns a list of all PaymentMethods.
@@ -204,7 +206,11 @@ export interface PaymentMethod {
 
   giropay?: PaymentMethod.Giropay;
 
+  gopay?: PaymentMethod.Gopay;
+
   grabpay?: PaymentMethod.Grabpay;
+
+  id_bank_transfer?: PaymentMethod.IdBankTransfer;
 
   ideal?: PaymentMethod.Ideal;
 
@@ -217,6 +223,11 @@ export interface PaymentMethod {
   konbini?: PaymentMethod.Konbini;
 
   kr_card?: PaymentMethod.KrCard;
+
+  /**
+   * The Mandate object of the most recently created Mandate associated with this payment method
+   */
+  latest_active_mandate?: Mandate | null;
 
   link?: PaymentMethod.Link;
 
@@ -252,16 +263,22 @@ export interface PaymentMethod {
 
   paypal?: PaymentMethod.Paypal;
 
+  paypay?: PaymentMethod.Paypay;
+
   payto?: PaymentMethod.Payto;
 
   pix?: PaymentMethod.Pix;
 
   promptpay?: PaymentMethod.Promptpay;
 
+  qris?: PaymentMethod.Qris;
+
   /**
    * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
    */
   radar_options?: PaymentMethod.RadarOptions;
+
+  rechnung?: PaymentMethod.Rechnung;
 
   revolut_pay?: PaymentMethod.RevolutPay;
 
@@ -271,7 +288,11 @@ export interface PaymentMethod {
 
   sepa_debit?: PaymentMethod.SepaDebit;
 
+  shopeepay?: PaymentMethod.Shopeepay;
+
   sofort?: PaymentMethod.Sofort;
+
+  stripe_balance?: PaymentMethod.StripeBalance;
 
   swish?: PaymentMethod.Swish;
 
@@ -292,6 +313,11 @@ export interface PaymentMethod {
 }
 export namespace PaymentMethod {
   export interface AcssDebit {
+    /**
+     * Account number of the bank account.
+     */
+    account_number?: string | null;
+
     /**
      * Name of the bank associated with the bank account.
      */
@@ -633,7 +659,19 @@ export namespace PaymentMethod {
 
   export interface Giropay {}
 
+  export interface Gopay {}
+
   export interface Grabpay {}
+
+  export interface IdBankTransfer {
+    bank: IdBankTransfer.Bank | null;
+
+    bank_code: string | null;
+
+    bank_name: string | null;
+
+    display_name: string | null;
+  }
 
   export interface Ideal {
     /**
@@ -829,6 +867,11 @@ export namespace PaymentMethod {
     country: string | null;
 
     /**
+     * Uniquely identifies this particular PayPal account. You can use this attribute to check whether two PayPal accounts are the same.
+     */
+    fingerprint?: string | null;
+
+    /**
      * Owner's email. Values are provided by PayPal directly
      * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
      */
@@ -838,7 +881,15 @@ export namespace PaymentMethod {
      * PayPal account PayerID. This identifier uniquely identifies the PayPal customer.
      */
     payer_id: string | null;
+
+    /**
+     * Owner's verified email. Values are verified or provided by PayPal directly
+     * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+     */
+    verified_email?: string | null;
   }
+
+  export interface Paypay {}
 
   export interface Payto {
     /**
@@ -861,11 +912,17 @@ export namespace PaymentMethod {
 
   export interface Promptpay {}
 
+  export interface Qris {}
+
   export interface RadarOptions {
     /**
      * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
      */
     session?: string;
+  }
+
+  export interface Rechnung {
+    dob?: Rechnung.Dob;
   }
 
   export interface RevolutPay {}
@@ -906,11 +963,20 @@ export namespace PaymentMethod {
     last4: string | null;
   }
 
+  export interface Shopeepay {}
+
   export interface Sofort {
     /**
      * Two-letter ISO code representing the country the bank account is located in.
      */
     country: string | null;
+  }
+
+  export interface StripeBalance {
+    /**
+     * The connected account ID whose Stripe balance to use as the source of payment
+     */
+    account?: string | null;
   }
 
   export interface Swish {}
@@ -939,7 +1005,9 @@ export namespace PaymentMethod {
     | 'eps'
     | 'fpx'
     | 'giropay'
+    | 'gopay'
     | 'grabpay'
+    | 'id_bank_transfer'
     | 'ideal'
     | 'interac_present'
     | 'kakao_pay'
@@ -958,14 +1026,19 @@ export namespace PaymentMethod {
     | 'payco'
     | 'paynow'
     | 'paypal'
+    | 'paypay'
     | 'payto'
     | 'pix'
     | 'promptpay'
+    | 'qris'
+    | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
     | 'sepa_debit'
+    | 'shopeepay'
     | 'sofort'
+    | 'stripe_balance'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -985,6 +1058,11 @@ export namespace PaymentMethod {
      * Account holder type: individual or company.
      */
     account_holder_type: UsBankAccount.AccountHolderType | null;
+
+    /**
+     * Account number of the bank account.
+     */
+    account_number?: string | null;
 
     /**
      * Account type: checkings or savings. Defaults to checking if omitted.
@@ -1537,6 +1615,10 @@ export namespace PaymentMethod {
       | 'uob';
   }
 
+  export namespace IdBankTransfer {
+    export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+  }
+
   export namespace Ideal {
     export type Bank =
       | 'abn_amro'
@@ -1682,6 +1764,25 @@ export namespace PaymentMethod {
       | 'toyota_bank'
       | 'velobank'
       | 'volkswagen_bank';
+  }
+
+  export namespace Rechnung {
+    export interface Dob {
+      /**
+       * The day of birth, between 1 and 31.
+       */
+      day: number;
+
+      /**
+       * The month of birth, between 1 and 12.
+       */
+      month: number;
+
+      /**
+       * The four-digit year of birth.
+       */
+      year: number;
+    }
   }
 
   export namespace SepaDebit {
@@ -1885,9 +1986,19 @@ export interface PaymentMethodCreateParams {
   giropay?: PaymentMethodCreateParams.Giropay;
 
   /**
+   * If this is a Gopay PaymentMethod, this hash contains details about the Gopay payment method.
+   */
+  gopay?: PaymentMethodCreateParams.Gopay;
+
+  /**
    * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
    */
   grabpay?: PaymentMethodCreateParams.Grabpay;
+
+  /**
+   * If this is an `IdBankTransfer` PaymentMethod, this hash contains details about the IdBankTransfer payment method.
+   */
+  id_bank_transfer?: PaymentMethodCreateParams.IdBankTransfer;
 
   /**
    * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -1990,6 +2101,11 @@ export interface PaymentMethodCreateParams {
   paypal?: PaymentMethodCreateParams.Paypal;
 
   /**
+   * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+   */
+  paypay?: PaymentMethodCreateParams.Paypay;
+
+  /**
    * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
    */
   payto?: PaymentMethodCreateParams.Payto;
@@ -2005,9 +2121,19 @@ export interface PaymentMethodCreateParams {
   promptpay?: PaymentMethodCreateParams.Promptpay;
 
   /**
+   * If this is a `qris` PaymentMethod, this hash contains details about the QRIS payment method.
+   */
+  qris?: PaymentMethodCreateParams.Qris;
+
+  /**
    * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
    */
   radar_options?: PaymentMethodCreateParams.RadarOptions;
+
+  /**
+   * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
+   */
+  rechnung?: PaymentMethodCreateParams.Rechnung;
 
   /**
    * If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
@@ -2030,9 +2156,19 @@ export interface PaymentMethodCreateParams {
   sepa_debit?: PaymentMethodCreateParams.SepaDebit;
 
   /**
+   * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
+   */
+  shopeepay?: PaymentMethodCreateParams.Shopeepay;
+
+  /**
    * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
    */
   sofort?: PaymentMethodCreateParams.Sofort;
+
+  /**
+   * This hash contains details about the Stripe balance payment method.
+   */
+  stripe_balance?: PaymentMethodCreateParams.StripeBalance;
 
   /**
    * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -2229,7 +2365,16 @@ export namespace PaymentMethodCreateParams {
 
   export interface Giropay {}
 
+  export interface Gopay {}
+
   export interface Grabpay {}
+
+  export interface IdBankTransfer {
+    /**
+     * Bank where the account is held.
+     */
+    bank?: IdBankTransfer.Bank;
+  }
 
   export interface Ideal {
     /**
@@ -2314,6 +2459,8 @@ export namespace PaymentMethodCreateParams {
 
   export interface Paypal {}
 
+  export interface Paypay {}
+
   export interface Payto {
     /**
      * The account number for the bank account.
@@ -2335,11 +2482,20 @@ export namespace PaymentMethodCreateParams {
 
   export interface Promptpay {}
 
+  export interface Qris {}
+
   export interface RadarOptions {
     /**
      * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
      */
     session?: string;
+  }
+
+  export interface Rechnung {
+    /**
+     * Customer's date of birth
+     */
+    dob: Rechnung.Dob;
   }
 
   export interface RevolutPay {}
@@ -2355,11 +2511,20 @@ export namespace PaymentMethodCreateParams {
     iban: string;
   }
 
+  export interface Shopeepay {}
+
   export interface Sofort {
     /**
      * Two-letter ISO code representing the country the bank account is located in.
      */
     country: Sofort.Country;
+  }
+
+  export interface StripeBalance {
+    /**
+     * The connected account ID whose Stripe balance to use as the source of payment
+     */
+    account?: string;
   }
 
   export interface Swish {}
@@ -2387,7 +2552,9 @@ export namespace PaymentMethodCreateParams {
     | 'eps'
     | 'fpx'
     | 'giropay'
+    | 'gopay'
     | 'grabpay'
+    | 'id_bank_transfer'
     | 'ideal'
     | 'kakao_pay'
     | 'klarna'
@@ -2405,14 +2572,19 @@ export namespace PaymentMethodCreateParams {
     | 'payco'
     | 'paynow'
     | 'paypal'
+    | 'paypay'
     | 'payto'
     | 'pix'
     | 'promptpay'
+    | 'qris'
+    | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
     | 'sepa_debit'
+    | 'shopeepay'
     | 'sofort'
+    | 'stripe_balance'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -2531,6 +2703,10 @@ export namespace PaymentMethodCreateParams {
       | 'uob';
   }
 
+  export namespace IdBankTransfer {
+    export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+  }
+
   export namespace Ideal {
     export type Bank =
       | 'abn_amro'
@@ -2606,6 +2782,25 @@ export namespace PaymentMethodCreateParams {
       | 'toyota_bank'
       | 'velobank'
       | 'volkswagen_bank';
+  }
+
+  export namespace Rechnung {
+    export interface Dob {
+      /**
+       * The day of birth, between 1 and 31.
+       */
+      day: number;
+
+      /**
+       * The month of birth, between 1 and 12.
+       */
+      month: number;
+
+      /**
+       * The four-digit year of birth.
+       */
+      year: number;
+    }
   }
 
   export namespace Sofort {
@@ -2833,7 +3028,9 @@ export namespace PaymentMethodListParams {
     | 'eps'
     | 'fpx'
     | 'giropay'
+    | 'gopay'
     | 'grabpay'
+    | 'id_bank_transfer'
     | 'ideal'
     | 'kakao_pay'
     | 'klarna'
@@ -2851,14 +3048,19 @@ export namespace PaymentMethodListParams {
     | 'payco'
     | 'paynow'
     | 'paypal'
+    | 'paypay'
     | 'payto'
     | 'pix'
     | 'promptpay'
+    | 'qris'
+    | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
     | 'sepa_debit'
+    | 'shopeepay'
     | 'sofort'
+    | 'stripe_balance'
     | 'swish'
     | 'twint'
     | 'upi'

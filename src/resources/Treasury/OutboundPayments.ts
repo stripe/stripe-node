@@ -14,6 +14,7 @@ import {
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class OutboundPaymentResource extends StripeResource {
   /**
    * Returns a list of OutboundPayments sent from the specified FinancialAccount.

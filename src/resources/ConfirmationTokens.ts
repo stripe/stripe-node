@@ -7,6 +7,7 @@ import {Charge} from './Charges.js';
 import {Address} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ConfirmationTokenResource extends StripeResource {
   /**
    * Retrieves an existing ConfirmationToken object
@@ -170,7 +171,11 @@ export namespace ConfirmationToken {
 
     giropay?: PaymentMethodPreview.Giropay;
 
+    gopay?: PaymentMethodPreview.Gopay;
+
     grabpay?: PaymentMethodPreview.Grabpay;
+
+    id_bank_transfer?: PaymentMethodPreview.IdBankTransfer;
 
     ideal?: PaymentMethodPreview.Ideal;
 
@@ -208,11 +213,17 @@ export namespace ConfirmationToken {
 
     paypal?: PaymentMethodPreview.Paypal;
 
+    paypay?: PaymentMethodPreview.Paypay;
+
     payto?: PaymentMethodPreview.Payto;
 
     pix?: PaymentMethodPreview.Pix;
 
     promptpay?: PaymentMethodPreview.Promptpay;
+
+    qris?: PaymentMethodPreview.Qris;
+
+    rechnung?: PaymentMethodPreview.Rechnung;
 
     revolut_pay?: PaymentMethodPreview.RevolutPay;
 
@@ -222,7 +233,11 @@ export namespace ConfirmationToken {
 
     sepa_debit?: PaymentMethodPreview.SepaDebit;
 
+    shopeepay?: PaymentMethodPreview.Shopeepay;
+
     sofort?: PaymentMethodPreview.Sofort;
+
+    stripe_balance?: PaymentMethodPreview.StripeBalance;
 
     swish?: PaymentMethodPreview.Swish;
 
@@ -332,6 +347,11 @@ export namespace ConfirmationToken {
 
   export namespace PaymentMethodPreview {
     export interface AcssDebit {
+      /**
+       * Account number of the bank account.
+       */
+      account_number?: string | null;
+
       /**
        * Name of the bank associated with the bank account.
        */
@@ -656,7 +676,19 @@ export namespace ConfirmationToken {
 
     export interface Giropay {}
 
+    export interface Gopay {}
+
     export interface Grabpay {}
+
+    export interface IdBankTransfer {
+      bank: IdBankTransfer.Bank | null;
+
+      bank_code: string | null;
+
+      bank_name: string | null;
+
+      display_name: string | null;
+    }
 
     export interface Ideal {
       /**
@@ -852,6 +884,11 @@ export namespace ConfirmationToken {
       country: string | null;
 
       /**
+       * Uniquely identifies this particular PayPal account. You can use this attribute to check whether two PayPal accounts are the same.
+       */
+      fingerprint?: string | null;
+
+      /**
        * Owner's email. Values are provided by PayPal directly
        * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
        */
@@ -861,7 +898,15 @@ export namespace ConfirmationToken {
        * PayPal account PayerID. This identifier uniquely identifies the PayPal customer.
        */
       payer_id: string | null;
+
+      /**
+       * Owner's verified email. Values are verified or provided by PayPal directly
+       * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+       */
+      verified_email?: string | null;
     }
+
+    export interface Paypay {}
 
     export interface Payto {
       /**
@@ -883,6 +928,12 @@ export namespace ConfirmationToken {
     export interface Pix {}
 
     export interface Promptpay {}
+
+    export interface Qris {}
+
+    export interface Rechnung {
+      dob?: Rechnung.Dob;
+    }
 
     export interface RevolutPay {}
 
@@ -922,11 +973,20 @@ export namespace ConfirmationToken {
       last4: string | null;
     }
 
+    export interface Shopeepay {}
+
     export interface Sofort {
       /**
        * Two-letter ISO code representing the country the bank account is located in.
        */
       country: string | null;
+    }
+
+    export interface StripeBalance {
+      /**
+       * The connected account ID whose Stripe balance to use as the source of payment
+       */
+      account?: string | null;
     }
 
     export interface Swish {}
@@ -955,7 +1015,9 @@ export namespace ConfirmationToken {
       | 'eps'
       | 'fpx'
       | 'giropay'
+      | 'gopay'
       | 'grabpay'
+      | 'id_bank_transfer'
       | 'ideal'
       | 'interac_present'
       | 'kakao_pay'
@@ -974,14 +1036,19 @@ export namespace ConfirmationToken {
       | 'payco'
       | 'paynow'
       | 'paypal'
+      | 'paypay'
       | 'payto'
       | 'pix'
       | 'promptpay'
+      | 'qris'
+      | 'rechnung'
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
       | 'sepa_debit'
+      | 'shopeepay'
       | 'sofort'
+      | 'stripe_balance'
       | 'swish'
       | 'twint'
       | 'upi'
@@ -1001,6 +1068,11 @@ export namespace ConfirmationToken {
        * Account holder type: individual or company.
        */
       account_holder_type: UsBankAccount.AccountHolderType | null;
+
+      /**
+       * Account number of the bank account.
+       */
+      account_number?: string | null;
 
       /**
        * Account type: checkings or savings. Defaults to checking if omitted.
@@ -1543,6 +1615,10 @@ export namespace ConfirmationToken {
         | 'uob';
     }
 
+    export namespace IdBankTransfer {
+      export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+    }
+
     export namespace Ideal {
       export type Bank =
         | 'abn_amro'
@@ -1688,6 +1764,25 @@ export namespace ConfirmationToken {
         | 'toyota_bank'
         | 'velobank'
         | 'volkswagen_bank';
+    }
+
+    export namespace Rechnung {
+      export interface Dob {
+        /**
+         * The day of birth, between 1 and 31.
+         */
+        day: number;
+
+        /**
+         * The month of birth, between 1 and 12.
+         */
+        month: number;
+
+        /**
+         * The four-digit year of birth.
+         */
+        year: number;
+      }
     }
 
     export namespace SepaDebit {

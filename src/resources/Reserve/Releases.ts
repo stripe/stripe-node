@@ -1,11 +1,47 @@
 // File generated from our OpenAPI spec
 
+import {StripeResource} from '../../StripeResource.js';
 import {Hold} from './Holds.js';
 import {Plan} from './Plans.js';
 import {Dispute} from './../Disputes.js';
 import {Refund} from './../Refunds.js';
-import {Metadata} from '../../shared.js';
-import {RequestOptions} from '../../lib.js';
+import {PaginationParams, Metadata} from '../../shared.js';
+import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
+const stripeMethod = StripeResource.method;
+
+export class ReleaseResource extends StripeResource {
+  /**
+   * Returns a list of ReserveReleases previously created. The ReserveReleases are returned in sorted order, with the most recent ReserveReleases appearing first.
+   */
+  list(
+    params?: Reserve.ReleaseListParams,
+    options?: RequestOptions
+  ): ApiListPromise<Release>;
+  list(options?: RequestOptions): ApiListPromise<Release>;
+  list(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'GET',
+      fullPath: '/v1/reserve/releases',
+      methodType: 'list',
+    }).call(this, ...args);
+  }
+
+  /**
+   * Retrieve a ReserveRelease.
+   */
+  retrieve(
+    id: string,
+    params?: Reserve.ReleaseRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<Release>>;
+  retrieve(id: string, options?: RequestOptions): Promise<Response<Release>>;
+  retrieve(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'GET',
+      fullPath: '/v1/reserve/releases/{id}',
+    }).call(this, ...args);
+  }
+}
 export interface Release {
   /**
    * Unique identifier for the object.
@@ -99,5 +135,36 @@ export namespace Reserve {
     export namespace SourceTransaction {
       export type Type = 'dispute' | 'refund';
     }
+  }
+}
+export namespace Reserve {
+  export interface ReleaseRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+}
+export namespace Reserve {
+  export interface ReleaseListParams extends PaginationParams {
+    /**
+     * Only return ReserveReleases associated with the currency specified by this currency code. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Only return ReserveReleases associated with the ReserveHold specified by this ReserveHold ID.
+     */
+    reserve_hold?: string;
+
+    /**
+     * Only return ReserveReleases associated with the ReservePlan specified by this ReservePlan ID.
+     */
+    reserve_plan?: string;
   }
 }

@@ -27,6 +27,7 @@ import {
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class SessionResource extends StripeResource {
   /**
    * Returns a list of Checkout Sessions.
@@ -822,6 +823,11 @@ export interface Session {
   locale: Checkout.Session.Locale | null;
 
   /**
+   * Settings for Managed Payments for this Checkout Session and resulting [PaymentIntents](https://docs.stripe.com/api/payment_intents/object), [Invoices](https://docs.stripe.com/api/invoices/object), and [Subscriptions](https://docs.stripe.com/api/subscriptions/object).
+   */
+  managed_payments?: Checkout.Session.ManagedPayments | null;
+
+  /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata | null;
@@ -1061,14 +1067,29 @@ export namespace Checkout {
       business_name: string | null;
 
       /**
+       * Customer's email for this Checkout Session
+       */
+      email?: string | null;
+
+      /**
        * Customer's individual name for this Checkout Session
        */
       individual_name: string | null;
 
       /**
+       * Customer's phone number for this Checkout Session
+       */
+      phone?: string | null;
+
+      /**
        * Shipping information for this Checkout Session.
        */
       shipping_details: CollectedInformation.ShippingDetails | null;
+
+      /**
+       * Customer's tax ids for this Checkout Session.
+       */
+      tax_ids?: Array<CollectedInformation.TaxId> | null;
     }
 
     export interface Consent {
@@ -1281,6 +1302,13 @@ export namespace Checkout {
       | 'zh-HK'
       | 'zh-TW';
 
+    export interface ManagedPayments {
+      /**
+       * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
+       */
+      enabled: boolean;
+    }
+
     export type Mode = 'payment' | 'setup' | 'subscription';
 
     export interface NameCollection {
@@ -1404,6 +1432,20 @@ export namespace Checkout {
     export type PaymentStatus = 'no_payment_required' | 'paid' | 'unpaid';
 
     export interface Permissions {
+      /**
+       * Permissions for updating the Checkout Session.
+       */
+      update?: Permissions.Update | null;
+
+      /**
+       * Determines which entity is allowed to update the line items.
+       *
+       * Default is `client_only`. Stripe Checkout client will automatically update the line items. If set to `server_only`, only your server is allowed to update the line items.
+       *
+       * When set to `server_only`, you must add the onLineItemsChange event handler when initializing the Stripe Checkout client and manually update the line items from your server using the Stripe API.
+       */
+      update_line_items?: Permissions.UpdateLineItems | null;
+
       /**
        * Determines which entity is allowed to update the shipping details.
        *
@@ -1642,6 +1684,135 @@ export namespace Checkout {
          * Customer name.
          */
         name: string;
+      }
+
+      export interface TaxId {
+        /**
+         * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, or `unknown`
+         */
+        type: TaxId.Type;
+
+        /**
+         * The value of the tax ID.
+         */
+        value: string | null;
+      }
+
+      export namespace TaxId {
+        export type Type =
+          | 'ad_nrt'
+          | 'ae_trn'
+          | 'al_tin'
+          | 'am_tin'
+          | 'ao_tin'
+          | 'ar_cuit'
+          | 'au_abn'
+          | 'au_arn'
+          | 'aw_tin'
+          | 'az_tin'
+          | 'ba_tin'
+          | 'bb_tin'
+          | 'bd_bin'
+          | 'bf_ifu'
+          | 'bg_uic'
+          | 'bh_vat'
+          | 'bj_ifu'
+          | 'bo_tin'
+          | 'br_cnpj'
+          | 'br_cpf'
+          | 'bs_tin'
+          | 'by_tin'
+          | 'ca_bn'
+          | 'ca_gst_hst'
+          | 'ca_pst_bc'
+          | 'ca_pst_mb'
+          | 'ca_pst_sk'
+          | 'ca_qst'
+          | 'cd_nif'
+          | 'ch_uid'
+          | 'ch_vat'
+          | 'cl_tin'
+          | 'cm_niu'
+          | 'cn_tin'
+          | 'co_nit'
+          | 'cr_tin'
+          | 'cv_nif'
+          | 'de_stn'
+          | 'do_rcn'
+          | 'ec_ruc'
+          | 'eg_tin'
+          | 'es_cif'
+          | 'et_tin'
+          | 'eu_oss_vat'
+          | 'eu_vat'
+          | 'gb_vat'
+          | 'ge_vat'
+          | 'gn_nif'
+          | 'hk_br'
+          | 'hr_oib'
+          | 'hu_tin'
+          | 'id_npwp'
+          | 'il_vat'
+          | 'in_gst'
+          | 'is_vat'
+          | 'jp_cn'
+          | 'jp_rn'
+          | 'jp_trn'
+          | 'ke_pin'
+          | 'kg_tin'
+          | 'kh_tin'
+          | 'kr_brn'
+          | 'kz_bin'
+          | 'la_tin'
+          | 'li_uid'
+          | 'li_vat'
+          | 'lk_vat'
+          | 'ma_vat'
+          | 'md_vat'
+          | 'me_pib'
+          | 'mk_vat'
+          | 'mr_nif'
+          | 'mx_rfc'
+          | 'my_frp'
+          | 'my_itn'
+          | 'my_sst'
+          | 'ng_tin'
+          | 'no_vat'
+          | 'no_voec'
+          | 'np_pan'
+          | 'nz_gst'
+          | 'om_vat'
+          | 'pe_ruc'
+          | 'ph_tin'
+          | 'pl_nip'
+          | 'ro_tin'
+          | 'rs_pib'
+          | 'ru_inn'
+          | 'ru_kpp'
+          | 'sa_vat'
+          | 'sg_gst'
+          | 'sg_uen'
+          | 'si_tin'
+          | 'sn_ninea'
+          | 'sr_fin'
+          | 'sv_nit'
+          | 'th_vat'
+          | 'tj_tin'
+          | 'tr_tin'
+          | 'tw_vat'
+          | 'tz_vat'
+          | 'ua_vat'
+          | 'ug_tin'
+          | 'unknown'
+          | 'us_ein'
+          | 'uy_ruc'
+          | 'uz_tin'
+          | 'uz_vat'
+          | 've_rif'
+          | 'vn_tin'
+          | 'za_vat'
+          | 'zm_tin'
+          | 'zw_tin';
       }
     }
 
@@ -2240,6 +2411,11 @@ export namespace Checkout {
         /**
          * Request ability to [capture beyond the standard authorization validity window](https://docs.stripe.com/payments/extended-authorization) for this CheckoutSession.
          */
+        request_decremental_authorization?: Card.RequestDecrementalAuthorization;
+
+        /**
+         * Request ability to [capture beyond the standard authorization validity window](https://docs.stripe.com/payments/extended-authorization) for this CheckoutSession.
+         */
         request_extended_authorization?: Card.RequestExtendedAuthorization;
 
         /**
@@ -2605,6 +2781,11 @@ export namespace Checkout {
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
         setup_future_usage?: Paypal.SetupFutureUsage;
+
+        /**
+         * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+         */
+        subsellers?: Array<string>;
       }
 
       export interface Payto {
@@ -2633,6 +2814,8 @@ export namespace Checkout {
          */
         expires_after_seconds: number | null;
 
+        mandate_options?: Pix.MandateOptions;
+
         /**
          * Indicates that you intend to make future payments with this PaymentIntent's payment method.
          *
@@ -2642,7 +2825,7 @@ export namespace Checkout {
          *
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
-        setup_future_usage?: 'none';
+        setup_future_usage?: Pix.SetupFutureUsage;
       }
 
       export interface RevolutPay {
@@ -2843,6 +3026,8 @@ export namespace Checkout {
           enabled?: boolean;
         }
 
+        export type RequestDecrementalAuthorization = 'if_available' | 'never';
+
         export type RequestExtendedAuthorization = 'if_available' | 'never';
 
         export type RequestIncrementalAuthorization = 'if_available' | 'never';
@@ -3012,6 +3197,63 @@ export namespace Checkout {
 
       export namespace Pix {
         export type AmountIncludesIof = 'always' | 'never';
+
+        export interface MandateOptions {
+          /**
+           * Amount to be charged for future payments.
+           */
+          amount?: number;
+
+          /**
+           * Determines if the amount includes the IOF tax.
+           */
+          amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+          /**
+           * Type of amount.
+           */
+          amount_type?: MandateOptions.AmountType;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
+           */
+          currency?: string;
+
+          /**
+           * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`.
+           */
+          end_date?: string;
+
+          /**
+           * Schedule at which the future payments will be charged.
+           */
+          payment_schedule?: MandateOptions.PaymentSchedule;
+
+          /**
+           * Subscription name displayed to buyers in their bank app.
+           */
+          reference?: string;
+
+          /**
+           * Start date of the mandate, in `YYYY-MM-DD`.
+           */
+          start_date?: string;
+        }
+
+        export type SetupFutureUsage = 'none' | 'off_session';
+
+        export namespace MandateOptions {
+          export type AmountIncludesIof = 'always' | 'never';
+
+          export type AmountType = 'fixed' | 'maximum';
+
+          export type PaymentSchedule =
+            | 'halfyearly'
+            | 'monthly'
+            | 'quarterly'
+            | 'weekly'
+            | 'yearly';
+        }
       }
 
       export namespace RevolutPay {
@@ -3063,6 +3305,8 @@ export namespace Checkout {
         export interface FinancialConnections {
           filters?: FinancialConnections.Filters;
 
+          manual_entry?: FinancialConnections.ManualEntry;
+
           /**
            * The list of permissions to request. The `payment_method` permission must be included.
            */
@@ -3089,6 +3333,18 @@ export namespace Checkout {
              * The account subcategories to use to filter for possible accounts to link. Valid subcategories are `checking` and `savings`.
              */
             account_subcategories?: Array<Filters.AccountSubcategory>;
+
+            /**
+             * The institution to use to filter for possible accounts to link.
+             */
+            institution?: string;
+          }
+
+          export interface ManualEntry {
+            /**
+             * Settings for configuring manual entry of account details.
+             */
+            mode?: ManualEntry.Mode;
           }
 
           export type Permission =
@@ -3097,17 +3353,53 @@ export namespace Checkout {
             | 'payment_method'
             | 'transactions';
 
-          export type Prefetch = 'balances' | 'ownership' | 'transactions';
+          export type Prefetch =
+            | 'balances'
+            | 'inferred_balances'
+            | 'ownership'
+            | 'transactions';
 
           export namespace Filters {
             export type AccountSubcategory = 'checking' | 'savings';
+          }
+
+          export namespace ManualEntry {
+            export type Mode = 'automatic' | 'custom';
           }
         }
       }
     }
 
     export namespace Permissions {
+      export interface Update {
+        /**
+         * Determines which entity is allowed to update the line items.
+         *
+         * Default is `client_only`. Stripe Checkout client will automatically update the line items. If set to `server_only`, only your server is allowed to update the line items.
+         *
+         * When set to `server_only`, you must add the onLineItemsChange event handler when initializing the Stripe Checkout client and manually update the line items from your server using the Stripe API.
+         */
+        line_items?: Update.LineItems | null;
+
+        /**
+         * Determines which entity is allowed to update the shipping details.
+         *
+         * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
+         *
+         * When set to `server_only`, you must add the onShippingDetailsChange event handler when initializing the Stripe Checkout client and manually update the shipping details from your server using the Stripe API.
+         */
+        shipping_details: Update.ShippingDetails | null;
+      }
+
+      export type UpdateLineItems = 'client_only' | 'server_only';
+
       export type UpdateShippingDetails = 'client_only' | 'server_only';
+
+      export namespace Update {
+        export type LineItems = 'client_only' | 'server_only';
+
+        export type ShippingDetails = 'client_only' | 'server_only';
+      }
     }
 
     export namespace SavedPaymentMethodOptions {
@@ -3655,6 +3947,11 @@ export namespace Checkout {
     locale?: SessionCreateParams.Locale;
 
     /**
+     * Settings for Managed Payments for this Checkout Session and resulting [PaymentIntents](https://docs.stripe.com/api/payment_intents/object), [Invoices](https://docs.stripe.com/api/invoices/object), and [Subscriptions](https://docs.stripe.com/api/subscriptions/object).
+     */
+    managed_payments?: SessionCreateParams.ManagedPayments;
+
+    /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: MetadataParam;
@@ -4001,6 +4298,11 @@ export namespace Checkout {
       coupon?: string;
 
       /**
+       * Data used to generate a new [Coupon](https://docs.stripe.com/api/coupon) object inline. One of `coupon` or `coupon_data` is required when updating discounts.
+       */
+      coupon_data?: Discount.CouponData;
+
+      /**
        * The ID of a promotion code to apply to this Session.
        */
       promotion_code?: string;
@@ -4026,6 +4328,7 @@ export namespace Checkout {
       | 'eps'
       | 'fpx'
       | 'giropay'
+      | 'gopay'
       | 'grabpay'
       | 'ideal'
       | 'kakao_pay'
@@ -4043,13 +4346,17 @@ export namespace Checkout {
       | 'payco'
       | 'paynow'
       | 'paypal'
+      | 'paypay'
       | 'payto'
       | 'pix'
       | 'promptpay'
+      | 'qris'
+      | 'rechnung'
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
       | 'sepa_debit'
+      | 'shopeepay'
       | 'sofort'
       | 'swish'
       | 'twint'
@@ -4149,6 +4456,13 @@ export namespace Checkout {
       | 'zh'
       | 'zh-HK'
       | 'zh-TW';
+
+    export interface ManagedPayments {
+      /**
+       * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
+       */
+      enabled?: boolean;
+    }
 
     export type Mode = 'payment' | 'setup' | 'subscription';
 
@@ -4535,6 +4849,7 @@ export namespace Checkout {
       | 'eps'
       | 'fpx'
       | 'giropay'
+      | 'gopay'
       | 'grabpay'
       | 'ideal'
       | 'kakao_pay'
@@ -4553,13 +4868,17 @@ export namespace Checkout {
       | 'payco'
       | 'paynow'
       | 'paypal'
+      | 'paypay'
       | 'payto'
       | 'pix'
       | 'promptpay'
+      | 'qris'
+      | 'rechnung'
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
       | 'sepa_debit'
+      | 'shopeepay'
       | 'sofort'
       | 'swish'
       | 'twint'
@@ -4569,6 +4888,27 @@ export namespace Checkout {
       | 'zip';
 
     export interface Permissions {
+      /**
+       * Permissions for updating the Checkout Session.
+       */
+      update?: Permissions.Update;
+
+      /**
+       * Determines which entity is allowed to update the discounts (coupons or promotion codes) that apply to this session.
+       *
+       * Default is `client_only`. Stripe Checkout client will automatically handle discount updates. If set to `server_only`, only your server is allowed to update discounts.
+       */
+      update_discounts?: Permissions.UpdateDiscounts;
+
+      /**
+       * Determines which entity is allowed to update the line items.
+       *
+       * Default is `client_only`. Stripe Checkout client will automatically update the line items. If set to `server_only`, only your server is allowed to update the line items.
+       *
+       * When set to `server_only`, you must add the onLineItemsChange event handler when initializing the Stripe Checkout client and manually update the line items from your server using the Stripe API.
+       */
+      update_line_items?: Permissions.UpdateLineItems;
+
       /**
        * Determines which entity is allowed to update the shipping details.
        *
@@ -4985,6 +5325,44 @@ export namespace Checkout {
       }
     }
 
+    export namespace Discount {
+      export interface CouponData {
+        /**
+         * A positive integer representing the amount to subtract from an invoice total (required if `percent_off` is not passed).
+         */
+        amount_off?: number;
+
+        /**
+         * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) of the `amount_off` parameter (required if `amount_off` is passed).
+         */
+        currency?: string;
+
+        /**
+         * Specifies how long the discount will be in effect if used on a subscription. Defaults to `once`.
+         */
+        duration?: CouponData.Duration;
+
+        /**
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Emptyable<MetadataParam>;
+
+        /**
+         * Name of the coupon displayed to customers on, for instance invoices, or receipts. By default the `id` is shown if `name` is not set.
+         */
+        name?: string;
+
+        /**
+         * A positive float larger than 0, and smaller or equal to 100, that represents the discount the coupon will apply (required if `amount_off` is not passed).
+         */
+        percent_off?: number;
+      }
+
+      export namespace CouponData {
+        export type Duration = 'forever' | 'once' | 'repeating';
+      }
+    }
+
     export namespace InvoiceCreation {
       export interface InvoiceData {
         /**
@@ -5155,6 +5533,11 @@ export namespace Checkout {
           tax_code?: string;
 
           /**
+           * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+           */
+          tax_details?: ProductData.TaxDetails;
+
+          /**
            * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
            */
           unit_label?: string;
@@ -5173,6 +5556,20 @@ export namespace Checkout {
         }
 
         export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+
+        export namespace ProductData {
+          export interface TaxDetails {
+            /**
+             * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+             */
+            performance_location?: string;
+
+            /**
+             * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+             */
+            tax_code?: Emptyable<string>;
+          }
+        }
 
         export namespace Recurring {
           export type Interval = 'day' | 'month' | 'week' | 'year';
@@ -5474,6 +5871,11 @@ export namespace Checkout {
          * Installment options for card payments
          */
         installments?: Card.Installments;
+
+        /**
+         * Request ability to [capture beyond the standard authorization validity window](https://docs.stripe.com/payments/extended-authorization) for this CheckoutSession.
+         */
+        request_decremental_authorization?: Card.RequestDecrementalAuthorization;
 
         /**
          * Request ability to [capture beyond the standard authorization validity window](https://docs.stripe.com/payments/extended-authorization) for this CheckoutSession.
@@ -5878,6 +6280,11 @@ export namespace Checkout {
         reference?: string;
 
         /**
+         * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+         */
+        reference_id?: string;
+
+        /**
          * The risk correlation ID for an on-session payment using a saved PayPal payment method.
          */
         risk_correlation_id?: string;
@@ -5894,6 +6301,11 @@ export namespace Checkout {
          * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
          */
         setup_future_usage?: Emptyable<Paypal.SetupFutureUsage>;
+
+        /**
+         * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+         */
+        subsellers?: Array<string>;
       }
 
       export interface Payto {
@@ -5926,6 +6338,11 @@ export namespace Checkout {
         expires_after_seconds?: number;
 
         /**
+         * Additional fields for mandate creation.
+         */
+        mandate_options?: Pix.MandateOptions;
+
+        /**
          * Indicates that you intend to make future payments with this PaymentIntent's payment method.
          *
          * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -5934,7 +6351,7 @@ export namespace Checkout {
          *
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
-        setup_future_usage?: 'none';
+        setup_future_usage?: Pix.SetupFutureUsage;
       }
 
       export interface RevolutPay {
@@ -6160,6 +6577,8 @@ export namespace Checkout {
            */
           enabled?: boolean;
         }
+
+        export type RequestDecrementalAuthorization = 'if_available' | 'never';
 
         export type RequestExtendedAuthorization = 'if_available' | 'never';
 
@@ -6401,6 +6820,63 @@ export namespace Checkout {
 
       export namespace Pix {
         export type AmountIncludesIof = 'always' | 'never';
+
+        export interface MandateOptions {
+          /**
+           * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
+           */
+          amount?: number;
+
+          /**
+           * Determines if the amount includes the IOF tax. Defaults to `never`.
+           */
+          amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+          /**
+           * Type of amount. Defaults to `maximum`.
+           */
+          amount_type?: MandateOptions.AmountType;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Only `brl` is supported currently.
+           */
+          currency?: string;
+
+          /**
+           * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+           */
+          end_date?: string;
+
+          /**
+           * Schedule at which the future payments will be charged. Defaults to `monthly`.
+           */
+          payment_schedule?: MandateOptions.PaymentSchedule;
+
+          /**
+           * Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
+           */
+          reference?: string;
+
+          /**
+           * Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future. Defaults to 3 days after the current date.
+           */
+          start_date?: string;
+        }
+
+        export type SetupFutureUsage = 'none' | 'off_session';
+
+        export namespace MandateOptions {
+          export type AmountIncludesIof = 'always' | 'never';
+
+          export type AmountType = 'fixed' | 'maximum';
+
+          export type PaymentSchedule =
+            | 'halfyearly'
+            | 'monthly'
+            | 'quarterly'
+            | 'weekly'
+            | 'yearly';
+        }
       }
 
       export namespace RevolutPay {
@@ -6472,7 +6948,11 @@ export namespace Checkout {
             | 'payment_method'
             | 'transactions';
 
-          export type Prefetch = 'balances' | 'ownership' | 'transactions';
+          export type Prefetch =
+            | 'balances'
+            | 'inferred_balances'
+            | 'ownership'
+            | 'transactions';
         }
       }
 
@@ -6482,7 +6962,37 @@ export namespace Checkout {
     }
 
     export namespace Permissions {
+      export interface Update {
+        /**
+         * Determines which entity is allowed to update the line items.
+         *
+         * Default is `client_only`. Stripe Checkout client will automatically update the line items. If set to `server_only`, only your server is allowed to update the line items.
+         *
+         * When set to `server_only`, you must add the onLineItemsChange event handler when initializing the Stripe Checkout client and manually update the line items from your server using the Stripe API.
+         */
+        line_items?: Update.LineItems;
+
+        /**
+         * Determines which entity is allowed to update the shipping details.
+         *
+         * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
+         *
+         * When set to `server_only`, you must add the onShippingDetailsChange event handler when initializing the Stripe Checkout client and manually update the shipping details from your server using the Stripe API.
+         */
+        shipping_details?: Update.ShippingDetails;
+      }
+
+      export type UpdateDiscounts = 'client_only' | 'server_only';
+
+      export type UpdateLineItems = 'client_only' | 'server_only';
+
       export type UpdateShippingDetails = 'client_only' | 'server_only';
+
+      export namespace Update {
+        export type LineItems = 'client_only' | 'server_only';
+
+        export type ShippingDetails = 'client_only' | 'server_only';
+      }
     }
 
     export namespace SavedPaymentMethodOptions {
@@ -7007,14 +7517,29 @@ export namespace Checkout {
 export namespace Checkout {
   export interface SessionUpdateParams {
     /**
+     * Settings for automatic tax lookup for this session and resulting payments, invoices, and subscriptions.
+     */
+    automatic_tax?: SessionUpdateParams.AutomaticTax;
+
+    /**
      * Information about the customer collected within the Checkout Session. Can only be set when updating `embedded` or `custom` sessions.
      */
     collected_information?: SessionUpdateParams.CollectedInformation;
 
     /**
+     * List of coupons and promotion codes attached to the Checkout Session.
+     */
+    discounts?: Emptyable<Array<SessionUpdateParams.Discount>>;
+
+    /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
+
+    /**
+     * Generate a post-purchase Invoice for one-time payments.
+     */
+    invoice_creation?: SessionUpdateParams.InvoiceCreation;
 
     /**
      * A list of items the customer is purchasing.
@@ -7042,14 +7567,45 @@ export namespace Checkout {
      * The shipping rate options to apply to this Session. Up to a maximum of 5.
      */
     shipping_options?: Emptyable<Array<SessionUpdateParams.ShippingOption>>;
+
+    /**
+     * A subset of parameters to be passed to subscription creation for Checkout Sessions in `subscription` mode.
+     */
+    subscription_data?: SessionUpdateParams.SubscriptionData;
   }
 
   export namespace SessionUpdateParams {
+    export interface AutomaticTax {
+      /**
+       * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
+       */
+      liability?: AutomaticTax.Liability;
+    }
+
     export interface CollectedInformation {
       /**
        * The shipping details to apply to this Session.
        */
       shipping_details?: CollectedInformation.ShippingDetails;
+    }
+
+    export interface Discount {
+      /**
+       * The ID of the [Coupon](https://docs.stripe.com/api/coupons) to apply to this Session. One of `coupon` or `coupon_data` is required when updating discounts.
+       */
+      coupon?: string;
+
+      /**
+       * Data used to generate a new [Coupon](https://docs.stripe.com/api/coupon) object inline. One of `coupon` or `coupon_data` is required when updating discounts.
+       */
+      coupon_data?: Discount.CouponData;
+    }
+
+    export interface InvoiceCreation {
+      /**
+       * Parameters passed when creating invoices for payment-mode Checkout Sessions.
+       */
+      invoice_data?: InvoiceCreation.InvoiceData;
     }
 
     export interface LineItem {
@@ -7101,6 +7657,48 @@ export namespace Checkout {
       shipping_rate_data?: ShippingOption.ShippingRateData;
     }
 
+    export interface SubscriptionData {
+      /**
+       * All invoices will be billed using the specified settings.
+       */
+      invoice_settings?: SubscriptionData.InvoiceSettings;
+
+      /**
+       * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://docs.stripe.com/api#create_invoice) for the given subscription at the specified interval.
+       */
+      pending_invoice_item_interval?: Emptyable<
+        SubscriptionData.PendingInvoiceItemInterval
+      >;
+
+      /**
+       * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. Has to be at least 48 hours in the future.
+       */
+      trial_end?: number;
+
+      /**
+       * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
+       */
+      trial_period_days?: Emptyable<number>;
+    }
+
+    export namespace AutomaticTax {
+      export interface Liability {
+        /**
+         * The connected account being referenced when `type` is `account`.
+         */
+        account?: string;
+
+        /**
+         * Type of the account referenced in the request.
+         */
+        type: Liability.Type;
+      }
+
+      export namespace Liability {
+        export type Type = 'account' | 'self';
+      }
+    }
+
     export namespace CollectedInformation {
       export interface ShippingDetails {
         /**
@@ -7145,6 +7743,71 @@ export namespace Checkout {
            * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
            */
           state?: string;
+        }
+      }
+    }
+
+    export namespace Discount {
+      export interface CouponData {
+        /**
+         * A positive integer representing the amount to subtract from an invoice total (required if `percent_off` is not passed).
+         */
+        amount_off?: number;
+
+        /**
+         * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) of the `amount_off` parameter (required if `amount_off` is passed).
+         */
+        currency?: string;
+
+        /**
+         * Specifies how long the discount will be in effect if used on a subscription. Defaults to `once`.
+         */
+        duration?: CouponData.Duration;
+
+        /**
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Emptyable<MetadataParam>;
+
+        /**
+         * Name of the coupon displayed to customers on, for instance invoices, or receipts. By default the `id` is shown if `name` is not set.
+         */
+        name?: string;
+
+        /**
+         * A positive float larger than 0, and smaller or equal to 100, that represents the discount the coupon will apply (required if `amount_off` is not passed).
+         */
+        percent_off?: number;
+      }
+
+      export namespace CouponData {
+        export type Duration = 'forever' | 'once' | 'repeating';
+      }
+    }
+
+    export namespace InvoiceCreation {
+      export interface InvoiceData {
+        /**
+         * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+         */
+        issuer?: InvoiceData.Issuer;
+      }
+
+      export namespace InvoiceData {
+        export interface Issuer {
+          /**
+           * The connected account being referenced when `type` is `account`.
+           */
+          account?: string;
+
+          /**
+           * Type of the account referenced in the request.
+           */
+          type: Issuer.Type;
+        }
+
+        export namespace Issuer {
+          export type Type = 'account' | 'self';
         }
       }
     }
@@ -7232,6 +7895,11 @@ export namespace Checkout {
           tax_code?: string;
 
           /**
+           * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+           */
+          tax_details?: ProductData.TaxDetails;
+
+          /**
            * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
            */
           unit_label?: string;
@@ -7250,6 +7918,20 @@ export namespace Checkout {
         }
 
         export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+
+        export namespace ProductData {
+          export interface TaxDetails {
+            /**
+             * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+             */
+            performance_location?: string;
+
+            /**
+             * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+             */
+            tax_code?: Emptyable<string>;
+          }
+        }
 
         export namespace Recurring {
           export type Interval = 'day' | 'month' | 'week' | 'year';
@@ -7390,6 +8072,49 @@ export namespace Checkout {
             export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
           }
         }
+      }
+    }
+
+    export namespace SubscriptionData {
+      export interface InvoiceSettings {
+        /**
+         * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+         */
+        issuer?: InvoiceSettings.Issuer;
+      }
+
+      export interface PendingInvoiceItemInterval {
+        /**
+         * Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
+         */
+        interval: PendingInvoiceItemInterval.Interval;
+
+        /**
+         * The number of intervals between invoices. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+         */
+        interval_count?: number;
+      }
+
+      export namespace InvoiceSettings {
+        export interface Issuer {
+          /**
+           * The connected account being referenced when `type` is `account`.
+           */
+          account?: string;
+
+          /**
+           * Type of the account referenced in the request.
+           */
+          type: Issuer.Type;
+        }
+
+        export namespace Issuer {
+          export type Type = 'account' | 'self';
+        }
+      }
+
+      export namespace PendingInvoiceItemInterval {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
       }
     }
   }

@@ -3,6 +3,7 @@
 import {StripeResource} from '../StripeResource.js';
 import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class BalanceResource extends StripeResource {
   /**
    * Retrieves the current account balance, based on the authentication that was used to make the request.
@@ -54,6 +55,8 @@ export interface Balance {
   pending: Array<Balance.Pending>;
 
   refund_and_dispute_prefunding?: Balance.RefundAndDisputePrefunding;
+
+  risk_reserved?: Balance.RiskReserved;
 }
 export namespace Balance {
   export interface Available {
@@ -134,6 +137,18 @@ export namespace Balance {
      * Funds that are pending
      */
     pending: Array<RefundAndDisputePrefunding.Pending>;
+  }
+
+  export interface RiskReserved {
+    /**
+     * Funds that are available for use.
+     */
+    available: Array<RiskReserved.Available>;
+
+    /**
+     * Funds that are pending
+     */
+    pending: Array<RiskReserved.Pending>;
   }
 
   export namespace Available {
@@ -281,6 +296,74 @@ export namespace Balance {
   }
 
   export namespace RefundAndDisputePrefunding {
+    export interface Available {
+      /**
+       * Balance amount.
+       */
+      amount: number;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+
+      source_types?: Available.SourceTypes;
+    }
+
+    export interface Pending {
+      /**
+       * Balance amount.
+       */
+      amount: number;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+
+      source_types?: Pending.SourceTypes;
+    }
+
+    export namespace Available {
+      export interface SourceTypes {
+        /**
+         * Amount coming from [legacy US ACH payments](https://docs.stripe.com/ach-deprecated).
+         */
+        bank_account?: number;
+
+        /**
+         * Amount coming from most payment methods, including cards as well as [non-legacy bank debits](https://docs.stripe.com/payments/bank-debits).
+         */
+        card?: number;
+
+        /**
+         * Amount coming from [FPX](https://docs.stripe.com/payments/fpx), a Malaysian payment method.
+         */
+        fpx?: number;
+      }
+    }
+
+    export namespace Pending {
+      export interface SourceTypes {
+        /**
+         * Amount coming from [legacy US ACH payments](https://docs.stripe.com/ach-deprecated).
+         */
+        bank_account?: number;
+
+        /**
+         * Amount coming from most payment methods, including cards as well as [non-legacy bank debits](https://docs.stripe.com/payments/bank-debits).
+         */
+        card?: number;
+
+        /**
+         * Amount coming from [FPX](https://docs.stripe.com/payments/fpx), a Malaysian payment method.
+         */
+        fpx?: number;
+      }
+    }
+  }
+
+  export namespace RiskReserved {
     export interface Available {
       /**
        * Balance amount.

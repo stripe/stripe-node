@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import * as crypto from 'crypto';
 import {StripeResource} from '../StripeResource.js';
 import {DeletedDiscount, Discount} from './Discounts.js';
 import {CustomerBalanceTransaction} from './CustomerBalanceTransactions.js';
@@ -29,6 +30,7 @@ import {
   ApiSearchResultPromise,
 } from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class CustomerResource extends StripeResource {
   /**
    * Permanently deletes a customer. It cannot be undone. Also immediately cancels any active subscriptions on the customer.
@@ -609,7 +611,26 @@ export class CustomerResource extends StripeResource {
       },
     }).call(this, ...args);
   }
+  serializeBatchUpdate(
+    customer: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = crypto.randomUUID();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
 
+    const item: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    item.path_params = {customer: customer};
+    if (options.stripeContext) {
+      item.context = options.stripeContext;
+    }
+    return JSON.stringify(item);
+  }
   /**
    * Returns a list of transactions that updated the customer's [balances](https://docs.stripe.com/docs/billing/customer/balance).
    */
@@ -2230,7 +2251,9 @@ export namespace CustomerListPaymentMethodsParams {
     | 'eps'
     | 'fpx'
     | 'giropay'
+    | 'gopay'
     | 'grabpay'
+    | 'id_bank_transfer'
     | 'ideal'
     | 'kakao_pay'
     | 'klarna'
@@ -2248,14 +2271,19 @@ export namespace CustomerListPaymentMethodsParams {
     | 'payco'
     | 'paynow'
     | 'paypal'
+    | 'paypay'
     | 'payto'
     | 'pix'
     | 'promptpay'
+    | 'qris'
+    | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
     | 'sepa_debit'
+    | 'shopeepay'
     | 'sofort'
+    | 'stripe_balance'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -2337,6 +2365,7 @@ export interface CustomerSearchParams {
    */
   page?: string;
 }
+export interface CustomerSerializeBatchUpdateParams {}
 export interface CustomerUpdateBalanceTransactionParams {
   /**
    * An arbitrary string attached to the object. Often useful for displaying to users.

@@ -5,6 +5,7 @@ import {ConfirmationToken} from './../ConfirmationTokens.js';
 import {MetadataParam, Emptyable, AddressParam} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ConfirmationTokenResource extends StripeResource {
   /**
    * Creates a test mode Confirmation Token server side for your integration tests.
@@ -164,9 +165,19 @@ export namespace TestHelpers {
       giropay?: PaymentMethodData.Giropay;
 
       /**
+       * If this is a Gopay PaymentMethod, this hash contains details about the Gopay payment method.
+       */
+      gopay?: PaymentMethodData.Gopay;
+
+      /**
        * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
        */
       grabpay?: PaymentMethodData.Grabpay;
+
+      /**
+       * If this is an `IdBankTransfer` PaymentMethod, this hash contains details about the IdBankTransfer payment method.
+       */
+      id_bank_transfer?: PaymentMethodData.IdBankTransfer;
 
       /**
        * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -264,6 +275,11 @@ export namespace TestHelpers {
       paypal?: PaymentMethodData.Paypal;
 
       /**
+       * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+       */
+      paypay?: PaymentMethodData.Paypay;
+
+      /**
        * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
        */
       payto?: PaymentMethodData.Payto;
@@ -279,9 +295,19 @@ export namespace TestHelpers {
       promptpay?: PaymentMethodData.Promptpay;
 
       /**
+       * If this is a `qris` PaymentMethod, this hash contains details about the QRIS payment method.
+       */
+      qris?: PaymentMethodData.Qris;
+
+      /**
        * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
        */
       radar_options?: PaymentMethodData.RadarOptions;
+
+      /**
+       * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
+       */
+      rechnung?: PaymentMethodData.Rechnung;
 
       /**
        * If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
@@ -304,9 +330,19 @@ export namespace TestHelpers {
       sepa_debit?: PaymentMethodData.SepaDebit;
 
       /**
+       * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
+       */
+      shopeepay?: PaymentMethodData.Shopeepay;
+
+      /**
        * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
        */
       sofort?: PaymentMethodData.Sofort;
+
+      /**
+       * This hash contains details about the Stripe balance payment method.
+       */
+      stripe_balance?: PaymentMethodData.StripeBalance;
 
       /**
        * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -491,7 +527,16 @@ export namespace TestHelpers {
 
       export interface Giropay {}
 
+      export interface Gopay {}
+
       export interface Grabpay {}
+
+      export interface IdBankTransfer {
+        /**
+         * Bank where the account is held.
+         */
+        bank?: IdBankTransfer.Bank;
+      }
 
       export interface Ideal {
         /**
@@ -576,6 +621,8 @@ export namespace TestHelpers {
 
       export interface Paypal {}
 
+      export interface Paypay {}
+
       export interface Payto {
         /**
          * The account number for the bank account.
@@ -597,11 +644,20 @@ export namespace TestHelpers {
 
       export interface Promptpay {}
 
+      export interface Qris {}
+
       export interface RadarOptions {
         /**
          * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
          */
         session?: string;
+      }
+
+      export interface Rechnung {
+        /**
+         * Customer's date of birth
+         */
+        dob: Rechnung.Dob;
       }
 
       export interface RevolutPay {}
@@ -617,11 +673,20 @@ export namespace TestHelpers {
         iban: string;
       }
 
+      export interface Shopeepay {}
+
       export interface Sofort {
         /**
          * Two-letter ISO code representing the country the bank account is located in.
          */
         country: Sofort.Country;
+      }
+
+      export interface StripeBalance {
+        /**
+         * The connected account ID whose Stripe balance to use as the source of payment
+         */
+        account?: string;
       }
 
       export interface Swish {}
@@ -647,7 +712,9 @@ export namespace TestHelpers {
         | 'eps'
         | 'fpx'
         | 'giropay'
+        | 'gopay'
         | 'grabpay'
+        | 'id_bank_transfer'
         | 'ideal'
         | 'kakao_pay'
         | 'klarna'
@@ -665,14 +732,19 @@ export namespace TestHelpers {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'paypay'
         | 'payto'
         | 'pix'
         | 'promptpay'
+        | 'qris'
+        | 'rechnung'
         | 'revolut_pay'
         | 'samsung_pay'
         | 'satispay'
         | 'sepa_debit'
+        | 'shopeepay'
         | 'sofort'
+        | 'stripe_balance'
         | 'swish'
         | 'twint'
         | 'upi'
@@ -778,6 +850,10 @@ export namespace TestHelpers {
           | 'uob';
       }
 
+      export namespace IdBankTransfer {
+        export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+      }
+
       export namespace Ideal {
         export type Bank =
           | 'abn_amro'
@@ -853,6 +929,25 @@ export namespace TestHelpers {
           | 'toyota_bank'
           | 'velobank'
           | 'volkswagen_bank';
+      }
+
+      export namespace Rechnung {
+        export interface Dob {
+          /**
+           * The day of birth, between 1 and 31.
+           */
+          day: number;
+
+          /**
+           * The month of birth, between 1 and 12.
+           */
+          month: number;
+
+          /**
+           * The four-digit year of birth.
+           */
+          year: number;
+        }
       }
 
       export namespace Sofort {

@@ -3,6 +3,7 @@
 import {StripeResource} from '../StripeResource.js';
 import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class AccountLinkResource extends StripeResource {
   /**
    * Creates an AccountLink object that includes a single-use Stripe URL that the platform can redirect their user to in order to take them through the Connect Onboarding flow.
@@ -78,7 +79,11 @@ export interface AccountLinkCreateParams {
   return_url?: string;
 }
 export namespace AccountLinkCreateParams {
-  export type Type = 'account_onboarding' | 'account_update';
+  export type Type =
+    | 'account_onboarding'
+    | 'account_update'
+    | 'capital_financing_offer'
+    | 'capital_financing_reporting';
 
   export type Collect = 'currently_due' | 'eventually_due';
 

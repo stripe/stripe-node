@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec
 
+import * as crypto from 'crypto';
 import {StripeResource} from '../StripeResource.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {Coupon} from './Coupons.js';
@@ -12,6 +13,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PromotionCodeResource extends StripeResource {
   /**
    * Returns a list of your promotion codes.
@@ -75,6 +77,44 @@ export class PromotionCodeResource extends StripeResource {
       method: 'POST',
       fullPath: '/v1/promotion_codes/{promotion_code}',
     }).call(this, ...args);
+  }
+  serializeBatchCreate(
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = crypto.randomUUID();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const item: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    if (options.stripeContext) {
+      item.context = options.stripeContext;
+    }
+    return JSON.stringify(item);
+  }
+  serializeBatchUpdate(
+    promotionCode: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = crypto.randomUUID();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const item: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    item.path_params = {promotion_code: promotionCode};
+    if (options.stripeContext) {
+      item.context = options.stripeContext;
+    }
+    return JSON.stringify(item);
   }
 }
 export interface PromotionCode {
@@ -369,3 +409,5 @@ export interface PromotionCodeListParams extends PaginationParams {
    */
   expand?: Array<string>;
 }
+export interface PromotionCodeSerializeBatchCreateParams {}
+export interface PromotionCodeSerializeBatchUpdateParams {}

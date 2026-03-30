@@ -14,10 +14,10 @@ import {
   Emptyable,
   MetadataParam,
   AddressParam,
+  Address,
   PaginationParams,
   RangeQueryParam,
   Metadata,
-  Address,
 } from '../shared.js';
 import {
   RequestOptions,
@@ -27,6 +27,7 @@ import {
   ApiSearchResultPromise,
 } from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PaymentIntentResource extends StripeResource {
   /**
    * Returns a list of PaymentIntents.
@@ -243,6 +244,36 @@ export class PaymentIntentResource extends StripeResource {
   }
 
   /**
+   * Perform a decremental authorization on an eligible
+   * [PaymentIntent](https://docs.stripe.com/docs/api/payment_intents/object). To be eligible, the
+   * PaymentIntent's status must be requires_capture and
+   * [decremental_authorization.status](https://docs.stripe.com/docs/api/charges/object#charge_object-payment_method_details-card-decremental_authorization)
+   * must be available.
+   *
+   * Decremental authorizations decrease the authorized amount on your customer's card
+   * to the new, lower amount provided. A single PaymentIntent can call this endpoint multiple times to further decrease the authorized amount.
+   *
+   * After decrement, the PaymentIntent object
+   * returns with the updated
+   * [amount](https://docs.stripe.com/docs/api/payment_intents/object#payment_intent_object-amount).
+   * The PaymentIntent will now be capturable up to the new authorized amount.
+   *
+   * Each PaymentIntent can have a maximum of 10 decremental or incremental authorization attempts, including declines.
+   * After it's fully captured, a PaymentIntent can no longer be decremented.
+   */
+  decrementAuthorization(
+    id: string,
+    params: PaymentIntentDecrementAuthorizationParams,
+    options?: RequestOptions
+  ): Promise<Response<PaymentIntent>>;
+  decrementAuthorization(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'POST',
+      fullPath: '/v1/payment_intents/{intent}/decrement_authorization',
+    }).call(this, ...args);
+  }
+
+  /**
    * Perform an incremental authorization on an eligible
    * [PaymentIntent](https://docs.stripe.com/docs/api/payment_intents/object). To be eligible, the
    * PaymentIntent's status must be requires_capture and
@@ -296,6 +327,21 @@ export class PaymentIntentResource extends StripeResource {
     return stripeMethod({
       method: 'POST',
       fullPath: '/v1/payment_intents/{intent}/verify_microdeposits',
+    }).call(this, ...args);
+  }
+
+  /**
+   * Trigger an external action on a PaymentIntent.
+   */
+  triggerAction(
+    id: string,
+    params: PaymentIntentTriggerActionParams,
+    options?: RequestOptions
+  ): Promise<Response<PaymentIntent>>;
+  triggerAction(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'POST',
+      fullPath: '/v1/test/payment_intents/{intent}/trigger_action',
     }).call(this, ...args);
   }
 
@@ -356,6 +402,8 @@ export interface PaymentIntent {
    * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://docs.stripe.com/payments/connected-accounts).
    */
   application_fee_amount: number | null;
+
+  async_workflows?: PaymentIntent.AsyncWorkflows;
 
   /**
    * Settings to configure compatible payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods)
@@ -431,6 +479,11 @@ export interface PaymentIntent {
     PaymentIntent.ExcludedPaymentMethodType
   > | null;
 
+  /**
+   * The FX Quote used for the PaymentIntent.
+   */
+  fx_quote?: string | null;
+
   hooks?: PaymentIntent.Hooks;
 
   /**
@@ -447,6 +500,11 @@ export interface PaymentIntent {
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
    */
   livemode: boolean;
+
+  /**
+   * Settings for Managed Payments.
+   */
+  managed_payments?: PaymentIntent.ManagedPayments | null;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Learn more about [storing information in metadata](https://docs.stripe.com/payments/payment-intents/creating-payment-intents#storing-information-in-metadata).
@@ -502,6 +560,11 @@ export interface PaymentIntent {
    * ID of the review associated with this PaymentIntent, if any.
    */
   review: string | Review | null;
+
+  /**
+   * Indicates whether confirmation for this PaymentIntent using a secret key is `required` or `optional`.
+   */
+  secret_key_confirmation?: PaymentIntent.SecretKeyConfirmation;
 
   /**
    * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -569,9 +632,15 @@ export namespace PaymentIntent {
 
     shipping?: AmountDetails.Shipping;
 
+    surcharge?: AmountDetails.Surcharge;
+
     tax?: AmountDetails.Tax;
 
     tip?: AmountDetails.Tip;
+  }
+
+  export interface AsyncWorkflows {
+    inputs?: AsyncWorkflows.Inputs;
   }
 
   export interface AutomaticPaymentMethods {
@@ -622,7 +691,9 @@ export namespace PaymentIntent {
     | 'eps'
     | 'fpx'
     | 'giropay'
+    | 'gopay'
     | 'grabpay'
+    | 'id_bank_transfer'
     | 'ideal'
     | 'kakao_pay'
     | 'klarna'
@@ -639,14 +710,19 @@ export namespace PaymentIntent {
     | 'payco'
     | 'paynow'
     | 'paypal'
+    | 'paypay'
     | 'payto'
     | 'pix'
     | 'promptpay'
+    | 'qris'
+    | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
     | 'sepa_debit'
+    | 'shopeepay'
     | 'sofort'
+    | 'stripe_balance'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -771,6 +847,13 @@ export namespace PaymentIntent {
     type: LastPaymentError.Type;
   }
 
+  export interface ManagedPayments {
+    /**
+     * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
+     */
+    enabled: boolean;
+  }
+
   export interface NextAction {
     alipay_handle_redirect?: NextAction.AlipayHandleRedirect;
 
@@ -820,6 +903,10 @@ export namespace PaymentIntent {
   }
 
   export interface PaymentDetails {
+    car_rental?: PaymentDetails.CarRental;
+
+    car_rental_data?: Array<PaymentDetails.CarRentalDatum>;
+
     /**
      * A unique value to identify the customer. This field is available only for card payments.
      *
@@ -827,12 +914,20 @@ export namespace PaymentIntent {
      */
     customer_reference: string | null;
 
+    event_details?: PaymentDetails.EventDetails;
+
+    flight_data?: Array<PaymentDetails.FlightDatum>;
+
+    lodging_data?: Array<PaymentDetails.LodgingDatum>;
+
     /**
      * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
      *
      * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
      */
     order_reference: string | null;
+
+    subscription?: PaymentDetails.Subscription;
   }
 
   export interface PaymentMethodConfigurationDetails {
@@ -888,7 +983,11 @@ export namespace PaymentIntent {
 
     giropay?: PaymentMethodOptions.Giropay;
 
+    gopay?: PaymentMethodOptions.Gopay;
+
     grabpay?: PaymentMethodOptions.Grabpay;
+
+    id_bank_transfer?: PaymentMethodOptions.IdBankTransfer;
 
     ideal?: PaymentMethodOptions.Ideal;
 
@@ -926,11 +1025,17 @@ export namespace PaymentIntent {
 
     paypal?: PaymentMethodOptions.Paypal;
 
+    paypay?: PaymentMethodOptions.Paypay;
+
     payto?: PaymentMethodOptions.Payto;
 
     pix?: PaymentMethodOptions.Pix;
 
     promptpay?: PaymentMethodOptions.Promptpay;
+
+    qris?: PaymentMethodOptions.Qris;
+
+    rechnung?: PaymentMethodOptions.Rechnung;
 
     revolut_pay?: PaymentMethodOptions.RevolutPay;
 
@@ -940,7 +1045,11 @@ export namespace PaymentIntent {
 
     sepa_debit?: PaymentMethodOptions.SepaDebit;
 
+    shopeepay?: PaymentMethodOptions.Shopeepay;
+
     sofort?: PaymentMethodOptions.Sofort;
+
+    stripe_balance?: PaymentMethodOptions.StripeBalance;
 
     swish?: PaymentMethodOptions.Swish;
 
@@ -975,6 +1084,8 @@ export namespace PaymentIntent {
      */
     type: 'card';
   }
+
+  export type SecretKeyConfirmation = 'optional' | 'required';
 
   export type SetupFutureUsage = 'off_session' | 'on_session';
 
@@ -1055,6 +1166,28 @@ export namespace PaymentIntent {
       to_postal_code: string | null;
     }
 
+    export interface Surcharge {
+      /**
+       * Portion of the amount that corresponds to a surcharge.
+       */
+      amount?: number;
+
+      /**
+       * Indicate whether to enforce validations on the surcharge amount.
+       */
+      enforce_validation?: Surcharge.EnforceValidation;
+
+      /**
+       * The maximum amount allowed for the surcharge.
+       */
+      maximum_amount?: number;
+
+      /**
+       * The status of the surcharge.
+       */
+      status?: string;
+    }
+
     export interface Tax {
       /**
        * The total amount of tax on the transaction represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
@@ -1075,6 +1208,25 @@ export namespace PaymentIntent {
       export type Code =
         | 'amount_details_amount_mismatch'
         | 'amount_details_tax_shipping_discount_greater_than_amount';
+    }
+
+    export namespace Surcharge {
+      export type EnforceValidation = 'automatic' | 'disabled' | 'enabled';
+    }
+  }
+
+  export namespace AsyncWorkflows {
+    export interface Inputs {
+      tax?: Inputs.Tax;
+    }
+
+    export namespace Inputs {
+      export interface Tax {
+        /**
+         * The [TaxCalculation](https://docs.stripe.com/api/tax/calculations) id
+         */
+        calculation: string;
+      }
     }
   }
 
@@ -1151,6 +1303,7 @@ export namespace PaymentIntent {
       | 'financial_connections_account_inactive'
       | 'financial_connections_account_pending_account_numbers'
       | 'financial_connections_account_unavailable_account_numbers'
+      | 'financial_connections_institution_unavailable'
       | 'financial_connections_no_successful_transaction_refresh'
       | 'forwarding_api_inactive'
       | 'forwarding_api_invalid_parameter'
@@ -1250,6 +1403,7 @@ export namespace PaymentIntent {
       | 'return_intent_already_processed'
       | 'routing_number_invalid'
       | 'secret_key_required'
+      | 'sensitive_data_access_expired'
       | 'sepa_unsupported_account'
       | 'service_period_coupon_with_metered_tiered_item_unsupported'
       | 'setup_attempt_failed'
@@ -1272,6 +1426,7 @@ export namespace PaymentIntent {
       | 'taxes_calculation_failed'
       | 'terminal_location_country_unsupported'
       | 'terminal_reader_busy'
+      | 'terminal_reader_collected_data_invalid'
       | 'terminal_reader_hardware_fault'
       | 'terminal_reader_invalid_location_for_activation'
       | 'terminal_reader_invalid_location_for_payment'
@@ -1284,7 +1439,9 @@ export namespace PaymentIntent {
       | 'token_in_use'
       | 'transfer_source_balance_parameters_mismatch'
       | 'transfers_not_allowed'
-      | 'url_invalid';
+      | 'url_invalid'
+      | 'v2_account_disconnection_unsupported'
+      | 'v2_account_missing_configuration';
 
     export type Type =
       | 'api_error'
@@ -2032,6 +2189,1307 @@ export namespace PaymentIntent {
     }
   }
 
+  export namespace PaymentDetails {
+    export interface CarRental {
+      affiliate?: CarRental.Affiliate;
+
+      /**
+       * The booking number associated with the car rental.
+       */
+      booking_number: string;
+
+      /**
+       * Class code of the car.
+       */
+      car_class_code?: string;
+
+      /**
+       * Make of the car.
+       */
+      car_make?: string;
+
+      /**
+       * Model of the car.
+       */
+      car_model?: string;
+
+      /**
+       * The name of the rental car company.
+       */
+      company?: string;
+
+      /**
+       * The customer service phone number of the car rental company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * Number of days the car is being rented.
+       */
+      days_rented: number;
+
+      delivery?: CarRental.Delivery;
+
+      distance?: CarRental.Distance;
+
+      /**
+       * The details of the drivers associated with the trip.
+       */
+      drivers?: Array<CarRental.Driver>;
+
+      /**
+       * List of additional charges being billed.
+       */
+      extra_charges?: Array<CarRental.ExtraCharge>;
+
+      /**
+       * Indicates if the customer did not keep nor cancel their booking.
+       */
+      no_show?: boolean;
+
+      pickup_address?: Address;
+
+      /**
+       * Car pick-up time. Measured in seconds since the Unix epoch.
+       */
+      pickup_at: number;
+
+      /**
+       * Name of the pickup location.
+       */
+      pickup_location_name?: string;
+
+      /**
+       * Rental rate.
+       */
+      rate_amount?: number;
+
+      /**
+       * The frequency at which the rate amount is applied. One of `day`, `week` or `month`
+       */
+      rate_interval?: CarRental.RateInterval;
+
+      /**
+       * The full name of the person or entity renting the car.
+       */
+      renter_name?: string;
+
+      return_address?: Address;
+
+      /**
+       * Car return time. Measured in seconds since the Unix epoch.
+       */
+      return_at: number;
+
+      /**
+       * Name of the return location.
+       */
+      return_location_name?: string;
+
+      /**
+       * Indicates whether the goods or services are tax-exempt or tax is not collected.
+       */
+      tax_exempt?: boolean;
+
+      /**
+       * The vehicle identification number of the car.
+       */
+      vehicle_identification_number?: string;
+    }
+
+    export interface CarRentalDatum {
+      affiliate?: CarRentalDatum.Affiliate;
+
+      /**
+       * The booking number associated with the car rental.
+       */
+      booking_number?: string;
+
+      /**
+       * The name of the car rental company.
+       */
+      carrier_name?: string;
+
+      /**
+       * The customer service phone number of the car rental company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * Number of days the car is being rented.
+       */
+      days_rented?: number;
+
+      distance?: CarRentalDatum.Distance;
+
+      /**
+       * The details of the drivers associated with the rental.
+       */
+      drivers?: Array<CarRentalDatum.Driver>;
+
+      drop_off?: CarRentalDatum.DropOff;
+
+      /**
+       * Insurance details for the car rental.
+       */
+      insurances?: Array<CarRentalDatum.Insurance>;
+
+      /**
+       * Indicates if the customer did not keep nor cancel their booking.
+       */
+      no_show_indicator?: boolean;
+
+      pickup?: CarRentalDatum.Pickup;
+
+      /**
+       * Name of the person renting the vehicle.
+       */
+      renter_name?: string;
+
+      total?: CarRentalDatum.Total;
+
+      vehicle?: CarRentalDatum.Vehicle;
+    }
+
+    export interface EventDetails {
+      /**
+       * Indicates if the tickets are digitally checked when entering the venue.
+       */
+      access_controlled_venue?: boolean;
+
+      address?: Address;
+
+      affiliate?: EventDetails.Affiliate;
+
+      /**
+       * The name of the company
+       */
+      company?: string;
+
+      delivery?: EventDetails.Delivery;
+
+      /**
+       * Event end time. Measured in seconds since the Unix epoch.
+       */
+      ends_at?: number;
+
+      /**
+       * Type of the event entertainment (concert, sports event etc)
+       */
+      genre?: string;
+
+      /**
+       * The name of the event.
+       */
+      name?: string;
+
+      /**
+       * Event start time. Measured in seconds since the Unix epoch.
+       */
+      starts_at?: number;
+    }
+
+    export interface FlightDatum {
+      affiliate?: FlightDatum.Affiliate;
+
+      /**
+       * The booking number associated with the flight reservation.
+       */
+      booking_number?: string;
+
+      /**
+       * The computerized reservation system used to make the reservation and purchase the ticket.
+       */
+      computerized_reservation_system?: string;
+
+      /**
+       * Ticket restrictions.
+       */
+      endorsements_and_restrictions?: string;
+
+      /**
+       * Insurance details for the flight.
+       */
+      insurances?: Array<FlightDatum.Insurance>;
+
+      /**
+       * The list of passengers for this flight.
+       */
+      passengers?: Array<FlightDatum.Passenger>;
+
+      /**
+       * The list of flight segments for this reservation.
+       */
+      segments?: Array<FlightDatum.Segment>;
+
+      /**
+       * Electronic ticket indicator.
+       */
+      ticket_electronically_issued_indicator?: boolean;
+
+      total?: FlightDatum.Total;
+
+      /**
+       * Type of flight transaction.
+       */
+      transaction_type?: FlightDatum.TransactionType;
+    }
+
+    export interface LodgingDatum {
+      accommodation?: LodgingDatum.Accommodation;
+
+      affiliate?: LodgingDatum.Affiliate;
+
+      /**
+       * Booking confirmation number for the lodging.
+       */
+      booking_number?: string;
+
+      /**
+       * Check-in date.
+       */
+      checkin_at?: number;
+
+      /**
+       * Check-out date.
+       */
+      checkout_at?: number;
+
+      /**
+       * Customer service phone number for the lodging company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * Whether the lodging is compliant with any hotel fire safety regulations.
+       */
+      fire_safety_act_compliance_indicator?: boolean;
+
+      /**
+       * List of guests for the lodging.
+       */
+      guests?: Array<LodgingDatum.Guest>;
+
+      host?: LodgingDatum.Host;
+
+      /**
+       * List of insurances for the lodging.
+       */
+      insurances?: Array<LodgingDatum.Insurance>;
+
+      /**
+       * Whether the renter is a no-show.
+       */
+      no_show_indicator?: boolean;
+
+      /**
+       * Renter ID number for the lodging.
+       */
+      renter_id_number?: string;
+
+      /**
+       * Renter name for the lodging.
+       */
+      renter_name?: string;
+
+      total?: LodgingDatum.Total;
+    }
+
+    export interface Subscription {
+      affiliate?: Subscription.Affiliate;
+
+      /**
+       * Info whether the subscription will be auto renewed upon expiry.
+       */
+      auto_renewal?: boolean;
+
+      billing_interval?: Subscription.BillingInterval;
+
+      /**
+       * Subscription end time. Measured in seconds since the Unix epoch.
+       */
+      ends_at?: number;
+
+      /**
+       * Name of the product on subscription. e.g. Apple Music Subscription.
+       */
+      name?: string;
+
+      /**
+       * Subscription start time. Measured in seconds since the Unix epoch.
+       */
+      starts_at?: number;
+    }
+
+    export namespace CarRental {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name?: string;
+      }
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        recipient?: Delivery.Recipient;
+      }
+
+      export interface Distance {
+        /**
+         * Distance traveled.
+         */
+        amount?: number;
+
+        /**
+         * Unit of measurement for the distance traveled. One of `miles` or `kilometers`
+         */
+        unit?: string;
+      }
+
+      export interface Driver {
+        /**
+         * Driver's identification number.
+         */
+        driver_identification_number?: string;
+
+        /**
+         * Driver's tax number.
+         */
+        driver_tax_number?: string;
+
+        /**
+         * Full name of the driver on the reservation.
+         */
+        name?: string;
+      }
+
+      export type ExtraCharge =
+        | 'extra_mileage'
+        | 'gas'
+        | 'late_return'
+        | 'one_way_service'
+        | 'parking_violation';
+
+      export type RateInterval = 'day' | 'month' | 'week';
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+    }
+
+    export namespace CarRentalDatum {
+      export interface Affiliate {
+        /**
+         * Affiliate code.
+         */
+        code?: string;
+
+        /**
+         * Affiliate name.
+         */
+        name?: string;
+      }
+
+      export interface Distance {
+        /**
+         * Distance amount.
+         */
+        amount?: number;
+
+        /**
+         * Unit for the distance.
+         */
+        unit?: Distance.Unit;
+      }
+
+      export interface Driver {
+        date_of_birth?: Driver.DateOfBirth;
+
+        /**
+         * Driver's identification number.
+         */
+        driver_identification_number?: string;
+
+        /**
+         * Driver's tax number.
+         */
+        driver_tax_number?: string;
+
+        /**
+         * Full name of the driver.
+         */
+        name?: string;
+      }
+
+      export interface DropOff {
+        address?: Address;
+
+        /**
+         * Name of the location.
+         */
+        location_name?: string;
+
+        /**
+         * Time associated with the location.
+         */
+        time?: number;
+      }
+
+      export interface Insurance {
+        /**
+         * Amount of the insurance.
+         */
+        amount?: number;
+
+        /**
+         * Currency for the insurance price.
+         */
+        currency?: string;
+
+        /**
+         * Name of the insurance company.
+         */
+        insurance_company_name?: string;
+
+        /**
+         * Type of insurance.
+         */
+        insurance_type?: Insurance.InsuranceType;
+      }
+
+      export interface Pickup {
+        address?: Address;
+
+        /**
+         * Name of the location.
+         */
+        location_name?: string;
+
+        /**
+         * Time associated with the location.
+         */
+        time?: number;
+      }
+
+      export interface Total {
+        /**
+         * Total amount.
+         */
+        amount?: number;
+
+        /**
+         * Currency for the total amount.
+         */
+        currency?: string;
+
+        discounts?: Total.Discounts;
+
+        /**
+         * Additional charges for the rental.
+         */
+        extra_charges?: Array<Total.ExtraCharge>;
+
+        /**
+         * Rate per unit.
+         */
+        rate_per_unit?: number;
+
+        /**
+         * Unit for the rate.
+         */
+        rate_unit?: Total.RateUnit;
+
+        tax?: Total.Tax;
+      }
+
+      export interface Vehicle {
+        /**
+         * Make of the vehicle.
+         */
+        make?: string;
+
+        /**
+         * Model of the vehicle.
+         */
+        model?: string;
+
+        /**
+         * Odometer reading.
+         */
+        odometer?: number;
+
+        /**
+         * Type of the vehicle.
+         */
+        type?: Vehicle.Type;
+
+        /**
+         * Class of the vehicle.
+         */
+        vehicle_class?: Vehicle.VehicleClass;
+
+        /**
+         * Vehicle identification number.
+         */
+        vehicle_identification_number?: string;
+      }
+
+      export namespace Distance {
+        export type Unit = 'kilometers' | 'miles';
+      }
+
+      export namespace Driver {
+        export interface DateOfBirth {
+          /**
+           * Day of birth.
+           */
+          day?: number;
+
+          /**
+           * Month of birth.
+           */
+          month?: number;
+
+          /**
+           * Year of birth.
+           */
+          year?: number;
+        }
+      }
+
+      export namespace Insurance {
+        export type InsuranceType =
+          | 'liability_supplement'
+          | 'loss_damage_waiver'
+          | 'other'
+          | 'partial_damage_waiver'
+          | 'personal_accident'
+          | 'personal_effects';
+      }
+
+      export namespace Total {
+        export interface Discounts {
+          /**
+           * Corporate client discount code.
+           */
+          corporate_client_code?: string;
+
+          /**
+           * Coupon code applied.
+           */
+          coupon?: string;
+
+          /**
+           * Maximum free miles or kilometers included.
+           */
+          maximum_free_miles_or_kilometers?: number;
+        }
+
+        export interface ExtraCharge {
+          /**
+           * Amount of the extra charge.
+           */
+          amount?: number;
+
+          /**
+           * Type of extra charge.
+           */
+          type?: ExtraCharge.Type;
+        }
+
+        export type RateUnit = 'kilometers' | 'miles';
+
+        export interface Tax {
+          /**
+           * Indicates whether the rental is tax-exempt.
+           */
+          tax_exempt_indicator?: boolean;
+
+          /**
+           * Tax details.
+           */
+          taxes?: Array<Tax.Tax>;
+        }
+
+        export namespace ExtraCharge {
+          export type Type =
+            | 'extra_mileage'
+            | 'gas'
+            | 'gps'
+            | 'late_charge'
+            | 'one_way_drop_off'
+            | 'other'
+            | 'parking'
+            | 'phone'
+            | 'regular_mileage'
+            | 'towing';
+        }
+
+        export namespace Tax {
+          export interface Tax {
+            /**
+             * Tax amount.
+             */
+            amount?: number;
+
+            /**
+             * Tax rate.
+             */
+            rate?: number;
+
+            /**
+             * Type of tax.
+             */
+            type?: string;
+          }
+        }
+      }
+
+      export namespace Vehicle {
+        export type Type =
+          | 'cargo_van'
+          | 'compact'
+          | 'economy'
+          | 'exotic'
+          | 'exotic_suv'
+          | 'fifteen_passenger_van'
+          | 'four_wheel_drive'
+          | 'full_size'
+          | 'intermediate'
+          | 'large_suv'
+          | 'large_truck'
+          | 'luxury'
+          | 'medium_suv'
+          | 'midsize'
+          | 'mini'
+          | 'minivan'
+          | 'miscellaneous'
+          | 'moped'
+          | 'moving_van'
+          | 'premium'
+          | 'regular'
+          | 'small_medium_truck'
+          | 'small_suv'
+          | 'special'
+          | 'standard'
+          | 'stretch'
+          | 'subcompact'
+          | 'taxi'
+          | 'twelve_foot_truck'
+          | 'twelve_passenger_van'
+          | 'twenty_foot_truck'
+          | 'twenty_four_foot_truck'
+          | 'twenty_six_foot_truck'
+          | 'unique';
+
+        export type VehicleClass =
+          | 'business'
+          | 'economy'
+          | 'first_class'
+          | 'premium_economy';
+      }
+    }
+
+    export namespace EventDetails {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name?: string;
+      }
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        recipient?: Delivery.Recipient;
+      }
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+    }
+
+    export namespace FlightDatum {
+      export interface Affiliate {
+        /**
+         * Affiliate code.
+         */
+        code?: string;
+
+        /**
+         * Affiliate name.
+         */
+        name?: string;
+
+        /**
+         * Code provided by the company to a travel agent authorizing ticket issuance.
+         */
+        travel_authorization_code?: string;
+      }
+
+      export interface Insurance {
+        /**
+         * Amount of the insurance.
+         */
+        amount?: number;
+
+        /**
+         * Currency for the insurance price.
+         */
+        currency?: string;
+
+        /**
+         * Name of the insurance company.
+         */
+        insurance_company_name?: string;
+
+        /**
+         * Type of insurance.
+         */
+        insurance_type?: Insurance.InsuranceType;
+      }
+
+      export interface Passenger {
+        /**
+         * Full name of the passenger.
+         */
+        name?: string;
+      }
+
+      export interface Segment {
+        /**
+         * Segment fare amount.
+         */
+        amount?: number;
+
+        arrival?: Segment.Arrival;
+
+        /**
+         * Airline carrier code.
+         */
+        carrier_code?: string;
+
+        /**
+         * Carrier name.
+         */
+        carrier_name?: string;
+
+        /**
+         * Segment currency.
+         */
+        currency?: string;
+
+        departure?: Segment.Departure;
+
+        /**
+         * Exchange ticket number.
+         */
+        exchange_ticket_number?: string;
+
+        /**
+         * Fare basis code.
+         */
+        fare_basis_code?: string;
+
+        /**
+         * Additional fees.
+         */
+        fees?: number;
+
+        /**
+         * Flight number.
+         */
+        flight_number?: string;
+
+        /**
+         * Stopover indicator.
+         */
+        is_stop_over_indicator?: boolean;
+
+        /**
+         * Refundable ticket indicator.
+         */
+        refundable?: boolean;
+
+        /**
+         * Class of service.
+         */
+        service_class?: Segment.ServiceClass;
+
+        /**
+         * Tax amount for segment.
+         */
+        tax_amount?: number;
+
+        /**
+         * Ticket number.
+         */
+        ticket_number?: string;
+      }
+
+      export interface Total {
+        /**
+         * Total amount.
+         */
+        amount?: number;
+
+        /**
+         * Reason for credit.
+         */
+        credit_reason?: Total.CreditReason;
+
+        /**
+         * Currency for the total amount.
+         */
+        currency?: string;
+
+        discounts?: Total.Discounts;
+
+        /**
+         * Additional charges for the flight.
+         */
+        extra_charges?: Array<Total.ExtraCharge>;
+
+        tax?: Total.Tax;
+      }
+
+      export type TransactionType =
+        | 'exchange_ticket'
+        | 'miscellaneous'
+        | 'refund'
+        | 'ticket_purchase';
+
+      export namespace Insurance {
+        export type InsuranceType =
+          | 'baggage'
+          | 'bankruptcy'
+          | 'cancelation'
+          | 'emergency'
+          | 'medical';
+      }
+
+      export namespace Segment {
+        export interface Arrival {
+          /**
+           * Arrival airport IATA code.
+           */
+          airport?: string;
+
+          /**
+           * Arrival date and time.
+           */
+          arrives_at?: number;
+
+          /**
+           * Arrival city.
+           */
+          city?: string;
+
+          /**
+           * Arrival country.
+           */
+          country?: string;
+        }
+
+        export interface Departure {
+          /**
+           * Departure airport IATA code.
+           */
+          airport?: string;
+
+          /**
+           * Departure city.
+           */
+          city?: string;
+
+          /**
+           * Departure country.
+           */
+          country?: string;
+
+          /**
+           * Departure date and time.
+           */
+          departs_at?: number;
+        }
+
+        export type ServiceClass =
+          | 'business'
+          | 'economy'
+          | 'first_class'
+          | 'premium_economy';
+      }
+
+      export namespace Total {
+        export type CreditReason =
+          | 'other'
+          | 'partial_ticket_refund'
+          | 'passenger_transport_ancillary_cancellation'
+          | 'ticket_and_ancillary_cancellation'
+          | 'ticket_cancellation';
+
+        export interface Discounts {
+          /**
+           * Corporate client discount code.
+           */
+          corporate_client_code?: string;
+        }
+
+        export interface ExtraCharge {
+          /**
+           * Amount of the extra charge.
+           */
+          amount?: number;
+
+          /**
+           * Type of extra charge.
+           */
+          type?: ExtraCharge.Type;
+        }
+
+        export interface Tax {
+          /**
+           * Tax details.
+           */
+          taxes?: Array<Tax.Tax>;
+        }
+
+        export namespace ExtraCharge {
+          export type Type =
+            | 'additional_fees'
+            | 'ancillary_service_charges'
+            | 'exchange_fee';
+        }
+
+        export namespace Tax {
+          export interface Tax {
+            /**
+             * Tax amount.
+             */
+            amount?: number;
+
+            /**
+             * Tax rate.
+             */
+            rate?: number;
+
+            /**
+             * Type of tax.
+             */
+            type?: string;
+          }
+        }
+      }
+    }
+
+    export namespace LodgingDatum {
+      export interface Accommodation {
+        /**
+         * Type of accommodation.
+         */
+        accommodation_type: Accommodation.AccommodationType | null;
+
+        /**
+         * Bed type.
+         */
+        bed_type?: string;
+
+        /**
+         * Daily accommodation rate in cents.
+         */
+        daily_rate_amount?: number;
+
+        /**
+         * Number of nights.
+         */
+        nights?: number;
+
+        /**
+         * Number of rooms, cabanas, apartments, and so on.
+         */
+        number_of_rooms?: number;
+
+        /**
+         * Rate type.
+         */
+        rate_type?: string;
+
+        /**
+         * Whether smoking is allowed.
+         */
+        smoking_indicator?: boolean;
+      }
+
+      export interface Affiliate {
+        /**
+         * Affiliate partner code.
+         */
+        code?: string;
+
+        /**
+         * Affiliate partner name.
+         */
+        name?: string;
+      }
+
+      export interface Guest {
+        /**
+         * Guest's full name.
+         */
+        name?: string;
+      }
+
+      export interface Host {
+        address?: Address;
+
+        /**
+         * Host's country of domicile.
+         */
+        country_of_domicile?: string;
+
+        /**
+         * Reference number for the host.
+         */
+        host_reference?: string;
+
+        /**
+         * Type of host.
+         */
+        host_type?: Host.HostType;
+
+        /**
+         * Name of the lodging property or host.
+         */
+        name?: string;
+
+        /**
+         * Total number of reservations for the host.
+         */
+        number_of_reservations?: number;
+
+        /**
+         * Property phone number.
+         */
+        property_phone_number?: string;
+
+        /**
+         * Host's registration date.
+         */
+        registered_at?: number;
+      }
+
+      export interface Insurance {
+        /**
+         * Price of the insurance coverage in cents.
+         */
+        amount?: number;
+
+        /**
+         * Currency of the insurance amount.
+         */
+        currency?: string;
+
+        /**
+         * Name of the insurance company.
+         */
+        insurance_company_name?: string;
+
+        /**
+         * Type of insurance coverage.
+         */
+        insurance_type?: Insurance.InsuranceType;
+      }
+
+      export interface Total {
+        /**
+         * Total price of the lodging reservation in cents.
+         */
+        amount?: number;
+
+        /**
+         * Cash advances in cents.
+         */
+        cash_advances?: number;
+
+        /**
+         * Currency of the total amount.
+         */
+        currency?: string;
+
+        discounts?: Total.Discounts;
+
+        /**
+         * Additional charges for the lodging.
+         */
+        extra_charges?: Array<Total.ExtraCharge>;
+
+        /**
+         * Prepaid amount in cents.
+         */
+        prepaid_amount?: number;
+
+        tax?: Total.Tax;
+      }
+
+      export namespace Accommodation {
+        export type AccommodationType =
+          | 'apartment'
+          | 'cabana'
+          | 'house'
+          | 'penthouse'
+          | 'room'
+          | 'standard'
+          | 'suite'
+          | 'villa';
+      }
+
+      export namespace Host {
+        export type HostType = 'hostel' | 'hotel' | 'owner' | 'rental_agency';
+      }
+
+      export namespace Insurance {
+        export type InsuranceType =
+          | 'bankruptcy'
+          | 'cancelation'
+          | 'emergency'
+          | 'medical';
+      }
+
+      export namespace Total {
+        export interface Discounts {
+          /**
+           * Corporate client discount code.
+           */
+          corporate_client_code?: string;
+
+          /**
+           * Coupon code.
+           */
+          coupon?: string;
+        }
+
+        export interface ExtraCharge {
+          /**
+           * Amount of the extra charge in cents.
+           */
+          amount?: number;
+
+          /**
+           * Type of extra charge.
+           */
+          type?: ExtraCharge.Type;
+        }
+
+        export interface Tax {
+          /**
+           * Indicates whether the transaction is tax exempt.
+           */
+          tax_exempt_indicator?: boolean;
+
+          /**
+           * Tax details.
+           */
+          taxes?: Array<Tax.Tax>;
+        }
+
+        export namespace ExtraCharge {
+          export type Type =
+            | 'gift_shop'
+            | 'laundry'
+            | 'mini_bar'
+            | 'other'
+            | 'phone'
+            | 'restaurant';
+        }
+
+        export namespace Tax {
+          export interface Tax {
+            /**
+             * Tax amount in cents.
+             */
+            amount?: number;
+
+            /**
+             * Tax rate.
+             */
+            rate?: number;
+
+            /**
+             * Type of tax applied.
+             */
+            type?: string;
+          }
+        }
+      }
+    }
+
+    export namespace Subscription {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name?: string;
+      }
+
+      export interface BillingInterval {
+        /**
+         * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+         */
+        count?: number;
+
+        /**
+         * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+         */
+        interval?: BillingInterval.Interval;
+      }
+
+      export namespace BillingInterval {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+    }
+  }
+
   export namespace PaymentMethodOptions {
     export interface AcssDebit {
       mandate_options?: AcssDebit.MandateOptions;
@@ -2261,6 +3719,11 @@ export namespace PaymentIntent {
       network: Card.Network | null;
 
       /**
+       * Request ability to [decrement the authorization](https://docs.stripe.com/payments/decremental-authorization) for this PaymentIntent.
+       */
+      request_decremental_authorization?: Card.RequestDecrementalAuthorization;
+
+      /**
        * Request ability to [capture beyond the standard authorization validity window](https://docs.stripe.com/payments/extended-authorization) for this PaymentIntent.
        */
       request_extended_authorization?: Card.RequestExtendedAuthorization;
@@ -2279,6 +3742,11 @@ export namespace PaymentIntent {
        * Request ability to [overcapture](https://docs.stripe.com/payments/overcapture) for this PaymentIntent.
        */
       request_overcapture?: Card.RequestOvercapture;
+
+      /**
+       * Request partial authorization on this PaymentIntent.
+       */
+      request_partial_authorization?: Card.RequestPartialAuthorization;
 
       /**
        * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
@@ -2310,6 +3778,8 @@ export namespace PaymentIntent {
        * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
        */
       statement_descriptor_suffix_kanji?: string;
+
+      statement_details?: Card.StatementDetails;
     }
 
     export interface CardPresent {
@@ -2421,7 +3891,43 @@ export namespace PaymentIntent {
       setup_future_usage?: 'none';
     }
 
+    export interface Gopay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Gopay.SetupFutureUsage;
+    }
+
     export interface Grabpay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface IdBankTransfer {
+      /**
+       * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from now till 2678400 seconds (31 days) from now.
+       */
+      expires_after?: number | null;
+
+      /**
+       * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from now until 30 days from now. If unset, it defaults to 1 days from now.
+       */
+      expires_at: number | null;
+
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
@@ -2705,6 +4211,11 @@ export namespace PaymentIntent {
       capture_method?: 'manual';
 
       /**
+       * The line items purchased by the customer.
+       */
+      line_items?: Array<Paypal.LineItem>;
+
+      /**
        * Preferred locale of the PayPal checkout page that the customer is redirected to.
        */
       preferred_locale: string | null;
@@ -2713,6 +4224,11 @@ export namespace PaymentIntent {
        * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
        */
       reference: string | null;
+
+      /**
+       * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+       */
+      reference_id?: string | null;
 
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -2724,7 +4240,14 @@ export namespace PaymentIntent {
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
       setup_future_usage?: Paypal.SetupFutureUsage;
+
+      /**
+       * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+       */
+      subsellers?: Array<string>;
     }
+
+    export interface Paypay {}
 
     export interface Payto {
       mandate_options?: Payto.MandateOptions;
@@ -2757,6 +4280,8 @@ export namespace PaymentIntent {
        */
       expires_at: number | null;
 
+      mandate_options?: Pix.MandateOptions;
+
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
@@ -2766,7 +4291,7 @@ export namespace PaymentIntent {
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Pix.SetupFutureUsage;
     }
 
     export interface Promptpay {
@@ -2781,6 +4306,21 @@ export namespace PaymentIntent {
        */
       setup_future_usage?: 'none';
     }
+
+    export interface Qris {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Rechnung {}
 
     export interface RevolutPay {
       /**
@@ -2834,6 +4374,19 @@ export namespace PaymentIntent {
       target_date?: string;
     }
 
+    export interface Shopeepay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
     export interface Sofort {
       /**
        * Preferred language of the SOFORT authorization page that the customer is redirected to.
@@ -2850,6 +4403,19 @@ export namespace PaymentIntent {
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
       setup_future_usage?: Sofort.SetupFutureUsage;
+    }
+
+    export interface StripeBalance {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: StripeBalance.SetupFutureUsage;
     }
 
     export interface Swish {
@@ -3114,6 +4680,8 @@ export namespace PaymentIntent {
         | 'unknown'
         | 'visa';
 
+      export type RequestDecrementalAuthorization = 'if_available' | 'never';
+
       export type RequestExtendedAuthorization = 'if_available' | 'never';
 
       export type RequestIncrementalAuthorization = 'if_available' | 'never';
@@ -3122,9 +4690,20 @@ export namespace PaymentIntent {
 
       export type RequestOvercapture = 'if_available' | 'never';
 
+      export type RequestPartialAuthorization = 'if_available' | 'never';
+
       export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
       export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+      export interface StatementDetails {
+        address?: StatementDetails.Address;
+
+        /**
+         * Phone number
+         */
+        phone?: string;
+      }
 
       export namespace Installments {
         export interface AvailablePlan {
@@ -3176,6 +4755,40 @@ export namespace PaymentIntent {
         export type AmountType = 'fixed' | 'maximum';
 
         export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+      }
+
+      export namespace StatementDetails {
+        export interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Address line 1, such as the street, PO Box, or company name.
+           */
+          line1?: string;
+
+          /**
+           * Address line 2, such as the apartment, suite, unit, or building.
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+           */
+          state?: string;
+        }
       }
     }
 
@@ -3245,6 +4858,10 @@ export namespace PaymentIntent {
       }
     }
 
+    export namespace Gopay {
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
     export namespace Ideal {
       export type SetupFutureUsage = 'none' | 'off_session';
     }
@@ -3274,7 +4891,66 @@ export namespace PaymentIntent {
     }
 
     export namespace Paypal {
+      export interface LineItem {
+        /**
+         * Type of the line item.
+         */
+        category?: LineItem.Category;
+
+        /**
+         * Description of the line item.
+         */
+        description?: string;
+
+        /**
+         * Descriptive name of the line item.
+         */
+        name: string;
+
+        /**
+         * Quantity of the line item. Cannot be a negative number.
+         */
+        quantity: number;
+
+        /**
+         * Client facing stock keeping unit, article number or similar.
+         */
+        sku?: string;
+
+        /**
+         * The Stripe account ID of the connected account that sells the item. This is only needed when using [Separate Charges and Transfers](https://docs.stripe.com/connect/separate-charges-and-transfers).
+         */
+        sold_by?: string;
+
+        tax?: LineItem.Tax;
+
+        /**
+         * Price for a single unit of the line item in minor units. Cannot be a negative number.
+         */
+        unit_amount: number;
+      }
+
       export type SetupFutureUsage = 'none' | 'off_session';
+
+      export namespace LineItem {
+        export type Category = 'digital_goods' | 'donation' | 'physical_goods';
+
+        export interface Tax {
+          /**
+           * The tax for a single unit of the line item in minor units. Cannot be a negative number.
+           */
+          amount: number;
+
+          /**
+           * The tax behavior for the line item.
+           */
+          behavior: Tax.Behavior;
+        }
+
+        export namespace Tax {
+          export type Behavior = 'exclusive' | 'inclusive';
+        }
+      }
     }
 
     export namespace Payto {
@@ -3342,6 +5018,63 @@ export namespace PaymentIntent {
 
     export namespace Pix {
       export type AmountIncludesIof = 'always' | 'never';
+
+      export interface MandateOptions {
+        /**
+         * Amount to be charged for future payments.
+         */
+        amount?: number;
+
+        /**
+         * Determines if the amount includes the IOF tax.
+         */
+        amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+        /**
+         * Type of amount.
+         */
+        amount_type?: MandateOptions.AmountType;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
+         */
+        currency?: string;
+
+        /**
+         * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`.
+         */
+        end_date?: string;
+
+        /**
+         * Schedule at which the future payments will be charged.
+         */
+        payment_schedule?: MandateOptions.PaymentSchedule;
+
+        /**
+         * Subscription name displayed to buyers in their bank app.
+         */
+        reference?: string;
+
+        /**
+         * Start date of the mandate, in `YYYY-MM-DD`.
+         */
+        start_date?: string;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session';
+
+      export namespace MandateOptions {
+        export type AmountIncludesIof = 'always' | 'never';
+
+        export type AmountType = 'fixed' | 'maximum';
+
+        export type PaymentSchedule =
+          | 'halfyearly'
+          | 'monthly'
+          | 'quarterly'
+          | 'weekly'
+          | 'yearly';
+      }
     }
 
     export namespace RevolutPay {
@@ -3372,6 +5105,10 @@ export namespace PaymentIntent {
       export type SetupFutureUsage = 'none' | 'off_session';
     }
 
+    export namespace StripeBalance {
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
     export namespace Upi {
       export type SetupFutureUsage = 'off_session' | 'on_session';
     }
@@ -3379,6 +5116,8 @@ export namespace PaymentIntent {
     export namespace UsBankAccount {
       export interface FinancialConnections {
         filters?: FinancialConnections.Filters;
+
+        manual_entry?: FinancialConnections.ManualEntry;
 
         /**
          * The list of permissions to request. The `payment_method` permission must be included.
@@ -3422,6 +5161,18 @@ export namespace PaymentIntent {
            * The account subcategories to use to filter for possible accounts to link. Valid subcategories are `checking` and `savings`.
            */
           account_subcategories?: Array<Filters.AccountSubcategory>;
+
+          /**
+           * The institution to use to filter for possible accounts to link.
+           */
+          institution?: string;
+        }
+
+        export interface ManualEntry {
+          /**
+           * Settings for configuring manual entry of account details.
+           */
+          mode?: ManualEntry.Mode;
         }
 
         export type Permission =
@@ -3430,10 +5181,18 @@ export namespace PaymentIntent {
           | 'payment_method'
           | 'transactions';
 
-        export type Prefetch = 'balances' | 'ownership' | 'transactions';
+        export type Prefetch =
+          | 'balances'
+          | 'inferred_balances'
+          | 'ownership'
+          | 'transactions';
 
         export namespace Filters {
           export type AccountSubcategory = 'checking' | 'savings';
+        }
+
+        export namespace ManualEntry {
+          export type Mode = 'automatic' | 'custom';
         }
       }
     }
@@ -3552,6 +5311,11 @@ export interface PaymentIntentCreateParams {
   expand?: Array<string>;
 
   /**
+   * The FX rate in the quote is validated and used to convert the presentment amount to the settlement amount.
+   */
+  fx_quote?: string;
+
+  /**
    * Automations to be run during the PaymentIntent lifecycle
    */
   hooks?: PaymentIntentCreateParams.Hooks;
@@ -3633,6 +5397,11 @@ export interface PaymentIntentCreateParams {
   return_url?: string;
 
   /**
+   * Indicates whether confirmation for this PaymentIntent using a secret key is `required` or `optional`.
+   */
+  secret_key_confirmation?: PaymentIntentCreateParams.SecretKeyConfirmation;
+
+  /**
    * Indicates that you intend to make future payments with this PaymentIntent's payment method.
    *
    * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -3705,6 +5474,11 @@ export namespace PaymentIntentCreateParams {
     shipping?: Emptyable<AmountDetails.Shipping>;
 
     /**
+     * Contains information about the surcharge portion of the amount.
+     */
+    surcharge?: Emptyable<AmountDetails.Surcharge>;
+
+    /**
      * Contains information about the tax portion of the amount.
      */
     tax?: Emptyable<AmountDetails.Tax>;
@@ -3748,7 +5522,9 @@ export namespace PaymentIntentCreateParams {
     | 'eps'
     | 'fpx'
     | 'giropay'
+    | 'gopay'
     | 'grabpay'
+    | 'id_bank_transfer'
     | 'ideal'
     | 'kakao_pay'
     | 'klarna'
@@ -3765,14 +5541,19 @@ export namespace PaymentIntentCreateParams {
     | 'payco'
     | 'paynow'
     | 'paypal'
+    | 'paypay'
     | 'payto'
     | 'pix'
     | 'promptpay'
+    | 'qris'
+    | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
     | 'sepa_debit'
+    | 'shopeepay'
     | 'sofort'
+    | 'stripe_balance'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -3798,6 +5579,16 @@ export namespace PaymentIntentCreateParams {
 
   export interface PaymentDetails {
     /**
+     * Car rental details for this PaymentIntent.
+     */
+    car_rental?: PaymentDetails.CarRental;
+
+    /**
+     * Car rental data for this PaymentIntent.
+     */
+    car_rental_data?: Emptyable<Array<PaymentDetails.CarRentalDatum>>;
+
+    /**
      * A unique value to identify the customer. This field is available only for card payments.
      *
      * This field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
@@ -3805,11 +5596,41 @@ export namespace PaymentIntentCreateParams {
     customer_reference?: Emptyable<string>;
 
     /**
+     * Event details for this PaymentIntent
+     */
+    event_details?: PaymentDetails.EventDetails;
+
+    /**
+     * Flight reservation details for this PaymentIntent
+     */
+    flight?: PaymentDetails.Flight;
+
+    /**
+     * Flight data for this PaymentIntent.
+     */
+    flight_data?: Emptyable<Array<PaymentDetails.FlightDatum>>;
+
+    /**
+     * Lodging reservation details for this PaymentIntent
+     */
+    lodging?: PaymentDetails.Lodging;
+
+    /**
+     * Lodging data for this PaymentIntent.
+     */
+    lodging_data?: Emptyable<Array<PaymentDetails.LodgingDatum>>;
+
+    /**
      * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
      *
      * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
      */
     order_reference?: Emptyable<string>;
+
+    /**
+     * Subscription details for this PaymentIntent
+     */
+    subscription?: PaymentDetails.Subscription;
   }
 
   export interface PaymentMethodData {
@@ -3914,9 +5735,19 @@ export namespace PaymentIntentCreateParams {
     giropay?: PaymentMethodData.Giropay;
 
     /**
+     * If this is a Gopay PaymentMethod, this hash contains details about the Gopay payment method.
+     */
+    gopay?: PaymentMethodData.Gopay;
+
+    /**
      * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
      */
     grabpay?: PaymentMethodData.Grabpay;
+
+    /**
+     * If this is an `IdBankTransfer` PaymentMethod, this hash contains details about the IdBankTransfer payment method.
+     */
+    id_bank_transfer?: PaymentMethodData.IdBankTransfer;
 
     /**
      * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -4014,6 +5845,11 @@ export namespace PaymentIntentCreateParams {
     paypal?: PaymentMethodData.Paypal;
 
     /**
+     * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+     */
+    paypay?: PaymentMethodData.Paypay;
+
+    /**
      * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
      */
     payto?: PaymentMethodData.Payto;
@@ -4029,9 +5865,19 @@ export namespace PaymentIntentCreateParams {
     promptpay?: PaymentMethodData.Promptpay;
 
     /**
+     * If this is a `qris` PaymentMethod, this hash contains details about the QRIS payment method.
+     */
+    qris?: PaymentMethodData.Qris;
+
+    /**
      * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
      */
     radar_options?: PaymentMethodData.RadarOptions;
+
+    /**
+     * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
+     */
+    rechnung?: PaymentMethodData.Rechnung;
 
     /**
      * If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
@@ -4054,9 +5900,19 @@ export namespace PaymentIntentCreateParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
+     */
+    shopeepay?: PaymentMethodData.Shopeepay;
+
+    /**
      * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
      */
     sofort?: PaymentMethodData.Sofort;
+
+    /**
+     * This hash contains details about the Stripe balance payment method.
+     */
+    stripe_balance?: PaymentMethodData.StripeBalance;
 
     /**
      * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -4196,9 +6052,19 @@ export namespace PaymentIntentCreateParams {
     giropay?: Emptyable<PaymentMethodOptions.Giropay>;
 
     /**
+     * If this is a `gopay` PaymentMethod, this sub-hash contains details about the Gopay payment method options.
+     */
+    gopay?: Emptyable<PaymentMethodOptions.Gopay>;
+
+    /**
      * If this is a `grabpay` PaymentMethod, this sub-hash contains details about the Grabpay payment method options.
      */
     grabpay?: Emptyable<PaymentMethodOptions.Grabpay>;
+
+    /**
+     * If this is a `id_bank_transfer` PaymentMethod, this sub-hash contains details about the Indonesia Bank Transfer payment method options.
+     */
+    id_bank_transfer?: Emptyable<PaymentMethodOptions.IdBankTransfer>;
 
     /**
      * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
@@ -4291,6 +6157,11 @@ export namespace PaymentIntentCreateParams {
     paypal?: Emptyable<PaymentMethodOptions.Paypal>;
 
     /**
+     * If this is a `paypay` PaymentMethod, this sub-hash contains details about the PayPay payment method options.
+     */
+    paypay?: Emptyable<PaymentMethodOptions.Paypay>;
+
+    /**
      * If this is a `payto` PaymentMethod, this sub-hash contains details about the PayTo payment method options.
      */
     payto?: Emptyable<PaymentMethodOptions.Payto>;
@@ -4304,6 +6175,16 @@ export namespace PaymentIntentCreateParams {
      * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
      */
     promptpay?: Emptyable<PaymentMethodOptions.Promptpay>;
+
+    /**
+     * If this is a `qris` PaymentMethod, this sub-hash contains details about the QRIS payment method options.
+     */
+    qris?: Emptyable<PaymentMethodOptions.Qris>;
+
+    /**
+     * If this is a `rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
+     */
+    rechnung?: Emptyable<PaymentMethodOptions.Rechnung>;
 
     /**
      * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Revolut Pay payment method options.
@@ -4326,9 +6207,19 @@ export namespace PaymentIntentCreateParams {
     sepa_debit?: Emptyable<PaymentMethodOptions.SepaDebit>;
 
     /**
+     * If this is a `shopeepay` PaymentMethod, this sub-hash contains details about the ShopeePay payment method options.
+     */
+    shopeepay?: Emptyable<PaymentMethodOptions.Shopeepay>;
+
+    /**
      * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
      */
     sofort?: Emptyable<PaymentMethodOptions.Sofort>;
+
+    /**
+     * If this is a `stripe_balance` PaymentMethod, this sub-hash contains details about the Stripe Balance payment method options.
+     */
+    stripe_balance?: Emptyable<PaymentMethodOptions.StripeBalance>;
 
     /**
      * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
@@ -4367,6 +6258,8 @@ export namespace PaymentIntentCreateParams {
      */
     session?: string;
   }
+
+  export type SecretKeyConfirmation = 'optional' | 'required';
 
   export type SetupFutureUsage = 'off_session' | 'on_session';
 
@@ -4482,6 +6375,18 @@ export namespace PaymentIntentCreateParams {
       to_postal_code?: Emptyable<string>;
     }
 
+    export interface Surcharge {
+      /**
+       * Portion of the amount that corresponds to a surcharge.
+       */
+      amount?: Emptyable<number>;
+
+      /**
+       * Indicate whether to enforce validations on the surcharge amount.
+       */
+      enforce_validation?: Emptyable<Surcharge.EnforceValidation>;
+    }
+
     export interface Tax {
       /**
        * The total amount of tax on the transaction represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
@@ -4585,6 +6490,10 @@ export namespace PaymentIntentCreateParams {
         }
       }
     }
+
+    export namespace Surcharge {
+      export type EnforceValidation = 'automatic' | 'disabled' | 'enabled';
+    }
   }
 
   export namespace AutomaticPaymentMethods {
@@ -4648,6 +6557,1831 @@ export namespace PaymentIntentCreateParams {
       }
 
       export type Type = 'offline' | 'online';
+    }
+  }
+
+  export namespace PaymentDetails {
+    export interface CarRental {
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: CarRental.Affiliate;
+
+      /**
+       * The booking number associated with the car rental.
+       */
+      booking_number: string;
+
+      /**
+       * Class code of the car.
+       */
+      car_class_code?: string;
+
+      /**
+       * Make of the car.
+       */
+      car_make?: string;
+
+      /**
+       * Model of the car.
+       */
+      car_model?: string;
+
+      /**
+       * The name of the rental car company.
+       */
+      company?: string;
+
+      /**
+       * The customer service phone number of the car rental company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * Number of days the car is being rented.
+       */
+      days_rented: number;
+
+      /**
+       * Delivery details for this purchase.
+       */
+      delivery?: CarRental.Delivery;
+
+      /**
+       * The details of the distance traveled during the rental period.
+       */
+      distance?: CarRental.Distance;
+
+      /**
+       * The details of the passengers in the travel reservation
+       */
+      drivers?: Array<CarRental.Driver>;
+
+      /**
+       * List of additional charges being billed.
+       */
+      extra_charges?: Array<CarRental.ExtraCharge>;
+
+      /**
+       * Indicates if the customer did not keep nor cancel their booking.
+       */
+      no_show?: boolean;
+
+      /**
+       * Car pick-up address.
+       */
+      pickup_address?: AddressParam;
+
+      /**
+       * Car pick-up time. Measured in seconds since the Unix epoch.
+       */
+      pickup_at: number;
+
+      /**
+       * Name of the pickup location.
+       */
+      pickup_location_name?: string;
+
+      /**
+       * Rental rate.
+       */
+      rate_amount?: number;
+
+      /**
+       * The frequency at which the rate amount is applied. One of `day`, `week` or `month`
+       */
+      rate_interval?: CarRental.RateInterval;
+
+      /**
+       * The name of the person or entity renting the car.
+       */
+      renter_name?: string;
+
+      /**
+       * Car return address.
+       */
+      return_address?: AddressParam;
+
+      /**
+       * Car return time. Measured in seconds since the Unix epoch.
+       */
+      return_at: number;
+
+      /**
+       * Name of the return location.
+       */
+      return_location_name?: string;
+
+      /**
+       * Indicates whether the goods or services are tax-exempt or tax is not collected.
+       */
+      tax_exempt?: boolean;
+
+      /**
+       * The vehicle identification number.
+       */
+      vehicle_identification_number?: string;
+    }
+
+    export interface CarRentalDatum {
+      /**
+       * Affiliate (such as travel agency) details for the rental.
+       */
+      affiliate?: CarRentalDatum.Affiliate;
+
+      /**
+       * Booking confirmation number for the car rental.
+       */
+      booking_number?: string;
+
+      /**
+       * Name of the car rental company.
+       */
+      carrier_name?: string;
+
+      /**
+       * Customer service phone number for the car rental company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * Number of days the car is being rented.
+       */
+      days_rented?: number;
+
+      /**
+       * Distance details for the rental.
+       */
+      distance?: CarRentalDatum.Distance;
+
+      /**
+       * List of drivers for the rental.
+       */
+      drivers?: Array<CarRentalDatum.Driver>;
+
+      /**
+       * Drop-off location details.
+       */
+      drop_off: CarRentalDatum.DropOff;
+
+      /**
+       * Insurance details for the rental.
+       */
+      insurances?: Array<CarRentalDatum.Insurance>;
+
+      /**
+       * Indicates if the customer was a no-show.
+       */
+      no_show_indicator?: boolean;
+
+      /**
+       * Pickup location details.
+       */
+      pickup: CarRentalDatum.Pickup;
+
+      /**
+       * Name of the person renting the vehicle.
+       */
+      renter_name?: string;
+
+      /**
+       * Total cost breakdown for the rental.
+       */
+      total: CarRentalDatum.Total;
+
+      /**
+       * Vehicle details for the rental.
+       */
+      vehicle?: CarRentalDatum.Vehicle;
+    }
+
+    export interface EventDetails {
+      /**
+       * Indicates if the tickets are digitally checked when entering the venue.
+       */
+      access_controlled_venue?: boolean;
+
+      /**
+       * The event location's address.
+       */
+      address?: AddressParam;
+
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: EventDetails.Affiliate;
+
+      /**
+       * The name of the company
+       */
+      company?: string;
+
+      /**
+       * Delivery details for this purchase.
+       */
+      delivery?: EventDetails.Delivery;
+
+      /**
+       * Event end time. Measured in seconds since the Unix epoch.
+       */
+      ends_at?: number;
+
+      /**
+       * Type of the event entertainment (concert, sports event etc)
+       */
+      genre?: string;
+
+      /**
+       * The name of the event.
+       */
+      name: string;
+
+      /**
+       * Event start time. Measured in seconds since the Unix epoch.
+       */
+      starts_at?: number;
+    }
+
+    export interface Flight {
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: Flight.Affiliate;
+
+      /**
+       * The agency number (i.e. International Air Transport Association (IATA) agency number) of the travel agency that made the booking.
+       */
+      agency_number?: string;
+
+      /**
+       * The International Air Transport Association (IATA) carrier code of the carrier that issued the ticket.
+       */
+      carrier?: string;
+
+      /**
+       * Delivery details for this purchase.
+       */
+      delivery?: Flight.Delivery;
+
+      /**
+       * The name of the person or entity on the reservation.
+       */
+      passenger_name?: string;
+
+      /**
+       * The details of the passengers in the travel reservation.
+       */
+      passengers?: Array<Flight.Passenger>;
+
+      /**
+       * The individual flight segments associated with the trip.
+       */
+      segments: Array<Flight.Segment>;
+
+      /**
+       * The ticket number associated with the travel reservation.
+       */
+      ticket_number?: string;
+    }
+
+    export interface FlightDatum {
+      /**
+       * Affiliate details if applicable.
+       */
+      affiliate?: FlightDatum.Affiliate;
+
+      /**
+       * Reservation reference.
+       */
+      booking_number?: string;
+
+      /**
+       * Computerized reservation system used to make the reservation and purchase the ticket.
+       */
+      computerized_reservation_system?: string;
+
+      /**
+       * Ticket restrictions.
+       */
+      endorsements_and_restrictions?: string;
+
+      /**
+       * List of insurances.
+       */
+      insurances?: Array<FlightDatum.Insurance>;
+
+      /**
+       * List of passengers.
+       */
+      passengers?: Array<FlightDatum.Passenger>;
+
+      /**
+       * List of flight segments.
+       */
+      segments: Array<FlightDatum.Segment>;
+
+      /**
+       * Electronic ticket indicator.
+       */
+      ticket_electronically_issued_indicator?: boolean;
+
+      /**
+       * Total cost breakdown.
+       */
+      total: FlightDatum.Total;
+
+      /**
+       * Type of flight transaction.
+       */
+      transaction_type?: FlightDatum.TransactionType;
+    }
+
+    export interface Lodging {
+      /**
+       * The lodging location's address.
+       */
+      address?: AddressParam;
+
+      /**
+       * The number of adults on the booking
+       */
+      adults?: number;
+
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: Lodging.Affiliate;
+
+      /**
+       * The booking number associated with the lodging reservation.
+       */
+      booking_number?: string;
+
+      /**
+       * The lodging category
+       */
+      category?: Lodging.Category;
+
+      /**
+       * Lodging check-in time. Measured in seconds since the Unix epoch.
+       */
+      checkin_at: number;
+
+      /**
+       * Lodging check-out time. Measured in seconds since the Unix epoch.
+       */
+      checkout_at: number;
+
+      /**
+       * The customer service phone number of the lodging company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * The daily lodging room rate.
+       */
+      daily_room_rate_amount?: number;
+
+      /**
+       * Delivery details for this purchase.
+       */
+      delivery?: Lodging.Delivery;
+
+      /**
+       * List of additional charges being billed.
+       */
+      extra_charges?: Array<Lodging.ExtraCharge>;
+
+      /**
+       * Indicates whether the lodging location is compliant with the Fire Safety Act.
+       */
+      fire_safety_act_compliance?: boolean;
+
+      /**
+       * The name of the lodging location.
+       */
+      name?: string;
+
+      /**
+       * Indicates if the customer did not keep their booking while failing to cancel the reservation.
+       */
+      no_show?: boolean;
+
+      /**
+       * The number of rooms on the booking
+       */
+      number_of_rooms?: number;
+
+      /**
+       * The details of the passengers in the travel reservation
+       */
+      passengers?: Array<Lodging.Passenger>;
+
+      /**
+       * The phone number of the lodging location.
+       */
+      property_phone_number?: string;
+
+      /**
+       * The room class for this purchase.
+       */
+      room_class?: string;
+
+      /**
+       * The number of room nights
+       */
+      room_nights?: number;
+
+      /**
+       * The total tax amount associating with the room reservation.
+       */
+      total_room_tax_amount?: number;
+
+      /**
+       * The total tax amount
+       */
+      total_tax_amount?: number;
+    }
+
+    export interface LodgingDatum {
+      /**
+       * Accommodation details for the lodging.
+       */
+      accommodation?: LodgingDatum.Accommodation;
+
+      /**
+       * Affiliate details if applicable.
+       */
+      affiliate?: LodgingDatum.Affiliate;
+
+      /**
+       * Booking confirmation number for the lodging.
+       */
+      booking_number?: string;
+
+      /**
+       * Check-in date.
+       */
+      checkin_at: number;
+
+      /**
+       * Check-out date.
+       */
+      checkout_at: number;
+
+      /**
+       * Customer service phone number for the lodging company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * Whether the lodging is compliant with any hotel fire safety regulations.
+       */
+      fire_safety_act_compliance_indicator?: boolean;
+
+      /**
+       * List of guests for the lodging.
+       */
+      guests?: Array<LodgingDatum.Guest>;
+
+      /**
+       * Host details for the lodging.
+       */
+      host?: LodgingDatum.Host;
+
+      /**
+       * List of insurances for the lodging.
+       */
+      insurances?: Array<LodgingDatum.Insurance>;
+
+      /**
+       * Whether the renter is a no-show.
+       */
+      no_show_indicator?: boolean;
+
+      /**
+       * Renter ID number for the lodging.
+       */
+      renter_id_number?: string;
+
+      /**
+       * Renter name for the lodging.
+       */
+      renter_name?: string;
+
+      /**
+       * Total details for the lodging.
+       */
+      total: LodgingDatum.Total;
+    }
+
+    export interface Subscription {
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: Subscription.Affiliate;
+
+      /**
+       * Info whether the subscription will be auto renewed upon expiry.
+       */
+      auto_renewal?: boolean;
+
+      /**
+       * Subscription billing details for this purchase.
+       */
+      billing_interval?: Subscription.BillingInterval;
+
+      /**
+       * Subscription end time. Measured in seconds since the Unix epoch.
+       */
+      ends_at?: number;
+
+      /**
+       * Name of the product on subscription. e.g. Apple Music Subscription
+       */
+      name: string;
+
+      /**
+       * Subscription start time. Measured in seconds since the Unix epoch.
+       */
+      starts_at?: number;
+    }
+
+    export namespace CarRental {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        /**
+         * Details of the recipient.
+         */
+        recipient?: Delivery.Recipient;
+      }
+
+      export interface Distance {
+        /**
+         * Distance traveled.
+         */
+        amount?: number;
+
+        /**
+         * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+         */
+        unit?: Distance.Unit;
+      }
+
+      export interface Driver {
+        /**
+         * Driver's identification number.
+         */
+        driver_identification_number?: string;
+
+        /**
+         * Driver's tax number.
+         */
+        driver_tax_number?: string;
+
+        /**
+         * Full name of the person or entity on the car reservation.
+         */
+        name: string;
+      }
+
+      export type ExtraCharge =
+        | 'extra_mileage'
+        | 'gas'
+        | 'late_return'
+        | 'one_way_service'
+        | 'parking_violation';
+
+      export type RateInterval = 'day' | 'month' | 'week';
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+
+      export namespace Distance {
+        export type Unit = 'kilometers' | 'miles';
+      }
+    }
+
+    export namespace CarRentalDatum {
+      export interface Affiliate {
+        /**
+         * Affiliate partner code.
+         */
+        code?: string;
+
+        /**
+         * Name of affiliate partner.
+         */
+        name?: string;
+      }
+
+      export interface Distance {
+        /**
+         * Distance traveled.
+         */
+        amount: number;
+
+        /**
+         * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+         */
+        unit: Distance.Unit;
+      }
+
+      export interface Driver {
+        /**
+         * Driver's date of birth.
+         */
+        date_of_birth?: Driver.DateOfBirth;
+
+        /**
+         * Driver's identification number.
+         */
+        driver_identification_number?: string;
+
+        /**
+         * Driver's tax number.
+         */
+        driver_tax_number?: string;
+
+        /**
+         * Driver's full name.
+         */
+        name: string;
+      }
+
+      export interface DropOff {
+        /**
+         * Address of the rental location.
+         */
+        address: DropOff.Address;
+
+        /**
+         * Location name.
+         */
+        location_name?: string;
+
+        /**
+         * Timestamp for the location.
+         */
+        time: number;
+      }
+
+      export interface Insurance {
+        /**
+         * Amount of the insurance coverage in cents.
+         */
+        amount: number;
+
+        /**
+         * Currency of the insurance amount.
+         */
+        currency?: string;
+
+        /**
+         * Name of the insurance company.
+         */
+        insurance_company_name?: string;
+
+        /**
+         * Type of insurance coverage.
+         */
+        insurance_type: Insurance.InsuranceType;
+      }
+
+      export interface Pickup {
+        /**
+         * Address of the rental location.
+         */
+        address: Pickup.Address;
+
+        /**
+         * Location name.
+         */
+        location_name?: string;
+
+        /**
+         * Timestamp for the location.
+         */
+        time: number;
+      }
+
+      export interface Total {
+        /**
+         * Total amount in cents.
+         */
+        amount: number;
+
+        /**
+         * Currency of the amount.
+         */
+        currency?: string;
+
+        /**
+         * Discount details for the rental.
+         */
+        discounts?: Total.Discounts;
+
+        /**
+         * Additional charges for the rental.
+         */
+        extra_charges?: Array<Total.ExtraCharge>;
+
+        /**
+         * Rate per unit for the rental.
+         */
+        rate_per_unit?: number;
+
+        /**
+         * Unit of measurement for the rate.
+         */
+        rate_unit?: Total.RateUnit;
+
+        /**
+         * Tax breakdown for the rental.
+         */
+        tax?: Total.Tax;
+      }
+
+      export interface Vehicle {
+        /**
+         * Make of the rental vehicle.
+         */
+        make?: string;
+
+        /**
+         * Model of the rental vehicle.
+         */
+        model?: string;
+
+        /**
+         * Odometer reading at the time of rental.
+         */
+        odometer?: number;
+
+        /**
+         * Type of the rental vehicle.
+         */
+        type?: Vehicle.Type;
+
+        /**
+         * Class of the rental vehicle.
+         */
+        vehicle_class?: Vehicle.VehicleClass;
+
+        /**
+         * Vehicle identification number (VIN).
+         */
+        vehicle_identification_number?: string;
+      }
+
+      export namespace Distance {
+        export type Unit = 'kilometers' | 'miles';
+      }
+
+      export namespace Driver {
+        export interface DateOfBirth {
+          /**
+           * Day of birth (1-31).
+           */
+          day: number;
+
+          /**
+           * Month of birth (1-12).
+           */
+          month: number;
+
+          /**
+           * Year of birth (must be greater than 1900).
+           */
+          year: number;
+        }
+      }
+
+      export namespace DropOff {
+        export interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string;
+
+          /**
+           * Address line 1, such as the street, PO Box, or company name.
+           */
+          line1: string;
+
+          /**
+           * Address line 2, such as the apartment, suite, unit, or building.
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code: string;
+
+          /**
+           * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+           */
+          state?: string;
+        }
+      }
+
+      export namespace Insurance {
+        export type InsuranceType =
+          | 'liability_supplement'
+          | 'loss_damage_waiver'
+          | 'other'
+          | 'partial_damage_waiver'
+          | 'personal_accident'
+          | 'personal_effects';
+      }
+
+      export namespace Pickup {
+        export interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string;
+
+          /**
+           * Address line 1, such as the street, PO Box, or company name.
+           */
+          line1: string;
+
+          /**
+           * Address line 2, such as the apartment, suite, unit, or building.
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code: string;
+
+          /**
+           * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+           */
+          state?: string;
+        }
+      }
+
+      export namespace Total {
+        export interface Discounts {
+          /**
+           * Corporate client discount code.
+           */
+          corporate_client_code?: string;
+
+          /**
+           * Coupon code applied to the rental.
+           */
+          coupon?: string;
+
+          /**
+           * Maximum number of free miles or kilometers included.
+           */
+          maximum_free_miles_or_kilometers?: number;
+        }
+
+        export interface ExtraCharge {
+          /**
+           * Amount of the extra charge in cents.
+           */
+          amount: number;
+
+          /**
+           * Type of extra charge.
+           */
+          type: ExtraCharge.Type;
+        }
+
+        export type RateUnit =
+          | 'days'
+          | 'kilometers'
+          | 'miles'
+          | 'months'
+          | 'weeks';
+
+        export interface Tax {
+          /**
+           * Indicates if the transaction is tax exempt.
+           */
+          tax_exempt_indicator?: boolean;
+
+          /**
+           * Array of tax details.
+           */
+          taxes?: Array<Tax.Tax>;
+        }
+
+        export namespace ExtraCharge {
+          export type Type =
+            | 'extra_mileage'
+            | 'gas'
+            | 'gps'
+            | 'late_charge'
+            | 'one_way_drop_off'
+            | 'other'
+            | 'parking'
+            | 'phone'
+            | 'regular_mileage'
+            | 'towing';
+        }
+
+        export namespace Tax {
+          export interface Tax {
+            /**
+             * Tax amount.
+             */
+            amount?: number;
+
+            /**
+             * Tax rate applied.
+             */
+            rate?: number;
+
+            /**
+             * Type of tax applied.
+             */
+            type?: string;
+          }
+        }
+      }
+
+      export namespace Vehicle {
+        export type Type =
+          | 'cargo_van'
+          | 'compact'
+          | 'economy'
+          | 'exotic'
+          | 'exotic_suv'
+          | 'fifteen_passenger_van'
+          | 'four_wheel_drive'
+          | 'full_size'
+          | 'intermediate'
+          | 'large_suv'
+          | 'large_truck'
+          | 'luxury'
+          | 'medium_suv'
+          | 'midsize'
+          | 'mini'
+          | 'minivan'
+          | 'miscellaneous'
+          | 'moped'
+          | 'moving_van'
+          | 'premium'
+          | 'regular'
+          | 'small_medium_truck'
+          | 'small_suv'
+          | 'special'
+          | 'standard'
+          | 'stretch'
+          | 'subcompact'
+          | 'taxi'
+          | 'twelve_foot_truck'
+          | 'twelve_passenger_van'
+          | 'twenty_foot_truck'
+          | 'twenty_four_foot_truck'
+          | 'twenty_six_foot_truck'
+          | 'unique';
+
+        export type VehicleClass =
+          | 'business'
+          | 'economy'
+          | 'first_class'
+          | 'premium_economy';
+      }
+    }
+
+    export namespace EventDetails {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        /**
+         * Details of the recipient.
+         */
+        recipient?: Delivery.Recipient;
+      }
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+    }
+
+    export namespace Flight {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        /**
+         * Details of the recipient.
+         */
+        recipient?: Delivery.Recipient;
+      }
+
+      export interface Passenger {
+        /**
+         * Full name of the person or entity on the flight reservation.
+         */
+        name: string;
+      }
+
+      export interface Segment {
+        /**
+         * The flight segment amount.
+         */
+        amount?: number;
+
+        /**
+         * The International Air Transport Association (IATA) airport code for the arrival airport.
+         */
+        arrival_airport?: string;
+
+        /**
+         * The arrival time for the flight segment. Measured in seconds since the Unix epoch.
+         */
+        arrives_at?: number;
+
+        /**
+         * The International Air Transport Association (IATA) carrier code of the carrier operating the flight segment.
+         */
+        carrier?: string;
+
+        /**
+         * The departure time for the flight segment. Measured in seconds since the Unix epoch.
+         */
+        departs_at: number;
+
+        /**
+         * The International Air Transport Association (IATA) airport code for the departure airport.
+         */
+        departure_airport?: string;
+
+        /**
+         * The flight number associated with the segment
+         */
+        flight_number?: string;
+
+        /**
+         * The fare class for the segment.
+         */
+        service_class?: Segment.ServiceClass;
+      }
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+
+      export namespace Segment {
+        export type ServiceClass =
+          | 'business'
+          | 'economy'
+          | 'first'
+          | 'premium_economy';
+      }
+    }
+
+    export namespace FlightDatum {
+      export interface Affiliate {
+        /**
+         * Affiliate partner code.
+         */
+        code?: string;
+
+        /**
+         * Name of affiliate partner.
+         */
+        name?: string;
+
+        /**
+         * Code provided by the company to a travel agent authorizing ticket issuance.
+         */
+        travel_authorization_code?: string;
+      }
+
+      export interface Insurance {
+        /**
+         * Insurance cost.
+         */
+        amount: number;
+
+        /**
+         * Insurance currency.
+         */
+        currency?: string;
+
+        /**
+         * Insurance company name.
+         */
+        insurance_company_name?: string;
+
+        /**
+         * Type of insurance.
+         */
+        insurance_type: Insurance.InsuranceType;
+      }
+
+      export interface Passenger {
+        /**
+         * Passenger's full name.
+         */
+        name: string;
+      }
+
+      export interface Segment {
+        /**
+         * Segment fare amount.
+         */
+        amount?: number;
+
+        /**
+         * Arrival details.
+         */
+        arrival: Segment.Arrival;
+
+        /**
+         * Airline carrier code.
+         */
+        carrier_code: string;
+
+        /**
+         * Carrier name.
+         */
+        carrier_name?: string;
+
+        /**
+         * Segment currency.
+         */
+        currency?: string;
+
+        /**
+         * Departure details.
+         */
+        departure: Segment.Departure;
+
+        /**
+         * Exchange ticket number.
+         */
+        exchange_ticket_number?: string;
+
+        /**
+         * Fare basis code.
+         */
+        fare_basis_code?: string;
+
+        /**
+         * Additional fees.
+         */
+        fees?: number;
+
+        /**
+         * Flight number.
+         */
+        flight_number?: string;
+
+        /**
+         * Stopover indicator.
+         */
+        is_stop_over_indicator?: boolean;
+
+        /**
+         * Refundable ticket indicator.
+         */
+        refundable?: boolean;
+
+        /**
+         * Class of service.
+         */
+        service_class: Segment.ServiceClass;
+
+        /**
+         * Tax amount for segment.
+         */
+        tax_amount?: number;
+
+        /**
+         * Ticket number.
+         */
+        ticket_number?: string;
+      }
+
+      export interface Total {
+        /**
+         * Total flight amount.
+         */
+        amount: number;
+
+        /**
+         * Reason for credit.
+         */
+        credit_reason?: Total.CreditReason;
+
+        /**
+         * Total currency.
+         */
+        currency?: string;
+
+        /**
+         * Discount details.
+         */
+        discounts?: Total.Discounts;
+
+        /**
+         * Additional charges.
+         */
+        extra_charges?: Array<Total.ExtraCharge>;
+
+        /**
+         * Tax breakdown.
+         */
+        tax?: Total.Tax;
+      }
+
+      export type TransactionType =
+        | 'exchange_ticket'
+        | 'miscellaneous'
+        | 'refund'
+        | 'ticket_purchase';
+
+      export namespace Insurance {
+        export type InsuranceType =
+          | 'baggage'
+          | 'bankruptcy'
+          | 'cancelation'
+          | 'emergency'
+          | 'medical';
+      }
+
+      export namespace Segment {
+        export interface Arrival {
+          /**
+           * Arrival airport IATA code.
+           */
+          airport: string;
+
+          /**
+           * Arrival date/time.
+           */
+          arrives_at?: number;
+
+          /**
+           * Arrival city.
+           */
+          city?: string;
+
+          /**
+           * Arrival country.
+           */
+          country?: string;
+        }
+
+        export interface Departure {
+          /**
+           * Departure airport IATA code.
+           */
+          airport: string;
+
+          /**
+           * Departure city.
+           */
+          city?: string;
+
+          /**
+           * Departure country.
+           */
+          country?: string;
+
+          /**
+           * Departure date/time.
+           */
+          departs_at: number;
+        }
+
+        export type ServiceClass =
+          | 'business'
+          | 'economy'
+          | 'first_class'
+          | 'premium_economy';
+      }
+
+      export namespace Total {
+        export type CreditReason =
+          | 'other'
+          | 'partial_ticket_refund'
+          | 'passenger_transport_ancillary_cancellation'
+          | 'ticket_and_ancillary_cancellation'
+          | 'ticket_cancellation';
+
+        export interface Discounts {
+          /**
+           * Corporate client discount code.
+           */
+          corporate_client_code?: string;
+        }
+
+        export interface ExtraCharge {
+          /**
+           * Amount of additional charges.
+           */
+          amount?: number;
+
+          /**
+           * Type of additional charges.
+           */
+          type?: ExtraCharge.Type;
+        }
+
+        export interface Tax {
+          /**
+           * Array of tax details.
+           */
+          taxes?: Array<Tax.Tax>;
+        }
+
+        export namespace ExtraCharge {
+          export type Type =
+            | 'additional_fees'
+            | 'ancillary_service_charges'
+            | 'exchange_fee';
+        }
+
+        export namespace Tax {
+          export interface Tax {
+            /**
+             * Tax amount.
+             */
+            amount?: number;
+
+            /**
+             * Tax rate.
+             */
+            rate?: number;
+
+            /**
+             * Type of tax.
+             */
+            type?: string;
+          }
+        }
+      }
+    }
+
+    export namespace Lodging {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export type Category = 'hotel' | 'vacation_rental';
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        /**
+         * Details of the recipient.
+         */
+        recipient?: Delivery.Recipient;
+      }
+
+      export type ExtraCharge =
+        | 'gift_shop'
+        | 'laundry'
+        | 'mini_bar'
+        | 'other'
+        | 'restaurant'
+        | 'telephone';
+
+      export interface Passenger {
+        /**
+         * Full name of the person or entity on the lodging reservation.
+         */
+        name: string;
+      }
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+    }
+
+    export namespace LodgingDatum {
+      export interface Accommodation {
+        /**
+         * Type of accommodation.
+         */
+        accommodation_type?: Accommodation.AccommodationType;
+
+        /**
+         * Bed type.
+         */
+        bed_type?: string;
+
+        /**
+         * Daily accommodation rate in cents.
+         */
+        daily_rate_amount?: number;
+
+        /**
+         * Number of nights.
+         */
+        nights?: number;
+
+        /**
+         * Number of rooms, cabanas, apartments, and so on.
+         */
+        number_of_rooms?: number;
+
+        /**
+         * Rate type.
+         */
+        rate_type?: string;
+
+        /**
+         * Whether smoking is allowed.
+         */
+        smoking_indicator?: boolean;
+      }
+
+      export interface Affiliate {
+        /**
+         * Affiliate partner code.
+         */
+        code?: string;
+
+        /**
+         * Affiliate partner name.
+         */
+        name?: string;
+      }
+
+      export interface Guest {
+        /**
+         * Guest's full name.
+         */
+        name: string;
+      }
+
+      export interface Host {
+        /**
+         * Address of the host.
+         */
+        address?: Host.Address;
+
+        /**
+         * Host's country of domicile.
+         */
+        country_of_domicile?: string;
+
+        /**
+         * Reference number for the host.
+         */
+        host_reference?: string;
+
+        /**
+         * Type of host.
+         */
+        host_type?: Host.HostType;
+
+        /**
+         * Name of the lodging property or host.
+         */
+        name?: string;
+
+        /**
+         * Total number of reservations for the host.
+         */
+        number_of_reservations?: number;
+
+        /**
+         * Property phone number.
+         */
+        property_phone_number?: string;
+
+        /**
+         * Host's registration date.
+         */
+        registered_at?: number;
+      }
+
+      export interface Insurance {
+        /**
+         * Price of the insurance coverage in cents.
+         */
+        amount: number;
+
+        /**
+         * Currency of the insurance amount.
+         */
+        currency?: string;
+
+        /**
+         * Name of the insurance company.
+         */
+        insurance_company_name?: string;
+
+        /**
+         * Type of insurance coverage.
+         */
+        insurance_type: Insurance.InsuranceType;
+      }
+
+      export interface Total {
+        /**
+         * Total price of the lodging reservation in cents.
+         */
+        amount: number;
+
+        /**
+         * Cash advances in cents.
+         */
+        cash_advances?: number;
+
+        /**
+         * Currency of the total amount.
+         */
+        currency?: string;
+
+        /**
+         * Discount details for the lodging.
+         */
+        discounts?: Total.Discounts;
+
+        /**
+         * Additional charges for the lodging.
+         */
+        extra_charges?: Array<Total.ExtraCharge>;
+
+        /**
+         * Prepaid amount in cents.
+         */
+        prepaid_amount?: number;
+
+        /**
+         * Tax breakdown for the lodging reservation.
+         */
+        tax?: Total.Tax;
+      }
+
+      export namespace Accommodation {
+        export type AccommodationType =
+          | 'apartment'
+          | 'cabana'
+          | 'house'
+          | 'penthouse'
+          | 'room'
+          | 'standard'
+          | 'suite'
+          | 'villa';
+      }
+
+      export namespace Host {
+        export interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string;
+
+          /**
+           * Address line 1, such as the street, PO Box, or company name.
+           */
+          line1: string;
+
+          /**
+           * Address line 2, such as the apartment, suite, unit, or building.
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code: string;
+
+          /**
+           * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+           */
+          state?: string;
+        }
+
+        export type HostType = 'hostel' | 'hotel' | 'owner' | 'rental_agency';
+      }
+
+      export namespace Insurance {
+        export type InsuranceType =
+          | 'bankruptcy'
+          | 'cancelation'
+          | 'emergency'
+          | 'medical';
+      }
+
+      export namespace Total {
+        export interface Discounts {
+          /**
+           * Corporate client discount code.
+           */
+          corporate_client_code?: string;
+
+          /**
+           * Coupon code.
+           */
+          coupon?: string;
+        }
+
+        export interface ExtraCharge {
+          /**
+           * Amount of the extra charge in cents.
+           */
+          amount?: number;
+
+          /**
+           * Type of extra charge.
+           */
+          type?: ExtraCharge.Type;
+        }
+
+        export interface Tax {
+          /**
+           * Indicates whether the transaction is tax exempt.
+           */
+          tax_exempt_indicator?: boolean;
+
+          /**
+           * Tax details.
+           */
+          taxes?: Array<Tax.Tax>;
+        }
+
+        export namespace ExtraCharge {
+          export type Type =
+            | 'gift_shop'
+            | 'laundry'
+            | 'mini_bar'
+            | 'other'
+            | 'phone'
+            | 'restaurant';
+        }
+
+        export namespace Tax {
+          export interface Tax {
+            /**
+             * Tax amount in cents.
+             */
+            amount?: number;
+
+            /**
+             * Tax rate.
+             */
+            rate?: number;
+
+            /**
+             * Type of tax applied.
+             */
+            type?: string;
+          }
+        }
+      }
+    }
+
+    export namespace Subscription {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export interface BillingInterval {
+        /**
+         * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+         */
+        count: number;
+
+        /**
+         * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+         */
+        interval: BillingInterval.Interval;
+      }
+
+      export namespace BillingInterval {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
+      }
     }
   }
 
@@ -4772,7 +8506,16 @@ export namespace PaymentIntentCreateParams {
 
     export interface Giropay {}
 
+    export interface Gopay {}
+
     export interface Grabpay {}
+
+    export interface IdBankTransfer {
+      /**
+       * Bank where the account is held.
+       */
+      bank?: IdBankTransfer.Bank;
+    }
 
     export interface Ideal {
       /**
@@ -4857,6 +8600,8 @@ export namespace PaymentIntentCreateParams {
 
     export interface Paypal {}
 
+    export interface Paypay {}
+
     export interface Payto {
       /**
        * The account number for the bank account.
@@ -4878,11 +8623,20 @@ export namespace PaymentIntentCreateParams {
 
     export interface Promptpay {}
 
+    export interface Qris {}
+
     export interface RadarOptions {
       /**
        * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
        */
       session?: string;
+    }
+
+    export interface Rechnung {
+      /**
+       * Customer's date of birth
+       */
+      dob: Rechnung.Dob;
     }
 
     export interface RevolutPay {}
@@ -4898,11 +8652,20 @@ export namespace PaymentIntentCreateParams {
       iban: string;
     }
 
+    export interface Shopeepay {}
+
     export interface Sofort {
       /**
        * Two-letter ISO code representing the country the bank account is located in.
        */
       country: Sofort.Country;
+    }
+
+    export interface StripeBalance {
+      /**
+       * The connected account ID whose Stripe balance to use as the source of payment
+       */
+      account?: string;
     }
 
     export interface Swish {}
@@ -4928,7 +8691,9 @@ export namespace PaymentIntentCreateParams {
       | 'eps'
       | 'fpx'
       | 'giropay'
+      | 'gopay'
       | 'grabpay'
+      | 'id_bank_transfer'
       | 'ideal'
       | 'kakao_pay'
       | 'klarna'
@@ -4946,14 +8711,19 @@ export namespace PaymentIntentCreateParams {
       | 'payco'
       | 'paynow'
       | 'paypal'
+      | 'paypay'
       | 'payto'
       | 'pix'
       | 'promptpay'
+      | 'qris'
+      | 'rechnung'
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
       | 'sepa_debit'
+      | 'shopeepay'
       | 'sofort'
+      | 'stripe_balance'
       | 'swish'
       | 'twint'
       | 'upi'
@@ -5059,6 +8829,10 @@ export namespace PaymentIntentCreateParams {
         | 'uob';
     }
 
+    export namespace IdBankTransfer {
+      export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+    }
+
     export namespace Ideal {
       export type Bank =
         | 'abn_amro'
@@ -5134,6 +8908,25 @@ export namespace PaymentIntentCreateParams {
         | 'toyota_bank'
         | 'velobank'
         | 'volkswagen_bank';
+    }
+
+    export namespace Rechnung {
+      export interface Dob {
+        /**
+         * The day of birth, between 1 and 31.
+         */
+        day: number;
+
+        /**
+         * The month of birth, between 1 and 12.
+         */
+        month: number;
+
+        /**
+         * The four-digit year of birth.
+         */
+        year: number;
+      }
     }
 
     export namespace Sofort {
@@ -5469,6 +9262,11 @@ export namespace PaymentIntentCreateParams {
       network?: Card.Network;
 
       /**
+       * Request ability to [decrement the authorization](https://docs.stripe.com/payments/decremental-authorization) for this PaymentIntent.
+       */
+      request_decremental_authorization?: Card.RequestDecrementalAuthorization;
+
+      /**
        * Request ability to [capture beyond the standard authorization validity window](https://docs.stripe.com/payments/extended-authorization) for this PaymentIntent.
        */
       request_extended_authorization?: Card.RequestExtendedAuthorization;
@@ -5487,6 +9285,11 @@ export namespace PaymentIntentCreateParams {
        * Request ability to [overcapture](https://docs.stripe.com/payments/overcapture) for this PaymentIntent.
        */
       request_overcapture?: Card.RequestOvercapture;
+
+      /**
+       * Request partial authorization on this PaymentIntent.
+       */
+      request_partial_authorization?: Card.RequestPartialAuthorization;
 
       /**
        * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
@@ -5520,6 +9323,11 @@ export namespace PaymentIntentCreateParams {
        * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
        */
       statement_descriptor_suffix_kanji?: Emptyable<string>;
+
+      /**
+       * Statement details for this payment intent. You can use this to override the merchant details shown on your customers' statements.
+       */
+      statement_details?: Emptyable<Card.StatementDetails>;
 
       /**
        * If 3D Secure authentication was performed with a third-party provider,
@@ -5663,7 +9471,47 @@ export namespace PaymentIntentCreateParams {
       setup_future_usage?: 'none';
     }
 
+    export interface Gopay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: Gopay.SetupFutureUsage;
+    }
+
     export interface Grabpay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface IdBankTransfer {
+      /**
+       * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from 5 minutes from now until 31 days from now. If unset, it defaults to 3 days from now.
+       */
+      expires_after?: number;
+
+      /**
+       * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from now until 30 days from now. If unset, it defaults to 1 days from now.
+       */
+      expires_at?: number;
+
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
@@ -5754,6 +9602,11 @@ export namespace PaymentIntentCreateParams {
        * Subscription details if setting up or charging a subscription.
        */
       subscriptions?: Emptyable<Array<Klarna.Subscription>>;
+
+      /**
+       * Supplementary Purchase Data for the corresponding Klarna payment
+       */
+      supplementary_purchase_data?: Emptyable<Klarna.SupplementaryPurchaseData>;
     }
 
     export interface Konbini {
@@ -6014,6 +9867,11 @@ export namespace PaymentIntentCreateParams {
       capture_method?: Emptyable<'manual'>;
 
       /**
+       * The line items purchased by the customer.
+       */
+      line_items?: Array<Paypal.LineItem>;
+
+      /**
        * [Preferred locale](https://docs.stripe.com/payments/paypal/supported-locales) of the PayPal checkout page that the customer is redirected to.
        */
       preferred_locale?: Paypal.PreferredLocale;
@@ -6022,6 +9880,11 @@ export namespace PaymentIntentCreateParams {
        * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
        */
       reference?: string;
+
+      /**
+       * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+       */
+      reference_id?: string;
 
       /**
        * The risk correlation ID for an on-session payment using a saved PayPal payment method.
@@ -6040,6 +9903,22 @@ export namespace PaymentIntentCreateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Emptyable<Paypal.SetupFutureUsage>;
+
+      /**
+       * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+       */
+      subsellers?: Array<string>;
+    }
+
+    export interface Paypay {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
     }
 
     export interface Payto {
@@ -6079,6 +9958,11 @@ export namespace PaymentIntentCreateParams {
       expires_at?: number;
 
       /**
+       * Additional fields for mandate creation. Only applicable when `setup_future_usage=off_session`.
+       */
+      mandate_options?: Pix.MandateOptions;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -6089,7 +9973,7 @@ export namespace PaymentIntentCreateParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Pix.SetupFutureUsage;
     }
 
     export interface Promptpay {
@@ -6106,6 +9990,23 @@ export namespace PaymentIntentCreateParams {
        */
       setup_future_usage?: 'none';
     }
+
+    export interface Qris {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Rechnung {}
 
     export interface RevolutPay {
       /**
@@ -6176,6 +10077,21 @@ export namespace PaymentIntentCreateParams {
       target_date?: string;
     }
 
+    export interface Shopeepay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
+    }
+
     export interface Sofort {
       /**
        * Language shown to the payer on redirect.
@@ -6194,6 +10110,21 @@ export namespace PaymentIntentCreateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Emptyable<Sofort.SetupFutureUsage>;
+    }
+
+    export interface StripeBalance {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: Emptyable<StripeBalance.SetupFutureUsage>;
     }
 
     export interface Swish {
@@ -6475,6 +10406,8 @@ export namespace PaymentIntentCreateParams {
         | 'unknown'
         | 'visa';
 
+      export type RequestDecrementalAuthorization = 'if_available' | 'never';
+
       export type RequestExtendedAuthorization = 'if_available' | 'never';
 
       export type RequestIncrementalAuthorization = 'if_available' | 'never';
@@ -6483,9 +10416,23 @@ export namespace PaymentIntentCreateParams {
 
       export type RequestOvercapture = 'if_available' | 'never';
 
+      export type RequestPartialAuthorization = 'if_available' | 'never';
+
       export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
       export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+      export interface StatementDetails {
+        /**
+         * Please pass in an address that is within your Stripe user account country
+         */
+        address?: AddressParam;
+
+        /**
+         * Phone number (e.g., a toll-free number that customers can call)
+         */
+        phone?: string;
+      }
 
       export interface ThreeDSecure {
         /**
@@ -6684,6 +10631,10 @@ export namespace PaymentIntentCreateParams {
       }
     }
 
+    export namespace Gopay {
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
     export namespace Ideal {
       export type SetupFutureUsage = 'none' | 'off_session';
     }
@@ -6797,6 +10748,60 @@ export namespace PaymentIntentCreateParams {
         reference: string;
       }
 
+      export interface SupplementaryPurchaseData {
+        /**
+         * Supplementary bus reservation details.
+         */
+        bus_reservation_details?: Emptyable<
+          Array<SupplementaryPurchaseData.BusReservationDetail>
+        >;
+
+        /**
+         * Supplementary event reservation details.
+         */
+        event_reservation_details?: Emptyable<
+          Array<SupplementaryPurchaseData.EventReservationDetail>
+        >;
+
+        /**
+         * Supplementary ferry reservation details.
+         */
+        ferry_reservation_details?: Emptyable<
+          Array<SupplementaryPurchaseData.FerryReservationDetail>
+        >;
+
+        /**
+         * Supplementary insurance details.
+         */
+        insurances?: Emptyable<Array<SupplementaryPurchaseData.Insurance>>;
+
+        /**
+         * Supplementary marketplace seller details.
+         */
+        marketplace_sellers?: Emptyable<
+          Array<SupplementaryPurchaseData.MarketplaceSeller>
+        >;
+
+        /**
+         * Supplementary round trip reservation details.
+         */
+        round_trip_reservation_details?: Emptyable<
+          Array<SupplementaryPurchaseData.RoundTripReservationDetail>
+        >;
+
+        /**
+         * Supplementary train reservation details.
+         */
+        train_reservation_details?: Emptyable<
+          Array<SupplementaryPurchaseData.TrainReservationDetail>
+        >;
+
+        /**
+         * Voucher details, such as a gift card or discount code.
+         */
+        vouchers?: Emptyable<Array<SupplementaryPurchaseData.Voucher>>;
+      }
+
       export namespace OnDemand {
         export type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
       }
@@ -6814,6 +10819,1124 @@ export namespace PaymentIntentCreateParams {
            * The date of the next charge for the subscription in YYYY-MM-DD format.
            */
           date: string;
+        }
+      }
+
+      export namespace SupplementaryPurchaseData {
+        export interface BusReservationDetail {
+          /**
+           * Name of associated or partner company for the service.
+           */
+          affiliate_name?: string;
+
+          /**
+           * Arrival details.
+           */
+          arrival?: BusReservationDetail.Arrival;
+
+          /**
+           * Name of transportation company.
+           */
+          carrier_name?: string;
+
+          /**
+           * Currency.
+           */
+          currency?: string;
+
+          /**
+           * Departure details.
+           */
+          departure?: BusReservationDetail.Departure;
+
+          /**
+           * List of insurances for this reservation.
+           */
+          insurances?: Array<BusReservationDetail.Insurance>;
+
+          /**
+           * List of passengers that this reservation applies to.
+           */
+          passengers?: Array<BusReservationDetail.Passenger>;
+
+          /**
+           * Price in cents.
+           */
+          price?: number;
+
+          /**
+           * Ticket class.
+           */
+          ticket_class?: BusReservationDetail.TicketClass;
+        }
+
+        export interface EventReservationDetail {
+          /**
+           * Indicates if the tickets are digitally checked when entering the venue.
+           */
+          access_controlled_venue?: boolean;
+
+          /**
+           * Address of the event.
+           */
+          address?: EventReservationDetail.Address;
+
+          /**
+           * Name of associated or partner company for the service.
+           */
+          affiliate_name?: string;
+
+          /**
+           * End timestamp of the event.
+           */
+          ends_at?: number;
+
+          /**
+           * Company selling the ticket.
+           */
+          event_company_name?: string;
+
+          /**
+           * Name of the event.
+           */
+          event_name?: string;
+
+          /**
+           * Type of the event.
+           */
+          event_type?: EventReservationDetail.EventType;
+
+          /**
+           * List of insurances for this event.
+           */
+          insurances?: Array<EventReservationDetail.Insurance>;
+
+          /**
+           * Start timestamp of the event.
+           */
+          starts_at?: number;
+
+          /**
+           * Name of the venue where the event takes place.
+           */
+          venue_name?: string;
+        }
+
+        export interface FerryReservationDetail {
+          /**
+           * Name of associated or partner company for the service.
+           */
+          affiliate_name?: string;
+
+          /**
+           * Arrival details.
+           */
+          arrival?: FerryReservationDetail.Arrival;
+
+          /**
+           * Name of transportation company.
+           */
+          carrier_name?: string;
+
+          /**
+           * Currency.
+           */
+          currency?: string;
+
+          /**
+           * Departure details.
+           */
+          departure?: FerryReservationDetail.Departure;
+
+          /**
+           * List of insurances for this reservation.
+           */
+          insurances?: Array<FerryReservationDetail.Insurance>;
+
+          /**
+           * List of passengers that this reservation applies to.
+           */
+          passengers?: Array<FerryReservationDetail.Passenger>;
+
+          /**
+           * Price in cents.
+           */
+          price?: number;
+
+          /**
+           * Ticket class.
+           */
+          ticket_class?: FerryReservationDetail.TicketClass;
+        }
+
+        export interface Insurance {
+          /**
+           * Insurance currency.
+           */
+          currency?: string;
+
+          /**
+           * Name of the company providing the insurance.
+           */
+          insurance_company_name?: string;
+
+          /**
+           * Type of insurance
+           */
+          insurance_type?: Insurance.InsuranceType;
+
+          /**
+           * Price of insurance in cents.
+           */
+          price?: number;
+        }
+
+        export interface MarketplaceSeller {
+          /**
+           * The references to line items for purchases with multiple associated sub-sellers.
+           */
+          line_item_references?: Array<string>;
+
+          /**
+           * The address of the selling or delivering merchant.
+           */
+          marketplace_seller_address?: MarketplaceSeller.MarketplaceSellerAddress;
+
+          /**
+           * The name of the marketplace seller.
+           */
+          marketplace_seller_name?: string;
+
+          /**
+           * The unique identifier for the marketplace seller.
+           */
+          marketplace_seller_reference?: string;
+
+          /**
+           * The number of transactions the sub-seller completed in the last 12 months.
+           */
+          number_of_transactions?: number;
+
+          /**
+           * The category of the product.
+           */
+          product_category?: MarketplaceSeller.ProductCategory;
+
+          /**
+           * The date when the seller's account with the marketplace was last logged in.
+           */
+          seller_last_login_at?: number;
+
+          /**
+           * The current rating of the marketplace seller. If the marketplace uses numeric ranking, map these to the enum values.
+           */
+          seller_rating?: MarketplaceSeller.SellerRating;
+
+          /**
+           * The date when the seller's account with the marketplace was created.
+           */
+          seller_registered_at?: number;
+
+          /**
+           * The date when the seller's account with the marketplace was last updated.
+           */
+          seller_updated_at?: number;
+
+          /**
+           * The references to shipping addresses for purchases with multiple associated sub-sellers.
+           */
+          shipping_references?: Array<string>;
+
+          /**
+           * The accumulated amount of sales transactions made by the sub-merchant or sub-seller within the past 12 months in the payment currency. These transactions are in minor currency units.
+           */
+          volume_of_transactions?: number;
+        }
+
+        export interface RoundTripReservationDetail {
+          /**
+           * Name of associated or partner company for the service.
+           */
+          affiliate_name?: string;
+
+          /**
+           * Arrival details.
+           */
+          arrival?: RoundTripReservationDetail.Arrival;
+
+          /**
+           * Name of transportation company.
+           */
+          carrier_name?: string;
+
+          /**
+           * Currency.
+           */
+          currency?: string;
+
+          /**
+           * Departure details.
+           */
+          departure?: RoundTripReservationDetail.Departure;
+
+          /**
+           * List of insurances for this reservation.
+           */
+          insurances?: Array<RoundTripReservationDetail.Insurance>;
+
+          /**
+           * List of passengers that this reservation applies to.
+           */
+          passengers?: Array<RoundTripReservationDetail.Passenger>;
+
+          /**
+           * Price in cents.
+           */
+          price?: number;
+
+          /**
+           * Ticket class.
+           */
+          ticket_class?: RoundTripReservationDetail.TicketClass;
+        }
+
+        export interface TrainReservationDetail {
+          /**
+           * Name of associated or partner company for the service.
+           */
+          affiliate_name?: string;
+
+          /**
+           * Arrival details.
+           */
+          arrival?: TrainReservationDetail.Arrival;
+
+          /**
+           * Name of transportation company.
+           */
+          carrier_name?: string;
+
+          /**
+           * Currency.
+           */
+          currency?: string;
+
+          /**
+           * Departure details.
+           */
+          departure?: TrainReservationDetail.Departure;
+
+          /**
+           * List of insurances for this reservation.
+           */
+          insurances?: Array<TrainReservationDetail.Insurance>;
+
+          /**
+           * List of passengers that this reservation applies to.
+           */
+          passengers?: Array<TrainReservationDetail.Passenger>;
+
+          /**
+           * Price in cents.
+           */
+          price?: number;
+
+          /**
+           * Ticket class.
+           */
+          ticket_class?: TrainReservationDetail.TicketClass;
+        }
+
+        export interface Voucher {
+          /**
+           * Name of associated or partner company for this voucher.
+           */
+          affiliate_name?: string;
+
+          /**
+           * The voucher validity end time.
+           */
+          ends_at?: number;
+
+          /**
+           * The voucher validity start time.
+           */
+          starts_at?: number;
+
+          /**
+           * The issuer or provider of this voucher.
+           */
+          voucher_company?: string;
+
+          /**
+           * The name or reference to identify the voucher.
+           */
+          voucher_name?: string;
+
+          /**
+           * The type of this voucher.
+           */
+          voucher_type?: Voucher.VoucherType;
+        }
+
+        export namespace BusReservationDetail {
+          export interface Arrival {
+            /**
+             * Address of the arrival location.
+             */
+            address?: Arrival.Address;
+
+            /**
+             * Identifier name or reference for the arrival location.
+             */
+            arrival_location?: string;
+          }
+
+          export interface Departure {
+            /**
+             * Address of the departure location.
+             */
+            address?: Departure.Address;
+
+            /**
+             * Timestamp of departure.
+             */
+            departs_at?: number;
+
+            /**
+             * Identifier name or reference for the origin location.
+             */
+            departure_location?: string;
+          }
+
+          export interface Insurance {
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Name of the company providing the insurance.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type?: Insurance.InsuranceType;
+
+            /**
+             * Price of insurance in cents.
+             */
+            price?: number;
+          }
+
+          export interface Passenger {
+            /**
+             * The family name of the person.
+             */
+            family_name?: string;
+
+            /**
+             * The given name of the person.
+             */
+            given_name?: string;
+          }
+
+          export type TicketClass =
+            | 'business'
+            | 'economy'
+            | 'first_class'
+            | 'premium_economy';
+
+          export namespace Arrival {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Departure {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Insurance {
+            export type InsuranceType =
+              | 'baggage'
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+        }
+
+        export namespace EventReservationDetail {
+          export interface Address {
+            /**
+             * The city or town.
+             */
+            city?: string;
+
+            /**
+             * The country in ISO 3166-1 alpha-2 format.
+             */
+            country?: string;
+
+            /**
+             * The postal code formatted according to country.
+             */
+            postal_code?: string;
+
+            /**
+             * The state, county, province, or region formatted according to country.
+             */
+            region?: string;
+
+            /**
+             * Line 1 of the street address.
+             */
+            street_address?: string;
+
+            /**
+             * Line 2 of the street address.
+             */
+            street_address2?: string;
+          }
+
+          export type EventType =
+            | 'concert'
+            | 'conference'
+            | 'digital_education'
+            | 'expo'
+            | 'festival'
+            | 'in_person_education'
+            | 'sport'
+            | 'tour';
+
+          export interface Insurance {
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Name of the company providing the insurance.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type?: Insurance.InsuranceType;
+
+            /**
+             * Price of insurance in cents.
+             */
+            price?: number;
+          }
+
+          export namespace Insurance {
+            export type InsuranceType =
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+        }
+
+        export namespace FerryReservationDetail {
+          export interface Arrival {
+            /**
+             * Address of the arrival location.
+             */
+            address?: Arrival.Address;
+
+            /**
+             * Identifier name or reference for the arrival location.
+             */
+            arrival_location?: string;
+          }
+
+          export interface Departure {
+            /**
+             * Address of the departure location.
+             */
+            address?: Departure.Address;
+
+            /**
+             * Timestamp of departure.
+             */
+            departs_at?: number;
+
+            /**
+             * Identifier name or reference for the origin location.
+             */
+            departure_location?: string;
+          }
+
+          export interface Insurance {
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Name of the company providing the insurance.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type?: Insurance.InsuranceType;
+
+            /**
+             * Price of insurance in cents.
+             */
+            price?: number;
+          }
+
+          export interface Passenger {
+            /**
+             * The family name of the person.
+             */
+            family_name?: string;
+
+            /**
+             * The given name of the person.
+             */
+            given_name?: string;
+          }
+
+          export type TicketClass =
+            | 'business'
+            | 'economy'
+            | 'first_class'
+            | 'premium_economy';
+
+          export namespace Arrival {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Departure {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Insurance {
+            export type InsuranceType =
+              | 'baggage'
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+        }
+
+        export namespace Insurance {
+          export type InsuranceType =
+            | 'bankruptcy'
+            | 'cancelation'
+            | 'emergency'
+            | 'medical';
+        }
+
+        export namespace MarketplaceSeller {
+          export interface MarketplaceSellerAddress {
+            /**
+             * The city or town.
+             */
+            city?: string;
+
+            /**
+             * The country in ISO 3166-1 alpha-2 format.
+             */
+            country?: string;
+
+            /**
+             * The postal code formatted according to country.
+             */
+            postal_code?: string;
+
+            /**
+             * The state, county, province, or region formatted according to country.
+             */
+            region?: string;
+
+            /**
+             * Line 1 of the street address.
+             */
+            street_address?: string;
+
+            /**
+             * Line 2 of the street address.
+             */
+            street_address2?: string;
+          }
+
+          export type ProductCategory =
+            | 'accessories'
+            | 'appliances'
+            | 'apps_and_games'
+            | 'arts_crafts_and_sewing'
+            | 'automotive'
+            | 'baby'
+            | 'baby_clothing'
+            | 'bags_and_purses'
+            | 'beauty'
+            | 'books'
+            | 'cds_and_vinyl'
+            | 'cell_phones_and_accessories'
+            | 'collectibles_and_fine_arts'
+            | 'digital_music'
+            | 'electronics'
+            | 'grocery_and_gourmet_food'
+            | 'handmade'
+            | 'health_and_personal_care'
+            | 'home_and_kitchen'
+            | 'industrial_and_scientific'
+            | 'luggage_and_travel_gear'
+            | 'magazine_subscriptions'
+            | 'men_clothing'
+            | 'musical_instruments'
+            | 'office_products'
+            | 'patio_lawn_and_garden'
+            | 'pet_supplies'
+            | 'shoes'
+            | 'software'
+            | 'sports_and_outdoors'
+            | 'tools_and_home_improvement'
+            | 'toys_and_games'
+            | 'video_games'
+            | 'women_clothing';
+
+          export type SellerRating =
+            | 'high'
+            | 'low'
+            | 'medium'
+            | 'very_high'
+            | 'very_low';
+        }
+
+        export namespace RoundTripReservationDetail {
+          export interface Arrival {
+            /**
+             * Address of the arrival location.
+             */
+            address?: Arrival.Address;
+
+            /**
+             * Identifier name or reference for the arrival location.
+             */
+            arrival_location?: string;
+          }
+
+          export interface Departure {
+            /**
+             * Address of the departure location.
+             */
+            address?: Departure.Address;
+
+            /**
+             * Timestamp of departure.
+             */
+            departs_at?: number;
+
+            /**
+             * Identifier name or reference for the origin location.
+             */
+            departure_location?: string;
+          }
+
+          export interface Insurance {
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Name of the company providing the insurance.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type?: Insurance.InsuranceType;
+
+            /**
+             * Price of insurance in cents.
+             */
+            price?: number;
+          }
+
+          export interface Passenger {
+            /**
+             * The family name of the person.
+             */
+            family_name?: string;
+
+            /**
+             * The given name of the person.
+             */
+            given_name?: string;
+          }
+
+          export type TicketClass =
+            | 'business'
+            | 'economy'
+            | 'first_class'
+            | 'premium_economy';
+
+          export namespace Arrival {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Departure {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Insurance {
+            export type InsuranceType =
+              | 'baggage'
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+        }
+
+        export namespace TrainReservationDetail {
+          export interface Arrival {
+            /**
+             * Address of the arrival location.
+             */
+            address?: Arrival.Address;
+
+            /**
+             * Identifier name or reference for the arrival location.
+             */
+            arrival_location?: string;
+          }
+
+          export interface Departure {
+            /**
+             * Address of the departure location.
+             */
+            address?: Departure.Address;
+
+            /**
+             * Timestamp of departure.
+             */
+            departs_at?: number;
+
+            /**
+             * Identifier name or reference for the origin location.
+             */
+            departure_location?: string;
+          }
+
+          export interface Insurance {
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Name of the company providing the insurance.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type?: Insurance.InsuranceType;
+
+            /**
+             * Price of insurance in cents.
+             */
+            price?: number;
+          }
+
+          export interface Passenger {
+            /**
+             * The family name of the person.
+             */
+            family_name?: string;
+
+            /**
+             * The given name of the person.
+             */
+            given_name?: string;
+          }
+
+          export type TicketClass =
+            | 'business'
+            | 'economy'
+            | 'first_class'
+            | 'premium_economy';
+
+          export namespace Arrival {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Departure {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Insurance {
+            export type InsuranceType =
+              | 'baggage'
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+        }
+
+        export namespace Voucher {
+          export type VoucherType =
+            | 'digital_product'
+            | 'discount'
+            | 'gift_card'
+            | 'physical_product'
+            | 'services';
         }
       }
     }
@@ -6835,6 +11958,48 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace Paypal {
+      export interface LineItem {
+        /**
+         * Type of the line item.
+         */
+        category?: LineItem.Category;
+
+        /**
+         * Description of the line item.
+         */
+        description?: string;
+
+        /**
+         * Descriptive name of the line item.
+         */
+        name: string;
+
+        /**
+         * Quantity of the line item. Must be a positive number.
+         */
+        quantity: number;
+
+        /**
+         * Client facing stock keeping unit, article number or similar.
+         */
+        sku?: string;
+
+        /**
+         * The Stripe account ID of the connected account that sells the item.
+         */
+        sold_by?: string;
+
+        /**
+         * The tax information for the line item.
+         */
+        tax?: LineItem.Tax;
+
+        /**
+         * Price for a single unit of the line item in minor units. Cannot be a negative number.
+         */
+        unit_amount: number;
+      }
+
       export type PreferredLocale =
         | 'cs-CZ'
         | 'da-DK'
@@ -6859,6 +12024,26 @@ export namespace PaymentIntentCreateParams {
         | 'sv-SE';
 
       export type SetupFutureUsage = 'none' | 'off_session';
+
+      export namespace LineItem {
+        export type Category = 'digital_goods' | 'donation' | 'physical_goods';
+
+        export interface Tax {
+          /**
+           * The tax for a single unit of the line item in minor units. Cannot be a negative number.
+           */
+          amount: number;
+
+          /**
+           * The tax behavior for the line item.
+           */
+          behavior: Tax.Behavior;
+        }
+
+        export namespace Tax {
+          export type Behavior = 'exclusive' | 'inclusive';
+        }
+      }
     }
 
     export namespace Payto {
@@ -6926,6 +12111,63 @@ export namespace PaymentIntentCreateParams {
 
     export namespace Pix {
       export type AmountIncludesIof = 'always' | 'never';
+
+      export interface MandateOptions {
+        /**
+         * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
+         */
+        amount?: number;
+
+        /**
+         * Determines if the amount includes the IOF tax. Defaults to `never`.
+         */
+        amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+        /**
+         * Type of amount. Defaults to `maximum`.
+         */
+        amount_type?: MandateOptions.AmountType;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Only `brl` is supported currently.
+         */
+        currency?: string;
+
+        /**
+         * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+         */
+        end_date?: string;
+
+        /**
+         * Schedule at which the future payments will be charged. Defaults to `monthly`.
+         */
+        payment_schedule?: MandateOptions.PaymentSchedule;
+
+        /**
+         * Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
+         */
+        reference?: string;
+
+        /**
+         * Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future. Defaults to 3 days after the current date.
+         */
+        start_date?: string;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session';
+
+      export namespace MandateOptions {
+        export type AmountIncludesIof = 'always' | 'never';
+
+        export type AmountType = 'fixed' | 'maximum';
+
+        export type PaymentSchedule =
+          | 'halfyearly'
+          | 'monthly'
+          | 'quarterly'
+          | 'weekly'
+          | 'yearly';
+      }
     }
 
     export namespace RevolutPay {
@@ -6953,6 +12195,10 @@ export namespace PaymentIntentCreateParams {
         | 'nl'
         | 'pl';
 
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
+    export namespace StripeBalance {
       export type SetupFutureUsage = 'none' | 'off_session';
     }
 
@@ -6992,6 +12238,11 @@ export namespace PaymentIntentCreateParams {
          * Provide filters for the linked accounts that the customer can select for the payment method.
          */
         filters?: FinancialConnections.Filters;
+
+        /**
+         * Customize manual entry behavior
+         */
+        manual_entry?: FinancialConnections.ManualEntry;
 
         /**
          * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
@@ -7042,6 +12293,18 @@ export namespace PaymentIntentCreateParams {
            * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
            */
           account_subcategories?: Array<Filters.AccountSubcategory>;
+
+          /**
+           * ID of the institution to use to filter for selectable accounts.
+           */
+          institution?: string;
+        }
+
+        export interface ManualEntry {
+          /**
+           * Settings for configuring manual entry of account details.
+           */
+          mode: ManualEntry.Mode;
         }
 
         export type Permission =
@@ -7050,10 +12313,18 @@ export namespace PaymentIntentCreateParams {
           | 'payment_method'
           | 'transactions';
 
-        export type Prefetch = 'balances' | 'ownership' | 'transactions';
+        export type Prefetch =
+          | 'balances'
+          | 'inferred_balances'
+          | 'ownership'
+          | 'transactions';
 
         export namespace Filters {
           export type AccountSubcategory = 'checking' | 'savings';
+        }
+
+        export namespace ManualEntry {
+          export type Mode = 'automatic' | 'custom';
         }
       }
 
@@ -7140,9 +12411,19 @@ export interface PaymentIntentUpdateParams {
   expand?: Array<string>;
 
   /**
+   * The FX rate in the quote is validated and used to convert the presentment amount to the settlement amount.
+   */
+  fx_quote?: string;
+
+  /**
    * Automations to be run during the PaymentIntent lifecycle
    */
   hooks?: PaymentIntentUpdateParams.Hooks;
+
+  /**
+   * This hash contains details about the Mandate to create.
+   */
+  mandate_data?: PaymentIntentUpdateParams.MandateData;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -7154,9 +12435,6 @@ export interface PaymentIntentUpdateParams {
    */
   payment_details?: Emptyable<PaymentIntentUpdateParams.PaymentDetails>;
 
-  /**
-   * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://docs.stripe.com/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent. To unset this field to null, pass in an empty string.
-   */
   payment_method?: string;
 
   /**
@@ -7255,6 +12533,11 @@ export namespace PaymentIntentUpdateParams {
     shipping?: Emptyable<AmountDetails.Shipping>;
 
     /**
+     * Contains information about the surcharge portion of the amount.
+     */
+    surcharge?: Emptyable<AmountDetails.Surcharge>;
+
+    /**
      * Contains information about the tax portion of the amount.
      */
     tax?: Emptyable<AmountDetails.Tax>;
@@ -7282,7 +12565,9 @@ export namespace PaymentIntentUpdateParams {
     | 'eps'
     | 'fpx'
     | 'giropay'
+    | 'gopay'
     | 'grabpay'
+    | 'id_bank_transfer'
     | 'ideal'
     | 'kakao_pay'
     | 'klarna'
@@ -7299,14 +12584,19 @@ export namespace PaymentIntentUpdateParams {
     | 'payco'
     | 'paynow'
     | 'paypal'
+    | 'paypay'
     | 'payto'
     | 'pix'
     | 'promptpay'
+    | 'qris'
+    | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
     | 'sepa_debit'
+    | 'shopeepay'
     | 'sofort'
+    | 'stripe_balance'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -7321,7 +12611,24 @@ export namespace PaymentIntentUpdateParams {
     inputs?: Hooks.Inputs;
   }
 
+  export interface MandateData {
+    /**
+     * This hash contains details about the customer acceptance of the Mandate.
+     */
+    customer_acceptance: MandateData.CustomerAcceptance;
+  }
+
   export interface PaymentDetails {
+    /**
+     * Car rental details for this PaymentIntent.
+     */
+    car_rental?: PaymentDetails.CarRental;
+
+    /**
+     * Car rental data for this PaymentIntent.
+     */
+    car_rental_data?: Emptyable<Array<PaymentDetails.CarRentalDatum>>;
+
     /**
      * A unique value to identify the customer. This field is available only for card payments.
      *
@@ -7330,11 +12637,41 @@ export namespace PaymentIntentUpdateParams {
     customer_reference?: Emptyable<string>;
 
     /**
+     * Event details for this PaymentIntent
+     */
+    event_details?: PaymentDetails.EventDetails;
+
+    /**
+     * Flight reservation details for this PaymentIntent
+     */
+    flight?: PaymentDetails.Flight;
+
+    /**
+     * Flight data for this PaymentIntent.
+     */
+    flight_data?: Emptyable<Array<PaymentDetails.FlightDatum>>;
+
+    /**
+     * Lodging reservation details for this PaymentIntent
+     */
+    lodging?: PaymentDetails.Lodging;
+
+    /**
+     * Lodging data for this PaymentIntent.
+     */
+    lodging_data?: Emptyable<Array<PaymentDetails.LodgingDatum>>;
+
+    /**
      * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
      *
      * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
      */
     order_reference?: Emptyable<string>;
+
+    /**
+     * Subscription details for this PaymentIntent
+     */
+    subscription?: PaymentDetails.Subscription;
   }
 
   export interface PaymentMethodData {
@@ -7439,9 +12776,19 @@ export namespace PaymentIntentUpdateParams {
     giropay?: PaymentMethodData.Giropay;
 
     /**
+     * If this is a Gopay PaymentMethod, this hash contains details about the Gopay payment method.
+     */
+    gopay?: PaymentMethodData.Gopay;
+
+    /**
      * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
      */
     grabpay?: PaymentMethodData.Grabpay;
+
+    /**
+     * If this is an `IdBankTransfer` PaymentMethod, this hash contains details about the IdBankTransfer payment method.
+     */
+    id_bank_transfer?: PaymentMethodData.IdBankTransfer;
 
     /**
      * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -7539,6 +12886,11 @@ export namespace PaymentIntentUpdateParams {
     paypal?: PaymentMethodData.Paypal;
 
     /**
+     * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+     */
+    paypay?: PaymentMethodData.Paypay;
+
+    /**
      * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
      */
     payto?: PaymentMethodData.Payto;
@@ -7554,9 +12906,19 @@ export namespace PaymentIntentUpdateParams {
     promptpay?: PaymentMethodData.Promptpay;
 
     /**
+     * If this is a `qris` PaymentMethod, this hash contains details about the QRIS payment method.
+     */
+    qris?: PaymentMethodData.Qris;
+
+    /**
      * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
      */
     radar_options?: PaymentMethodData.RadarOptions;
+
+    /**
+     * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
+     */
+    rechnung?: PaymentMethodData.Rechnung;
 
     /**
      * If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
@@ -7579,9 +12941,19 @@ export namespace PaymentIntentUpdateParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
+     */
+    shopeepay?: PaymentMethodData.Shopeepay;
+
+    /**
      * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
      */
     sofort?: PaymentMethodData.Sofort;
+
+    /**
+     * This hash contains details about the Stripe balance payment method.
+     */
+    stripe_balance?: PaymentMethodData.StripeBalance;
 
     /**
      * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -7721,9 +13093,19 @@ export namespace PaymentIntentUpdateParams {
     giropay?: Emptyable<PaymentMethodOptions.Giropay>;
 
     /**
+     * If this is a `gopay` PaymentMethod, this sub-hash contains details about the Gopay payment method options.
+     */
+    gopay?: Emptyable<PaymentMethodOptions.Gopay>;
+
+    /**
      * If this is a `grabpay` PaymentMethod, this sub-hash contains details about the Grabpay payment method options.
      */
     grabpay?: Emptyable<PaymentMethodOptions.Grabpay>;
+
+    /**
+     * If this is a `id_bank_transfer` PaymentMethod, this sub-hash contains details about the Indonesia Bank Transfer payment method options.
+     */
+    id_bank_transfer?: Emptyable<PaymentMethodOptions.IdBankTransfer>;
 
     /**
      * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
@@ -7816,6 +13198,11 @@ export namespace PaymentIntentUpdateParams {
     paypal?: Emptyable<PaymentMethodOptions.Paypal>;
 
     /**
+     * If this is a `paypay` PaymentMethod, this sub-hash contains details about the PayPay payment method options.
+     */
+    paypay?: Emptyable<PaymentMethodOptions.Paypay>;
+
+    /**
      * If this is a `payto` PaymentMethod, this sub-hash contains details about the PayTo payment method options.
      */
     payto?: Emptyable<PaymentMethodOptions.Payto>;
@@ -7829,6 +13216,16 @@ export namespace PaymentIntentUpdateParams {
      * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
      */
     promptpay?: Emptyable<PaymentMethodOptions.Promptpay>;
+
+    /**
+     * If this is a `qris` PaymentMethod, this sub-hash contains details about the QRIS payment method options.
+     */
+    qris?: Emptyable<PaymentMethodOptions.Qris>;
+
+    /**
+     * If this is a `rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
+     */
+    rechnung?: Emptyable<PaymentMethodOptions.Rechnung>;
 
     /**
      * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Revolut Pay payment method options.
@@ -7851,9 +13248,19 @@ export namespace PaymentIntentUpdateParams {
     sepa_debit?: Emptyable<PaymentMethodOptions.SepaDebit>;
 
     /**
+     * If this is a `shopeepay` PaymentMethod, this sub-hash contains details about the ShopeePay payment method options.
+     */
+    shopeepay?: Emptyable<PaymentMethodOptions.Shopeepay>;
+
+    /**
      * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
      */
     sofort?: Emptyable<PaymentMethodOptions.Sofort>;
+
+    /**
+     * If this is a `stripe_balance` PaymentMethod, this sub-hash contains details about the Stripe Balance payment method options.
+     */
+    stripe_balance?: Emptyable<PaymentMethodOptions.StripeBalance>;
 
     /**
      * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
@@ -7986,6 +13393,18 @@ export namespace PaymentIntentUpdateParams {
       to_postal_code?: Emptyable<string>;
     }
 
+    export interface Surcharge {
+      /**
+       * Portion of the amount that corresponds to a surcharge.
+       */
+      amount?: Emptyable<number>;
+
+      /**
+       * Indicate whether to enforce validations on the surcharge amount.
+       */
+      enforce_validation?: Emptyable<Surcharge.EnforceValidation>;
+    }
+
     export interface Tax {
       /**
        * The total amount of tax on the transaction represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
@@ -8089,6 +13508,10 @@ export namespace PaymentIntentUpdateParams {
         }
       }
     }
+
+    export namespace Surcharge {
+      export type EnforceValidation = 'automatic' | 'disabled' | 'enabled';
+    }
   }
 
   export namespace Hooks {
@@ -8105,6 +13528,1859 @@ export namespace PaymentIntentUpdateParams {
          * The [TaxCalculation](https://docs.stripe.com/api/tax/calculations) id
          */
         calculation: Emptyable<string>;
+      }
+    }
+  }
+
+  export namespace MandateData {
+    export interface CustomerAcceptance {
+      /**
+       * If this is a Mandate accepted online, this hash contains details about the online acceptance.
+       */
+      online: CustomerAcceptance.Online;
+
+      /**
+       * The type of customer acceptance information included with the Mandate.
+       */
+      type: 'online';
+    }
+
+    export namespace CustomerAcceptance {
+      export interface Online {
+        /**
+         * The IP address from which the Mandate was accepted by the customer.
+         */
+        ip_address?: string;
+
+        /**
+         * The user agent of the browser from which the Mandate was accepted by the customer.
+         */
+        user_agent?: string;
+      }
+    }
+  }
+
+  export namespace PaymentDetails {
+    export interface CarRental {
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: CarRental.Affiliate;
+
+      /**
+       * The booking number associated with the car rental.
+       */
+      booking_number: string;
+
+      /**
+       * Class code of the car.
+       */
+      car_class_code?: string;
+
+      /**
+       * Make of the car.
+       */
+      car_make?: string;
+
+      /**
+       * Model of the car.
+       */
+      car_model?: string;
+
+      /**
+       * The name of the rental car company.
+       */
+      company?: string;
+
+      /**
+       * The customer service phone number of the car rental company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * Number of days the car is being rented.
+       */
+      days_rented: number;
+
+      /**
+       * Delivery details for this purchase.
+       */
+      delivery?: CarRental.Delivery;
+
+      /**
+       * The details of the distance traveled during the rental period.
+       */
+      distance?: CarRental.Distance;
+
+      /**
+       * The details of the passengers in the travel reservation
+       */
+      drivers?: Array<CarRental.Driver>;
+
+      /**
+       * List of additional charges being billed.
+       */
+      extra_charges?: Array<CarRental.ExtraCharge>;
+
+      /**
+       * Indicates if the customer did not keep nor cancel their booking.
+       */
+      no_show?: boolean;
+
+      /**
+       * Car pick-up address.
+       */
+      pickup_address?: AddressParam;
+
+      /**
+       * Car pick-up time. Measured in seconds since the Unix epoch.
+       */
+      pickup_at: number;
+
+      /**
+       * Name of the pickup location.
+       */
+      pickup_location_name?: string;
+
+      /**
+       * Rental rate.
+       */
+      rate_amount?: number;
+
+      /**
+       * The frequency at which the rate amount is applied. One of `day`, `week` or `month`
+       */
+      rate_interval?: CarRental.RateInterval;
+
+      /**
+       * The name of the person or entity renting the car.
+       */
+      renter_name?: string;
+
+      /**
+       * Car return address.
+       */
+      return_address?: AddressParam;
+
+      /**
+       * Car return time. Measured in seconds since the Unix epoch.
+       */
+      return_at: number;
+
+      /**
+       * Name of the return location.
+       */
+      return_location_name?: string;
+
+      /**
+       * Indicates whether the goods or services are tax-exempt or tax is not collected.
+       */
+      tax_exempt?: boolean;
+
+      /**
+       * The vehicle identification number.
+       */
+      vehicle_identification_number?: string;
+    }
+
+    export interface CarRentalDatum {
+      /**
+       * Affiliate (such as travel agency) details for the rental.
+       */
+      affiliate?: CarRentalDatum.Affiliate;
+
+      /**
+       * Booking confirmation number for the car rental.
+       */
+      booking_number?: string;
+
+      /**
+       * Name of the car rental company.
+       */
+      carrier_name?: string;
+
+      /**
+       * Customer service phone number for the car rental company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * Number of days the car is being rented.
+       */
+      days_rented?: number;
+
+      /**
+       * Distance details for the rental.
+       */
+      distance?: CarRentalDatum.Distance;
+
+      /**
+       * List of drivers for the rental.
+       */
+      drivers?: Array<CarRentalDatum.Driver>;
+
+      /**
+       * Drop-off location details.
+       */
+      drop_off: CarRentalDatum.DropOff;
+
+      /**
+       * Insurance details for the rental.
+       */
+      insurances?: Array<CarRentalDatum.Insurance>;
+
+      /**
+       * Indicates if the customer was a no-show.
+       */
+      no_show_indicator?: boolean;
+
+      /**
+       * Pickup location details.
+       */
+      pickup: CarRentalDatum.Pickup;
+
+      /**
+       * Name of the person renting the vehicle.
+       */
+      renter_name?: string;
+
+      /**
+       * Total cost breakdown for the rental.
+       */
+      total: CarRentalDatum.Total;
+
+      /**
+       * Vehicle details for the rental.
+       */
+      vehicle?: CarRentalDatum.Vehicle;
+    }
+
+    export interface EventDetails {
+      /**
+       * Indicates if the tickets are digitally checked when entering the venue.
+       */
+      access_controlled_venue?: boolean;
+
+      /**
+       * The event location's address.
+       */
+      address?: AddressParam;
+
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: EventDetails.Affiliate;
+
+      /**
+       * The name of the company
+       */
+      company?: string;
+
+      /**
+       * Delivery details for this purchase.
+       */
+      delivery?: EventDetails.Delivery;
+
+      /**
+       * Event end time. Measured in seconds since the Unix epoch.
+       */
+      ends_at?: number;
+
+      /**
+       * Type of the event entertainment (concert, sports event etc)
+       */
+      genre?: string;
+
+      /**
+       * The name of the event.
+       */
+      name: string;
+
+      /**
+       * Event start time. Measured in seconds since the Unix epoch.
+       */
+      starts_at?: number;
+    }
+
+    export interface Flight {
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: Flight.Affiliate;
+
+      /**
+       * The agency number (i.e. International Air Transport Association (IATA) agency number) of the travel agency that made the booking.
+       */
+      agency_number?: string;
+
+      /**
+       * The International Air Transport Association (IATA) carrier code of the carrier that issued the ticket.
+       */
+      carrier?: string;
+
+      /**
+       * Delivery details for this purchase.
+       */
+      delivery?: Flight.Delivery;
+
+      /**
+       * The name of the person or entity on the reservation.
+       */
+      passenger_name?: string;
+
+      /**
+       * The details of the passengers in the travel reservation.
+       */
+      passengers?: Array<Flight.Passenger>;
+
+      /**
+       * The individual flight segments associated with the trip.
+       */
+      segments: Array<Flight.Segment>;
+
+      /**
+       * The ticket number associated with the travel reservation.
+       */
+      ticket_number?: string;
+    }
+
+    export interface FlightDatum {
+      /**
+       * Affiliate details if applicable.
+       */
+      affiliate?: FlightDatum.Affiliate;
+
+      /**
+       * Reservation reference.
+       */
+      booking_number?: string;
+
+      /**
+       * Computerized reservation system used to make the reservation and purchase the ticket.
+       */
+      computerized_reservation_system?: string;
+
+      /**
+       * Ticket restrictions.
+       */
+      endorsements_and_restrictions?: string;
+
+      /**
+       * List of insurances.
+       */
+      insurances?: Array<FlightDatum.Insurance>;
+
+      /**
+       * List of passengers.
+       */
+      passengers?: Array<FlightDatum.Passenger>;
+
+      /**
+       * List of flight segments.
+       */
+      segments: Array<FlightDatum.Segment>;
+
+      /**
+       * Electronic ticket indicator.
+       */
+      ticket_electronically_issued_indicator?: boolean;
+
+      /**
+       * Total cost breakdown.
+       */
+      total: FlightDatum.Total;
+
+      /**
+       * Type of flight transaction.
+       */
+      transaction_type?: FlightDatum.TransactionType;
+    }
+
+    export interface Lodging {
+      /**
+       * The lodging location's address.
+       */
+      address?: AddressParam;
+
+      /**
+       * The number of adults on the booking
+       */
+      adults?: number;
+
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: Lodging.Affiliate;
+
+      /**
+       * The booking number associated with the lodging reservation.
+       */
+      booking_number?: string;
+
+      /**
+       * The lodging category
+       */
+      category?: Lodging.Category;
+
+      /**
+       * Lodging check-in time. Measured in seconds since the Unix epoch.
+       */
+      checkin_at: number;
+
+      /**
+       * Lodging check-out time. Measured in seconds since the Unix epoch.
+       */
+      checkout_at: number;
+
+      /**
+       * The customer service phone number of the lodging company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * The daily lodging room rate.
+       */
+      daily_room_rate_amount?: number;
+
+      /**
+       * Delivery details for this purchase.
+       */
+      delivery?: Lodging.Delivery;
+
+      /**
+       * List of additional charges being billed.
+       */
+      extra_charges?: Array<Lodging.ExtraCharge>;
+
+      /**
+       * Indicates whether the lodging location is compliant with the Fire Safety Act.
+       */
+      fire_safety_act_compliance?: boolean;
+
+      /**
+       * The name of the lodging location.
+       */
+      name?: string;
+
+      /**
+       * Indicates if the customer did not keep their booking while failing to cancel the reservation.
+       */
+      no_show?: boolean;
+
+      /**
+       * The number of rooms on the booking
+       */
+      number_of_rooms?: number;
+
+      /**
+       * The details of the passengers in the travel reservation
+       */
+      passengers?: Array<Lodging.Passenger>;
+
+      /**
+       * The phone number of the lodging location.
+       */
+      property_phone_number?: string;
+
+      /**
+       * The room class for this purchase.
+       */
+      room_class?: string;
+
+      /**
+       * The number of room nights
+       */
+      room_nights?: number;
+
+      /**
+       * The total tax amount associating with the room reservation.
+       */
+      total_room_tax_amount?: number;
+
+      /**
+       * The total tax amount
+       */
+      total_tax_amount?: number;
+    }
+
+    export interface LodgingDatum {
+      /**
+       * Accommodation details for the lodging.
+       */
+      accommodation?: LodgingDatum.Accommodation;
+
+      /**
+       * Affiliate details if applicable.
+       */
+      affiliate?: LodgingDatum.Affiliate;
+
+      /**
+       * Booking confirmation number for the lodging.
+       */
+      booking_number?: string;
+
+      /**
+       * Check-in date.
+       */
+      checkin_at: number;
+
+      /**
+       * Check-out date.
+       */
+      checkout_at: number;
+
+      /**
+       * Customer service phone number for the lodging company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * Whether the lodging is compliant with any hotel fire safety regulations.
+       */
+      fire_safety_act_compliance_indicator?: boolean;
+
+      /**
+       * List of guests for the lodging.
+       */
+      guests?: Array<LodgingDatum.Guest>;
+
+      /**
+       * Host details for the lodging.
+       */
+      host?: LodgingDatum.Host;
+
+      /**
+       * List of insurances for the lodging.
+       */
+      insurances?: Array<LodgingDatum.Insurance>;
+
+      /**
+       * Whether the renter is a no-show.
+       */
+      no_show_indicator?: boolean;
+
+      /**
+       * Renter ID number for the lodging.
+       */
+      renter_id_number?: string;
+
+      /**
+       * Renter name for the lodging.
+       */
+      renter_name?: string;
+
+      /**
+       * Total details for the lodging.
+       */
+      total: LodgingDatum.Total;
+    }
+
+    export interface Subscription {
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: Subscription.Affiliate;
+
+      /**
+       * Info whether the subscription will be auto renewed upon expiry.
+       */
+      auto_renewal?: boolean;
+
+      /**
+       * Subscription billing details for this purchase.
+       */
+      billing_interval?: Subscription.BillingInterval;
+
+      /**
+       * Subscription end time. Measured in seconds since the Unix epoch.
+       */
+      ends_at?: number;
+
+      /**
+       * Name of the product on subscription. e.g. Apple Music Subscription
+       */
+      name: string;
+
+      /**
+       * Subscription start time. Measured in seconds since the Unix epoch.
+       */
+      starts_at?: number;
+    }
+
+    export namespace CarRental {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        /**
+         * Details of the recipient.
+         */
+        recipient?: Delivery.Recipient;
+      }
+
+      export interface Distance {
+        /**
+         * Distance traveled.
+         */
+        amount?: number;
+
+        /**
+         * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+         */
+        unit?: Distance.Unit;
+      }
+
+      export interface Driver {
+        /**
+         * Driver's identification number.
+         */
+        driver_identification_number?: string;
+
+        /**
+         * Driver's tax number.
+         */
+        driver_tax_number?: string;
+
+        /**
+         * Full name of the person or entity on the car reservation.
+         */
+        name: string;
+      }
+
+      export type ExtraCharge =
+        | 'extra_mileage'
+        | 'gas'
+        | 'late_return'
+        | 'one_way_service'
+        | 'parking_violation';
+
+      export type RateInterval = 'day' | 'month' | 'week';
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+
+      export namespace Distance {
+        export type Unit = 'kilometers' | 'miles';
+      }
+    }
+
+    export namespace CarRentalDatum {
+      export interface Affiliate {
+        /**
+         * Affiliate partner code.
+         */
+        code?: string;
+
+        /**
+         * Name of affiliate partner.
+         */
+        name?: string;
+      }
+
+      export interface Distance {
+        /**
+         * Distance traveled.
+         */
+        amount: number;
+
+        /**
+         * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+         */
+        unit: Distance.Unit;
+      }
+
+      export interface Driver {
+        /**
+         * Driver's date of birth.
+         */
+        date_of_birth?: Driver.DateOfBirth;
+
+        /**
+         * Driver's identification number.
+         */
+        driver_identification_number?: string;
+
+        /**
+         * Driver's tax number.
+         */
+        driver_tax_number?: string;
+
+        /**
+         * Driver's full name.
+         */
+        name: string;
+      }
+
+      export interface DropOff {
+        /**
+         * Address of the rental location.
+         */
+        address: DropOff.Address;
+
+        /**
+         * Location name.
+         */
+        location_name?: string;
+
+        /**
+         * Timestamp for the location.
+         */
+        time: number;
+      }
+
+      export interface Insurance {
+        /**
+         * Amount of the insurance coverage in cents.
+         */
+        amount: number;
+
+        /**
+         * Currency of the insurance amount.
+         */
+        currency?: string;
+
+        /**
+         * Name of the insurance company.
+         */
+        insurance_company_name?: string;
+
+        /**
+         * Type of insurance coverage.
+         */
+        insurance_type: Insurance.InsuranceType;
+      }
+
+      export interface Pickup {
+        /**
+         * Address of the rental location.
+         */
+        address: Pickup.Address;
+
+        /**
+         * Location name.
+         */
+        location_name?: string;
+
+        /**
+         * Timestamp for the location.
+         */
+        time: number;
+      }
+
+      export interface Total {
+        /**
+         * Total amount in cents.
+         */
+        amount: number;
+
+        /**
+         * Currency of the amount.
+         */
+        currency?: string;
+
+        /**
+         * Discount details for the rental.
+         */
+        discounts?: Total.Discounts;
+
+        /**
+         * Additional charges for the rental.
+         */
+        extra_charges?: Array<Total.ExtraCharge>;
+
+        /**
+         * Rate per unit for the rental.
+         */
+        rate_per_unit?: number;
+
+        /**
+         * Unit of measurement for the rate.
+         */
+        rate_unit?: Total.RateUnit;
+
+        /**
+         * Tax breakdown for the rental.
+         */
+        tax?: Total.Tax;
+      }
+
+      export interface Vehicle {
+        /**
+         * Make of the rental vehicle.
+         */
+        make?: string;
+
+        /**
+         * Model of the rental vehicle.
+         */
+        model?: string;
+
+        /**
+         * Odometer reading at the time of rental.
+         */
+        odometer?: number;
+
+        /**
+         * Type of the rental vehicle.
+         */
+        type?: Vehicle.Type;
+
+        /**
+         * Class of the rental vehicle.
+         */
+        vehicle_class?: Vehicle.VehicleClass;
+
+        /**
+         * Vehicle identification number (VIN).
+         */
+        vehicle_identification_number?: string;
+      }
+
+      export namespace Distance {
+        export type Unit = 'kilometers' | 'miles';
+      }
+
+      export namespace Driver {
+        export interface DateOfBirth {
+          /**
+           * Day of birth (1-31).
+           */
+          day: number;
+
+          /**
+           * Month of birth (1-12).
+           */
+          month: number;
+
+          /**
+           * Year of birth (must be greater than 1900).
+           */
+          year: number;
+        }
+      }
+
+      export namespace DropOff {
+        export interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string;
+
+          /**
+           * Address line 1, such as the street, PO Box, or company name.
+           */
+          line1: string;
+
+          /**
+           * Address line 2, such as the apartment, suite, unit, or building.
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code: string;
+
+          /**
+           * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+           */
+          state?: string;
+        }
+      }
+
+      export namespace Insurance {
+        export type InsuranceType =
+          | 'liability_supplement'
+          | 'loss_damage_waiver'
+          | 'other'
+          | 'partial_damage_waiver'
+          | 'personal_accident'
+          | 'personal_effects';
+      }
+
+      export namespace Pickup {
+        export interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string;
+
+          /**
+           * Address line 1, such as the street, PO Box, or company name.
+           */
+          line1: string;
+
+          /**
+           * Address line 2, such as the apartment, suite, unit, or building.
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code: string;
+
+          /**
+           * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+           */
+          state?: string;
+        }
+      }
+
+      export namespace Total {
+        export interface Discounts {
+          /**
+           * Corporate client discount code.
+           */
+          corporate_client_code?: string;
+
+          /**
+           * Coupon code applied to the rental.
+           */
+          coupon?: string;
+
+          /**
+           * Maximum number of free miles or kilometers included.
+           */
+          maximum_free_miles_or_kilometers?: number;
+        }
+
+        export interface ExtraCharge {
+          /**
+           * Amount of the extra charge in cents.
+           */
+          amount: number;
+
+          /**
+           * Type of extra charge.
+           */
+          type: ExtraCharge.Type;
+        }
+
+        export type RateUnit =
+          | 'days'
+          | 'kilometers'
+          | 'miles'
+          | 'months'
+          | 'weeks';
+
+        export interface Tax {
+          /**
+           * Indicates if the transaction is tax exempt.
+           */
+          tax_exempt_indicator?: boolean;
+
+          /**
+           * Array of tax details.
+           */
+          taxes?: Array<Tax.Tax>;
+        }
+
+        export namespace ExtraCharge {
+          export type Type =
+            | 'extra_mileage'
+            | 'gas'
+            | 'gps'
+            | 'late_charge'
+            | 'one_way_drop_off'
+            | 'other'
+            | 'parking'
+            | 'phone'
+            | 'regular_mileage'
+            | 'towing';
+        }
+
+        export namespace Tax {
+          export interface Tax {
+            /**
+             * Tax amount.
+             */
+            amount?: number;
+
+            /**
+             * Tax rate applied.
+             */
+            rate?: number;
+
+            /**
+             * Type of tax applied.
+             */
+            type?: string;
+          }
+        }
+      }
+
+      export namespace Vehicle {
+        export type Type =
+          | 'cargo_van'
+          | 'compact'
+          | 'economy'
+          | 'exotic'
+          | 'exotic_suv'
+          | 'fifteen_passenger_van'
+          | 'four_wheel_drive'
+          | 'full_size'
+          | 'intermediate'
+          | 'large_suv'
+          | 'large_truck'
+          | 'luxury'
+          | 'medium_suv'
+          | 'midsize'
+          | 'mini'
+          | 'minivan'
+          | 'miscellaneous'
+          | 'moped'
+          | 'moving_van'
+          | 'premium'
+          | 'regular'
+          | 'small_medium_truck'
+          | 'small_suv'
+          | 'special'
+          | 'standard'
+          | 'stretch'
+          | 'subcompact'
+          | 'taxi'
+          | 'twelve_foot_truck'
+          | 'twelve_passenger_van'
+          | 'twenty_foot_truck'
+          | 'twenty_four_foot_truck'
+          | 'twenty_six_foot_truck'
+          | 'unique';
+
+        export type VehicleClass =
+          | 'business'
+          | 'economy'
+          | 'first_class'
+          | 'premium_economy';
+      }
+    }
+
+    export namespace EventDetails {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        /**
+         * Details of the recipient.
+         */
+        recipient?: Delivery.Recipient;
+      }
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+    }
+
+    export namespace Flight {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        /**
+         * Details of the recipient.
+         */
+        recipient?: Delivery.Recipient;
+      }
+
+      export interface Passenger {
+        /**
+         * Full name of the person or entity on the flight reservation.
+         */
+        name: string;
+      }
+
+      export interface Segment {
+        /**
+         * The flight segment amount.
+         */
+        amount?: number;
+
+        /**
+         * The International Air Transport Association (IATA) airport code for the arrival airport.
+         */
+        arrival_airport?: string;
+
+        /**
+         * The arrival time for the flight segment. Measured in seconds since the Unix epoch.
+         */
+        arrives_at?: number;
+
+        /**
+         * The International Air Transport Association (IATA) carrier code of the carrier operating the flight segment.
+         */
+        carrier?: string;
+
+        /**
+         * The departure time for the flight segment. Measured in seconds since the Unix epoch.
+         */
+        departs_at: number;
+
+        /**
+         * The International Air Transport Association (IATA) airport code for the departure airport.
+         */
+        departure_airport?: string;
+
+        /**
+         * The flight number associated with the segment
+         */
+        flight_number?: string;
+
+        /**
+         * The fare class for the segment.
+         */
+        service_class?: Segment.ServiceClass;
+      }
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+
+      export namespace Segment {
+        export type ServiceClass =
+          | 'business'
+          | 'economy'
+          | 'first'
+          | 'premium_economy';
+      }
+    }
+
+    export namespace FlightDatum {
+      export interface Affiliate {
+        /**
+         * Affiliate partner code.
+         */
+        code?: string;
+
+        /**
+         * Name of affiliate partner.
+         */
+        name?: string;
+
+        /**
+         * Code provided by the company to a travel agent authorizing ticket issuance.
+         */
+        travel_authorization_code?: string;
+      }
+
+      export interface Insurance {
+        /**
+         * Insurance cost.
+         */
+        amount: number;
+
+        /**
+         * Insurance currency.
+         */
+        currency?: string;
+
+        /**
+         * Insurance company name.
+         */
+        insurance_company_name?: string;
+
+        /**
+         * Type of insurance.
+         */
+        insurance_type: Insurance.InsuranceType;
+      }
+
+      export interface Passenger {
+        /**
+         * Passenger's full name.
+         */
+        name: string;
+      }
+
+      export interface Segment {
+        /**
+         * Segment fare amount.
+         */
+        amount?: number;
+
+        /**
+         * Arrival details.
+         */
+        arrival: Segment.Arrival;
+
+        /**
+         * Airline carrier code.
+         */
+        carrier_code: string;
+
+        /**
+         * Carrier name.
+         */
+        carrier_name?: string;
+
+        /**
+         * Segment currency.
+         */
+        currency?: string;
+
+        /**
+         * Departure details.
+         */
+        departure: Segment.Departure;
+
+        /**
+         * Exchange ticket number.
+         */
+        exchange_ticket_number?: string;
+
+        /**
+         * Fare basis code.
+         */
+        fare_basis_code?: string;
+
+        /**
+         * Additional fees.
+         */
+        fees?: number;
+
+        /**
+         * Flight number.
+         */
+        flight_number?: string;
+
+        /**
+         * Stopover indicator.
+         */
+        is_stop_over_indicator?: boolean;
+
+        /**
+         * Refundable ticket indicator.
+         */
+        refundable?: boolean;
+
+        /**
+         * Class of service.
+         */
+        service_class: Segment.ServiceClass;
+
+        /**
+         * Tax amount for segment.
+         */
+        tax_amount?: number;
+
+        /**
+         * Ticket number.
+         */
+        ticket_number?: string;
+      }
+
+      export interface Total {
+        /**
+         * Total flight amount.
+         */
+        amount: number;
+
+        /**
+         * Reason for credit.
+         */
+        credit_reason?: Total.CreditReason;
+
+        /**
+         * Total currency.
+         */
+        currency?: string;
+
+        /**
+         * Discount details.
+         */
+        discounts?: Total.Discounts;
+
+        /**
+         * Additional charges.
+         */
+        extra_charges?: Array<Total.ExtraCharge>;
+
+        /**
+         * Tax breakdown.
+         */
+        tax?: Total.Tax;
+      }
+
+      export type TransactionType =
+        | 'exchange_ticket'
+        | 'miscellaneous'
+        | 'refund'
+        | 'ticket_purchase';
+
+      export namespace Insurance {
+        export type InsuranceType =
+          | 'baggage'
+          | 'bankruptcy'
+          | 'cancelation'
+          | 'emergency'
+          | 'medical';
+      }
+
+      export namespace Segment {
+        export interface Arrival {
+          /**
+           * Arrival airport IATA code.
+           */
+          airport: string;
+
+          /**
+           * Arrival date/time.
+           */
+          arrives_at?: number;
+
+          /**
+           * Arrival city.
+           */
+          city?: string;
+
+          /**
+           * Arrival country.
+           */
+          country?: string;
+        }
+
+        export interface Departure {
+          /**
+           * Departure airport IATA code.
+           */
+          airport: string;
+
+          /**
+           * Departure city.
+           */
+          city?: string;
+
+          /**
+           * Departure country.
+           */
+          country?: string;
+
+          /**
+           * Departure date/time.
+           */
+          departs_at: number;
+        }
+
+        export type ServiceClass =
+          | 'business'
+          | 'economy'
+          | 'first_class'
+          | 'premium_economy';
+      }
+
+      export namespace Total {
+        export type CreditReason =
+          | 'other'
+          | 'partial_ticket_refund'
+          | 'passenger_transport_ancillary_cancellation'
+          | 'ticket_and_ancillary_cancellation'
+          | 'ticket_cancellation';
+
+        export interface Discounts {
+          /**
+           * Corporate client discount code.
+           */
+          corporate_client_code?: string;
+        }
+
+        export interface ExtraCharge {
+          /**
+           * Amount of additional charges.
+           */
+          amount?: number;
+
+          /**
+           * Type of additional charges.
+           */
+          type?: ExtraCharge.Type;
+        }
+
+        export interface Tax {
+          /**
+           * Array of tax details.
+           */
+          taxes?: Array<Tax.Tax>;
+        }
+
+        export namespace ExtraCharge {
+          export type Type =
+            | 'additional_fees'
+            | 'ancillary_service_charges'
+            | 'exchange_fee';
+        }
+
+        export namespace Tax {
+          export interface Tax {
+            /**
+             * Tax amount.
+             */
+            amount?: number;
+
+            /**
+             * Tax rate.
+             */
+            rate?: number;
+
+            /**
+             * Type of tax.
+             */
+            type?: string;
+          }
+        }
+      }
+    }
+
+    export namespace Lodging {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export type Category = 'hotel' | 'vacation_rental';
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        /**
+         * Details of the recipient.
+         */
+        recipient?: Delivery.Recipient;
+      }
+
+      export type ExtraCharge =
+        | 'gift_shop'
+        | 'laundry'
+        | 'mini_bar'
+        | 'other'
+        | 'restaurant'
+        | 'telephone';
+
+      export interface Passenger {
+        /**
+         * Full name of the person or entity on the lodging reservation.
+         */
+        name: string;
+      }
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+    }
+
+    export namespace LodgingDatum {
+      export interface Accommodation {
+        /**
+         * Type of accommodation.
+         */
+        accommodation_type?: Accommodation.AccommodationType;
+
+        /**
+         * Bed type.
+         */
+        bed_type?: string;
+
+        /**
+         * Daily accommodation rate in cents.
+         */
+        daily_rate_amount?: number;
+
+        /**
+         * Number of nights.
+         */
+        nights?: number;
+
+        /**
+         * Number of rooms, cabanas, apartments, and so on.
+         */
+        number_of_rooms?: number;
+
+        /**
+         * Rate type.
+         */
+        rate_type?: string;
+
+        /**
+         * Whether smoking is allowed.
+         */
+        smoking_indicator?: boolean;
+      }
+
+      export interface Affiliate {
+        /**
+         * Affiliate partner code.
+         */
+        code?: string;
+
+        /**
+         * Affiliate partner name.
+         */
+        name?: string;
+      }
+
+      export interface Guest {
+        /**
+         * Guest's full name.
+         */
+        name: string;
+      }
+
+      export interface Host {
+        /**
+         * Address of the host.
+         */
+        address?: Host.Address;
+
+        /**
+         * Host's country of domicile.
+         */
+        country_of_domicile?: string;
+
+        /**
+         * Reference number for the host.
+         */
+        host_reference?: string;
+
+        /**
+         * Type of host.
+         */
+        host_type?: Host.HostType;
+
+        /**
+         * Name of the lodging property or host.
+         */
+        name?: string;
+
+        /**
+         * Total number of reservations for the host.
+         */
+        number_of_reservations?: number;
+
+        /**
+         * Property phone number.
+         */
+        property_phone_number?: string;
+
+        /**
+         * Host's registration date.
+         */
+        registered_at?: number;
+      }
+
+      export interface Insurance {
+        /**
+         * Price of the insurance coverage in cents.
+         */
+        amount: number;
+
+        /**
+         * Currency of the insurance amount.
+         */
+        currency?: string;
+
+        /**
+         * Name of the insurance company.
+         */
+        insurance_company_name?: string;
+
+        /**
+         * Type of insurance coverage.
+         */
+        insurance_type: Insurance.InsuranceType;
+      }
+
+      export interface Total {
+        /**
+         * Total price of the lodging reservation in cents.
+         */
+        amount: number;
+
+        /**
+         * Cash advances in cents.
+         */
+        cash_advances?: number;
+
+        /**
+         * Currency of the total amount.
+         */
+        currency?: string;
+
+        /**
+         * Discount details for the lodging.
+         */
+        discounts?: Total.Discounts;
+
+        /**
+         * Additional charges for the lodging.
+         */
+        extra_charges?: Array<Total.ExtraCharge>;
+
+        /**
+         * Prepaid amount in cents.
+         */
+        prepaid_amount?: number;
+
+        /**
+         * Tax breakdown for the lodging reservation.
+         */
+        tax?: Total.Tax;
+      }
+
+      export namespace Accommodation {
+        export type AccommodationType =
+          | 'apartment'
+          | 'cabana'
+          | 'house'
+          | 'penthouse'
+          | 'room'
+          | 'standard'
+          | 'suite'
+          | 'villa';
+      }
+
+      export namespace Host {
+        export interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string;
+
+          /**
+           * Address line 1, such as the street, PO Box, or company name.
+           */
+          line1: string;
+
+          /**
+           * Address line 2, such as the apartment, suite, unit, or building.
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code: string;
+
+          /**
+           * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+           */
+          state?: string;
+        }
+
+        export type HostType = 'hostel' | 'hotel' | 'owner' | 'rental_agency';
+      }
+
+      export namespace Insurance {
+        export type InsuranceType =
+          | 'bankruptcy'
+          | 'cancelation'
+          | 'emergency'
+          | 'medical';
+      }
+
+      export namespace Total {
+        export interface Discounts {
+          /**
+           * Corporate client discount code.
+           */
+          corporate_client_code?: string;
+
+          /**
+           * Coupon code.
+           */
+          coupon?: string;
+        }
+
+        export interface ExtraCharge {
+          /**
+           * Amount of the extra charge in cents.
+           */
+          amount?: number;
+
+          /**
+           * Type of extra charge.
+           */
+          type?: ExtraCharge.Type;
+        }
+
+        export interface Tax {
+          /**
+           * Indicates whether the transaction is tax exempt.
+           */
+          tax_exempt_indicator?: boolean;
+
+          /**
+           * Tax details.
+           */
+          taxes?: Array<Tax.Tax>;
+        }
+
+        export namespace ExtraCharge {
+          export type Type =
+            | 'gift_shop'
+            | 'laundry'
+            | 'mini_bar'
+            | 'other'
+            | 'phone'
+            | 'restaurant';
+        }
+
+        export namespace Tax {
+          export interface Tax {
+            /**
+             * Tax amount in cents.
+             */
+            amount?: number;
+
+            /**
+             * Tax rate.
+             */
+            rate?: number;
+
+            /**
+             * Type of tax applied.
+             */
+            type?: string;
+          }
+        }
+      }
+    }
+
+    export namespace Subscription {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export interface BillingInterval {
+        /**
+         * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+         */
+        count: number;
+
+        /**
+         * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+         */
+        interval: BillingInterval.Interval;
+      }
+
+      export namespace BillingInterval {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
       }
     }
   }
@@ -8230,7 +15506,16 @@ export namespace PaymentIntentUpdateParams {
 
     export interface Giropay {}
 
+    export interface Gopay {}
+
     export interface Grabpay {}
+
+    export interface IdBankTransfer {
+      /**
+       * Bank where the account is held.
+       */
+      bank?: IdBankTransfer.Bank;
+    }
 
     export interface Ideal {
       /**
@@ -8315,6 +15600,8 @@ export namespace PaymentIntentUpdateParams {
 
     export interface Paypal {}
 
+    export interface Paypay {}
+
     export interface Payto {
       /**
        * The account number for the bank account.
@@ -8336,11 +15623,20 @@ export namespace PaymentIntentUpdateParams {
 
     export interface Promptpay {}
 
+    export interface Qris {}
+
     export interface RadarOptions {
       /**
        * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
        */
       session?: string;
+    }
+
+    export interface Rechnung {
+      /**
+       * Customer's date of birth
+       */
+      dob: Rechnung.Dob;
     }
 
     export interface RevolutPay {}
@@ -8356,11 +15652,20 @@ export namespace PaymentIntentUpdateParams {
       iban: string;
     }
 
+    export interface Shopeepay {}
+
     export interface Sofort {
       /**
        * Two-letter ISO code representing the country the bank account is located in.
        */
       country: Sofort.Country;
+    }
+
+    export interface StripeBalance {
+      /**
+       * The connected account ID whose Stripe balance to use as the source of payment
+       */
+      account?: string;
     }
 
     export interface Swish {}
@@ -8386,7 +15691,9 @@ export namespace PaymentIntentUpdateParams {
       | 'eps'
       | 'fpx'
       | 'giropay'
+      | 'gopay'
       | 'grabpay'
+      | 'id_bank_transfer'
       | 'ideal'
       | 'kakao_pay'
       | 'klarna'
@@ -8404,14 +15711,19 @@ export namespace PaymentIntentUpdateParams {
       | 'payco'
       | 'paynow'
       | 'paypal'
+      | 'paypay'
       | 'payto'
       | 'pix'
       | 'promptpay'
+      | 'qris'
+      | 'rechnung'
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
       | 'sepa_debit'
+      | 'shopeepay'
       | 'sofort'
+      | 'stripe_balance'
       | 'swish'
       | 'twint'
       | 'upi'
@@ -8517,6 +15829,10 @@ export namespace PaymentIntentUpdateParams {
         | 'uob';
     }
 
+    export namespace IdBankTransfer {
+      export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+    }
+
     export namespace Ideal {
       export type Bank =
         | 'abn_amro'
@@ -8592,6 +15908,25 @@ export namespace PaymentIntentUpdateParams {
         | 'toyota_bank'
         | 'velobank'
         | 'volkswagen_bank';
+    }
+
+    export namespace Rechnung {
+      export interface Dob {
+        /**
+         * The day of birth, between 1 and 31.
+         */
+        day: number;
+
+        /**
+         * The month of birth, between 1 and 12.
+         */
+        month: number;
+
+        /**
+         * The four-digit year of birth.
+         */
+        year: number;
+      }
     }
 
     export namespace Sofort {
@@ -8927,6 +16262,11 @@ export namespace PaymentIntentUpdateParams {
       network?: Card.Network;
 
       /**
+       * Request ability to [decrement the authorization](https://docs.stripe.com/payments/decremental-authorization) for this PaymentIntent.
+       */
+      request_decremental_authorization?: Card.RequestDecrementalAuthorization;
+
+      /**
        * Request ability to [capture beyond the standard authorization validity window](https://docs.stripe.com/payments/extended-authorization) for this PaymentIntent.
        */
       request_extended_authorization?: Card.RequestExtendedAuthorization;
@@ -8945,6 +16285,11 @@ export namespace PaymentIntentUpdateParams {
        * Request ability to [overcapture](https://docs.stripe.com/payments/overcapture) for this PaymentIntent.
        */
       request_overcapture?: Card.RequestOvercapture;
+
+      /**
+       * Request partial authorization on this PaymentIntent.
+       */
+      request_partial_authorization?: Card.RequestPartialAuthorization;
 
       /**
        * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
@@ -8978,6 +16323,11 @@ export namespace PaymentIntentUpdateParams {
        * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
        */
       statement_descriptor_suffix_kanji?: Emptyable<string>;
+
+      /**
+       * Statement details for this payment intent. You can use this to override the merchant details shown on your customers' statements.
+       */
+      statement_details?: Emptyable<Card.StatementDetails>;
 
       /**
        * If 3D Secure authentication was performed with a third-party provider,
@@ -9121,7 +16471,47 @@ export namespace PaymentIntentUpdateParams {
       setup_future_usage?: 'none';
     }
 
+    export interface Gopay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: Gopay.SetupFutureUsage;
+    }
+
     export interface Grabpay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface IdBankTransfer {
+      /**
+       * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from 5 minutes from now until 31 days from now. If unset, it defaults to 3 days from now.
+       */
+      expires_after?: number;
+
+      /**
+       * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from now until 30 days from now. If unset, it defaults to 1 days from now.
+       */
+      expires_at?: number;
+
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
@@ -9212,6 +16602,11 @@ export namespace PaymentIntentUpdateParams {
        * Subscription details if setting up or charging a subscription.
        */
       subscriptions?: Emptyable<Array<Klarna.Subscription>>;
+
+      /**
+       * Supplementary Purchase Data for the corresponding Klarna payment
+       */
+      supplementary_purchase_data?: Emptyable<Klarna.SupplementaryPurchaseData>;
     }
 
     export interface Konbini {
@@ -9472,6 +16867,11 @@ export namespace PaymentIntentUpdateParams {
       capture_method?: Emptyable<'manual'>;
 
       /**
+       * The line items purchased by the customer.
+       */
+      line_items?: Array<Paypal.LineItem>;
+
+      /**
        * [Preferred locale](https://docs.stripe.com/payments/paypal/supported-locales) of the PayPal checkout page that the customer is redirected to.
        */
       preferred_locale?: Paypal.PreferredLocale;
@@ -9480,6 +16880,11 @@ export namespace PaymentIntentUpdateParams {
        * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
        */
       reference?: string;
+
+      /**
+       * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+       */
+      reference_id?: string;
 
       /**
        * The risk correlation ID for an on-session payment using a saved PayPal payment method.
@@ -9498,6 +16903,22 @@ export namespace PaymentIntentUpdateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Emptyable<Paypal.SetupFutureUsage>;
+
+      /**
+       * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+       */
+      subsellers?: Array<string>;
+    }
+
+    export interface Paypay {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
     }
 
     export interface Payto {
@@ -9537,6 +16958,11 @@ export namespace PaymentIntentUpdateParams {
       expires_at?: number;
 
       /**
+       * Additional fields for mandate creation. Only applicable when `setup_future_usage=off_session`.
+       */
+      mandate_options?: Pix.MandateOptions;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -9547,7 +16973,7 @@ export namespace PaymentIntentUpdateParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Pix.SetupFutureUsage;
     }
 
     export interface Promptpay {
@@ -9564,6 +16990,23 @@ export namespace PaymentIntentUpdateParams {
        */
       setup_future_usage?: 'none';
     }
+
+    export interface Qris {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Rechnung {}
 
     export interface RevolutPay {
       /**
@@ -9634,6 +17077,21 @@ export namespace PaymentIntentUpdateParams {
       target_date?: string;
     }
 
+    export interface Shopeepay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
+    }
+
     export interface Sofort {
       /**
        * Language shown to the payer on redirect.
@@ -9652,6 +17110,21 @@ export namespace PaymentIntentUpdateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Emptyable<Sofort.SetupFutureUsage>;
+    }
+
+    export interface StripeBalance {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: Emptyable<StripeBalance.SetupFutureUsage>;
     }
 
     export interface Swish {
@@ -9933,6 +17406,8 @@ export namespace PaymentIntentUpdateParams {
         | 'unknown'
         | 'visa';
 
+      export type RequestDecrementalAuthorization = 'if_available' | 'never';
+
       export type RequestExtendedAuthorization = 'if_available' | 'never';
 
       export type RequestIncrementalAuthorization = 'if_available' | 'never';
@@ -9941,9 +17416,23 @@ export namespace PaymentIntentUpdateParams {
 
       export type RequestOvercapture = 'if_available' | 'never';
 
+      export type RequestPartialAuthorization = 'if_available' | 'never';
+
       export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
       export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+      export interface StatementDetails {
+        /**
+         * Please pass in an address that is within your Stripe user account country
+         */
+        address?: AddressParam;
+
+        /**
+         * Phone number (e.g., a toll-free number that customers can call)
+         */
+        phone?: string;
+      }
 
       export interface ThreeDSecure {
         /**
@@ -10142,6 +17631,10 @@ export namespace PaymentIntentUpdateParams {
       }
     }
 
+    export namespace Gopay {
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
     export namespace Ideal {
       export type SetupFutureUsage = 'none' | 'off_session';
     }
@@ -10255,6 +17748,60 @@ export namespace PaymentIntentUpdateParams {
         reference: string;
       }
 
+      export interface SupplementaryPurchaseData {
+        /**
+         * Supplementary bus reservation details.
+         */
+        bus_reservation_details?: Emptyable<
+          Array<SupplementaryPurchaseData.BusReservationDetail>
+        >;
+
+        /**
+         * Supplementary event reservation details.
+         */
+        event_reservation_details?: Emptyable<
+          Array<SupplementaryPurchaseData.EventReservationDetail>
+        >;
+
+        /**
+         * Supplementary ferry reservation details.
+         */
+        ferry_reservation_details?: Emptyable<
+          Array<SupplementaryPurchaseData.FerryReservationDetail>
+        >;
+
+        /**
+         * Supplementary insurance details.
+         */
+        insurances?: Emptyable<Array<SupplementaryPurchaseData.Insurance>>;
+
+        /**
+         * Supplementary marketplace seller details.
+         */
+        marketplace_sellers?: Emptyable<
+          Array<SupplementaryPurchaseData.MarketplaceSeller>
+        >;
+
+        /**
+         * Supplementary round trip reservation details.
+         */
+        round_trip_reservation_details?: Emptyable<
+          Array<SupplementaryPurchaseData.RoundTripReservationDetail>
+        >;
+
+        /**
+         * Supplementary train reservation details.
+         */
+        train_reservation_details?: Emptyable<
+          Array<SupplementaryPurchaseData.TrainReservationDetail>
+        >;
+
+        /**
+         * Voucher details, such as a gift card or discount code.
+         */
+        vouchers?: Emptyable<Array<SupplementaryPurchaseData.Voucher>>;
+      }
+
       export namespace OnDemand {
         export type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
       }
@@ -10272,6 +17819,1124 @@ export namespace PaymentIntentUpdateParams {
            * The date of the next charge for the subscription in YYYY-MM-DD format.
            */
           date: string;
+        }
+      }
+
+      export namespace SupplementaryPurchaseData {
+        export interface BusReservationDetail {
+          /**
+           * Name of associated or partner company for the service.
+           */
+          affiliate_name?: string;
+
+          /**
+           * Arrival details.
+           */
+          arrival?: BusReservationDetail.Arrival;
+
+          /**
+           * Name of transportation company.
+           */
+          carrier_name?: string;
+
+          /**
+           * Currency.
+           */
+          currency?: string;
+
+          /**
+           * Departure details.
+           */
+          departure?: BusReservationDetail.Departure;
+
+          /**
+           * List of insurances for this reservation.
+           */
+          insurances?: Array<BusReservationDetail.Insurance>;
+
+          /**
+           * List of passengers that this reservation applies to.
+           */
+          passengers?: Array<BusReservationDetail.Passenger>;
+
+          /**
+           * Price in cents.
+           */
+          price?: number;
+
+          /**
+           * Ticket class.
+           */
+          ticket_class?: BusReservationDetail.TicketClass;
+        }
+
+        export interface EventReservationDetail {
+          /**
+           * Indicates if the tickets are digitally checked when entering the venue.
+           */
+          access_controlled_venue?: boolean;
+
+          /**
+           * Address of the event.
+           */
+          address?: EventReservationDetail.Address;
+
+          /**
+           * Name of associated or partner company for the service.
+           */
+          affiliate_name?: string;
+
+          /**
+           * End timestamp of the event.
+           */
+          ends_at?: number;
+
+          /**
+           * Company selling the ticket.
+           */
+          event_company_name?: string;
+
+          /**
+           * Name of the event.
+           */
+          event_name?: string;
+
+          /**
+           * Type of the event.
+           */
+          event_type?: EventReservationDetail.EventType;
+
+          /**
+           * List of insurances for this event.
+           */
+          insurances?: Array<EventReservationDetail.Insurance>;
+
+          /**
+           * Start timestamp of the event.
+           */
+          starts_at?: number;
+
+          /**
+           * Name of the venue where the event takes place.
+           */
+          venue_name?: string;
+        }
+
+        export interface FerryReservationDetail {
+          /**
+           * Name of associated or partner company for the service.
+           */
+          affiliate_name?: string;
+
+          /**
+           * Arrival details.
+           */
+          arrival?: FerryReservationDetail.Arrival;
+
+          /**
+           * Name of transportation company.
+           */
+          carrier_name?: string;
+
+          /**
+           * Currency.
+           */
+          currency?: string;
+
+          /**
+           * Departure details.
+           */
+          departure?: FerryReservationDetail.Departure;
+
+          /**
+           * List of insurances for this reservation.
+           */
+          insurances?: Array<FerryReservationDetail.Insurance>;
+
+          /**
+           * List of passengers that this reservation applies to.
+           */
+          passengers?: Array<FerryReservationDetail.Passenger>;
+
+          /**
+           * Price in cents.
+           */
+          price?: number;
+
+          /**
+           * Ticket class.
+           */
+          ticket_class?: FerryReservationDetail.TicketClass;
+        }
+
+        export interface Insurance {
+          /**
+           * Insurance currency.
+           */
+          currency?: string;
+
+          /**
+           * Name of the company providing the insurance.
+           */
+          insurance_company_name?: string;
+
+          /**
+           * Type of insurance
+           */
+          insurance_type?: Insurance.InsuranceType;
+
+          /**
+           * Price of insurance in cents.
+           */
+          price?: number;
+        }
+
+        export interface MarketplaceSeller {
+          /**
+           * The references to line items for purchases with multiple associated sub-sellers.
+           */
+          line_item_references?: Array<string>;
+
+          /**
+           * The address of the selling or delivering merchant.
+           */
+          marketplace_seller_address?: MarketplaceSeller.MarketplaceSellerAddress;
+
+          /**
+           * The name of the marketplace seller.
+           */
+          marketplace_seller_name?: string;
+
+          /**
+           * The unique identifier for the marketplace seller.
+           */
+          marketplace_seller_reference?: string;
+
+          /**
+           * The number of transactions the sub-seller completed in the last 12 months.
+           */
+          number_of_transactions?: number;
+
+          /**
+           * The category of the product.
+           */
+          product_category?: MarketplaceSeller.ProductCategory;
+
+          /**
+           * The date when the seller's account with the marketplace was last logged in.
+           */
+          seller_last_login_at?: number;
+
+          /**
+           * The current rating of the marketplace seller. If the marketplace uses numeric ranking, map these to the enum values.
+           */
+          seller_rating?: MarketplaceSeller.SellerRating;
+
+          /**
+           * The date when the seller's account with the marketplace was created.
+           */
+          seller_registered_at?: number;
+
+          /**
+           * The date when the seller's account with the marketplace was last updated.
+           */
+          seller_updated_at?: number;
+
+          /**
+           * The references to shipping addresses for purchases with multiple associated sub-sellers.
+           */
+          shipping_references?: Array<string>;
+
+          /**
+           * The accumulated amount of sales transactions made by the sub-merchant or sub-seller within the past 12 months in the payment currency. These transactions are in minor currency units.
+           */
+          volume_of_transactions?: number;
+        }
+
+        export interface RoundTripReservationDetail {
+          /**
+           * Name of associated or partner company for the service.
+           */
+          affiliate_name?: string;
+
+          /**
+           * Arrival details.
+           */
+          arrival?: RoundTripReservationDetail.Arrival;
+
+          /**
+           * Name of transportation company.
+           */
+          carrier_name?: string;
+
+          /**
+           * Currency.
+           */
+          currency?: string;
+
+          /**
+           * Departure details.
+           */
+          departure?: RoundTripReservationDetail.Departure;
+
+          /**
+           * List of insurances for this reservation.
+           */
+          insurances?: Array<RoundTripReservationDetail.Insurance>;
+
+          /**
+           * List of passengers that this reservation applies to.
+           */
+          passengers?: Array<RoundTripReservationDetail.Passenger>;
+
+          /**
+           * Price in cents.
+           */
+          price?: number;
+
+          /**
+           * Ticket class.
+           */
+          ticket_class?: RoundTripReservationDetail.TicketClass;
+        }
+
+        export interface TrainReservationDetail {
+          /**
+           * Name of associated or partner company for the service.
+           */
+          affiliate_name?: string;
+
+          /**
+           * Arrival details.
+           */
+          arrival?: TrainReservationDetail.Arrival;
+
+          /**
+           * Name of transportation company.
+           */
+          carrier_name?: string;
+
+          /**
+           * Currency.
+           */
+          currency?: string;
+
+          /**
+           * Departure details.
+           */
+          departure?: TrainReservationDetail.Departure;
+
+          /**
+           * List of insurances for this reservation.
+           */
+          insurances?: Array<TrainReservationDetail.Insurance>;
+
+          /**
+           * List of passengers that this reservation applies to.
+           */
+          passengers?: Array<TrainReservationDetail.Passenger>;
+
+          /**
+           * Price in cents.
+           */
+          price?: number;
+
+          /**
+           * Ticket class.
+           */
+          ticket_class?: TrainReservationDetail.TicketClass;
+        }
+
+        export interface Voucher {
+          /**
+           * Name of associated or partner company for this voucher.
+           */
+          affiliate_name?: string;
+
+          /**
+           * The voucher validity end time.
+           */
+          ends_at?: number;
+
+          /**
+           * The voucher validity start time.
+           */
+          starts_at?: number;
+
+          /**
+           * The issuer or provider of this voucher.
+           */
+          voucher_company?: string;
+
+          /**
+           * The name or reference to identify the voucher.
+           */
+          voucher_name?: string;
+
+          /**
+           * The type of this voucher.
+           */
+          voucher_type?: Voucher.VoucherType;
+        }
+
+        export namespace BusReservationDetail {
+          export interface Arrival {
+            /**
+             * Address of the arrival location.
+             */
+            address?: Arrival.Address;
+
+            /**
+             * Identifier name or reference for the arrival location.
+             */
+            arrival_location?: string;
+          }
+
+          export interface Departure {
+            /**
+             * Address of the departure location.
+             */
+            address?: Departure.Address;
+
+            /**
+             * Timestamp of departure.
+             */
+            departs_at?: number;
+
+            /**
+             * Identifier name or reference for the origin location.
+             */
+            departure_location?: string;
+          }
+
+          export interface Insurance {
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Name of the company providing the insurance.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type?: Insurance.InsuranceType;
+
+            /**
+             * Price of insurance in cents.
+             */
+            price?: number;
+          }
+
+          export interface Passenger {
+            /**
+             * The family name of the person.
+             */
+            family_name?: string;
+
+            /**
+             * The given name of the person.
+             */
+            given_name?: string;
+          }
+
+          export type TicketClass =
+            | 'business'
+            | 'economy'
+            | 'first_class'
+            | 'premium_economy';
+
+          export namespace Arrival {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Departure {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Insurance {
+            export type InsuranceType =
+              | 'baggage'
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+        }
+
+        export namespace EventReservationDetail {
+          export interface Address {
+            /**
+             * The city or town.
+             */
+            city?: string;
+
+            /**
+             * The country in ISO 3166-1 alpha-2 format.
+             */
+            country?: string;
+
+            /**
+             * The postal code formatted according to country.
+             */
+            postal_code?: string;
+
+            /**
+             * The state, county, province, or region formatted according to country.
+             */
+            region?: string;
+
+            /**
+             * Line 1 of the street address.
+             */
+            street_address?: string;
+
+            /**
+             * Line 2 of the street address.
+             */
+            street_address2?: string;
+          }
+
+          export type EventType =
+            | 'concert'
+            | 'conference'
+            | 'digital_education'
+            | 'expo'
+            | 'festival'
+            | 'in_person_education'
+            | 'sport'
+            | 'tour';
+
+          export interface Insurance {
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Name of the company providing the insurance.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type?: Insurance.InsuranceType;
+
+            /**
+             * Price of insurance in cents.
+             */
+            price?: number;
+          }
+
+          export namespace Insurance {
+            export type InsuranceType =
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+        }
+
+        export namespace FerryReservationDetail {
+          export interface Arrival {
+            /**
+             * Address of the arrival location.
+             */
+            address?: Arrival.Address;
+
+            /**
+             * Identifier name or reference for the arrival location.
+             */
+            arrival_location?: string;
+          }
+
+          export interface Departure {
+            /**
+             * Address of the departure location.
+             */
+            address?: Departure.Address;
+
+            /**
+             * Timestamp of departure.
+             */
+            departs_at?: number;
+
+            /**
+             * Identifier name or reference for the origin location.
+             */
+            departure_location?: string;
+          }
+
+          export interface Insurance {
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Name of the company providing the insurance.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type?: Insurance.InsuranceType;
+
+            /**
+             * Price of insurance in cents.
+             */
+            price?: number;
+          }
+
+          export interface Passenger {
+            /**
+             * The family name of the person.
+             */
+            family_name?: string;
+
+            /**
+             * The given name of the person.
+             */
+            given_name?: string;
+          }
+
+          export type TicketClass =
+            | 'business'
+            | 'economy'
+            | 'first_class'
+            | 'premium_economy';
+
+          export namespace Arrival {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Departure {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Insurance {
+            export type InsuranceType =
+              | 'baggage'
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+        }
+
+        export namespace Insurance {
+          export type InsuranceType =
+            | 'bankruptcy'
+            | 'cancelation'
+            | 'emergency'
+            | 'medical';
+        }
+
+        export namespace MarketplaceSeller {
+          export interface MarketplaceSellerAddress {
+            /**
+             * The city or town.
+             */
+            city?: string;
+
+            /**
+             * The country in ISO 3166-1 alpha-2 format.
+             */
+            country?: string;
+
+            /**
+             * The postal code formatted according to country.
+             */
+            postal_code?: string;
+
+            /**
+             * The state, county, province, or region formatted according to country.
+             */
+            region?: string;
+
+            /**
+             * Line 1 of the street address.
+             */
+            street_address?: string;
+
+            /**
+             * Line 2 of the street address.
+             */
+            street_address2?: string;
+          }
+
+          export type ProductCategory =
+            | 'accessories'
+            | 'appliances'
+            | 'apps_and_games'
+            | 'arts_crafts_and_sewing'
+            | 'automotive'
+            | 'baby'
+            | 'baby_clothing'
+            | 'bags_and_purses'
+            | 'beauty'
+            | 'books'
+            | 'cds_and_vinyl'
+            | 'cell_phones_and_accessories'
+            | 'collectibles_and_fine_arts'
+            | 'digital_music'
+            | 'electronics'
+            | 'grocery_and_gourmet_food'
+            | 'handmade'
+            | 'health_and_personal_care'
+            | 'home_and_kitchen'
+            | 'industrial_and_scientific'
+            | 'luggage_and_travel_gear'
+            | 'magazine_subscriptions'
+            | 'men_clothing'
+            | 'musical_instruments'
+            | 'office_products'
+            | 'patio_lawn_and_garden'
+            | 'pet_supplies'
+            | 'shoes'
+            | 'software'
+            | 'sports_and_outdoors'
+            | 'tools_and_home_improvement'
+            | 'toys_and_games'
+            | 'video_games'
+            | 'women_clothing';
+
+          export type SellerRating =
+            | 'high'
+            | 'low'
+            | 'medium'
+            | 'very_high'
+            | 'very_low';
+        }
+
+        export namespace RoundTripReservationDetail {
+          export interface Arrival {
+            /**
+             * Address of the arrival location.
+             */
+            address?: Arrival.Address;
+
+            /**
+             * Identifier name or reference for the arrival location.
+             */
+            arrival_location?: string;
+          }
+
+          export interface Departure {
+            /**
+             * Address of the departure location.
+             */
+            address?: Departure.Address;
+
+            /**
+             * Timestamp of departure.
+             */
+            departs_at?: number;
+
+            /**
+             * Identifier name or reference for the origin location.
+             */
+            departure_location?: string;
+          }
+
+          export interface Insurance {
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Name of the company providing the insurance.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type?: Insurance.InsuranceType;
+
+            /**
+             * Price of insurance in cents.
+             */
+            price?: number;
+          }
+
+          export interface Passenger {
+            /**
+             * The family name of the person.
+             */
+            family_name?: string;
+
+            /**
+             * The given name of the person.
+             */
+            given_name?: string;
+          }
+
+          export type TicketClass =
+            | 'business'
+            | 'economy'
+            | 'first_class'
+            | 'premium_economy';
+
+          export namespace Arrival {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Departure {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Insurance {
+            export type InsuranceType =
+              | 'baggage'
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+        }
+
+        export namespace TrainReservationDetail {
+          export interface Arrival {
+            /**
+             * Address of the arrival location.
+             */
+            address?: Arrival.Address;
+
+            /**
+             * Identifier name or reference for the arrival location.
+             */
+            arrival_location?: string;
+          }
+
+          export interface Departure {
+            /**
+             * Address of the departure location.
+             */
+            address?: Departure.Address;
+
+            /**
+             * Timestamp of departure.
+             */
+            departs_at?: number;
+
+            /**
+             * Identifier name or reference for the origin location.
+             */
+            departure_location?: string;
+          }
+
+          export interface Insurance {
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Name of the company providing the insurance.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type?: Insurance.InsuranceType;
+
+            /**
+             * Price of insurance in cents.
+             */
+            price?: number;
+          }
+
+          export interface Passenger {
+            /**
+             * The family name of the person.
+             */
+            family_name?: string;
+
+            /**
+             * The given name of the person.
+             */
+            given_name?: string;
+          }
+
+          export type TicketClass =
+            | 'business'
+            | 'economy'
+            | 'first_class'
+            | 'premium_economy';
+
+          export namespace Arrival {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Departure {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Insurance {
+            export type InsuranceType =
+              | 'baggage'
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+        }
+
+        export namespace Voucher {
+          export type VoucherType =
+            | 'digital_product'
+            | 'discount'
+            | 'gift_card'
+            | 'physical_product'
+            | 'services';
         }
       }
     }
@@ -10293,6 +18958,48 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace Paypal {
+      export interface LineItem {
+        /**
+         * Type of the line item.
+         */
+        category?: LineItem.Category;
+
+        /**
+         * Description of the line item.
+         */
+        description?: string;
+
+        /**
+         * Descriptive name of the line item.
+         */
+        name: string;
+
+        /**
+         * Quantity of the line item. Must be a positive number.
+         */
+        quantity: number;
+
+        /**
+         * Client facing stock keeping unit, article number or similar.
+         */
+        sku?: string;
+
+        /**
+         * The Stripe account ID of the connected account that sells the item.
+         */
+        sold_by?: string;
+
+        /**
+         * The tax information for the line item.
+         */
+        tax?: LineItem.Tax;
+
+        /**
+         * Price for a single unit of the line item in minor units. Cannot be a negative number.
+         */
+        unit_amount: number;
+      }
+
       export type PreferredLocale =
         | 'cs-CZ'
         | 'da-DK'
@@ -10317,6 +19024,26 @@ export namespace PaymentIntentUpdateParams {
         | 'sv-SE';
 
       export type SetupFutureUsage = 'none' | 'off_session';
+
+      export namespace LineItem {
+        export type Category = 'digital_goods' | 'donation' | 'physical_goods';
+
+        export interface Tax {
+          /**
+           * The tax for a single unit of the line item in minor units. Cannot be a negative number.
+           */
+          amount: number;
+
+          /**
+           * The tax behavior for the line item.
+           */
+          behavior: Tax.Behavior;
+        }
+
+        export namespace Tax {
+          export type Behavior = 'exclusive' | 'inclusive';
+        }
+      }
     }
 
     export namespace Payto {
@@ -10384,6 +19111,63 @@ export namespace PaymentIntentUpdateParams {
 
     export namespace Pix {
       export type AmountIncludesIof = 'always' | 'never';
+
+      export interface MandateOptions {
+        /**
+         * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
+         */
+        amount?: number;
+
+        /**
+         * Determines if the amount includes the IOF tax. Defaults to `never`.
+         */
+        amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+        /**
+         * Type of amount. Defaults to `maximum`.
+         */
+        amount_type?: MandateOptions.AmountType;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Only `brl` is supported currently.
+         */
+        currency?: string;
+
+        /**
+         * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+         */
+        end_date?: string;
+
+        /**
+         * Schedule at which the future payments will be charged. Defaults to `monthly`.
+         */
+        payment_schedule?: MandateOptions.PaymentSchedule;
+
+        /**
+         * Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
+         */
+        reference?: string;
+
+        /**
+         * Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future. Defaults to 3 days after the current date.
+         */
+        start_date?: string;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session';
+
+      export namespace MandateOptions {
+        export type AmountIncludesIof = 'always' | 'never';
+
+        export type AmountType = 'fixed' | 'maximum';
+
+        export type PaymentSchedule =
+          | 'halfyearly'
+          | 'monthly'
+          | 'quarterly'
+          | 'weekly'
+          | 'yearly';
+      }
     }
 
     export namespace RevolutPay {
@@ -10411,6 +19195,10 @@ export namespace PaymentIntentUpdateParams {
         | 'nl'
         | 'pl';
 
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
+    export namespace StripeBalance {
       export type SetupFutureUsage = 'none' | 'off_session';
     }
 
@@ -10450,6 +19238,11 @@ export namespace PaymentIntentUpdateParams {
          * Provide filters for the linked accounts that the customer can select for the payment method.
          */
         filters?: FinancialConnections.Filters;
+
+        /**
+         * Customize manual entry behavior
+         */
+        manual_entry?: FinancialConnections.ManualEntry;
 
         /**
          * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
@@ -10500,6 +19293,18 @@ export namespace PaymentIntentUpdateParams {
            * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
            */
           account_subcategories?: Array<Filters.AccountSubcategory>;
+
+          /**
+           * ID of the institution to use to filter for selectable accounts.
+           */
+          institution?: string;
+        }
+
+        export interface ManualEntry {
+          /**
+           * Settings for configuring manual entry of account details.
+           */
+          mode: ManualEntry.Mode;
         }
 
         export type Permission =
@@ -10508,10 +19313,18 @@ export namespace PaymentIntentUpdateParams {
           | 'payment_method'
           | 'transactions';
 
-        export type Prefetch = 'balances' | 'ownership' | 'transactions';
+        export type Prefetch =
+          | 'balances'
+          | 'inferred_balances'
+          | 'ownership'
+          | 'transactions';
 
         export namespace Filters {
           export type AccountSubcategory = 'checking' | 'savings';
+        }
+
+        export namespace ManualEntry {
+          export type Mode = 'automatic' | 'custom';
         }
       }
 
@@ -10672,6 +19485,11 @@ export namespace PaymentIntentCaptureParams {
     shipping?: Emptyable<AmountDetails.Shipping>;
 
     /**
+     * Contains information about the surcharge portion of the amount.
+     */
+    surcharge?: Emptyable<AmountDetails.Surcharge>;
+
+    /**
      * Contains information about the tax portion of the amount.
      */
     tax?: Emptyable<AmountDetails.Tax>;
@@ -10686,6 +19504,16 @@ export namespace PaymentIntentCaptureParams {
 
   export interface PaymentDetails {
     /**
+     * Car rental details for this PaymentIntent.
+     */
+    car_rental?: PaymentDetails.CarRental;
+
+    /**
+     * Car rental data for this PaymentIntent.
+     */
+    car_rental_data?: Emptyable<Array<PaymentDetails.CarRentalDatum>>;
+
+    /**
      * A unique value to identify the customer. This field is available only for card payments.
      *
      * This field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
@@ -10693,11 +19521,41 @@ export namespace PaymentIntentCaptureParams {
     customer_reference?: Emptyable<string>;
 
     /**
+     * Event details for this PaymentIntent
+     */
+    event_details?: PaymentDetails.EventDetails;
+
+    /**
+     * Flight reservation details for this PaymentIntent
+     */
+    flight?: PaymentDetails.Flight;
+
+    /**
+     * Flight data for this PaymentIntent.
+     */
+    flight_data?: Emptyable<Array<PaymentDetails.FlightDatum>>;
+
+    /**
+     * Lodging reservation details for this PaymentIntent
+     */
+    lodging?: PaymentDetails.Lodging;
+
+    /**
+     * Lodging data for this PaymentIntent.
+     */
+    lodging_data?: Emptyable<Array<PaymentDetails.LodgingDatum>>;
+
+    /**
      * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
      *
      * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
      */
     order_reference?: Emptyable<string>;
+
+    /**
+     * Subscription details for this PaymentIntent
+     */
+    subscription?: PaymentDetails.Subscription;
   }
 
   export interface TransferData {
@@ -10769,6 +19627,18 @@ export namespace PaymentIntentCaptureParams {
        * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
        */
       to_postal_code?: Emptyable<string>;
+    }
+
+    export interface Surcharge {
+      /**
+       * Portion of the amount that corresponds to a surcharge.
+       */
+      amount?: Emptyable<number>;
+
+      /**
+       * Indicate whether to enforce validations on the surcharge amount.
+       */
+      enforce_validation?: Emptyable<Surcharge.EnforceValidation>;
     }
 
     export interface Tax {
@@ -10874,6 +19744,10 @@ export namespace PaymentIntentCaptureParams {
         }
       }
     }
+
+    export namespace Surcharge {
+      export type EnforceValidation = 'automatic' | 'disabled' | 'enabled';
+    }
   }
 
   export namespace Hooks {
@@ -10893,12 +19767,1842 @@ export namespace PaymentIntentCaptureParams {
       }
     }
   }
+
+  export namespace PaymentDetails {
+    export interface CarRental {
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: CarRental.Affiliate;
+
+      /**
+       * The booking number associated with the car rental.
+       */
+      booking_number: string;
+
+      /**
+       * Class code of the car.
+       */
+      car_class_code?: string;
+
+      /**
+       * Make of the car.
+       */
+      car_make?: string;
+
+      /**
+       * Model of the car.
+       */
+      car_model?: string;
+
+      /**
+       * The name of the rental car company.
+       */
+      company?: string;
+
+      /**
+       * The customer service phone number of the car rental company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * Number of days the car is being rented.
+       */
+      days_rented: number;
+
+      /**
+       * Delivery details for this purchase.
+       */
+      delivery?: CarRental.Delivery;
+
+      /**
+       * The details of the distance traveled during the rental period.
+       */
+      distance?: CarRental.Distance;
+
+      /**
+       * The details of the passengers in the travel reservation
+       */
+      drivers?: Array<CarRental.Driver>;
+
+      /**
+       * List of additional charges being billed.
+       */
+      extra_charges?: Array<CarRental.ExtraCharge>;
+
+      /**
+       * Indicates if the customer did not keep nor cancel their booking.
+       */
+      no_show?: boolean;
+
+      /**
+       * Car pick-up address.
+       */
+      pickup_address?: AddressParam;
+
+      /**
+       * Car pick-up time. Measured in seconds since the Unix epoch.
+       */
+      pickup_at: number;
+
+      /**
+       * Name of the pickup location.
+       */
+      pickup_location_name?: string;
+
+      /**
+       * Rental rate.
+       */
+      rate_amount?: number;
+
+      /**
+       * The frequency at which the rate amount is applied. One of `day`, `week` or `month`
+       */
+      rate_interval?: CarRental.RateInterval;
+
+      /**
+       * The name of the person or entity renting the car.
+       */
+      renter_name?: string;
+
+      /**
+       * Car return address.
+       */
+      return_address?: AddressParam;
+
+      /**
+       * Car return time. Measured in seconds since the Unix epoch.
+       */
+      return_at: number;
+
+      /**
+       * Name of the return location.
+       */
+      return_location_name?: string;
+
+      /**
+       * Indicates whether the goods or services are tax-exempt or tax is not collected.
+       */
+      tax_exempt?: boolean;
+
+      /**
+       * The vehicle identification number.
+       */
+      vehicle_identification_number?: string;
+    }
+
+    export interface CarRentalDatum {
+      /**
+       * Affiliate (such as travel agency) details for the rental.
+       */
+      affiliate?: CarRentalDatum.Affiliate;
+
+      /**
+       * Booking confirmation number for the car rental.
+       */
+      booking_number?: string;
+
+      /**
+       * Name of the car rental company.
+       */
+      carrier_name?: string;
+
+      /**
+       * Customer service phone number for the car rental company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * Number of days the car is being rented.
+       */
+      days_rented?: number;
+
+      /**
+       * Distance details for the rental.
+       */
+      distance?: CarRentalDatum.Distance;
+
+      /**
+       * List of drivers for the rental.
+       */
+      drivers?: Array<CarRentalDatum.Driver>;
+
+      /**
+       * Drop-off location details.
+       */
+      drop_off: CarRentalDatum.DropOff;
+
+      /**
+       * Insurance details for the rental.
+       */
+      insurances?: Array<CarRentalDatum.Insurance>;
+
+      /**
+       * Indicates if the customer was a no-show.
+       */
+      no_show_indicator?: boolean;
+
+      /**
+       * Pickup location details.
+       */
+      pickup: CarRentalDatum.Pickup;
+
+      /**
+       * Name of the person renting the vehicle.
+       */
+      renter_name?: string;
+
+      /**
+       * Total cost breakdown for the rental.
+       */
+      total: CarRentalDatum.Total;
+
+      /**
+       * Vehicle details for the rental.
+       */
+      vehicle?: CarRentalDatum.Vehicle;
+    }
+
+    export interface EventDetails {
+      /**
+       * Indicates if the tickets are digitally checked when entering the venue.
+       */
+      access_controlled_venue?: boolean;
+
+      /**
+       * The event location's address.
+       */
+      address?: AddressParam;
+
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: EventDetails.Affiliate;
+
+      /**
+       * The name of the company
+       */
+      company?: string;
+
+      /**
+       * Delivery details for this purchase.
+       */
+      delivery?: EventDetails.Delivery;
+
+      /**
+       * Event end time. Measured in seconds since the Unix epoch.
+       */
+      ends_at?: number;
+
+      /**
+       * Type of the event entertainment (concert, sports event etc)
+       */
+      genre?: string;
+
+      /**
+       * The name of the event.
+       */
+      name: string;
+
+      /**
+       * Event start time. Measured in seconds since the Unix epoch.
+       */
+      starts_at?: number;
+    }
+
+    export interface Flight {
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: Flight.Affiliate;
+
+      /**
+       * The agency number (i.e. International Air Transport Association (IATA) agency number) of the travel agency that made the booking.
+       */
+      agency_number?: string;
+
+      /**
+       * The International Air Transport Association (IATA) carrier code of the carrier that issued the ticket.
+       */
+      carrier?: string;
+
+      /**
+       * Delivery details for this purchase.
+       */
+      delivery?: Flight.Delivery;
+
+      /**
+       * The name of the person or entity on the reservation.
+       */
+      passenger_name?: string;
+
+      /**
+       * The details of the passengers in the travel reservation.
+       */
+      passengers?: Array<Flight.Passenger>;
+
+      /**
+       * The individual flight segments associated with the trip.
+       */
+      segments: Array<Flight.Segment>;
+
+      /**
+       * The ticket number associated with the travel reservation.
+       */
+      ticket_number?: string;
+    }
+
+    export interface FlightDatum {
+      /**
+       * Affiliate details if applicable.
+       */
+      affiliate?: FlightDatum.Affiliate;
+
+      /**
+       * Reservation reference.
+       */
+      booking_number?: string;
+
+      /**
+       * Computerized reservation system used to make the reservation and purchase the ticket.
+       */
+      computerized_reservation_system?: string;
+
+      /**
+       * Ticket restrictions.
+       */
+      endorsements_and_restrictions?: string;
+
+      /**
+       * List of insurances.
+       */
+      insurances?: Array<FlightDatum.Insurance>;
+
+      /**
+       * List of passengers.
+       */
+      passengers?: Array<FlightDatum.Passenger>;
+
+      /**
+       * List of flight segments.
+       */
+      segments: Array<FlightDatum.Segment>;
+
+      /**
+       * Electronic ticket indicator.
+       */
+      ticket_electronically_issued_indicator?: boolean;
+
+      /**
+       * Total cost breakdown.
+       */
+      total: FlightDatum.Total;
+
+      /**
+       * Type of flight transaction.
+       */
+      transaction_type?: FlightDatum.TransactionType;
+    }
+
+    export interface Lodging {
+      /**
+       * The lodging location's address.
+       */
+      address?: AddressParam;
+
+      /**
+       * The number of adults on the booking
+       */
+      adults?: number;
+
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: Lodging.Affiliate;
+
+      /**
+       * The booking number associated with the lodging reservation.
+       */
+      booking_number?: string;
+
+      /**
+       * The lodging category
+       */
+      category?: Lodging.Category;
+
+      /**
+       * Lodging check-in time. Measured in seconds since the Unix epoch.
+       */
+      checkin_at: number;
+
+      /**
+       * Lodging check-out time. Measured in seconds since the Unix epoch.
+       */
+      checkout_at: number;
+
+      /**
+       * The customer service phone number of the lodging company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * The daily lodging room rate.
+       */
+      daily_room_rate_amount?: number;
+
+      /**
+       * Delivery details for this purchase.
+       */
+      delivery?: Lodging.Delivery;
+
+      /**
+       * List of additional charges being billed.
+       */
+      extra_charges?: Array<Lodging.ExtraCharge>;
+
+      /**
+       * Indicates whether the lodging location is compliant with the Fire Safety Act.
+       */
+      fire_safety_act_compliance?: boolean;
+
+      /**
+       * The name of the lodging location.
+       */
+      name?: string;
+
+      /**
+       * Indicates if the customer did not keep their booking while failing to cancel the reservation.
+       */
+      no_show?: boolean;
+
+      /**
+       * The number of rooms on the booking
+       */
+      number_of_rooms?: number;
+
+      /**
+       * The details of the passengers in the travel reservation
+       */
+      passengers?: Array<Lodging.Passenger>;
+
+      /**
+       * The phone number of the lodging location.
+       */
+      property_phone_number?: string;
+
+      /**
+       * The room class for this purchase.
+       */
+      room_class?: string;
+
+      /**
+       * The number of room nights
+       */
+      room_nights?: number;
+
+      /**
+       * The total tax amount associating with the room reservation.
+       */
+      total_room_tax_amount?: number;
+
+      /**
+       * The total tax amount
+       */
+      total_tax_amount?: number;
+    }
+
+    export interface LodgingDatum {
+      /**
+       * Accommodation details for the lodging.
+       */
+      accommodation?: LodgingDatum.Accommodation;
+
+      /**
+       * Affiliate details if applicable.
+       */
+      affiliate?: LodgingDatum.Affiliate;
+
+      /**
+       * Booking confirmation number for the lodging.
+       */
+      booking_number?: string;
+
+      /**
+       * Check-in date.
+       */
+      checkin_at: number;
+
+      /**
+       * Check-out date.
+       */
+      checkout_at: number;
+
+      /**
+       * Customer service phone number for the lodging company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * Whether the lodging is compliant with any hotel fire safety regulations.
+       */
+      fire_safety_act_compliance_indicator?: boolean;
+
+      /**
+       * List of guests for the lodging.
+       */
+      guests?: Array<LodgingDatum.Guest>;
+
+      /**
+       * Host details for the lodging.
+       */
+      host?: LodgingDatum.Host;
+
+      /**
+       * List of insurances for the lodging.
+       */
+      insurances?: Array<LodgingDatum.Insurance>;
+
+      /**
+       * Whether the renter is a no-show.
+       */
+      no_show_indicator?: boolean;
+
+      /**
+       * Renter ID number for the lodging.
+       */
+      renter_id_number?: string;
+
+      /**
+       * Renter name for the lodging.
+       */
+      renter_name?: string;
+
+      /**
+       * Total details for the lodging.
+       */
+      total: LodgingDatum.Total;
+    }
+
+    export interface Subscription {
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: Subscription.Affiliate;
+
+      /**
+       * Info whether the subscription will be auto renewed upon expiry.
+       */
+      auto_renewal?: boolean;
+
+      /**
+       * Subscription billing details for this purchase.
+       */
+      billing_interval?: Subscription.BillingInterval;
+
+      /**
+       * Subscription end time. Measured in seconds since the Unix epoch.
+       */
+      ends_at?: number;
+
+      /**
+       * Name of the product on subscription. e.g. Apple Music Subscription
+       */
+      name: string;
+
+      /**
+       * Subscription start time. Measured in seconds since the Unix epoch.
+       */
+      starts_at?: number;
+    }
+
+    export namespace CarRental {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        /**
+         * Details of the recipient.
+         */
+        recipient?: Delivery.Recipient;
+      }
+
+      export interface Distance {
+        /**
+         * Distance traveled.
+         */
+        amount?: number;
+
+        /**
+         * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+         */
+        unit?: Distance.Unit;
+      }
+
+      export interface Driver {
+        /**
+         * Driver's identification number.
+         */
+        driver_identification_number?: string;
+
+        /**
+         * Driver's tax number.
+         */
+        driver_tax_number?: string;
+
+        /**
+         * Full name of the person or entity on the car reservation.
+         */
+        name: string;
+      }
+
+      export type ExtraCharge =
+        | 'extra_mileage'
+        | 'gas'
+        | 'late_return'
+        | 'one_way_service'
+        | 'parking_violation';
+
+      export type RateInterval = 'day' | 'month' | 'week';
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+
+      export namespace Distance {
+        export type Unit = 'kilometers' | 'miles';
+      }
+    }
+
+    export namespace CarRentalDatum {
+      export interface Affiliate {
+        /**
+         * Affiliate partner code.
+         */
+        code?: string;
+
+        /**
+         * Name of affiliate partner.
+         */
+        name?: string;
+      }
+
+      export interface Distance {
+        /**
+         * Distance traveled.
+         */
+        amount: number;
+
+        /**
+         * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+         */
+        unit: Distance.Unit;
+      }
+
+      export interface Driver {
+        /**
+         * Driver's date of birth.
+         */
+        date_of_birth?: Driver.DateOfBirth;
+
+        /**
+         * Driver's identification number.
+         */
+        driver_identification_number?: string;
+
+        /**
+         * Driver's tax number.
+         */
+        driver_tax_number?: string;
+
+        /**
+         * Driver's full name.
+         */
+        name: string;
+      }
+
+      export interface DropOff {
+        /**
+         * Address of the rental location.
+         */
+        address: DropOff.Address;
+
+        /**
+         * Location name.
+         */
+        location_name?: string;
+
+        /**
+         * Timestamp for the location.
+         */
+        time: number;
+      }
+
+      export interface Insurance {
+        /**
+         * Amount of the insurance coverage in cents.
+         */
+        amount: number;
+
+        /**
+         * Currency of the insurance amount.
+         */
+        currency?: string;
+
+        /**
+         * Name of the insurance company.
+         */
+        insurance_company_name?: string;
+
+        /**
+         * Type of insurance coverage.
+         */
+        insurance_type: Insurance.InsuranceType;
+      }
+
+      export interface Pickup {
+        /**
+         * Address of the rental location.
+         */
+        address: Pickup.Address;
+
+        /**
+         * Location name.
+         */
+        location_name?: string;
+
+        /**
+         * Timestamp for the location.
+         */
+        time: number;
+      }
+
+      export interface Total {
+        /**
+         * Total amount in cents.
+         */
+        amount: number;
+
+        /**
+         * Currency of the amount.
+         */
+        currency?: string;
+
+        /**
+         * Discount details for the rental.
+         */
+        discounts?: Total.Discounts;
+
+        /**
+         * Additional charges for the rental.
+         */
+        extra_charges?: Array<Total.ExtraCharge>;
+
+        /**
+         * Rate per unit for the rental.
+         */
+        rate_per_unit?: number;
+
+        /**
+         * Unit of measurement for the rate.
+         */
+        rate_unit?: Total.RateUnit;
+
+        /**
+         * Tax breakdown for the rental.
+         */
+        tax?: Total.Tax;
+      }
+
+      export interface Vehicle {
+        /**
+         * Make of the rental vehicle.
+         */
+        make?: string;
+
+        /**
+         * Model of the rental vehicle.
+         */
+        model?: string;
+
+        /**
+         * Odometer reading at the time of rental.
+         */
+        odometer?: number;
+
+        /**
+         * Type of the rental vehicle.
+         */
+        type?: Vehicle.Type;
+
+        /**
+         * Class of the rental vehicle.
+         */
+        vehicle_class?: Vehicle.VehicleClass;
+
+        /**
+         * Vehicle identification number (VIN).
+         */
+        vehicle_identification_number?: string;
+      }
+
+      export namespace Distance {
+        export type Unit = 'kilometers' | 'miles';
+      }
+
+      export namespace Driver {
+        export interface DateOfBirth {
+          /**
+           * Day of birth (1-31).
+           */
+          day: number;
+
+          /**
+           * Month of birth (1-12).
+           */
+          month: number;
+
+          /**
+           * Year of birth (must be greater than 1900).
+           */
+          year: number;
+        }
+      }
+
+      export namespace DropOff {
+        export interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string;
+
+          /**
+           * Address line 1, such as the street, PO Box, or company name.
+           */
+          line1: string;
+
+          /**
+           * Address line 2, such as the apartment, suite, unit, or building.
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code: string;
+
+          /**
+           * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+           */
+          state?: string;
+        }
+      }
+
+      export namespace Insurance {
+        export type InsuranceType =
+          | 'liability_supplement'
+          | 'loss_damage_waiver'
+          | 'other'
+          | 'partial_damage_waiver'
+          | 'personal_accident'
+          | 'personal_effects';
+      }
+
+      export namespace Pickup {
+        export interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string;
+
+          /**
+           * Address line 1, such as the street, PO Box, or company name.
+           */
+          line1: string;
+
+          /**
+           * Address line 2, such as the apartment, suite, unit, or building.
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code: string;
+
+          /**
+           * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+           */
+          state?: string;
+        }
+      }
+
+      export namespace Total {
+        export interface Discounts {
+          /**
+           * Corporate client discount code.
+           */
+          corporate_client_code?: string;
+
+          /**
+           * Coupon code applied to the rental.
+           */
+          coupon?: string;
+
+          /**
+           * Maximum number of free miles or kilometers included.
+           */
+          maximum_free_miles_or_kilometers?: number;
+        }
+
+        export interface ExtraCharge {
+          /**
+           * Amount of the extra charge in cents.
+           */
+          amount: number;
+
+          /**
+           * Type of extra charge.
+           */
+          type: ExtraCharge.Type;
+        }
+
+        export type RateUnit =
+          | 'days'
+          | 'kilometers'
+          | 'miles'
+          | 'months'
+          | 'weeks';
+
+        export interface Tax {
+          /**
+           * Indicates if the transaction is tax exempt.
+           */
+          tax_exempt_indicator?: boolean;
+
+          /**
+           * Array of tax details.
+           */
+          taxes?: Array<Tax.Tax>;
+        }
+
+        export namespace ExtraCharge {
+          export type Type =
+            | 'extra_mileage'
+            | 'gas'
+            | 'gps'
+            | 'late_charge'
+            | 'one_way_drop_off'
+            | 'other'
+            | 'parking'
+            | 'phone'
+            | 'regular_mileage'
+            | 'towing';
+        }
+
+        export namespace Tax {
+          export interface Tax {
+            /**
+             * Tax amount.
+             */
+            amount?: number;
+
+            /**
+             * Tax rate applied.
+             */
+            rate?: number;
+
+            /**
+             * Type of tax applied.
+             */
+            type?: string;
+          }
+        }
+      }
+
+      export namespace Vehicle {
+        export type Type =
+          | 'cargo_van'
+          | 'compact'
+          | 'economy'
+          | 'exotic'
+          | 'exotic_suv'
+          | 'fifteen_passenger_van'
+          | 'four_wheel_drive'
+          | 'full_size'
+          | 'intermediate'
+          | 'large_suv'
+          | 'large_truck'
+          | 'luxury'
+          | 'medium_suv'
+          | 'midsize'
+          | 'mini'
+          | 'minivan'
+          | 'miscellaneous'
+          | 'moped'
+          | 'moving_van'
+          | 'premium'
+          | 'regular'
+          | 'small_medium_truck'
+          | 'small_suv'
+          | 'special'
+          | 'standard'
+          | 'stretch'
+          | 'subcompact'
+          | 'taxi'
+          | 'twelve_foot_truck'
+          | 'twelve_passenger_van'
+          | 'twenty_foot_truck'
+          | 'twenty_four_foot_truck'
+          | 'twenty_six_foot_truck'
+          | 'unique';
+
+        export type VehicleClass =
+          | 'business'
+          | 'economy'
+          | 'first_class'
+          | 'premium_economy';
+      }
+    }
+
+    export namespace EventDetails {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        /**
+         * Details of the recipient.
+         */
+        recipient?: Delivery.Recipient;
+      }
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+    }
+
+    export namespace Flight {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        /**
+         * Details of the recipient.
+         */
+        recipient?: Delivery.Recipient;
+      }
+
+      export interface Passenger {
+        /**
+         * Full name of the person or entity on the flight reservation.
+         */
+        name: string;
+      }
+
+      export interface Segment {
+        /**
+         * The flight segment amount.
+         */
+        amount?: number;
+
+        /**
+         * The International Air Transport Association (IATA) airport code for the arrival airport.
+         */
+        arrival_airport?: string;
+
+        /**
+         * The arrival time for the flight segment. Measured in seconds since the Unix epoch.
+         */
+        arrives_at?: number;
+
+        /**
+         * The International Air Transport Association (IATA) carrier code of the carrier operating the flight segment.
+         */
+        carrier?: string;
+
+        /**
+         * The departure time for the flight segment. Measured in seconds since the Unix epoch.
+         */
+        departs_at: number;
+
+        /**
+         * The International Air Transport Association (IATA) airport code for the departure airport.
+         */
+        departure_airport?: string;
+
+        /**
+         * The flight number associated with the segment
+         */
+        flight_number?: string;
+
+        /**
+         * The fare class for the segment.
+         */
+        service_class?: Segment.ServiceClass;
+      }
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+
+      export namespace Segment {
+        export type ServiceClass =
+          | 'business'
+          | 'economy'
+          | 'first'
+          | 'premium_economy';
+      }
+    }
+
+    export namespace FlightDatum {
+      export interface Affiliate {
+        /**
+         * Affiliate partner code.
+         */
+        code?: string;
+
+        /**
+         * Name of affiliate partner.
+         */
+        name?: string;
+
+        /**
+         * Code provided by the company to a travel agent authorizing ticket issuance.
+         */
+        travel_authorization_code?: string;
+      }
+
+      export interface Insurance {
+        /**
+         * Insurance cost.
+         */
+        amount: number;
+
+        /**
+         * Insurance currency.
+         */
+        currency?: string;
+
+        /**
+         * Insurance company name.
+         */
+        insurance_company_name?: string;
+
+        /**
+         * Type of insurance.
+         */
+        insurance_type: Insurance.InsuranceType;
+      }
+
+      export interface Passenger {
+        /**
+         * Passenger's full name.
+         */
+        name: string;
+      }
+
+      export interface Segment {
+        /**
+         * Segment fare amount.
+         */
+        amount?: number;
+
+        /**
+         * Arrival details.
+         */
+        arrival: Segment.Arrival;
+
+        /**
+         * Airline carrier code.
+         */
+        carrier_code: string;
+
+        /**
+         * Carrier name.
+         */
+        carrier_name?: string;
+
+        /**
+         * Segment currency.
+         */
+        currency?: string;
+
+        /**
+         * Departure details.
+         */
+        departure: Segment.Departure;
+
+        /**
+         * Exchange ticket number.
+         */
+        exchange_ticket_number?: string;
+
+        /**
+         * Fare basis code.
+         */
+        fare_basis_code?: string;
+
+        /**
+         * Additional fees.
+         */
+        fees?: number;
+
+        /**
+         * Flight number.
+         */
+        flight_number?: string;
+
+        /**
+         * Stopover indicator.
+         */
+        is_stop_over_indicator?: boolean;
+
+        /**
+         * Refundable ticket indicator.
+         */
+        refundable?: boolean;
+
+        /**
+         * Class of service.
+         */
+        service_class: Segment.ServiceClass;
+
+        /**
+         * Tax amount for segment.
+         */
+        tax_amount?: number;
+
+        /**
+         * Ticket number.
+         */
+        ticket_number?: string;
+      }
+
+      export interface Total {
+        /**
+         * Total flight amount.
+         */
+        amount: number;
+
+        /**
+         * Reason for credit.
+         */
+        credit_reason?: Total.CreditReason;
+
+        /**
+         * Total currency.
+         */
+        currency?: string;
+
+        /**
+         * Discount details.
+         */
+        discounts?: Total.Discounts;
+
+        /**
+         * Additional charges.
+         */
+        extra_charges?: Array<Total.ExtraCharge>;
+
+        /**
+         * Tax breakdown.
+         */
+        tax?: Total.Tax;
+      }
+
+      export type TransactionType =
+        | 'exchange_ticket'
+        | 'miscellaneous'
+        | 'refund'
+        | 'ticket_purchase';
+
+      export namespace Insurance {
+        export type InsuranceType =
+          | 'baggage'
+          | 'bankruptcy'
+          | 'cancelation'
+          | 'emergency'
+          | 'medical';
+      }
+
+      export namespace Segment {
+        export interface Arrival {
+          /**
+           * Arrival airport IATA code.
+           */
+          airport: string;
+
+          /**
+           * Arrival date/time.
+           */
+          arrives_at?: number;
+
+          /**
+           * Arrival city.
+           */
+          city?: string;
+
+          /**
+           * Arrival country.
+           */
+          country?: string;
+        }
+
+        export interface Departure {
+          /**
+           * Departure airport IATA code.
+           */
+          airport: string;
+
+          /**
+           * Departure city.
+           */
+          city?: string;
+
+          /**
+           * Departure country.
+           */
+          country?: string;
+
+          /**
+           * Departure date/time.
+           */
+          departs_at: number;
+        }
+
+        export type ServiceClass =
+          | 'business'
+          | 'economy'
+          | 'first_class'
+          | 'premium_economy';
+      }
+
+      export namespace Total {
+        export type CreditReason =
+          | 'other'
+          | 'partial_ticket_refund'
+          | 'passenger_transport_ancillary_cancellation'
+          | 'ticket_and_ancillary_cancellation'
+          | 'ticket_cancellation';
+
+        export interface Discounts {
+          /**
+           * Corporate client discount code.
+           */
+          corporate_client_code?: string;
+        }
+
+        export interface ExtraCharge {
+          /**
+           * Amount of additional charges.
+           */
+          amount?: number;
+
+          /**
+           * Type of additional charges.
+           */
+          type?: ExtraCharge.Type;
+        }
+
+        export interface Tax {
+          /**
+           * Array of tax details.
+           */
+          taxes?: Array<Tax.Tax>;
+        }
+
+        export namespace ExtraCharge {
+          export type Type =
+            | 'additional_fees'
+            | 'ancillary_service_charges'
+            | 'exchange_fee';
+        }
+
+        export namespace Tax {
+          export interface Tax {
+            /**
+             * Tax amount.
+             */
+            amount?: number;
+
+            /**
+             * Tax rate.
+             */
+            rate?: number;
+
+            /**
+             * Type of tax.
+             */
+            type?: string;
+          }
+        }
+      }
+    }
+
+    export namespace Lodging {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export type Category = 'hotel' | 'vacation_rental';
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        /**
+         * Details of the recipient.
+         */
+        recipient?: Delivery.Recipient;
+      }
+
+      export type ExtraCharge =
+        | 'gift_shop'
+        | 'laundry'
+        | 'mini_bar'
+        | 'other'
+        | 'restaurant'
+        | 'telephone';
+
+      export interface Passenger {
+        /**
+         * Full name of the person or entity on the lodging reservation.
+         */
+        name: string;
+      }
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+    }
+
+    export namespace LodgingDatum {
+      export interface Accommodation {
+        /**
+         * Type of accommodation.
+         */
+        accommodation_type?: Accommodation.AccommodationType;
+
+        /**
+         * Bed type.
+         */
+        bed_type?: string;
+
+        /**
+         * Daily accommodation rate in cents.
+         */
+        daily_rate_amount?: number;
+
+        /**
+         * Number of nights.
+         */
+        nights?: number;
+
+        /**
+         * Number of rooms, cabanas, apartments, and so on.
+         */
+        number_of_rooms?: number;
+
+        /**
+         * Rate type.
+         */
+        rate_type?: string;
+
+        /**
+         * Whether smoking is allowed.
+         */
+        smoking_indicator?: boolean;
+      }
+
+      export interface Affiliate {
+        /**
+         * Affiliate partner code.
+         */
+        code?: string;
+
+        /**
+         * Affiliate partner name.
+         */
+        name?: string;
+      }
+
+      export interface Guest {
+        /**
+         * Guest's full name.
+         */
+        name: string;
+      }
+
+      export interface Host {
+        /**
+         * Address of the host.
+         */
+        address?: Host.Address;
+
+        /**
+         * Host's country of domicile.
+         */
+        country_of_domicile?: string;
+
+        /**
+         * Reference number for the host.
+         */
+        host_reference?: string;
+
+        /**
+         * Type of host.
+         */
+        host_type?: Host.HostType;
+
+        /**
+         * Name of the lodging property or host.
+         */
+        name?: string;
+
+        /**
+         * Total number of reservations for the host.
+         */
+        number_of_reservations?: number;
+
+        /**
+         * Property phone number.
+         */
+        property_phone_number?: string;
+
+        /**
+         * Host's registration date.
+         */
+        registered_at?: number;
+      }
+
+      export interface Insurance {
+        /**
+         * Price of the insurance coverage in cents.
+         */
+        amount: number;
+
+        /**
+         * Currency of the insurance amount.
+         */
+        currency?: string;
+
+        /**
+         * Name of the insurance company.
+         */
+        insurance_company_name?: string;
+
+        /**
+         * Type of insurance coverage.
+         */
+        insurance_type: Insurance.InsuranceType;
+      }
+
+      export interface Total {
+        /**
+         * Total price of the lodging reservation in cents.
+         */
+        amount: number;
+
+        /**
+         * Cash advances in cents.
+         */
+        cash_advances?: number;
+
+        /**
+         * Currency of the total amount.
+         */
+        currency?: string;
+
+        /**
+         * Discount details for the lodging.
+         */
+        discounts?: Total.Discounts;
+
+        /**
+         * Additional charges for the lodging.
+         */
+        extra_charges?: Array<Total.ExtraCharge>;
+
+        /**
+         * Prepaid amount in cents.
+         */
+        prepaid_amount?: number;
+
+        /**
+         * Tax breakdown for the lodging reservation.
+         */
+        tax?: Total.Tax;
+      }
+
+      export namespace Accommodation {
+        export type AccommodationType =
+          | 'apartment'
+          | 'cabana'
+          | 'house'
+          | 'penthouse'
+          | 'room'
+          | 'standard'
+          | 'suite'
+          | 'villa';
+      }
+
+      export namespace Host {
+        export interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string;
+
+          /**
+           * Address line 1, such as the street, PO Box, or company name.
+           */
+          line1: string;
+
+          /**
+           * Address line 2, such as the apartment, suite, unit, or building.
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code: string;
+
+          /**
+           * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+           */
+          state?: string;
+        }
+
+        export type HostType = 'hostel' | 'hotel' | 'owner' | 'rental_agency';
+      }
+
+      export namespace Insurance {
+        export type InsuranceType =
+          | 'bankruptcy'
+          | 'cancelation'
+          | 'emergency'
+          | 'medical';
+      }
+
+      export namespace Total {
+        export interface Discounts {
+          /**
+           * Corporate client discount code.
+           */
+          corporate_client_code?: string;
+
+          /**
+           * Coupon code.
+           */
+          coupon?: string;
+        }
+
+        export interface ExtraCharge {
+          /**
+           * Amount of the extra charge in cents.
+           */
+          amount?: number;
+
+          /**
+           * Type of extra charge.
+           */
+          type?: ExtraCharge.Type;
+        }
+
+        export interface Tax {
+          /**
+           * Indicates whether the transaction is tax exempt.
+           */
+          tax_exempt_indicator?: boolean;
+
+          /**
+           * Tax details.
+           */
+          taxes?: Array<Tax.Tax>;
+        }
+
+        export namespace ExtraCharge {
+          export type Type =
+            | 'gift_shop'
+            | 'laundry'
+            | 'mini_bar'
+            | 'other'
+            | 'phone'
+            | 'restaurant';
+        }
+
+        export namespace Tax {
+          export interface Tax {
+            /**
+             * Tax amount in cents.
+             */
+            amount?: number;
+
+            /**
+             * Tax rate.
+             */
+            rate?: number;
+
+            /**
+             * Type of tax applied.
+             */
+            type?: string;
+          }
+        }
+      }
+    }
+
+    export namespace Subscription {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export interface BillingInterval {
+        /**
+         * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+         */
+        count: number;
+
+        /**
+         * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+         */
+        interval: BillingInterval.Interval;
+      }
+
+      export namespace BillingInterval {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+    }
+  }
 }
 export interface PaymentIntentConfirmParams {
   /**
    * Provides industry-specific information about the amount.
    */
   amount_details?: Emptyable<PaymentIntentConfirmParams.AmountDetails>;
+
+  /**
+   * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://docs.stripe.com/payments/connected-accounts).
+   */
+  application_fee_amount?: Emptyable<number>;
 
   /**
    * Controls when the funds will be captured from the customer's account.
@@ -10928,6 +21632,11 @@ export interface PaymentIntentConfirmParams {
    * Specifies which fields in the response should be expanded.
    */
   expand?: Array<string>;
+
+  /**
+   * The FX rate in the quote is validated and used to convert the presentment amount to the settlement amount.
+   */
+  fx_quote?: string;
 
   /**
    * Automations to be run during the PaymentIntent lifecycle
@@ -11043,6 +21752,11 @@ export namespace PaymentIntentConfirmParams {
     shipping?: Emptyable<AmountDetails.Shipping>;
 
     /**
+     * Contains information about the surcharge portion of the amount.
+     */
+    surcharge?: Emptyable<AmountDetails.Surcharge>;
+
+    /**
      * Contains information about the tax portion of the amount.
      */
     tax?: Emptyable<AmountDetails.Tax>;
@@ -11070,7 +21784,9 @@ export namespace PaymentIntentConfirmParams {
     | 'eps'
     | 'fpx'
     | 'giropay'
+    | 'gopay'
     | 'grabpay'
+    | 'id_bank_transfer'
     | 'ideal'
     | 'kakao_pay'
     | 'klarna'
@@ -11087,14 +21803,19 @@ export namespace PaymentIntentConfirmParams {
     | 'payco'
     | 'paynow'
     | 'paypal'
+    | 'paypay'
     | 'payto'
     | 'pix'
     | 'promptpay'
+    | 'qris'
+    | 'rechnung'
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
     | 'sepa_debit'
+    | 'shopeepay'
     | 'sofort'
+    | 'stripe_balance'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -11120,6 +21841,16 @@ export namespace PaymentIntentConfirmParams {
 
   export interface PaymentDetails {
     /**
+     * Car rental details for this PaymentIntent.
+     */
+    car_rental?: PaymentDetails.CarRental;
+
+    /**
+     * Car rental data for this PaymentIntent.
+     */
+    car_rental_data?: Emptyable<Array<PaymentDetails.CarRentalDatum>>;
+
+    /**
      * A unique value to identify the customer. This field is available only for card payments.
      *
      * This field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
@@ -11127,11 +21858,41 @@ export namespace PaymentIntentConfirmParams {
     customer_reference?: Emptyable<string>;
 
     /**
+     * Event details for this PaymentIntent
+     */
+    event_details?: PaymentDetails.EventDetails;
+
+    /**
+     * Flight reservation details for this PaymentIntent
+     */
+    flight?: PaymentDetails.Flight;
+
+    /**
+     * Flight data for this PaymentIntent.
+     */
+    flight_data?: Emptyable<Array<PaymentDetails.FlightDatum>>;
+
+    /**
+     * Lodging reservation details for this PaymentIntent
+     */
+    lodging?: PaymentDetails.Lodging;
+
+    /**
+     * Lodging data for this PaymentIntent.
+     */
+    lodging_data?: Emptyable<Array<PaymentDetails.LodgingDatum>>;
+
+    /**
      * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
      *
      * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
      */
     order_reference?: Emptyable<string>;
+
+    /**
+     * Subscription details for this PaymentIntent
+     */
+    subscription?: PaymentDetails.Subscription;
   }
 
   export interface PaymentMethodData {
@@ -11236,9 +21997,19 @@ export namespace PaymentIntentConfirmParams {
     giropay?: PaymentMethodData.Giropay;
 
     /**
+     * If this is a Gopay PaymentMethod, this hash contains details about the Gopay payment method.
+     */
+    gopay?: PaymentMethodData.Gopay;
+
+    /**
      * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
      */
     grabpay?: PaymentMethodData.Grabpay;
+
+    /**
+     * If this is an `IdBankTransfer` PaymentMethod, this hash contains details about the IdBankTransfer payment method.
+     */
+    id_bank_transfer?: PaymentMethodData.IdBankTransfer;
 
     /**
      * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -11336,6 +22107,11 @@ export namespace PaymentIntentConfirmParams {
     paypal?: PaymentMethodData.Paypal;
 
     /**
+     * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+     */
+    paypay?: PaymentMethodData.Paypay;
+
+    /**
      * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
      */
     payto?: PaymentMethodData.Payto;
@@ -11351,9 +22127,19 @@ export namespace PaymentIntentConfirmParams {
     promptpay?: PaymentMethodData.Promptpay;
 
     /**
+     * If this is a `qris` PaymentMethod, this hash contains details about the QRIS payment method.
+     */
+    qris?: PaymentMethodData.Qris;
+
+    /**
      * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
      */
     radar_options?: PaymentMethodData.RadarOptions;
+
+    /**
+     * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
+     */
+    rechnung?: PaymentMethodData.Rechnung;
 
     /**
      * If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
@@ -11376,9 +22162,19 @@ export namespace PaymentIntentConfirmParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
+     */
+    shopeepay?: PaymentMethodData.Shopeepay;
+
+    /**
      * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
      */
     sofort?: PaymentMethodData.Sofort;
+
+    /**
+     * This hash contains details about the Stripe balance payment method.
+     */
+    stripe_balance?: PaymentMethodData.StripeBalance;
 
     /**
      * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -11518,9 +22314,19 @@ export namespace PaymentIntentConfirmParams {
     giropay?: Emptyable<PaymentMethodOptions.Giropay>;
 
     /**
+     * If this is a `gopay` PaymentMethod, this sub-hash contains details about the Gopay payment method options.
+     */
+    gopay?: Emptyable<PaymentMethodOptions.Gopay>;
+
+    /**
      * If this is a `grabpay` PaymentMethod, this sub-hash contains details about the Grabpay payment method options.
      */
     grabpay?: Emptyable<PaymentMethodOptions.Grabpay>;
+
+    /**
+     * If this is a `id_bank_transfer` PaymentMethod, this sub-hash contains details about the Indonesia Bank Transfer payment method options.
+     */
+    id_bank_transfer?: Emptyable<PaymentMethodOptions.IdBankTransfer>;
 
     /**
      * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
@@ -11613,6 +22419,11 @@ export namespace PaymentIntentConfirmParams {
     paypal?: Emptyable<PaymentMethodOptions.Paypal>;
 
     /**
+     * If this is a `paypay` PaymentMethod, this sub-hash contains details about the PayPay payment method options.
+     */
+    paypay?: Emptyable<PaymentMethodOptions.Paypay>;
+
+    /**
      * If this is a `payto` PaymentMethod, this sub-hash contains details about the PayTo payment method options.
      */
     payto?: Emptyable<PaymentMethodOptions.Payto>;
@@ -11626,6 +22437,16 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
      */
     promptpay?: Emptyable<PaymentMethodOptions.Promptpay>;
+
+    /**
+     * If this is a `qris` PaymentMethod, this sub-hash contains details about the QRIS payment method options.
+     */
+    qris?: Emptyable<PaymentMethodOptions.Qris>;
+
+    /**
+     * If this is a `rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
+     */
+    rechnung?: Emptyable<PaymentMethodOptions.Rechnung>;
 
     /**
      * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Revolut Pay payment method options.
@@ -11648,9 +22469,19 @@ export namespace PaymentIntentConfirmParams {
     sepa_debit?: Emptyable<PaymentMethodOptions.SepaDebit>;
 
     /**
+     * If this is a `shopeepay` PaymentMethod, this sub-hash contains details about the ShopeePay payment method options.
+     */
+    shopeepay?: Emptyable<PaymentMethodOptions.Shopeepay>;
+
+    /**
      * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
      */
     sofort?: Emptyable<PaymentMethodOptions.Sofort>;
+
+    /**
+     * If this is a `stripe_balance` PaymentMethod, this sub-hash contains details about the Stripe Balance payment method options.
+     */
+    stripe_balance?: Emptyable<PaymentMethodOptions.StripeBalance>;
 
     /**
      * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
@@ -11783,6 +22614,18 @@ export namespace PaymentIntentConfirmParams {
       to_postal_code?: Emptyable<string>;
     }
 
+    export interface Surcharge {
+      /**
+       * Portion of the amount that corresponds to a surcharge.
+       */
+      amount?: Emptyable<number>;
+
+      /**
+       * Indicate whether to enforce validations on the surcharge amount.
+       */
+      enforce_validation?: Emptyable<Surcharge.EnforceValidation>;
+    }
+
     export interface Tax {
       /**
        * The total amount of tax on the transaction represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
@@ -11886,6 +22729,10 @@ export namespace PaymentIntentConfirmParams {
         }
       }
     }
+
+    export namespace Surcharge {
+      export type EnforceValidation = 'automatic' | 'disabled' | 'enabled';
+    }
   }
 
   export namespace Hooks {
@@ -11945,6 +22792,1831 @@ export namespace PaymentIntentConfirmParams {
       }
 
       export type Type = 'offline' | 'online';
+    }
+  }
+
+  export namespace PaymentDetails {
+    export interface CarRental {
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: CarRental.Affiliate;
+
+      /**
+       * The booking number associated with the car rental.
+       */
+      booking_number: string;
+
+      /**
+       * Class code of the car.
+       */
+      car_class_code?: string;
+
+      /**
+       * Make of the car.
+       */
+      car_make?: string;
+
+      /**
+       * Model of the car.
+       */
+      car_model?: string;
+
+      /**
+       * The name of the rental car company.
+       */
+      company?: string;
+
+      /**
+       * The customer service phone number of the car rental company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * Number of days the car is being rented.
+       */
+      days_rented: number;
+
+      /**
+       * Delivery details for this purchase.
+       */
+      delivery?: CarRental.Delivery;
+
+      /**
+       * The details of the distance traveled during the rental period.
+       */
+      distance?: CarRental.Distance;
+
+      /**
+       * The details of the passengers in the travel reservation
+       */
+      drivers?: Array<CarRental.Driver>;
+
+      /**
+       * List of additional charges being billed.
+       */
+      extra_charges?: Array<CarRental.ExtraCharge>;
+
+      /**
+       * Indicates if the customer did not keep nor cancel their booking.
+       */
+      no_show?: boolean;
+
+      /**
+       * Car pick-up address.
+       */
+      pickup_address?: AddressParam;
+
+      /**
+       * Car pick-up time. Measured in seconds since the Unix epoch.
+       */
+      pickup_at: number;
+
+      /**
+       * Name of the pickup location.
+       */
+      pickup_location_name?: string;
+
+      /**
+       * Rental rate.
+       */
+      rate_amount?: number;
+
+      /**
+       * The frequency at which the rate amount is applied. One of `day`, `week` or `month`
+       */
+      rate_interval?: CarRental.RateInterval;
+
+      /**
+       * The name of the person or entity renting the car.
+       */
+      renter_name?: string;
+
+      /**
+       * Car return address.
+       */
+      return_address?: AddressParam;
+
+      /**
+       * Car return time. Measured in seconds since the Unix epoch.
+       */
+      return_at: number;
+
+      /**
+       * Name of the return location.
+       */
+      return_location_name?: string;
+
+      /**
+       * Indicates whether the goods or services are tax-exempt or tax is not collected.
+       */
+      tax_exempt?: boolean;
+
+      /**
+       * The vehicle identification number.
+       */
+      vehicle_identification_number?: string;
+    }
+
+    export interface CarRentalDatum {
+      /**
+       * Affiliate (such as travel agency) details for the rental.
+       */
+      affiliate?: CarRentalDatum.Affiliate;
+
+      /**
+       * Booking confirmation number for the car rental.
+       */
+      booking_number?: string;
+
+      /**
+       * Name of the car rental company.
+       */
+      carrier_name?: string;
+
+      /**
+       * Customer service phone number for the car rental company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * Number of days the car is being rented.
+       */
+      days_rented?: number;
+
+      /**
+       * Distance details for the rental.
+       */
+      distance?: CarRentalDatum.Distance;
+
+      /**
+       * List of drivers for the rental.
+       */
+      drivers?: Array<CarRentalDatum.Driver>;
+
+      /**
+       * Drop-off location details.
+       */
+      drop_off: CarRentalDatum.DropOff;
+
+      /**
+       * Insurance details for the rental.
+       */
+      insurances?: Array<CarRentalDatum.Insurance>;
+
+      /**
+       * Indicates if the customer was a no-show.
+       */
+      no_show_indicator?: boolean;
+
+      /**
+       * Pickup location details.
+       */
+      pickup: CarRentalDatum.Pickup;
+
+      /**
+       * Name of the person renting the vehicle.
+       */
+      renter_name?: string;
+
+      /**
+       * Total cost breakdown for the rental.
+       */
+      total: CarRentalDatum.Total;
+
+      /**
+       * Vehicle details for the rental.
+       */
+      vehicle?: CarRentalDatum.Vehicle;
+    }
+
+    export interface EventDetails {
+      /**
+       * Indicates if the tickets are digitally checked when entering the venue.
+       */
+      access_controlled_venue?: boolean;
+
+      /**
+       * The event location's address.
+       */
+      address?: AddressParam;
+
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: EventDetails.Affiliate;
+
+      /**
+       * The name of the company
+       */
+      company?: string;
+
+      /**
+       * Delivery details for this purchase.
+       */
+      delivery?: EventDetails.Delivery;
+
+      /**
+       * Event end time. Measured in seconds since the Unix epoch.
+       */
+      ends_at?: number;
+
+      /**
+       * Type of the event entertainment (concert, sports event etc)
+       */
+      genre?: string;
+
+      /**
+       * The name of the event.
+       */
+      name: string;
+
+      /**
+       * Event start time. Measured in seconds since the Unix epoch.
+       */
+      starts_at?: number;
+    }
+
+    export interface Flight {
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: Flight.Affiliate;
+
+      /**
+       * The agency number (i.e. International Air Transport Association (IATA) agency number) of the travel agency that made the booking.
+       */
+      agency_number?: string;
+
+      /**
+       * The International Air Transport Association (IATA) carrier code of the carrier that issued the ticket.
+       */
+      carrier?: string;
+
+      /**
+       * Delivery details for this purchase.
+       */
+      delivery?: Flight.Delivery;
+
+      /**
+       * The name of the person or entity on the reservation.
+       */
+      passenger_name?: string;
+
+      /**
+       * The details of the passengers in the travel reservation.
+       */
+      passengers?: Array<Flight.Passenger>;
+
+      /**
+       * The individual flight segments associated with the trip.
+       */
+      segments: Array<Flight.Segment>;
+
+      /**
+       * The ticket number associated with the travel reservation.
+       */
+      ticket_number?: string;
+    }
+
+    export interface FlightDatum {
+      /**
+       * Affiliate details if applicable.
+       */
+      affiliate?: FlightDatum.Affiliate;
+
+      /**
+       * Reservation reference.
+       */
+      booking_number?: string;
+
+      /**
+       * Computerized reservation system used to make the reservation and purchase the ticket.
+       */
+      computerized_reservation_system?: string;
+
+      /**
+       * Ticket restrictions.
+       */
+      endorsements_and_restrictions?: string;
+
+      /**
+       * List of insurances.
+       */
+      insurances?: Array<FlightDatum.Insurance>;
+
+      /**
+       * List of passengers.
+       */
+      passengers?: Array<FlightDatum.Passenger>;
+
+      /**
+       * List of flight segments.
+       */
+      segments: Array<FlightDatum.Segment>;
+
+      /**
+       * Electronic ticket indicator.
+       */
+      ticket_electronically_issued_indicator?: boolean;
+
+      /**
+       * Total cost breakdown.
+       */
+      total: FlightDatum.Total;
+
+      /**
+       * Type of flight transaction.
+       */
+      transaction_type?: FlightDatum.TransactionType;
+    }
+
+    export interface Lodging {
+      /**
+       * The lodging location's address.
+       */
+      address?: AddressParam;
+
+      /**
+       * The number of adults on the booking
+       */
+      adults?: number;
+
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: Lodging.Affiliate;
+
+      /**
+       * The booking number associated with the lodging reservation.
+       */
+      booking_number?: string;
+
+      /**
+       * The lodging category
+       */
+      category?: Lodging.Category;
+
+      /**
+       * Lodging check-in time. Measured in seconds since the Unix epoch.
+       */
+      checkin_at: number;
+
+      /**
+       * Lodging check-out time. Measured in seconds since the Unix epoch.
+       */
+      checkout_at: number;
+
+      /**
+       * The customer service phone number of the lodging company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * The daily lodging room rate.
+       */
+      daily_room_rate_amount?: number;
+
+      /**
+       * Delivery details for this purchase.
+       */
+      delivery?: Lodging.Delivery;
+
+      /**
+       * List of additional charges being billed.
+       */
+      extra_charges?: Array<Lodging.ExtraCharge>;
+
+      /**
+       * Indicates whether the lodging location is compliant with the Fire Safety Act.
+       */
+      fire_safety_act_compliance?: boolean;
+
+      /**
+       * The name of the lodging location.
+       */
+      name?: string;
+
+      /**
+       * Indicates if the customer did not keep their booking while failing to cancel the reservation.
+       */
+      no_show?: boolean;
+
+      /**
+       * The number of rooms on the booking
+       */
+      number_of_rooms?: number;
+
+      /**
+       * The details of the passengers in the travel reservation
+       */
+      passengers?: Array<Lodging.Passenger>;
+
+      /**
+       * The phone number of the lodging location.
+       */
+      property_phone_number?: string;
+
+      /**
+       * The room class for this purchase.
+       */
+      room_class?: string;
+
+      /**
+       * The number of room nights
+       */
+      room_nights?: number;
+
+      /**
+       * The total tax amount associating with the room reservation.
+       */
+      total_room_tax_amount?: number;
+
+      /**
+       * The total tax amount
+       */
+      total_tax_amount?: number;
+    }
+
+    export interface LodgingDatum {
+      /**
+       * Accommodation details for the lodging.
+       */
+      accommodation?: LodgingDatum.Accommodation;
+
+      /**
+       * Affiliate details if applicable.
+       */
+      affiliate?: LodgingDatum.Affiliate;
+
+      /**
+       * Booking confirmation number for the lodging.
+       */
+      booking_number?: string;
+
+      /**
+       * Check-in date.
+       */
+      checkin_at: number;
+
+      /**
+       * Check-out date.
+       */
+      checkout_at: number;
+
+      /**
+       * Customer service phone number for the lodging company.
+       */
+      customer_service_phone_number?: string;
+
+      /**
+       * Whether the lodging is compliant with any hotel fire safety regulations.
+       */
+      fire_safety_act_compliance_indicator?: boolean;
+
+      /**
+       * List of guests for the lodging.
+       */
+      guests?: Array<LodgingDatum.Guest>;
+
+      /**
+       * Host details for the lodging.
+       */
+      host?: LodgingDatum.Host;
+
+      /**
+       * List of insurances for the lodging.
+       */
+      insurances?: Array<LodgingDatum.Insurance>;
+
+      /**
+       * Whether the renter is a no-show.
+       */
+      no_show_indicator?: boolean;
+
+      /**
+       * Renter ID number for the lodging.
+       */
+      renter_id_number?: string;
+
+      /**
+       * Renter name for the lodging.
+       */
+      renter_name?: string;
+
+      /**
+       * Total details for the lodging.
+       */
+      total: LodgingDatum.Total;
+    }
+
+    export interface Subscription {
+      /**
+       * Affiliate details for this purchase.
+       */
+      affiliate?: Subscription.Affiliate;
+
+      /**
+       * Info whether the subscription will be auto renewed upon expiry.
+       */
+      auto_renewal?: boolean;
+
+      /**
+       * Subscription billing details for this purchase.
+       */
+      billing_interval?: Subscription.BillingInterval;
+
+      /**
+       * Subscription end time. Measured in seconds since the Unix epoch.
+       */
+      ends_at?: number;
+
+      /**
+       * Name of the product on subscription. e.g. Apple Music Subscription
+       */
+      name: string;
+
+      /**
+       * Subscription start time. Measured in seconds since the Unix epoch.
+       */
+      starts_at?: number;
+    }
+
+    export namespace CarRental {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        /**
+         * Details of the recipient.
+         */
+        recipient?: Delivery.Recipient;
+      }
+
+      export interface Distance {
+        /**
+         * Distance traveled.
+         */
+        amount?: number;
+
+        /**
+         * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+         */
+        unit?: Distance.Unit;
+      }
+
+      export interface Driver {
+        /**
+         * Driver's identification number.
+         */
+        driver_identification_number?: string;
+
+        /**
+         * Driver's tax number.
+         */
+        driver_tax_number?: string;
+
+        /**
+         * Full name of the person or entity on the car reservation.
+         */
+        name: string;
+      }
+
+      export type ExtraCharge =
+        | 'extra_mileage'
+        | 'gas'
+        | 'late_return'
+        | 'one_way_service'
+        | 'parking_violation';
+
+      export type RateInterval = 'day' | 'month' | 'week';
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+
+      export namespace Distance {
+        export type Unit = 'kilometers' | 'miles';
+      }
+    }
+
+    export namespace CarRentalDatum {
+      export interface Affiliate {
+        /**
+         * Affiliate partner code.
+         */
+        code?: string;
+
+        /**
+         * Name of affiliate partner.
+         */
+        name?: string;
+      }
+
+      export interface Distance {
+        /**
+         * Distance traveled.
+         */
+        amount: number;
+
+        /**
+         * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+         */
+        unit: Distance.Unit;
+      }
+
+      export interface Driver {
+        /**
+         * Driver's date of birth.
+         */
+        date_of_birth?: Driver.DateOfBirth;
+
+        /**
+         * Driver's identification number.
+         */
+        driver_identification_number?: string;
+
+        /**
+         * Driver's tax number.
+         */
+        driver_tax_number?: string;
+
+        /**
+         * Driver's full name.
+         */
+        name: string;
+      }
+
+      export interface DropOff {
+        /**
+         * Address of the rental location.
+         */
+        address: DropOff.Address;
+
+        /**
+         * Location name.
+         */
+        location_name?: string;
+
+        /**
+         * Timestamp for the location.
+         */
+        time: number;
+      }
+
+      export interface Insurance {
+        /**
+         * Amount of the insurance coverage in cents.
+         */
+        amount: number;
+
+        /**
+         * Currency of the insurance amount.
+         */
+        currency?: string;
+
+        /**
+         * Name of the insurance company.
+         */
+        insurance_company_name?: string;
+
+        /**
+         * Type of insurance coverage.
+         */
+        insurance_type: Insurance.InsuranceType;
+      }
+
+      export interface Pickup {
+        /**
+         * Address of the rental location.
+         */
+        address: Pickup.Address;
+
+        /**
+         * Location name.
+         */
+        location_name?: string;
+
+        /**
+         * Timestamp for the location.
+         */
+        time: number;
+      }
+
+      export interface Total {
+        /**
+         * Total amount in cents.
+         */
+        amount: number;
+
+        /**
+         * Currency of the amount.
+         */
+        currency?: string;
+
+        /**
+         * Discount details for the rental.
+         */
+        discounts?: Total.Discounts;
+
+        /**
+         * Additional charges for the rental.
+         */
+        extra_charges?: Array<Total.ExtraCharge>;
+
+        /**
+         * Rate per unit for the rental.
+         */
+        rate_per_unit?: number;
+
+        /**
+         * Unit of measurement for the rate.
+         */
+        rate_unit?: Total.RateUnit;
+
+        /**
+         * Tax breakdown for the rental.
+         */
+        tax?: Total.Tax;
+      }
+
+      export interface Vehicle {
+        /**
+         * Make of the rental vehicle.
+         */
+        make?: string;
+
+        /**
+         * Model of the rental vehicle.
+         */
+        model?: string;
+
+        /**
+         * Odometer reading at the time of rental.
+         */
+        odometer?: number;
+
+        /**
+         * Type of the rental vehicle.
+         */
+        type?: Vehicle.Type;
+
+        /**
+         * Class of the rental vehicle.
+         */
+        vehicle_class?: Vehicle.VehicleClass;
+
+        /**
+         * Vehicle identification number (VIN).
+         */
+        vehicle_identification_number?: string;
+      }
+
+      export namespace Distance {
+        export type Unit = 'kilometers' | 'miles';
+      }
+
+      export namespace Driver {
+        export interface DateOfBirth {
+          /**
+           * Day of birth (1-31).
+           */
+          day: number;
+
+          /**
+           * Month of birth (1-12).
+           */
+          month: number;
+
+          /**
+           * Year of birth (must be greater than 1900).
+           */
+          year: number;
+        }
+      }
+
+      export namespace DropOff {
+        export interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string;
+
+          /**
+           * Address line 1, such as the street, PO Box, or company name.
+           */
+          line1: string;
+
+          /**
+           * Address line 2, such as the apartment, suite, unit, or building.
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code: string;
+
+          /**
+           * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+           */
+          state?: string;
+        }
+      }
+
+      export namespace Insurance {
+        export type InsuranceType =
+          | 'liability_supplement'
+          | 'loss_damage_waiver'
+          | 'other'
+          | 'partial_damage_waiver'
+          | 'personal_accident'
+          | 'personal_effects';
+      }
+
+      export namespace Pickup {
+        export interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string;
+
+          /**
+           * Address line 1, such as the street, PO Box, or company name.
+           */
+          line1: string;
+
+          /**
+           * Address line 2, such as the apartment, suite, unit, or building.
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code: string;
+
+          /**
+           * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+           */
+          state?: string;
+        }
+      }
+
+      export namespace Total {
+        export interface Discounts {
+          /**
+           * Corporate client discount code.
+           */
+          corporate_client_code?: string;
+
+          /**
+           * Coupon code applied to the rental.
+           */
+          coupon?: string;
+
+          /**
+           * Maximum number of free miles or kilometers included.
+           */
+          maximum_free_miles_or_kilometers?: number;
+        }
+
+        export interface ExtraCharge {
+          /**
+           * Amount of the extra charge in cents.
+           */
+          amount: number;
+
+          /**
+           * Type of extra charge.
+           */
+          type: ExtraCharge.Type;
+        }
+
+        export type RateUnit =
+          | 'days'
+          | 'kilometers'
+          | 'miles'
+          | 'months'
+          | 'weeks';
+
+        export interface Tax {
+          /**
+           * Indicates if the transaction is tax exempt.
+           */
+          tax_exempt_indicator?: boolean;
+
+          /**
+           * Array of tax details.
+           */
+          taxes?: Array<Tax.Tax>;
+        }
+
+        export namespace ExtraCharge {
+          export type Type =
+            | 'extra_mileage'
+            | 'gas'
+            | 'gps'
+            | 'late_charge'
+            | 'one_way_drop_off'
+            | 'other'
+            | 'parking'
+            | 'phone'
+            | 'regular_mileage'
+            | 'towing';
+        }
+
+        export namespace Tax {
+          export interface Tax {
+            /**
+             * Tax amount.
+             */
+            amount?: number;
+
+            /**
+             * Tax rate applied.
+             */
+            rate?: number;
+
+            /**
+             * Type of tax applied.
+             */
+            type?: string;
+          }
+        }
+      }
+
+      export namespace Vehicle {
+        export type Type =
+          | 'cargo_van'
+          | 'compact'
+          | 'economy'
+          | 'exotic'
+          | 'exotic_suv'
+          | 'fifteen_passenger_van'
+          | 'four_wheel_drive'
+          | 'full_size'
+          | 'intermediate'
+          | 'large_suv'
+          | 'large_truck'
+          | 'luxury'
+          | 'medium_suv'
+          | 'midsize'
+          | 'mini'
+          | 'minivan'
+          | 'miscellaneous'
+          | 'moped'
+          | 'moving_van'
+          | 'premium'
+          | 'regular'
+          | 'small_medium_truck'
+          | 'small_suv'
+          | 'special'
+          | 'standard'
+          | 'stretch'
+          | 'subcompact'
+          | 'taxi'
+          | 'twelve_foot_truck'
+          | 'twelve_passenger_van'
+          | 'twenty_foot_truck'
+          | 'twenty_four_foot_truck'
+          | 'twenty_six_foot_truck'
+          | 'unique';
+
+        export type VehicleClass =
+          | 'business'
+          | 'economy'
+          | 'first_class'
+          | 'premium_economy';
+      }
+    }
+
+    export namespace EventDetails {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        /**
+         * Details of the recipient.
+         */
+        recipient?: Delivery.Recipient;
+      }
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+    }
+
+    export namespace Flight {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        /**
+         * Details of the recipient.
+         */
+        recipient?: Delivery.Recipient;
+      }
+
+      export interface Passenger {
+        /**
+         * Full name of the person or entity on the flight reservation.
+         */
+        name: string;
+      }
+
+      export interface Segment {
+        /**
+         * The flight segment amount.
+         */
+        amount?: number;
+
+        /**
+         * The International Air Transport Association (IATA) airport code for the arrival airport.
+         */
+        arrival_airport?: string;
+
+        /**
+         * The arrival time for the flight segment. Measured in seconds since the Unix epoch.
+         */
+        arrives_at?: number;
+
+        /**
+         * The International Air Transport Association (IATA) carrier code of the carrier operating the flight segment.
+         */
+        carrier?: string;
+
+        /**
+         * The departure time for the flight segment. Measured in seconds since the Unix epoch.
+         */
+        departs_at: number;
+
+        /**
+         * The International Air Transport Association (IATA) airport code for the departure airport.
+         */
+        departure_airport?: string;
+
+        /**
+         * The flight number associated with the segment
+         */
+        flight_number?: string;
+
+        /**
+         * The fare class for the segment.
+         */
+        service_class?: Segment.ServiceClass;
+      }
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+
+      export namespace Segment {
+        export type ServiceClass =
+          | 'business'
+          | 'economy'
+          | 'first'
+          | 'premium_economy';
+      }
+    }
+
+    export namespace FlightDatum {
+      export interface Affiliate {
+        /**
+         * Affiliate partner code.
+         */
+        code?: string;
+
+        /**
+         * Name of affiliate partner.
+         */
+        name?: string;
+
+        /**
+         * Code provided by the company to a travel agent authorizing ticket issuance.
+         */
+        travel_authorization_code?: string;
+      }
+
+      export interface Insurance {
+        /**
+         * Insurance cost.
+         */
+        amount: number;
+
+        /**
+         * Insurance currency.
+         */
+        currency?: string;
+
+        /**
+         * Insurance company name.
+         */
+        insurance_company_name?: string;
+
+        /**
+         * Type of insurance.
+         */
+        insurance_type: Insurance.InsuranceType;
+      }
+
+      export interface Passenger {
+        /**
+         * Passenger's full name.
+         */
+        name: string;
+      }
+
+      export interface Segment {
+        /**
+         * Segment fare amount.
+         */
+        amount?: number;
+
+        /**
+         * Arrival details.
+         */
+        arrival: Segment.Arrival;
+
+        /**
+         * Airline carrier code.
+         */
+        carrier_code: string;
+
+        /**
+         * Carrier name.
+         */
+        carrier_name?: string;
+
+        /**
+         * Segment currency.
+         */
+        currency?: string;
+
+        /**
+         * Departure details.
+         */
+        departure: Segment.Departure;
+
+        /**
+         * Exchange ticket number.
+         */
+        exchange_ticket_number?: string;
+
+        /**
+         * Fare basis code.
+         */
+        fare_basis_code?: string;
+
+        /**
+         * Additional fees.
+         */
+        fees?: number;
+
+        /**
+         * Flight number.
+         */
+        flight_number?: string;
+
+        /**
+         * Stopover indicator.
+         */
+        is_stop_over_indicator?: boolean;
+
+        /**
+         * Refundable ticket indicator.
+         */
+        refundable?: boolean;
+
+        /**
+         * Class of service.
+         */
+        service_class: Segment.ServiceClass;
+
+        /**
+         * Tax amount for segment.
+         */
+        tax_amount?: number;
+
+        /**
+         * Ticket number.
+         */
+        ticket_number?: string;
+      }
+
+      export interface Total {
+        /**
+         * Total flight amount.
+         */
+        amount: number;
+
+        /**
+         * Reason for credit.
+         */
+        credit_reason?: Total.CreditReason;
+
+        /**
+         * Total currency.
+         */
+        currency?: string;
+
+        /**
+         * Discount details.
+         */
+        discounts?: Total.Discounts;
+
+        /**
+         * Additional charges.
+         */
+        extra_charges?: Array<Total.ExtraCharge>;
+
+        /**
+         * Tax breakdown.
+         */
+        tax?: Total.Tax;
+      }
+
+      export type TransactionType =
+        | 'exchange_ticket'
+        | 'miscellaneous'
+        | 'refund'
+        | 'ticket_purchase';
+
+      export namespace Insurance {
+        export type InsuranceType =
+          | 'baggage'
+          | 'bankruptcy'
+          | 'cancelation'
+          | 'emergency'
+          | 'medical';
+      }
+
+      export namespace Segment {
+        export interface Arrival {
+          /**
+           * Arrival airport IATA code.
+           */
+          airport: string;
+
+          /**
+           * Arrival date/time.
+           */
+          arrives_at?: number;
+
+          /**
+           * Arrival city.
+           */
+          city?: string;
+
+          /**
+           * Arrival country.
+           */
+          country?: string;
+        }
+
+        export interface Departure {
+          /**
+           * Departure airport IATA code.
+           */
+          airport: string;
+
+          /**
+           * Departure city.
+           */
+          city?: string;
+
+          /**
+           * Departure country.
+           */
+          country?: string;
+
+          /**
+           * Departure date/time.
+           */
+          departs_at: number;
+        }
+
+        export type ServiceClass =
+          | 'business'
+          | 'economy'
+          | 'first_class'
+          | 'premium_economy';
+      }
+
+      export namespace Total {
+        export type CreditReason =
+          | 'other'
+          | 'partial_ticket_refund'
+          | 'passenger_transport_ancillary_cancellation'
+          | 'ticket_and_ancillary_cancellation'
+          | 'ticket_cancellation';
+
+        export interface Discounts {
+          /**
+           * Corporate client discount code.
+           */
+          corporate_client_code?: string;
+        }
+
+        export interface ExtraCharge {
+          /**
+           * Amount of additional charges.
+           */
+          amount?: number;
+
+          /**
+           * Type of additional charges.
+           */
+          type?: ExtraCharge.Type;
+        }
+
+        export interface Tax {
+          /**
+           * Array of tax details.
+           */
+          taxes?: Array<Tax.Tax>;
+        }
+
+        export namespace ExtraCharge {
+          export type Type =
+            | 'additional_fees'
+            | 'ancillary_service_charges'
+            | 'exchange_fee';
+        }
+
+        export namespace Tax {
+          export interface Tax {
+            /**
+             * Tax amount.
+             */
+            amount?: number;
+
+            /**
+             * Tax rate.
+             */
+            rate?: number;
+
+            /**
+             * Type of tax.
+             */
+            type?: string;
+          }
+        }
+      }
+    }
+
+    export namespace Lodging {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export type Category = 'hotel' | 'vacation_rental';
+
+      export interface Delivery {
+        /**
+         * The delivery method for the payment
+         */
+        mode?: Delivery.Mode;
+
+        /**
+         * Details of the recipient.
+         */
+        recipient?: Delivery.Recipient;
+      }
+
+      export type ExtraCharge =
+        | 'gift_shop'
+        | 'laundry'
+        | 'mini_bar'
+        | 'other'
+        | 'restaurant'
+        | 'telephone';
+
+      export interface Passenger {
+        /**
+         * Full name of the person or entity on the lodging reservation.
+         */
+        name: string;
+      }
+
+      export namespace Delivery {
+        export type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+        export interface Recipient {
+          /**
+           * The email of the recipient the ticket is delivered to.
+           */
+          email?: string;
+
+          /**
+           * The name of the recipient the ticket is delivered to.
+           */
+          name?: string;
+
+          /**
+           * The phone number of the recipient the ticket is delivered to.
+           */
+          phone?: string;
+        }
+      }
+    }
+
+    export namespace LodgingDatum {
+      export interface Accommodation {
+        /**
+         * Type of accommodation.
+         */
+        accommodation_type?: Accommodation.AccommodationType;
+
+        /**
+         * Bed type.
+         */
+        bed_type?: string;
+
+        /**
+         * Daily accommodation rate in cents.
+         */
+        daily_rate_amount?: number;
+
+        /**
+         * Number of nights.
+         */
+        nights?: number;
+
+        /**
+         * Number of rooms, cabanas, apartments, and so on.
+         */
+        number_of_rooms?: number;
+
+        /**
+         * Rate type.
+         */
+        rate_type?: string;
+
+        /**
+         * Whether smoking is allowed.
+         */
+        smoking_indicator?: boolean;
+      }
+
+      export interface Affiliate {
+        /**
+         * Affiliate partner code.
+         */
+        code?: string;
+
+        /**
+         * Affiliate partner name.
+         */
+        name?: string;
+      }
+
+      export interface Guest {
+        /**
+         * Guest's full name.
+         */
+        name: string;
+      }
+
+      export interface Host {
+        /**
+         * Address of the host.
+         */
+        address?: Host.Address;
+
+        /**
+         * Host's country of domicile.
+         */
+        country_of_domicile?: string;
+
+        /**
+         * Reference number for the host.
+         */
+        host_reference?: string;
+
+        /**
+         * Type of host.
+         */
+        host_type?: Host.HostType;
+
+        /**
+         * Name of the lodging property or host.
+         */
+        name?: string;
+
+        /**
+         * Total number of reservations for the host.
+         */
+        number_of_reservations?: number;
+
+        /**
+         * Property phone number.
+         */
+        property_phone_number?: string;
+
+        /**
+         * Host's registration date.
+         */
+        registered_at?: number;
+      }
+
+      export interface Insurance {
+        /**
+         * Price of the insurance coverage in cents.
+         */
+        amount: number;
+
+        /**
+         * Currency of the insurance amount.
+         */
+        currency?: string;
+
+        /**
+         * Name of the insurance company.
+         */
+        insurance_company_name?: string;
+
+        /**
+         * Type of insurance coverage.
+         */
+        insurance_type: Insurance.InsuranceType;
+      }
+
+      export interface Total {
+        /**
+         * Total price of the lodging reservation in cents.
+         */
+        amount: number;
+
+        /**
+         * Cash advances in cents.
+         */
+        cash_advances?: number;
+
+        /**
+         * Currency of the total amount.
+         */
+        currency?: string;
+
+        /**
+         * Discount details for the lodging.
+         */
+        discounts?: Total.Discounts;
+
+        /**
+         * Additional charges for the lodging.
+         */
+        extra_charges?: Array<Total.ExtraCharge>;
+
+        /**
+         * Prepaid amount in cents.
+         */
+        prepaid_amount?: number;
+
+        /**
+         * Tax breakdown for the lodging reservation.
+         */
+        tax?: Total.Tax;
+      }
+
+      export namespace Accommodation {
+        export type AccommodationType =
+          | 'apartment'
+          | 'cabana'
+          | 'house'
+          | 'penthouse'
+          | 'room'
+          | 'standard'
+          | 'suite'
+          | 'villa';
+      }
+
+      export namespace Host {
+        export interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string;
+
+          /**
+           * Address line 1, such as the street, PO Box, or company name.
+           */
+          line1: string;
+
+          /**
+           * Address line 2, such as the apartment, suite, unit, or building.
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code: string;
+
+          /**
+           * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+           */
+          state?: string;
+        }
+
+        export type HostType = 'hostel' | 'hotel' | 'owner' | 'rental_agency';
+      }
+
+      export namespace Insurance {
+        export type InsuranceType =
+          | 'bankruptcy'
+          | 'cancelation'
+          | 'emergency'
+          | 'medical';
+      }
+
+      export namespace Total {
+        export interface Discounts {
+          /**
+           * Corporate client discount code.
+           */
+          corporate_client_code?: string;
+
+          /**
+           * Coupon code.
+           */
+          coupon?: string;
+        }
+
+        export interface ExtraCharge {
+          /**
+           * Amount of the extra charge in cents.
+           */
+          amount?: number;
+
+          /**
+           * Type of extra charge.
+           */
+          type?: ExtraCharge.Type;
+        }
+
+        export interface Tax {
+          /**
+           * Indicates whether the transaction is tax exempt.
+           */
+          tax_exempt_indicator?: boolean;
+
+          /**
+           * Tax details.
+           */
+          taxes?: Array<Tax.Tax>;
+        }
+
+        export namespace ExtraCharge {
+          export type Type =
+            | 'gift_shop'
+            | 'laundry'
+            | 'mini_bar'
+            | 'other'
+            | 'phone'
+            | 'restaurant';
+        }
+
+        export namespace Tax {
+          export interface Tax {
+            /**
+             * Tax amount in cents.
+             */
+            amount?: number;
+
+            /**
+             * Tax rate.
+             */
+            rate?: number;
+
+            /**
+             * Type of tax applied.
+             */
+            type?: string;
+          }
+        }
+      }
+    }
+
+    export namespace Subscription {
+      export interface Affiliate {
+        /**
+         * The name of the affiliate that originated the purchase.
+         */
+        name: string;
+      }
+
+      export interface BillingInterval {
+        /**
+         * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+         */
+        count: number;
+
+        /**
+         * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+         */
+        interval: BillingInterval.Interval;
+      }
+
+      export namespace BillingInterval {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
+      }
     }
   }
 
@@ -12069,7 +24741,16 @@ export namespace PaymentIntentConfirmParams {
 
     export interface Giropay {}
 
+    export interface Gopay {}
+
     export interface Grabpay {}
+
+    export interface IdBankTransfer {
+      /**
+       * Bank where the account is held.
+       */
+      bank?: IdBankTransfer.Bank;
+    }
 
     export interface Ideal {
       /**
@@ -12154,6 +24835,8 @@ export namespace PaymentIntentConfirmParams {
 
     export interface Paypal {}
 
+    export interface Paypay {}
+
     export interface Payto {
       /**
        * The account number for the bank account.
@@ -12175,11 +24858,20 @@ export namespace PaymentIntentConfirmParams {
 
     export interface Promptpay {}
 
+    export interface Qris {}
+
     export interface RadarOptions {
       /**
        * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
        */
       session?: string;
+    }
+
+    export interface Rechnung {
+      /**
+       * Customer's date of birth
+       */
+      dob: Rechnung.Dob;
     }
 
     export interface RevolutPay {}
@@ -12195,11 +24887,20 @@ export namespace PaymentIntentConfirmParams {
       iban: string;
     }
 
+    export interface Shopeepay {}
+
     export interface Sofort {
       /**
        * Two-letter ISO code representing the country the bank account is located in.
        */
       country: Sofort.Country;
+    }
+
+    export interface StripeBalance {
+      /**
+       * The connected account ID whose Stripe balance to use as the source of payment
+       */
+      account?: string;
     }
 
     export interface Swish {}
@@ -12225,7 +24926,9 @@ export namespace PaymentIntentConfirmParams {
       | 'eps'
       | 'fpx'
       | 'giropay'
+      | 'gopay'
       | 'grabpay'
+      | 'id_bank_transfer'
       | 'ideal'
       | 'kakao_pay'
       | 'klarna'
@@ -12243,14 +24946,19 @@ export namespace PaymentIntentConfirmParams {
       | 'payco'
       | 'paynow'
       | 'paypal'
+      | 'paypay'
       | 'payto'
       | 'pix'
       | 'promptpay'
+      | 'qris'
+      | 'rechnung'
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
       | 'sepa_debit'
+      | 'shopeepay'
       | 'sofort'
+      | 'stripe_balance'
       | 'swish'
       | 'twint'
       | 'upi'
@@ -12356,6 +25064,10 @@ export namespace PaymentIntentConfirmParams {
         | 'uob';
     }
 
+    export namespace IdBankTransfer {
+      export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+    }
+
     export namespace Ideal {
       export type Bank =
         | 'abn_amro'
@@ -12431,6 +25143,25 @@ export namespace PaymentIntentConfirmParams {
         | 'toyota_bank'
         | 'velobank'
         | 'volkswagen_bank';
+    }
+
+    export namespace Rechnung {
+      export interface Dob {
+        /**
+         * The day of birth, between 1 and 31.
+         */
+        day: number;
+
+        /**
+         * The month of birth, between 1 and 12.
+         */
+        month: number;
+
+        /**
+         * The four-digit year of birth.
+         */
+        year: number;
+      }
     }
 
     export namespace Sofort {
@@ -12766,6 +25497,11 @@ export namespace PaymentIntentConfirmParams {
       network?: Card.Network;
 
       /**
+       * Request ability to [decrement the authorization](https://docs.stripe.com/payments/decremental-authorization) for this PaymentIntent.
+       */
+      request_decremental_authorization?: Card.RequestDecrementalAuthorization;
+
+      /**
        * Request ability to [capture beyond the standard authorization validity window](https://docs.stripe.com/payments/extended-authorization) for this PaymentIntent.
        */
       request_extended_authorization?: Card.RequestExtendedAuthorization;
@@ -12784,6 +25520,11 @@ export namespace PaymentIntentConfirmParams {
        * Request ability to [overcapture](https://docs.stripe.com/payments/overcapture) for this PaymentIntent.
        */
       request_overcapture?: Card.RequestOvercapture;
+
+      /**
+       * Request partial authorization on this PaymentIntent.
+       */
+      request_partial_authorization?: Card.RequestPartialAuthorization;
 
       /**
        * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
@@ -12817,6 +25558,11 @@ export namespace PaymentIntentConfirmParams {
        * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
        */
       statement_descriptor_suffix_kanji?: Emptyable<string>;
+
+      /**
+       * Statement details for this payment intent. You can use this to override the merchant details shown on your customers' statements.
+       */
+      statement_details?: Emptyable<Card.StatementDetails>;
 
       /**
        * If 3D Secure authentication was performed with a third-party provider,
@@ -12960,7 +25706,47 @@ export namespace PaymentIntentConfirmParams {
       setup_future_usage?: 'none';
     }
 
+    export interface Gopay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: Gopay.SetupFutureUsage;
+    }
+
     export interface Grabpay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface IdBankTransfer {
+      /**
+       * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from 5 minutes from now until 31 days from now. If unset, it defaults to 3 days from now.
+       */
+      expires_after?: number;
+
+      /**
+       * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from now until 30 days from now. If unset, it defaults to 1 days from now.
+       */
+      expires_at?: number;
+
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
@@ -13051,6 +25837,11 @@ export namespace PaymentIntentConfirmParams {
        * Subscription details if setting up or charging a subscription.
        */
       subscriptions?: Emptyable<Array<Klarna.Subscription>>;
+
+      /**
+       * Supplementary Purchase Data for the corresponding Klarna payment
+       */
+      supplementary_purchase_data?: Emptyable<Klarna.SupplementaryPurchaseData>;
     }
 
     export interface Konbini {
@@ -13311,6 +26102,11 @@ export namespace PaymentIntentConfirmParams {
       capture_method?: Emptyable<'manual'>;
 
       /**
+       * The line items purchased by the customer.
+       */
+      line_items?: Array<Paypal.LineItem>;
+
+      /**
        * [Preferred locale](https://docs.stripe.com/payments/paypal/supported-locales) of the PayPal checkout page that the customer is redirected to.
        */
       preferred_locale?: Paypal.PreferredLocale;
@@ -13319,6 +26115,11 @@ export namespace PaymentIntentConfirmParams {
        * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
        */
       reference?: string;
+
+      /**
+       * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+       */
+      reference_id?: string;
 
       /**
        * The risk correlation ID for an on-session payment using a saved PayPal payment method.
@@ -13337,6 +26138,22 @@ export namespace PaymentIntentConfirmParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Emptyable<Paypal.SetupFutureUsage>;
+
+      /**
+       * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+       */
+      subsellers?: Array<string>;
+    }
+
+    export interface Paypay {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
     }
 
     export interface Payto {
@@ -13376,6 +26193,11 @@ export namespace PaymentIntentConfirmParams {
       expires_at?: number;
 
       /**
+       * Additional fields for mandate creation. Only applicable when `setup_future_usage=off_session`.
+       */
+      mandate_options?: Pix.MandateOptions;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -13386,7 +26208,7 @@ export namespace PaymentIntentConfirmParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Pix.SetupFutureUsage;
     }
 
     export interface Promptpay {
@@ -13403,6 +26225,23 @@ export namespace PaymentIntentConfirmParams {
        */
       setup_future_usage?: 'none';
     }
+
+    export interface Qris {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Rechnung {}
 
     export interface RevolutPay {
       /**
@@ -13473,6 +26312,21 @@ export namespace PaymentIntentConfirmParams {
       target_date?: string;
     }
 
+    export interface Shopeepay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: 'none';
+    }
+
     export interface Sofort {
       /**
        * Language shown to the payer on redirect.
@@ -13491,6 +26345,21 @@ export namespace PaymentIntentConfirmParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Emptyable<Sofort.SetupFutureUsage>;
+    }
+
+    export interface StripeBalance {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       *
+       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+       */
+      setup_future_usage?: Emptyable<StripeBalance.SetupFutureUsage>;
     }
 
     export interface Swish {
@@ -13772,6 +26641,8 @@ export namespace PaymentIntentConfirmParams {
         | 'unknown'
         | 'visa';
 
+      export type RequestDecrementalAuthorization = 'if_available' | 'never';
+
       export type RequestExtendedAuthorization = 'if_available' | 'never';
 
       export type RequestIncrementalAuthorization = 'if_available' | 'never';
@@ -13780,9 +26651,23 @@ export namespace PaymentIntentConfirmParams {
 
       export type RequestOvercapture = 'if_available' | 'never';
 
+      export type RequestPartialAuthorization = 'if_available' | 'never';
+
       export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
       export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+      export interface StatementDetails {
+        /**
+         * Please pass in an address that is within your Stripe user account country
+         */
+        address?: AddressParam;
+
+        /**
+         * Phone number (e.g., a toll-free number that customers can call)
+         */
+        phone?: string;
+      }
 
       export interface ThreeDSecure {
         /**
@@ -13981,6 +26866,10 @@ export namespace PaymentIntentConfirmParams {
       }
     }
 
+    export namespace Gopay {
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
     export namespace Ideal {
       export type SetupFutureUsage = 'none' | 'off_session';
     }
@@ -14094,6 +26983,60 @@ export namespace PaymentIntentConfirmParams {
         reference: string;
       }
 
+      export interface SupplementaryPurchaseData {
+        /**
+         * Supplementary bus reservation details.
+         */
+        bus_reservation_details?: Emptyable<
+          Array<SupplementaryPurchaseData.BusReservationDetail>
+        >;
+
+        /**
+         * Supplementary event reservation details.
+         */
+        event_reservation_details?: Emptyable<
+          Array<SupplementaryPurchaseData.EventReservationDetail>
+        >;
+
+        /**
+         * Supplementary ferry reservation details.
+         */
+        ferry_reservation_details?: Emptyable<
+          Array<SupplementaryPurchaseData.FerryReservationDetail>
+        >;
+
+        /**
+         * Supplementary insurance details.
+         */
+        insurances?: Emptyable<Array<SupplementaryPurchaseData.Insurance>>;
+
+        /**
+         * Supplementary marketplace seller details.
+         */
+        marketplace_sellers?: Emptyable<
+          Array<SupplementaryPurchaseData.MarketplaceSeller>
+        >;
+
+        /**
+         * Supplementary round trip reservation details.
+         */
+        round_trip_reservation_details?: Emptyable<
+          Array<SupplementaryPurchaseData.RoundTripReservationDetail>
+        >;
+
+        /**
+         * Supplementary train reservation details.
+         */
+        train_reservation_details?: Emptyable<
+          Array<SupplementaryPurchaseData.TrainReservationDetail>
+        >;
+
+        /**
+         * Voucher details, such as a gift card or discount code.
+         */
+        vouchers?: Emptyable<Array<SupplementaryPurchaseData.Voucher>>;
+      }
+
       export namespace OnDemand {
         export type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
       }
@@ -14111,6 +27054,1124 @@ export namespace PaymentIntentConfirmParams {
            * The date of the next charge for the subscription in YYYY-MM-DD format.
            */
           date: string;
+        }
+      }
+
+      export namespace SupplementaryPurchaseData {
+        export interface BusReservationDetail {
+          /**
+           * Name of associated or partner company for the service.
+           */
+          affiliate_name?: string;
+
+          /**
+           * Arrival details.
+           */
+          arrival?: BusReservationDetail.Arrival;
+
+          /**
+           * Name of transportation company.
+           */
+          carrier_name?: string;
+
+          /**
+           * Currency.
+           */
+          currency?: string;
+
+          /**
+           * Departure details.
+           */
+          departure?: BusReservationDetail.Departure;
+
+          /**
+           * List of insurances for this reservation.
+           */
+          insurances?: Array<BusReservationDetail.Insurance>;
+
+          /**
+           * List of passengers that this reservation applies to.
+           */
+          passengers?: Array<BusReservationDetail.Passenger>;
+
+          /**
+           * Price in cents.
+           */
+          price?: number;
+
+          /**
+           * Ticket class.
+           */
+          ticket_class?: BusReservationDetail.TicketClass;
+        }
+
+        export interface EventReservationDetail {
+          /**
+           * Indicates if the tickets are digitally checked when entering the venue.
+           */
+          access_controlled_venue?: boolean;
+
+          /**
+           * Address of the event.
+           */
+          address?: EventReservationDetail.Address;
+
+          /**
+           * Name of associated or partner company for the service.
+           */
+          affiliate_name?: string;
+
+          /**
+           * End timestamp of the event.
+           */
+          ends_at?: number;
+
+          /**
+           * Company selling the ticket.
+           */
+          event_company_name?: string;
+
+          /**
+           * Name of the event.
+           */
+          event_name?: string;
+
+          /**
+           * Type of the event.
+           */
+          event_type?: EventReservationDetail.EventType;
+
+          /**
+           * List of insurances for this event.
+           */
+          insurances?: Array<EventReservationDetail.Insurance>;
+
+          /**
+           * Start timestamp of the event.
+           */
+          starts_at?: number;
+
+          /**
+           * Name of the venue where the event takes place.
+           */
+          venue_name?: string;
+        }
+
+        export interface FerryReservationDetail {
+          /**
+           * Name of associated or partner company for the service.
+           */
+          affiliate_name?: string;
+
+          /**
+           * Arrival details.
+           */
+          arrival?: FerryReservationDetail.Arrival;
+
+          /**
+           * Name of transportation company.
+           */
+          carrier_name?: string;
+
+          /**
+           * Currency.
+           */
+          currency?: string;
+
+          /**
+           * Departure details.
+           */
+          departure?: FerryReservationDetail.Departure;
+
+          /**
+           * List of insurances for this reservation.
+           */
+          insurances?: Array<FerryReservationDetail.Insurance>;
+
+          /**
+           * List of passengers that this reservation applies to.
+           */
+          passengers?: Array<FerryReservationDetail.Passenger>;
+
+          /**
+           * Price in cents.
+           */
+          price?: number;
+
+          /**
+           * Ticket class.
+           */
+          ticket_class?: FerryReservationDetail.TicketClass;
+        }
+
+        export interface Insurance {
+          /**
+           * Insurance currency.
+           */
+          currency?: string;
+
+          /**
+           * Name of the company providing the insurance.
+           */
+          insurance_company_name?: string;
+
+          /**
+           * Type of insurance
+           */
+          insurance_type?: Insurance.InsuranceType;
+
+          /**
+           * Price of insurance in cents.
+           */
+          price?: number;
+        }
+
+        export interface MarketplaceSeller {
+          /**
+           * The references to line items for purchases with multiple associated sub-sellers.
+           */
+          line_item_references?: Array<string>;
+
+          /**
+           * The address of the selling or delivering merchant.
+           */
+          marketplace_seller_address?: MarketplaceSeller.MarketplaceSellerAddress;
+
+          /**
+           * The name of the marketplace seller.
+           */
+          marketplace_seller_name?: string;
+
+          /**
+           * The unique identifier for the marketplace seller.
+           */
+          marketplace_seller_reference?: string;
+
+          /**
+           * The number of transactions the sub-seller completed in the last 12 months.
+           */
+          number_of_transactions?: number;
+
+          /**
+           * The category of the product.
+           */
+          product_category?: MarketplaceSeller.ProductCategory;
+
+          /**
+           * The date when the seller's account with the marketplace was last logged in.
+           */
+          seller_last_login_at?: number;
+
+          /**
+           * The current rating of the marketplace seller. If the marketplace uses numeric ranking, map these to the enum values.
+           */
+          seller_rating?: MarketplaceSeller.SellerRating;
+
+          /**
+           * The date when the seller's account with the marketplace was created.
+           */
+          seller_registered_at?: number;
+
+          /**
+           * The date when the seller's account with the marketplace was last updated.
+           */
+          seller_updated_at?: number;
+
+          /**
+           * The references to shipping addresses for purchases with multiple associated sub-sellers.
+           */
+          shipping_references?: Array<string>;
+
+          /**
+           * The accumulated amount of sales transactions made by the sub-merchant or sub-seller within the past 12 months in the payment currency. These transactions are in minor currency units.
+           */
+          volume_of_transactions?: number;
+        }
+
+        export interface RoundTripReservationDetail {
+          /**
+           * Name of associated or partner company for the service.
+           */
+          affiliate_name?: string;
+
+          /**
+           * Arrival details.
+           */
+          arrival?: RoundTripReservationDetail.Arrival;
+
+          /**
+           * Name of transportation company.
+           */
+          carrier_name?: string;
+
+          /**
+           * Currency.
+           */
+          currency?: string;
+
+          /**
+           * Departure details.
+           */
+          departure?: RoundTripReservationDetail.Departure;
+
+          /**
+           * List of insurances for this reservation.
+           */
+          insurances?: Array<RoundTripReservationDetail.Insurance>;
+
+          /**
+           * List of passengers that this reservation applies to.
+           */
+          passengers?: Array<RoundTripReservationDetail.Passenger>;
+
+          /**
+           * Price in cents.
+           */
+          price?: number;
+
+          /**
+           * Ticket class.
+           */
+          ticket_class?: RoundTripReservationDetail.TicketClass;
+        }
+
+        export interface TrainReservationDetail {
+          /**
+           * Name of associated or partner company for the service.
+           */
+          affiliate_name?: string;
+
+          /**
+           * Arrival details.
+           */
+          arrival?: TrainReservationDetail.Arrival;
+
+          /**
+           * Name of transportation company.
+           */
+          carrier_name?: string;
+
+          /**
+           * Currency.
+           */
+          currency?: string;
+
+          /**
+           * Departure details.
+           */
+          departure?: TrainReservationDetail.Departure;
+
+          /**
+           * List of insurances for this reservation.
+           */
+          insurances?: Array<TrainReservationDetail.Insurance>;
+
+          /**
+           * List of passengers that this reservation applies to.
+           */
+          passengers?: Array<TrainReservationDetail.Passenger>;
+
+          /**
+           * Price in cents.
+           */
+          price?: number;
+
+          /**
+           * Ticket class.
+           */
+          ticket_class?: TrainReservationDetail.TicketClass;
+        }
+
+        export interface Voucher {
+          /**
+           * Name of associated or partner company for this voucher.
+           */
+          affiliate_name?: string;
+
+          /**
+           * The voucher validity end time.
+           */
+          ends_at?: number;
+
+          /**
+           * The voucher validity start time.
+           */
+          starts_at?: number;
+
+          /**
+           * The issuer or provider of this voucher.
+           */
+          voucher_company?: string;
+
+          /**
+           * The name or reference to identify the voucher.
+           */
+          voucher_name?: string;
+
+          /**
+           * The type of this voucher.
+           */
+          voucher_type?: Voucher.VoucherType;
+        }
+
+        export namespace BusReservationDetail {
+          export interface Arrival {
+            /**
+             * Address of the arrival location.
+             */
+            address?: Arrival.Address;
+
+            /**
+             * Identifier name or reference for the arrival location.
+             */
+            arrival_location?: string;
+          }
+
+          export interface Departure {
+            /**
+             * Address of the departure location.
+             */
+            address?: Departure.Address;
+
+            /**
+             * Timestamp of departure.
+             */
+            departs_at?: number;
+
+            /**
+             * Identifier name or reference for the origin location.
+             */
+            departure_location?: string;
+          }
+
+          export interface Insurance {
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Name of the company providing the insurance.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type?: Insurance.InsuranceType;
+
+            /**
+             * Price of insurance in cents.
+             */
+            price?: number;
+          }
+
+          export interface Passenger {
+            /**
+             * The family name of the person.
+             */
+            family_name?: string;
+
+            /**
+             * The given name of the person.
+             */
+            given_name?: string;
+          }
+
+          export type TicketClass =
+            | 'business'
+            | 'economy'
+            | 'first_class'
+            | 'premium_economy';
+
+          export namespace Arrival {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Departure {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Insurance {
+            export type InsuranceType =
+              | 'baggage'
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+        }
+
+        export namespace EventReservationDetail {
+          export interface Address {
+            /**
+             * The city or town.
+             */
+            city?: string;
+
+            /**
+             * The country in ISO 3166-1 alpha-2 format.
+             */
+            country?: string;
+
+            /**
+             * The postal code formatted according to country.
+             */
+            postal_code?: string;
+
+            /**
+             * The state, county, province, or region formatted according to country.
+             */
+            region?: string;
+
+            /**
+             * Line 1 of the street address.
+             */
+            street_address?: string;
+
+            /**
+             * Line 2 of the street address.
+             */
+            street_address2?: string;
+          }
+
+          export type EventType =
+            | 'concert'
+            | 'conference'
+            | 'digital_education'
+            | 'expo'
+            | 'festival'
+            | 'in_person_education'
+            | 'sport'
+            | 'tour';
+
+          export interface Insurance {
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Name of the company providing the insurance.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type?: Insurance.InsuranceType;
+
+            /**
+             * Price of insurance in cents.
+             */
+            price?: number;
+          }
+
+          export namespace Insurance {
+            export type InsuranceType =
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+        }
+
+        export namespace FerryReservationDetail {
+          export interface Arrival {
+            /**
+             * Address of the arrival location.
+             */
+            address?: Arrival.Address;
+
+            /**
+             * Identifier name or reference for the arrival location.
+             */
+            arrival_location?: string;
+          }
+
+          export interface Departure {
+            /**
+             * Address of the departure location.
+             */
+            address?: Departure.Address;
+
+            /**
+             * Timestamp of departure.
+             */
+            departs_at?: number;
+
+            /**
+             * Identifier name or reference for the origin location.
+             */
+            departure_location?: string;
+          }
+
+          export interface Insurance {
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Name of the company providing the insurance.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type?: Insurance.InsuranceType;
+
+            /**
+             * Price of insurance in cents.
+             */
+            price?: number;
+          }
+
+          export interface Passenger {
+            /**
+             * The family name of the person.
+             */
+            family_name?: string;
+
+            /**
+             * The given name of the person.
+             */
+            given_name?: string;
+          }
+
+          export type TicketClass =
+            | 'business'
+            | 'economy'
+            | 'first_class'
+            | 'premium_economy';
+
+          export namespace Arrival {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Departure {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Insurance {
+            export type InsuranceType =
+              | 'baggage'
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+        }
+
+        export namespace Insurance {
+          export type InsuranceType =
+            | 'bankruptcy'
+            | 'cancelation'
+            | 'emergency'
+            | 'medical';
+        }
+
+        export namespace MarketplaceSeller {
+          export interface MarketplaceSellerAddress {
+            /**
+             * The city or town.
+             */
+            city?: string;
+
+            /**
+             * The country in ISO 3166-1 alpha-2 format.
+             */
+            country?: string;
+
+            /**
+             * The postal code formatted according to country.
+             */
+            postal_code?: string;
+
+            /**
+             * The state, county, province, or region formatted according to country.
+             */
+            region?: string;
+
+            /**
+             * Line 1 of the street address.
+             */
+            street_address?: string;
+
+            /**
+             * Line 2 of the street address.
+             */
+            street_address2?: string;
+          }
+
+          export type ProductCategory =
+            | 'accessories'
+            | 'appliances'
+            | 'apps_and_games'
+            | 'arts_crafts_and_sewing'
+            | 'automotive'
+            | 'baby'
+            | 'baby_clothing'
+            | 'bags_and_purses'
+            | 'beauty'
+            | 'books'
+            | 'cds_and_vinyl'
+            | 'cell_phones_and_accessories'
+            | 'collectibles_and_fine_arts'
+            | 'digital_music'
+            | 'electronics'
+            | 'grocery_and_gourmet_food'
+            | 'handmade'
+            | 'health_and_personal_care'
+            | 'home_and_kitchen'
+            | 'industrial_and_scientific'
+            | 'luggage_and_travel_gear'
+            | 'magazine_subscriptions'
+            | 'men_clothing'
+            | 'musical_instruments'
+            | 'office_products'
+            | 'patio_lawn_and_garden'
+            | 'pet_supplies'
+            | 'shoes'
+            | 'software'
+            | 'sports_and_outdoors'
+            | 'tools_and_home_improvement'
+            | 'toys_and_games'
+            | 'video_games'
+            | 'women_clothing';
+
+          export type SellerRating =
+            | 'high'
+            | 'low'
+            | 'medium'
+            | 'very_high'
+            | 'very_low';
+        }
+
+        export namespace RoundTripReservationDetail {
+          export interface Arrival {
+            /**
+             * Address of the arrival location.
+             */
+            address?: Arrival.Address;
+
+            /**
+             * Identifier name or reference for the arrival location.
+             */
+            arrival_location?: string;
+          }
+
+          export interface Departure {
+            /**
+             * Address of the departure location.
+             */
+            address?: Departure.Address;
+
+            /**
+             * Timestamp of departure.
+             */
+            departs_at?: number;
+
+            /**
+             * Identifier name or reference for the origin location.
+             */
+            departure_location?: string;
+          }
+
+          export interface Insurance {
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Name of the company providing the insurance.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type?: Insurance.InsuranceType;
+
+            /**
+             * Price of insurance in cents.
+             */
+            price?: number;
+          }
+
+          export interface Passenger {
+            /**
+             * The family name of the person.
+             */
+            family_name?: string;
+
+            /**
+             * The given name of the person.
+             */
+            given_name?: string;
+          }
+
+          export type TicketClass =
+            | 'business'
+            | 'economy'
+            | 'first_class'
+            | 'premium_economy';
+
+          export namespace Arrival {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Departure {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Insurance {
+            export type InsuranceType =
+              | 'baggage'
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+        }
+
+        export namespace TrainReservationDetail {
+          export interface Arrival {
+            /**
+             * Address of the arrival location.
+             */
+            address?: Arrival.Address;
+
+            /**
+             * Identifier name or reference for the arrival location.
+             */
+            arrival_location?: string;
+          }
+
+          export interface Departure {
+            /**
+             * Address of the departure location.
+             */
+            address?: Departure.Address;
+
+            /**
+             * Timestamp of departure.
+             */
+            departs_at?: number;
+
+            /**
+             * Identifier name or reference for the origin location.
+             */
+            departure_location?: string;
+          }
+
+          export interface Insurance {
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Name of the company providing the insurance.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type?: Insurance.InsuranceType;
+
+            /**
+             * Price of insurance in cents.
+             */
+            price?: number;
+          }
+
+          export interface Passenger {
+            /**
+             * The family name of the person.
+             */
+            family_name?: string;
+
+            /**
+             * The given name of the person.
+             */
+            given_name?: string;
+          }
+
+          export type TicketClass =
+            | 'business'
+            | 'economy'
+            | 'first_class'
+            | 'premium_economy';
+
+          export namespace Arrival {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Departure {
+            export interface Address {
+              /**
+               * The city or town.
+               */
+              city?: string;
+
+              /**
+               * The country in ISO 3166-1 alpha-2 format.
+               */
+              country?: string;
+
+              /**
+               * The postal code formatted according to country.
+               */
+              postal_code?: string;
+
+              /**
+               * The state, county, province, or region formatted according to country.
+               */
+              region?: string;
+
+              /**
+               * Line 1 of the street address.
+               */
+              street_address?: string;
+
+              /**
+               * Line 2 of the street address.
+               */
+              street_address2?: string;
+            }
+          }
+
+          export namespace Insurance {
+            export type InsuranceType =
+              | 'baggage'
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+        }
+
+        export namespace Voucher {
+          export type VoucherType =
+            | 'digital_product'
+            | 'discount'
+            | 'gift_card'
+            | 'physical_product'
+            | 'services';
         }
       }
     }
@@ -14132,6 +28193,48 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace Paypal {
+      export interface LineItem {
+        /**
+         * Type of the line item.
+         */
+        category?: LineItem.Category;
+
+        /**
+         * Description of the line item.
+         */
+        description?: string;
+
+        /**
+         * Descriptive name of the line item.
+         */
+        name: string;
+
+        /**
+         * Quantity of the line item. Must be a positive number.
+         */
+        quantity: number;
+
+        /**
+         * Client facing stock keeping unit, article number or similar.
+         */
+        sku?: string;
+
+        /**
+         * The Stripe account ID of the connected account that sells the item.
+         */
+        sold_by?: string;
+
+        /**
+         * The tax information for the line item.
+         */
+        tax?: LineItem.Tax;
+
+        /**
+         * Price for a single unit of the line item in minor units. Cannot be a negative number.
+         */
+        unit_amount: number;
+      }
+
       export type PreferredLocale =
         | 'cs-CZ'
         | 'da-DK'
@@ -14156,6 +28259,26 @@ export namespace PaymentIntentConfirmParams {
         | 'sv-SE';
 
       export type SetupFutureUsage = 'none' | 'off_session';
+
+      export namespace LineItem {
+        export type Category = 'digital_goods' | 'donation' | 'physical_goods';
+
+        export interface Tax {
+          /**
+           * The tax for a single unit of the line item in minor units. Cannot be a negative number.
+           */
+          amount: number;
+
+          /**
+           * The tax behavior for the line item.
+           */
+          behavior: Tax.Behavior;
+        }
+
+        export namespace Tax {
+          export type Behavior = 'exclusive' | 'inclusive';
+        }
+      }
     }
 
     export namespace Payto {
@@ -14223,6 +28346,63 @@ export namespace PaymentIntentConfirmParams {
 
     export namespace Pix {
       export type AmountIncludesIof = 'always' | 'never';
+
+      export interface MandateOptions {
+        /**
+         * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
+         */
+        amount?: number;
+
+        /**
+         * Determines if the amount includes the IOF tax. Defaults to `never`.
+         */
+        amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+        /**
+         * Type of amount. Defaults to `maximum`.
+         */
+        amount_type?: MandateOptions.AmountType;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Only `brl` is supported currently.
+         */
+        currency?: string;
+
+        /**
+         * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+         */
+        end_date?: string;
+
+        /**
+         * Schedule at which the future payments will be charged. Defaults to `monthly`.
+         */
+        payment_schedule?: MandateOptions.PaymentSchedule;
+
+        /**
+         * Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
+         */
+        reference?: string;
+
+        /**
+         * Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future. Defaults to 3 days after the current date.
+         */
+        start_date?: string;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session';
+
+      export namespace MandateOptions {
+        export type AmountIncludesIof = 'always' | 'never';
+
+        export type AmountType = 'fixed' | 'maximum';
+
+        export type PaymentSchedule =
+          | 'halfyearly'
+          | 'monthly'
+          | 'quarterly'
+          | 'weekly'
+          | 'yearly';
+      }
     }
 
     export namespace RevolutPay {
@@ -14250,6 +28430,10 @@ export namespace PaymentIntentConfirmParams {
         | 'nl'
         | 'pl';
 
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
+    export namespace StripeBalance {
       export type SetupFutureUsage = 'none' | 'off_session';
     }
 
@@ -14289,6 +28473,11 @@ export namespace PaymentIntentConfirmParams {
          * Provide filters for the linked accounts that the customer can select for the payment method.
          */
         filters?: FinancialConnections.Filters;
+
+        /**
+         * Customize manual entry behavior
+         */
+        manual_entry?: FinancialConnections.ManualEntry;
 
         /**
          * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
@@ -14339,6 +28528,18 @@ export namespace PaymentIntentConfirmParams {
            * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
            */
           account_subcategories?: Array<Filters.AccountSubcategory>;
+
+          /**
+           * ID of the institution to use to filter for selectable accounts.
+           */
+          institution?: string;
+        }
+
+        export interface ManualEntry {
+          /**
+           * Settings for configuring manual entry of account details.
+           */
+          mode: ManualEntry.Mode;
         }
 
         export type Permission =
@@ -14347,10 +28548,18 @@ export namespace PaymentIntentConfirmParams {
           | 'payment_method'
           | 'transactions';
 
-        export type Prefetch = 'balances' | 'ownership' | 'transactions';
+        export type Prefetch =
+          | 'balances'
+          | 'inferred_balances'
+          | 'ownership'
+          | 'transactions';
 
         export namespace Filters {
           export type AccountSubcategory = 'checking' | 'savings';
+        }
+
+        export namespace ManualEntry {
+          export type Mode = 'automatic' | 'custom';
         }
       }
 
@@ -14364,16 +28573,16 @@ export namespace PaymentIntentConfirmParams {
     }
   }
 }
-export interface PaymentIntentIncrementAuthorizationParams {
+export interface PaymentIntentDecrementAuthorizationParams {
   /**
-   * The updated total amount that you intend to collect from the cardholder. This amount must be greater than the currently authorized amount.
+   * The updated total amount that you intend to collect from the cardholder. This amount must be smaller than the currently authorized amount and greater than the already captured amount.
    */
   amount: number;
 
   /**
    * Provides industry-specific information about the amount.
    */
-  amount_details?: PaymentIntentIncrementAuthorizationParams.AmountDetails;
+  amount_details?: PaymentIntentDecrementAuthorizationParams.AmountDetails;
 
   /**
    * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://docs.stripe.com/payments/connected-accounts).
@@ -14393,7 +28602,7 @@ export interface PaymentIntentIncrementAuthorizationParams {
   /**
    * Automations to be run during the PaymentIntent lifecycle
    */
-  hooks?: PaymentIntentIncrementAuthorizationParams.Hooks;
+  hooks?: PaymentIntentDecrementAuthorizationParams.Hooks;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -14403,20 +28612,15 @@ export interface PaymentIntentIncrementAuthorizationParams {
   /**
    * Provides industry-specific information about the charge.
    */
-  payment_details?: PaymentIntentIncrementAuthorizationParams.PaymentDetails;
-
-  /**
-   * Text that appears on the customer's statement as the statement descriptor for a non-card or card charge. This value overrides the account's default statement descriptor. For information about requirements, including the 22-character limit, see [the Statement Descriptor docs](https://docs.stripe.com/get-started/account/statement-descriptors).
-   */
-  statement_descriptor?: string;
+  payment_details?: PaymentIntentDecrementAuthorizationParams.PaymentDetails;
 
   /**
    * The parameters used to automatically create a transfer after the payment is captured.
    * Learn more about the [use case for connected accounts](https://docs.stripe.com/payments/connected-accounts).
    */
-  transfer_data?: PaymentIntentIncrementAuthorizationParams.TransferData;
+  transfer_data?: PaymentIntentDecrementAuthorizationParams.TransferData;
 }
-export namespace PaymentIntentIncrementAuthorizationParams {
+export namespace PaymentIntentDecrementAuthorizationParams {
   export interface AmountDetails {
     /**
      * The total discount applied on the transaction represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than 0.
@@ -14443,6 +28647,11 @@ export namespace PaymentIntentIncrementAuthorizationParams {
      * Contains information about the shipping portion of the amount.
      */
     shipping?: Emptyable<AmountDetails.Shipping>;
+
+    /**
+     * Contains information about the surcharge portion of the amount.
+     */
+    surcharge?: Emptyable<AmountDetails.Surcharge>;
 
     /**
      * Contains information about the tax portion of the amount.
@@ -14542,6 +28751,18 @@ export namespace PaymentIntentIncrementAuthorizationParams {
        * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
        */
       to_postal_code?: Emptyable<string>;
+    }
+
+    export interface Surcharge {
+      /**
+       * Portion of the amount that corresponds to a surcharge.
+       */
+      amount?: Emptyable<number>;
+
+      /**
+       * Indicate whether to enforce validations on the surcharge amount.
+       */
+      enforce_validation?: Emptyable<Surcharge.EnforceValidation>;
     }
 
     export interface Tax {
@@ -14647,6 +28868,10 @@ export namespace PaymentIntentIncrementAuthorizationParams {
         }
       }
     }
+
+    export namespace Surcharge {
+      export type EnforceValidation = 'automatic' | 'disabled' | 'enabled';
+    }
   }
 
   export namespace Hooks {
@@ -14664,6 +28889,355 @@ export namespace PaymentIntentIncrementAuthorizationParams {
          */
         calculation: Emptyable<string>;
       }
+    }
+  }
+}
+export interface PaymentIntentIncrementAuthorizationParams {
+  /**
+   * The updated total amount that you intend to collect from the cardholder. This amount must be greater than the currently authorized amount.
+   */
+  amount: number;
+
+  /**
+   * Provides industry-specific information about the amount.
+   */
+  amount_details?: PaymentIntentIncrementAuthorizationParams.AmountDetails;
+
+  /**
+   * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://docs.stripe.com/payments/connected-accounts).
+   */
+  application_fee_amount?: number;
+
+  /**
+   * An arbitrary string attached to the object. Often useful for displaying to users.
+   */
+  description?: string;
+
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+
+  /**
+   * Automations to be run during the PaymentIntent lifecycle
+   */
+  hooks?: PaymentIntentIncrementAuthorizationParams.Hooks;
+
+  /**
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   */
+  metadata?: MetadataParam;
+
+  /**
+   * Provides industry-specific information about the charge.
+   */
+  payment_details?: PaymentIntentIncrementAuthorizationParams.PaymentDetails;
+
+  /**
+   * Payment method-specific configuration for this PaymentIntent.
+   */
+  payment_method_options?: PaymentIntentIncrementAuthorizationParams.PaymentMethodOptions;
+
+  /**
+   * Text that appears on the customer's statement as the statement descriptor for a non-card or card charge. This value overrides the account's default statement descriptor. For information about requirements, including the 22-character limit, see [the Statement Descriptor docs](https://docs.stripe.com/get-started/account/statement-descriptors).
+   */
+  statement_descriptor?: string;
+
+  /**
+   * The parameters used to automatically create a transfer after the payment is captured.
+   * Learn more about the [use case for connected accounts](https://docs.stripe.com/payments/connected-accounts).
+   */
+  transfer_data?: PaymentIntentIncrementAuthorizationParams.TransferData;
+}
+export namespace PaymentIntentIncrementAuthorizationParams {
+  export interface AmountDetails {
+    /**
+     * The total discount applied on the transaction represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than 0.
+     *
+     * This field is mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
+     */
+    discount_amount?: Emptyable<number>;
+
+    /**
+     * Set to `false` to return arithmetic validation errors in the response without failing the request. Use this when you want the operation to proceed regardless of arithmetic errors in the line item data.
+     *
+     * Omit or set to `true` to immediately return a 400 error when arithmetic validation fails. Use this for strict validation that prevents processing with line item data that has arithmetic inconsistencies.
+     *
+     * For card payments, Stripe doesn't send line item data to card networks if there's an arithmetic validation error.
+     */
+    enforce_arithmetic_validation?: boolean;
+
+    /**
+     * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 200 line items.
+     */
+    line_items?: Emptyable<Array<AmountDetails.LineItem>>;
+
+    /**
+     * Contains information about the shipping portion of the amount.
+     */
+    shipping?: Emptyable<AmountDetails.Shipping>;
+
+    /**
+     * Contains information about the surcharge portion of the amount.
+     */
+    surcharge?: Emptyable<AmountDetails.Surcharge>;
+
+    /**
+     * Contains information about the tax portion of the amount.
+     */
+    tax?: Emptyable<AmountDetails.Tax>;
+  }
+
+  export interface Hooks {
+    /**
+     * Arguments passed in automations
+     */
+    inputs?: Hooks.Inputs;
+  }
+
+  export interface PaymentDetails {
+    /**
+     * A unique value to identify the customer. This field is available only for card payments.
+     *
+     * This field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
+     */
+    customer_reference?: Emptyable<string>;
+
+    /**
+     * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
+     *
+     * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
+     */
+    order_reference?: Emptyable<string>;
+  }
+
+  export interface PaymentMethodOptions {
+    /**
+     * Configuration for any card payments attempted on this PaymentIntent.
+     */
+    card?: PaymentMethodOptions.Card;
+  }
+
+  export interface TransferData {
+    /**
+     * The amount that will be transferred automatically when a charge succeeds.
+     */
+    amount?: number;
+  }
+
+  export namespace AmountDetails {
+    export interface LineItem {
+      /**
+       * The discount applied on this line item represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than 0.
+       *
+       * This field is mutually exclusive with the `amount_details[discount_amount]` field.
+       */
+      discount_amount?: number;
+
+      /**
+       * Payment method-specific information for line items.
+       */
+      payment_method_options?: LineItem.PaymentMethodOptions;
+
+      /**
+       * The product code of the line item, such as an SKU. Required for L3 rates. At most 12 characters long.
+       */
+      product_code?: string;
+
+      /**
+       * The product name of the line item. Required for L3 rates. At most 1024 characters long.
+       *
+       * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For PayPal, this field is truncated to 127 characters.
+       */
+      product_name: string;
+
+      /**
+       * The quantity of items. Required for L3 rates. An integer greater than 0.
+       */
+      quantity: number;
+
+      /**
+       * Contains information about the tax on the item.
+       */
+      tax?: LineItem.Tax;
+
+      /**
+       * The unit cost of the line item represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+       */
+      unit_cost: number;
+
+      /**
+       * A unit of measure for the line item, such as gallons, feet, meters, etc.
+       */
+      unit_of_measure?: string;
+    }
+
+    export interface Shipping {
+      /**
+       * If a physical good is being shipped, the cost of shipping represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). An integer greater than or equal to 0.
+       */
+      amount?: Emptyable<number>;
+
+      /**
+       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+       */
+      from_postal_code?: Emptyable<string>;
+
+      /**
+       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+       */
+      to_postal_code?: Emptyable<string>;
+    }
+
+    export interface Surcharge {
+      /**
+       * Portion of the amount that corresponds to a surcharge.
+       */
+      amount?: Emptyable<number>;
+
+      /**
+       * Indicate whether to enforce validations on the surcharge amount.
+       */
+      enforce_validation?: Emptyable<Surcharge.EnforceValidation>;
+    }
+
+    export interface Tax {
+      /**
+       * The total amount of tax on the transaction represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
+       *
+       * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
+       */
+      total_tax_amount: number;
+    }
+
+    export namespace LineItem {
+      export interface PaymentMethodOptions {
+        /**
+         * This sub-hash contains line item details that are specific to the `card` payment method.
+         */
+        card?: PaymentMethodOptions.Card;
+
+        /**
+         * This sub-hash contains line item details that are specific to the `card_present` payment method.
+         */
+        card_present?: PaymentMethodOptions.CardPresent;
+
+        /**
+         * This sub-hash contains line item details that are specific to the `klarna` payment method.
+         */
+        klarna?: PaymentMethodOptions.Klarna;
+
+        /**
+         * This sub-hash contains line item details that are specific to the `paypal` payment method.
+         */
+        paypal?: PaymentMethodOptions.Paypal;
+      }
+
+      export interface Tax {
+        /**
+         * The total amount of tax on a single line item represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+         *
+         * This field is mutually exclusive with the `amount_details[tax][total_tax_amount]` field.
+         */
+        total_tax_amount: number;
+      }
+
+      export namespace PaymentMethodOptions {
+        export interface Card {
+          /**
+           * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
+           */
+          commodity_code?: string;
+        }
+
+        export interface CardPresent {
+          /**
+           * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
+           */
+          commodity_code?: string;
+        }
+
+        export interface Klarna {
+          /**
+           * URL to an image for the product. Max length, 4096 characters.
+           */
+          image_url?: string;
+
+          /**
+           * URL to the product page. Max length, 4096 characters.
+           */
+          product_url?: string;
+
+          /**
+           * Unique reference for this line item to correlate it with your system's internal records. The field is displayed in the Klarna Consumer App if passed.
+           */
+          reference?: string;
+
+          /**
+           * Reference for the subscription this line item is for.
+           */
+          subscription_reference?: string;
+        }
+
+        export interface Paypal {
+          /**
+           * Type of the line item.
+           */
+          category?: Paypal.Category;
+
+          /**
+           * Description of the line item.
+           */
+          description?: string;
+
+          /**
+           * The Stripe account ID of the connected account that sells the item.
+           */
+          sold_by?: string;
+        }
+
+        export namespace Paypal {
+          export type Category =
+            | 'digital_goods'
+            | 'donation'
+            | 'physical_goods';
+        }
+      }
+    }
+
+    export namespace Surcharge {
+      export type EnforceValidation = 'automatic' | 'disabled' | 'enabled';
+    }
+  }
+
+  export namespace Hooks {
+    export interface Inputs {
+      /**
+       * Tax arguments for automations
+       */
+      tax?: Inputs.Tax;
+    }
+
+    export namespace Inputs {
+      export interface Tax {
+        /**
+         * The [TaxCalculation](https://docs.stripe.com/api/tax/calculations) id
+         */
+        calculation: Emptyable<string>;
+      }
+    }
+  }
+
+  export namespace PaymentMethodOptions {
+    export interface Card {
+      /**
+       * Request partial authorization on this PaymentIntent.
+       */
+      request_partial_authorization?: Card.RequestPartialAuthorization;
+    }
+
+    export namespace Card {
+      export type RequestPartialAuthorization = 'if_available' | 'never';
     }
   }
 }
@@ -14694,6 +29268,36 @@ export interface PaymentIntentSearchParams {
    * A cursor for pagination across multiple pages of results. Don't include this parameter on the first call. Use the next_page value returned in a previous response to request subsequent results.
    */
   page?: string;
+}
+export interface PaymentIntentTriggerActionParams {
+  /**
+   * The type of action to be simulated.
+   */
+  type: PaymentIntentTriggerActionParams.Type;
+
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+
+  /**
+   * True to simulate success, false to simulate failure.
+   */
+  scan_qr_code?: PaymentIntentTriggerActionParams.ScanQrCode;
+}
+export namespace PaymentIntentTriggerActionParams {
+  export type Type = 'expire' | 'fund';
+
+  export interface ScanQrCode {
+    /**
+     * Whether the QR Code scan's payment should succeed or fail.
+     */
+    result?: ScanQrCode.Result;
+  }
+
+  export namespace ScanQrCode {
+    export type Result = 'failure' | 'success';
+  }
 }
 export interface PaymentIntentVerifyMicrodepositsParams {
   /**

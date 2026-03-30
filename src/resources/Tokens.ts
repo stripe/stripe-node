@@ -11,6 +11,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class TokenResource extends StripeResource {
   /**
    * Retrieves the token with the given ID.

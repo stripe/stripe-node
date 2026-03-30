@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {Alert} from './Alerts.js';
+import {Decimal} from '../../shared.js';
 import {RequestOptions} from '../../lib.js';
 export interface AlertTriggered {
   /**
@@ -31,5 +32,5 @@ export interface AlertTriggered {
   /**
    * The value triggering the alert
    */
-  value: number;
+  value: Decimal;
 }
