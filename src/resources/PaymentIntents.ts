@@ -1,6 +1,31 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
+import {PaymentIntentAmountDetailsLineItem} from './PaymentIntentAmountDetailsLineItems.js';
+import {Application} from './Applications.js';
+import {Customer, DeletedCustomer} from './Customers.js';
+import {Charge} from './Charges.js';
+import {Account} from './Accounts.js';
+import {PaymentMethod} from './PaymentMethods.js';
+import {Review} from './Reviews.js';
+import {CustomerSource, DeletedCustomerSource} from './CustomerSources.js';
+import {SetupIntent} from './SetupIntents.js';
+import {
+  Emptyable,
+  MetadataParam,
+  AddressParam,
+  PaginationParams,
+  RangeQueryParam,
+  Metadata,
+  Address,
+} from '../shared.js';
+import {
+  RequestOptions,
+  ApiListPromise,
+  Response,
+  ApiList,
+  ApiSearchResultPromise,
+} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export const PaymentIntents = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/payment_intents'}),

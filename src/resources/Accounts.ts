@@ -2,12 +2,58 @@
 
 import * as crypto from 'crypto';
 import {StripeResource} from '../StripeResource.js';
+import {Capability} from './Capabilities.js';
+import {DeletedExternalAccount, ExternalAccount} from './ExternalAccounts.js';
+import {LoginLink} from './LoginLinks.js';
+import {DeletedPerson, Person} from './Persons.js';
+import {File} from './Files.js';
+import {TaxId} from './TaxIds.js';
+import {
+  Emptyable,
+  MetadataParam,
+  AddressParam,
+  JapanAddressParam,
+  PaginationParams,
+  RangeQueryParam,
+  Metadata,
+  Address,
+} from '../shared.js';
+import {RequestOptions, Response, ApiListPromise, ApiList} from '../lib.js';
 const stripeMethod = StripeResource.method;
 // Since path can either be `account` or `accounts`, support both through stripeMethod path
-export const Accounts = StripeResource.extend({
-  create: stripeMethod({method: 'POST', fullPath: '/v1/accounts'}),
+export class AccountResource extends StripeResource {
+  /**
+   * With [Connect](https://docs.stripe.com/connect), you can delete accounts you manage.
+   *
+   * Test-mode accounts can be deleted at any time.
+   *
+   * Live-mode accounts that have access to the standard dashboard and Stripe is responsible for negative account balances cannot be deleted, which includes Standard accounts. All other Live-mode accounts, can be deleted when all [balances](https://docs.stripe.com/api/balance/balance_object) are zero.
+   *
+   * If you want to delete your own account, use the [account information tab in your account settings](https://dashboard.stripe.com/settings/account) instead.
+   */
+  del(
+    id: string,
+    params?: AccountDeleteParams,
+    options?: RequestOptions
+  ): Promise<Response<DeletedAccount>>;
+  del(id: string, options?: RequestOptions): Promise<Response<DeletedAccount>>;
+  del(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'DELETE',
+      fullPath: '/v1/accounts/{account}',
+    }).call(this, ...args);
+  }
 
-  retrieve(id: string, ...args: any[]) {
+  /**
+   * Retrieves the details of an account.
+   */
+  retrieve(
+    id: string,
+    params?: AccountRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<Account>>;
+  retrieve(id: string, options?: RequestOptions): Promise<Response<Account>>;
+  retrieve(id: string, ...args: any[]): Promise<Response<any>> {
     // No longer allow an api key to be passed as the first string to this function due to ambiguity between
     // old account ids and api keys. To request the account for an api key, send null as the id
     if (typeof id === 'string') {

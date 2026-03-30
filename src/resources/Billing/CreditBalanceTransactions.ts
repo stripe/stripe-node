@@ -1,6 +1,11 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {CreditGrant} from './CreditGrants.js';
+import {Invoice} from './../Invoices.js';
+import * as TestHelpers from './../TestHelpers/index.js';
+import {PaginationParams} from '../../shared.js';
+import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export const CreditBalanceTransactions = StripeResource.extend({
   retrieve: stripeMethod({

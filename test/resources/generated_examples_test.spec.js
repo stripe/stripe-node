@@ -5,7 +5,7 @@
 const testUtils = require('../testUtils.js');
 const stripe = testUtils.getStripeMockClient();
 const realStripe = require('../../src/stripe.cjs.node.js')('sk_test_123');
-const {Decimal} = require('../../src/stripe.cjs.node.js');
+const {Decimal} = require('../../src/shared.js');
 const nock = require('nock');
 const expect = require('chai').expect;
 

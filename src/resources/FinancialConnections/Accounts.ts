@@ -1,6 +1,11 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {AccountOwner} from './AccountOwners.js';
+import {AccountOwnership} from './AccountOwnerships.js';
+import {Customer} from './../Customers.js';
+import {PaginationParams} from '../../shared.js';
+import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export const Accounts = StripeResource.extend({
   retrieve: stripeMethod({

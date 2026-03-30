@@ -2,6 +2,16 @@
 
 import * as crypto from 'crypto';
 import {StripeResource} from '../StripeResource.js';
+import {Customer, DeletedCustomer} from './Customers.js';
+import {Coupon} from './Coupons.js';
+import {
+  MetadataParam,
+  Emptyable,
+  PaginationParams,
+  RangeQueryParam,
+  Metadata,
+} from '../shared.js';
+import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export const PromotionCodes = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/promotion_codes'}),

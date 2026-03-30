@@ -1,0 +1,19 @@
+{
+  "name": "typescriptTest",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "stripe": "file:../../"
+  },
+  "scripts": {
+    "runtestproject": "tsc && node typescriptTest.js",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "eslint": "^8.33.0",
+    "eslint-plugin-import": "^2.27.5",
+    "typescript": "^5.9.3"
+  }
+}

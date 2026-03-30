@@ -4,7 +4,8 @@ import {RequestHeaders, RequestData} from '../Types.js';
 import {
   HttpClient,
   HttpClientResponse,
-  HttpClientResponseInterface,
+  NodeHttpClientInterface,
+  NodeHttpClientResponseInterface,
 } from './HttpClient.js';
 
 // `import * as http_ from 'http'` creates a "Module Namespace Exotic Object"
@@ -24,7 +25,8 @@ const defaultHttpsAgent = new https.Agent({keepAlive: true});
  * HTTP client which uses the Node `http` and `https` packages to issue
  * requests.`
  */
-export class NodeHttpClient extends HttpClient {
+export class NodeHttpClient extends HttpClient
+  implements NodeHttpClientInterface {
   _agent?: http_.Agent | https_.Agent | undefined;
 
   constructor(agent?: http_.Agent | https_.Agent) {
@@ -46,7 +48,7 @@ export class NodeHttpClient extends HttpClient {
     requestData: string,
     protocol: string,
     timeout: number
-  ): Promise<HttpClientResponseInterface> {
+  ): Promise<NodeHttpClientResponseInterface> {
     const isInsecureConnection = protocol === 'http';
 
     let agent = this._agent;
@@ -54,7 +56,7 @@ export class NodeHttpClient extends HttpClient {
       agent = isInsecureConnection ? defaultHttpAgent : defaultHttpsAgent;
     }
 
-    const requestPromise = new Promise<HttpClientResponseInterface>(
+    const requestPromise = new Promise<NodeHttpClientResponseInterface>(
       (resolve, reject) => {
         const req = (isInsecureConnection ? http : https).request({
           host: host,
@@ -102,7 +104,7 @@ export class NodeHttpClient extends HttpClient {
 }
 
 export class NodeHttpClientResponse extends HttpClientResponse
-  implements HttpClientResponseInterface {
+  implements NodeHttpClientResponseInterface {
   _res: http_.IncomingMessage;
 
   constructor(res: http_.IncomingMessage) {

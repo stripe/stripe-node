@@ -1,6 +1,10 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
+import {PaymentMethod} from './PaymentMethods.js';
+import {Mandate} from './Mandates.js';
+import {Metadata, Address} from '../shared.js';
+import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
 export const PaymentAttemptRecords = StripeResource.extend({
   retrieve: stripeMethod({

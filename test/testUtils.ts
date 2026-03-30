@@ -6,7 +6,7 @@ import http = require('http');
 import {CryptoProvider} from '../src/crypto/CryptoProvider.js';
 import {NodePlatformFunctions} from '../src/platform/NodePlatformFunctions.js';
 import {RequestSender} from '../src/RequestSender.js';
-import {createStripe} from '../src/stripe.core.js';
+import {Stripe} from '../src/stripe.core.js';
 import {
   RequestAuthenticator,
   RequestCallback,
@@ -15,9 +15,7 @@ import {
   RequestHeaders,
   RequestOptions,
   RequestSettings,
-  StripeObject as StripeClient,
 } from '../src/Types.js';
-import stripe = require('../src/stripe.cjs.node.js');
 import {NodeHttpClient} from '../src/net/NodeHttpClient.js';
 import {HttpClientResponseInterface} from '../src/net/HttpClient.js';
 import {AddressInfo} from 'net';
@@ -34,7 +32,7 @@ export const getTestServerStripe = (
   ) => {shouldStayOpen?: boolean} | null,
   callback: (
     err: Error | null,
-    stripe: StripeClient,
+    stripe: Stripe,
     closeServer: () => void,
     address: string
   ) => void
@@ -71,7 +69,7 @@ export const getTestServerStripe = (
   });
 };
 
-export const getStripeMockClient = (): StripeClient => {
+export const getStripeMockClient = (): Stripe => {
   const stripe = require('../src/stripe.cjs.node.js');
   class StripeMockForwardingClient extends NodeHttpClient {
     makeRequest(
@@ -105,7 +103,7 @@ export const getStripeMockClient = (): StripeClient => {
 export const getMockStripe = (
   config: Record<string, unknown>,
   request: RequestSender['_request']
-): StripeClient => {
+): Stripe => {
   class MockRequestSender extends RequestSender {
     _request(
       method: string,
@@ -134,20 +132,22 @@ export const getMockStripe = (
 
   // Provide a testable stripe instance
   // That is, with mock-requests built in and hookable
-  const stripeFactory: any = createStripe(
-    new NodePlatformFunctions(),
-    (stripeInstance) =>
-      new MockRequestSender(
-        stripeInstance,
-        (stripe as any).StripeResource.MAX_BUFFERED_REQUEST_METRICS
-      )
+  // Create a normal instance and replace its _requestSender directly
+  // to avoid polluting global state via Stripe.initialize()
+  const stripe = require('../src/stripe.cjs.node.js');
+  const stripeInstance = stripe(FAKE_API_KEY, config);
+
+  stripeInstance._requestSender = new MockRequestSender(
+    stripeInstance,
+    Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
   );
-  return stripeFactory(FAKE_API_KEY, config);
+
+  return stripeInstance;
 };
 
 export const createMockClient = (
   requests: Array<{method: string; path: string; response: string}>
-): StripeClient => {
+): Stripe => {
   return getMockStripe({}, (method, _host, path, _4, _5, _6, _7, callback) => {
     const request = requests.find((r) => r.method == method && r.path == path);
     if (!request) {
@@ -158,9 +158,7 @@ export const createMockClient = (
   });
 };
 
-export const getSpyableStripe = (
-  config: Record<string, unknown>
-): StripeClient => {
+export const getSpyableStripe = (config: Record<string, unknown>): Stripe => {
   class SpyableRequestSender extends RequestSender {
     _request(
       method: string,
@@ -236,14 +234,16 @@ export const getSpyableStripe = (
 
   // Provide a testable stripe instance
   // That is, with mock-requests built in and hookable
-  const stripe = require('../src/stripe.cjs.node.js');
-  const stripeInstance = stripe(FAKE_API_KEY, config);
+  const stripeInstance = require('../src/stripe.cjs.node.js')(
+    FAKE_API_KEY,
+    config
+  );
 
   stripeInstance.REQUESTS = [];
 
   stripeInstance._requestSender = new SpyableRequestSender(
     stripeInstance,
-    stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
+    Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
   );
 
   return stripeInstance;

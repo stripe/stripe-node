@@ -1,6 +1,10 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {Meter} from './Meters.js';
+import {Customer} from './../Customers.js';
+import {PaginationParams} from '../../shared.js';
+import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
 export const Alerts = StripeResource.extend({
   create: stripeMethod({
