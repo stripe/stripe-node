@@ -13,6 +13,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class SourceResource extends StripeResource {
   /**
    * Retrieves an existing source object. Supply the unique source ID from a source creation request and Stripe will return the corresponding up-to-date source object information.
@@ -188,6 +189,8 @@ export interface Source {
 
   p24?: Source.P24;
 
+  paypal?: Source.Paypal;
+
   receiver?: Source.Receiver;
 
   redirect?: Source.Redirect;
@@ -318,6 +321,8 @@ export namespace Source {
 
     brand?: string | null;
 
+    brand_product?: string | null;
+
     country?: string | null;
 
     cvc_check?: string | null;
@@ -357,6 +362,8 @@ export namespace Source {
     authorization_response_code?: string;
 
     brand?: string | null;
+
+    brand_product?: string | null;
 
     country?: string | null;
 
@@ -561,6 +568,26 @@ export namespace Source {
     reference?: string | null;
   }
 
+  export interface Paypal {
+    billing_agreement?: string | null;
+
+    fingerprint?: string | null;
+
+    payer_id?: string | null;
+
+    reference_id?: string;
+
+    reference_transaction_amount?: string;
+
+    reference_transaction_charged?: boolean;
+
+    statement_descriptor?: string | null;
+
+    transaction_id?: string;
+
+    verified_email?: string | null;
+  }
+
   export interface Receiver {
     /**
      * The address of the receiver source. This is the value that should be communicated to the customer to send their funds to.
@@ -704,6 +731,8 @@ export namespace Source {
 
     brand?: string | null;
 
+    brand_product?: string | null;
+
     card?: string | null;
 
     country?: string | null;
@@ -752,6 +781,7 @@ export namespace Source {
     | 'klarna'
     | 'multibanco'
     | 'p24'
+    | 'paypal'
     | 'sepa_credit_transfer'
     | 'sepa_debit'
     | 'sofort'

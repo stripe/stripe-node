@@ -3,6 +3,7 @@
 import {StripeResource} from '../StripeResource.js';
 import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class EphemeralKeyResource extends StripeResource {
   /**
    * Invalidates a short-lived API key for a given resource.

@@ -4,6 +4,7 @@ import {StripeResource} from '../../StripeResource.js';
 import {PaginationParams, RangeQueryParam} from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ValueListItemResource extends StripeResource {
   /**
    * Deletes a ValueListItem object, removing it from its parent value list.

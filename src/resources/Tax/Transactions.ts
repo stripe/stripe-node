@@ -10,6 +10,7 @@ import {
 } from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise, ApiList} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class TransactionResource extends StripeResource {
   /**
    * Retrieves a Tax Transaction object.
@@ -423,7 +424,7 @@ export namespace Tax {
           state: string | null;
         }
 
-        export type Sourcing = 'destination' | 'origin';
+        export type Sourcing = 'destination' | 'origin' | 'performance';
 
         export interface TaxRateDetails {
           /**
@@ -470,19 +471,27 @@ export namespace Tax {
 
         export namespace TaxRateDetails {
           export type TaxType =
+            | 'admissions_tax'
             | 'amusement_tax'
+            | 'attendance_tax'
             | 'communications_tax'
+            | 'entertainment_tax'
+            | 'gross_receipts_tax'
             | 'gst'
+            | 'hospitality_tax'
             | 'hst'
             | 'igst'
             | 'jct'
             | 'lease_tax'
+            | 'luxury_tax'
             | 'pst'
             | 'qst'
+            | 'resort_tax'
             | 'retail_delivery_fee'
             | 'rst'
             | 'sales_tax'
             | 'service_tax'
+            | 'tourism_tax'
             | 'vat';
         }
       }

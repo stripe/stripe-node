@@ -4,6 +4,7 @@ import {StripeResource} from '../../../StripeResource.js';
 import {PersonalizationDesign} from './../../Issuing/PersonalizationDesigns.js';
 import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PersonalizationDesignResource extends StripeResource {
   /**
    * Updates the status of the specified testmode personalization design object to active.

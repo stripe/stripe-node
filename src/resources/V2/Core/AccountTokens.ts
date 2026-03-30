@@ -5,6 +5,7 @@ import {Amount} from './../../V2/Amounts.js';
 import {JapanAddressParam, MetadataParam, Decimal} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class AccountTokenResource extends StripeResource {
   /**
    * Creates an Account Token.
@@ -177,6 +178,11 @@ export namespace V2 {
            * The business gross annual revenue for its preceding fiscal year.
            */
           annual_revenue?: BusinessDetails.AnnualRevenue;
+
+          /**
+           * A detailed description of the business's compliance and anti-money laundering controls and practices.
+           */
+          compliance_screening_description?: string;
 
           /**
            * A document verifying the business.
@@ -371,6 +377,21 @@ export namespace V2 {
              * Details on the Account's acceptance of the [Stripe Services Agreement]; IP, date, and User Agent are expanded by Stripe.
              */
             account?: TermsOfService.Account;
+
+            /**
+             * Details on the Account's acceptance of Issuing-specific terms of service.
+             */
+            card_creator?: TermsOfService.CardCreator;
+
+            /**
+             * Details on the Account's acceptance of Crypto-storer-specific terms of service; IP, date, and User Agent are expanded by Stripe.
+             */
+            crypto_storer?: TermsOfService.CryptoStorer;
+
+            /**
+             * Details on the Account's acceptance of Treasury-specific terms of service; IP, date, and User Agent are expanded by Stripe.
+             */
+            storer?: TermsOfService.Storer;
           }
 
           export namespace PersonsProvided {
@@ -385,6 +406,243 @@ export namespace V2 {
                * The boolean value indicating if the terms of service have been accepted.
                */
               shown_and_accepted?: boolean;
+            }
+
+            export interface CardCreator {
+              /**
+               * Terms of service acceptances to create cards for commercial issuing use cases.
+               */
+              commercial?: CardCreator.Commercial;
+            }
+
+            export interface CryptoStorer {
+              /**
+               * The boolean value indicating if the terms of service have been accepted.
+               */
+              shown_and_accepted?: boolean;
+            }
+
+            export interface Storer {
+              /**
+               * The boolean value indicating if the terms of service have been accepted.
+               */
+              shown_and_accepted?: boolean;
+            }
+
+            export namespace CardCreator {
+              export interface Commercial {
+                /**
+                 * Terms of service acceptances for Stripe commercial card issuing.
+                 */
+                account_holder?: Commercial.AccountHolder;
+
+                /**
+                 * Terms of service acceptances for commercial issuing cards with Celtic as BIN sponsor.
+                 */
+                celtic?: Commercial.Celtic;
+
+                /**
+                 * Terms of service acceptances for commercial issuing cards with Cross River Bank as BIN sponsor.
+                 */
+                cross_river_bank?: Commercial.CrossRiverBank;
+              }
+
+              export namespace Commercial {
+                export interface AccountHolder {
+                  /**
+                   * The boolean value indicating if the terms of service have been accepted.
+                   */
+                  shown_and_accepted?: boolean;
+                }
+
+                export interface Celtic {
+                  /**
+                   * Terms of service acceptances for commercial issuing Apple Pay cards with Celtic as BIN sponsor.
+                   */
+                  apple_pay?: Celtic.ApplePay;
+
+                  /**
+                   * Terms of service acceptances for commercial issuing charge cards with Celtic as BIN sponsor.
+                   */
+                  charge_card?: Celtic.ChargeCard;
+
+                  /**
+                   * Terms of service acceptances for commercial issuing spend cards with Celtic as BIN sponsor.
+                   */
+                  spend_card?: Celtic.SpendCard;
+                }
+
+                export interface CrossRiverBank {
+                  /**
+                   * Terms of service acceptances for commercial issuing Apple Pay cards with Cross River Bank as BIN sponsor.
+                   */
+                  apple_pay?: CrossRiverBank.ApplePay;
+
+                  /**
+                   * Terms of service acceptances for commercial issuing charge cards with Cross River Bank as BIN sponsor.
+                   */
+                  charge_card?: CrossRiverBank.ChargeCard;
+
+                  /**
+                   * Terms of service acceptances for commercial issuing spend cards with Cross River Bank as BIN sponsor.
+                   */
+                  spend_card?: CrossRiverBank.SpendCard;
+                }
+
+                export namespace Celtic {
+                  export interface ApplePay {
+                    /**
+                     * The boolean value indicating if the terms of service have been accepted.
+                     */
+                    shown_and_accepted?: boolean;
+                  }
+
+                  export interface ChargeCard {
+                    /**
+                     * Bank terms of service acceptance for commercial issuing charge cards with Celtic as BIN sponsor.
+                     */
+                    bank_terms?: ChargeCard.BankTerms;
+
+                    /**
+                     * Platform terms of service acceptance for commercial issuing charge cards with Celtic as BIN sponsor.
+                     */
+                    platform?: ChargeCard.Platform;
+                  }
+
+                  export interface SpendCard {
+                    /**
+                     * Bank terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
+                     */
+                    bank_terms?: SpendCard.BankTerms;
+
+                    /**
+                     * Financial disclosures terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
+                     */
+                    financing_disclosures?: SpendCard.FinancingDisclosures;
+
+                    /**
+                     * Platform terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
+                     */
+                    platform?: SpendCard.Platform;
+                  }
+
+                  export namespace ChargeCard {
+                    export interface BankTerms {
+                      /**
+                       * The boolean value indicating if the terms of service have been accepted.
+                       */
+                      shown_and_accepted?: boolean;
+                    }
+
+                    export interface Platform {
+                      /**
+                       * The boolean value indicating if the terms of service have been accepted.
+                       */
+                      shown_and_accepted?: boolean;
+                    }
+                  }
+
+                  export namespace SpendCard {
+                    export interface BankTerms {
+                      /**
+                       * The boolean value indicating if the terms of service have been accepted.
+                       */
+                      shown_and_accepted?: boolean;
+                    }
+
+                    export interface FinancingDisclosures {
+                      /**
+                       * The boolean value indicating if the terms of service have been accepted.
+                       */
+                      shown_and_accepted?: boolean;
+                    }
+
+                    export interface Platform {
+                      /**
+                       * The boolean value indicating if the terms of service have been accepted.
+                       */
+                      shown_and_accepted?: boolean;
+                    }
+                  }
+                }
+
+                export namespace CrossRiverBank {
+                  export interface ApplePay {
+                    /**
+                     * The boolean value indicating if the terms of service have been accepted.
+                     */
+                    shown_and_accepted?: boolean;
+                  }
+
+                  export interface ChargeCard {
+                    /**
+                     * Bank terms of service acceptance for commercial issuing charge cards with Cross River Bank as BIN sponsor.
+                     */
+                    bank_terms?: ChargeCard.BankTerms;
+
+                    /**
+                     * Financial disclosures terms of service acceptance for commercial issuing charge cards with Cross River Bank as BIN sponsor.
+                     */
+                    financing_disclosures?: ChargeCard.FinancingDisclosures;
+
+                    /**
+                     * Platform terms of service acceptance for commercial issuing charge cards with Cross River Bank as BIN sponsor.
+                     */
+                    platform?: ChargeCard.Platform;
+                  }
+
+                  export interface SpendCard {
+                    /**
+                     * Bank terms of service acceptance for commercial issuing spend cards with Cross River Bank as BIN sponsor.
+                     */
+                    bank_terms?: SpendCard.BankTerms;
+
+                    /**
+                     * Financial disclosures terms of service acceptance for commercial issuing spend cards with Cross River Bank as BIN sponsor.
+                     */
+                    financing_disclosures?: SpendCard.FinancingDisclosures;
+                  }
+
+                  export namespace ChargeCard {
+                    export interface BankTerms {
+                      /**
+                       * The boolean value indicating if the terms of service have been accepted.
+                       */
+                      shown_and_accepted?: boolean;
+                    }
+
+                    export interface FinancingDisclosures {
+                      /**
+                       * The boolean value indicating if the terms of service have been accepted.
+                       */
+                      shown_and_accepted?: boolean;
+                    }
+
+                    export interface Platform {
+                      /**
+                       * The boolean value indicating if the terms of service have been accepted.
+                       */
+                      shown_and_accepted?: boolean;
+                    }
+                  }
+
+                  export namespace SpendCard {
+                    export interface BankTerms {
+                      /**
+                       * The boolean value indicating if the terms of service have been accepted.
+                       */
+                      shown_and_accepted?: boolean;
+                    }
+
+                    export interface FinancingDisclosures {
+                      /**
+                       * The boolean value indicating if the terms of service have been accepted.
+                       */
+                      shown_and_accepted?: boolean;
+                    }
+                  }
+                }
+              }
             }
           }
         }

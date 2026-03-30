@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {Discount, DeletedDiscount} from './Discounts.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {Invoice} from './Invoices.js';
+import {Margin} from './Margins.js';
 import {TaxRate} from './TaxRates.js';
 import {Price} from './Prices.js';
 import * as TestHelpers from './TestHelpers/index.js';
@@ -17,6 +18,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class InvoiceItemResource extends StripeResource {
   /**
    * Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they're not attached to invoices, or if it's attached to a draft invoice.
@@ -261,6 +263,11 @@ export interface InvoiceItem {
   discounts: Array<string | Discount> | null;
 
   /**
+   * Array of field names that can't be modified. Attempting to update a frozen field returns an error.
+   */
+  frozen_fields?: Array<InvoiceItem.FrozenField>;
+
+  /**
    * The ID of the invoice this invoice item belongs to.
    */
   invoice: string | Invoice | null;
@@ -269,6 +276,11 @@ export interface InvoiceItem {
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
    */
   livemode: boolean;
+
+  /**
+   * The margins which apply to the invoice item. When set, the `default_margins` on the invoice do not apply to this invoice item.
+   */
+  margins?: Array<string | Margin> | null;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -336,7 +348,24 @@ export interface DeletedInvoiceItem {
   deleted: true;
 }
 export namespace InvoiceItem {
+  export type FrozenField = 'discounts' | 'pricing' | 'quantity';
+
   export interface Parent {
+    /**
+     * Details about the pricing plan subscription that generated this invoice item
+     */
+    pricing_plan_subscription_details?: Parent.PricingPlanSubscriptionDetails | null;
+
+    /**
+     * Details about the rate card subscription that generated this invoice item
+     */
+    rate_card_subscription_details?: Parent.RateCardSubscriptionDetails | null;
+
+    /**
+     * Details about the subscription schedule that generated this invoice item
+     */
+    schedule_details?: Parent.ScheduleDetails | null;
+
     /**
      * Details about the subscription that generated this invoice item
      */
@@ -345,7 +374,7 @@ export namespace InvoiceItem {
     /**
      * The type of parent that generated this invoice item
      */
-    type: 'subscription_details';
+    type: Parent.Type;
   }
 
   export interface Period {
@@ -361,12 +390,18 @@ export namespace InvoiceItem {
   }
 
   export interface Pricing {
+    license_fee_details?: Pricing.LicenseFeeDetails;
+
     price_details?: Pricing.PriceDetails;
+
+    rate_card_custom_pricing_unit_overage_rate_details?: Pricing.RateCardCustomPricingUnitOverageRateDetails;
+
+    rate_card_rate_details?: Pricing.RateCardRateDetails;
 
     /**
      * The type of the pricing details.
      */
-    type: 'price_details';
+    type: Pricing.Type;
 
     /**
      * The unit amount (in the `currency` specified) of the item which contains a decimal value with at most 12 decimal places.
@@ -382,6 +417,37 @@ export namespace InvoiceItem {
   }
 
   export namespace Parent {
+    export interface PricingPlanSubscriptionDetails {
+      /**
+       * The pricing plan subscription that manages this charge
+       */
+      pricing_plan_subscription: string;
+
+      /**
+       * The pricing plan version at the time this charge was generated
+       */
+      pricing_plan_version: string;
+    }
+
+    export interface RateCardSubscriptionDetails {
+      /**
+       * The rate card subscription that generated this invoice item
+       */
+      rate_card_subscription: string;
+
+      /**
+       * The rate card version that generated this invoice item
+       */
+      rate_card_version: string;
+    }
+
+    export interface ScheduleDetails {
+      /**
+       * The subscription schedule that generated this invoice item
+       */
+      schedule: string;
+    }
+
     export interface SubscriptionDetails {
       /**
        * The subscription that generated this invoice item
@@ -393,9 +459,32 @@ export namespace InvoiceItem {
        */
       subscription_item?: string;
     }
+
+    export type Type =
+      | 'pricing_plan_subscription_details'
+      | 'rate_card_subscription_details'
+      | 'schedule_details'
+      | 'subscription_details';
   }
 
   export namespace Pricing {
+    export interface LicenseFeeDetails {
+      /**
+       * The ID of the license fee this item is associated with
+       */
+      license_fee: string;
+
+      /**
+       * The version of the license fee this item is associated with
+       */
+      license_fee_version: string;
+
+      /**
+       * The ID of the licensed item this item is associated with
+       */
+      licensed_item: string;
+    }
+
     export interface PriceDetails {
       /**
        * The ID of the price this item is associated with.
@@ -407,6 +496,51 @@ export namespace InvoiceItem {
        */
       product: string;
     }
+
+    export interface RateCardCustomPricingUnitOverageRateDetails {
+      /**
+       * The ID of the custom pricing unit this item is associated with
+       */
+      custom_pricing_unit: string;
+
+      /**
+       * The ID of the custom pricing unit overage rate this item is associated with
+       */
+      custom_pricing_unit_overage_rate: string;
+
+      /**
+       * The ID of the one-time item this custom pricing unit overage rate is associated with
+       */
+      one_time_item: string;
+
+      /**
+       * The ID of the rate card this item is associated with
+       */
+      rate_card: string;
+    }
+
+    export interface RateCardRateDetails {
+      /**
+       * The ID of billable item this item is associated with
+       */
+      metered_item: string;
+
+      /**
+       * The ID of the rate card this item is associated with
+       */
+      rate_card: string;
+
+      /**
+       * The ID of the rate card rate this item is associated with
+       */
+      rate_card_rate: string;
+    }
+
+    export type Type =
+      | 'license_fee_details'
+      | 'price_details'
+      | 'rate_card_custom_pricing_unit_overage_rate_details'
+      | 'rate_card_rate_details';
   }
 
   export namespace ProrationDetails {
@@ -468,6 +602,11 @@ export interface InvoiceItemCreateParams {
    * The ID of an existing invoice to add this invoice item to. For subscription invoices, when left blank, the invoice item will be added to the next upcoming scheduled invoice. For standalone invoices, the invoice item won't be automatically added unless you pass `pending_invoice_item_behavior: 'include'` when creating the invoice. This is useful when adding invoice items in response to an invoice.created webhook. You can only add invoice items to draft invoices and there is a maximum of 250 items per invoice.
    */
   invoice?: string;
+
+  /**
+   * The ids of the margins to apply to the invoice item. When set, the `default_margins` on the invoice do not apply to this invoice item.
+   */
+  margins?: Array<string>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -537,6 +676,11 @@ export namespace InvoiceItemCreateParams {
     discount?: string;
 
     /**
+     * Details to determine how long the discount should be applied for.
+     */
+    discount_end?: Discount.DiscountEnd;
+
+    /**
      * ID of the promotion code to create a new discount for.
      */
     promotion_code?: string;
@@ -590,6 +734,45 @@ export namespace InvoiceItemCreateParams {
 
   export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
 
+  export namespace Discount {
+    export interface DiscountEnd {
+      /**
+       * Time span for the redeemed discount.
+       */
+      duration?: DiscountEnd.Duration;
+
+      /**
+       * A precise Unix timestamp for the discount to end. Must be in the future.
+       */
+      timestamp?: number;
+
+      /**
+       * The type of calculation made to determine when the discount ends.
+       */
+      type: DiscountEnd.Type;
+    }
+
+    export namespace DiscountEnd {
+      export interface Duration {
+        /**
+         * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+         */
+        interval: Duration.Interval;
+
+        /**
+         * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+         */
+        interval_count: number;
+      }
+
+      export type Type = 'duration' | 'timestamp';
+
+      export namespace Duration {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+    }
+  }
+
   export namespace PriceData {
     export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
   }
@@ -625,6 +808,11 @@ export interface InvoiceItemUpdateParams {
    * Specifies which fields in the response should be expanded.
    */
   expand?: Array<string>;
+
+  /**
+   * The ids of the margins to apply to the invoice item. When set, the `default_margins` on the invoice do not apply to this invoice item.
+   */
+  margins?: Emptyable<Array<string>>;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -689,6 +877,11 @@ export namespace InvoiceItemUpdateParams {
     discount?: string;
 
     /**
+     * Details to determine how long the discount should be applied for.
+     */
+    discount_end?: Discount.DiscountEnd;
+
+    /**
      * ID of the promotion code to create a new discount for.
      */
     promotion_code?: string;
@@ -741,6 +934,45 @@ export namespace InvoiceItemUpdateParams {
   }
 
   export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+
+  export namespace Discount {
+    export interface DiscountEnd {
+      /**
+       * Time span for the redeemed discount.
+       */
+      duration?: DiscountEnd.Duration;
+
+      /**
+       * A precise Unix timestamp for the discount to end. Must be in the future.
+       */
+      timestamp?: number;
+
+      /**
+       * The type of calculation made to determine when the discount ends.
+       */
+      type: DiscountEnd.Type;
+    }
+
+    export namespace DiscountEnd {
+      export interface Duration {
+        /**
+         * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+         */
+        interval: Duration.Interval;
+
+        /**
+         * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+         */
+        interval_count: number;
+      }
+
+      export type Type = 'duration' | 'timestamp';
+
+      export namespace Duration {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+    }
+  }
 
   export namespace PriceData {
     export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';

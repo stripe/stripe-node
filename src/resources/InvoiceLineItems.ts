@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {Discount, DeletedDiscount} from './Discounts.js';
+import {Margin} from './Margins.js';
 import {Subscription} from './Subscriptions.js';
 import {Price} from './Prices.js';
 import * as Billing from './Billing/index.js';
@@ -58,6 +59,16 @@ export interface InvoiceLineItem {
   livemode: boolean;
 
   /**
+   * The amount of margin calculated per margin for this line item.
+   */
+  margin_amounts?: Array<InvoiceLineItem.MarginAmount> | null;
+
+  /**
+   * The margins applied to the line item. When set, the `default_margins` on the invoice do not apply to the line item. Use `expand[]=margins` to expand each margin.
+   */
+  margins?: Array<string | Margin> | null;
+
+  /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription`, `metadata` reflects the current metadata from the subscription associated with the line item, unless the invoice line was directly updated with different metadata after creation.
    */
   metadata: Metadata;
@@ -97,6 +108,11 @@ export interface InvoiceLineItem {
   subtotal: number;
 
   /**
+   * The tax calculation identifiers of the line item.
+   */
+  tax_calculation_reference?: InvoiceLineItem.TaxCalculationReference | null;
+
+  /**
    * The tax information of the line item.
    */
   taxes: Array<InvoiceLineItem.Tax> | null;
@@ -114,11 +130,38 @@ export namespace InvoiceLineItem {
     discount: string | Discount | DeletedDiscount;
   }
 
+  export interface MarginAmount {
+    /**
+     * The amount, in cents (or local equivalent), of the reduction in line item amount.
+     */
+    amount: number;
+
+    /**
+     * The margin that was applied to get this margin amount.
+     */
+    margin: string | Margin;
+  }
+
   export interface Parent {
     /**
      * Details about the invoice item that generated this line item
      */
     invoice_item_details: Parent.InvoiceItemDetails | null;
+
+    /**
+     * Details about the pricing plan subscription that generated this line item
+     */
+    pricing_plan_subscription_details?: Parent.PricingPlanSubscriptionDetails | null;
+
+    /**
+     * Details about the rate card subscription that generated this line item
+     */
+    rate_card_subscription_details?: Parent.RateCardSubscriptionDetails | null;
+
+    /**
+     * Details about the subscription schedule that generated this line item
+     */
+    schedule_details?: Parent.ScheduleDetails | null;
 
     /**
      * Details about the subscription item that generated this line item
@@ -163,23 +206,46 @@ export namespace InvoiceLineItem {
     discount?: string | Discount | DeletedDiscount;
 
     /**
+     * The margin that was applied to get this pretax credit amount.
+     */
+    margin?: string | Margin;
+
+    /**
      * Type of the pretax credit amount referenced.
      */
     type: PretaxCreditAmount.Type;
   }
 
   export interface Pricing {
+    license_fee_details?: Pricing.LicenseFeeDetails;
+
     price_details?: Pricing.PriceDetails;
+
+    rate_card_custom_pricing_unit_overage_rate_details?: Pricing.RateCardCustomPricingUnitOverageRateDetails;
+
+    rate_card_rate_details?: Pricing.RateCardRateDetails;
 
     /**
      * The type of the pricing details.
      */
-    type: 'price_details';
+    type: Pricing.Type;
 
     /**
      * The unit amount (in the `currency` specified) of the item which contains a decimal value with at most 12 decimal places.
      */
     unit_amount_decimal: Decimal | null;
+  }
+
+  export interface TaxCalculationReference {
+    /**
+     * The calculation identifier for tax calculation response.
+     */
+    calculation_id: string | null;
+
+    /**
+     * The calculation identifier for tax calculation response line item.
+     */
+    calculation_item_id: string | null;
   }
 
   export interface Tax {
@@ -237,6 +303,67 @@ export namespace InvoiceLineItem {
       subscription: string | null;
     }
 
+    export interface PricingPlanSubscriptionDetails {
+      /**
+       * The invoice item that generated this line item
+       */
+      invoice_item: string;
+
+      /**
+       * The pricing plan subscription that manages this charge
+       */
+      pricing_plan_subscription: string;
+
+      /**
+       * The pricing plan version at the time this charge was generated
+       */
+      pricing_plan_version: string;
+    }
+
+    export interface RateCardSubscriptionDetails {
+      /**
+       * The invoice item that generated this line item
+       */
+      invoice_item: string;
+
+      /**
+       * The rate card subscription that generated this line item
+       */
+      rate_card_subscription: string;
+
+      /**
+       * The rate card version at the time this line item was generated
+       */
+      rate_card_version: string;
+    }
+
+    export interface ScheduleDetails {
+      /**
+       * The invoice item that generated this line item.
+       */
+      invoice_item: string | null;
+
+      /**
+       * Whether this is a proration.
+       */
+      proration: boolean;
+
+      /**
+       * Additional details for proration line items.
+       */
+      proration_details: ScheduleDetails.ProrationDetails | null;
+
+      /**
+       * The subscription schedule that generated this line item.
+       */
+      schedule: string;
+
+      /**
+       * The subscription that the schedule belongs to.
+       */
+      subscription: string | null;
+    }
+
     export interface SubscriptionItemDetails {
       /**
        * The invoice item that generated this line item
@@ -264,9 +391,37 @@ export namespace InvoiceLineItem {
       subscription_item: string;
     }
 
-    export type Type = 'invoice_item_details' | 'subscription_item_details';
+    export type Type =
+      | 'invoice_item_details'
+      | 'pricing_plan_subscription_details'
+      | 'rate_card_subscription_details'
+      | 'schedule_details'
+      | 'subscription_item_details';
 
     export namespace InvoiceItemDetails {
+      export interface ProrationDetails {
+        /**
+         * For a credit proration `line_item`, the original debit line_items to which the credit proration applies.
+         */
+        credited_items: ProrationDetails.CreditedItems | null;
+      }
+
+      export namespace ProrationDetails {
+        export interface CreditedItems {
+          /**
+           * Invoice containing the credited invoice line items
+           */
+          invoice: string;
+
+          /**
+           * Credited invoice line items
+           */
+          invoice_line_items: Array<string>;
+        }
+      }
+    }
+
+    export namespace ScheduleDetails {
       export interface ProrationDetails {
         /**
          * For a credit proration `line_item`, the original debit line_items to which the credit proration applies.
@@ -314,10 +469,27 @@ export namespace InvoiceLineItem {
   }
 
   export namespace PretaxCreditAmount {
-    export type Type = 'credit_balance_transaction' | 'discount';
+    export type Type = 'credit_balance_transaction' | 'discount' | 'margin';
   }
 
   export namespace Pricing {
+    export interface LicenseFeeDetails {
+      /**
+       * The ID of the license fee this item is associated with
+       */
+      license_fee: string;
+
+      /**
+       * The version of the license fee this item is associated with
+       */
+      license_fee_version: string;
+
+      /**
+       * The ID of the licensed item this item is associated with
+       */
+      licensed_item: string;
+    }
+
     export interface PriceDetails {
       /**
        * The ID of the price this item is associated with.
@@ -329,6 +501,51 @@ export namespace InvoiceLineItem {
        */
       product: string;
     }
+
+    export interface RateCardCustomPricingUnitOverageRateDetails {
+      /**
+       * The ID of the custom pricing unit this item is associated with
+       */
+      custom_pricing_unit: string;
+
+      /**
+       * The ID of the custom pricing unit overage rate this item is associated with
+       */
+      custom_pricing_unit_overage_rate: string;
+
+      /**
+       * The ID of the one-time item this custom pricing unit overage rate is associated with
+       */
+      one_time_item: string;
+
+      /**
+       * The ID of the rate card this item is associated with
+       */
+      rate_card: string;
+    }
+
+    export interface RateCardRateDetails {
+      /**
+       * The ID of billable item this item is associated with
+       */
+      metered_item: string;
+
+      /**
+       * The ID of the rate card this item is associated with
+       */
+      rate_card: string;
+
+      /**
+       * The ID of the rate card rate this item is associated with
+       */
+      rate_card_rate: string;
+    }
+
+    export type Type =
+      | 'license_fee_details'
+      | 'price_details'
+      | 'rate_card_custom_pricing_unit_overage_rate_details'
+      | 'rate_card_rate_details';
   }
 
   export namespace Tax {

@@ -5,6 +5,7 @@ import {Transaction} from './Transactions.js';
 import {PaginationParams, Address} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ReceivedDebitResource extends StripeResource {
   /**
    * Returns a list of ReceivedDebits.
@@ -101,6 +102,11 @@ export interface ReceivedDebit {
   network: Treasury.ReceivedDebit.Network;
 
   /**
+   * Details specific to the money movement rails.
+   */
+  network_details?: Treasury.ReceivedDebit.NetworkDetails | null;
+
+  /**
    * Details describing when a ReceivedDebit might be reversed.
    */
   reversal_details: Treasury.ReceivedDebit.ReversalDetails | null;
@@ -174,12 +180,29 @@ export namespace Treasury {
       payout: string | null;
 
       /**
+       * The ReceivedCredit that Capital withheld from
+       */
+      received_credit_capital_withholding?: string | null;
+
+      /**
        * Set if the ReceivedDebit was created due to a [Topup](https://api.stripe.com#topups) object.
        */
       topup: string | null;
     }
 
     export type Network = 'ach' | 'card' | 'stripe';
+
+    export interface NetworkDetails {
+      /**
+       * Details about an ACH transaction.
+       */
+      ach?: NetworkDetails.Ach | null;
+
+      /**
+       * The type of flow that originated the ReceivedDebit.
+       */
+      type: 'ach';
+    }
 
     export interface ReversalDetails {
       /**
@@ -244,6 +267,15 @@ export namespace Treasury {
          * The routing number for the bank account.
          */
         routing_number: string | null;
+      }
+    }
+
+    export namespace NetworkDetails {
+      export interface Ach {
+        /**
+         * ACH Addenda record
+         */
+        addenda: string | null;
       }
     }
 

@@ -67,10 +67,17 @@ export interface Card {
    */
   available_payout_methods?: Array<Card.AvailablePayoutMethod> | null;
 
+  benefits?: Card.Benefits;
+
   /**
    * Card brand. Can be `American Express`, `Cartes Bancaires`, `Diners Club`, `Discover`, `Eftpos Australia`, `Girocard`, `JCB`, `MasterCard`, `UnionPay`, `Visa`, or `Unknown`.
    */
   brand: string;
+
+  /**
+   * The [product code](https://stripe.com/docs/card-product-codes) that identifies the specific program or product associated with a card. (For internal use only and not typically available in standard API requests.)
+   */
+  brand_product?: string | null;
 
   /**
    * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
@@ -201,6 +208,18 @@ export namespace Card {
   export type AllowRedisplay = 'always' | 'limited' | 'unspecified';
 
   export type AvailablePayoutMethod = 'instant' | 'standard';
+
+  export interface Benefits {
+    /**
+     * Issuer of this benefit card
+     */
+    issuer: string | null;
+
+    /**
+     * Available benefit programs for this card
+     */
+    programs: Array<string> | null;
+  }
 
   export interface Networks {
     /**

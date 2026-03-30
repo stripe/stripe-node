@@ -7,6 +7,7 @@ import {Application} from './Applications.js';
 import {PaginationParams} from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class TaxIdResource extends StripeResource {
   /**
    * Deletes an existing account or customer tax_id object.

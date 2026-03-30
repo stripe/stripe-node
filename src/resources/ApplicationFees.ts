@@ -14,6 +14,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ApplicationFeeResource extends StripeResource {
   /**
    * Returns a list of application fees you've previously collected. The application fees are returned in sorted order, with the most recent fees appearing first.
@@ -195,6 +196,11 @@ export interface ApplicationFee {
   fee_source: ApplicationFee.FeeSource | null;
 
   /**
+   * Polymorphic funding source of the application fee. Includes the type and details of the funding source.
+   */
+  funding_source?: ApplicationFee.FundingSource | null;
+
+  /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
    */
   livemode: boolean;
@@ -213,6 +219,11 @@ export interface ApplicationFee {
    * A list of refunds that have been applied to the fee.
    */
   refunds: ApiList<FeeRefund>;
+
+  /**
+   * Type of settlement for the application fee. One of `net_settled` or `gross_settled`.
+   */
+  settlement_type?: ApplicationFee.SettlementType;
 }
 export namespace ApplicationFee {
   export interface FeeSource {
@@ -227,13 +238,32 @@ export namespace ApplicationFee {
     payout?: string;
 
     /**
+     * Transfer ID that created this application fee.
+     */
+    transfer?: string;
+
+    /**
      * Type of object that created the application fee.
      */
     type: FeeSource.Type;
   }
 
+  export interface FundingSource {
+    /**
+     * The invoice ID associated with this funding source, if applicable.
+     */
+    invoice?: string;
+
+    /**
+     * The type of funding source.
+     */
+    type: string;
+  }
+
+  export type SettlementType = 'gross_settled' | 'net_settled';
+
   export namespace FeeSource {
-    export type Type = 'charge' | 'payout';
+    export type Type = 'charge' | 'payout' | 'transfer';
   }
 }
 export interface ApplicationFeeRetrieveParams {

@@ -139,6 +139,10 @@ export interface Person {
    */
   requirements?: Person.Requirements | null;
 
+  self_reported_income?: Person.SelfReportedIncome;
+
+  self_reported_monthly_housing_payment?: Person.SelfReportedMonthlyHousingPayment;
+
   /**
    * Whether the last four digits of the person's Social Security number have been provided (U.S. only).
    */
@@ -374,6 +378,30 @@ export namespace Person {
     pending_verification: Array<string>;
   }
 
+  export interface SelfReportedIncome {
+    /**
+     * The amount in the minor currency unit (for example, cents for USD).
+     */
+    amount: number;
+
+    /**
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency: string;
+  }
+
+  export interface SelfReportedMonthlyHousingPayment {
+    /**
+     * The amount in the minor currency unit (for example, cents for USD).
+     */
+    amount: number;
+
+    /**
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency: string;
+  }
+
   export interface UsCfpbData {
     /**
      * The persons ethnicity details
@@ -510,6 +538,7 @@ export namespace Person {
         | 'invalid_url_website_other'
         | 'invalid_value_other'
         | 'unsupported_business_type'
+        | 'verification_data_not_found'
         | 'verification_directors_mismatch'
         | 'verification_document_address_mismatch'
         | 'verification_document_address_missing'
@@ -642,6 +671,7 @@ export namespace Person {
         | 'invalid_url_website_other'
         | 'invalid_value_other'
         | 'unsupported_business_type'
+        | 'verification_data_not_found'
         | 'verification_directors_mismatch'
         | 'verification_document_address_mismatch'
         | 'verification_document_address_missing'

@@ -12,6 +12,7 @@ import {CustomerSource} from './CustomerSources.js';
 import {PaginationParams, RangeQueryParam} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class SetupAttemptResource extends StripeResource {
   /**
    * Returns a list of SetupAttempts that associate with a provided SetupIntent.
@@ -132,6 +133,8 @@ export namespace SetupAttempt {
 
     cashapp?: PaymentMethodDetails.Cashapp;
 
+    id_bank_transfer?: PaymentMethodDetails.IdBankTransfer;
+
     ideal?: PaymentMethodDetails.Ideal;
 
     kakao_pay?: PaymentMethodDetails.KakaoPay;
@@ -150,11 +153,15 @@ export namespace SetupAttempt {
 
     payto?: PaymentMethodDetails.Payto;
 
+    pix?: PaymentMethodDetails.Pix;
+
     revolut_pay?: PaymentMethodDetails.RevolutPay;
 
     sepa_debit?: PaymentMethodDetails.SepaDebit;
 
     sofort?: PaymentMethodDetails.Sofort;
+
+    stripe_balance?: PaymentMethodDetails.StripeBalance;
 
     /**
      * The type of the payment method used in the SetupIntent (e.g., `card`). An additional hash is included on `payment_method_details` with a name matching this value. It contains confirmation-specific information for the payment method.
@@ -422,6 +429,28 @@ export namespace SetupAttempt {
 
     export interface Cashapp {}
 
+    export interface IdBankTransfer {
+      /**
+       * Bank where the account is located.
+       */
+      bank: IdBankTransfer.Bank | null;
+
+      /**
+       * Local bank code of the bank.
+       */
+      bank_code: string | null;
+
+      /**
+       * Name of the bank associated with the bank account.
+       */
+      bank_name: string | null;
+
+      /**
+       * Merchant name and billing details name, for the customer to check for the correct merchant when performing the bank transfer.
+       */
+      display_name: string | null;
+    }
+
     export interface Ideal {
       /**
        * The customer's bank. Can be one of `abn_amro`, `adyen`, `asn_bank`, `bunq`, `buut`, `finom`, `handelsbanken`, `ing`, `knab`, `mollie`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
@@ -476,6 +505,8 @@ export namespace SetupAttempt {
 
     export interface Payto {}
 
+    export interface Pix {}
+
     export interface RevolutPay {}
 
     export interface SepaDebit {}
@@ -523,6 +554,8 @@ export namespace SetupAttempt {
        */
       verified_name: string | null;
     }
+
+    export interface StripeBalance {}
 
     export interface Upi {}
 
@@ -650,6 +683,10 @@ export namespace SetupAttempt {
       }
     }
 
+    export namespace IdBankTransfer {
+      export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+    }
+
     export namespace Ideal {
       export type Bank =
         | 'abn_amro'
@@ -756,6 +793,7 @@ export namespace SetupAttempt {
       | 'financial_connections_account_inactive'
       | 'financial_connections_account_pending_account_numbers'
       | 'financial_connections_account_unavailable_account_numbers'
+      | 'financial_connections_institution_unavailable'
       | 'financial_connections_no_successful_transaction_refresh'
       | 'forwarding_api_inactive'
       | 'forwarding_api_invalid_parameter'
@@ -855,6 +893,7 @@ export namespace SetupAttempt {
       | 'return_intent_already_processed'
       | 'routing_number_invalid'
       | 'secret_key_required'
+      | 'sensitive_data_access_expired'
       | 'sepa_unsupported_account'
       | 'service_period_coupon_with_metered_tiered_item_unsupported'
       | 'setup_attempt_failed'
@@ -877,6 +916,7 @@ export namespace SetupAttempt {
       | 'taxes_calculation_failed'
       | 'terminal_location_country_unsupported'
       | 'terminal_reader_busy'
+      | 'terminal_reader_collected_data_invalid'
       | 'terminal_reader_hardware_fault'
       | 'terminal_reader_invalid_location_for_activation'
       | 'terminal_reader_invalid_location_for_payment'
@@ -889,7 +929,9 @@ export namespace SetupAttempt {
       | 'token_in_use'
       | 'transfer_source_balance_parameters_mismatch'
       | 'transfers_not_allowed'
-      | 'url_invalid';
+      | 'url_invalid'
+      | 'v2_account_disconnection_unsupported'
+      | 'v2_account_missing_configuration';
 
     export type Type =
       | 'api_error'

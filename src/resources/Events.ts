@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {PaginationParams, RangeQueryParam} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class EventResource extends StripeResource {
   /**
    * List events, going back up to 30 days. Each event data is rendered according to Stripe API version at its creation time, specified in [event object](https://docs.stripe.com/api/events/object) api_version attribute (not according to your current Stripe API version or Stripe-Version header).
@@ -81,6 +82,11 @@ export interface EventBase {
   pending_webhooks: number;
 
   /**
+   * Information about the action that causes the event. Only present when the event is triggered by an API request or an [Automation](https://docs.stripe.com/billing/automations) action.
+   */
+  reason?: Event.Reason | null;
+
+  /**
    * Information on the API request that triggers the event.
    */
   request: Event.Request | null;
@@ -103,6 +109,17 @@ export namespace Event {
     previous_attributes?: Data.PreviousAttributes;
   }
 
+  export interface Reason {
+    automation_action?: Reason.AutomationAction;
+
+    request?: Reason.Request;
+
+    /**
+     * The type of the reason for the event.
+     */
+    type: Reason.Type;
+  }
+
   export interface Request {
     /**
      * ID of the API request that caused the event. If null, the event was automatic (e.g., Stripe's automatic subscription handling). Request logs are available in the [dashboard](https://dashboard.stripe.com/logs), but currently not in the API.
@@ -122,6 +139,8 @@ export namespace Event {
     | 'account.external_account.deleted'
     | 'account.external_account.updated'
     | 'account.updated'
+    | 'account_notice.created'
+    | 'account_notice.updated'
     | 'application_fee.created'
     | 'application_fee.refund.updated'
     | 'application_fee.refunded'
@@ -133,6 +152,17 @@ export namespace Event {
     | 'billing_portal.configuration.updated'
     | 'billing_portal.session.created'
     | 'capability.updated'
+    | 'capital.financing_offer.accepted'
+    | 'capital.financing_offer.accepted_other_offer'
+    | 'capital.financing_offer.canceled'
+    | 'capital.financing_offer.created'
+    | 'capital.financing_offer.expired'
+    | 'capital.financing_offer.fully_repaid'
+    | 'capital.financing_offer.paid_out'
+    | 'capital.financing_offer.rejected'
+    | 'capital.financing_offer.replacement_created'
+    | 'capital.financing_summary.line_of_credit_update'
+    | 'capital.financing_transaction.created'
     | 'cash_balance.funds_available'
     | 'charge.captured'
     | 'charge.dispute.closed'
@@ -173,11 +203,15 @@ export namespace Event {
     | 'customer.source.deleted'
     | 'customer.source.expiring'
     | 'customer.source.updated'
+    | 'customer.subscription.collection_paused'
+    | 'customer.subscription.collection_resumed'
     | 'customer.subscription.created'
+    | 'customer.subscription.custom_event'
     | 'customer.subscription.deleted'
     | 'customer.subscription.paused'
     | 'customer.subscription.pending_update_applied'
     | 'customer.subscription.pending_update_expired'
+    | 'customer.subscription.price_migration_failed'
     | 'customer.subscription.resumed'
     | 'customer.subscription.trial_will_end'
     | 'customer.subscription.updated'
@@ -194,9 +228,12 @@ export namespace Event {
     | 'financial_connections.account.disconnected'
     | 'financial_connections.account.reactivated'
     | 'financial_connections.account.refreshed_balance'
+    | 'financial_connections.account.refreshed_inferred_balances'
     | 'financial_connections.account.refreshed_ownership'
     | 'financial_connections.account.refreshed_transactions'
     | 'financial_connections.account.upcoming_account_number_expiry'
+    | 'financial_connections.session.updated'
+    | 'fx_quote.expired'
     | 'identity.verification_session.canceled'
     | 'identity.verification_session.created'
     | 'identity.verification_session.processing'
@@ -211,6 +248,7 @@ export namespace Event {
     | 'invoice.overdue'
     | 'invoice.overpaid'
     | 'invoice.paid'
+    | 'invoice.payment.overpaid'
     | 'invoice.payment_action_required'
     | 'invoice.payment_attempt_required'
     | 'invoice.payment_failed'
@@ -236,10 +274,15 @@ export namespace Event {
     | 'issuing_dispute.funds_rescinded'
     | 'issuing_dispute.submitted'
     | 'issuing_dispute.updated'
+    | 'issuing_dispute_settlement_detail.created'
+    | 'issuing_dispute_settlement_detail.updated'
+    | 'issuing_fraud_liability_debit.created'
     | 'issuing_personalization_design.activated'
     | 'issuing_personalization_design.deactivated'
     | 'issuing_personalization_design.rejected'
     | 'issuing_personalization_design.updated'
+    | 'issuing_settlement.created'
+    | 'issuing_settlement.updated'
     | 'issuing_token.created'
     | 'issuing_token.updated'
     | 'issuing_transaction.created'
@@ -275,15 +318,26 @@ export namespace Event {
     | 'price.created'
     | 'price.deleted'
     | 'price.updated'
+    | 'privacy.redaction_job.canceled'
+    | 'privacy.redaction_job.created'
+    | 'privacy.redaction_job.ready'
+    | 'privacy.redaction_job.succeeded'
+    | 'privacy.redaction_job.validation_error'
     | 'product.created'
     | 'product.deleted'
     | 'product.updated'
     | 'promotion_code.created'
     | 'promotion_code.updated'
+    | 'quote.accept_failed'
     | 'quote.accepted'
+    | 'quote.accepting'
     | 'quote.canceled'
     | 'quote.created'
+    | 'quote.draft'
     | 'quote.finalized'
+    | 'quote.reestimate_failed'
+    | 'quote.reestimated'
+    | 'quote.stale'
     | 'radar.early_fraud_warning.created'
     | 'radar.early_fraud_warning.updated'
     | 'refund.created'
@@ -319,8 +373,10 @@ export namespace Event {
     | 'subscription_schedule.completed'
     | 'subscription_schedule.created'
     | 'subscription_schedule.expiring'
+    | 'subscription_schedule.price_migration_failed'
     | 'subscription_schedule.released'
     | 'subscription_schedule.updated'
+    | 'tax.form.updated'
     | 'tax.settings.updated'
     | 'tax_rate.created'
     | 'tax_rate.updated'
@@ -370,6 +426,8 @@ export namespace Event {
     | 'treasury.received_credit.failed'
     | 'treasury.received_credit.succeeded'
     | 'treasury.received_debit.created'
+    | 'invoice_payment.detached'
+    | 'billing.alert.recovered'
     | 'billing.credit_balance_transaction.created'
     | 'billing.credit_grant.updated'
     | 'billing.meter.created'
@@ -381,6 +439,48 @@ export namespace Event {
     export interface Object {}
 
     export interface PreviousAttributes {}
+  }
+
+  export namespace Reason {
+    export interface AutomationAction {
+      stripe_send_webhook_custom_event?: AutomationAction.StripeSendWebhookCustomEvent;
+
+      /**
+       * The trigger name of the automation that triggered this action.
+       *  Please visit [Revenue and retention automations](https://docs.stripe.com/billing/automations#choose-a-trigger) for all possible trigger names.
+       */
+      trigger: string;
+
+      /**
+       * The type of the `automation_action`.
+       */
+      type: 'stripe_send_webhook_custom_event';
+    }
+
+    export interface Request {
+      /**
+       * ID of the API request that caused the event. If null, the event was automatic (e.g., Stripe's automatic subscription handling). Request logs are available in the [dashboard](https://dashboard.stripe.com/logs), but currently not in the API.
+       */
+      id: string | null;
+
+      /**
+       * The idempotency key transmitted during the request, if any. *Note: This property is populated only for events on or after May 23, 2017*.
+       */
+      idempotency_key: string | null;
+    }
+
+    export type Type = 'automation_action' | 'request';
+
+    export namespace AutomationAction {
+      export interface StripeSendWebhookCustomEvent {
+        /**
+         * Set of key-value pairs attached to the action when creating an Automation.
+         */
+        custom_data: {
+          [key: string]: string;
+        } | null;
+      }
+    }
   }
 }
 export interface EventRetrieveParams {
@@ -417,12 +517,14 @@ export interface EventListParams extends PaginationParams {
 }
 import {Billing} from './Billing/index.js';
 import {BillingPortal} from './BillingPortal/index.js';
+import {Capital} from './Capital/index.js';
 import {Checkout} from './Checkout/index.js';
 import {Climate} from './Climate/index.js';
 import {Entitlements} from './Entitlements/index.js';
 import {FinancialConnections} from './FinancialConnections/index.js';
 import {Identity} from './Identity/index.js';
 import {Issuing} from './Issuing/index.js';
+import {Privacy} from './Privacy/index.js';
 import {Radar} from './Radar/index.js';
 import {Reporting} from './Reporting/index.js';
 import {Reserve} from './Reserve/index.js';
@@ -434,6 +536,7 @@ import {Treasury} from './Treasury/index.js';
 import {Application} from './Applications.js';
 import {ExternalAccount} from './ExternalAccounts.js';
 import {Account} from './Accounts.js';
+import {AccountNotice} from './AccountNotices.js';
 import {ApplicationFee} from './ApplicationFees.js';
 import {FeeRefund} from './FeeRefunds.js';
 import {Balance} from './Balance.js';
@@ -452,6 +555,7 @@ import {Subscription} from './Subscriptions.js';
 import {TaxId} from './TaxIds.js';
 import {CustomerCashBalanceTransaction} from './CustomerCashBalanceTransactions.js';
 import {File} from './Files.js';
+import {FxQuote} from './FxQuotes.js';
 import {Invoice} from './Invoices.js';
 import {InvoicePayment} from './InvoicePayments.js';
 import {InvoiceItem} from './InvoiceItems.js';
@@ -482,11 +586,14 @@ export type Event =
   | AccountExternalAccountDeletedEvent
   | AccountExternalAccountUpdatedEvent
   | AccountUpdatedEvent
+  | AccountNoticeCreatedEvent
+  | AccountNoticeUpdatedEvent
   | ApplicationFeeCreatedEvent
   | ApplicationFeeRefundUpdatedEvent
   | ApplicationFeeRefundedEvent
   | BalanceAvailableEvent
   | BalanceSettingsUpdatedEvent
+  | BillingAlertRecoveredEvent
   | BillingAlertTriggeredEvent
   | BillingCreditBalanceTransactionCreatedEvent
   | BillingCreditGrantCreatedEvent
@@ -499,6 +606,15 @@ export type Event =
   | BillingPortalConfigurationUpdatedEvent
   | BillingPortalSessionCreatedEvent
   | CapabilityUpdatedEvent
+  | CapitalFinancingOfferAcceptedEvent
+  | CapitalFinancingOfferCanceledEvent
+  | CapitalFinancingOfferCreatedEvent
+  | CapitalFinancingOfferExpiredEvent
+  | CapitalFinancingOfferFullyRepaidEvent
+  | CapitalFinancingOfferPaidOutEvent
+  | CapitalFinancingOfferRejectedEvent
+  | CapitalFinancingOfferReplacementCreatedEvent
+  | CapitalFinancingTransactionCreatedEvent
   | CashBalanceFundsAvailableEvent
   | ChargeCapturedEvent
   | ChargeDisputeClosedEvent
@@ -539,11 +655,15 @@ export type Event =
   | CustomerSourceDeletedEvent
   | CustomerSourceExpiringEvent
   | CustomerSourceUpdatedEvent
+  | CustomerSubscriptionCollectionPausedEvent
+  | CustomerSubscriptionCollectionResumedEvent
   | CustomerSubscriptionCreatedEvent
+  | CustomerSubscriptionCustomEventEvent
   | CustomerSubscriptionDeletedEvent
   | CustomerSubscriptionPausedEvent
   | CustomerSubscriptionPendingUpdateAppliedEvent
   | CustomerSubscriptionPendingUpdateExpiredEvent
+  | CustomerSubscriptionPriceMigrationFailedEvent
   | CustomerSubscriptionResumedEvent
   | CustomerSubscriptionTrialWillEndEvent
   | CustomerSubscriptionUpdatedEvent
@@ -560,9 +680,12 @@ export type Event =
   | FinancialConnectionsAccountDisconnectedEvent
   | FinancialConnectionsAccountReactivatedEvent
   | FinancialConnectionsAccountRefreshedBalanceEvent
+  | FinancialConnectionsAccountRefreshedInferredBalancesEvent
   | FinancialConnectionsAccountRefreshedOwnershipEvent
   | FinancialConnectionsAccountRefreshedTransactionsEvent
   | FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent
+  | FinancialConnectionsSessionUpdatedEvent
+  | FxQuoteExpiredEvent
   | IdentityVerificationSessionCanceledEvent
   | IdentityVerificationSessionCreatedEvent
   | IdentityVerificationSessionProcessingEvent
@@ -577,6 +700,7 @@ export type Event =
   | InvoiceOverdueEvent
   | InvoiceOverpaidEvent
   | InvoicePaidEvent
+  | InvoicePaymentOverpaidEvent
   | InvoicePaymentActionRequiredEvent
   | InvoicePaymentAttemptRequiredEvent
   | InvoicePaymentFailedEvent
@@ -586,6 +710,7 @@ export type Event =
   | InvoiceUpdatedEvent
   | InvoiceVoidedEvent
   | InvoiceWillBeDueEvent
+  | InvoicePaymentDetachedEvent
   | InvoicePaymentPaidEvent
   | InvoiceItemCreatedEvent
   | InvoiceItemDeletedEvent
@@ -602,10 +727,15 @@ export type Event =
   | IssuingDisputeFundsRescindedEvent
   | IssuingDisputeSubmittedEvent
   | IssuingDisputeUpdatedEvent
+  | IssuingDisputeSettlementDetailCreatedEvent
+  | IssuingDisputeSettlementDetailUpdatedEvent
+  | IssuingFraudLiabilityDebitCreatedEvent
   | IssuingPersonalizationDesignActivatedEvent
   | IssuingPersonalizationDesignDeactivatedEvent
   | IssuingPersonalizationDesignRejectedEvent
   | IssuingPersonalizationDesignUpdatedEvent
+  | IssuingSettlementCreatedEvent
+  | IssuingSettlementUpdatedEvent
   | IssuingTokenCreatedEvent
   | IssuingTokenUpdatedEvent
   | IssuingTransactionCreatedEvent
@@ -641,15 +771,26 @@ export type Event =
   | PriceCreatedEvent
   | PriceDeletedEvent
   | PriceUpdatedEvent
+  | PrivacyRedactionJobCanceledEvent
+  | PrivacyRedactionJobCreatedEvent
+  | PrivacyRedactionJobReadyEvent
+  | PrivacyRedactionJobSucceededEvent
+  | PrivacyRedactionJobValidationErrorEvent
   | ProductCreatedEvent
   | ProductDeletedEvent
   | ProductUpdatedEvent
   | PromotionCodeCreatedEvent
   | PromotionCodeUpdatedEvent
+  | QuoteAcceptFailedEvent
   | QuoteAcceptedEvent
+  | QuoteAcceptingEvent
   | QuoteCanceledEvent
   | QuoteCreatedEvent
+  | QuoteDraftEvent
   | QuoteFinalizedEvent
+  | QuoteReestimateFailedEvent
+  | QuoteReestimatedEvent
+  | QuoteStaleEvent
   | RadarEarlyFraudWarningCreatedEvent
   | RadarEarlyFraudWarningUpdatedEvent
   | RefundCreatedEvent
@@ -685,8 +826,10 @@ export type Event =
   | SubscriptionScheduleCompletedEvent
   | SubscriptionScheduleCreatedEvent
   | SubscriptionScheduleExpiringEvent
+  | SubscriptionSchedulePriceMigrationFailedEvent
   | SubscriptionScheduleReleasedEvent
   | SubscriptionScheduleUpdatedEvent
+  | TaxFormUpdatedEvent
   | TaxSettingsUpdatedEvent
   | TaxRateCreatedEvent
   | TaxRateUpdatedEvent
@@ -834,6 +977,38 @@ export namespace AccountUpdatedEvent {
 }
 
 /**
+ * Occurs whenever an AccountNotice is created.
+ */
+export interface AccountNoticeCreatedEvent extends EventBase {
+  type: 'account_notice.created';
+  data: AccountNoticeCreatedEvent.Data;
+}
+
+export namespace AccountNoticeCreatedEvent {
+  export interface Data extends Event.Data {
+    object: AccountNotice;
+
+    previous_attributes?: Partial<AccountNotice>;
+  }
+}
+
+/**
+ * Occurs whenever an AccountNotice is updated.
+ */
+export interface AccountNoticeUpdatedEvent extends EventBase {
+  type: 'account_notice.updated';
+  data: AccountNoticeUpdatedEvent.Data;
+}
+
+export namespace AccountNoticeUpdatedEvent {
+  export interface Data extends Event.Data {
+    object: AccountNotice;
+
+    previous_attributes?: Partial<AccountNotice>;
+  }
+}
+
+/**
  * Occurs whenever an application fee is created on a charge.
  */
 export interface ApplicationFeeCreatedEvent extends EventBase {
@@ -910,6 +1085,22 @@ export namespace BalanceSettingsUpdatedEvent {
     object: BalanceSettings;
 
     previous_attributes?: Partial<BalanceSettings>;
+  }
+}
+
+/**
+ * Occurs whenever your custom alert threshold is recovered from a previous exceeded state.
+ */
+export interface BillingAlertRecoveredEvent extends EventBase {
+  type: 'billing.alert.recovered';
+  data: BillingAlertRecoveredEvent.Data;
+}
+
+export namespace BillingAlertRecoveredEvent {
+  export interface Data extends Event.Data {
+    object: Billing.AlertRecovered;
+
+    previous_attributes?: Partial<Billing.AlertRecovered>;
   }
 }
 
@@ -1102,6 +1293,151 @@ export namespace CapabilityUpdatedEvent {
     object: Capability;
 
     previous_attributes?: Partial<Capability>;
+  }
+}
+
+/**
+ * Occurs whenever a connected account accepts a financing offer.
+ */
+export interface CapitalFinancingOfferAcceptedEvent extends EventBase {
+  type: 'capital.financing_offer.accepted';
+  data: CapitalFinancingOfferAcceptedEvent.Data;
+}
+
+export namespace CapitalFinancingOfferAcceptedEvent {
+  export interface Data extends Event.Data {
+    object: Capital.FinancingOffer;
+
+    previous_attributes?: Partial<Capital.FinancingOffer>;
+  }
+}
+
+/**
+ * Occurs whenever a financing offer is canceled.
+ */
+export interface CapitalFinancingOfferCanceledEvent extends EventBase {
+  type: 'capital.financing_offer.canceled';
+  data: CapitalFinancingOfferCanceledEvent.Data;
+}
+
+export namespace CapitalFinancingOfferCanceledEvent {
+  export interface Data extends Event.Data {
+    object: Capital.FinancingOffer;
+
+    previous_attributes?: Partial<Capital.FinancingOffer>;
+  }
+}
+
+/**
+ * Occurs whenever a new financing offer is created for a connected account.
+ */
+export interface CapitalFinancingOfferCreatedEvent extends EventBase {
+  type: 'capital.financing_offer.created';
+  data: CapitalFinancingOfferCreatedEvent.Data;
+}
+
+export namespace CapitalFinancingOfferCreatedEvent {
+  export interface Data extends Event.Data {
+    object: Capital.FinancingOffer;
+
+    previous_attributes?: Partial<Capital.FinancingOffer>;
+  }
+}
+
+/**
+ * Occurs whenever a financing offer expires.
+ */
+export interface CapitalFinancingOfferExpiredEvent extends EventBase {
+  type: 'capital.financing_offer.expired';
+  data: CapitalFinancingOfferExpiredEvent.Data;
+}
+
+export namespace CapitalFinancingOfferExpiredEvent {
+  export interface Data extends Event.Data {
+    object: Capital.FinancingOffer;
+
+    previous_attributes?: Partial<Capital.FinancingOffer>;
+  }
+}
+
+/**
+ * Occurs whenever a financing offer is fully repaid.
+ */
+export interface CapitalFinancingOfferFullyRepaidEvent extends EventBase {
+  type: 'capital.financing_offer.fully_repaid';
+  data: CapitalFinancingOfferFullyRepaidEvent.Data;
+}
+
+export namespace CapitalFinancingOfferFullyRepaidEvent {
+  export interface Data extends Event.Data {
+    object: Capital.FinancingOffer;
+
+    previous_attributes?: Partial<Capital.FinancingOffer>;
+  }
+}
+
+/**
+ * Occurs whenever a financing offer is paid out.
+ */
+export interface CapitalFinancingOfferPaidOutEvent extends EventBase {
+  type: 'capital.financing_offer.paid_out';
+  data: CapitalFinancingOfferPaidOutEvent.Data;
+}
+
+export namespace CapitalFinancingOfferPaidOutEvent {
+  export interface Data extends Event.Data {
+    object: Capital.FinancingOffer;
+
+    previous_attributes?: Partial<Capital.FinancingOffer>;
+  }
+}
+
+/**
+ * Occurs whenever a financing offer is rejected.
+ */
+export interface CapitalFinancingOfferRejectedEvent extends EventBase {
+  type: 'capital.financing_offer.rejected';
+  data: CapitalFinancingOfferRejectedEvent.Data;
+}
+
+export namespace CapitalFinancingOfferRejectedEvent {
+  export interface Data extends Event.Data {
+    object: Capital.FinancingOffer;
+
+    previous_attributes?: Partial<Capital.FinancingOffer>;
+  }
+}
+
+/**
+ * Occurs whenever a replacement for a financing offer has been created. More details can be [found here](https://docs.stripe.com/capital/replacements).
+ */
+export interface CapitalFinancingOfferReplacementCreatedEvent
+  extends EventBase {
+  type: 'capital.financing_offer.replacement_created';
+  data: CapitalFinancingOfferReplacementCreatedEvent.Data;
+}
+
+export namespace CapitalFinancingOfferReplacementCreatedEvent {
+  export interface Data extends Event.Data {
+    object: Capital.FinancingOffer;
+
+    previous_attributes?: Partial<Capital.FinancingOffer>;
+  }
+}
+
+/**
+ * Occurs whenever a financing transaction is created.
+ */
+export interface CapitalFinancingTransactionCreatedEvent extends EventBase {
+  type: 'capital.financing_transaction.created';
+  data: CapitalFinancingTransactionCreatedEvent.Data;
+}
+
+export namespace CapitalFinancingTransactionCreatedEvent {
+  export interface Data extends Event.Data {
+    object: Capital.FinancingTransaction;
+
+    previous_attributes?: Partial<Capital.FinancingTransaction>;
   }
 }
 
@@ -1746,6 +2082,38 @@ export namespace CustomerSourceUpdatedEvent {
 }
 
 /**
+ * Occurs whenever collection is paused on a customer's subscription. Only applies when [payment collection](https://docs.stripe.com/billing/subscriptions/pause) is paused, not when subscriptions enter `status=paused`.
+ */
+export interface CustomerSubscriptionCollectionPausedEvent extends EventBase {
+  type: 'customer.subscription.collection_paused';
+  data: CustomerSubscriptionCollectionPausedEvent.Data;
+}
+
+export namespace CustomerSubscriptionCollectionPausedEvent {
+  export interface Data extends Event.Data {
+    object: Subscription;
+
+    previous_attributes?: Partial<Subscription>;
+  }
+}
+
+/**
+ * Occurs whenever collection is resumed on a customer's subscription that is currently paused. Only applies when [payment collection](https://docs.stripe.com/billing/subscriptions/pause) is resumed, not when subscriptions exit `status=paused`.
+ */
+export interface CustomerSubscriptionCollectionResumedEvent extends EventBase {
+  type: 'customer.subscription.collection_resumed';
+  data: CustomerSubscriptionCollectionResumedEvent.Data;
+}
+
+export namespace CustomerSubscriptionCollectionResumedEvent {
+  export interface Data extends Event.Data {
+    object: Subscription;
+
+    previous_attributes?: Partial<Subscription>;
+  }
+}
+
+/**
  * Occurs whenever a customer is signed up for a new plan.
  */
 export interface CustomerSubscriptionCreatedEvent extends EventBase {
@@ -1754,6 +2122,22 @@ export interface CustomerSubscriptionCreatedEvent extends EventBase {
 }
 
 export namespace CustomerSubscriptionCreatedEvent {
+  export interface Data extends Event.Data {
+    object: Subscription;
+
+    previous_attributes?: Partial<Subscription>;
+  }
+}
+
+/**
+ * An ad-hoc custom event that is sent based on user configured [Automation](https://docs.stripe.com/billing/automations#send-custom-webhook-event-action).
+ */
+export interface CustomerSubscriptionCustomEventEvent extends EventBase {
+  type: 'customer.subscription.custom_event';
+  data: CustomerSubscriptionCustomEventEvent.Data;
+}
+
+export namespace CustomerSubscriptionCustomEventEvent {
   export interface Data extends Event.Data {
     object: Subscription;
 
@@ -1820,6 +2204,23 @@ export interface CustomerSubscriptionPendingUpdateExpiredEvent
 }
 
 export namespace CustomerSubscriptionPendingUpdateExpiredEvent {
+  export interface Data extends Event.Data {
+    object: Subscription;
+
+    previous_attributes?: Partial<Subscription>;
+  }
+}
+
+/**
+ * Occurs whenever a price migration failed to transition prices on a subscription.
+ */
+export interface CustomerSubscriptionPriceMigrationFailedEvent
+  extends EventBase {
+  type: 'customer.subscription.price_migration_failed';
+  data: CustomerSubscriptionPriceMigrationFailedEvent.Data;
+}
+
+export namespace CustomerSubscriptionPriceMigrationFailedEvent {
   export interface Data extends Event.Data {
     object: Subscription;
 
@@ -2088,6 +2489,23 @@ export namespace FinancialConnectionsAccountRefreshedBalanceEvent {
 }
 
 /**
+ * Occurs when an Account’s `inferred_balances_refresh` status transitions from `pending` to either `succeeded` or `failed`.
+ */
+export interface FinancialConnectionsAccountRefreshedInferredBalancesEvent
+  extends EventBase {
+  type: 'financial_connections.account.refreshed_inferred_balances';
+  data: FinancialConnectionsAccountRefreshedInferredBalancesEvent.Data;
+}
+
+export namespace FinancialConnectionsAccountRefreshedInferredBalancesEvent {
+  export interface Data extends Event.Data {
+    object: FinancialConnections.Account;
+
+    previous_attributes?: Partial<FinancialConnections.Account>;
+  }
+}
+
+/**
  * Occurs when an Account’s `ownership_refresh` status transitions from `pending` to either `succeeded` or `failed`.
  */
 export interface FinancialConnectionsAccountRefreshedOwnershipEvent
@@ -2135,6 +2553,38 @@ export namespace FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent {
     object: FinancialConnections.Account;
 
     previous_attributes?: Partial<FinancialConnections.Account>;
+  }
+}
+
+/**
+ * Occurs when a Financial Connections Session `status` transitions from `pending` to `failed`, `cancelled`, or `completed`.
+ */
+export interface FinancialConnectionsSessionUpdatedEvent extends EventBase {
+  type: 'financial_connections.session.updated';
+  data: FinancialConnectionsSessionUpdatedEvent.Data;
+}
+
+export namespace FinancialConnectionsSessionUpdatedEvent {
+  export interface Data extends Event.Data {
+    object: FinancialConnections.Session;
+
+    previous_attributes?: Partial<FinancialConnections.Session>;
+  }
+}
+
+/**
+ * Occurs when FX Quote's lock_status field transitions to 'Expired'.
+ */
+export interface FxQuoteExpiredEvent extends EventBase {
+  type: 'fx_quote.expired';
+  data: FxQuoteExpiredEvent.Data;
+}
+
+export namespace FxQuoteExpiredEvent {
+  export interface Data extends Event.Data {
+    object: FxQuote;
+
+    previous_attributes?: Partial<FxQuote>;
   }
 }
 
@@ -2364,6 +2814,22 @@ export namespace InvoicePaidEvent {
 }
 
 /**
+ * Occurs when an InvoicePayment transitions to paid with a non-zero amount_overpaid.
+ */
+export interface InvoicePaymentOverpaidEvent extends EventBase {
+  type: 'invoice.payment.overpaid';
+  data: InvoicePaymentOverpaidEvent.Data;
+}
+
+export namespace InvoicePaymentOverpaidEvent {
+  export interface Data extends Event.Data {
+    object: InvoicePayment;
+
+    previous_attributes?: Partial<InvoicePayment>;
+  }
+}
+
+/**
  * Occurs whenever an invoice payment attempt requires further user action to complete.
  */
 export interface InvoicePaymentActionRequiredEvent extends EventBase {
@@ -2504,6 +2970,22 @@ export namespace InvoiceWillBeDueEvent {
     object: Invoice;
 
     previous_attributes?: Partial<Invoice>;
+  }
+}
+
+/**
+ * Occurs when an InvoicePayment is detached from an invoice.
+ */
+export interface InvoicePaymentDetachedEvent extends EventBase {
+  type: 'invoice_payment.detached';
+  data: InvoicePaymentDetachedEvent.Data;
+}
+
+export namespace InvoicePaymentDetachedEvent {
+  export interface Data extends Event.Data {
+    object: InvoicePayment;
+
+    previous_attributes?: Partial<InvoicePayment>;
   }
 }
 
@@ -2764,6 +3246,54 @@ export namespace IssuingDisputeUpdatedEvent {
 }
 
 /**
+ * Emitted when the DisputeSettlementDetail object is created
+ */
+export interface IssuingDisputeSettlementDetailCreatedEvent extends EventBase {
+  type: 'issuing_dispute_settlement_detail.created';
+  data: IssuingDisputeSettlementDetailCreatedEvent.Data;
+}
+
+export namespace IssuingDisputeSettlementDetailCreatedEvent {
+  export interface Data extends Event.Data {
+    object: Issuing.DisputeSettlementDetail;
+
+    previous_attributes?: Partial<Issuing.DisputeSettlementDetail>;
+  }
+}
+
+/**
+ * Emitted when the DisputeSettlementDetail object is updated
+ */
+export interface IssuingDisputeSettlementDetailUpdatedEvent extends EventBase {
+  type: 'issuing_dispute_settlement_detail.updated';
+  data: IssuingDisputeSettlementDetailUpdatedEvent.Data;
+}
+
+export namespace IssuingDisputeSettlementDetailUpdatedEvent {
+  export interface Data extends Event.Data {
+    object: Issuing.DisputeSettlementDetail;
+
+    previous_attributes?: Partial<Issuing.DisputeSettlementDetail>;
+  }
+}
+
+/**
+ * Occurs whenever funds are deducted from your account for fraud dispute loss liability.
+ */
+export interface IssuingFraudLiabilityDebitCreatedEvent extends EventBase {
+  type: 'issuing_fraud_liability_debit.created';
+  data: IssuingFraudLiabilityDebitCreatedEvent.Data;
+}
+
+export namespace IssuingFraudLiabilityDebitCreatedEvent {
+  export interface Data extends Event.Data {
+    object: Issuing.FraudLiabilityDebit;
+
+    previous_attributes?: Partial<Issuing.FraudLiabilityDebit>;
+  }
+}
+
+/**
  * Occurs whenever a personalization design is activated following the activation of the physical bundle that belongs to it.
  */
 export interface IssuingPersonalizationDesignActivatedEvent extends EventBase {
@@ -2825,6 +3355,38 @@ export namespace IssuingPersonalizationDesignUpdatedEvent {
     object: Issuing.PersonalizationDesign;
 
     previous_attributes?: Partial<Issuing.PersonalizationDesign>;
+  }
+}
+
+/**
+ * Occurs whenever an issuing settlement is created.
+ */
+export interface IssuingSettlementCreatedEvent extends EventBase {
+  type: 'issuing_settlement.created';
+  data: IssuingSettlementCreatedEvent.Data;
+}
+
+export namespace IssuingSettlementCreatedEvent {
+  export interface Data extends Event.Data {
+    object: Issuing.Settlement;
+
+    previous_attributes?: Partial<Issuing.Settlement>;
+  }
+}
+
+/**
+ * Occurs whenever an issuing settlement is updated.
+ */
+export interface IssuingSettlementUpdatedEvent extends EventBase {
+  type: 'issuing_settlement.updated';
+  data: IssuingSettlementUpdatedEvent.Data;
+}
+
+export namespace IssuingSettlementUpdatedEvent {
+  export interface Data extends Event.Data {
+    object: Issuing.Settlement;
+
+    previous_attributes?: Partial<Issuing.Settlement>;
   }
 }
 
@@ -3390,6 +3952,86 @@ export namespace PriceUpdatedEvent {
 }
 
 /**
+ * Occurs whenever a redaction job is canceled.
+ */
+export interface PrivacyRedactionJobCanceledEvent extends EventBase {
+  type: 'privacy.redaction_job.canceled';
+  data: PrivacyRedactionJobCanceledEvent.Data;
+}
+
+export namespace PrivacyRedactionJobCanceledEvent {
+  export interface Data extends Event.Data {
+    object: Privacy.RedactionJob;
+
+    previous_attributes?: Partial<Privacy.RedactionJob>;
+  }
+}
+
+/**
+ * Occurs whenever a redaction job is created.
+ */
+export interface PrivacyRedactionJobCreatedEvent extends EventBase {
+  type: 'privacy.redaction_job.created';
+  data: PrivacyRedactionJobCreatedEvent.Data;
+}
+
+export namespace PrivacyRedactionJobCreatedEvent {
+  export interface Data extends Event.Data {
+    object: Privacy.RedactionJob;
+
+    previous_attributes?: Partial<Privacy.RedactionJob>;
+  }
+}
+
+/**
+ * Occurs whenever a redaction job has been successfully validated and is ready to run.
+ */
+export interface PrivacyRedactionJobReadyEvent extends EventBase {
+  type: 'privacy.redaction_job.ready';
+  data: PrivacyRedactionJobReadyEvent.Data;
+}
+
+export namespace PrivacyRedactionJobReadyEvent {
+  export interface Data extends Event.Data {
+    object: Privacy.RedactionJob;
+
+    previous_attributes?: Partial<Privacy.RedactionJob>;
+  }
+}
+
+/**
+ * Occurs whenever a redaction job finishes running.
+ */
+export interface PrivacyRedactionJobSucceededEvent extends EventBase {
+  type: 'privacy.redaction_job.succeeded';
+  data: PrivacyRedactionJobSucceededEvent.Data;
+}
+
+export namespace PrivacyRedactionJobSucceededEvent {
+  export interface Data extends Event.Data {
+    object: Privacy.RedactionJob;
+
+    previous_attributes?: Partial<Privacy.RedactionJob>;
+  }
+}
+
+/**
+ * Occurs whenever a redaction job fails validation.
+ */
+export interface PrivacyRedactionJobValidationErrorEvent extends EventBase {
+  type: 'privacy.redaction_job.validation_error';
+  data: PrivacyRedactionJobValidationErrorEvent.Data;
+}
+
+export namespace PrivacyRedactionJobValidationErrorEvent {
+  export interface Data extends Event.Data {
+    object: Privacy.RedactionJob;
+
+    previous_attributes?: Partial<Privacy.RedactionJob>;
+  }
+}
+
+/**
  * Occurs whenever a product is created.
  */
 export interface ProductCreatedEvent extends EventBase {
@@ -3470,6 +4112,22 @@ export namespace PromotionCodeUpdatedEvent {
 }
 
 /**
+ * Occurs whenever a quote acceptance fails
+ */
+export interface QuoteAcceptFailedEvent extends EventBase {
+  type: 'quote.accept_failed';
+  data: QuoteAcceptFailedEvent.Data;
+}
+
+export namespace QuoteAcceptFailedEvent {
+  export interface Data extends Event.Data {
+    object: Quote;
+
+    previous_attributes?: Partial<Quote>;
+  }
+}
+
+/**
  * Occurs whenever a quote is accepted.
  */
 export interface QuoteAcceptedEvent extends EventBase {
@@ -3478,6 +4136,22 @@ export interface QuoteAcceptedEvent extends EventBase {
 }
 
 export namespace QuoteAcceptedEvent {
+  export interface Data extends Event.Data {
+    object: Quote;
+
+    previous_attributes?: Partial<Quote>;
+  }
+}
+
+/**
+ * Occurs whenever a quote's status changes to accepting
+ */
+export interface QuoteAcceptingEvent extends EventBase {
+  type: 'quote.accepting';
+  data: QuoteAcceptingEvent.Data;
+}
+
+export namespace QuoteAcceptingEvent {
   export interface Data extends Event.Data {
     object: Quote;
 
@@ -3518,6 +4192,22 @@ export namespace QuoteCreatedEvent {
 }
 
 /**
+ * Occurs when a quote's status changes from stale to draft
+ */
+export interface QuoteDraftEvent extends EventBase {
+  type: 'quote.draft';
+  data: QuoteDraftEvent.Data;
+}
+
+export namespace QuoteDraftEvent {
+  export interface Data extends Event.Data {
+    object: Quote;
+
+    previous_attributes?: Partial<Quote>;
+  }
+}
+
+/**
  * Occurs whenever a quote is finalized.
  */
 export interface QuoteFinalizedEvent extends EventBase {
@@ -3526,6 +4216,54 @@ export interface QuoteFinalizedEvent extends EventBase {
 }
 
 export namespace QuoteFinalizedEvent {
+  export interface Data extends Event.Data {
+    object: Quote;
+
+    previous_attributes?: Partial<Quote>;
+  }
+}
+
+/**
+ * Occurs whenever a quote reestimate fails
+ */
+export interface QuoteReestimateFailedEvent extends EventBase {
+  type: 'quote.reestimate_failed';
+  data: QuoteReestimateFailedEvent.Data;
+}
+
+export namespace QuoteReestimateFailedEvent {
+  export interface Data extends Event.Data {
+    object: Quote;
+
+    previous_attributes?: Partial<Quote>;
+  }
+}
+
+/**
+ * Occurs whenever an async job to compute preview subscription schedules/upcoming invoices for the quote has completed.
+ */
+export interface QuoteReestimatedEvent extends EventBase {
+  type: 'quote.reestimated';
+  data: QuoteReestimatedEvent.Data;
+}
+
+export namespace QuoteReestimatedEvent {
+  export interface Data extends Event.Data {
+    object: Quote;
+
+    previous_attributes?: Partial<Quote>;
+  }
+}
+
+/**
+ * Occurs whenever a quote's status changes to stale
+ */
+export interface QuoteStaleEvent extends EventBase {
+  type: 'quote.stale';
+  data: QuoteStaleEvent.Data;
+}
+
+export namespace QuoteStaleEvent {
   export interface Data extends Event.Data {
     object: Quote;
 
@@ -4094,6 +4832,23 @@ export namespace SubscriptionScheduleExpiringEvent {
 }
 
 /**
+ * Occurs whenever a price migration failed to transition prices on a subscription schedule.
+ */
+export interface SubscriptionSchedulePriceMigrationFailedEvent
+  extends EventBase {
+  type: 'subscription_schedule.price_migration_failed';
+  data: SubscriptionSchedulePriceMigrationFailedEvent.Data;
+}
+
+export namespace SubscriptionSchedulePriceMigrationFailedEvent {
+  export interface Data extends Event.Data {
+    object: SubscriptionSchedule;
+
+    previous_attributes?: Partial<SubscriptionSchedule>;
+  }
+}
+
+/**
  * Occurs whenever a new subscription schedule is released.
  */
 export interface SubscriptionScheduleReleasedEvent extends EventBase {
@@ -4122,6 +4877,22 @@ export namespace SubscriptionScheduleUpdatedEvent {
     object: SubscriptionSchedule;
 
     previous_attributes?: Partial<SubscriptionSchedule>;
+  }
+}
+
+/**
+ * Occurs when a tax form is updated.
+ */
+export interface TaxFormUpdatedEvent extends EventBase {
+  type: 'tax.form.updated';
+  data: TaxFormUpdatedEvent.Data;
+}
+
+export namespace TaxFormUpdatedEvent {
+  export interface Data extends Event.Data {
+    object: Tax.Form;
+
+    previous_attributes?: Partial<Tax.Form>;
   }
 }
 

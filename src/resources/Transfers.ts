@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {TransferReversal} from './TransferReversals.js';
+import {ApplicationFee} from './ApplicationFees.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
 import {Account} from './Accounts.js';
 import {Charge} from './Charges.js';
@@ -14,6 +15,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class TransferResource extends StripeResource {
   /**
    * Returns a list of existing transfers sent to connected accounts. The transfers are returned in sorted order, with the most recently created transfers appearing first.
@@ -186,6 +188,10 @@ export interface Transfer {
    */
   amount_reversed: number;
 
+  application_fee?: string | ApplicationFee | null;
+
+  application_fee_amount?: number | null;
+
   /**
    * Balance transaction that describes the impact of this transfer on your account balance.
    */
@@ -215,6 +221,11 @@ export interface Transfer {
    * If the destination is a Stripe account, this will be the ID of the payment that the destination account received for the transfer.
    */
   destination_payment?: string | Charge;
+
+  /**
+   * The FX Quote used for the transfer.
+   */
+  fx_quote?: string;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -267,6 +278,8 @@ export interface TransferCreateParams {
    */
   amount?: number;
 
+  application_fee_amount?: number;
+
   /**
    * An arbitrary string attached to the object. Often useful for displaying to users.
    */
@@ -276,6 +289,11 @@ export interface TransferCreateParams {
    * Specifies which fields in the response should be expanded.
    */
   expand?: Array<string>;
+
+  /**
+   * The FX rate in the quote is validated and used to convert the transfer amount to the destination currency.
+   */
+  fx_quote?: string;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.

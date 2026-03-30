@@ -4,6 +4,7 @@ import {StripeResource} from '../../StripeResource.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class TestClockResource extends StripeResource {
   /**
    * Deletes a test clock.

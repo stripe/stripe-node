@@ -73,6 +73,8 @@ import {
   AccountRetrieveCapabilityParams,
   AccountRetrieveExternalAccountParams,
   AccountRetrievePersonParams,
+  AccountRetrieveSignalsParams,
+  AccountSerializeBatchUpdateParams,
   AccountUpdateCapabilityParams,
   AccountUpdateExternalAccountParams,
   AccountUpdatePersonParams,
@@ -83,6 +85,13 @@ import {
   AccountLinkCreateParams,
   AccountLinkResource,
 } from './resources/AccountLinks.js';
+import {
+  AccountNotice,
+  AccountNoticeRetrieveParams,
+  AccountNoticeUpdateParams,
+  AccountNoticeListParams,
+  AccountNoticeResource,
+} from './resources/AccountNotices.js';
 import {
   AccountSession,
   AccountSessionCreateParams,
@@ -125,6 +134,11 @@ import {
   BalanceTransactionResource,
 } from './resources/BalanceTransactions.js';
 import {
+  BalanceTransfer,
+  BalanceTransferCreateParams,
+  BalanceTransferResource,
+} from './resources/BalanceTransfers.js';
+import {
   Charge,
   ChargeCreateParams,
   ChargeRetrieveParams,
@@ -164,6 +178,7 @@ import {
   CreditNoteListLineItemsParams,
   CreditNoteListPreviewLineItemsParams,
   CreditNotePreviewParams,
+  CreditNoteSerializeBatchCreateParams,
   CreditNoteVoidCreditNoteParams,
   CreditNoteResource,
 } from './resources/CreditNotes.js';
@@ -194,6 +209,7 @@ import {
   CustomerRetrieveSourceParams,
   CustomerRetrieveTaxIdParams,
   CustomerSearchParams,
+  CustomerSerializeBatchUpdateParams,
   CustomerUpdateBalanceTransactionParams,
   CustomerUpdateCashBalanceParams,
   CustomerUpdateSourceParams,
@@ -226,6 +242,16 @@ import {
   ExchangeRateResource,
 } from './resources/ExchangeRates.js';
 import {
+  ExternalAccount,
+  DeletedExternalAccount,
+  ExternalAccountCreateParams,
+  ExternalAccountRetrieveParams,
+  ExternalAccountUpdateParams,
+  ExternalAccountListParams,
+  ExternalAccountDeleteParams,
+  ExternalAccountResource,
+} from './resources/ExternalAccounts.js';
+import {
   File,
   FileCreateParams,
   FileRetrieveParams,
@@ -241,6 +267,21 @@ import {
   FileLinkResource,
 } from './resources/FileLinks.js';
 import {
+  FrMealVouchersOnboarding,
+  FrMealVouchersOnboardingCreateParams,
+  FrMealVouchersOnboardingRetrieveParams,
+  FrMealVouchersOnboardingUpdateParams,
+  FrMealVouchersOnboardingListParams,
+  FrMealVouchersOnboardingResource,
+} from './resources/FrMealVouchersOnboardings.js';
+import {
+  FxQuote,
+  FxQuoteCreateParams,
+  FxQuoteRetrieveParams,
+  FxQuoteListParams,
+  FxQuoteResource,
+} from './resources/FxQuotes.js';
+import {
   Invoice,
   DeletedInvoice,
   InvoiceCreateParams,
@@ -251,6 +292,7 @@ import {
   InvoiceAddLinesParams,
   InvoiceAttachPaymentParams,
   InvoiceCreatePreviewParams,
+  InvoiceDetachPaymentParams,
   InvoiceFinalizeInvoiceParams,
   InvoiceListLineItemsParams,
   InvoiceMarkUncollectibleParams,
@@ -258,6 +300,8 @@ import {
   InvoiceRemoveLinesParams,
   InvoiceSearchParams,
   InvoiceSendInvoiceParams,
+  InvoiceSerializeBatchPayParams,
+  InvoiceSerializeBatchUpdateParams,
   InvoiceUpdateLinesParams,
   InvoiceUpdateLineItemParams,
   InvoiceVoidInvoiceParams,
@@ -290,12 +334,36 @@ import {
 import {
   Mandate,
   MandateRetrieveParams,
+  MandateListParams,
   MandateResource,
 } from './resources/Mandates.js';
+import {
+  Margin,
+  MarginCreateParams,
+  MarginRetrieveParams,
+  MarginUpdateParams,
+  MarginListParams,
+  MarginResource,
+} from './resources/Margins.js';
+import {
+  Order,
+  OrderCreateParams,
+  OrderRetrieveParams,
+  OrderUpdateParams,
+  OrderListParams,
+  OrderSubmitParams,
+  OrderResource,
+} from './resources/Orders.js';
 import {
   PaymentAttemptRecord,
   PaymentAttemptRecordRetrieveParams,
   PaymentAttemptRecordListParams,
+  PaymentAttemptRecordReportAuthenticatedParams,
+  PaymentAttemptRecordReportCanceledParams,
+  PaymentAttemptRecordReportFailedParams,
+  PaymentAttemptRecordReportGuaranteedParams,
+  PaymentAttemptRecordReportInformationalParams,
+  PaymentAttemptRecordReportRefundParams,
   PaymentAttemptRecordResource,
 } from './resources/PaymentAttemptRecords.js';
 import {
@@ -308,9 +376,12 @@ import {
   PaymentIntentCancelParams,
   PaymentIntentCaptureParams,
   PaymentIntentConfirmParams,
+  PaymentIntentDecrementAuthorizationParams,
   PaymentIntentIncrementAuthorizationParams,
   PaymentIntentListAmountDetailsLineItemsParams,
+  PaymentIntentReauthorizeParams,
   PaymentIntentSearchParams,
+  PaymentIntentTriggerActionParams,
   PaymentIntentVerifyMicrodepositsParams,
   PaymentIntentResource,
 } from './resources/PaymentIntents.js';
@@ -330,6 +401,7 @@ import {
   PaymentMethodUpdateParams,
   PaymentMethodListParams,
   PaymentMethodAttachParams,
+  PaymentMethodCheckBalanceParams,
   PaymentMethodDetachParams,
   PaymentMethodResource,
 } from './resources/PaymentMethods.js';
@@ -413,6 +485,8 @@ import {
   PromotionCodeRetrieveParams,
   PromotionCodeUpdateParams,
   PromotionCodeListParams,
+  PromotionCodeSerializeBatchCreateParams,
+  PromotionCodeSerializeBatchUpdateParams,
   PromotionCodeResource,
 } from './resources/PromotionCodes.js';
 import {
@@ -424,9 +498,16 @@ import {
   QuoteAcceptParams,
   QuoteCancelParams,
   QuoteFinalizeQuoteParams,
+  QuoteListPreviewInvoiceLinesParams,
   QuoteListComputedUpfrontLineItemsParams,
   QuoteListLineItemsParams,
+  QuoteListLinesParams,
+  QuoteListPreviewInvoicesParams,
+  QuoteListPreviewSubscriptionSchedulesParams,
+  QuoteMarkDraftParams,
+  QuoteMarkStaleParams,
   QuotePdfParams,
+  QuoteReestimateParams,
   QuoteResource,
 } from './resources/Quotes.js';
 import {
@@ -484,11 +565,15 @@ import {
   SubscriptionRetrieveParams,
   SubscriptionUpdateParams,
   SubscriptionListParams,
+  SubscriptionAttachCadenceParams,
   SubscriptionCancelParams,
   SubscriptionDeleteDiscountParams,
   SubscriptionMigrateParams,
+  SubscriptionPauseParams,
   SubscriptionResumeParams,
   SubscriptionSearchParams,
+  SubscriptionSerializeBatchMigrateParams,
+  SubscriptionSerializeBatchUpdateParams,
   SubscriptionResource,
 } from './resources/Subscriptions.js';
 import {
@@ -507,8 +592,12 @@ import {
   SubscriptionScheduleRetrieveParams,
   SubscriptionScheduleUpdateParams,
   SubscriptionScheduleListParams,
+  SubscriptionScheduleAmendParams,
   SubscriptionScheduleCancelParams,
   SubscriptionScheduleReleaseParams,
+  SubscriptionScheduleSerializeBatchCancelParams,
+  SubscriptionScheduleSerializeBatchCreateParams,
+  SubscriptionScheduleSerializeBatchUpdateParams,
   SubscriptionScheduleResource,
 } from './resources/SubscriptionSchedules.js';
 import {
@@ -579,15 +668,17 @@ import {ConnectCollectionTransfer} from './resources/ConnectCollectionTransfers.
 import {Discount, DeletedDiscount} from './resources/Discounts.js';
 import {FundingInstructions} from './resources/FundingInstructions.js';
 import {LineItem} from './resources/LineItems.js';
+import {PaymentMethodBalance} from './resources/PaymentMethodBalances.js';
+import {Profile} from './resources/Profiles.js';
+import {QuoteLine} from './resources/QuoteLines.js';
 import {ReserveTransaction} from './resources/ReserveTransactions.js';
+import {RiskSignals} from './resources/RiskSignals.js';
 import {SourceMandateNotification} from './resources/SourceMandateNotifications.js';
 import {SourceTransaction} from './resources/SourceTransactions.js';
 import {TaxDeductedAtSource} from './resources/TaxDeductedAtSources.js';
+import {TransitBalance} from './resources/TransitBalances.js';
+import {AccountSignals} from './resources/AccountSignals.js';
 import {Capability} from './resources/Capabilities.js';
-import {
-  ExternalAccount,
-  DeletedExternalAccount,
-} from './resources/ExternalAccounts.js';
 import {LoginLink} from './resources/LoginLinks.js';
 import {Person, DeletedPerson} from './resources/Persons.js';
 import {FeeRefund} from './resources/FeeRefunds.js';
@@ -605,19 +696,28 @@ import {
   ProductFeature,
   DeletedProductFeature,
 } from './resources/ProductFeatures.js';
+import {QuotePreviewInvoice} from './resources/QuotePreviewInvoices.js';
+import {QuotePreviewSubscriptionSchedule} from './resources/QuotePreviewSubscriptionSchedules.js';
 import {TransferReversal} from './resources/TransferReversals.js';
 import {Apps} from './resources/Apps/index.js';
 import {Billing} from './resources/Billing/index.js';
 import {BillingPortal} from './resources/BillingPortal/index.js';
+import {Capital} from './resources/Capital/index.js';
 import {Checkout} from './resources/Checkout/index.js';
 import {Climate} from './resources/Climate/index.js';
+import {DelegatedCheckout} from './resources/DelegatedCheckout/index.js';
 import {Entitlements} from './resources/Entitlements/index.js';
 import {FinancialConnections} from './resources/FinancialConnections/index.js';
 import {Forwarding} from './resources/Forwarding/index.js';
 import {Identity} from './resources/Identity/index.js';
 import {Issuing} from './resources/Issuing/index.js';
+import {Orchestration} from './resources/Orchestration/index.js';
+import {Privacy} from './resources/Privacy/index.js';
+import {ProductCatalog} from './resources/ProductCatalog/index.js';
 import {Radar} from './resources/Radar/index.js';
 import {Reporting} from './resources/Reporting/index.js';
+import {Reserve} from './resources/Reserve/index.js';
+import {SharedPayment} from './resources/SharedPayment/index.js';
 import {Sigma} from './resources/Sigma/index.js';
 import {Tax} from './resources/Tax/index.js';
 import {Terminal} from './resources/Terminal/index.js';
@@ -633,11 +733,14 @@ import {
   AccountExternalAccountDeletedEvent,
   AccountExternalAccountUpdatedEvent,
   AccountUpdatedEvent,
+  AccountNoticeCreatedEvent,
+  AccountNoticeUpdatedEvent,
   ApplicationFeeCreatedEvent,
   ApplicationFeeRefundUpdatedEvent,
   ApplicationFeeRefundedEvent,
   BalanceAvailableEvent,
   BalanceSettingsUpdatedEvent,
+  BillingAlertRecoveredEvent,
   BillingAlertTriggeredEvent,
   BillingCreditBalanceTransactionCreatedEvent,
   BillingCreditGrantCreatedEvent,
@@ -650,6 +753,15 @@ import {
   BillingPortalConfigurationUpdatedEvent,
   BillingPortalSessionCreatedEvent,
   CapabilityUpdatedEvent,
+  CapitalFinancingOfferAcceptedEvent,
+  CapitalFinancingOfferCanceledEvent,
+  CapitalFinancingOfferCreatedEvent,
+  CapitalFinancingOfferExpiredEvent,
+  CapitalFinancingOfferFullyRepaidEvent,
+  CapitalFinancingOfferPaidOutEvent,
+  CapitalFinancingOfferRejectedEvent,
+  CapitalFinancingOfferReplacementCreatedEvent,
+  CapitalFinancingTransactionCreatedEvent,
   CashBalanceFundsAvailableEvent,
   ChargeCapturedEvent,
   ChargeDisputeClosedEvent,
@@ -690,11 +802,15 @@ import {
   CustomerSourceDeletedEvent,
   CustomerSourceExpiringEvent,
   CustomerSourceUpdatedEvent,
+  CustomerSubscriptionCollectionPausedEvent,
+  CustomerSubscriptionCollectionResumedEvent,
   CustomerSubscriptionCreatedEvent,
+  CustomerSubscriptionCustomEventEvent,
   CustomerSubscriptionDeletedEvent,
   CustomerSubscriptionPausedEvent,
   CustomerSubscriptionPendingUpdateAppliedEvent,
   CustomerSubscriptionPendingUpdateExpiredEvent,
+  CustomerSubscriptionPriceMigrationFailedEvent,
   CustomerSubscriptionResumedEvent,
   CustomerSubscriptionTrialWillEndEvent,
   CustomerSubscriptionUpdatedEvent,
@@ -711,9 +827,12 @@ import {
   FinancialConnectionsAccountDisconnectedEvent,
   FinancialConnectionsAccountReactivatedEvent,
   FinancialConnectionsAccountRefreshedBalanceEvent,
+  FinancialConnectionsAccountRefreshedInferredBalancesEvent,
   FinancialConnectionsAccountRefreshedOwnershipEvent,
   FinancialConnectionsAccountRefreshedTransactionsEvent,
   FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent,
+  FinancialConnectionsSessionUpdatedEvent,
+  FxQuoteExpiredEvent,
   IdentityVerificationSessionCanceledEvent,
   IdentityVerificationSessionCreatedEvent,
   IdentityVerificationSessionProcessingEvent,
@@ -728,6 +847,7 @@ import {
   InvoiceOverdueEvent,
   InvoiceOverpaidEvent,
   InvoicePaidEvent,
+  InvoicePaymentOverpaidEvent,
   InvoicePaymentActionRequiredEvent,
   InvoicePaymentAttemptRequiredEvent,
   InvoicePaymentFailedEvent,
@@ -737,6 +857,7 @@ import {
   InvoiceUpdatedEvent,
   InvoiceVoidedEvent,
   InvoiceWillBeDueEvent,
+  InvoicePaymentDetachedEvent,
   InvoicePaymentPaidEvent,
   InvoiceItemCreatedEvent,
   InvoiceItemDeletedEvent,
@@ -753,10 +874,15 @@ import {
   IssuingDisputeFundsRescindedEvent,
   IssuingDisputeSubmittedEvent,
   IssuingDisputeUpdatedEvent,
+  IssuingDisputeSettlementDetailCreatedEvent,
+  IssuingDisputeSettlementDetailUpdatedEvent,
+  IssuingFraudLiabilityDebitCreatedEvent,
   IssuingPersonalizationDesignActivatedEvent,
   IssuingPersonalizationDesignDeactivatedEvent,
   IssuingPersonalizationDesignRejectedEvent,
   IssuingPersonalizationDesignUpdatedEvent,
+  IssuingSettlementCreatedEvent,
+  IssuingSettlementUpdatedEvent,
   IssuingTokenCreatedEvent,
   IssuingTokenUpdatedEvent,
   IssuingTransactionCreatedEvent,
@@ -792,15 +918,26 @@ import {
   PriceCreatedEvent,
   PriceDeletedEvent,
   PriceUpdatedEvent,
+  PrivacyRedactionJobCanceledEvent,
+  PrivacyRedactionJobCreatedEvent,
+  PrivacyRedactionJobReadyEvent,
+  PrivacyRedactionJobSucceededEvent,
+  PrivacyRedactionJobValidationErrorEvent,
   ProductCreatedEvent,
   ProductDeletedEvent,
   ProductUpdatedEvent,
   PromotionCodeCreatedEvent,
   PromotionCodeUpdatedEvent,
+  QuoteAcceptFailedEvent,
   QuoteAcceptedEvent,
+  QuoteAcceptingEvent,
   QuoteCanceledEvent,
   QuoteCreatedEvent,
+  QuoteDraftEvent,
   QuoteFinalizedEvent,
+  QuoteReestimateFailedEvent,
+  QuoteReestimatedEvent,
+  QuoteStaleEvent,
   RadarEarlyFraudWarningCreatedEvent,
   RadarEarlyFraudWarningUpdatedEvent,
   RefundCreatedEvent,
@@ -836,8 +973,10 @@ import {
   SubscriptionScheduleCompletedEvent,
   SubscriptionScheduleCreatedEvent,
   SubscriptionScheduleExpiringEvent,
+  SubscriptionSchedulePriceMigrationFailedEvent,
   SubscriptionScheduleReleasedEvent,
   SubscriptionScheduleUpdatedEvent,
+  TaxFormUpdatedEvent,
   TaxSettingsUpdatedEvent,
   TaxRateCreatedEvent,
   TaxRateUpdatedEvent,
@@ -987,6 +1126,7 @@ export class Stripe {
 
   // StripeInstanceVariables: The beginning of the section generated from our OpenAPI spec
   accountLinks: AccountLinkResource;
+  accountNotices: AccountNoticeResource;
   accountSessions: AccountSessionResource;
   accounts: AccountResource;
   applePayDomains: ApplePayDomainResource;
@@ -994,6 +1134,7 @@ export class Stripe {
   balance: BalanceResource;
   balanceSettings: BalanceSettingResource;
   balanceTransactions: BalanceTransactionResource;
+  balanceTransfers: BalanceTransferResource;
   charges: ChargeResource;
   confirmationTokens: ConfirmationTokenResource;
   countrySpecs: CountrySpecResource;
@@ -1005,13 +1146,18 @@ export class Stripe {
   ephemeralKeys: EphemeralKeyResource;
   events: EventResource;
   exchangeRates: ExchangeRateResource;
+  externalAccounts: ExternalAccountResource;
   fileLinks: FileLinkResource;
   files: FileResource;
+  frMealVouchersOnboardings: FrMealVouchersOnboardingResource;
+  fxQuotes: FxQuoteResource;
   invoiceItems: InvoiceItemResource;
   invoicePayments: InvoicePaymentResource;
   invoiceRenderingTemplates: InvoiceRenderingTemplateResource;
   invoices: InvoiceResource;
   mandates: MandateResource;
+  margins: MarginResource;
+  orders: OrderResource;
   paymentAttemptRecords: PaymentAttemptRecordResource;
   paymentIntents: PaymentIntentResource;
   paymentLinks: PaymentLinkResource;
@@ -1044,15 +1190,22 @@ export class Stripe {
   apps: Apps;
   billing: Billing;
   billingPortal: BillingPortal;
+  capital: Capital;
   checkout: Checkout;
   climate: Climate;
+  delegatedCheckout: DelegatedCheckout;
   entitlements: Entitlements;
   financialConnections: FinancialConnections;
   forwarding: Forwarding;
   identity: Identity;
   issuing: Issuing;
+  orchestration: Orchestration;
+  privacy: Privacy;
+  productCatalog: ProductCatalog;
   radar: Radar;
   reporting: Reporting;
+  reserve: Reserve;
+  sharedPayment: SharedPayment;
   sigma: Sigma;
   tax: Tax;
   terminal: Terminal;
@@ -1149,6 +1302,7 @@ export class Stripe {
 
     // StripeInitInstanceVariables: The beginning of the section generated from our OpenAPI spec
     this.accountLinks = new AccountLinkResource(this);
+    this.accountNotices = new AccountNoticeResource(this);
     this.accountSessions = new AccountSessionResource(this);
     this.accounts = new AccountResource(this);
     this.applePayDomains = new ApplePayDomainResource(this);
@@ -1156,6 +1310,7 @@ export class Stripe {
     this.balance = new BalanceResource(this);
     this.balanceSettings = new BalanceSettingResource(this);
     this.balanceTransactions = new BalanceTransactionResource(this);
+    this.balanceTransfers = new BalanceTransferResource(this);
     this.charges = new ChargeResource(this);
     this.confirmationTokens = new ConfirmationTokenResource(this);
     this.countrySpecs = new CountrySpecResource(this);
@@ -1167,13 +1322,18 @@ export class Stripe {
     this.ephemeralKeys = new EphemeralKeyResource(this);
     this.events = new EventResource(this);
     this.exchangeRates = new ExchangeRateResource(this);
+    this.externalAccounts = new ExternalAccountResource(this);
     this.fileLinks = new FileLinkResource(this);
     this.files = new FileResource(this);
+    this.frMealVouchersOnboardings = new FrMealVouchersOnboardingResource(this);
+    this.fxQuotes = new FxQuoteResource(this);
     this.invoiceItems = new InvoiceItemResource(this);
     this.invoicePayments = new InvoicePaymentResource(this);
     this.invoiceRenderingTemplates = new InvoiceRenderingTemplateResource(this);
     this.invoices = new InvoiceResource(this);
     this.mandates = new MandateResource(this);
+    this.margins = new MarginResource(this);
+    this.orders = new OrderResource(this);
     this.paymentAttemptRecords = new PaymentAttemptRecordResource(this);
     this.paymentIntents = new PaymentIntentResource(this);
     this.paymentLinks = new PaymentLinkResource(this);
@@ -1208,15 +1368,22 @@ export class Stripe {
     this.apps = new Apps(this);
     this.billing = new Billing(this);
     this.billingPortal = new BillingPortal(this);
+    this.capital = new Capital(this);
     this.checkout = new Checkout(this);
     this.climate = new Climate(this);
+    this.delegatedCheckout = new DelegatedCheckout(this);
     this.entitlements = new Entitlements(this);
     this.financialConnections = new FinancialConnections(this);
     this.forwarding = new Forwarding(this);
     this.identity = new Identity(this);
     this.issuing = new Issuing(this);
+    this.orchestration = new Orchestration(this);
+    this.privacy = new Privacy(this);
+    this.productCatalog = new ProductCatalog(this);
     this.radar = new Radar(this);
     this.reporting = new Reporting(this);
+    this.reserve = new Reserve(this);
+    this.sharedPayment = new SharedPayment(this);
     this.sigma = new Sigma(this);
     this.tax = new Tax(this);
     this.terminal = new Terminal(this);
@@ -1639,12 +1806,21 @@ export declare namespace Stripe {
     AccountRetrieveCapabilityParams,
     AccountRetrieveExternalAccountParams,
     AccountRetrievePersonParams,
+    AccountRetrieveSignalsParams,
+    AccountSerializeBatchUpdateParams,
     AccountUpdateCapabilityParams,
     AccountUpdateExternalAccountParams,
     AccountUpdatePersonParams,
     AccountResource,
   };
   export {AccountLink, AccountLinkCreateParams, AccountLinkResource};
+  export {
+    AccountNotice,
+    AccountNoticeRetrieveParams,
+    AccountNoticeUpdateParams,
+    AccountNoticeListParams,
+    AccountNoticeResource,
+  };
   export {AccountSession, AccountSessionCreateParams, AccountSessionResource};
   export {
     ApplePayDomain,
@@ -1677,6 +1853,11 @@ export declare namespace Stripe {
     BalanceTransactionRetrieveParams,
     BalanceTransactionListParams,
     BalanceTransactionResource,
+  };
+  export {
+    BalanceTransfer,
+    BalanceTransferCreateParams,
+    BalanceTransferResource,
   };
   export {
     Charge,
@@ -1718,6 +1899,7 @@ export declare namespace Stripe {
     CreditNoteListLineItemsParams,
     CreditNoteListPreviewLineItemsParams,
     CreditNotePreviewParams,
+    CreditNoteSerializeBatchCreateParams,
     CreditNoteVoidCreditNoteParams,
     CreditNoteResource,
   };
@@ -1748,6 +1930,7 @@ export declare namespace Stripe {
     CustomerRetrieveSourceParams,
     CustomerRetrieveTaxIdParams,
     CustomerSearchParams,
+    CustomerSerializeBatchUpdateParams,
     CustomerUpdateBalanceTransactionParams,
     CustomerUpdateCashBalanceParams,
     CustomerUpdateSourceParams,
@@ -1787,6 +1970,16 @@ export declare namespace Stripe {
     ExchangeRateResource,
   };
   export {
+    ExternalAccount,
+    DeletedExternalAccount,
+    ExternalAccountCreateParams,
+    ExternalAccountRetrieveParams,
+    ExternalAccountUpdateParams,
+    ExternalAccountListParams,
+    ExternalAccountDeleteParams,
+    ExternalAccountResource,
+  };
+  export {
     File,
     FileCreateParams,
     FileRetrieveParams,
@@ -1802,6 +1995,21 @@ export declare namespace Stripe {
     FileLinkResource,
   };
   export {
+    FrMealVouchersOnboarding,
+    FrMealVouchersOnboardingCreateParams,
+    FrMealVouchersOnboardingRetrieveParams,
+    FrMealVouchersOnboardingUpdateParams,
+    FrMealVouchersOnboardingListParams,
+    FrMealVouchersOnboardingResource,
+  };
+  export {
+    FxQuote,
+    FxQuoteCreateParams,
+    FxQuoteRetrieveParams,
+    FxQuoteListParams,
+    FxQuoteResource,
+  };
+  export {
     Invoice,
     DeletedInvoice,
     InvoiceCreateParams,
@@ -1812,6 +2020,7 @@ export declare namespace Stripe {
     InvoiceAddLinesParams,
     InvoiceAttachPaymentParams,
     InvoiceCreatePreviewParams,
+    InvoiceDetachPaymentParams,
     InvoiceFinalizeInvoiceParams,
     InvoiceListLineItemsParams,
     InvoiceMarkUncollectibleParams,
@@ -1819,6 +2028,8 @@ export declare namespace Stripe {
     InvoiceRemoveLinesParams,
     InvoiceSearchParams,
     InvoiceSendInvoiceParams,
+    InvoiceSerializeBatchPayParams,
+    InvoiceSerializeBatchUpdateParams,
     InvoiceUpdateLinesParams,
     InvoiceUpdateLineItemParams,
     InvoiceVoidInvoiceParams,
@@ -1848,11 +2059,34 @@ export declare namespace Stripe {
     InvoiceRenderingTemplateUnarchiveParams,
     InvoiceRenderingTemplateResource,
   };
-  export {Mandate, MandateRetrieveParams, MandateResource};
+  export {Mandate, MandateRetrieveParams, MandateListParams, MandateResource};
+  export {
+    Margin,
+    MarginCreateParams,
+    MarginRetrieveParams,
+    MarginUpdateParams,
+    MarginListParams,
+    MarginResource,
+  };
+  export {
+    Order,
+    OrderCreateParams,
+    OrderRetrieveParams,
+    OrderUpdateParams,
+    OrderListParams,
+    OrderSubmitParams,
+    OrderResource,
+  };
   export {
     PaymentAttemptRecord,
     PaymentAttemptRecordRetrieveParams,
     PaymentAttemptRecordListParams,
+    PaymentAttemptRecordReportAuthenticatedParams,
+    PaymentAttemptRecordReportCanceledParams,
+    PaymentAttemptRecordReportFailedParams,
+    PaymentAttemptRecordReportGuaranteedParams,
+    PaymentAttemptRecordReportInformationalParams,
+    PaymentAttemptRecordReportRefundParams,
     PaymentAttemptRecordResource,
   };
   export {
@@ -1865,9 +2099,12 @@ export declare namespace Stripe {
     PaymentIntentCancelParams,
     PaymentIntentCaptureParams,
     PaymentIntentConfirmParams,
+    PaymentIntentDecrementAuthorizationParams,
     PaymentIntentIncrementAuthorizationParams,
     PaymentIntentListAmountDetailsLineItemsParams,
+    PaymentIntentReauthorizeParams,
     PaymentIntentSearchParams,
+    PaymentIntentTriggerActionParams,
     PaymentIntentVerifyMicrodepositsParams,
     PaymentIntentResource,
   };
@@ -1887,6 +2124,7 @@ export declare namespace Stripe {
     PaymentMethodUpdateParams,
     PaymentMethodListParams,
     PaymentMethodAttachParams,
+    PaymentMethodCheckBalanceParams,
     PaymentMethodDetachParams,
     PaymentMethodResource,
   };
@@ -1970,6 +2208,8 @@ export declare namespace Stripe {
     PromotionCodeRetrieveParams,
     PromotionCodeUpdateParams,
     PromotionCodeListParams,
+    PromotionCodeSerializeBatchCreateParams,
+    PromotionCodeSerializeBatchUpdateParams,
     PromotionCodeResource,
   };
   export {
@@ -1981,9 +2221,16 @@ export declare namespace Stripe {
     QuoteAcceptParams,
     QuoteCancelParams,
     QuoteFinalizeQuoteParams,
+    QuoteListPreviewInvoiceLinesParams,
     QuoteListComputedUpfrontLineItemsParams,
     QuoteListLineItemsParams,
+    QuoteListLinesParams,
+    QuoteListPreviewInvoicesParams,
+    QuoteListPreviewSubscriptionSchedulesParams,
+    QuoteMarkDraftParams,
+    QuoteMarkStaleParams,
     QuotePdfParams,
+    QuoteReestimateParams,
     QuoteResource,
   };
   export {
@@ -2037,11 +2284,15 @@ export declare namespace Stripe {
     SubscriptionRetrieveParams,
     SubscriptionUpdateParams,
     SubscriptionListParams,
+    SubscriptionAttachCadenceParams,
     SubscriptionCancelParams,
     SubscriptionDeleteDiscountParams,
     SubscriptionMigrateParams,
+    SubscriptionPauseParams,
     SubscriptionResumeParams,
     SubscriptionSearchParams,
+    SubscriptionSerializeBatchMigrateParams,
+    SubscriptionSerializeBatchUpdateParams,
     SubscriptionResource,
   };
   export {
@@ -2060,8 +2311,12 @@ export declare namespace Stripe {
     SubscriptionScheduleRetrieveParams,
     SubscriptionScheduleUpdateParams,
     SubscriptionScheduleListParams,
+    SubscriptionScheduleAmendParams,
     SubscriptionScheduleCancelParams,
     SubscriptionScheduleReleaseParams,
+    SubscriptionScheduleSerializeBatchCancelParams,
+    SubscriptionScheduleSerializeBatchCreateParams,
+    SubscriptionScheduleSerializeBatchUpdateParams,
     SubscriptionScheduleResource,
   };
   export {TaxCode, TaxCodeRetrieveParams, TaxCodeListParams, TaxCodeResource};
@@ -2122,12 +2377,17 @@ export declare namespace Stripe {
   export {Discount, DeletedDiscount};
   export {FundingInstructions};
   export {LineItem};
+  export {PaymentMethodBalance};
+  export {Profile};
+  export {QuoteLine};
   export {ReserveTransaction};
+  export {RiskSignals};
   export {SourceMandateNotification};
   export {SourceTransaction};
   export {TaxDeductedAtSource};
+  export {TransitBalance};
+  export {AccountSignals};
   export {Capability};
-  export {ExternalAccount, DeletedExternalAccount};
   export {LoginLink};
   export {Person, DeletedPerson};
   export {FeeRefund};
@@ -2139,19 +2399,29 @@ export declare namespace Stripe {
   export {InvoiceLineItem};
   export {PaymentIntentAmountDetailsLineItem};
   export {ProductFeature, DeletedProductFeature};
+  export {QuotePreviewInvoice};
+  export {QuotePreviewSubscriptionSchedule};
   export {TransferReversal};
   export {Apps};
   export {Billing};
+  export {V1Billing};
   export {BillingPortal};
+  export {Capital};
   export {Checkout};
   export {Climate};
+  export {DelegatedCheckout};
   export {Entitlements};
   export {FinancialConnections};
   export {Forwarding};
   export {Identity};
   export {Issuing};
+  export {Orchestration};
+  export {Privacy};
+  export {ProductCatalog};
   export {Radar};
   export {Reporting};
+  export {Reserve};
+  export {SharedPayment};
   export {Sigma};
   export {Tax};
   export {Terminal};
@@ -2167,11 +2437,14 @@ export declare namespace Stripe {
     AccountExternalAccountDeletedEvent,
     AccountExternalAccountUpdatedEvent,
     AccountUpdatedEvent,
+    AccountNoticeCreatedEvent,
+    AccountNoticeUpdatedEvent,
     ApplicationFeeCreatedEvent,
     ApplicationFeeRefundUpdatedEvent,
     ApplicationFeeRefundedEvent,
     BalanceAvailableEvent,
     BalanceSettingsUpdatedEvent,
+    BillingAlertRecoveredEvent,
     BillingAlertTriggeredEvent,
     BillingCreditBalanceTransactionCreatedEvent,
     BillingCreditGrantCreatedEvent,
@@ -2184,6 +2457,15 @@ export declare namespace Stripe {
     BillingPortalConfigurationUpdatedEvent,
     BillingPortalSessionCreatedEvent,
     CapabilityUpdatedEvent,
+    CapitalFinancingOfferAcceptedEvent,
+    CapitalFinancingOfferCanceledEvent,
+    CapitalFinancingOfferCreatedEvent,
+    CapitalFinancingOfferExpiredEvent,
+    CapitalFinancingOfferFullyRepaidEvent,
+    CapitalFinancingOfferPaidOutEvent,
+    CapitalFinancingOfferRejectedEvent,
+    CapitalFinancingOfferReplacementCreatedEvent,
+    CapitalFinancingTransactionCreatedEvent,
     CashBalanceFundsAvailableEvent,
     ChargeCapturedEvent,
     ChargeDisputeClosedEvent,
@@ -2224,11 +2506,15 @@ export declare namespace Stripe {
     CustomerSourceDeletedEvent,
     CustomerSourceExpiringEvent,
     CustomerSourceUpdatedEvent,
+    CustomerSubscriptionCollectionPausedEvent,
+    CustomerSubscriptionCollectionResumedEvent,
     CustomerSubscriptionCreatedEvent,
+    CustomerSubscriptionCustomEventEvent,
     CustomerSubscriptionDeletedEvent,
     CustomerSubscriptionPausedEvent,
     CustomerSubscriptionPendingUpdateAppliedEvent,
     CustomerSubscriptionPendingUpdateExpiredEvent,
+    CustomerSubscriptionPriceMigrationFailedEvent,
     CustomerSubscriptionResumedEvent,
     CustomerSubscriptionTrialWillEndEvent,
     CustomerSubscriptionUpdatedEvent,
@@ -2245,9 +2531,12 @@ export declare namespace Stripe {
     FinancialConnectionsAccountDisconnectedEvent,
     FinancialConnectionsAccountReactivatedEvent,
     FinancialConnectionsAccountRefreshedBalanceEvent,
+    FinancialConnectionsAccountRefreshedInferredBalancesEvent,
     FinancialConnectionsAccountRefreshedOwnershipEvent,
     FinancialConnectionsAccountRefreshedTransactionsEvent,
     FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent,
+    FinancialConnectionsSessionUpdatedEvent,
+    FxQuoteExpiredEvent,
     IdentityVerificationSessionCanceledEvent,
     IdentityVerificationSessionCreatedEvent,
     IdentityVerificationSessionProcessingEvent,
@@ -2262,6 +2551,7 @@ export declare namespace Stripe {
     InvoiceOverdueEvent,
     InvoiceOverpaidEvent,
     InvoicePaidEvent,
+    InvoicePaymentOverpaidEvent,
     InvoicePaymentActionRequiredEvent,
     InvoicePaymentAttemptRequiredEvent,
     InvoicePaymentFailedEvent,
@@ -2271,6 +2561,7 @@ export declare namespace Stripe {
     InvoiceUpdatedEvent,
     InvoiceVoidedEvent,
     InvoiceWillBeDueEvent,
+    InvoicePaymentDetachedEvent,
     InvoicePaymentPaidEvent,
     InvoiceItemCreatedEvent,
     InvoiceItemDeletedEvent,
@@ -2287,10 +2578,15 @@ export declare namespace Stripe {
     IssuingDisputeFundsRescindedEvent,
     IssuingDisputeSubmittedEvent,
     IssuingDisputeUpdatedEvent,
+    IssuingDisputeSettlementDetailCreatedEvent,
+    IssuingDisputeSettlementDetailUpdatedEvent,
+    IssuingFraudLiabilityDebitCreatedEvent,
     IssuingPersonalizationDesignActivatedEvent,
     IssuingPersonalizationDesignDeactivatedEvent,
     IssuingPersonalizationDesignRejectedEvent,
     IssuingPersonalizationDesignUpdatedEvent,
+    IssuingSettlementCreatedEvent,
+    IssuingSettlementUpdatedEvent,
     IssuingTokenCreatedEvent,
     IssuingTokenUpdatedEvent,
     IssuingTransactionCreatedEvent,
@@ -2326,15 +2622,26 @@ export declare namespace Stripe {
     PriceCreatedEvent,
     PriceDeletedEvent,
     PriceUpdatedEvent,
+    PrivacyRedactionJobCanceledEvent,
+    PrivacyRedactionJobCreatedEvent,
+    PrivacyRedactionJobReadyEvent,
+    PrivacyRedactionJobSucceededEvent,
+    PrivacyRedactionJobValidationErrorEvent,
     ProductCreatedEvent,
     ProductDeletedEvent,
     ProductUpdatedEvent,
     PromotionCodeCreatedEvent,
     PromotionCodeUpdatedEvent,
+    QuoteAcceptFailedEvent,
     QuoteAcceptedEvent,
+    QuoteAcceptingEvent,
     QuoteCanceledEvent,
     QuoteCreatedEvent,
+    QuoteDraftEvent,
     QuoteFinalizedEvent,
+    QuoteReestimateFailedEvent,
+    QuoteReestimatedEvent,
+    QuoteStaleEvent,
     RadarEarlyFraudWarningCreatedEvent,
     RadarEarlyFraudWarningUpdatedEvent,
     RefundCreatedEvent,
@@ -2370,8 +2677,10 @@ export declare namespace Stripe {
     SubscriptionScheduleCompletedEvent,
     SubscriptionScheduleCreatedEvent,
     SubscriptionScheduleExpiringEvent,
+    SubscriptionSchedulePriceMigrationFailedEvent,
     SubscriptionScheduleReleasedEvent,
     SubscriptionScheduleUpdatedEvent,
+    TaxFormUpdatedEvent,
     TaxSettingsUpdatedEvent,
     TaxRateCreatedEvent,
     TaxRateUpdatedEvent,

@@ -15,6 +15,7 @@ import {
 } from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ReaderResource extends StripeResource {
   /**
    * Deletes a Reader object.
@@ -426,6 +427,11 @@ export namespace Terminal {
 
       export interface CollectPaymentMethod {
         /**
+         * Account the payment intent belongs to.
+         */
+        account?: string;
+
+        /**
          * Represents a per-transaction override of a reader configuration
          */
         collect_config?: CollectPaymentMethod.CollectConfig;
@@ -447,6 +453,11 @@ export namespace Terminal {
 
       export interface ConfirmPaymentIntent {
         /**
+         * Account the payment intent belongs to.
+         */
+        account?: string;
+
+        /**
          * Represents a per-transaction override of a reader configuration
          */
         confirm_config?: ConfirmPaymentIntent.ConfirmConfig;
@@ -458,6 +469,11 @@ export namespace Terminal {
       }
 
       export interface ProcessPaymentIntent {
+        /**
+         * Account the payment intent belongs to.
+         */
+        account?: string;
+
         /**
          * Most recent PaymentIntent processed by the reader.
          */
@@ -487,6 +503,11 @@ export namespace Terminal {
       }
 
       export interface RefundPayment {
+        /**
+         * Account the payment intent belongs to.
+         */
+        account?: string;
+
         /**
          * The amount being refunded.
          */

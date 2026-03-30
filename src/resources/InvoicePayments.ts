@@ -8,6 +8,7 @@ import {PaymentRecord} from './PaymentRecords.js';
 import {PaginationParams, RangeQueryParam} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class InvoicePaymentResource extends StripeResource {
   /**
    * When retrieving an invoice, there is an includable payments property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of payments.

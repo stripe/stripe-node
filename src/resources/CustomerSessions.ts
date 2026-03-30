@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {Customer} from './Customers.js';
 import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class CustomerSessionResource extends StripeResource {
   /**
    * Creates a Customer Session object that includes a single-use client secret that you can use on your front-end to grant client-side API access for certain customer resources.
@@ -88,6 +89,11 @@ export namespace CustomerSession {
      * This hash contains whether the pricing table is enabled.
      */
     pricing_table: Components.PricingTable;
+
+    /**
+     * This hash contains whether the Tax ID Element is enabled and the features it supports.
+     */
+    tax_id_element?: Components.TaxIdElement;
   }
 
   export namespace Components {
@@ -139,6 +145,18 @@ export namespace CustomerSession {
        * Whether the pricing table is enabled.
        */
       enabled: boolean;
+    }
+
+    export interface TaxIdElement {
+      /**
+       * Whether the Tax ID Element is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * This hash defines whether the Tax ID Element supports certain features.
+       */
+      features: TaxIdElement.Features | null;
     }
 
     export namespace CustomerSheet {
@@ -285,6 +303,30 @@ export namespace CustomerSession {
         export type PaymentMethodSaveUsage = 'off_session' | 'on_session';
       }
     }
+
+    export namespace TaxIdElement {
+      export interface Features {
+        /**
+         * Controls whether the Tax ID Element displays saved tax IDs for the customer. This parameter defaults to `disabled`.
+         *
+         * When enabled, the Tax ID Element will show existing tax IDs associated with the customer, allowing them to select from previously saved tax identification numbers.
+         */
+        tax_id_redisplay: Features.TaxIdRedisplay;
+
+        /**
+         * Controls whether the Tax ID Element allows merchants to save new tax IDs for their customer. This parameter defaults to `disabled`.
+         *
+         * When enabled, customers can enter and save new tax identification numbers during the payment flow, which will be stored securely and associated with their customer object for future use.
+         */
+        tax_id_save: Features.TaxIdSave;
+      }
+
+      export namespace Features {
+        export type TaxIdRedisplay = 'disabled' | 'enabled';
+
+        export type TaxIdSave = 'disabled' | 'enabled';
+      }
+    }
   }
 }
 export interface CustomerSessionCreateParams {
@@ -334,6 +376,11 @@ export namespace CustomerSessionCreateParams {
      * Configuration for the pricing table.
      */
     pricing_table?: Components.PricingTable;
+
+    /**
+     * Configuration for the Tax ID Element.
+     */
+    tax_id_element?: Components.TaxIdElement;
   }
 
   export namespace Components {
@@ -385,6 +432,18 @@ export namespace CustomerSessionCreateParams {
        * Whether the pricing table is enabled.
        */
       enabled: boolean;
+    }
+
+    export interface TaxIdElement {
+      /**
+       * Whether the Tax ID Element is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * This hash defines whether the Tax ID Element supports certain features.
+       */
+      features?: TaxIdElement.Features;
     }
 
     export namespace CustomerSheet {
@@ -529,6 +588,30 @@ export namespace CustomerSessionCreateParams {
         export type PaymentMethodSave = 'disabled' | 'enabled';
 
         export type PaymentMethodSaveUsage = 'off_session' | 'on_session';
+      }
+    }
+
+    export namespace TaxIdElement {
+      export interface Features {
+        /**
+         * Controls whether the Tax ID Element displays saved tax IDs for the customer. This parameter defaults to `disabled`.
+         *
+         * When enabled, the Tax ID Element will show existing tax IDs associated with the customer, allowing them to select from previously saved tax identification numbers.
+         */
+        tax_id_redisplay?: Features.TaxIdRedisplay;
+
+        /**
+         * Controls whether the Tax ID Element allows merchants to save new tax IDs for their customer. This parameter defaults to `disabled`.
+         *
+         * When enabled, customers can enter and save new tax identification numbers during the payment flow, which will be stored securely and associated with their customer object for future use.
+         */
+        tax_id_save?: Features.TaxIdSave;
+      }
+
+      export namespace Features {
+        export type TaxIdRedisplay = 'disabled' | 'enabled';
+
+        export type TaxIdSave = 'disabled' | 'enabled';
       }
     }
   }

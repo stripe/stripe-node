@@ -6,6 +6,7 @@ import {BalanceTransaction} from './../BalanceTransactions.js';
 import {Card} from './Cards.js';
 import {Cardholder} from './Cardholders.js';
 import {Dispute} from './Disputes.js';
+import {Settlement} from './Settlements.js';
 import {Token} from './Tokens.js';
 import {
   Emptyable,
@@ -17,6 +18,7 @@ import {
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class TransactionResource extends StripeResource {
   /**
    * Returns a list of Issuing Transaction objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -409,6 +411,11 @@ export interface Transaction {
    * Additional purchase information that is optionally provided by the merchant.
    */
   purchase_details?: Issuing.Transaction.PurchaseDetails | null;
+
+  /**
+   * The ID of the [settlement](https://docs.stripe.com/api/issuing/settlements) to which this transaction belongs.
+   */
+  settlement?: string | Settlement | null;
 
   /**
    * [Token](https://docs.stripe.com/api/issuing/tokens/object) object used for this transaction. If a network token was not used for this transaction, this field will be null.
@@ -829,6 +836,11 @@ export namespace Issuing {
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
+
+    /**
+     * Only return transactions that are associated with the given settlement.
+     */
+    settlement?: string;
 
     /**
      * Only return transactions that have the given type. One of `capture` or `refund`.

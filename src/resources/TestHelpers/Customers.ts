@@ -4,6 +4,7 @@ import {StripeResource} from '../../StripeResource.js';
 import {CustomerCashBalanceTransaction} from './../CustomerCashBalanceTransactions.js';
 import {RequestOptions, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class CustomerResource extends StripeResource {
   /**
    * Create an incoming testmode bank transfer

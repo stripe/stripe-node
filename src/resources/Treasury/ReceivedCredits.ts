@@ -9,6 +9,7 @@ import {Payout} from './../Payouts.js';
 import {PaginationParams, Address} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ReceivedCreditResource extends StripeResource {
   /**
    * Returns a list of ReceivedCredits.
@@ -105,6 +106,11 @@ export interface ReceivedCredit {
   network: Treasury.ReceivedCredit.Network;
 
   /**
+   * Details specific to the money movement rails.
+   */
+  network_details?: Treasury.ReceivedCredit.NetworkDetails | null;
+
+  /**
    * Details describing when a ReceivedCredit may be reversed.
    */
   reversal_details: Treasury.ReceivedCredit.ReversalDetails | null;
@@ -183,6 +189,18 @@ export namespace Treasury {
     }
 
     export type Network = 'ach' | 'card' | 'stripe' | 'us_domestic_wire';
+
+    export interface NetworkDetails {
+      /**
+       * Details about an ACH transaction.
+       */
+      ach?: NetworkDetails.Ach | null;
+
+      /**
+       * The type of flow that originated the ReceivedCredit.
+       */
+      type: 'ach';
+    }
 
     export interface ReversalDetails {
       /**
@@ -300,6 +318,15 @@ export namespace Treasury {
           | 'outbound_payment'
           | 'outbound_transfer'
           | 'payout';
+      }
+    }
+
+    export namespace NetworkDetails {
+      export interface Ach {
+        /**
+         * ACH Addenda record
+         */
+        addenda: string | null;
       }
     }
 

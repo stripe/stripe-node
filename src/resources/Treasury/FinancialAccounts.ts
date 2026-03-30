@@ -3,14 +3,15 @@
 import {StripeResource} from '../../StripeResource.js';
 import {FinancialAccountFeatures} from './FinancialAccountFeatures.js';
 import {
-  MetadataParam,
   Emptyable,
+  MetadataParam,
   PaginationParams,
   RangeQueryParam,
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class FinancialAccountResource extends StripeResource {
   /**
    * Returns a list of FinancialAccounts.
@@ -163,6 +164,11 @@ export interface FinancialAccount {
    * Time at which the object was created. Measured in seconds since the Unix epoch.
    */
   created: number;
+
+  /**
+   * The display name for the FinancialAccount. Use this field to customize the names of the FinancialAccounts for your connected accounts. Unlike the `nickname` field, `display_name` is not internal metadata and will be exposed to connected accounts.
+   */
+  display_name?: string | null;
 
   /**
    * Encodes whether a FinancialAccount has access to a particular Feature, with a `status` enum and associated `status_details`.
@@ -383,6 +389,11 @@ export namespace Treasury {
     supported_currencies: Array<string>;
 
     /**
+     * The display name for the FinancialAccount. Use this field to customize the names of the FinancialAccounts for your connected accounts. Unlike the `nickname` field, `display_name` is not internal metadata and will be exposed to connected accounts.
+     */
+    display_name?: Emptyable<string>;
+
+    /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
@@ -521,9 +532,18 @@ export namespace Treasury {
       export namespace FinancialAddresses {
         export interface Aba {
           /**
+           * Requested bank partner
+           */
+          bank?: Aba.Bank;
+
+          /**
            * Whether the FinancialAccount should have the Feature.
            */
           requested: boolean;
+        }
+
+        export namespace Aba {
+          export type Bank = 'evolve' | 'fifth_third' | 'goldman_sachs';
         }
       }
 
@@ -586,6 +606,11 @@ export namespace Treasury {
 }
 export namespace Treasury {
   export interface FinancialAccountUpdateParams {
+    /**
+     * The display name for the FinancialAccount. Use this field to customize the names of the FinancialAccounts for your connected accounts. Unlike the `nickname` field, `display_name` is not internal metadata and will be exposed to connected accounts.
+     */
+    display_name?: Emptyable<string>;
+
     /**
      * Specifies which fields in the response should be expanded.
      */
@@ -747,9 +772,18 @@ export namespace Treasury {
       export namespace FinancialAddresses {
         export interface Aba {
           /**
+           * Requested bank partner
+           */
+          bank?: Aba.Bank;
+
+          /**
            * Whether the FinancialAccount should have the Feature.
            */
           requested: boolean;
+        }
+
+        export namespace Aba {
+          export type Bank = 'evolve' | 'fifth_third' | 'goldman_sachs';
         }
       }
 
@@ -978,9 +1012,18 @@ export namespace Treasury {
     export namespace FinancialAddresses {
       export interface Aba {
         /**
+         * Requested bank partner
+         */
+        bank?: Aba.Bank;
+
+        /**
          * Whether the FinancialAccount should have the Feature.
          */
         requested: boolean;
+      }
+
+      export namespace Aba {
+        export type Bank = 'evolve' | 'fifth_third' | 'goldman_sachs';
       }
     }
 

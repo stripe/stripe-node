@@ -17,6 +17,7 @@ import {
   ApiSearchResultPromise,
 } from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PriceResource extends StripeResource {
   /**
    * Returns a list of your active prices, excluding [inline prices](https://docs.stripe.com/docs/products-prices/pricing-models#inline-pricing). For the list of inactive prices, set active to false.
@@ -462,6 +463,11 @@ export interface Price {
   deleted?: void;
 
   /**
+   * A custom identifier for this price, such as a SKU number or product code, that can be used to reference records from external systems.
+   */
+  external_reference?: string | null;
+
+  /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
    */
   livemode: boolean;
@@ -475,6 +481,11 @@ export interface Price {
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata;
+
+  /**
+   * Subscriptions using this price will be migrated to use the new referenced price.
+   */
+  migrate_to?: Price.MigrateTo | null;
 
   /**
    * A brief description of the price, hidden from customers.
@@ -587,6 +598,23 @@ export namespace Price {
      * The starting unit amount which can be updated by the customer.
      */
     preset: number | null;
+  }
+
+  export interface MigrateTo {
+    /**
+     * The behavior controlling at what point in the subscription lifecycle to migrate the price
+     */
+    behavior: 'at_cycle_end';
+
+    /**
+     * The unix timestamp after at which subscriptions will start to migrate to the new price.
+     */
+    effective_after: number;
+
+    /**
+     * The id of the price being migrated to
+     */
+    price: string;
   }
 
   export interface Recurring {
@@ -903,6 +931,11 @@ export namespace PriceCreateParams {
     tax_code?: string;
 
     /**
+     * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+     */
+    tax_details?: ProductData.TaxDetails;
+
+    /**
      * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
      */
     unit_label?: string;
@@ -1031,6 +1064,20 @@ export namespace PriceCreateParams {
     }
   }
 
+  export namespace ProductData {
+    export interface TaxDetails {
+      /**
+       * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+       */
+      performance_location?: string;
+
+      /**
+       * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+       */
+      tax_code?: Emptyable<string>;
+    }
+  }
+
   export namespace Recurring {
     export type Interval = 'day' | 'month' | 'week' | 'year';
 
@@ -1076,6 +1123,11 @@ export interface PriceUpdateParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
+   * If specified, subscriptions using this price will be updated to use the new referenced price.
+   */
+  migrate_to?: Emptyable<PriceUpdateParams.MigrateTo>;
+
+  /**
    * A brief description of the price, hidden from customers.
    */
   nickname?: string;
@@ -1116,6 +1168,23 @@ export namespace PriceUpdateParams {
      * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
      */
     unit_amount_decimal?: Decimal;
+  }
+
+  export interface MigrateTo {
+    /**
+     * The behavior controlling the point in the subscription lifecycle after which to migrate the price. Currently must be `at_cycle_end`.
+     */
+    behavior: 'at_cycle_end';
+
+    /**
+     * The time after which subscriptions should start using the new price.
+     */
+    effective_after?: number;
+
+    /**
+     * The ID of the price object.
+     */
+    price: string;
   }
 
   export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';

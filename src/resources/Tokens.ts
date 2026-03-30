@@ -11,6 +11,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class TokenResource extends StripeResource {
   /**
    * Retrieves the token with the given ID.
@@ -402,6 +403,16 @@ export namespace TokenCreateParams {
     relationship?: Person.Relationship;
 
     /**
+     * The credit applicant's self-reported yearly income in minor units.
+     */
+    self_reported_income?: Person.SelfReportedIncome;
+
+    /**
+     * The credit applicant's self-reported monthly housing payment in minor units.
+     */
+    self_reported_monthly_housing_payment?: Person.SelfReportedMonthlyHousingPayment;
+
+    /**
      * The last four digits of the person's Social Security number (U.S. only).
      */
     ssn_last_4?: string;
@@ -660,6 +671,16 @@ export namespace TokenCreateParams {
       relationship?: Individual.Relationship;
 
       /**
+       * The credit applicant's self-reported yearly income in minor units.
+       */
+      self_reported_income?: Individual.SelfReportedIncome;
+
+      /**
+       * The credit applicant's self-reported monthly housing payment in minor units.
+       */
+      self_reported_monthly_housing_payment?: Individual.SelfReportedMonthlyHousingPayment;
+
+      /**
        * The last four digits of the individual's Social Security Number (U.S. only).
        */
       ssn_last_4?: string;
@@ -837,6 +858,30 @@ export namespace TokenCreateParams {
         title?: string;
       }
 
+      export interface SelfReportedIncome {
+        /**
+         * The amount in the minor currency unit (for example, cents for USD).
+         */
+        amount: number;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+      }
+
+      export interface SelfReportedMonthlyHousingPayment {
+        /**
+         * The amount in the minor currency unit (for example, cents for USD).
+         */
+        amount: number;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+      }
+
       export interface Verification {
         /**
          * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
@@ -980,6 +1025,30 @@ export namespace TokenCreateParams {
        * The person's title (e.g., CEO, Support Engineer).
        */
       title?: string;
+    }
+
+    export interface SelfReportedIncome {
+      /**
+       * The amount in the minor currency unit (for example, cents for USD).
+       */
+      amount: number;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+    }
+
+    export interface SelfReportedMonthlyHousingPayment {
+      /**
+       * The amount in the minor currency unit (for example, cents for USD).
+       */
+      amount: number;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
     }
 
     export interface UsCfpbData {

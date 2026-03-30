@@ -4,6 +4,7 @@ import {StripeResource} from '../../../StripeResource.js';
 import {ReceivedDebit} from './../../Treasury/ReceivedDebits.js';
 import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ReceivedDebitResource extends StripeResource {
   /**
    * Use this endpoint to simulate a test mode ReceivedDebit initiated by a third party. In live mode, you can't directly create ReceivedDebits initiated by third parties.
@@ -56,6 +57,11 @@ export namespace TestHelpers {
        * Initiating payment method details for the object.
        */
       initiating_payment_method_details?: ReceivedDebitCreateParams.InitiatingPaymentMethodDetails;
+
+      /**
+       * Details about the network used for the ReceivedDebit.
+       */
+      network_details?: ReceivedDebitCreateParams.NetworkDetails;
     }
 
     export namespace ReceivedDebitCreateParams {
@@ -69,6 +75,18 @@ export namespace TestHelpers {
          * Optional fields for `us_bank_account`.
          */
         us_bank_account?: InitiatingPaymentMethodDetails.UsBankAccount;
+      }
+
+      export interface NetworkDetails {
+        /**
+         * Optional fields for `ach`.
+         */
+        ach?: NetworkDetails.Ach;
+
+        /**
+         * The type of flow that originated the ReceivedDebit.
+         */
+        type: 'ach';
       }
 
       export namespace InitiatingPaymentMethodDetails {
@@ -87,6 +105,15 @@ export namespace TestHelpers {
            * The bank account's routing number.
            */
           routing_number?: string;
+        }
+      }
+
+      export namespace NetworkDetails {
+        export interface Ach {
+          /**
+           * Addenda record data associated with this ReceivedDebit.
+           */
+          addenda?: string;
         }
       }
     }

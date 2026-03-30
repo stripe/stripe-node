@@ -14,6 +14,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class RefundResource extends StripeResource {
   /**
    * Returns a list of all refunds you created. We return the refunds in sorted order, with the most recent refunds appearing first. The 10 most recent refunds are always available by default on the Charge object.
@@ -245,6 +246,8 @@ export namespace Refund {
 
     grabpay?: DestinationDetails.Grabpay;
 
+    id_bank_transfer?: DestinationDetails.IdBankTransfer;
+
     jp_bank_transfer?: DestinationDetails.JpBankTransfer;
 
     klarna?: DestinationDetails.Klarna;
@@ -423,6 +426,18 @@ export namespace Refund {
     export interface Giropay {}
 
     export interface Grabpay {}
+
+    export interface IdBankTransfer {
+      /**
+       * The reference assigned to the refund.
+       */
+      reference: string | null;
+
+      /**
+       * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+       */
+      reference_status: string | null;
+    }
 
     export interface JpBankTransfer {
       /**

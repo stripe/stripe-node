@@ -1,15 +1,25 @@
-// eslint-disable-next-line no-warning-comments
-// TODO(prathmesh): https://go/j/DEVSDK-3050 Generate this class with codegen
+// File generated from our OpenAPI spec
 
-import {Hold} from './Holds.js';
-import {Plan} from './Plans.js';
-import {Release} from './Releases.js';
+import {Stripe} from '../../stripe.core.js';
+import {Hold, HoldResource} from './Holds.js';
+import {Plan, PlanResource} from './Plans.js';
+import {Release, ReleaseResource} from './Releases.js';
 
 export {Hold} from './Holds.js';
 export {Plan} from './Plans.js';
 export {Release} from './Releases.js';
 
-export class Reserve {}
+export class Reserve {
+  holds: HoldResource;
+  plans: PlanResource;
+  releases: ReleaseResource;
+
+  constructor(private readonly stripe: Stripe) {
+    this.holds = new HoldResource(stripe);
+    this.plans = new PlanResource(stripe);
+    this.releases = new ReleaseResource(stripe);
+  }
+}
 
 export declare namespace Reserve {
   export {Hold};

@@ -3,6 +3,7 @@
 import {StripeResource} from '../StripeResource.js';
 import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class AccountLinkResource extends StripeResource {
   /**
    * Creates an AccountLink object that includes a single-use Stripe URL that the platform can redirect their user to in order to take them through the Connect Onboarding flow.
@@ -78,11 +79,20 @@ export interface AccountLinkCreateParams {
   return_url?: string;
 }
 export namespace AccountLinkCreateParams {
-  export type Type = 'account_onboarding' | 'account_update';
+  export type Type =
+    | 'account_onboarding'
+    | 'account_update'
+    | 'capital_financing_offer'
+    | 'capital_financing_reporting';
 
   export type Collect = 'currently_due' | 'eventually_due';
 
   export interface CollectionOptions {
+    /**
+     * Specifies whether the platform collects external account information from connected accounts during Connect Onboarding. When set to `true`, the platform only collects external account information if the connected account has capabilities which require it. Some capabilities, such as `treasury`, don't require external account collection. When set to `false`, external account collection is skipped. Defaults to `true`.
+     */
+    external_account_collection?: boolean;
+
     /**
      * Specifies whether the platform collects only currently_due requirements (`currently_due`) or both currently_due and eventually_due requirements (`eventually_due`). If you don't specify `collection_options`, the default value is `currently_due`.
      */

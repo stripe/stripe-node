@@ -218,6 +218,11 @@ export namespace Treasury {
     export namespace FinancialAddresses {
       export interface Aba {
         /**
+         * Requested bank partner for this Financial Account
+         */
+        bank?: Aba.Bank;
+
+        /**
          * Whether the FinancialAccount should have the Feature.
          */
         requested: boolean;
@@ -234,6 +239,8 @@ export namespace Treasury {
       }
 
       export namespace Aba {
+        export type Bank = 'evolve' | 'fifth_third' | 'goldman_sachs';
+
         export type Status = 'active' | 'pending' | 'restricted';
 
         export interface StatusDetail {

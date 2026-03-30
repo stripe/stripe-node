@@ -13,6 +13,7 @@ import {
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class CardResource extends StripeResource {
   /**
    * Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -1344,6 +1345,11 @@ export namespace Issuing {
          * Reason the card is ineligible for Apple Pay
          */
         ineligible_reason: ApplePay.IneligibleReason | null;
+
+        /**
+         * Unique identifier for the card in Apple Pay
+         */
+        primary_account_identifier?: string | null;
       }
 
       export interface GooglePay {
@@ -1356,6 +1362,11 @@ export namespace Issuing {
          * Reason the card is ineligible for Google Pay
          */
         ineligible_reason: GooglePay.IneligibleReason | null;
+
+        /**
+         * Unique identifier for the card in Google Pay
+         */
+        primary_account_identifier?: string | null;
       }
 
       export namespace ApplePay {
@@ -3693,11 +3704,44 @@ export namespace Issuing {
      * Only return cards that have the given type. One of `virtual` or `physical`.
      */
     type?: CardListParams.Type;
+
+    /**
+     * Filter cards by wallet settings.
+     */
+    wallets?: CardListParams.Wallets;
   }
 
   export namespace CardListParams {
     export type Status = 'active' | 'canceled' | 'inactive';
 
     export type Type = 'physical' | 'virtual';
+
+    export interface Wallets {
+      /**
+       * Filter cards by Apple Pay wallet details.
+       */
+      apple_pay?: Wallets.ApplePay;
+
+      /**
+       * Filter cards by Google Pay wallet details.
+       */
+      google_pay?: Wallets.GooglePay;
+    }
+
+    export namespace Wallets {
+      export interface ApplePay {
+        /**
+         * Query by Apple Pay primary account identifier.
+         */
+        primary_account_identifier?: string;
+      }
+
+      export interface GooglePay {
+        /**
+         * Query by Google Pay primary account identifier.
+         */
+        primary_account_identifier?: string;
+      }
+    }
   }
 }

@@ -5,6 +5,7 @@ import {File} from './../Files.js';
 import {PaginationParams, RangeQueryParam} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ReportRunResource extends StripeResource {
   /**
    * Returns a list of Report Runs, with the most recent appearing first.

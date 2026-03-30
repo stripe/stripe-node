@@ -16,6 +16,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class DisputeResource extends StripeResource {
   /**
    * Returns a list of your disputes.
@@ -101,6 +102,11 @@ export interface Dispute {
   amount: number;
 
   /**
+   * The amount you want to contest, in the dispute's currency. Setting this to less than the full dispute amount means accepting the loss on the remaining amount. If not specified, the entire disputed amount is contested.
+   */
+  amount_to_counter?: number;
+
+  /**
    * List of zero, one, or two balance transactions that show funds withdrawn and reinstated to your Stripe account as a result of this dispute.
    */
   balance_transactions: Array<BalanceTransaction>;
@@ -128,6 +134,11 @@ export interface Dispute {
   evidence: Dispute.Evidence;
 
   evidence_details: Dispute.EvidenceDetails;
+
+  /**
+   * Intended submission method for the dispute.
+   */
+  intended_submission_method?: Dispute.IntendedSubmissionMethod | null;
 
   /**
    * If true, it's still possible to refund the disputed payment. After the payment has been fully refunded, no further funds are withdrawn from your Stripe account as a result of this dispute.
@@ -160,6 +171,8 @@ export interface Dispute {
    * Reason given by cardholder for dispute. Possible values are `bank_cannot_process`, `check_returned`, `credit_not_processed`, `customer_initiated`, `debit_not_authorized`, `duplicate`, `fraudulent`, `general`, `incorrect_account_details`, `insufficient_funds`, `noncompliant`, `product_not_received`, `product_unacceptable`, `subscription_canceled`, or `unrecognized`. Learn more about [dispute reasons](https://docs.stripe.com/disputes/categories).
    */
   reason: string;
+
+  smart_disputes?: Dispute.SmartDisputes;
 
   /**
    * The current status of a dispute. Possible values include:`warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `won`, `lost`, or `prevented`.
@@ -332,7 +345,18 @@ export namespace Dispute {
      * The number of times evidence has been submitted. Typically, you may only submit evidence once.
      */
     submission_count: number;
+
+    /**
+     * Whether the dispute was submitted manually, with Smart Disputes, or not submitted.
+     */
+    submission_method?: EvidenceDetails.SubmissionMethod;
   }
+
+  export type IntendedSubmissionMethod =
+    | 'manual'
+    | 'prefer_manual'
+    | 'prefer_smart_disputes'
+    | 'smart_disputes';
 
   export interface PaymentMethodDetails {
     amazon_pay?: PaymentMethodDetails.AmazonPay;
@@ -347,6 +371,18 @@ export namespace Dispute {
      * Payment method type.
      */
     type: PaymentMethodDetails.Type;
+  }
+
+  export interface SmartDisputes {
+    /**
+     * Evidence that could be provided to improve the SmartDisputes packet
+     */
+    recommended_evidence: Array<Array<string>> | null;
+
+    /**
+     * Smart Disputes auto representment packet availability status.
+     */
+    status: SmartDisputes.Status;
   }
 
   export type Status =
@@ -487,6 +523,11 @@ export namespace Dispute {
       visa_compliance?: EnhancedEligibility.VisaCompliance;
     }
 
+    export type SubmissionMethod =
+      | 'manual'
+      | 'not_submitted'
+      | 'smart_disputes';
+
     export namespace EnhancedEligibility {
       export interface VisaCompellingEvidence3 {
         /**
@@ -590,6 +631,14 @@ export namespace Dispute {
         | 'resolution';
     }
   }
+
+  export namespace SmartDisputes {
+    export type Status =
+      | 'available'
+      | 'processing'
+      | 'requires_evidence'
+      | 'unavailable';
+  }
 }
 export interface DisputeRetrieveParams {
   /**
@@ -599,6 +648,11 @@ export interface DisputeRetrieveParams {
 }
 export interface DisputeUpdateParams {
   /**
+   * If not countering the full disputed amount, specify an alternate amount, less than or equal to the disputed amount.
+   */
+  amount_to_counter?: number;
+
+  /**
    * Evidence to upload, to respond to a dispute. Updating any field in the hash will submit all fields in the hash for review. The combined character count of all fields is limited to 150,000.
    */
   evidence?: DisputeUpdateParams.Evidence;
@@ -607,6 +661,11 @@ export interface DisputeUpdateParams {
    * Specifies which fields in the response should be expanded.
    */
   expand?: Array<string>;
+
+  /**
+   * Intended submission method for the dispute.
+   */
+  intended_submission_method?: DisputeUpdateParams.IntendedSubmissionMethod;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -760,6 +819,12 @@ export namespace DisputeUpdateParams {
      */
     uncategorized_text?: string;
   }
+
+  export type IntendedSubmissionMethod =
+    | 'manual'
+    | 'prefer_manual'
+    | 'prefer_smart_disputes'
+    | 'smart_disputes';
 
   export namespace Evidence {
     export interface EnhancedEvidence {

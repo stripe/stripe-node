@@ -62,6 +62,11 @@ export interface CreditNoteLineItem {
   quantity: number | null;
 
   /**
+   * The tax calculation identifiers of the line item.
+   */
+  tax_calculation_reference?: CreditNoteLineItem.TaxCalculationReference | null;
+
+  /**
    * The tax rates which apply to the line item.
    */
   tax_rates: Array<TaxRate>;
@@ -119,6 +124,18 @@ export namespace CreditNoteLineItem {
      * Type of the pretax credit amount referenced.
      */
     type: PretaxCreditAmount.Type;
+  }
+
+  export interface TaxCalculationReference {
+    /**
+     * The calculation identifier for tax calculation response.
+     */
+    calculation_id: string | null;
+
+    /**
+     * The calculation identifier for tax calculation response line item.
+     */
+    calculation_item_id: string | null;
   }
 
   export interface Tax {

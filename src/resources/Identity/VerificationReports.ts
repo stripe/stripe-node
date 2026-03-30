@@ -1,9 +1,11 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {BlocklistEntry} from './BlocklistEntries.js';
 import {PaginationParams, RangeQueryParam, Address} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class VerificationReportResource extends StripeResource {
   /**
    * List all verification reports.
@@ -115,6 +117,11 @@ export namespace Identity {
        * Address as it appears in the document.
        */
       address: Address | null;
+
+      /**
+       * If document was not verified due to extracted data being on the blocklist, this is the token of the BlocklistEntry that blocked it
+       */
+      blocked_by_entry?: string | BlocklistEntry | null;
 
       /**
        * Date of birth as it appears in the document.
@@ -265,6 +272,11 @@ export namespace Identity {
     }
 
     export interface Selfie {
+      /**
+       * If selfie was not verified due to being on the blocklist, this is the token of the BlocklistEntry that blocked it
+       */
+      blocked_by_entry?: string | BlocklistEntry | null;
+
       /**
        * ID of the [File](https://docs.stripe.com/api/files) holding the image of the identity document used in this check.
        */
@@ -517,6 +529,11 @@ export namespace Identity {
 }
 export namespace Identity {
   export interface VerificationReportListParams extends PaginationParams {
+    /**
+     * Only return VerificationReports that were blocked by this BlocklistEntry id.
+     */
+    blocked_by_entry?: string;
+
     /**
      * A string to reference this user. This can be a customer ID, a session ID, or similar, and can be used to reconcile this verification with your internal systems.
      */

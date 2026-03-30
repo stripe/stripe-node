@@ -12,6 +12,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PlanResource extends StripeResource {
   /**
    * Deleting plans means new subscribers can't be added. Existing subscribers aren't affected.
@@ -247,6 +248,11 @@ export interface Plan {
    * Always true for a deleted object
    */
   deleted?: void;
+
+  /**
+   * A custom identifier for this price, such as a SKU number or product code, that can be used to reference records from external systems.
+   */
+  external_reference?: string | null;
 
   /**
    * The frequency at which a subscription is billed. One of `day`, `week`, `month` or `year`.
@@ -503,6 +509,11 @@ export namespace PlanCreateParams {
     tax_code?: string;
 
     /**
+     * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+     */
+    tax_details?: Product.TaxDetails;
+
+    /**
      * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
      */
     unit_label?: string;
@@ -550,6 +561,20 @@ export namespace PlanCreateParams {
   }
 
   export type UsageType = 'licensed' | 'metered';
+
+  export namespace Product {
+    export interface TaxDetails {
+      /**
+       * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+       */
+      performance_location?: string;
+
+      /**
+       * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+       */
+      tax_code?: Emptyable<string>;
+    }
+  }
 
   export namespace TransformUsage {
     export type Round = 'down' | 'up';

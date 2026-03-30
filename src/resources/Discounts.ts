@@ -55,6 +55,13 @@ export interface Discount {
    */
   promotion_code: string | PromotionCode | null;
 
+  /**
+   * The subscription schedule that this coupon is applied to, if it is applied to a particular subscription schedule.
+   */
+  schedule?: string | null;
+
+  service_period_details?: Discount.ServicePeriodDetails;
+
   source: Discount.Source;
 
   /**
@@ -118,6 +125,11 @@ export interface DeletedDiscount {
    */
   promotion_code: string | PromotionCode | null;
 
+  /**
+   * The subscription schedule that this coupon is applied to, if it is applied to a particular subscription schedule.
+   */
+  schedule?: string | null;
+
   source: DeletedDiscount.Source;
 
   /**
@@ -149,6 +161,18 @@ export namespace DeletedDiscount {
   }
 }
 export namespace Discount {
+  export interface ServicePeriodDetails {
+    /**
+     * The date that the service period was anchored to.
+     */
+    service_period_anchored_at: number;
+
+    /**
+     * The date that the service period started.
+     */
+    start_date: number;
+  }
+
   export interface Source {
     /**
      * The coupon that was redeemed to create this discount.

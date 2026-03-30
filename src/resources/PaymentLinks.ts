@@ -15,6 +15,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PaymentLinkResource extends StripeResource {
   /**
    * Returns a list of your payment links.
@@ -575,6 +576,11 @@ export interface PaymentLink {
   livemode: boolean;
 
   /**
+   * Settings for Managed Payments for this Payment Link and resulting [CheckoutSessions](https://docs.stripe.com/api/checkout/sessions/object), [PaymentIntents](https://docs.stripe.com/api/payment_intents/object), [Invoices](https://docs.stripe.com/api/invoices/object), and [Subscriptions](https://docs.stripe.com/api/subscriptions/object).
+   */
+  managed_payments?: PaymentLink.ManagedPayments | null;
+
+  /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata;
@@ -749,6 +755,13 @@ export namespace PaymentLink {
     invoice_data: InvoiceCreation.InvoiceData | null;
   }
 
+  export interface ManagedPayments {
+    /**
+     * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
+     */
+    enabled: boolean;
+  }
+
   export interface NameCollection {
     business?: NameCollection.Business;
 
@@ -818,6 +831,7 @@ export namespace PaymentLink {
     | 'eps'
     | 'fpx'
     | 'giropay'
+    | 'gopay'
     | 'grabpay'
     | 'ideal'
     | 'klarna'
@@ -831,11 +845,15 @@ export namespace PaymentLink {
     | 'pay_by_bank'
     | 'paynow'
     | 'paypal'
+    | 'paypay'
     | 'payto'
     | 'pix'
     | 'promptpay'
+    | 'qris'
+    | 'rechnung'
     | 'satispay'
     | 'sepa_debit'
+    | 'shopeepay'
     | 'sofort'
     | 'swish'
     | 'twint'
@@ -953,7 +971,7 @@ export namespace PaymentLink {
     }
 
     export namespace Liability {
-      export type Type = 'account' | 'self';
+      export type Type = 'account' | 'application' | 'self';
     }
   }
 
@@ -1158,7 +1176,7 @@ export namespace PaymentLink {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'self';
+        export type Type = 'account' | 'application' | 'self';
       }
     }
   }
@@ -1496,7 +1514,7 @@ export namespace PaymentLink {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'self';
+        export type Type = 'account' | 'application' | 'self';
       }
     }
 
@@ -1596,6 +1614,11 @@ export interface PaymentLinkCreateParams {
    * Generate a post-purchase Invoice for one-time payments.
    */
   invoice_creation?: PaymentLinkCreateParams.InvoiceCreation;
+
+  /**
+   * Settings for Managed Payments for this Payment Link and resulting [CheckoutSessions](https://docs.stripe.com/api/checkout/sessions/object), [PaymentIntents](https://docs.stripe.com/api/payment_intents/object), [Invoices](https://docs.stripe.com/api/invoices/object), and [Subscriptions](https://docs.stripe.com/api/subscriptions/object).
+   */
+  managed_payments?: PaymentLinkCreateParams.ManagedPayments;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. Metadata associated with this Payment Link will automatically be copied to [checkout sessions](https://docs.stripe.com/api/checkout/sessions) created by this payment link.
@@ -1831,6 +1854,13 @@ export namespace PaymentLinkCreateParams {
     invoice_data?: InvoiceCreation.InvoiceData;
   }
 
+  export interface ManagedPayments {
+    /**
+     * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
+     */
+    enabled?: boolean;
+  }
+
   export interface NameCollection {
     /**
      * Controls settings applied for collecting the customer's business name.
@@ -1927,6 +1957,7 @@ export namespace PaymentLinkCreateParams {
     | 'eps'
     | 'fpx'
     | 'giropay'
+    | 'gopay'
     | 'grabpay'
     | 'ideal'
     | 'klarna'
@@ -1940,11 +1971,15 @@ export namespace PaymentLinkCreateParams {
     | 'pay_by_bank'
     | 'paynow'
     | 'paypal'
+    | 'paypay'
     | 'payto'
     | 'pix'
     | 'promptpay'
+    | 'qris'
+    | 'rechnung'
     | 'satispay'
     | 'sepa_debit'
+    | 'shopeepay'
     | 'sofort'
     | 'swish'
     | 'twint'
@@ -2070,7 +2105,7 @@ export namespace PaymentLinkCreateParams {
     }
 
     export namespace Liability {
-      export type Type = 'account' | 'self';
+      export type Type = 'account' | 'application' | 'self';
     }
   }
 
@@ -2274,7 +2309,7 @@ export namespace PaymentLinkCreateParams {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'self';
+        export type Type = 'account' | 'application' | 'self';
       }
 
       export namespace RenderingOptions {
@@ -2366,6 +2401,11 @@ export namespace PaymentLinkCreateParams {
         tax_code?: string;
 
         /**
+         * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+         */
+        tax_details?: ProductData.TaxDetails;
+
+        /**
          * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
          */
         unit_label?: string;
@@ -2384,6 +2424,20 @@ export namespace PaymentLinkCreateParams {
       }
 
       export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+
+      export namespace ProductData {
+        export interface TaxDetails {
+          /**
+           * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+           */
+          performance_location?: string;
+
+          /**
+           * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+           */
+          tax_code?: Emptyable<string>;
+        }
+      }
 
       export namespace Recurring {
         export type Interval = 'day' | 'month' | 'week' | 'year';
@@ -2722,7 +2776,7 @@ export namespace PaymentLinkCreateParams {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'self';
+        export type Type = 'account' | 'application' | 'self';
       }
     }
 
@@ -3088,6 +3142,7 @@ export namespace PaymentLinkUpdateParams {
     | 'eps'
     | 'fpx'
     | 'giropay'
+    | 'gopay'
     | 'grabpay'
     | 'ideal'
     | 'klarna'
@@ -3101,11 +3156,15 @@ export namespace PaymentLinkUpdateParams {
     | 'pay_by_bank'
     | 'paynow'
     | 'paypal'
+    | 'paypay'
     | 'payto'
     | 'pix'
     | 'promptpay'
+    | 'qris'
+    | 'rechnung'
     | 'satispay'
     | 'sepa_debit'
+    | 'shopeepay'
     | 'sofort'
     | 'swish'
     | 'twint'
@@ -3204,7 +3263,7 @@ export namespace PaymentLinkUpdateParams {
     }
 
     export namespace Liability {
-      export type Type = 'account' | 'self';
+      export type Type = 'account' | 'application' | 'self';
     }
   }
 
@@ -3390,7 +3449,7 @@ export namespace PaymentLinkUpdateParams {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'self';
+        export type Type = 'account' | 'application' | 'self';
       }
 
       export namespace RenderingOptions {
@@ -3743,7 +3802,7 @@ export namespace PaymentLinkUpdateParams {
       }
 
       export namespace Issuer {
-        export type Type = 'account' | 'self';
+        export type Type = 'account' | 'application' | 'self';
       }
     }
 

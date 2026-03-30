@@ -2,13 +2,501 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {PaymentMethod} from './PaymentMethods.js';
-import {RequestOptions, Response} from '../lib.js';
+import {PaginationParams} from '../shared.js';
+import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
-export const Mandates = StripeResource.extend({
-  retrieve: stripeMethod({method: 'GET', fullPath: '/v1/mandates/{mandate}'}),
-  list: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/mandates',
-    methodType: 'list',
-  }),
-});
+
+export class MandateResource extends StripeResource {
+  /**
+   * Retrieves a list of Mandates for a given PaymentMethod.
+   */
+  list(
+    params: MandateListParams,
+    options?: RequestOptions
+  ): ApiListPromise<Mandate>;
+  list(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'GET',
+      fullPath: '/v1/mandates',
+      methodType: 'list',
+    }).call(this, ...args);
+  }
+
+  /**
+   * Retrieves a Mandate object.
+   */
+  retrieve(
+    id: string,
+    params?: MandateRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<Mandate>>;
+  retrieve(id: string, options?: RequestOptions): Promise<Response<Mandate>>;
+  retrieve(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'GET',
+      fullPath: '/v1/mandates/{mandate}',
+    }).call(this, ...args);
+  }
+}
+export interface Mandate {
+  /**
+   * Unique identifier for the object.
+   */
+  id: string;
+
+  /**
+   * String representing the object's type. Objects of the same type share the same value.
+   */
+  object: 'mandate';
+
+  customer_acceptance: Mandate.CustomerAcceptance;
+
+  /**
+   * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
+   */
+  livemode: boolean;
+
+  multi_use?: Mandate.MultiUse;
+
+  /**
+   * The account (if any) that the mandate is intended for.
+   */
+  on_behalf_of?: string;
+
+  /**
+   * ID of the payment method associated with this mandate.
+   */
+  payment_method: string | PaymentMethod;
+
+  payment_method_details: Mandate.PaymentMethodDetails;
+
+  single_use?: Mandate.SingleUse;
+
+  /**
+   * The mandate status indicates whether or not you can use it to initiate a payment.
+   */
+  status: Mandate.Status;
+
+  /**
+   * The type of the mandate.
+   */
+  type: Mandate.Type;
+}
+export namespace Mandate {
+  export interface CustomerAcceptance {
+    /**
+     * The time that the customer accepts the mandate.
+     */
+    accepted_at: number | null;
+
+    offline?: CustomerAcceptance.Offline;
+
+    online?: CustomerAcceptance.Online;
+
+    /**
+     * The mandate includes the type of customer acceptance information, such as: `online` or `offline`.
+     */
+    type: CustomerAcceptance.Type;
+  }
+
+  export interface MultiUse {
+    /**
+     * The amount of the payment on a multi use mandate.
+     */
+    amount?: number;
+
+    /**
+     * The currency of the payment on a multi use mandate.
+     */
+    currency?: string;
+  }
+
+  export interface PaymentMethodDetails {
+    acss_debit?: PaymentMethodDetails.AcssDebit;
+
+    amazon_pay?: PaymentMethodDetails.AmazonPay;
+
+    au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
+
+    bacs_debit?: PaymentMethodDetails.BacsDebit;
+
+    card?: PaymentMethodDetails.Card;
+
+    cashapp?: PaymentMethodDetails.Cashapp;
+
+    kakao_pay?: PaymentMethodDetails.KakaoPay;
+
+    klarna?: PaymentMethodDetails.Klarna;
+
+    kr_card?: PaymentMethodDetails.KrCard;
+
+    link?: PaymentMethodDetails.Link;
+
+    naver_pay?: PaymentMethodDetails.NaverPay;
+
+    nz_bank_account?: PaymentMethodDetails.NzBankAccount;
+
+    paypal?: PaymentMethodDetails.Paypal;
+
+    payto?: PaymentMethodDetails.Payto;
+
+    pix?: PaymentMethodDetails.Pix;
+
+    revolut_pay?: PaymentMethodDetails.RevolutPay;
+
+    sepa_debit?: PaymentMethodDetails.SepaDebit;
+
+    /**
+     * This mandate corresponds with a specific payment method type. The `payment_method_details` includes an additional hash with the same name and contains mandate information that's specific to that payment method.
+     */
+    type: string;
+
+    upi?: PaymentMethodDetails.Upi;
+
+    us_bank_account?: PaymentMethodDetails.UsBankAccount;
+  }
+
+  export interface SingleUse {
+    /**
+     * The amount of the payment on a single use mandate.
+     */
+    amount: number;
+
+    /**
+     * The currency of the payment on a single use mandate.
+     */
+    currency: string;
+  }
+
+  export type Status = 'active' | 'inactive' | 'pending';
+
+  export type Type = 'multi_use' | 'single_use';
+
+  export namespace CustomerAcceptance {
+    export interface Offline {}
+
+    export interface Online {
+      /**
+       * The customer accepts the mandate from this IP address.
+       */
+      ip_address: string | null;
+
+      /**
+       * The customer accepts the mandate using the user agent of the browser.
+       */
+      user_agent: string | null;
+    }
+
+    export type Type = 'offline' | 'online';
+  }
+
+  export namespace PaymentMethodDetails {
+    export interface AcssDebit {
+      /**
+       * List of Stripe products where this mandate can be selected automatically.
+       */
+      default_for?: Array<AcssDebit.DefaultFor>;
+
+      /**
+       * Description of the interval. Only required if the 'payment_schedule' parameter is 'interval' or 'combined'.
+       */
+      interval_description: string | null;
+
+      /**
+       * Payment schedule for the mandate.
+       */
+      payment_schedule: AcssDebit.PaymentSchedule;
+
+      /**
+       * Transaction type of the mandate.
+       */
+      transaction_type: AcssDebit.TransactionType;
+    }
+
+    export interface AmazonPay {}
+
+    export interface AuBecsDebit {
+      /**
+       * The URL of the mandate. This URL generally contains sensitive information about the customer and should be shared with them exclusively.
+       */
+      url: string;
+    }
+
+    export interface BacsDebit {
+      /**
+       * The display name for the account on this mandate.
+       */
+      display_name: string | null;
+
+      /**
+       * The status of the mandate on the Bacs network. Can be one of `pending`, `revoked`, `refused`, or `accepted`.
+       */
+      network_status: BacsDebit.NetworkStatus;
+
+      /**
+       * The unique reference identifying the mandate on the Bacs network.
+       */
+      reference: string;
+
+      /**
+       * When the mandate is revoked on the Bacs network this field displays the reason for the revocation.
+       */
+      revocation_reason: BacsDebit.RevocationReason | null;
+
+      /**
+       * The service user number for the account on this mandate.
+       */
+      service_user_number: string | null;
+
+      /**
+       * The URL that will contain the mandate that the customer has signed.
+       */
+      url: string;
+    }
+
+    export interface Card {}
+
+    export interface Cashapp {}
+
+    export interface KakaoPay {}
+
+    export interface Klarna {}
+
+    export interface KrCard {}
+
+    export interface Link {}
+
+    export interface NaverPay {}
+
+    export interface NzBankAccount {}
+
+    export interface Paypal {
+      /**
+       * The PayPal Billing Agreement ID (BAID). This is an ID generated by PayPal which represents the mandate between the merchant and the customer.
+       */
+      billing_agreement_id: string | null;
+
+      /**
+       * Uniquely identifies this particular PayPal account. You can use this attribute to check whether two PayPal accounts are the same.
+       */
+      fingerprint?: string | null;
+
+      /**
+       * PayPal account PayerID. This identifier uniquely identifies the PayPal customer.
+       */
+      payer_id: string | null;
+
+      /**
+       * Owner's verified email. Values are verified or provided by PayPal directly
+       * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+       */
+      verified_email?: string | null;
+    }
+
+    export interface Payto {
+      /**
+       * Amount that will be collected. It is required when `amount_type` is `fixed`.
+       */
+      amount: number | null;
+
+      /**
+       * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
+       */
+      amount_type: Payto.AmountType;
+
+      /**
+       * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+       */
+      end_date: string | null;
+
+      /**
+       * The periodicity at which payments will be collected. Defaults to `adhoc`.
+       */
+      payment_schedule: Payto.PaymentSchedule;
+
+      /**
+       * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+       */
+      payments_per_period: number | null;
+
+      /**
+       * The purpose for which payments are made. Has a default value based on your merchant category code.
+       */
+      purpose: Payto.Purpose | null;
+
+      /**
+       * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+       */
+      start_date: string | null;
+    }
+
+    export interface Pix {
+      /**
+       * Determines if the amount includes the IOF tax.
+       */
+      amount_includes_iof?: Pix.AmountIncludesIof;
+
+      /**
+       * Type of amount.
+       */
+      amount_type?: Pix.AmountType;
+
+      /**
+       * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`.
+       */
+      end_date?: string;
+
+      /**
+       * Schedule at which the future payments will be charged.
+       */
+      payment_schedule?: Pix.PaymentSchedule;
+
+      /**
+       * Subscription name displayed to buyers in their bank app.
+       */
+      reference?: string;
+
+      /**
+       * Start date of the mandate, in `YYYY-MM-DD`.
+       */
+      start_date?: string;
+    }
+
+    export interface RevolutPay {}
+
+    export interface SepaDebit {
+      /**
+       * The unique reference of the mandate.
+       */
+      reference: string;
+
+      /**
+       * The URL of the mandate. This URL generally contains sensitive information about the customer and should be shared with them exclusively.
+       */
+      url: string;
+    }
+
+    export interface Upi {
+      /**
+       * Amount to be charged for future payments.
+       */
+      amount: number | null;
+
+      /**
+       * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+       */
+      amount_type: Upi.AmountType | null;
+
+      /**
+       * A description of the mandate or subscription that is meant to be displayed to the customer.
+       */
+      description: string | null;
+
+      /**
+       * End date of the mandate or subscription.
+       */
+      end_date: number | null;
+    }
+
+    export interface UsBankAccount {
+      /**
+       * Mandate collection method
+       */
+      collection_method?: 'paper';
+    }
+
+    export namespace AcssDebit {
+      export type DefaultFor = 'invoice' | 'subscription';
+
+      export type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+
+      export type TransactionType = 'business' | 'personal';
+    }
+
+    export namespace BacsDebit {
+      export type NetworkStatus =
+        | 'accepted'
+        | 'pending'
+        | 'refused'
+        | 'revoked';
+
+      export type RevocationReason =
+        | 'account_closed'
+        | 'bank_account_restricted'
+        | 'bank_ownership_changed'
+        | 'could_not_process'
+        | 'debit_not_authorized';
+    }
+
+    export namespace Payto {
+      export type AmountType = 'fixed' | 'maximum';
+
+      export type PaymentSchedule =
+        | 'adhoc'
+        | 'annual'
+        | 'daily'
+        | 'fortnightly'
+        | 'monthly'
+        | 'quarterly'
+        | 'semi_annual'
+        | 'weekly';
+
+      export type Purpose =
+        | 'dependant_support'
+        | 'government'
+        | 'loan'
+        | 'mortgage'
+        | 'other'
+        | 'pension'
+        | 'personal'
+        | 'retail'
+        | 'salary'
+        | 'tax'
+        | 'utility';
+    }
+
+    export namespace Pix {
+      export type AmountIncludesIof = 'always' | 'never';
+
+      export type AmountType = 'fixed' | 'maximum';
+
+      export type PaymentSchedule =
+        | 'halfyearly'
+        | 'monthly'
+        | 'quarterly'
+        | 'weekly'
+        | 'yearly';
+    }
+
+    export namespace Upi {
+      export type AmountType = 'fixed' | 'maximum';
+    }
+  }
+}
+export interface MandateRetrieveParams {
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}
+export interface MandateListParams extends PaginationParams {
+  payment_method: string;
+
+  /**
+   * The status of the mandates to retrieve. Status indicates whether or not you can use it to initiate a payment, and can have a value of `active`, `pending`, or `inactive`.
+   */
+  status: MandateListParams.Status;
+
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+
+  /**
+   * The Stripe account ID that the mandates are intended for. Learn more about the [use case for connected accounts payments](https://docs.stripe.com/payments/connected-accounts).
+   */
+  on_behalf_of?: string;
+}
+export namespace MandateListParams {
+  export type Status = 'active' | 'inactive' | 'pending';
+}
