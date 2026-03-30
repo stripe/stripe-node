@@ -9,7 +9,7 @@ import {ApiVersion} from '../src/apiVersion.js';
 import {createApiKeyAuthenticator, detectAIAgent} from '../src/utils.js';
 import Stripe = require('../src/stripe.cjs.node.js');
 import {NodePlatformFunctions} from '../src/platform/NodePlatformFunctions.js';
-
+import {Stripe as StripeCore} from '../src/stripe.core.js';
 import {
   FAKE_API_KEY,
   getRandomString,
@@ -264,10 +264,10 @@ describe('Stripe Module', function() {
     });
 
     it('includes AI agent in request headers', (done) => {
-      const origAIAgent = Stripe.AI_AGENT;
-      const origUserAgent = Stripe.USER_AGENT;
-      Stripe.AI_AGENT = 'cursor';
-      Stripe.USER_AGENT = {...origUserAgent, ai_agent: 'cursor'};
+      const origAIAgent = StripeCore.AI_AGENT;
+      const origUserAgent = StripeCore.USER_AGENT;
+      StripeCore.AI_AGENT = 'cursor';
+      StripeCore.USER_AGENT = {...origUserAgent, ai_agent: 'cursor'};
       let capturedHeaders: any;
       getTestServerStripe(
         {},
@@ -279,13 +279,13 @@ describe('Stripe Module', function() {
         },
         (err, stripeClient, close) => {
           if (err) {
-            Stripe.AI_AGENT = origAIAgent;
-            Stripe.USER_AGENT = origUserAgent;
+            StripeCore.AI_AGENT = origAIAgent;
+            StripeCore.USER_AGENT = origUserAgent;
             return done(err);
           }
           stripeClient.customers.create((err) => {
-            Stripe.AI_AGENT = origAIAgent;
-            Stripe.USER_AGENT = origUserAgent;
+            StripeCore.AI_AGENT = origAIAgent;
+            StripeCore.USER_AGENT = origUserAgent;
             close();
             if (err) {
               return done(err);
@@ -538,7 +538,7 @@ describe('Stripe Module', function() {
   describe('errors', () => {
     it('Exports errors as types', () => {
       expect(
-        Stripe.errors.StripeInvalidRequestError({
+        new Stripe.errors.StripeInvalidRequestError({
           message: 'error',
         }).type
       ).to.equal('StripeInvalidRequestError');
