@@ -180,13 +180,13 @@ export class StripeEventNotificationHandler {
     type: T,
     callback: (event: EventNotificationMap[T], client: Stripe) => Promise<void>
   ): this;
-  public on(
-    type: string,
-    callback: (
-      event: Events.EventNotificationBase,
-      client: Stripe
-    ) => Promise<void>
-  ): this;
+  // public on(
+  //   type: string,
+  //   callback: (
+  //     event: Events.EventNotificationBase,
+  //     client: Stripe
+  //   ) => Promise<void>
+  // ): this;
   public on(type: string, callback: HandlerCallback): this {
     if (this.hasHandledEvent) {
       throw new Error(
