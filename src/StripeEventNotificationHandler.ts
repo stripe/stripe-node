@@ -14,80 +14,6 @@ type FallbackCallback = (
 // this is an internal-only type; we write a user-facing one separately
 type HandlerCallback = (event: any, client: any) => Promise<void>;
 
-// event-notification-map: The beginning of the section generated from our OpenAPI spec
-interface EventNotificationMap {
-  'v1.billing.meter.error_report_triggered': Events.V1BillingMeterErrorReportTriggeredEventNotification;
-  'v1.billing.meter.no_meter_found': Events.V1BillingMeterNoMeterFoundEventNotification;
-  'v2.core.account.closed': Events.V2CoreAccountClosedEventNotification;
-  'v2.core.account.created': Events.V2CoreAccountCreatedEventNotification;
-  'v2.core.account.updated': Events.V2CoreAccountUpdatedEventNotification;
-  'v2.core.account[configuration.customer].capability_status_updated': Events.V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEventNotification;
-  'v2.core.account[configuration.customer].updated': Events.V2CoreAccountIncludingConfigurationCustomerUpdatedEventNotification;
-  'v2.core.account[configuration.merchant].capability_status_updated': Events.V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEventNotification;
-  'v2.core.account[configuration.merchant].updated': Events.V2CoreAccountIncludingConfigurationMerchantUpdatedEventNotification;
-  'v2.core.account[configuration.recipient].capability_status_updated': Events.V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEventNotification;
-  'v2.core.account[configuration.recipient].updated': Events.V2CoreAccountIncludingConfigurationRecipientUpdatedEventNotification;
-  'v2.core.account[configuration.storer].capability_status_updated': Events.V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEventNotification;
-  'v2.core.account[configuration.storer].updated': Events.V2CoreAccountIncludingConfigurationStorerUpdatedEventNotification;
-  'v2.core.account[defaults].updated': Events.V2CoreAccountIncludingDefaultsUpdatedEventNotification;
-  'v2.core.account[future_requirements].updated': Events.V2CoreAccountIncludingFutureRequirementsUpdatedEventNotification;
-  'v2.core.account[identity].updated': Events.V2CoreAccountIncludingIdentityUpdatedEventNotification;
-  'v2.core.account[requirements].updated': Events.V2CoreAccountIncludingRequirementsUpdatedEventNotification;
-  'v2.core.account_link.returned': Events.V2CoreAccountLinkReturnedEventNotification;
-  'v2.core.account_person.created': Events.V2CoreAccountPersonCreatedEventNotification;
-  'v2.core.account_person.deleted': Events.V2CoreAccountPersonDeletedEventNotification;
-  'v2.core.account_person.updated': Events.V2CoreAccountPersonUpdatedEventNotification;
-  'v2.core.batch_job.batch_failed': Events.V2CoreBatchJobBatchFailedEventNotification;
-  'v2.core.batch_job.canceled': Events.V2CoreBatchJobCanceledEventNotification;
-  'v2.core.batch_job.completed': Events.V2CoreBatchJobCompletedEventNotification;
-  'v2.core.batch_job.created': Events.V2CoreBatchJobCreatedEventNotification;
-  'v2.core.batch_job.ready_for_upload': Events.V2CoreBatchJobReadyForUploadEventNotification;
-  'v2.core.batch_job.timeout': Events.V2CoreBatchJobTimeoutEventNotification;
-  'v2.core.batch_job.updated': Events.V2CoreBatchJobUpdatedEventNotification;
-  'v2.core.batch_job.upload_timeout': Events.V2CoreBatchJobUploadTimeoutEventNotification;
-  'v2.core.batch_job.validating': Events.V2CoreBatchJobValidatingEventNotification;
-  'v2.core.batch_job.validation_failed': Events.V2CoreBatchJobValidationFailedEventNotification;
-  'v2.core.event_destination.ping': Events.V2CoreEventDestinationPingEventNotification;
-  'v2.core.health.event_generation_failure.resolved': Events.V2CoreHealthEventGenerationFailureResolvedEventNotification;
-  'v2.money_management.adjustment.created': Events.V2MoneyManagementAdjustmentCreatedEventNotification;
-  'v2.money_management.financial_account.created': Events.V2MoneyManagementFinancialAccountCreatedEventNotification;
-  'v2.money_management.financial_account.updated': Events.V2MoneyManagementFinancialAccountUpdatedEventNotification;
-  'v2.money_management.financial_address.activated': Events.V2MoneyManagementFinancialAddressActivatedEventNotification;
-  'v2.money_management.financial_address.failed': Events.V2MoneyManagementFinancialAddressFailedEventNotification;
-  'v2.money_management.inbound_transfer.available': Events.V2MoneyManagementInboundTransferAvailableEventNotification;
-  'v2.money_management.inbound_transfer.bank_debit_failed': Events.V2MoneyManagementInboundTransferBankDebitFailedEventNotification;
-  'v2.money_management.inbound_transfer.bank_debit_processing': Events.V2MoneyManagementInboundTransferBankDebitProcessingEventNotification;
-  'v2.money_management.inbound_transfer.bank_debit_queued': Events.V2MoneyManagementInboundTransferBankDebitQueuedEventNotification;
-  'v2.money_management.inbound_transfer.bank_debit_returned': Events.V2MoneyManagementInboundTransferBankDebitReturnedEventNotification;
-  'v2.money_management.inbound_transfer.bank_debit_succeeded': Events.V2MoneyManagementInboundTransferBankDebitSucceededEventNotification;
-  'v2.money_management.outbound_payment.canceled': Events.V2MoneyManagementOutboundPaymentCanceledEventNotification;
-  'v2.money_management.outbound_payment.created': Events.V2MoneyManagementOutboundPaymentCreatedEventNotification;
-  'v2.money_management.outbound_payment.failed': Events.V2MoneyManagementOutboundPaymentFailedEventNotification;
-  'v2.money_management.outbound_payment.posted': Events.V2MoneyManagementOutboundPaymentPostedEventNotification;
-  'v2.money_management.outbound_payment.returned': Events.V2MoneyManagementOutboundPaymentReturnedEventNotification;
-  'v2.money_management.outbound_payment.updated': Events.V2MoneyManagementOutboundPaymentUpdatedEventNotification;
-  'v2.money_management.outbound_transfer.canceled': Events.V2MoneyManagementOutboundTransferCanceledEventNotification;
-  'v2.money_management.outbound_transfer.created': Events.V2MoneyManagementOutboundTransferCreatedEventNotification;
-  'v2.money_management.outbound_transfer.failed': Events.V2MoneyManagementOutboundTransferFailedEventNotification;
-  'v2.money_management.outbound_transfer.posted': Events.V2MoneyManagementOutboundTransferPostedEventNotification;
-  'v2.money_management.outbound_transfer.returned': Events.V2MoneyManagementOutboundTransferReturnedEventNotification;
-  'v2.money_management.outbound_transfer.updated': Events.V2MoneyManagementOutboundTransferUpdatedEventNotification;
-  'v2.money_management.payout_method.created': Events.V2MoneyManagementPayoutMethodCreatedEventNotification;
-  'v2.money_management.payout_method.updated': Events.V2MoneyManagementPayoutMethodUpdatedEventNotification;
-  'v2.money_management.received_credit.available': Events.V2MoneyManagementReceivedCreditAvailableEventNotification;
-  'v2.money_management.received_credit.failed': Events.V2MoneyManagementReceivedCreditFailedEventNotification;
-  'v2.money_management.received_credit.returned': Events.V2MoneyManagementReceivedCreditReturnedEventNotification;
-  'v2.money_management.received_credit.succeeded': Events.V2MoneyManagementReceivedCreditSucceededEventNotification;
-  'v2.money_management.received_debit.canceled': Events.V2MoneyManagementReceivedDebitCanceledEventNotification;
-  'v2.money_management.received_debit.failed': Events.V2MoneyManagementReceivedDebitFailedEventNotification;
-  'v2.money_management.received_debit.pending': Events.V2MoneyManagementReceivedDebitPendingEventNotification;
-  'v2.money_management.received_debit.succeeded': Events.V2MoneyManagementReceivedDebitSucceededEventNotification;
-  'v2.money_management.received_debit.updated': Events.V2MoneyManagementReceivedDebitUpdatedEventNotification;
-  'v2.money_management.transaction.created': Events.V2MoneyManagementTransactionCreatedEventNotification;
-  'v2.money_management.transaction.updated': Events.V2MoneyManagementTransactionUpdatedEventNotification;
-}
-// event-notification-map: The end of the section generated from our OpenAPI spec
-
 // most languages can check if we have an UnknownEventNotification at runtime
 // but JS only has interfaces so we fall back to a string match to determine known events
 const KNOWN_EVENT_TYPES = new Set([
@@ -176,17 +102,13 @@ export class StripeEventNotificationHandler {
   ) {}
 
   // these types are duplicated in the manual types
-  public on<T extends keyof EventNotificationMap>(
+  public on<T extends Stripe.V2.Core.EventNotification['type']>(
     type: T,
-    callback: (event: EventNotificationMap[T], client: Stripe) => Promise<void>
+    callback: (
+      event: Extract<Stripe.V2.Core.EventNotification, {type: T}>,
+      client: Stripe
+    ) => Promise<void>
   ): this;
-  // public on(
-  //   type: string,
-  //   callback: (
-  //     event: Events.EventNotificationBase,
-  //     client: Stripe
-  //   ) => Promise<void>
-  // ): this;
   public on(type: string, callback: HandlerCallback): this {
     if (this.hasHandledEvent) {
       throw new Error(
