@@ -53,7 +53,7 @@ export type WebhookObject = {
     payload: WebhookPayload,
     header: WebhookHeader,
     secret: string,
-    tolerance?: null,
+    tolerance?: number,
     cryptoProvider?: CryptoProvider,
     receivedAt?: number
   ) => Event;
@@ -81,7 +81,7 @@ export function createWebhooks(
       payload: WebhookPayload,
       header: WebhookHeader,
       secret: string,
-      tolerance?: null,
+      tolerance?: number,
       cryptoProvider?: CryptoProvider,
       receivedAt?: number
     ): Event {

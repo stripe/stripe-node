@@ -306,6 +306,11 @@ export function protoExtend<T extends Record<string, any>>(
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const Super = this;
 
+  // This initialization logic is somewhat sensitive to be compatible with
+  // divergent JS implementations like the one found in Qt. See here for more
+  // context:
+  //
+  // https://github.com/stripe/stripe-node/pull/334
   // Create a subclass that properly extends the parent class (works with ES6 classes)
   const Constructor = class extends Super {
     constructor(...args: any[]) {

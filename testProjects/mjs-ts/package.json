@@ -6,7 +6,6 @@
   "type": "module",
   "dependencies": {
     "stripe": "file:../../",
-    "ts-node": "^10.9.1",
     "tsx": "^4.21.0"
   },
   "scripts": {
