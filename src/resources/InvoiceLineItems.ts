@@ -1,0 +1,407 @@
+// File generated from our OpenAPI spec
+
+import {Discount, DeletedDiscount} from './Discounts.js';
+import {Margin} from './Margins.js';
+import {Subscription} from './Subscriptions.js';
+import {Price} from './Prices.js';
+import * as Billing from './Billing/index.js';
+import {Metadata, Decimal} from '../shared.js';
+import {RequestOptions} from '../lib.js';
+export interface InvoiceLineItem {
+  /**
+   * Unique identifier for the object.
+   */
+  id: string;
+
+  /**
+   * String representing the object's type. Objects of the same type share the same value.
+   */
+  object: 'line_item';
+
+  /**
+   * The amount, in cents (or local equivalent).
+   */
+  amount: number;
+
+  /**
+   * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+   */
+  currency: string;
+
+  /**
+   * An arbitrary string attached to the object. Often useful for displaying to users.
+   */
+  description: string | null;
+
+  /**
+   * The amount of discount calculated per discount for this line item.
+   */
+  discount_amounts: Array<InvoiceLineItem.DiscountAmount> | null;
+
+  /**
+   * If true, discounts will apply to this line item. Always false for prorations.
+   */
+  discountable: boolean;
+
+  /**
+   * The discounts applied to the invoice line item. Line item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
+   */
+  discounts: Array<string | Discount>;
+
+  /**
+   * The ID of the invoice that contains this line item.
+   */
+  invoice: string | null;
+
+  /**
+   * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
+   */
+  livemode: boolean;
+
+  /**
+   * The amount of margin calculated per margin for this line item.
+   */
+  margin_amounts?: Array<InvoiceLineItem.MarginAmount> | null;
+
+  /**
+   * The margins applied to the line item. When set, the `default_margins` on the invoice do not apply to the line item. Use `expand[]=margins` to expand each margin.
+   */
+  margins?: Array<string | Margin> | null;
+
+  /**
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription`, `metadata` reflects the current metadata from the subscription associated with the line item, unless the invoice line was directly updated with different metadata after creation.
+   */
+  metadata: Metadata;
+
+  /**
+   * The parent that generated this line item.
+   */
+  parent: InvoiceLineItem.Parent | null;
+
+  period: InvoiceLineItem.Period;
+
+  /**
+   * Contains pretax credit amounts (ex: discount, credit grants, etc) that apply to this line item.
+   */
+  pretax_credit_amounts: Array<InvoiceLineItem.PretaxCreditAmount> | null;
+
+  /**
+   * The pricing information of the line item.
+   */
+  pricing: InvoiceLineItem.Pricing | null;
+
+  /**
+   * Quantity of units for the invoice line item in integer format, with any decimal precision truncated. For the line item's full-precision decimal quantity, use `quantity_decimal`. This field will be deprecated in favor of `quantity_decimal` in a future version. If the line item is a proration or subscription, the quantity of the subscription that the proration was computed for.
+   */
+  quantity: number | null;
+
+  /**
+   * Non-negative decimal with at most 12 decimal places. The quantity of units for the line item.
+   */
+  quantity_decimal: Decimal | null;
+
+  subscription: string | Subscription | null;
+
+  /**
+   * The subtotal of the line item, in cents (or local equivalent), before any discounts or taxes.
+   */
+  subtotal: number;
+
+  /**
+   * The tax calculation identifiers of the line item.
+   */
+  tax_calculation_reference?: InvoiceLineItem.TaxCalculationReference | null;
+
+  /**
+   * The tax information of the line item.
+   */
+  taxes: Array<InvoiceLineItem.Tax> | null;
+}
+export namespace InvoiceLineItem {
+  export interface DiscountAmount {
+    /**
+     * The amount, in cents (or local equivalent), of the discount.
+     */
+    amount: number;
+
+    /**
+     * The discount that was applied to get this discount amount.
+     */
+    discount: string | Discount | DeletedDiscount;
+  }
+
+  export interface MarginAmount {
+    /**
+     * The amount, in cents (or local equivalent), of the reduction in line item amount.
+     */
+    amount: number;
+
+    /**
+     * The margin that was applied to get this margin amount.
+     */
+    margin: string | Margin;
+  }
+
+  export interface Parent {
+    /**
+     * Details about the invoice item that generated this line item
+     */
+    invoice_item_details: Parent.InvoiceItemDetails | null;
+
+    /**
+     * Details about the subscription item that generated this line item
+     */
+    subscription_item_details: Parent.SubscriptionItemDetails | null;
+
+    /**
+     * The type of parent that generated this line item
+     */
+    type: Parent.Type;
+  }
+
+  export interface Period {
+    /**
+     * The end of the period, which must be greater than or equal to the start. This value is inclusive.
+     */
+    end: number;
+
+    /**
+     * The start of the period. This value is inclusive.
+     */
+    start: number;
+  }
+
+  export interface PretaxCreditAmount {
+    /**
+     * The amount, in cents (or local equivalent), of the pretax credit amount.
+     */
+    amount: number;
+
+    /**
+     * The credit balance transaction that was applied to get this pretax credit amount.
+     */
+    credit_balance_transaction?:
+      | string
+      | Billing.CreditBalanceTransaction
+      | null;
+
+    /**
+     * The discount that was applied to get this pretax credit amount.
+     */
+    discount?: string | Discount | DeletedDiscount;
+
+    /**
+     * The margin that was applied to get this pretax credit amount.
+     */
+    margin?: string | Margin;
+
+    /**
+     * Type of the pretax credit amount referenced.
+     */
+    type: PretaxCreditAmount.Type;
+  }
+
+  export interface Pricing {
+    price_details?: Pricing.PriceDetails;
+
+    /**
+     * The type of the pricing details.
+     */
+    type: 'price_details';
+
+    /**
+     * The unit amount (in the `currency` specified) of the item which contains a decimal value with at most 12 decimal places.
+     */
+    unit_amount_decimal: Decimal | null;
+  }
+
+  export interface TaxCalculationReference {
+    /**
+     * The calculation identifier for tax calculation response.
+     */
+    calculation_id: string | null;
+
+    /**
+     * The calculation identifier for tax calculation response line item.
+     */
+    calculation_item_id: string | null;
+  }
+
+  export interface Tax {
+    /**
+     * The amount of the tax, in cents (or local equivalent).
+     */
+    amount: number;
+
+    /**
+     * Whether this tax is inclusive or exclusive.
+     */
+    tax_behavior: Tax.TaxBehavior;
+
+    /**
+     * Additional details about the tax rate. Only present when `type` is `tax_rate_details`.
+     */
+    tax_rate_details: Tax.TaxRateDetails | null;
+
+    /**
+     * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+     */
+    taxability_reason: Tax.TaxabilityReason;
+
+    /**
+     * The amount on which tax is calculated, in cents (or local equivalent).
+     */
+    taxable_amount: number | null;
+
+    /**
+     * The type of tax information.
+     */
+    type: 'tax_rate_details';
+  }
+
+  export namespace Parent {
+    export interface InvoiceItemDetails {
+      /**
+       * The invoice item that generated this line item
+       */
+      invoice_item: string;
+
+      /**
+       * Whether this is a proration
+       */
+      proration: boolean;
+
+      /**
+       * Additional details for proration line items
+       */
+      proration_details: InvoiceItemDetails.ProrationDetails | null;
+
+      /**
+       * The subscription that the invoice item belongs to
+       */
+      subscription: string | null;
+    }
+
+    export interface SubscriptionItemDetails {
+      /**
+       * The invoice item that generated this line item
+       */
+      invoice_item: string | null;
+
+      /**
+       * Whether this is a proration
+       */
+      proration: boolean;
+
+      /**
+       * Additional details for proration line items
+       */
+      proration_details: SubscriptionItemDetails.ProrationDetails | null;
+
+      /**
+       * The subscription that the subscription item belongs to
+       */
+      subscription: string | null;
+
+      /**
+       * The subscription item that generated this line item
+       */
+      subscription_item: string;
+    }
+
+    export type Type = 'invoice_item_details' | 'subscription_item_details';
+
+    export namespace InvoiceItemDetails {
+      export interface ProrationDetails {
+        /**
+         * For a credit proration `line_item`, the original debit line_items to which the credit proration applies.
+         */
+        credited_items: ProrationDetails.CreditedItems | null;
+      }
+
+      export namespace ProrationDetails {
+        export interface CreditedItems {
+          /**
+           * Invoice containing the credited invoice line items
+           */
+          invoice: string;
+
+          /**
+           * Credited invoice line items
+           */
+          invoice_line_items: Array<string>;
+        }
+      }
+    }
+
+    export namespace SubscriptionItemDetails {
+      export interface ProrationDetails {
+        /**
+         * For a credit proration `line_item`, the original debit line_items to which the credit proration applies.
+         */
+        credited_items: ProrationDetails.CreditedItems | null;
+      }
+
+      export namespace ProrationDetails {
+        export interface CreditedItems {
+          /**
+           * Invoice containing the credited invoice line items
+           */
+          invoice: string;
+
+          /**
+           * Credited invoice line items
+           */
+          invoice_line_items: Array<string>;
+        }
+      }
+    }
+  }
+
+  export namespace PretaxCreditAmount {
+    export type Type = 'credit_balance_transaction' | 'discount' | 'margin';
+  }
+
+  export namespace Pricing {
+    export interface PriceDetails {
+      /**
+       * The ID of the price this item is associated with.
+       */
+      price: string | Price;
+
+      /**
+       * The ID of the product this item is associated with.
+       */
+      product: string;
+    }
+  }
+
+  export namespace Tax {
+    export type TaxBehavior = 'exclusive' | 'inclusive';
+
+    export interface TaxRateDetails {
+      /**
+       * ID of the tax rate
+       */
+      tax_rate: string;
+    }
+
+    export type TaxabilityReason =
+      | 'customer_exempt'
+      | 'not_available'
+      | 'not_collecting'
+      | 'not_subject_to_tax'
+      | 'not_supported'
+      | 'portion_product_exempt'
+      | 'portion_reduced_rated'
+      | 'portion_standard_rated'
+      | 'product_exempt'
+      | 'product_exempt_holiday'
+      | 'proportionally_rated'
+      | 'reduced_rated'
+      | 'reverse_charge'
+      | 'standard_rated'
+      | 'taxable_basis_reduced'
+      | 'zero_rated';
+  }
+}

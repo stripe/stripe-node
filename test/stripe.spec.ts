@@ -7,13 +7,15 @@ import {expect} from 'chai';
 import {StripeSignatureVerificationError} from '../src/Error.js';
 import {ApiVersion} from '../src/apiVersion.js';
 import {createApiKeyAuthenticator, detectAIAgent} from '../src/utils.js';
+import Stripe = require('../src/stripe.cjs.node.js');
+import {NodePlatformFunctions} from '../src/platform/NodePlatformFunctions.js';
+import {Stripe as StripeCore} from '../src/stripe.core.js';
 import {
   FAKE_API_KEY,
   getRandomString,
   getStripeMockClient,
   getTestServerStripe,
 } from './testUtils.js';
-import Stripe = require('../src/stripe.cjs.node.js');
 import crypto = require('crypto');
 import {StripeContext} from '../src/StripeContext.js';
 
@@ -113,7 +115,7 @@ describe('Stripe Module', function() {
     });
 
     it('should throw if no api key or authenticator provided', () => {
-      expect(() => new Stripe(null)).to.throw(
+      expect(() => Stripe(null)).to.throw(
         'Neither apiKey nor config.authenticator provided'
       );
     });
@@ -122,7 +124,7 @@ describe('Stripe Module', function() {
   describe('authenticator', () => {
     it('should throw an error when specifying both key and authenticator', () => {
       expect(() => {
-        return new Stripe('key', {
+        return Stripe('key', {
           authenticator: createApiKeyAuthenticator('...'),
         });
       }).to.throw("Can't specify both apiKey and authenticator");
@@ -130,7 +132,7 @@ describe('Stripe Module', function() {
 
     it('can create client using authenticator', () => {
       const authenticator = createApiKeyAuthenticator('...');
-      const stripe = new Stripe(null, {
+      const stripe = Stripe(null, {
         authenticator: authenticator,
       });
 
@@ -167,7 +169,7 @@ describe('Stripe Module', function() {
     });
 
     it('Should omit platform when telemetry is disabled', async () => {
-      const noTelemetryStripe = new Stripe(FAKE_API_KEY, {
+      const noTelemetryStripe = Stripe(FAKE_API_KEY, {
         telemetry: false,
       });
 
@@ -183,7 +185,7 @@ describe('Stripe Module', function() {
     it('Should include whether typescript: true was passed, respecting reinstantiations', () => {
       return new Promise((resolve) => resolve(null))
         .then(() => {
-          const newStripe = new Stripe(FAKE_API_KEY, {
+          const newStripe = Stripe(FAKE_API_KEY, {
             typescript: true,
           });
           return expect(
@@ -195,7 +197,7 @@ describe('Stripe Module', function() {
           ).to.eventually.have.property('typescript', 'true');
         })
         .then(() => {
-          const newStripe = new Stripe(FAKE_API_KEY, {});
+          const newStripe = Stripe(FAKE_API_KEY, {});
           return expect(
             new Promise((resolve, reject) => {
               newStripe.getClientUserAgent((c) => {
@@ -262,10 +264,10 @@ describe('Stripe Module', function() {
     });
 
     it('includes AI agent in request headers', (done) => {
-      const origAIAgent = Stripe.AI_AGENT;
-      const origUserAgent = Stripe.USER_AGENT;
-      Stripe.AI_AGENT = 'cursor';
-      Stripe.USER_AGENT = {...origUserAgent, ai_agent: 'cursor'};
+      const origAIAgent = StripeCore.AI_AGENT;
+      const origUserAgent = StripeCore.USER_AGENT;
+      StripeCore.AI_AGENT = 'cursor';
+      StripeCore.USER_AGENT = {...origUserAgent, ai_agent: 'cursor'};
       let capturedHeaders: any;
       getTestServerStripe(
         {},
@@ -277,13 +279,13 @@ describe('Stripe Module', function() {
         },
         (err, stripeClient, close) => {
           if (err) {
-            Stripe.AI_AGENT = origAIAgent;
-            Stripe.USER_AGENT = origUserAgent;
+            StripeCore.AI_AGENT = origAIAgent;
+            StripeCore.USER_AGENT = origUserAgent;
             return done(err);
           }
           stripeClient.customers.create((err) => {
-            Stripe.AI_AGENT = origAIAgent;
-            Stripe.USER_AGENT = origUserAgent;
+            StripeCore.AI_AGENT = origAIAgent;
+            StripeCore.USER_AGENT = origUserAgent;
             close();
             if (err) {
               return done(err);
@@ -648,7 +650,7 @@ describe('Stripe Module', function() {
   describe('context', () => {
     describe('when passed in via the config object', () => {
       let headers;
-      let stripeClient;
+      let stripeClient: Stripe;
       let closeServer;
       beforeEach((callback) => {
         getTestServerStripe(

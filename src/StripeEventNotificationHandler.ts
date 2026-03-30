@@ -1,4 +1,15 @@
-import {StripeObject} from './Types.js';
+import {Stripe} from './stripe.core.js';
+import * as Events from './resources/V2/Core/Events.js';
+
+export interface UnhandledNotificationDetails {
+  isKnownEventType: boolean;
+}
+
+type FallbackCallback = (
+  event: Events.UnknownEventNotification,
+  client: Stripe,
+  details: UnhandledNotificationDetails
+) => Promise<void>;
 
 // this is an internal-only type; we write a user-facing one separately
 type HandlerCallback = (event: any, client: any) => Promise<void>;
@@ -85,16 +96,19 @@ export class StripeEventNotificationHandler {
 
   // eslint-disable-next-line no-useless-constructor
   constructor(
-    private client: StripeObject,
+    private client: Stripe,
     private webhookSecret: string,
-    private fallbackCallback: (
-      event: any,
-      client: any,
-      details: any
-    ) => Promise<void>
+    private fallbackCallback: FallbackCallback
   ) {}
 
   // these types are duplicated in the manual types
+  public on<T extends Stripe.V2.Core.EventNotification['type']>(
+    type: T,
+    callback: (
+      event: Extract<Stripe.V2.Core.EventNotification, {type: T}>,
+      client: Stripe
+    ) => Promise<void>
+  ): this;
   public on(type: string, callback: HandlerCallback): this {
     if (this.hasHandledEvent) {
       throw new Error(
@@ -144,9 +158,13 @@ export class StripeEventNotificationHandler {
     if (handler) {
       return await handler(event, eventClient);
     } else {
-      return await this.fallbackCallback(event, eventClient, {
-        isKnownEventType: KNOWN_EVENT_TYPES.has(event.type),
-      });
+      return await this.fallbackCallback(
+        event as Events.UnknownEventNotification,
+        eventClient,
+        {
+          isKnownEventType: KNOWN_EVENT_TYPES.has(event.type),
+        }
+      );
     }
   }
 }

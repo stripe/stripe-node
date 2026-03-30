@@ -5,7 +5,7 @@
 const testUtils = require('../testUtils.js');
 const stripe = testUtils.getStripeMockClient();
 const realStripe = require('../../src/stripe.cjs.node.js')('sk_test_123');
-const {Decimal} = require('../../src/stripe.cjs.node.js');
+const {Decimal} = require('../../src/shared.js');
 const nock = require('nock');
 const expect = require('chai').expect;
 
@@ -5459,19 +5459,6 @@ describe('Generated tests', function() {
     expect(payoutMethod).not.to.be.null;
   });
 
-  it('test_v2_money_management_payout_methods_bank_account_spec_get', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'GET',
-        path: '/v2/money_management/payout_methods_bank_account_spec',
-        response:
-          '{"countries":{"key":{"fields":[{"local_name":"local_name","local_name_human":{"content":"content","localization_key":"localization_key"},"max_length":1111390753,"min_length":711577229,"placeholder":"placeholder","stripe_name":"stripe_name","validation_regex":"validation_regex"}]}},"object":"v2.money_management.payout_methods_bank_account_spec","livemode":true}',
-      },
-    ]);
-    const payoutMethodsBankAccountSpec = await stripe.v2.moneyManagement.payoutMethodsBankAccountSpec.retrieve();
-    expect(payoutMethodsBankAccountSpec).not.to.be.null;
-  });
-
   it('test_v2_money_management_received_credit_get', async function() {
     const stripe = testUtils.createMockClient([
       {
@@ -5593,7 +5580,7 @@ describe('Generated tests', function() {
           '{"object":"financial_address_credit_simulation","status":"status","livemode":true}',
       },
     ]);
-    const financialAddressCreditSimulation = await stripe.v2.testHelper.financialAddresses.credit(
+    const financialAddressCreditSimulation = await stripe.v2.testHelpers.financialAddresses.credit(
       'id_123',
       {
         amount: {
@@ -5616,7 +5603,7 @@ describe('Generated tests', function() {
           '{"amounts":[{"currency":"USD","value":1}],"object":"financial_address_generated_microdeposits","status":"accepted","livemode":true}',
       },
     ]);
-    const financialAddressGeneratedMicrodeposits = await stripe.v2.testHelper.financialAddresses.generateMicrodeposits(
+    const financialAddressGeneratedMicrodeposits = await stripe.v2.testHelpers.financialAddresses.generateMicrodeposits(
       'id_123'
     );
     expect(financialAddressGeneratedMicrodeposits).not.to.be.null;
