@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {Amount} from './../../V2/Amounts.js';
+import {V2Amount} from './../V2Amounts.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
 
@@ -55,7 +55,7 @@ export interface Transaction {
   /**
    * The amount of the Transaction.
    */
-  amount: Amount;
+  amount: V2Amount;
 
   /**
    * The delta to the FinancialAccount's balance. The balance_impact for the Transaction is equal to sum of its
@@ -120,17 +120,17 @@ export namespace V2 {
         /**
          * Impact to the available balance.
          */
-        available: Amount;
+        available: V2Amount;
 
         /**
          * Impact to the inbound_pending balance.
          */
-        inbound_pending: Amount;
+        inbound_pending: V2Amount;
 
         /**
          * Impact to the outbound_pending balance.
          */
-        outbound_pending: Amount;
+        outbound_pending: V2Amount;
       }
 
       export type Category =

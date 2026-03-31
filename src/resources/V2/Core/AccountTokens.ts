@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {Amount} from './../../V2/Amounts.js';
+import {V2Amount} from './../V2Amounts.js';
 import {JapanAddressParam, MetadataParam, Decimal} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
@@ -407,7 +407,7 @@ export namespace V2 {
             /**
              * A non-negative integer representing the amount in the smallest currency unit.
              */
-            amount?: Amount;
+            amount?: V2Amount;
 
             /**
              * The close-out date of the preceding fiscal year in ISO 8601 format. E.g. 2023-12-31 for the 31st of December, 2023.
@@ -488,7 +488,7 @@ export namespace V2 {
             /**
              * A non-negative integer representing the amount in the smallest currency unit.
              */
-            amount?: Amount;
+            amount?: V2Amount;
           }
 
           export interface RegistrationDate {

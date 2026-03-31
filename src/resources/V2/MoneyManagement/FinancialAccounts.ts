@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {Amount} from './../../V2/Amounts.js';
+import {V2Amount} from './../V2Amounts.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
@@ -168,21 +168,21 @@ export namespace V2 {
          * Balance that can be used for money movement.
          */
         available: {
-          [key: string]: Amount;
+          [key: string]: V2Amount;
         };
 
         /**
          * Balance of inbound funds that will later transition to the `available` balance.
          */
         inbound_pending: {
-          [key: string]: Amount;
+          [key: string]: V2Amount;
         };
 
         /**
          * Balance of funds that are being used for a pending outbound money movement.
          */
         outbound_pending: {
-          [key: string]: Amount;
+          [key: string]: V2Amount;
         };
       }
 

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {Amount} from './../../V2/Amounts.js';
+import {V2Amount} from './../V2Amounts.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
 
@@ -70,7 +70,7 @@ export interface InboundTransfer {
   /**
    * The amount in specified currency that will land in the FinancialAccount balance.
    */
-  amount: Amount;
+  amount: V2Amount;
 
   /**
    * Creation time of the InboundTransfer. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
@@ -114,7 +114,7 @@ export namespace V2 {
         /**
          * The amount in specified currency that was debited from the Payment Method.
          */
-        debited: Amount;
+        debited: V2Amount;
 
         /**
          * The Payment Method object used to create the InboundTransfer.
@@ -126,7 +126,7 @@ export namespace V2 {
         /**
          * The amount by which the FinancialAccount balance is credited.
          */
-        credited: Amount;
+        credited: V2Amount;
 
         /**
          * The FinancialAccount that funds will land in.
@@ -263,7 +263,7 @@ export namespace V2 {
       /**
        * The amount, in specified currency, by which the FinancialAccount balance will increase due to the InboundTransfer.
        */
-      amount: Amount;
+      amount: V2Amount;
 
       /**
        * Object containing details about where the funds will originate from.

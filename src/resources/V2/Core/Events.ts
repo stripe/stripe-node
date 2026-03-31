@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RangeQueryParam} from '../../../shared.js';
+import {RangeQueryParam, Decimal} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
 
@@ -21,7 +21,6 @@ export class EventResource extends StripeResource {
         data: response.data.map(this.addFetchRelatedObjectIfNeeded.bind(this)),
       };
     };
-
     return stripeMethod({
       method: 'GET',
       fullPath: '/v2/core/events',
@@ -43,7 +42,6 @@ export class EventResource extends StripeResource {
     const transformResponseData = (response: any): any => {
       return this.addFetchRelatedObjectIfNeeded(response);
     };
-
     return stripeMethod({
       method: 'GET',
       fullPath: '/v2/core/events/{id}',
@@ -193,7 +191,7 @@ export namespace V2 {
   }
 }
 import {Core} from './index.js';
-import {Billing} from './../../Billing/index.js';
+import {Billing as V1Billing} from './../../Billing/index.js';
 import {MoneyManagement} from './../MoneyManagement/index.js';
 export type Event =
   | V1BillingMeterErrorReportTriggeredEvent
@@ -339,6 +337,8 @@ export type EventNotification =
 
 import {StripeContext} from '../../../StripeContext.js';
 
+import {V2Amount} from '../V2Amounts.js';
+
 export namespace V2 {
   export namespace Core {
     export namespace Events {
@@ -359,9 +359,7 @@ export namespace V2 {
 
 /**
  * Represents the shape of an EventNotification that the SDK didn't know about when it was generated.
- */
-
-export interface UnknownEventNotification extends EventNotificationBase {
+ */ export interface UnknownEventNotification extends EventNotificationBase {
   /**
    * Object containing the reference to API resource relevant to the event.
    */ related_object: V2.Core.Events.RelatedObject | null;
@@ -387,7 +385,7 @@ export interface V1BillingMeterErrorReportTriggeredEvent extends EventBase {
   // Object containing the reference to API resource relevant to the event.
   related_object: V2.Core.Events.RelatedObject;
   // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Billing.Meter>;
+  fetchRelatedObject(): Promise<V1Billing.Meter>;
 }
 export interface V1BillingMeterErrorReportTriggeredEventNotification
   extends EventNotificationBase {
@@ -395,7 +393,7 @@ export interface V1BillingMeterErrorReportTriggeredEventNotification
   // Object containing the reference to API resource relevant to the event.
   related_object: V2.Core.Events.RelatedObject;
   // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Billing.Meter>;
+  fetchRelatedObject(): Promise<V1Billing.Meter>;
   fetchEvent(): Promise<V1BillingMeterErrorReportTriggeredEvent>;
 }
 
