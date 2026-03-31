@@ -656,9 +656,7 @@ export namespace V2 {
 
 /**
  * Represents the shape of an EventNotification that the SDK didn't know about when it was generated.
- */
-
-export interface UnknownEventNotification extends EventNotificationBase {
+ */ export interface UnknownEventNotification extends EventNotificationBase {
   /**
    * Object containing the reference to API resource relevant to the event.
    */ related_object: V2.Core.Events.RelatedObject | null;
