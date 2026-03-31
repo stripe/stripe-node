@@ -17,6 +17,7 @@ import {
   FileData,
 } from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class FileResource extends StripeResource {
   /**
    * Returns a list of the files that your account has access to. Stripe sorts and returns the files by their creation dates, placing the most recently created files at the top.

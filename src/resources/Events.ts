@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {PaginationParams, RangeQueryParam} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class EventResource extends StripeResource {
   /**
    * List events, going back up to 30 days. Each event data is rendered according to Stripe API version at its creation time, specified in [event object](https://docs.stripe.com/api/events/object) api_version attribute (not according to your current Stripe API version or Stripe-Version header).

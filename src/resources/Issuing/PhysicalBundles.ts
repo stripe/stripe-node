@@ -4,6 +4,7 @@ import {StripeResource} from '../../StripeResource.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PhysicalBundleResource extends StripeResource {
   /**
    * Returns a list of physical bundle objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.

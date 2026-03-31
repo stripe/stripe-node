@@ -5,6 +5,7 @@ import {MeterEventSummary} from './MeterEventSummaries.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class MeterResource extends StripeResource {
   /**
    * Retrieve a list of billing meters.

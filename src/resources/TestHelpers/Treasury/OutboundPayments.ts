@@ -4,6 +4,7 @@ import {StripeResource} from '../../../StripeResource.js';
 import {OutboundPayment} from './../../Treasury/OutboundPayments.js';
 import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class OutboundPaymentResource extends StripeResource {
   /**
    * Updates a test mode created OutboundPayment with tracking details. The OutboundPayment must not be cancelable, and cannot be in the canceled or failed states.

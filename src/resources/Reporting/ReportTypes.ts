@@ -3,6 +3,7 @@
 import {StripeResource} from '../../StripeResource.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ReportTypeResource extends StripeResource {
   /**
    * Returns a full list of Report Types.

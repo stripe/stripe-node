@@ -6,6 +6,7 @@ import {PaymentIntent} from './PaymentIntents.js';
 import {PaginationParams, RangeQueryParam} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ReviewResource extends StripeResource {
   /**
    * Returns a list of Review objects that have open set to true. The objects are sorted in descending order by creation date, with the most recently created object appearing first.

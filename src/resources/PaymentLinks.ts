@@ -15,6 +15,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PaymentLinkResource extends StripeResource {
   /**
    * Returns a list of your payment links.

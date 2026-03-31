@@ -20,6 +20,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class CreditNoteResource extends StripeResource {
   /**
    * Returns a list of credit notes.

@@ -11,6 +11,7 @@ import {
 import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
 import {DeletedObject} from './../../../V2/DeletedObject.js';
 const stripeMethod = StripeResource.method;
+
 export class PersonResource extends StripeResource {
   /**
    * Returns a paginated list of Persons associated with an Account.

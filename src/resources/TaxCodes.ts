@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {PaginationParams} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class TaxCodeResource extends StripeResource {
   /**
    * A list of [all tax codes available](https://stripe.com/docs/tax/tax-categories) to add to Products in order to allow specific tax calculations.

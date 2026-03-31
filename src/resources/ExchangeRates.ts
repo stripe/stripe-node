@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {PaginationParams} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ExchangeRateResource extends StripeResource {
   /**
    * [Deprecated] The ExchangeRate APIs are deprecated. Please use the [FX Quotes API](https://docs.stripe.com/payments/currencies/localize-prices/fx-quotes-api) instead.

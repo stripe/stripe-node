@@ -4,6 +4,7 @@ import {StripeResource} from '../../StripeResource.js';
 import {Emptyable, PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class RegistrationResource extends StripeResource {
   /**
    * Returns a list of Tax Registration objects.

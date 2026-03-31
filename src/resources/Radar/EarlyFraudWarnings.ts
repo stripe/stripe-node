@@ -6,6 +6,7 @@ import {PaymentIntent} from './../PaymentIntents.js';
 import {PaginationParams, RangeQueryParam} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class EarlyFraudWarningResource extends StripeResource {
   /**
    * Returns a list of early fraud warnings.

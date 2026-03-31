@@ -12,6 +12,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PlanResource extends StripeResource {
   /**
    * Deleting plans means new subscribers can't be added. Existing subscribers aren't affected.

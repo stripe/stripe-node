@@ -33,4 +33,7 @@ export class TestHelpers {
 
 export declare namespace TestHelpers {
   export {TestClock};
+  export {Issuing};
+  export {Terminal};
+  export {Treasury};
 }

@@ -11,6 +11,7 @@ import {
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class FinancialAccountResource extends StripeResource {
   /**
    * Returns a list of FinancialAccounts.

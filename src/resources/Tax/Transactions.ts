@@ -10,6 +10,7 @@ import {
 } from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise, ApiList} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class TransactionResource extends StripeResource {
   /**
    * Retrieves a Tax Transaction object.

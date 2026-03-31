@@ -5,6 +5,7 @@ import {Supplier} from './Suppliers.js';
 import {PaginationParams, Decimal} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ProductResource extends StripeResource {
   /**
    * Lists all available Climate product objects.

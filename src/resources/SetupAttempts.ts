@@ -12,6 +12,7 @@ import {CustomerSource} from './CustomerSources.js';
 import {PaginationParams, RangeQueryParam} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class SetupAttemptResource extends StripeResource {
   /**
    * Returns a list of SetupAttempts that associate with a provided SetupIntent.

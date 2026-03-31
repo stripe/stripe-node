@@ -15,6 +15,7 @@ import {
 } from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ReaderResource extends StripeResource {
   /**
    * Deletes a Reader object.

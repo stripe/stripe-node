@@ -3,6 +3,7 @@
 import {StripeResource} from '../StripeResource.js';
 import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class BalanceResource extends StripeResource {
   /**
    * Retrieves the current account balance, based on the authentication that was used to make the request.

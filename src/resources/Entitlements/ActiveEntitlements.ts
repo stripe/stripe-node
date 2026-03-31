@@ -5,6 +5,7 @@ import {Feature} from './Features.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ActiveEntitlementResource extends StripeResource {
   /**
    * Retrieve a list of active entitlements for a customer

@@ -4,6 +4,7 @@ import {StripeResource} from '../../../StripeResource.js';
 import {InboundTransfer} from './../../Treasury/InboundTransfers.js';
 import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class InboundTransferResource extends StripeResource {
   /**
    * Transitions a test mode created InboundTransfer to the failed status. The InboundTransfer must already be in the processing state.

@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {Customer} from './Customers.js';
 import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class CustomerSessionResource extends StripeResource {
   /**
    * Creates a Customer Session object that includes a single-use client secret that you can use on your front-end to grant client-side API access for certain customer resources.

@@ -7,6 +7,7 @@ import {Charge} from './Charges.js';
 import {Address} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ConfirmationTokenResource extends StripeResource {
   /**
    * Retrieves an existing ConfirmationToken object

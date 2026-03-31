@@ -5,6 +5,7 @@ import {Account} from './Accounts.js';
 import {Customer} from './../Customers.js';
 import {RequestOptions, Response, ApiList} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class SessionResource extends StripeResource {
   /**
    * Retrieves the details of a Financial Connections Session

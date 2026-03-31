@@ -4,6 +4,7 @@ import {StripeResource} from '../../StripeResource.js';
 import {Customer, DeletedCustomer} from './../Customers.js';
 import {RequestOptions, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class CreditBalanceSummaryResource extends StripeResource {
   /**
    * Retrieves the credit balance summary for a customer.

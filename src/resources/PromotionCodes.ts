@@ -12,6 +12,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PromotionCodeResource extends StripeResource {
   /**
    * Returns a list of your promotion codes.

@@ -5,6 +5,7 @@ import {Transaction} from './Transactions.js';
 import {PaginationParams, Address} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ReceivedDebitResource extends StripeResource {
   /**
    * Returns a list of ReceivedDebits.

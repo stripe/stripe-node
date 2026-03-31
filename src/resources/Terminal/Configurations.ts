@@ -5,6 +5,7 @@ import {File} from './../Files.js';
 import {Emptyable, PaginationParams} from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ConfigurationResource extends StripeResource {
   /**
    * Deletes a Configuration object.

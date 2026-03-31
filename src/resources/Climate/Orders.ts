@@ -12,6 +12,7 @@ import {
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class OrderResource extends StripeResource {
   /**
    * Lists all Climate order objects. The orders are returned sorted by creation date, with the

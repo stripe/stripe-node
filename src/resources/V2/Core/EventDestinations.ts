@@ -6,6 +6,7 @@ import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 import {DeletedObject} from './../../V2/DeletedObject.js';
 const stripeMethod = StripeResource.method;
+
 export class EventDestinationResource extends StripeResource {
   /**
    * Lists all event destinations.

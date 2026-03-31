@@ -3,6 +3,7 @@
 import {StripeResource} from '../../StripeResource.js';
 import {RequestOptions, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class MeterEventResource extends StripeResource {
   /**
    * Creates a billing meter event.

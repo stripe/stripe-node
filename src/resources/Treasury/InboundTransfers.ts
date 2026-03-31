@@ -11,6 +11,7 @@ import {
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class InboundTransferResource extends StripeResource {
   /**
    * Returns a list of InboundTransfers sent from the specified FinancialAccount.

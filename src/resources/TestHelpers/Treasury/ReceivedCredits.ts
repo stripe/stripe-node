@@ -4,6 +4,7 @@ import {StripeResource} from '../../../StripeResource.js';
 import {ReceivedCredit} from './../../Treasury/ReceivedCredits.js';
 import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ReceivedCreditResource extends StripeResource {
   /**
    * Use this endpoint to simulate a test mode ReceivedCredit initiated by a third party. In live mode, you can't directly create ReceivedCredits initiated by third parties.

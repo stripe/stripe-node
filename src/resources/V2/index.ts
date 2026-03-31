@@ -1,13 +1,14 @@
-// eslint-disable-next-line no-warning-comments
-// TODO(prathmesh): https://go/j/DEVSDK-3050 Generate this class with codegen
+// File generated from our OpenAPI spec
 
 import {Stripe} from '../../stripe.core.js';
+import {DeletedObject} from './DeletedObject.js';
 import {Billing} from './Billing/index.js';
 import {Core} from './Core/index.js';
 
 export class V2 {
   billing: Billing;
   core: Core;
+
   constructor(private readonly stripe: Stripe) {
     this.billing = new Billing(stripe);
     this.core = new Core(stripe);
@@ -15,6 +16,7 @@ export class V2 {
 }
 
 export declare namespace V2 {
+  export {DeletedObject};
   export {Billing};
   export {Core};
 }
