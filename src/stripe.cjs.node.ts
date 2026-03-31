@@ -34,4 +34,7 @@ for (const key of Object.getOwnPropertyNames(Stripe)) {
     });
   }
 }
+declare namespace StripeConstructor {
+  export type Stripe = import('./stripe.core.js').Stripe;
+}
 export = StripeConstructor;
