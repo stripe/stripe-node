@@ -35,6 +35,7 @@ import {
   ApiSearchResultPromise,
 } from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class InvoiceResource extends StripeResource {
   /**
    * Permanently deletes a one-off invoice draft. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized or if an invoice is for a subscription, it must be [voided](https://docs.stripe.com/api/invoices/void).

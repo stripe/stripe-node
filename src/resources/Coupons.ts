@@ -10,6 +10,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class CouponResource extends StripeResource {
   /**
    * You can delete coupons via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can't redeem the coupon. You can also delete coupons via the API.

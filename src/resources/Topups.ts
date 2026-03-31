@@ -12,6 +12,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class TopupResource extends StripeResource {
   /**
    * Returns a list of top-ups.

@@ -5,6 +5,7 @@ import {ConfirmationToken} from './../ConfirmationTokens.js';
 import {MetadataParam, Emptyable, AddressParam} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ConfirmationTokenResource extends StripeResource {
   /**
    * Creates a test mode Confirmation Token server side for your integration tests.

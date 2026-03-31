@@ -3,6 +3,7 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class AccountLinkResource extends StripeResource {
   /**
    * Creates an AccountLink object that includes a single-use URL that an account can use to access a Stripe-hosted flow for collecting or updating required information.

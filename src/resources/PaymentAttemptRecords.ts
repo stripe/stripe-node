@@ -6,6 +6,7 @@ import {Mandate} from './Mandates.js';
 import {Metadata, Address} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PaymentAttemptRecordResource extends StripeResource {
   /**
    * List all the Payment Attempt Records attached to the specified Payment Record.

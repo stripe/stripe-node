@@ -4,6 +4,7 @@ import {StripeResource} from '../../StripeResource.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class SecretResource extends StripeResource {
   /**
    * List all secrets stored on the given scope.

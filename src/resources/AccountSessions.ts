@@ -3,6 +3,7 @@
 import {StripeResource} from '../StripeResource.js';
 import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class AccountSessionResource extends StripeResource {
   /**
    * Creates a AccountSession object that includes a single-use token that the platform can use on their front-end to grant client-side API access.

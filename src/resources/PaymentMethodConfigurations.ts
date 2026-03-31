@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {PaginationParams, Emptyable} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PaymentMethodConfigurationResource extends StripeResource {
   /**
    * List payment method configurations

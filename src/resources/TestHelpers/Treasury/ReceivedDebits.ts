@@ -4,6 +4,7 @@ import {StripeResource} from '../../../StripeResource.js';
 import {ReceivedDebit} from './../../Treasury/ReceivedDebits.js';
 import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ReceivedDebitResource extends StripeResource {
   /**
    * Use this endpoint to simulate a test mode ReceivedDebit initiated by a third party. In live mode, you can't directly create ReceivedDebits initiated by third parties.

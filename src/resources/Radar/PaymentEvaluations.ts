@@ -5,6 +5,7 @@ import {PaymentMethod} from './../PaymentMethods.js';
 import {MetadataParam, AddressParam, Metadata, Address} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PaymentEvaluationResource extends StripeResource {
   /**
    * Request a Radar API fraud risk score from Stripe for a payment before sending it for external processor authorization.

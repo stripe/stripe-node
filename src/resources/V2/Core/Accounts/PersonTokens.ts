@@ -5,6 +5,7 @@ import {AccountPersonToken} from './../../../V2/Core/AccountPersonTokens.js';
 import {JapanAddressParam, MetadataParam, Decimal} from '../../../../shared.js';
 import {RequestOptions, Response} from '../../../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PersonTokenResource extends StripeResource {
   /**
    * Creates a Person Token associated with an Account.

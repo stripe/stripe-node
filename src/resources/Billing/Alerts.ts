@@ -6,6 +6,7 @@ import {Customer} from './../Customers.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class AlertResource extends StripeResource {
   /**
    * Lists billing active and inactive alerts

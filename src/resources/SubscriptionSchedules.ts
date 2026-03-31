@@ -24,6 +24,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class SubscriptionScheduleResource extends StripeResource {
   /**
    * Retrieves the list of your subscription schedules.

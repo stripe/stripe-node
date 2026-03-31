@@ -14,6 +14,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class SubscriptionItemResource extends StripeResource {
   /**
    * Deletes an item from the subscription. Removing a subscription item from a subscription will not cancel the subscription.

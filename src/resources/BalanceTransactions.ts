@@ -5,6 +5,7 @@ import {BalanceTransactionSource} from './BalanceTransactionSources.js';
 import {PaginationParams, RangeQueryParam} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class BalanceTransactionResource extends StripeResource {
   /**
    * Returns a list of transactions that have contributed to the Stripe account balance (e.g., charges, transfers, and so forth). The transactions are returned in sorted order, with the most recent transactions appearing first.

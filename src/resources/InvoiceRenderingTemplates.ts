@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {PaginationParams, Metadata} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class InvoiceRenderingTemplateResource extends StripeResource {
   /**
    * List all templates, ordered by creation date, with the most recently created template appearing first.

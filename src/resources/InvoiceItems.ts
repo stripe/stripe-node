@@ -17,6 +17,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class InvoiceItemResource extends StripeResource {
   /**
    * Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they're not attached to invoices, or if it's attached to a draft invoice.

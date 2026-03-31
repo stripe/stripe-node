@@ -7,6 +7,7 @@ import {Customer} from './../Customers.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class AccountResource extends StripeResource {
   /**
    * Returns a list of Financial Connections Account objects.

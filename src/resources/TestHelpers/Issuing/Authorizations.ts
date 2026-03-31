@@ -5,6 +5,7 @@ import {Authorization} from './../../Issuing/Authorizations.js';
 import {Decimal} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class AuthorizationResource extends StripeResource {
   /**
    * Create a test-mode authorization.

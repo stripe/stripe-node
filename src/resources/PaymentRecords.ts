@@ -12,6 +12,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PaymentRecordResource extends StripeResource {
   /**
    * Retrieves a Payment Record with the given ID

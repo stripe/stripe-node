@@ -10,6 +10,7 @@ import {
 } from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise, ApiList} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class ValueListResource extends StripeResource {
   /**
    * Deletes a ValueList object, also deleting any items contained within the value list. To be deleted, a value list must not be referenced in any rules.

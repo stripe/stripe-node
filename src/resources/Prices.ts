@@ -17,6 +17,7 @@ import {
   ApiSearchResultPromise,
 } from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PriceResource extends StripeResource {
   /**
    * Returns a list of your active prices, excluding [inline prices](https://docs.stripe.com/docs/products-prices/pricing-models#inline-pricing). For the list of inactive prices, set active to false.

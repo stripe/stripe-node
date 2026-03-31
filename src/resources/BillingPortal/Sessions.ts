@@ -4,6 +4,7 @@ import {StripeResource} from '../../StripeResource.js';
 import {Configuration} from './Configurations.js';
 import {RequestOptions, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class SessionResource extends StripeResource {
   /**
    * Creates a session of the customer portal.

@@ -26,6 +26,7 @@ import {
   StripeStreamResponse,
 } from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class QuoteResource extends StripeResource {
   /**
    * Returns a list of your quotes.

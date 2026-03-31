@@ -44,7 +44,7 @@ export declare namespace Core {
   export {Account};
   export {AccountLink};
   export {AccountToken};
-  export {EventBase, Event, Events, EventNotification};
+  export {EventBase, Event, EventNotification, Events};
   export {EventDestination};
   export {AccountPersonToken};
   export {AccountPerson};

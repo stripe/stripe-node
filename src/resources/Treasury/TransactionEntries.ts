@@ -13,6 +13,7 @@ import * as Issuing from './../Issuing/index.js';
 import {PaginationParams, RangeQueryParam} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class TransactionEntryResource extends StripeResource {
   /**
    * Retrieves a list of TransactionEntry objects.

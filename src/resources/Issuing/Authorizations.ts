@@ -16,6 +16,7 @@ import {
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class AuthorizationResource extends StripeResource {
   /**
    * Returns a list of Issuing Authorization objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.

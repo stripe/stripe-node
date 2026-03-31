@@ -29,6 +29,7 @@ import {
   ApiSearchResultPromise,
 } from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class CustomerResource extends StripeResource {
   /**
    * Permanently deletes a customer. It cannot be undone. Also immediately cancels any active subscriptions on the customer.

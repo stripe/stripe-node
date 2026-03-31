@@ -27,6 +27,7 @@ import {
   ApiSearchResultPromise,
 } from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class PaymentIntentResource extends StripeResource {
   /**
    * Returns a list of PaymentIntents.

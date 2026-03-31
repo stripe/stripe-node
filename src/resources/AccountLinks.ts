@@ -3,6 +3,7 @@
 import {StripeResource} from '../StripeResource.js';
 import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class AccountLinkResource extends StripeResource {
   /**
    * Creates an AccountLink object that includes a single-use Stripe URL that the platform can redirect their user to in order to take them through the Connect Onboarding flow.

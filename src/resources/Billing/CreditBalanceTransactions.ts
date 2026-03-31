@@ -7,6 +7,7 @@ import * as TestHelpers from './../TestHelpers/index.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class CreditBalanceTransactionResource extends StripeResource {
   /**
    * Retrieve a list of credit balance transactions.

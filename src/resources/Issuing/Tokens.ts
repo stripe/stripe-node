@@ -5,6 +5,7 @@ import {Card} from './Cards.js';
 import {PaginationParams, RangeQueryParam} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class TokenResource extends StripeResource {
   /**
    * Lists all Issuing Token objects for a given card.

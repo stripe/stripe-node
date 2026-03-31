@@ -13,6 +13,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class SourceResource extends StripeResource {
   /**
    * Retrieves an existing source object. Supply the unique source ID from a source creation request and Stripe will return the corresponding up-to-date source object information.

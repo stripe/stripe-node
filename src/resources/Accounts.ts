@@ -19,6 +19,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise, ApiList} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 // Since path can either be `account` or `accounts`, support both through stripeMethod path
 export class AccountResource extends StripeResource {
   /**

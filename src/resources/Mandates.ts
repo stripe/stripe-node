@@ -4,6 +4,7 @@ import {StripeResource} from '../StripeResource.js';
 import {PaymentMethod} from './PaymentMethods.js';
 import {RequestOptions, Response} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class MandateResource extends StripeResource {
   /**
    * Retrieves a Mandate object.

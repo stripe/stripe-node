@@ -30,6 +30,7 @@ import {
   ApiSearchResultPromise,
 } from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class SubscriptionResource extends StripeResource {
   /**
    * Cancels a customer's subscription immediately. The customer won't be charged again for the subscription. After it's canceled, you can no longer update the subscription or its [metadata](https://docs.stripe.com/metadata).

@@ -14,6 +14,7 @@ import {
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../lib.js';
 const stripeMethod = StripeResource.method;
+
 export class TransferResource extends StripeResource {
   /**
    * Returns a list of existing transfers sent to connected accounts. The transfers are returned in sorted order, with the most recently created transfers appearing first.
