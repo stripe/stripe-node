@@ -1,365 +1,345 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
+import {Discount} from './Discounts.js';
+import {Plan} from './Plans.js';
+import {Price} from './Prices.js';
+import {TaxRate} from './TaxRates.js';
+import {
+  Emptyable,
+  MetadataParam,
+  Decimal,
+  PaginationParams,
+  Metadata,
+} from '../shared.js';
+import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 const stripeMethod = StripeResource.method;
-export const SubscriptionItems = StripeResource.extend({
-  create: stripeMethod({
-    method: 'POST',
-    fullPath: '/v1/subscription_items',
-    requestSchema: {
-      kind: 'object',
-      fields: {
-        price_data: {
-          kind: 'object',
-          fields: {unit_amount_decimal: {kind: 'decimal_string'}},
-        },
-      },
-    },
-    responseSchema: {
-      kind: 'object',
-      fields: {
-        plan: {
-          kind: 'object',
-          fields: {
-            amount_decimal: {kind: 'nullable', inner: {kind: 'decimal_string'}},
-            tiers: {
-              kind: 'array',
-              element: {
-                kind: 'object',
-                fields: {
-                  flat_amount_decimal: {
-                    kind: 'nullable',
-                    inner: {kind: 'decimal_string'},
-                  },
-                  unit_amount_decimal: {
-                    kind: 'nullable',
-                    inner: {kind: 'decimal_string'},
-                  },
-                },
-              },
-            },
-          },
-        },
-        price: {
-          kind: 'object',
-          fields: {
-            currency_options: {
-              kind: 'array',
-              element: {
-                kind: 'object',
-                fields: {
-                  tiers: {
-                    kind: 'array',
-                    element: {
-                      kind: 'object',
-                      fields: {
-                        flat_amount_decimal: {
-                          kind: 'nullable',
-                          inner: {kind: 'decimal_string'},
-                        },
-                        unit_amount_decimal: {
-                          kind: 'nullable',
-                          inner: {kind: 'decimal_string'},
-                        },
-                      },
-                    },
-                  },
-                  unit_amount_decimal: {
-                    kind: 'nullable',
-                    inner: {kind: 'decimal_string'},
-                  },
-                },
-              },
-            },
-            tiers: {
-              kind: 'array',
-              element: {
-                kind: 'object',
-                fields: {
-                  flat_amount_decimal: {
-                    kind: 'nullable',
-                    inner: {kind: 'decimal_string'},
-                  },
-                  unit_amount_decimal: {
-                    kind: 'nullable',
-                    inner: {kind: 'decimal_string'},
-                  },
-                },
-              },
-            },
-            unit_amount_decimal: {
-              kind: 'nullable',
-              inner: {kind: 'decimal_string'},
-            },
-          },
-        },
-      },
-    },
-  }),
-  retrieve: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/subscription_items/{item}',
-    responseSchema: {
-      kind: 'object',
-      fields: {
-        plan: {
-          kind: 'object',
-          fields: {
-            amount_decimal: {kind: 'nullable', inner: {kind: 'decimal_string'}},
-            tiers: {
-              kind: 'array',
-              element: {
-                kind: 'object',
-                fields: {
-                  flat_amount_decimal: {
-                    kind: 'nullable',
-                    inner: {kind: 'decimal_string'},
-                  },
-                  unit_amount_decimal: {
-                    kind: 'nullable',
-                    inner: {kind: 'decimal_string'},
-                  },
-                },
-              },
-            },
-          },
-        },
-        price: {
-          kind: 'object',
-          fields: {
-            currency_options: {
-              kind: 'array',
-              element: {
-                kind: 'object',
-                fields: {
-                  tiers: {
-                    kind: 'array',
-                    element: {
-                      kind: 'object',
-                      fields: {
-                        flat_amount_decimal: {
-                          kind: 'nullable',
-                          inner: {kind: 'decimal_string'},
-                        },
-                        unit_amount_decimal: {
-                          kind: 'nullable',
-                          inner: {kind: 'decimal_string'},
-                        },
-                      },
-                    },
-                  },
-                  unit_amount_decimal: {
-                    kind: 'nullable',
-                    inner: {kind: 'decimal_string'},
-                  },
-                },
-              },
-            },
-            tiers: {
-              kind: 'array',
-              element: {
-                kind: 'object',
-                fields: {
-                  flat_amount_decimal: {
-                    kind: 'nullable',
-                    inner: {kind: 'decimal_string'},
-                  },
-                  unit_amount_decimal: {
-                    kind: 'nullable',
-                    inner: {kind: 'decimal_string'},
-                  },
-                },
-              },
-            },
-            unit_amount_decimal: {
-              kind: 'nullable',
-              inner: {kind: 'decimal_string'},
-            },
-          },
-        },
-      },
-    },
-  }),
-  update: stripeMethod({
-    method: 'POST',
-    fullPath: '/v1/subscription_items/{item}',
-    requestSchema: {
-      kind: 'object',
-      fields: {
-        price_data: {
-          kind: 'object',
-          fields: {unit_amount_decimal: {kind: 'decimal_string'}},
-        },
-      },
-    },
-    responseSchema: {
-      kind: 'object',
-      fields: {
-        plan: {
-          kind: 'object',
-          fields: {
-            amount_decimal: {kind: 'nullable', inner: {kind: 'decimal_string'}},
-            tiers: {
-              kind: 'array',
-              element: {
-                kind: 'object',
-                fields: {
-                  flat_amount_decimal: {
-                    kind: 'nullable',
-                    inner: {kind: 'decimal_string'},
-                  },
-                  unit_amount_decimal: {
-                    kind: 'nullable',
-                    inner: {kind: 'decimal_string'},
-                  },
-                },
-              },
-            },
-          },
-        },
-        price: {
-          kind: 'object',
-          fields: {
-            currency_options: {
-              kind: 'array',
-              element: {
-                kind: 'object',
-                fields: {
-                  tiers: {
-                    kind: 'array',
-                    element: {
-                      kind: 'object',
-                      fields: {
-                        flat_amount_decimal: {
-                          kind: 'nullable',
-                          inner: {kind: 'decimal_string'},
-                        },
-                        unit_amount_decimal: {
-                          kind: 'nullable',
-                          inner: {kind: 'decimal_string'},
-                        },
-                      },
-                    },
-                  },
-                  unit_amount_decimal: {
-                    kind: 'nullable',
-                    inner: {kind: 'decimal_string'},
-                  },
-                },
-              },
-            },
-            tiers: {
-              kind: 'array',
-              element: {
-                kind: 'object',
-                fields: {
-                  flat_amount_decimal: {
-                    kind: 'nullable',
-                    inner: {kind: 'decimal_string'},
-                  },
-                  unit_amount_decimal: {
-                    kind: 'nullable',
-                    inner: {kind: 'decimal_string'},
-                  },
-                },
-              },
-            },
-            unit_amount_decimal: {
-              kind: 'nullable',
-              inner: {kind: 'decimal_string'},
-            },
-          },
-        },
-      },
-    },
-  }),
-  list: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/subscription_items',
-    methodType: 'list',
-    responseSchema: {
-      kind: 'object',
-      fields: {
-        data: {
-          kind: 'array',
-          element: {
+
+export class SubscriptionItemResource extends StripeResource {
+  /**
+   * Deletes an item from the subscription. Removing a subscription item from a subscription will not cancel the subscription.
+   */
+  del(
+    id: string,
+    params?: SubscriptionItemDeleteParams,
+    options?: RequestOptions
+  ): Promise<Response<DeletedSubscriptionItem>>;
+  del(
+    id: string,
+    options?: RequestOptions
+  ): Promise<Response<DeletedSubscriptionItem>>;
+  del(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'DELETE',
+      fullPath: '/v1/subscription_items/{item}',
+    }).call(this, ...args);
+  }
+
+  /**
+   * Retrieves the subscription item with the given ID.
+   */
+  retrieve(
+    id: string,
+    params?: SubscriptionItemRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<SubscriptionItem>>;
+  retrieve(
+    id: string,
+    options?: RequestOptions
+  ): Promise<Response<SubscriptionItem>>;
+  retrieve(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'GET',
+      fullPath: '/v1/subscription_items/{item}',
+      responseSchema: {
+        kind: 'object',
+        fields: {
+          plan: {
             kind: 'object',
             fields: {
-              plan: {
-                kind: 'object',
-                fields: {
-                  amount_decimal: {
-                    kind: 'nullable',
-                    inner: {kind: 'decimal_string'},
+              amount_decimal: {
+                kind: 'nullable',
+                inner: {kind: 'decimal_string'},
+              },
+              tiers: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    flat_amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                    unit_amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
                   },
-                  tiers: {
-                    kind: 'array',
-                    element: {
-                      kind: 'object',
-                      fields: {
-                        flat_amount_decimal: {
-                          kind: 'nullable',
-                          inner: {kind: 'decimal_string'},
+                },
+              },
+            },
+          },
+          price: {
+            kind: 'object',
+            fields: {
+              currency_options: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    tiers: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {
+                          flat_amount_decimal: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
+                          unit_amount_decimal: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
                         },
-                        unit_amount_decimal: {
-                          kind: 'nullable',
-                          inner: {kind: 'decimal_string'},
+                      },
+                    },
+                    unit_amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                  },
+                },
+              },
+              tiers: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    flat_amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                    unit_amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                  },
+                },
+              },
+              unit_amount_decimal: {
+                kind: 'nullable',
+                inner: {kind: 'decimal_string'},
+              },
+            },
+          },
+        },
+      },
+    }).call(this, ...args);
+  }
+
+  /**
+   * Updates the plan or quantity of an item on a current subscription.
+   */
+  update(
+    id: string,
+    params?: SubscriptionItemUpdateParams,
+    options?: RequestOptions
+  ): Promise<Response<SubscriptionItem>>;
+  update(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'POST',
+      fullPath: '/v1/subscription_items/{item}',
+      requestSchema: {
+        kind: 'object',
+        fields: {
+          price_data: {
+            kind: 'object',
+            fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+          },
+        },
+      },
+      responseSchema: {
+        kind: 'object',
+        fields: {
+          plan: {
+            kind: 'object',
+            fields: {
+              amount_decimal: {
+                kind: 'nullable',
+                inner: {kind: 'decimal_string'},
+              },
+              tiers: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    flat_amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                    unit_amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                  },
+                },
+              },
+            },
+          },
+          price: {
+            kind: 'object',
+            fields: {
+              currency_options: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    tiers: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {
+                          flat_amount_decimal: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
+                          unit_amount_decimal: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
+                        },
+                      },
+                    },
+                    unit_amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                  },
+                },
+              },
+              tiers: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    flat_amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                    unit_amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                  },
+                },
+              },
+              unit_amount_decimal: {
+                kind: 'nullable',
+                inner: {kind: 'decimal_string'},
+              },
+            },
+          },
+        },
+      },
+    }).call(this, ...args);
+  }
+
+  /**
+   * Returns a list of your subscription items for a given subscription.
+   */
+  list(
+    params: SubscriptionItemListParams,
+    options?: RequestOptions
+  ): ApiListPromise<SubscriptionItem>;
+  list(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'GET',
+      fullPath: '/v1/subscription_items',
+      methodType: 'list',
+      responseSchema: {
+        kind: 'object',
+        fields: {
+          data: {
+            kind: 'array',
+            element: {
+              kind: 'object',
+              fields: {
+                plan: {
+                  kind: 'object',
+                  fields: {
+                    amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                    tiers: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {
+                          flat_amount_decimal: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
+                          unit_amount_decimal: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
                         },
                       },
                     },
                   },
                 },
-              },
-              price: {
-                kind: 'object',
-                fields: {
-                  currency_options: {
-                    kind: 'array',
-                    element: {
-                      kind: 'object',
-                      fields: {
-                        tiers: {
-                          kind: 'array',
-                          element: {
-                            kind: 'object',
-                            fields: {
-                              flat_amount_decimal: {
-                                kind: 'nullable',
-                                inner: {kind: 'decimal_string'},
-                              },
-                              unit_amount_decimal: {
-                                kind: 'nullable',
-                                inner: {kind: 'decimal_string'},
+                price: {
+                  kind: 'object',
+                  fields: {
+                    currency_options: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {
+                          tiers: {
+                            kind: 'array',
+                            element: {
+                              kind: 'object',
+                              fields: {
+                                flat_amount_decimal: {
+                                  kind: 'nullable',
+                                  inner: {kind: 'decimal_string'},
+                                },
+                                unit_amount_decimal: {
+                                  kind: 'nullable',
+                                  inner: {kind: 'decimal_string'},
+                                },
                               },
                             },
                           },
-                        },
-                        unit_amount_decimal: {
-                          kind: 'nullable',
-                          inner: {kind: 'decimal_string'},
-                        },
-                      },
-                    },
-                  },
-                  tiers: {
-                    kind: 'array',
-                    element: {
-                      kind: 'object',
-                      fields: {
-                        flat_amount_decimal: {
-                          kind: 'nullable',
-                          inner: {kind: 'decimal_string'},
-                        },
-                        unit_amount_decimal: {
-                          kind: 'nullable',
-                          inner: {kind: 'decimal_string'},
+                          unit_amount_decimal: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
                         },
                       },
                     },
-                  },
-                  unit_amount_decimal: {
-                    kind: 'nullable',
-                    inner: {kind: 'decimal_string'},
+                    tiers: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {
+                          flat_amount_decimal: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
+                          unit_amount_decimal: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
+                        },
+                      },
+                    },
+                    unit_amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
                   },
                 },
               },
@@ -367,10 +347,915 @@ export const SubscriptionItems = StripeResource.extend({
           },
         },
       },
-    },
-  }),
-  del: stripeMethod({
-    method: 'DELETE',
-    fullPath: '/v1/subscription_items/{item}',
-  }),
-});
+    }).call(this, ...args);
+  }
+
+  /**
+   * Adds a new item to an existing subscription. No existing items will be changed or replaced.
+   */
+  create(
+    params: SubscriptionItemCreateParams,
+    options?: RequestOptions
+  ): Promise<Response<SubscriptionItem>>;
+  create(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'POST',
+      fullPath: '/v1/subscription_items',
+      requestSchema: {
+        kind: 'object',
+        fields: {
+          price_data: {
+            kind: 'object',
+            fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+          },
+        },
+      },
+      responseSchema: {
+        kind: 'object',
+        fields: {
+          plan: {
+            kind: 'object',
+            fields: {
+              amount_decimal: {
+                kind: 'nullable',
+                inner: {kind: 'decimal_string'},
+              },
+              tiers: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    flat_amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                    unit_amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                  },
+                },
+              },
+            },
+          },
+          price: {
+            kind: 'object',
+            fields: {
+              currency_options: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    tiers: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {
+                          flat_amount_decimal: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
+                          unit_amount_decimal: {
+                            kind: 'nullable',
+                            inner: {kind: 'decimal_string'},
+                          },
+                        },
+                      },
+                    },
+                    unit_amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                  },
+                },
+              },
+              tiers: {
+                kind: 'array',
+                element: {
+                  kind: 'object',
+                  fields: {
+                    flat_amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                    unit_amount_decimal: {
+                      kind: 'nullable',
+                      inner: {kind: 'decimal_string'},
+                    },
+                  },
+                },
+              },
+              unit_amount_decimal: {
+                kind: 'nullable',
+                inner: {kind: 'decimal_string'},
+              },
+            },
+          },
+        },
+      },
+    }).call(this, ...args);
+  }
+}
+export interface SubscriptionItem {
+  /**
+   * Unique identifier for the object.
+   */
+  id: string;
+
+  /**
+   * String representing the object's type. Objects of the same type share the same value.
+   */
+  object: 'subscription_item';
+
+  /**
+   * The time period the subscription item has been billed for.
+   */
+  billed_until?: number | null;
+
+  /**
+   * Define thresholds at which an invoice will be sent, and the related subscription advanced to a new billing period
+   */
+  billing_thresholds: SubscriptionItem.BillingThresholds | null;
+
+  /**
+   * Time at which the object was created. Measured in seconds since the Unix epoch.
+   */
+  created: number;
+
+  /**
+   * The end time of this subscription item's current billing period.
+   */
+  current_period_end: number;
+
+  /**
+   * The start time of this subscription item's current billing period.
+   */
+  current_period_start: number;
+
+  /**
+   * The current trial that is applied to this subscription item.
+   */
+  current_trial?: SubscriptionItem.CurrentTrial | null;
+
+  /**
+   * Always true for a deleted object
+   */
+  deleted?: void;
+
+  /**
+   * The discounts applied to the subscription item. Subscription item discounts are applied before subscription discounts. Use `expand[]=discounts` to expand each discount.
+   */
+  discounts: Array<string | Discount>;
+
+  /**
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+   */
+  metadata: Metadata;
+
+  /**
+   * You can now model subscriptions more flexibly using the [Prices API](https://api.stripe.com#prices). It replaces the Plans API and is backwards compatible to simplify your migration.
+   *
+   * Plans define the base price, currency, and billing cycle for recurring purchases of products.
+   * [Products](https://api.stripe.com#products) help you track inventory or provisioning, and plans help you track pricing. Different physical goods or levels of service should be represented by products, and pricing options should be represented by plans. This approach lets you change prices without having to change your provisioning scheme.
+   *
+   * For example, you might have a single "gold" product that has plans for $10/month, $100/year, €9/month, and €90/year.
+   *
+   * Related guides: [Set up a subscription](https://docs.stripe.com/billing/subscriptions/set-up-subscription) and more about [products and prices](https://docs.stripe.com/products-prices/overview).
+   */
+  plan: Plan;
+
+  /**
+   * Prices define the unit cost, currency, and (optional) billing cycle for both recurring and one-time purchases of products.
+   * [Products](https://api.stripe.com#products) help you track inventory or provisioning, and prices help you track payment terms. Different physical goods or levels of service should be represented by products, and pricing options should be represented by prices. This approach lets you change prices without having to change your provisioning scheme.
+   *
+   * For example, you might have a single "gold" product that has prices for $10/month, $100/year, and €9 once.
+   *
+   * Related guides: [Set up a subscription](https://docs.stripe.com/billing/subscriptions/set-up-subscription), [create an invoice](https://docs.stripe.com/billing/invoices/create), and more about [products and prices](https://docs.stripe.com/products-prices/overview).
+   */
+  price: Price;
+
+  /**
+   * The [quantity](https://docs.stripe.com/subscriptions/quantities) of the plan to which the customer should be subscribed.
+   */
+  quantity?: number;
+
+  /**
+   * The `subscription` this `subscription_item` belongs to.
+   */
+  subscription: string;
+
+  /**
+   * The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
+   */
+  tax_rates: Array<TaxRate> | null;
+
+  /**
+   * Options that configure the trial on the subscription item.
+   */
+  trial?: SubscriptionItem.Trial | null;
+}
+export interface DeletedSubscriptionItem {
+  /**
+   * Unique identifier for the object.
+   */
+  id: string;
+
+  /**
+   * String representing the object's type. Objects of the same type share the same value.
+   */
+  object: 'subscription_item';
+
+  /**
+   * Always true for a deleted object
+   */
+  deleted: true;
+}
+export namespace SubscriptionItem {
+  export interface BillingThresholds {
+    /**
+     * Usage threshold that triggers the subscription to create an invoice
+     */
+    usage_gte: number | null;
+  }
+
+  export interface CurrentTrial {
+    end_date: number;
+
+    start_date: number;
+
+    trial_offer: string;
+  }
+
+  export interface Trial {
+    /**
+     * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
+     */
+    converts_to?: Array<string> | null;
+
+    /**
+     * Determines the type of trial for this item.
+     */
+    type: Trial.Type;
+  }
+
+  export namespace Trial {
+    export type Type = 'free' | 'paid';
+  }
+}
+export interface SubscriptionItemCreateParams {
+  /**
+   * The identifier of the subscription to modify.
+   */
+  subscription: string;
+
+  /**
+   * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+   */
+  billing_thresholds?: Emptyable<
+    SubscriptionItemCreateParams.BillingThresholds
+  >;
+
+  /**
+   * The trial offer to apply to this subscription item.
+   */
+  current_trial?: SubscriptionItemCreateParams.CurrentTrial;
+
+  /**
+   * The coupons to redeem into discounts for the subscription item.
+   */
+  discounts?: Emptyable<Array<SubscriptionItemCreateParams.Discount>>;
+
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+
+  /**
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   */
+  metadata?: MetadataParam;
+
+  /**
+   * Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid. This allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://docs.stripe.com/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
+   *
+   * Use `default_incomplete` to transition the subscription to `status=past_due` when payment is required and await explicit confirmation of the invoice's payment intent. This allows simpler management of scenarios where additional user actions are needed to pay a subscription's invoice. Such as failed payments, [SCA regulation](https://docs.stripe.com/billing/migration/strong-customer-authentication), or collecting a mandate for a bank debit payment method.
+   *
+   * Use `pending_if_incomplete` to update the subscription using [pending updates](https://docs.stripe.com/billing/subscriptions/pending-updates). When you use `pending_if_incomplete` you can only pass the parameters [supported by pending updates](https://docs.stripe.com/billing/pending-updates-reference#supported-attributes).
+   *
+   * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not update the subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://docs.stripe.com/changelog/2019-03-14) to learn more.
+   */
+  payment_behavior?: SubscriptionItemCreateParams.PaymentBehavior;
+
+  /**
+   * The identifier of the plan to add to the subscription.
+   */
+  plan?: string;
+
+  /**
+   * The ID of the price object.
+   */
+  price?: string;
+
+  /**
+   * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
+   */
+  price_data?: SubscriptionItemCreateParams.PriceData;
+
+  /**
+   * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+   */
+  proration_behavior?: SubscriptionItemCreateParams.ProrationBehavior;
+
+  /**
+   * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the [upcoming invoice](https://docs.stripe.com/api/invoices/create_preview) endpoint.
+   */
+  proration_date?: number;
+
+  /**
+   * The quantity you'd like to apply to the subscription item you're creating.
+   */
+  quantity?: number;
+
+  /**
+   * A list of [Tax Rate](https://docs.stripe.com/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+   */
+  tax_rates?: Emptyable<Array<string>>;
+
+  /**
+   * Options that configure the trial on the subscription item.
+   */
+  trial?: SubscriptionItemCreateParams.Trial;
+}
+export namespace SubscriptionItemCreateParams {
+  export interface BillingThresholds {
+    /**
+     * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://docs.stripe.com/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+     */
+    usage_gte: number;
+  }
+
+  export interface CurrentTrial {
+    /**
+     * Unix timestamp representing the end of the trial offer period. Required when the trial offer has `duration.type=timestamp`. Cannot be specified when `duration.type=relative`.
+     */
+    trial_end?: number;
+
+    /**
+     * The ID of the trial offer to apply to the subscription item.
+     */
+    trial_offer: string;
+  }
+
+  export interface Discount {
+    /**
+     * ID of the coupon to create a new discount for.
+     */
+    coupon?: string;
+
+    /**
+     * ID of an existing discount on the object (or one of its ancestors) to reuse.
+     */
+    discount?: string;
+
+    /**
+     * Details to determine how long the discount should be applied for.
+     */
+    discount_end?: Discount.DiscountEnd;
+
+    /**
+     * ID of the promotion code to create a new discount for.
+     */
+    promotion_code?: string;
+
+    /**
+     * Settings for discount application including service period anchoring.
+     */
+    settings?: Discount.Settings;
+  }
+
+  export type PaymentBehavior =
+    | 'allow_incomplete'
+    | 'default_incomplete'
+    | 'error_if_incomplete'
+    | 'pending_if_incomplete';
+
+  export interface PriceData {
+    /**
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency: string;
+
+    /**
+     * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
+     */
+    product: string;
+
+    /**
+     * The recurring components of a price such as `interval` and `interval_count`.
+     */
+    recurring: PriceData.Recurring;
+
+    /**
+     * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+     */
+    tax_behavior?: PriceData.TaxBehavior;
+
+    /**
+     * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+     */
+    unit_amount?: number;
+
+    /**
+     * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+     */
+    unit_amount_decimal?: Decimal;
+  }
+
+  export type ProrationBehavior =
+    | 'always_invoice'
+    | 'create_prorations'
+    | 'none';
+
+  export interface Trial {
+    /**
+     * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial. Currently only supports at most 1 price ID.
+     */
+    converts_to?: Array<string>;
+
+    /**
+     * Determines the type of trial for this item.
+     */
+    type: Trial.Type;
+  }
+
+  export namespace Discount {
+    export interface DiscountEnd {
+      /**
+       * Time span for the redeemed discount.
+       */
+      duration?: DiscountEnd.Duration;
+
+      /**
+       * A precise Unix timestamp for the discount to end. Must be in the future.
+       */
+      timestamp?: number;
+
+      /**
+       * The type of calculation made to determine when the discount ends.
+       */
+      type: DiscountEnd.Type;
+    }
+
+    export interface Settings {
+      /**
+       * Configures service period cycle anchoring.
+       */
+      service_period_anchor_config?: Settings.ServicePeriodAnchorConfig;
+
+      /**
+       * The start date of the discount's service period when applying a coupon or promotion code with a service period duration. Defaults to `now` if omitted.
+       */
+      start_date?: Settings.StartDate;
+    }
+
+    export namespace DiscountEnd {
+      export interface Duration {
+        /**
+         * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+         */
+        interval: Duration.Interval;
+
+        /**
+         * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+         */
+        interval_count: number;
+      }
+
+      export type Type = 'duration' | 'timestamp';
+
+      export namespace Duration {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+    }
+
+    export namespace Settings {
+      export interface ServicePeriodAnchorConfig {
+        /**
+         * Anchor the service period to a custom date. Type must be `custom` to specify.
+         */
+        custom?: ServicePeriodAnchorConfig.Custom;
+
+        /**
+         * The type of service period anchor config. Defaults to `subscription_service_cycle_anchor` if omitted.
+         */
+        type?: ServicePeriodAnchorConfig.Type;
+      }
+
+      export type StartDate =
+        | 'current_period_end'
+        | 'current_period_start'
+        | 'now';
+
+      export namespace ServicePeriodAnchorConfig {
+        export interface Custom {
+          /**
+           * The day of the month the anchor should be. Ranges from 1 to 31.
+           */
+          day_of_month: number;
+
+          /**
+           * The hour of the day the anchor should be. Ranges from 0 to 23.
+           */
+          hour?: number;
+
+          /**
+           * The minute of the hour the anchor should be. Ranges from 0 to 59.
+           */
+          minute?: number;
+
+          /**
+           * The month to start full cycle periods. Ranges from 1 to 12.
+           */
+          month?: number;
+
+          /**
+           * The second of the minute the anchor should be. Ranges from 0 to 59.
+           */
+          second?: number;
+        }
+
+        export type Type = 'custom' | 'subscription_service_cycle_anchor';
+      }
+    }
+  }
+
+  export namespace PriceData {
+    export interface Recurring {
+      /**
+       * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+       */
+      interval: Recurring.Interval;
+
+      /**
+       * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
+       */
+      interval_count?: number;
+    }
+
+    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+
+    export namespace Recurring {
+      export type Interval = 'day' | 'month' | 'week' | 'year';
+    }
+  }
+
+  export namespace Trial {
+    export type Type = 'free' | 'paid';
+  }
+}
+export interface SubscriptionItemRetrieveParams {
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}
+export interface SubscriptionItemUpdateParams {
+  /**
+   * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+   */
+  billing_thresholds?: Emptyable<
+    SubscriptionItemUpdateParams.BillingThresholds
+  >;
+
+  /**
+   * The trial offer to apply to this subscription item.
+   */
+  current_trial?: SubscriptionItemUpdateParams.CurrentTrial;
+
+  /**
+   * The coupons to redeem into discounts for the subscription item.
+   */
+  discounts?: Emptyable<Array<SubscriptionItemUpdateParams.Discount>>;
+
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+
+  /**
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   */
+  metadata?: Emptyable<MetadataParam>;
+
+  /**
+   * Indicates if a customer is on or off-session while an invoice payment is attempted. Defaults to `false` (on-session).
+   */
+  off_session?: boolean;
+
+  /**
+   * Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid. This allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://docs.stripe.com/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
+   *
+   * Use `default_incomplete` to transition the subscription to `status=past_due` when payment is required and await explicit confirmation of the invoice's payment intent. This allows simpler management of scenarios where additional user actions are needed to pay a subscription's invoice. Such as failed payments, [SCA regulation](https://docs.stripe.com/billing/migration/strong-customer-authentication), or collecting a mandate for a bank debit payment method.
+   *
+   * Use `pending_if_incomplete` to update the subscription using [pending updates](https://docs.stripe.com/billing/subscriptions/pending-updates). When you use `pending_if_incomplete` you can only pass the parameters [supported by pending updates](https://docs.stripe.com/billing/pending-updates-reference#supported-attributes).
+   *
+   * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not update the subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://docs.stripe.com/changelog/2019-03-14) to learn more.
+   */
+  payment_behavior?: SubscriptionItemUpdateParams.PaymentBehavior;
+
+  /**
+   * The identifier of the new plan for this subscription item.
+   */
+  plan?: string;
+
+  /**
+   * The ID of the price object. One of `price` or `price_data` is required. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
+   */
+  price?: string;
+
+  /**
+   * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
+   */
+  price_data?: SubscriptionItemUpdateParams.PriceData;
+
+  /**
+   * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+   */
+  proration_behavior?: SubscriptionItemUpdateParams.ProrationBehavior;
+
+  /**
+   * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the [upcoming invoice](https://docs.stripe.com/api/invoices/create_preview) endpoint.
+   */
+  proration_date?: number;
+
+  /**
+   * The quantity you'd like to apply to the subscription item you're creating.
+   */
+  quantity?: number;
+
+  /**
+   * A list of [Tax Rate](https://docs.stripe.com/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+   */
+  tax_rates?: Emptyable<Array<string>>;
+}
+export namespace SubscriptionItemUpdateParams {
+  export interface BillingThresholds {
+    /**
+     * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://docs.stripe.com/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+     */
+    usage_gte: number;
+  }
+
+  export interface CurrentTrial {
+    /**
+     * Unix timestamp representing the end of the trial offer period. Required when the trial offer has `duration.type=timestamp`. Cannot be specified when `duration.type=relative`.
+     */
+    trial_end?: number;
+
+    /**
+     * The ID of the trial offer to apply to the subscription item.
+     */
+    trial_offer: string;
+  }
+
+  export interface Discount {
+    /**
+     * ID of the coupon to create a new discount for.
+     */
+    coupon?: string;
+
+    /**
+     * ID of an existing discount on the object (or one of its ancestors) to reuse.
+     */
+    discount?: string;
+
+    /**
+     * Details to determine how long the discount should be applied for.
+     */
+    discount_end?: Discount.DiscountEnd;
+
+    /**
+     * ID of the promotion code to create a new discount for.
+     */
+    promotion_code?: string;
+
+    /**
+     * Settings for discount application including service period anchoring.
+     */
+    settings?: Discount.Settings;
+  }
+
+  export type PaymentBehavior =
+    | 'allow_incomplete'
+    | 'default_incomplete'
+    | 'error_if_incomplete'
+    | 'pending_if_incomplete';
+
+  export interface PriceData {
+    /**
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency: string;
+
+    /**
+     * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
+     */
+    product: string;
+
+    /**
+     * The recurring components of a price such as `interval` and `interval_count`.
+     */
+    recurring: PriceData.Recurring;
+
+    /**
+     * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+     */
+    tax_behavior?: PriceData.TaxBehavior;
+
+    /**
+     * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+     */
+    unit_amount?: number;
+
+    /**
+     * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+     */
+    unit_amount_decimal?: Decimal;
+  }
+
+  export type ProrationBehavior =
+    | 'always_invoice'
+    | 'create_prorations'
+    | 'none';
+
+  export namespace Discount {
+    export interface DiscountEnd {
+      /**
+       * Time span for the redeemed discount.
+       */
+      duration?: DiscountEnd.Duration;
+
+      /**
+       * A precise Unix timestamp for the discount to end. Must be in the future.
+       */
+      timestamp?: number;
+
+      /**
+       * The type of calculation made to determine when the discount ends.
+       */
+      type: DiscountEnd.Type;
+    }
+
+    export interface Settings {
+      /**
+       * Configures service period cycle anchoring.
+       */
+      service_period_anchor_config?: Settings.ServicePeriodAnchorConfig;
+
+      /**
+       * The start date of the discount's service period when applying a coupon or promotion code with a service period duration. Defaults to `now` if omitted.
+       */
+      start_date?: Settings.StartDate;
+    }
+
+    export namespace DiscountEnd {
+      export interface Duration {
+        /**
+         * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+         */
+        interval: Duration.Interval;
+
+        /**
+         * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+         */
+        interval_count: number;
+      }
+
+      export type Type = 'duration' | 'timestamp';
+
+      export namespace Duration {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+    }
+
+    export namespace Settings {
+      export interface ServicePeriodAnchorConfig {
+        /**
+         * Anchor the service period to a custom date. Type must be `custom` to specify.
+         */
+        custom?: ServicePeriodAnchorConfig.Custom;
+
+        /**
+         * The type of service period anchor config. Defaults to `subscription_service_cycle_anchor` if omitted.
+         */
+        type?: ServicePeriodAnchorConfig.Type;
+      }
+
+      export type StartDate =
+        | 'current_period_end'
+        | 'current_period_start'
+        | 'now';
+
+      export namespace ServicePeriodAnchorConfig {
+        export interface Custom {
+          /**
+           * The day of the month the anchor should be. Ranges from 1 to 31.
+           */
+          day_of_month: number;
+
+          /**
+           * The hour of the day the anchor should be. Ranges from 0 to 23.
+           */
+          hour?: number;
+
+          /**
+           * The minute of the hour the anchor should be. Ranges from 0 to 59.
+           */
+          minute?: number;
+
+          /**
+           * The month to start full cycle periods. Ranges from 1 to 12.
+           */
+          month?: number;
+
+          /**
+           * The second of the minute the anchor should be. Ranges from 0 to 59.
+           */
+          second?: number;
+        }
+
+        export type Type = 'custom' | 'subscription_service_cycle_anchor';
+      }
+    }
+  }
+
+  export namespace PriceData {
+    export interface Recurring {
+      /**
+       * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+       */
+      interval: Recurring.Interval;
+
+      /**
+       * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
+       */
+      interval_count?: number;
+    }
+
+    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+
+    export namespace Recurring {
+      export type Interval = 'day' | 'month' | 'week' | 'year';
+    }
+  }
+}
+export interface SubscriptionItemListParams extends PaginationParams {
+  /**
+   * The ID of the subscription whose items will be retrieved.
+   */
+  subscription: string;
+
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}
+export interface SubscriptionItemDeleteParams {
+  /**
+   * Delete all usage for the given subscription item. Allowed only when the current plan's `usage_type` is `metered`.
+   */
+  clear_usage?: boolean;
+
+  /**
+   * Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid. This allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://docs.stripe.com/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
+   *
+   * Use `default_incomplete` to transition the subscription to `status=past_due` when payment is required and await explicit confirmation of the invoice's payment intent. This allows simpler management of scenarios where additional user actions are needed to pay a subscription's invoice. Such as failed payments, [SCA regulation](https://docs.stripe.com/billing/migration/strong-customer-authentication), or collecting a mandate for a bank debit payment method.
+   *
+   * Use `pending_if_incomplete` to update the subscription using [pending updates](https://docs.stripe.com/billing/subscriptions/pending-updates). When you use `pending_if_incomplete` you can only pass the parameters [supported by pending updates](https://docs.stripe.com/billing/pending-updates-reference#supported-attributes).
+   *
+   * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not update the subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://docs.stripe.com/changelog/2019-03-14) to learn more.
+   */
+  payment_behavior?: SubscriptionItemDeleteParams.PaymentBehavior;
+
+  /**
+   * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+   */
+  proration_behavior?: SubscriptionItemDeleteParams.ProrationBehavior;
+
+  /**
+   * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the [upcoming invoice](https://docs.stripe.com/api/invoices/create_preview) endpoint.
+   */
+  proration_date?: number;
+}
+export namespace SubscriptionItemDeleteParams {
+  export type PaymentBehavior =
+    | 'allow_incomplete'
+    | 'default_incomplete'
+    | 'error_if_incomplete'
+    | 'pending_if_incomplete';
+
+  export type ProrationBehavior =
+    | 'always_invoice'
+    | 'create_prorations'
+    | 'none';
+}

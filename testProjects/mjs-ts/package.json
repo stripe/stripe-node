@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "dependencies": {
     "stripe": "file:../../",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "tsx": "^4.21.0"
   },
   "scripts": {
-    "runtestproject": "ts-node index.ts",
+    "runtestproject": "tsx index.ts sk_test_123",
     "lint": "eslint . --ext .ts"
   },
   "devDependencies": {
