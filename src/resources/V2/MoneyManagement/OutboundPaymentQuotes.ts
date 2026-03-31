@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {Amount} from './../../V2/Amounts.js';
+import {V2Amount} from './../V2Amounts.js';
 import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
 
@@ -54,7 +54,7 @@ export interface OutboundPaymentQuote {
   /**
    * The "presentment amount" for the OutboundPaymentQuote.
    */
-  amount: Amount;
+  amount: V2Amount;
 
   /**
    * Time at which the OutboundPaymentQuote was created.
@@ -111,7 +111,7 @@ export namespace V2 {
         /**
          * The fee amount for corresponding fee type.
          */
-        amount: Amount;
+        amount: V2Amount;
 
         /**
          * The fee type.
@@ -123,7 +123,7 @@ export namespace V2 {
         /**
          * The monetary amount debited from the sender, only set on responses.
          */
-        debited: Amount;
+        debited: V2Amount;
 
         /**
          * The FinancialAccount that funds were pulled from.
@@ -164,7 +164,7 @@ export namespace V2 {
         /**
          * The monetary amount being credited to the destination.
          */
-        credited: Amount;
+        credited: V2Amount;
 
         /**
          * The payout method which the OutboundPayment uses to send payout.
@@ -215,7 +215,7 @@ export namespace V2 {
       /**
        * The "presentment amount" to be sent to the recipient.
        */
-      amount: Amount;
+      amount: V2Amount;
 
       /**
        * Request details about the sender of an OutboundPaymentQuote.

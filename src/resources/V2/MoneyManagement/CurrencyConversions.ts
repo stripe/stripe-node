@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {Amount} from './../../V2/Amounts.js';
+import {V2Amount} from './../V2Amounts.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
 
@@ -104,14 +104,14 @@ export namespace V2 {
         /**
          * Amount object.
          */
-        amount: Amount;
+        amount: V2Amount;
       }
 
       export interface To {
         /**
          * Amount object.
          */
-        amount: Amount;
+        amount: V2Amount;
       }
     }
   }
@@ -140,7 +140,7 @@ export namespace V2 {
         /**
          * Amount object.
          */
-        amount?: Amount;
+        amount?: V2Amount;
 
         /**
          * A lowercase alpha3 currency code like "usd".
@@ -152,7 +152,7 @@ export namespace V2 {
         /**
          * Amount object.
          */
-        amount?: Amount;
+        amount?: V2Amount;
 
         /**
          * A lowercase alpha3 currency code like "usd".

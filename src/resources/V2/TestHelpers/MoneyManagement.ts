@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RecipientVerification} from './RecipientVerifications.js';
+import * as MoneyManagement from './../../V2/MoneyManagement/index.js';
 import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
 

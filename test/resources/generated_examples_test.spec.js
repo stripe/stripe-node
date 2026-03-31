@@ -7545,24 +7545,6 @@ describe('Generated tests', function() {
     expect(financialAddressGeneratedMicrodeposits).not.to.be.null;
   });
 
-  it('test_v2_test_helpers_money_management_post', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'POST',
-        path: '/v2/test_helpers/money_management/recipient_verifications',
-        response:
-          '{"created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","id":"obj_123","match_result":"unavailable","match_result_details":{"message":"message","provided_name":"provided_name"},"object":"v2.money_management.recipient_verification","status":"acknowledged","livemode":true}',
-      },
-    ]);
-    const recipientVerification = await stripe.v2.testHelpers.moneyManagement.recipientVerifications(
-      {
-        match_result: 'unavailable',
-        payout_method: 'payout_method',
-      }
-    );
-    expect(recipientVerification).not.to.be.null;
-  });
-
   it('test_already_canceled_error', async function() {
     const {AlreadyCanceledError} = require('../../src/Error.js');
 

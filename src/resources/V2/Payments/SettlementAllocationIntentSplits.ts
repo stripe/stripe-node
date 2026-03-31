@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Amount} from './../../V2/Amounts.js';
+import {V2Amount} from './../V2Amounts.js';
 import {Metadata} from '../../../shared.js';
 import {RequestOptions} from '../../../lib.js';
 export interface SettlementAllocationIntentSplit {
@@ -22,7 +22,7 @@ export interface SettlementAllocationIntentSplit {
   /**
    * The amount and currency of the SettlementAllocationIntentSplit.
    */
-  amount: Amount;
+  amount: V2Amount;
 
   /**
    * Timestamp at which SettlementAllocationIntentSplit was created.

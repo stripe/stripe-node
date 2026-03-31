@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {Amount} from './../../V2/Amounts.js';
+import {V2Amount} from './../V2Amounts.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 import {SplitResource} from './SettlementAllocationIntents/Splits.js';
@@ -130,7 +130,7 @@ export interface SettlementAllocationIntent {
   /**
    * The amount and currency of the SettlementAllocationIntent.
    */
-  amount: Amount;
+  amount: V2Amount;
 
   /**
    * Timestamp at which SettlementAllocationIntent was created .
@@ -222,7 +222,7 @@ export namespace V2 {
       /**
        * The amount and currency of the SettlementAllocationIntent. Allowed Currencies are `gbp` | `eur`.
        */
-      amount: Amount;
+      amount: V2Amount;
 
       /**
        * Date when we expect to receive the funds. Must be in future .
@@ -257,7 +257,7 @@ export namespace V2 {
       /**
        * The new amount for the SettlementAllocationIntent. Only amount.value can be updated and currency must remain same.
        */
-      amount?: Amount;
+      amount?: V2Amount;
 
       /**
        * The new reference for the SettlementAllocationIntent.

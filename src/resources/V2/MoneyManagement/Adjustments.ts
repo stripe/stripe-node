@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {Amount} from './../../V2/Amounts.js';
+import {V2Amount} from './../V2Amounts.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
 
@@ -57,7 +57,7 @@ export interface Adjustment {
   /**
    * The amount of the Adjustment.
    */
-  amount: Amount;
+  amount: V2Amount;
 
   /**
    * Time at which the object was created. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.

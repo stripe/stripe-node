@@ -2404,7 +2404,6 @@ export declare namespace Stripe {
   export {TransferReversal};
   export {Apps};
   export {Billing};
-  export {V1Billing};
   export {BillingPortal};
   export {Capital};
   export {Checkout};

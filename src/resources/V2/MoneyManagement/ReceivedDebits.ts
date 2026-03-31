@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {Amount} from './../../V2/Amounts.js';
+import {V2Amount} from './../V2Amounts.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
 
@@ -55,7 +55,7 @@ export interface ReceivedDebit {
   /**
    * Amount and currency of the ReceivedDebit.
    */
-  amount: Amount;
+  amount: V2Amount;
 
   /**
    * This object stores details about the balance transfer object that resulted in the ReceivedDebit.
@@ -86,7 +86,7 @@ export interface ReceivedDebit {
   /**
    * The amount and currency of the original/external debit request.
    */
-  external_amount?: Amount;
+  external_amount?: V2Amount;
 
   /**
    * Financial Account on which funds for ReceivedDebit were debited.
@@ -265,7 +265,7 @@ export namespace V2 {
           /**
            * Amount associated with this issuing authorization.
            */
-          amount: Amount;
+          amount: V2Amount;
 
           /**
            * The reference to the v1 issuing authorization ID.
@@ -277,7 +277,7 @@ export namespace V2 {
           /**
            * Amount associated with this issuing transaction.
            */
-          amount: Amount;
+          amount: V2Amount;
 
           /**
            * The reference to the v1 issuing transaction ID.

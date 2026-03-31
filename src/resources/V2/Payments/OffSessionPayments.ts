@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {Amount} from './../../V2/Amounts.js';
+import {V2Amount} from './../V2Amounts.js';
 import {MetadataParam, AddressParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
@@ -104,12 +104,12 @@ export interface OffSessionPayment {
   /**
    * The amount available to be captured.
    */
-  amount_capturable?: Amount;
+  amount_capturable?: V2Amount;
 
   /**
    * The “presentment amount” to be collected from the customer.
    */
-  amount_requested: Amount;
+  amount_requested: V2Amount;
 
   /**
    * The frequency of the underlying payment.
@@ -316,7 +316,7 @@ export namespace V2 {
       /**
        * The “presentment amount” to be collected from the customer.
        */
-      amount: Amount;
+      amount: V2Amount;
 
       /**
        * The frequency of the underlying payment.

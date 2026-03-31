@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import * as Billing from './../Billing/index.js';
+import {MeterEventSummary} from './MeterEventSummaries.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 const stripeMethod = StripeResource.method;
@@ -11,7 +11,7 @@ export class MeterResource extends StripeResource {
    * Retrieve a list of billing meters.
    */
   list(
-    params?: V1Billing.MeterListParams,
+    params?: Billing.MeterListParams,
     options?: RequestOptions
   ): ApiListPromise<Meter>;
   list(options?: RequestOptions): ApiListPromise<Meter>;
@@ -27,7 +27,7 @@ export class MeterResource extends StripeResource {
    * Creates a billing meter.
    */
   create(
-    params: V1Billing.MeterCreateParams,
+    params: Billing.MeterCreateParams,
     options?: RequestOptions
   ): Promise<Response<Meter>>;
   create(...args: any[]): Promise<Response<any>> {
@@ -42,7 +42,7 @@ export class MeterResource extends StripeResource {
    */
   retrieve(
     id: string,
-    params?: V1Billing.MeterRetrieveParams,
+    params?: Billing.MeterRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Meter>>;
   retrieve(id: string, options?: RequestOptions): Promise<Response<Meter>>;
@@ -58,7 +58,7 @@ export class MeterResource extends StripeResource {
    */
   update(
     id: string,
-    params?: V1Billing.MeterUpdateParams,
+    params?: Billing.MeterUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Meter>>;
   update(...args: any[]): Promise<Response<any>> {
@@ -73,7 +73,7 @@ export class MeterResource extends StripeResource {
    */
   deactivate(
     id: string,
-    params?: V1Billing.MeterDeactivateParams,
+    params?: Billing.MeterDeactivateParams,
     options?: RequestOptions
   ): Promise<Response<Meter>>;
   deactivate(id: string, options?: RequestOptions): Promise<Response<Meter>>;
@@ -89,7 +89,7 @@ export class MeterResource extends StripeResource {
    */
   reactivate(
     id: string,
-    params?: V1Billing.MeterReactivateParams,
+    params?: Billing.MeterReactivateParams,
     options?: RequestOptions
   ): Promise<Response<Meter>>;
   reactivate(id: string, options?: RequestOptions): Promise<Response<Meter>>;
@@ -105,7 +105,7 @@ export class MeterResource extends StripeResource {
    */
   listEventSummaries(
     id: string,
-    params: V1Billing.MeterListEventSummariesParams,
+    params: Billing.MeterListEventSummariesParams,
     options?: RequestOptions
   ): ApiListPromise<MeterEventSummary>;
   listEventSummaries(...args: any[]): Promise<Response<any>> {
@@ -132,9 +132,9 @@ export interface Meter {
    */
   created: number;
 
-  customer_mapping: V1Billing.Meter.CustomerMapping;
+  customer_mapping: Billing.Meter.CustomerMapping;
 
-  default_aggregation: V1Billing.Meter.DefaultAggregation;
+  default_aggregation: Billing.Meter.DefaultAggregation;
 
   /**
    * Set of keys that will be used to group meter events by.
@@ -154,7 +154,7 @@ export interface Meter {
   /**
    * The time window which meter events have been pre-aggregated for, if any.
    */
-  event_time_window: V1Billing.Meter.EventTimeWindow | null;
+  event_time_window: Billing.Meter.EventTimeWindow | null;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -164,18 +164,18 @@ export interface Meter {
   /**
    * The meter's status.
    */
-  status: V1Billing.Meter.Status;
+  status: Billing.Meter.Status;
 
-  status_transitions: V1Billing.Meter.StatusTransitions;
+  status_transitions: Billing.Meter.StatusTransitions;
 
   /**
    * Time at which the object was last updated. Measured in seconds since the Unix epoch.
    */
   updated: number;
 
-  value_settings: V1Billing.Meter.ValueSettings;
+  value_settings: Billing.Meter.ValueSettings;
 }
-export namespace V1Billing {
+export namespace Billing {
   export namespace Meter {
     export interface CustomerMapping {
       /**
@@ -219,7 +219,7 @@ export namespace V1Billing {
     }
   }
 }
-export namespace V1Billing {
+export namespace Billing {
   export interface MeterCreateParams {
     /**
      * The default settings to aggregate a meter's events with.
@@ -296,7 +296,7 @@ export namespace V1Billing {
     }
   }
 }
-export namespace V1Billing {
+export namespace Billing {
   export interface MeterRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -304,7 +304,7 @@ export namespace V1Billing {
     expand?: Array<string>;
   }
 }
-export namespace V1Billing {
+export namespace Billing {
   export interface MeterUpdateParams {
     /**
      * The meter's name. Not visible to the customer.
@@ -317,7 +317,7 @@ export namespace V1Billing {
     expand?: Array<string>;
   }
 }
-export namespace V1Billing {
+export namespace Billing {
   export interface MeterListParams extends PaginationParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -334,7 +334,7 @@ export namespace V1Billing {
     export type Status = 'active' | 'inactive';
   }
 }
-export namespace V1Billing {
+export namespace Billing {
   export interface MeterDeactivateParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -342,7 +342,7 @@ export namespace V1Billing {
     expand?: Array<string>;
   }
 }
-export namespace V1Billing {
+export namespace Billing {
   export interface MeterListEventSummariesParams extends PaginationParams {
     /**
      * The customer for which to fetch event summaries.
@@ -386,7 +386,7 @@ export namespace V1Billing {
     export type ValueGroupingWindow = 'day' | 'hour';
   }
 }
-export namespace V1Billing {
+export namespace Billing {
   export interface MeterReactivateParams {
     /**
      * Specifies which fields in the response should be expanded.

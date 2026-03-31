@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Amount} from './Amounts.js';
+import {V2Amount} from './V2Amounts.js';
 import {RequestOptions} from '../../lib.js';
 export interface FinancialAddressGeneratedMicrodeposits {
   /**
@@ -11,7 +11,7 @@ export interface FinancialAddressGeneratedMicrodeposits {
   /**
    * The amounts of the microdeposits that were generated.
    */
-  amounts: Array<Amount>;
+  amounts: Array<V2Amount>;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

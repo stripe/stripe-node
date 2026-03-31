@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {Amount} from './../../V2/Amounts.js';
+import {V2Amount} from './../V2Amounts.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
@@ -93,7 +93,7 @@ export interface OutboundTransfer {
   /**
    * The "presentment amount" for the OutboundTransfer.
    */
-  amount: Amount;
+  amount: V2Amount;
 
   /**
    * Returns true if the OutboundTransfer can be canceled, and false otherwise.
@@ -194,7 +194,7 @@ export namespace V2 {
         /**
          * The monetary amount debited from the sender, only set on responses.
          */
-        debited: Amount;
+        debited: V2Amount;
 
         /**
          * The FinancialAccount that funds were pulled from.
@@ -251,7 +251,7 @@ export namespace V2 {
         /**
          * The monetary amount being credited to the destination.
          */
-        credited: Amount;
+        credited: V2Amount;
 
         /**
          * The payout method which the OutboundTransfer uses to send payout.
@@ -331,7 +331,7 @@ export namespace V2 {
       /**
        * The "presentment amount" for the OutboundPayment.
        */
-      amount: Amount;
+      amount: V2Amount;
 
       /**
        * The FinancialAccount to pull funds from.

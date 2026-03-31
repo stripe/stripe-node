@@ -700,7 +700,6 @@ import {QuotePreviewSubscriptionSchedule} from './resources/QuotePreviewSubscrip
 import {TransferReversal} from './resources/TransferReversals.js';
 import {Apps} from './resources/Apps/index.js';
 import {Billing} from './resources/Billing/index.js';
-import {V1Billing} from './resources/V1Billing/index.js';
 import {BillingPortal} from './resources/BillingPortal/index.js';
 import {Capital} from './resources/Capital/index.js';
 import {Checkout} from './resources/Checkout/index.js';
@@ -2405,7 +2404,6 @@ export declare namespace Stripe {
   export {TransferReversal};
   export {Apps};
   export {Billing};
-  export {V1Billing};
   export {BillingPortal};
   export {Capital};
   export {Checkout};

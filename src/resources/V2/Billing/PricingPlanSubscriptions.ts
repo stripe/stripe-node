@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {Amount} from './../../V2/Amounts.js';
 import {CustomPricingUnit} from './CustomPricingUnits.js';
+import {V2Amount} from './../V2Amounts.js';
 import {MetadataParam, Metadata, Decimal} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
@@ -852,7 +852,7 @@ export namespace V2 {
               /**
                * The monetary amount of the credit grant. Required if `type` is `monetary`.
                */
-              monetary?: Amount;
+              monetary?: V2Amount;
             }
 
             export interface ApplicabilityConfig {
@@ -920,7 +920,7 @@ export namespace V2 {
               /**
                * The monetary amount of the credit grant. Required if `type` is `monetary`.
                */
-              monetary?: Amount;
+              monetary?: V2Amount;
             }
 
             export interface ApplicabilityConfig {

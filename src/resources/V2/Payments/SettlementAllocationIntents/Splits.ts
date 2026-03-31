@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../../StripeResource.js';
 import {SettlementAllocationIntentSplit} from './../../../V2/Payments/SettlementAllocationIntentSplits.js';
-import {Amount} from './../../../V2/Amounts.js';
+import {V2Amount} from './../../V2Amounts.js';
 import {MetadataParam} from '../../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
 const stripeMethod = StripeResource.method;
@@ -101,7 +101,7 @@ export namespace V2 {
         /**
          * The amount and currency of the SettlementAllocationIntentSplit.
          */
-        amount: Amount;
+        amount: V2Amount;
 
         /**
          * The type of the fund transfer.

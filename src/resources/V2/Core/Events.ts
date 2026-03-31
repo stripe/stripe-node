@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RangeQueryParam} from '../../../shared.js';
+import {RangeQueryParam, Decimal} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
 
@@ -264,7 +264,7 @@ export namespace V2 {
   }
 }
 import {Core} from './index.js';
-import {V1Billing} from './../../V1Billing/index.js';
+import {Billing as V1Billing} from './../../Billing/index.js';
 import {Billing} from './../Billing/index.js';
 import {MoneyManagement} from './../MoneyManagement/index.js';
 import {Payments} from './../Payments/index.js';
@@ -622,6 +622,8 @@ export type EventNotification =
   | V2SignalsAccountSignalFraudulentMerchantReadyEventNotification;
 
 import {StripeContext} from '../../../StripeContext.js';
+
+import {V2Amount} from '../V2Amounts.js';
 
 export namespace V2 {
   export namespace Core {
@@ -3810,7 +3812,7 @@ export namespace V2CoreHealthFraudRateIncreasedEvent {
       /**
        * Estimated aggregated amount for the impacted requests.
        */
-      realized_fraud_amount: V2.Amount;
+      realized_fraud_amount: V2Amount;
     }
 
     export namespace Impact {
@@ -3864,7 +3866,7 @@ export namespace V2CoreHealthIssuingAuthorizationRequestErrorsFiringEvent {
       /**
        * Estimated aggregated amount for the approved requests.
        */
-      approved_amount?: V2.Amount;
+      approved_amount?: V2Amount;
 
       /**
        * The number of approved requests which are impacted.
@@ -3874,7 +3876,7 @@ export namespace V2CoreHealthIssuingAuthorizationRequestErrorsFiringEvent {
       /**
        * Estimated aggregated amount for the declined requests.
        */
-      declined_amount?: V2.Amount;
+      declined_amount?: V2Amount;
 
       /**
        * The number of declined requests which are impacted.
@@ -3934,7 +3936,7 @@ export namespace V2CoreHealthIssuingAuthorizationRequestErrorsResolvedEvent {
       /**
        * Estimated aggregated amount for the approved requests.
        */
-      approved_amount?: V2.Amount;
+      approved_amount?: V2Amount;
 
       /**
        * The number of approved requests which are impacted.
@@ -3944,7 +3946,7 @@ export namespace V2CoreHealthIssuingAuthorizationRequestErrorsResolvedEvent {
       /**
        * Estimated aggregated amount for the declined requests.
        */
-      declined_amount?: V2.Amount;
+      declined_amount?: V2Amount;
 
       /**
        * The number of declined requests which are impacted.
@@ -4004,7 +4006,7 @@ export namespace V2CoreHealthIssuingAuthorizationRequestTimeoutFiringEvent {
       /**
        * Estimated aggregated amount for the approved requests.
        */
-      approved_amount?: V2.Amount;
+      approved_amount?: V2Amount;
 
       /**
        * The number of approved requests which are impacted.
@@ -4014,7 +4016,7 @@ export namespace V2CoreHealthIssuingAuthorizationRequestTimeoutFiringEvent {
       /**
        * Estimated aggregated amount for the declined requests.
        */
-      declined_amount?: V2.Amount;
+      declined_amount?: V2Amount;
 
       /**
        * The number of declined requests which are impacted.
@@ -4074,7 +4076,7 @@ export namespace V2CoreHealthIssuingAuthorizationRequestTimeoutResolvedEvent {
       /**
        * Estimated aggregated amount for the approved requests.
        */
-      approved_amount?: V2.Amount;
+      approved_amount?: V2Amount;
 
       /**
        * The number of approved requests which are impacted.
@@ -4084,7 +4086,7 @@ export namespace V2CoreHealthIssuingAuthorizationRequestTimeoutResolvedEvent {
       /**
        * Estimated aggregated amount for the declined requests.
        */
-      declined_amount?: V2.Amount;
+      declined_amount?: V2Amount;
 
       /**
        * The number of declined requests which are impacted.
