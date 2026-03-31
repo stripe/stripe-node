@@ -3,7 +3,7 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {FinancialAddressCreditSimulation} from './../../V2/FinancialAddressCreditSimulations.js';
 import {FinancialAddressGeneratedMicrodeposits} from './../../V2/FinancialAddressGeneratedMicrodeposits.js';
-import {Amount} from './../../V2/Amounts.js';
+import {V2Amount} from './../V2Amounts.js';
 import {RequestOptions, Response} from '../../../lib.js';
 const stripeMethod = StripeResource.method;
 
@@ -51,7 +51,7 @@ export namespace V2 {
       /**
        * Object containing the amount value and currency to credit.
        */
-      amount: Amount;
+      amount: V2Amount;
 
       /**
        * Open Enum. The network to use in simulating the funds flow. This will be the reflected in the resulting ReceivedCredit.
