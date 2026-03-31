@@ -49,7 +49,6 @@ import {
   Decimal,
 } from './shared.js';
 import {EventNotification as V2EventNotification} from './resources/V2/Core/Events.js';
-import {V2Amount} from './resources/V2/V2Amounts.js';
 
 // StripeInstanceImports: The beginning of the section generated from our OpenAPI spec
 import {
@@ -2766,5 +2765,4 @@ export declare namespace Stripe {
   export {StripeRawError};
   export import ErrorType = _Error;
   export import Events = V2.Core.Events;
-  export {V2Amount};
 }
