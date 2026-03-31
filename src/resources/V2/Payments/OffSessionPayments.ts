@@ -89,6 +89,44 @@ export class OffSessionPaymentResource extends StripeResource {
       fullPath: '/v2/payments/off_session_payments/{id}/capture',
     }).call(this, ...args);
   }
+
+  /**
+   * Pauses an OffSessionPayment that has previously been created.
+   */
+  pause(
+    id: string,
+    params?: V2.Payments.OffSessionPaymentPauseParams,
+    options?: RequestOptions
+  ): Promise<Response<OffSessionPayment>>;
+  pause(
+    id: string,
+    options?: RequestOptions
+  ): Promise<Response<OffSessionPayment>>;
+  pause(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'POST',
+      fullPath: '/v2/payments/off_session_payments/{id}/pause',
+    }).call(this, ...args);
+  }
+
+  /**
+   * Resumes an OffSessionPayment that has previously been paused.
+   */
+  resume(
+    id: string,
+    params?: V2.Payments.OffSessionPaymentResumeParams,
+    options?: RequestOptions
+  ): Promise<Response<OffSessionPayment>>;
+  resume(
+    id: string,
+    options?: RequestOptions
+  ): Promise<Response<OffSessionPayment>>;
+  resume(...args: any[]): Promise<Response<any>> {
+    return stripeMethod({
+      method: 'POST',
+      fullPath: '/v2/payments/off_session_payments/{id}/resume',
+    }).call(this, ...args);
+  }
 }
 export interface OffSessionPayment {
   /**
@@ -120,11 +158,6 @@ export interface OffSessionPayment {
    * Details about the capture configuration for the OffSessionPayment.
    */
   capture?: V2.Payments.OffSessionPayment.Capture;
-
-  /**
-   * ID of the owning compartment.
-   */
-  compartment_id: string;
 
   /**
    * Creation time of the OffSessionPayment. Represented as a RFC 3339 date & time UTC
@@ -240,6 +273,7 @@ export namespace V2 {
 
       export type FailureReason =
         | 'authorization_expired'
+        | 'exceeded_retry_window'
         | 'no_valid_payment_method'
         | 'rejected_by_partner'
         | 'retries_exhausted';
@@ -266,11 +300,17 @@ export namespace V2 {
          * Indicates the strategy for how you want Stripe to retry the payment.
          */
         retry_strategy: RetryDetails.RetryStrategy;
+
+        /**
+         * The timestamp when this payment is no longer eligible to be retried. When this timestamp is reached, the payment will be marked as failed.
+         */
+        retry_until?: string;
       }
 
       export type Status =
         | 'canceled'
         | 'failed'
+        | 'paused'
         | 'pending'
         | 'pending_retry'
         | 'processing'
@@ -610,5 +650,15 @@ export namespace V2 {
         amount?: number;
       }
     }
+  }
+}
+export namespace V2 {
+  export namespace Payments {
+    export interface OffSessionPaymentPauseParams {}
+  }
+}
+export namespace V2 {
+  export namespace Payments {
+    export interface OffSessionPaymentResumeParams {}
   }
 }

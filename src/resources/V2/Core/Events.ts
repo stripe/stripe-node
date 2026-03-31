@@ -21,7 +21,6 @@ export class EventResource extends StripeResource {
         data: response.data.map(this.addFetchRelatedObjectIfNeeded.bind(this)),
       };
     };
-
     return stripeMethod({
       method: 'GET',
       fullPath: '/v2/core/events',
@@ -43,7 +42,6 @@ export class EventResource extends StripeResource {
     const transformResponseData = (response: any): any => {
       return this.addFetchRelatedObjectIfNeeded(response);
     };
-
     return stripeMethod({
       method: 'GET',
       fullPath: '/v2/core/events/{id}',
@@ -266,6 +264,7 @@ export namespace V2 {
 import {Core} from './index.js';
 import {Billing as V1Billing} from './../../Billing/index.js';
 import {Billing} from './../Billing/index.js';
+import {Data} from './../Data/index.js';
 import {MoneyManagement} from './../MoneyManagement/index.js';
 import {Payments} from './../Payments/index.js';
 import {Reporting} from './../Reporting/index.js';
@@ -369,6 +368,10 @@ export type Event =
   | V2CoreHealthTrafficVolumeDropResolvedEvent
   | V2CoreHealthWebhookLatencyFiringEvent
   | V2CoreHealthWebhookLatencyResolvedEvent
+  | V2DataReportingQueryRunCreatedEvent
+  | V2DataReportingQueryRunFailedEvent
+  | V2DataReportingQueryRunSucceededEvent
+  | V2DataReportingQueryRunUpdatedEvent
   | V2IamApiKeyCreatedEvent
   | V2IamApiKeyDefaultSecretRevealedEvent
   | V2IamApiKeyExpiredEvent
@@ -426,7 +429,9 @@ export type Event =
   | V2PaymentsOffSessionPaymentCanceledEvent
   | V2PaymentsOffSessionPaymentCreatedEvent
   | V2PaymentsOffSessionPaymentFailedEvent
+  | V2PaymentsOffSessionPaymentPausedEvent
   | V2PaymentsOffSessionPaymentRequiresCaptureEvent
+  | V2PaymentsOffSessionPaymentResumedEvent
   | V2PaymentsOffSessionPaymentSucceededEvent
   | V2PaymentsSettlementAllocationIntentCanceledEvent
   | V2PaymentsSettlementAllocationIntentCreatedEvent
@@ -545,6 +550,10 @@ export type EventNotification =
   | V2CoreHealthTrafficVolumeDropResolvedEventNotification
   | V2CoreHealthWebhookLatencyFiringEventNotification
   | V2CoreHealthWebhookLatencyResolvedEventNotification
+  | V2DataReportingQueryRunCreatedEventNotification
+  | V2DataReportingQueryRunFailedEventNotification
+  | V2DataReportingQueryRunSucceededEventNotification
+  | V2DataReportingQueryRunUpdatedEventNotification
   | V2IamApiKeyCreatedEventNotification
   | V2IamApiKeyDefaultSecretRevealedEventNotification
   | V2IamApiKeyExpiredEventNotification
@@ -602,7 +611,9 @@ export type EventNotification =
   | V2PaymentsOffSessionPaymentCanceledEventNotification
   | V2PaymentsOffSessionPaymentCreatedEventNotification
   | V2PaymentsOffSessionPaymentFailedEventNotification
+  | V2PaymentsOffSessionPaymentPausedEventNotification
   | V2PaymentsOffSessionPaymentRequiresCaptureEventNotification
+  | V2PaymentsOffSessionPaymentResumedEventNotification
   | V2PaymentsOffSessionPaymentSucceededEventNotification
   | V2PaymentsSettlementAllocationIntentCanceledEventNotification
   | V2PaymentsSettlementAllocationIntentCreatedEventNotification
@@ -2243,6 +2254,7 @@ export namespace V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpd
       | 'bank_accounts.wire'
       | 'cards'
       | 'crypto_wallets_v2'
+      | 'paper_checks'
       | 'stripe_balance.payouts'
       | 'stripe_balance.stripe_transfers'
       | 'stripe.transfers';
@@ -2319,6 +2331,7 @@ export namespace V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdate
       | 'outbound_payments.cards'
       | 'outbound_payments.crypto_wallets'
       | 'outbound_payments.financial_accounts'
+      | 'outbound_payments.paper_checks'
       | 'outbound_transfers.bank_accounts'
       | 'outbound_transfers.crypto_wallets'
       | 'outbound_transfers.financial_accounts';
@@ -3066,6 +3079,11 @@ export interface V2CoreHealthApiErrorResolvedEventNotification
 export namespace V2CoreHealthApiErrorResolvedEvent {
   export interface Data {
     /**
+     * The alert ID.
+     */
+    alert_id: string;
+
+    /**
      * The grouping key for the alert.
      */
     grouping_key: string;
@@ -3266,6 +3284,11 @@ export interface V2CoreHealthApiLatencyResolvedEventNotification
 
 export namespace V2CoreHealthApiLatencyResolvedEvent {
   export interface Data {
+    /**
+     * The alert ID.
+     */
+    alert_id: string;
+
     /**
      * The grouping key for the alert.
      */
@@ -3525,6 +3548,11 @@ export interface V2CoreHealthAuthorizationRateDropResolvedEventNotification
 
 export namespace V2CoreHealthAuthorizationRateDropResolvedEvent {
   export interface Data {
+    /**
+     * The alert ID.
+     */
+    alert_id: string;
+
     /**
      * The grouping key for the alert.
      */
@@ -3841,6 +3869,11 @@ export interface V2CoreHealthIssuingAuthorizationRequestErrorsFiringEventNotific
 export namespace V2CoreHealthIssuingAuthorizationRequestErrorsFiringEvent {
   export interface Data {
     /**
+     * The alert ID.
+     */
+    alert_id: string;
+
+    /**
      * The grouping key for the alert.
      */
     grouping_key: string;
@@ -3905,6 +3938,11 @@ export interface V2CoreHealthIssuingAuthorizationRequestErrorsResolvedEventNotif
 
 export namespace V2CoreHealthIssuingAuthorizationRequestErrorsResolvedEvent {
   export interface Data {
+    /**
+     * The alert ID.
+     */
+    alert_id: string;
+
     /**
      * The grouping key for the alert.
      */
@@ -4045,6 +4083,11 @@ export interface V2CoreHealthIssuingAuthorizationRequestTimeoutResolvedEventNoti
 
 export namespace V2CoreHealthIssuingAuthorizationRequestTimeoutResolvedEvent {
   export interface Data {
+    /**
+     * The alert ID.
+     */
+    alert_id: string;
+
     /**
      * The grouping key for the alert.
      */
@@ -4275,6 +4318,11 @@ export interface V2CoreHealthPaymentMethodErrorResolvedEventNotification
 export namespace V2CoreHealthPaymentMethodErrorResolvedEvent {
   export interface Data {
     /**
+     * The alert ID.
+     */
+    alert_id: string;
+
+    /**
      * The grouping key for the alert.
      */
     grouping_key: string;
@@ -4437,6 +4485,11 @@ export interface V2CoreHealthSepaDebitDelayedFiringEventNotification
 export namespace V2CoreHealthSepaDebitDelayedFiringEvent {
   export interface Data {
     /**
+     * The alert ID.
+     */
+    alert_id: string;
+
+    /**
      * The grouping key for the alert.
      */
     grouping_key: string;
@@ -4488,6 +4541,11 @@ export interface V2CoreHealthSepaDebitDelayedResolvedEventNotification
 
 export namespace V2CoreHealthSepaDebitDelayedResolvedEvent {
   export interface Data {
+    /**
+     * The alert ID.
+     */
+    alert_id: string;
+
     /**
      * The grouping key for the alert.
      */
@@ -4608,6 +4666,11 @@ export interface V2CoreHealthTrafficVolumeDropResolvedEventNotification
 export namespace V2CoreHealthTrafficVolumeDropResolvedEvent {
   export interface Data {
     /**
+     * The alert ID.
+     */
+    alert_id: string;
+
+    /**
      * The grouping key for the alert.
      */
     grouping_key: string;
@@ -4722,6 +4785,11 @@ export interface V2CoreHealthWebhookLatencyResolvedEventNotification
 export namespace V2CoreHealthWebhookLatencyResolvedEvent {
   export interface Data {
     /**
+     * The alert ID.
+     */
+    alert_id: string;
+
+    /**
      * The grouping key for the alert.
      */
     grouping_key: string;
@@ -4758,10 +4826,92 @@ export namespace V2CoreHealthWebhookLatencyResolvedEvent {
 }
 
 /**
+ * Occurs when a QueryRun is created.
+ */
+export interface V2DataReportingQueryRunCreatedEvent extends EventBase {
+  type: 'v2.data.reporting.query_run.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Data.Reporting.QueryRun>;
+}
+export interface V2DataReportingQueryRunCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.data.reporting.query_run.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Data.Reporting.QueryRun>;
+  fetchEvent(): Promise<V2DataReportingQueryRunCreatedEvent>;
+}
+
+/**
+ * Occurs when a QueryRun has failed to complete.
+ */
+export interface V2DataReportingQueryRunFailedEvent extends EventBase {
+  type: 'v2.data.reporting.query_run.failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Data.Reporting.QueryRun>;
+}
+export interface V2DataReportingQueryRunFailedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.data.reporting.query_run.failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Data.Reporting.QueryRun>;
+  fetchEvent(): Promise<V2DataReportingQueryRunFailedEvent>;
+}
+
+/**
+ * Occurs when a QueryRun has successfully completed.
+ */
+export interface V2DataReportingQueryRunSucceededEvent extends EventBase {
+  type: 'v2.data.reporting.query_run.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Data.Reporting.QueryRun>;
+}
+export interface V2DataReportingQueryRunSucceededEventNotification
+  extends EventNotificationBase {
+  type: 'v2.data.reporting.query_run.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Data.Reporting.QueryRun>;
+  fetchEvent(): Promise<V2DataReportingQueryRunSucceededEvent>;
+}
+
+/**
+ * Occurs when a QueryRun is updated.
+ */
+export interface V2DataReportingQueryRunUpdatedEvent extends EventBase {
+  type: 'v2.data.reporting.query_run.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Data.Reporting.QueryRun>;
+}
+export interface V2DataReportingQueryRunUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.data.reporting.query_run.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Data.Reporting.QueryRun>;
+  fetchEvent(): Promise<V2DataReportingQueryRunUpdatedEvent>;
+}
+
+/**
  * Occurs when an API Key is created.
  */
 export interface V2IamApiKeyCreatedEvent extends EventBase {
   type: 'v2.iam.api_key.created';
+  // Retrieves data specific to this event.
+  data: V2IamApiKeyCreatedEvent.Data;
 }
 export interface V2IamApiKeyCreatedEventNotification
   extends EventNotificationBase {
@@ -4769,11 +4919,22 @@ export interface V2IamApiKeyCreatedEventNotification
   fetchEvent(): Promise<V2IamApiKeyCreatedEvent>;
 }
 
+export namespace V2IamApiKeyCreatedEvent {
+  export interface Data {
+    /**
+     * ID of the created key.
+     */
+    api_key: string;
+  }
+}
+
 /**
  * Occurs when the default API Key's secret is revealed.
  */
 export interface V2IamApiKeyDefaultSecretRevealedEvent extends EventBase {
   type: 'v2.iam.api_key.default_secret_revealed';
+  // Retrieves data specific to this event.
+  data: V2IamApiKeyDefaultSecretRevealedEvent.Data;
 }
 export interface V2IamApiKeyDefaultSecretRevealedEventNotification
   extends EventNotificationBase {
@@ -4781,11 +4942,22 @@ export interface V2IamApiKeyDefaultSecretRevealedEventNotification
   fetchEvent(): Promise<V2IamApiKeyDefaultSecretRevealedEvent>;
 }
 
+export namespace V2IamApiKeyDefaultSecretRevealedEvent {
+  export interface Data {
+    /**
+     * ID of the default key whose secret was revealed.
+     */
+    api_key: string;
+  }
+}
+
 /**
  * Occurs when an API Key is expired.
  */
 export interface V2IamApiKeyExpiredEvent extends EventBase {
   type: 'v2.iam.api_key.expired';
+  // Retrieves data specific to this event.
+  data: V2IamApiKeyExpiredEvent.Data;
 }
 export interface V2IamApiKeyExpiredEventNotification
   extends EventNotificationBase {
@@ -4793,16 +4965,36 @@ export interface V2IamApiKeyExpiredEventNotification
   fetchEvent(): Promise<V2IamApiKeyExpiredEvent>;
 }
 
+export namespace V2IamApiKeyExpiredEvent {
+  export interface Data {
+    /**
+     * ID of the expired key.
+     */
+    api_key: string;
+  }
+}
+
 /**
  * Occurs when an API Key's permissions are updated.
  */
 export interface V2IamApiKeyPermissionsUpdatedEvent extends EventBase {
   type: 'v2.iam.api_key.permissions_updated';
+  // Retrieves data specific to this event.
+  data: V2IamApiKeyPermissionsUpdatedEvent.Data;
 }
 export interface V2IamApiKeyPermissionsUpdatedEventNotification
   extends EventNotificationBase {
   type: 'v2.iam.api_key.permissions_updated';
   fetchEvent(): Promise<V2IamApiKeyPermissionsUpdatedEvent>;
+}
+
+export namespace V2IamApiKeyPermissionsUpdatedEvent {
+  export interface Data {
+    /**
+     * ID of the key whose permissions were updated.
+     */
+    api_key: string;
+  }
 }
 
 /**
@@ -4822,6 +5014,11 @@ export interface V2IamApiKeyRotatedEventNotification
 export namespace V2IamApiKeyRotatedEvent {
   export interface Data {
     /**
+     * ID of the old key that was rotated.
+     */
+    api_key: string;
+
+    /**
      * ID of the new key that was created due to rotation.
      */
     new_api_key: string;
@@ -4833,6 +5030,8 @@ export namespace V2IamApiKeyRotatedEvent {
  */
 export interface V2IamApiKeyUpdatedEvent extends EventBase {
   type: 'v2.iam.api_key.updated';
+  // Retrieves data specific to this event.
+  data: V2IamApiKeyUpdatedEvent.Data;
 }
 export interface V2IamApiKeyUpdatedEventNotification
   extends EventNotificationBase {
@@ -4840,11 +5039,22 @@ export interface V2IamApiKeyUpdatedEventNotification
   fetchEvent(): Promise<V2IamApiKeyUpdatedEvent>;
 }
 
+export namespace V2IamApiKeyUpdatedEvent {
+  export interface Data {
+    /**
+     * ID of the updated key.
+     */
+    api_key: string;
+  }
+}
+
 /**
  * Occurs when a Stripe Access Grant is approved.
  */
 export interface V2IamStripeAccessGrantApprovedEvent extends EventBase {
   type: 'v2.iam.stripe_access_grant.approved';
+  // Retrieves data specific to this event.
+  data: V2IamStripeAccessGrantApprovedEvent.Data;
 }
 export interface V2IamStripeAccessGrantApprovedEventNotification
   extends EventNotificationBase {
@@ -4852,11 +5062,22 @@ export interface V2IamStripeAccessGrantApprovedEventNotification
   fetchEvent(): Promise<V2IamStripeAccessGrantApprovedEvent>;
 }
 
+export namespace V2IamStripeAccessGrantApprovedEvent {
+  export interface Data {
+    /**
+     * ID of approved Stripe Access Grant.
+     */
+    stripe_access_grant: string;
+  }
+}
+
 /**
  * Occurs when a Stripe Access Grant is canceled by the requesting Stripe.
  */
 export interface V2IamStripeAccessGrantCanceledEvent extends EventBase {
   type: 'v2.iam.stripe_access_grant.canceled';
+  // Retrieves data specific to this event.
+  data: V2IamStripeAccessGrantCanceledEvent.Data;
 }
 export interface V2IamStripeAccessGrantCanceledEventNotification
   extends EventNotificationBase {
@@ -4864,11 +5085,22 @@ export interface V2IamStripeAccessGrantCanceledEventNotification
   fetchEvent(): Promise<V2IamStripeAccessGrantCanceledEvent>;
 }
 
+export namespace V2IamStripeAccessGrantCanceledEvent {
+  export interface Data {
+    /**
+     * ID of canceled Stripe Access Grant.
+     */
+    stripe_access_grant: string;
+  }
+}
+
 /**
  * Occurs when a Stripe Access Grant is denied (was pending, then denied by the customer).
  */
 export interface V2IamStripeAccessGrantDeniedEvent extends EventBase {
   type: 'v2.iam.stripe_access_grant.denied';
+  // Retrieves data specific to this event.
+  data: V2IamStripeAccessGrantDeniedEvent.Data;
 }
 export interface V2IamStripeAccessGrantDeniedEventNotification
   extends EventNotificationBase {
@@ -4876,11 +5108,22 @@ export interface V2IamStripeAccessGrantDeniedEventNotification
   fetchEvent(): Promise<V2IamStripeAccessGrantDeniedEvent>;
 }
 
+export namespace V2IamStripeAccessGrantDeniedEvent {
+  export interface Data {
+    /**
+     * ID of denied Stripe Access Grant.
+     */
+    stripe_access_grant: string;
+  }
+}
+
 /**
  * Occurs when a Stripe Access Grant is removed (was approved, and then removed by the customer).
  */
 export interface V2IamStripeAccessGrantRemovedEvent extends EventBase {
   type: 'v2.iam.stripe_access_grant.removed';
+  // Retrieves data specific to this event.
+  data: V2IamStripeAccessGrantRemovedEvent.Data;
 }
 export interface V2IamStripeAccessGrantRemovedEventNotification
   extends EventNotificationBase {
@@ -4888,11 +5131,22 @@ export interface V2IamStripeAccessGrantRemovedEventNotification
   fetchEvent(): Promise<V2IamStripeAccessGrantRemovedEvent>;
 }
 
+export namespace V2IamStripeAccessGrantRemovedEvent {
+  export interface Data {
+    /**
+     * ID of removed Stripe Access Grant.
+     */
+    stripe_access_grant: string;
+  }
+}
+
 /**
  * Occurs when a Stripe Access Grant is requested.
  */
 export interface V2IamStripeAccessGrantRequestedEvent extends EventBase {
   type: 'v2.iam.stripe_access_grant.requested';
+  // Retrieves data specific to this event.
+  data: V2IamStripeAccessGrantRequestedEvent.Data;
 }
 export interface V2IamStripeAccessGrantRequestedEventNotification
   extends EventNotificationBase {
@@ -4900,16 +5154,36 @@ export interface V2IamStripeAccessGrantRequestedEventNotification
   fetchEvent(): Promise<V2IamStripeAccessGrantRequestedEvent>;
 }
 
+export namespace V2IamStripeAccessGrantRequestedEvent {
+  export interface Data {
+    /**
+     * ID of requested Stripe Access Grant.
+     */
+    stripe_access_grant: string;
+  }
+}
+
 /**
  * Occurs when a Stripe Access Grant is updated.
  */
 export interface V2IamStripeAccessGrantUpdatedEvent extends EventBase {
   type: 'v2.iam.stripe_access_grant.updated';
+  // Retrieves data specific to this event.
+  data: V2IamStripeAccessGrantUpdatedEvent.Data;
 }
 export interface V2IamStripeAccessGrantUpdatedEventNotification
   extends EventNotificationBase {
   type: 'v2.iam.stripe_access_grant.updated';
   fetchEvent(): Promise<V2IamStripeAccessGrantUpdatedEvent>;
+}
+
+export namespace V2IamStripeAccessGrantUpdatedEvent {
+  export interface Data {
+    /**
+     * ID of updated Stripe Access Grant.
+     */
+    stripe_access_grant: string;
+  }
 }
 
 /**
@@ -5888,6 +6162,26 @@ export interface V2PaymentsOffSessionPaymentFailedEventNotification
 }
 
 /**
+ * Sent immediately following a user's call to the Off-Session Payments pause endpoint.
+ */
+export interface V2PaymentsOffSessionPaymentPausedEvent extends EventBase {
+  type: 'v2.payments.off_session_payment.paused';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+}
+export interface V2PaymentsOffSessionPaymentPausedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.payments.off_session_payment.paused';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+  fetchEvent(): Promise<V2PaymentsOffSessionPaymentPausedEvent>;
+}
+
+/**
  * Sent when the off-session payment becomes available for capture.
  */
 export interface V2PaymentsOffSessionPaymentRequiresCaptureEvent
@@ -5906,6 +6200,26 @@ export interface V2PaymentsOffSessionPaymentRequiresCaptureEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
   fetchEvent(): Promise<V2PaymentsOffSessionPaymentRequiresCaptureEvent>;
+}
+
+/**
+ * Sent immediately following a user's call to the Off-Session Payments resume endpoint.
+ */
+export interface V2PaymentsOffSessionPaymentResumedEvent extends EventBase {
+  type: 'v2.payments.off_session_payment.resumed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+}
+export interface V2PaymentsOffSessionPaymentResumedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.payments.off_session_payment.resumed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+  fetchEvent(): Promise<V2PaymentsOffSessionPaymentResumedEvent>;
 }
 
 /**
@@ -6510,6 +6824,10 @@ export declare namespace Events {
     V2CoreHealthTrafficVolumeDropResolvedEvent,
     V2CoreHealthWebhookLatencyFiringEvent,
     V2CoreHealthWebhookLatencyResolvedEvent,
+    V2DataReportingQueryRunCreatedEvent,
+    V2DataReportingQueryRunFailedEvent,
+    V2DataReportingQueryRunSucceededEvent,
+    V2DataReportingQueryRunUpdatedEvent,
     V2IamApiKeyCreatedEvent,
     V2IamApiKeyDefaultSecretRevealedEvent,
     V2IamApiKeyExpiredEvent,
@@ -6567,7 +6885,9 @@ export declare namespace Events {
     V2PaymentsOffSessionPaymentCanceledEvent,
     V2PaymentsOffSessionPaymentCreatedEvent,
     V2PaymentsOffSessionPaymentFailedEvent,
+    V2PaymentsOffSessionPaymentPausedEvent,
     V2PaymentsOffSessionPaymentRequiresCaptureEvent,
+    V2PaymentsOffSessionPaymentResumedEvent,
     V2PaymentsOffSessionPaymentSucceededEvent,
     V2PaymentsSettlementAllocationIntentCanceledEvent,
     V2PaymentsSettlementAllocationIntentCreatedEvent,
@@ -6684,6 +7004,10 @@ export declare namespace Events {
     V2CoreHealthTrafficVolumeDropResolvedEventNotification,
     V2CoreHealthWebhookLatencyFiringEventNotification,
     V2CoreHealthWebhookLatencyResolvedEventNotification,
+    V2DataReportingQueryRunCreatedEventNotification,
+    V2DataReportingQueryRunFailedEventNotification,
+    V2DataReportingQueryRunSucceededEventNotification,
+    V2DataReportingQueryRunUpdatedEventNotification,
     V2IamApiKeyCreatedEventNotification,
     V2IamApiKeyDefaultSecretRevealedEventNotification,
     V2IamApiKeyExpiredEventNotification,
@@ -6741,7 +7065,9 @@ export declare namespace Events {
     V2PaymentsOffSessionPaymentCanceledEventNotification,
     V2PaymentsOffSessionPaymentCreatedEventNotification,
     V2PaymentsOffSessionPaymentFailedEventNotification,
+    V2PaymentsOffSessionPaymentPausedEventNotification,
     V2PaymentsOffSessionPaymentRequiresCaptureEventNotification,
+    V2PaymentsOffSessionPaymentResumedEventNotification,
     V2PaymentsOffSessionPaymentSucceededEventNotification,
     V2PaymentsSettlementAllocationIntentCanceledEventNotification,
     V2PaymentsSettlementAllocationIntentCreatedEventNotification,

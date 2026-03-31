@@ -4254,6 +4254,11 @@ export namespace V2 {
             crypto_wallets?: Capabilities.CryptoWallets;
 
             /**
+             * Capabilities that enable OutboundPayments via paper check.
+             */
+            paper_checks?: Capabilities.PaperChecks;
+
+            /**
              * Capabilities that enable the recipient to manage their Stripe Balance (/v1/balance).
              */
             stripe_balance?: Capabilities.StripeBalance;
@@ -4311,6 +4316,18 @@ export namespace V2 {
                * Additional details about the capability's status. This value is empty when `status` is `active`.
                */
               status_details: Array<CryptoWallets.StatusDetail>;
+            }
+
+            export interface PaperChecks {
+              /**
+               * The status of the Capability.
+               */
+              status: PaperChecks.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<PaperChecks.StatusDetail>;
             }
 
             export interface StripeBalance {
@@ -4508,6 +4525,42 @@ export namespace V2 {
             }
 
             export namespace CryptoWallets {
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace PaperChecks {
               export type Status =
                 | 'active'
                 | 'pending'
@@ -4921,6 +4974,11 @@ export namespace V2 {
                * Can send funds from a FinancialAccount to a FinancialAccount owned by a different entity.
                */
               financial_accounts?: OutboundPayments.FinancialAccounts;
+
+              /**
+               * Can send funds from a FinancialAccount to someone else via paper check.
+               */
+              paper_checks?: OutboundPayments.PaperChecks;
             }
 
             export interface OutboundTransfers {
@@ -5390,6 +5448,18 @@ export namespace V2 {
                 status_details: Array<FinancialAccounts.StatusDetail>;
               }
 
+              export interface PaperChecks {
+                /**
+                 * The status of the Capability.
+                 */
+                status: PaperChecks.Status;
+
+                /**
+                 * Additional details about the capability's status. This value is empty when `status` is `active`.
+                 */
+                status_details: Array<PaperChecks.StatusDetail>;
+              }
+
               export namespace BankAccounts {
                 export type Status =
                   | 'active'
@@ -5499,6 +5569,42 @@ export namespace V2 {
               }
 
               export namespace FinancialAccounts {
+                export type Status =
+                  | 'active'
+                  | 'pending'
+                  | 'restricted'
+                  | 'unsupported';
+
+                export interface StatusDetail {
+                  /**
+                   * Machine-readable code explaining the reason for the Capability to be in its current status.
+                   */
+                  code: StatusDetail.Code;
+
+                  /**
+                   * Machine-readable code explaining how to make the Capability active.
+                   */
+                  resolution: StatusDetail.Resolution;
+                }
+
+                export namespace StatusDetail {
+                  export type Code =
+                    | 'determining_status'
+                    | 'requirements_past_due'
+                    | 'requirements_pending_verification'
+                    | 'restricted_other'
+                    | 'unsupported_business'
+                    | 'unsupported_country'
+                    | 'unsupported_entity_type';
+
+                  export type Resolution =
+                    | 'contact_stripe'
+                    | 'no_resolution'
+                    | 'provide_info';
+                }
+              }
+
+              export namespace PaperChecks {
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -6094,10 +6200,12 @@ export namespace V2 {
                 | 'outbound_payments.bank_accounts'
                 | 'outbound_payments.cards'
                 | 'outbound_payments.financial_accounts'
+                | 'outbound_payments.paper_checks'
                 | 'outbound_transfers.bank_accounts'
                 | 'outbound_transfers.financial_accounts'
                 | 'oxxo_payments'
                 | 'p24_payments'
+                | 'paper_checks'
                 | 'payco_payments'
                 | 'paynow_payments'
                 | 'pay_by_bank_payments'
@@ -9019,10 +9127,12 @@ export namespace V2 {
                 | 'outbound_payments.bank_accounts'
                 | 'outbound_payments.cards'
                 | 'outbound_payments.financial_accounts'
+                | 'outbound_payments.paper_checks'
                 | 'outbound_transfers.bank_accounts'
                 | 'outbound_transfers.financial_accounts'
                 | 'oxxo_payments'
                 | 'p24_payments'
+                | 'paper_checks'
                 | 'payco_payments'
                 | 'paynow_payments'
                 | 'pay_by_bank_payments'
@@ -10544,6 +10654,11 @@ export namespace V2 {
             crypto_wallets?: Capabilities.CryptoWallets;
 
             /**
+             * Capabilities that enable OutboundPayments via paper check.
+             */
+            paper_checks?: Capabilities.PaperChecks;
+
+            /**
              * Capabilities that enable the recipient to manage their Stripe Balance (/v1/balance).
              */
             stripe_balance?: Capabilities.StripeBalance;
@@ -10575,6 +10690,13 @@ export namespace V2 {
             }
 
             export interface CryptoWallets {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface PaperChecks {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10792,6 +10914,11 @@ export namespace V2 {
                * Can send funds from a FinancialAccount to another FinancialAccount owned by someone else.
                */
               financial_accounts?: OutboundPayments.FinancialAccounts;
+
+              /**
+               * Can send funds from a FinancialAccount to someone else via paper check.
+               */
+              paper_checks?: OutboundPayments.PaperChecks;
             }
 
             export interface OutboundTransfers {
@@ -10907,6 +11034,13 @@ export namespace V2 {
               }
 
               export interface FinancialAccounts {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested: boolean;
+              }
+
+              export interface PaperChecks {
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
@@ -14907,6 +15041,11 @@ export namespace V2 {
             crypto_wallets?: Capabilities.CryptoWallets;
 
             /**
+             * Capabilities that enable OutboundPayments via paper check.
+             */
+            paper_checks?: Capabilities.PaperChecks;
+
+            /**
              * Capabilities that enable the recipient to manage their Stripe Balance (/v1/balance).
              */
             stripe_balance?: Capabilities.StripeBalance;
@@ -14938,6 +15077,13 @@ export namespace V2 {
             }
 
             export interface CryptoWallets {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface PaperChecks {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15155,6 +15301,11 @@ export namespace V2 {
                * Can send funds from a FinancialAccount to another FinancialAccount owned by someone else.
                */
               financial_accounts?: OutboundPayments.FinancialAccounts;
+
+              /**
+               * Can send funds from a FinancialAccount to someone else via paper check.
+               */
+              paper_checks?: OutboundPayments.PaperChecks;
             }
 
             export interface OutboundTransfers {
@@ -15270,6 +15421,13 @@ export namespace V2 {
               }
 
               export interface FinancialAccounts {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested?: boolean;
+              }
+
+              export interface PaperChecks {
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */

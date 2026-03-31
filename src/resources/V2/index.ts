@@ -6,6 +6,7 @@ import {FinancialAddressCreditSimulation} from './FinancialAddressCreditSimulati
 import {FinancialAddressGeneratedMicrodeposits} from './FinancialAddressGeneratedMicrodeposits.js';
 import {Billing} from './Billing/index.js';
 import {Core} from './Core/index.js';
+import {Data} from './Data/index.js';
 import {Iam} from './Iam/index.js';
 import {MoneyManagement} from './MoneyManagement/index.js';
 import {Payments} from './Payments/index.js';
@@ -16,6 +17,7 @@ import {TestHelpers} from './TestHelpers/index.js';
 export class V2 {
   billing: Billing;
   core: Core;
+  data: Data;
   iam: Iam;
   moneyManagement: MoneyManagement;
   payments: Payments;
@@ -26,6 +28,7 @@ export class V2 {
   constructor(private readonly stripe: Stripe) {
     this.billing = new Billing(stripe);
     this.core = new Core(stripe);
+    this.data = new Data(stripe);
     this.iam = new Iam(stripe);
     this.moneyManagement = new MoneyManagement(stripe);
     this.payments = new Payments(stripe);
@@ -41,6 +44,7 @@ export declare namespace V2 {
   export {FinancialAddressGeneratedMicrodeposits};
   export {Billing};
   export {Core};
+  export {Data};
   export {Iam};
   export {MoneyManagement};
   export {Payments};

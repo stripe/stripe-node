@@ -130,21 +130,21 @@ export namespace V2 {
 
       export interface Result {
         /**
-         * Contains metadata about the file produced by the `ReportRun`, including
-         * its content type, size, and a URL to download its contents.
-         */
-        file: Result.File;
-
-        /**
-         * The type of the `ReportRun` result.
+         * The type of the `ReportRun` or `QueryRun` result.
          */
         type: 'file';
+
+        /**
+         * Contains metadata about the file produced by the `ReportRun` or `QueryRun`, including
+         * its content type, size, and a URL to download its contents.
+         */
+        file?: Result.File;
       }
 
       export interface ResultOptions {
         /**
-         * If set, the generated report file will be compressed into a ZIP folder.
-         * This is useful for reducing file size and download time for large reports.
+         * If set, the generated results file will be compressed into a ZIP folder.
+         * This is useful for reducing file size and download time for large results.
          */
         compress_file?: boolean;
       }
@@ -231,8 +231,8 @@ export namespace V2 {
 
       export interface ResultOptions {
         /**
-         * If set, the generated report file will be compressed into a ZIP folder.
-         * This is useful for reducing file size and download time for large reports.
+         * If set, the generated results file will be compressed into a ZIP folder.
+         * This is useful for reducing file size and download time for large results.
          */
         compress_file?: boolean;
       }

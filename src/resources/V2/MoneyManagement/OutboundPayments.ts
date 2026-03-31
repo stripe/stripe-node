@@ -335,7 +335,7 @@ export namespace V2 {
           /**
            * Memo printed on the memo field of the check.
            */
-          memo?: string;
+          memo: string;
 
           /**
            * Open Enum. Shipping speed of the paper check.
@@ -374,6 +374,9 @@ export namespace V2 {
 
         export namespace Failed {
           export type Reason =
+            | 'paper_check_attachment_too_large'
+            | 'paper_check_expired'
+            | 'paper_check_undeliverable'
             | 'payout_method_declined'
             | 'payout_method_does_not_exist'
             | 'payout_method_expired'
@@ -473,11 +476,6 @@ export namespace V2 {
              * State, county, province, or region.
              */
             state?: string;
-
-            /**
-             * Town or district.
-             */
-            town?: string;
           }
 
           export type TrackingStatus = 'delivered' | 'in_transit' | 'mailed';

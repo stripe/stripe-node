@@ -107,6 +107,7 @@ import {PricingPlanResource as V2BillingPricingPlans} from './resources/V2/Billi
 import {ProductResource as ClimateProducts} from './resources/Climate/Products.js';
 import {ProfileResource as V2BillingProfiles} from './resources/V2/Billing/Profiles.js';
 import {ProgramResource as IssuingPrograms} from './resources/Issuing/Programs.js';
+import {QueryRunResource as V2DataReportingQueryRuns} from './resources/V2/Data/Reporting/QueryRuns.js';
 import {RateCardSubscriptionResource as V2BillingRateCardSubscriptions} from './resources/V2/Billing/RateCardSubscriptions.js';
 import {RateCardResource as V2BillingRateCards} from './resources/V2/Billing/RateCards.js';
 import {ReaderCollectedDatumResource as TerminalReaderCollectedData} from './resources/Terminal/ReaderCollectedData.js';
@@ -411,6 +412,11 @@ export const V2 = resourceNamespace('v2', {
     Vault: resourceNamespace('vault', {
       GbBankAccounts: V2CoreVaultGbBankAccounts,
       UsBankAccounts: V2CoreVaultUsBankAccounts,
+    }),
+  }),
+  Data: resourceNamespace('data', {
+    Reporting: resourceNamespace('reporting', {
+      QueryRuns: V2DataReportingQueryRuns,
     }),
   }),
   Iam: resourceNamespace('iam', {ApiKeys: V2IamApiKeys}),
