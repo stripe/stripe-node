@@ -1,4 +1,5 @@
 import {
+  BaseAddress,
   RequestData,
   UrlInterpolator,
   RequestArgs,
@@ -8,6 +9,7 @@ import {
   RequestAuthenticator,
   StripeRequest,
   ApiMode,
+  DEFAULT_BASE_ADDRESSES,
 } from './Types.js';
 
 const OPTIONS_KEYS = [
@@ -17,7 +19,7 @@ const OPTIONS_KEYS = [
   'apiVersion',
   'maxNetworkRetries',
   'timeout',
-  'host',
+  'apiBase',
   'authenticator',
   'stripeContext',
   'headers',
@@ -32,7 +34,7 @@ type Settings = {
 
 type Options = {
   authenticator?: RequestAuthenticator | null;
-  host: string | null;
+  apiBase: BaseAddress | null;
   settings: Settings;
   streaming?: boolean;
   headers: RequestHeaders;
@@ -212,11 +214,22 @@ export function getDataFromArgs(args: RequestArgs): RequestData {
 }
 
 /**
+ * enforces that only supplied API bases are allowed.
+ */
+export const validateApiBase = (apiBase: unknown): apiBase is BaseAddress => {
+  if (typeof apiBase !== 'string') {
+    throw new Error(`API base must be a string, got: ${typeof apiBase}`);
+  }
+  return apiBase in DEFAULT_BASE_ADDRESSES;
+};
+
+/**
  * Return the options hash from a list of arguments
  */
+// eslint-disable-next-line complexity
 export function getOptionsFromArgs(args: RequestArgs): Options {
   const opts: Options = {
-    host: null,
+    apiBase: null,
     headers: {},
     settings: {},
     streaming: false,
@@ -264,8 +277,8 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
       if (Number.isInteger(params.timeout)) {
         opts.settings.timeout = params.timeout as number;
       }
-      if (params.host) {
-        opts.host = params.host as string;
+      if (params.apiBase && validateApiBase(params.apiBase)) {
+        opts.apiBase = params.apiBase;
       }
       if (params.authenticator) {
         if (params.apiKey) {

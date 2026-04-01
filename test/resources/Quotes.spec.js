@@ -145,25 +145,21 @@ describe('Quotes Resource', () => {
             return callback(err);
           }
 
-          return stripe.quotes.pdf(
-            'foo_123',
-            {host: 'localhost'},
-            (err, res) => {
-              closeServer();
-              if (err) {
-                return callback(err);
-              }
-              const chunks = [];
-              res.on('data', (chunk) => chunks.push(chunk));
-              res.on('error', callback);
-              res.on('end', () => {
-                expect(Buffer.concat(chunks).toString()).to.equal(
-                  'Stripe binary response'
-                );
-                return callback();
-              });
+          return stripe.quotes.pdf('foo_123', (err, res) => {
+            closeServer();
+            if (err) {
+              return callback(err);
             }
-          );
+            const chunks = [];
+            res.on('data', (chunk) => chunks.push(chunk));
+            res.on('error', callback);
+            res.on('end', () => {
+              expect(Buffer.concat(chunks).toString()).to.equal(
+                'Stripe binary response'
+              );
+              return callback();
+            });
+          });
         }
       );
     });
@@ -192,7 +188,7 @@ describe('Quotes Resource', () => {
 
           return stripe.quotes.pdf(
             'foo_123',
-            {host: 'localhost', maxNetworkRetries: 1},
+            {maxNetworkRetries: 1},
             (err, res) => {
               closeServer();
               expect(err).to.exist;

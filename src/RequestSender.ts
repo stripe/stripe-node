@@ -516,7 +516,9 @@ export class RequestSender {
           queryData: {},
           authenticator,
           headers,
-          host: calculatedOptions.host,
+          host: calculatedOptions.apiBase
+            ? this._stripe.resolveBaseAddress(calculatedOptions.apiBase)
+            : null,
           streaming: !!calculatedOptions.streaming,
           settings: {},
           // We use this for thin event internals, so we should record the more specific `usage`, when available

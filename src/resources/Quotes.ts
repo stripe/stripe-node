@@ -785,7 +785,7 @@ export class QuoteResource extends StripeResource {
     return stripeMethod({
       method: 'GET',
       fullPath: '/v1/quotes/{quote}/pdf',
-      host: 'files.stripe.com',
+      apiBase: 'files',
       streaming: true,
     }).call(this, ...args);
   }

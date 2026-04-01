@@ -779,7 +779,7 @@ describe('utils', () => {
   describe('getOptsFromArgs', () => {
     it('handles an empty list', () => {
       expect(utils.getOptionsFromArgs([])).to.deep.equal({
-        host: null,
+        apiBase: null,
         headers: {},
         streaming: false,
         settings: {},
@@ -789,7 +789,7 @@ describe('utils', () => {
     it('handles an list with no object', () => {
       const args = [1, 3];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        host: null,
+        apiBase: null,
         headers: {},
         streaming: false,
         settings: {},
@@ -800,7 +800,7 @@ describe('utils', () => {
     it('ignores a non-options object', () => {
       const args = [{foo: 'bar'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        host: null,
+        apiBase: null,
         headers: {},
         streaming: false,
         settings: {},
@@ -812,7 +812,7 @@ describe('utils', () => {
       const args = ['sk_test_iiiiiiiiiiiiiiiiiiiiiiii'];
       const options = utils.getOptionsFromArgs(args);
       expect(options).to.deep.contain({
-        host: null,
+        apiBase: null,
         headers: {},
         streaming: false,
         settings: {},
@@ -827,7 +827,7 @@ describe('utils', () => {
       const args = ['yolo'];
       const options = utils.getOptionsFromArgs(args);
       expect(options).to.deep.contain({
-        host: null,
+        apiBase: null,
         headers: {},
         streaming: false,
         settings: {},
@@ -839,7 +839,7 @@ describe('utils', () => {
     it('parses an idempotency key', () => {
       const args = [{foo: 'bar'}, {idempotencyKey: 'foo'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        host: null,
+        apiBase: null,
         headers: {'Idempotency-Key': 'foo'},
         streaming: false,
         settings: {},
@@ -850,7 +850,7 @@ describe('utils', () => {
     it('parses an api version', () => {
       const args = [{foo: 'bar'}, {apiVersion: '2003-03-30'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        host: null,
+        apiBase: null,
         headers: {'Stripe-Version': '2003-03-30'},
         streaming: false,
         settings: {},
@@ -861,7 +861,7 @@ describe('utils', () => {
     it('parses streaming', () => {
       const args = [{foo: 'bar'}, {streaming: true}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        host: null,
+        apiBase: null,
         headers: {},
         streaming: true,
         settings: {},
@@ -880,7 +880,7 @@ describe('utils', () => {
       ];
       const options = utils.getOptionsFromArgs(args);
       expect(options).to.deep.contains({
-        host: null,
+        apiBase: null,
         headers: {
           'Idempotency-Key': 'foo',
           'Stripe-Version': '2010-01-10',
@@ -904,7 +904,7 @@ describe('utils', () => {
       ];
       const options = utils.getOptionsFromArgs(args);
       expect(options).to.deep.contains({
-        host: null,
+        apiBase: null,
         headers: {
           'Idempotency-Key': 'foo',
           'Stripe-Version': 'hunter2',
@@ -927,7 +927,7 @@ describe('utils', () => {
       ];
 
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        host: null,
+        apiBase: null,
         headers: {},
         streaming: false,
         settings: {

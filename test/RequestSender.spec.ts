@@ -734,15 +734,15 @@ describe('RequestSender', () => {
         );
       });
 
-      it('allows overriding host', (done) => {
-        const scope = nock('https://myhost')
-          .get('/v1/accounts/acct_123')
+      it('does not allow overriding host per-request', (done) => {
+        const scope = nock('https://api.stripe.com')
+          .get('/v1/accounts/acct_123?host=myhost')
           .reply(200, '{}');
 
         realStripe.accounts.retrieve(
           'acct_123',
-          {},
           {
+            // assumed to be a request param, not an option
             host: 'myhost',
           },
           (err, response) => {
@@ -779,7 +779,7 @@ describe('RequestSender', () => {
             '/v1/files/file_1Mr4LDLkdIwHu7ixFCz0dZiH/contents',
             {},
             {
-              host: 'files.stripe.com',
+              apiBase: 'files',
               streaming: true,
             }
           )

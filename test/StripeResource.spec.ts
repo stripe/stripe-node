@@ -88,24 +88,22 @@ describe('StripeResource', () => {
     });
   });
 
-  describe('custom host on method', () => {
+  describe('custom apiBase on method', () => {
     const makeResource = (stripe) => {
       return new (StripeResource.extend({
         path: 'resourceWithHost',
 
         testMethod: stripeMethod({
           method: 'GET',
-          host: 'some.host.stripe.com',
+          apiBase: 'files',
         }),
       }))(stripe);
     };
 
-    it('is not impacted by the global host', (done) => {
-      const stripe = require('../src/stripe.cjs.node.js')('sk_test', {
-        host: 'bad.host.stripe.com',
-      });
+    it('sends to the correct base address', (done) => {
+      const stripe = require('../src/stripe.cjs.node.js')('sk_test');
 
-      const scope = nock('https://some.host.stripe.com')
+      const scope = nock('https://files.stripe.com')
         .get('/v1/resourceWithHost')
         .reply(200, '{}');
 
@@ -115,211 +113,208 @@ describe('StripeResource', () => {
       });
     });
 
-    it('still lets users override the host on a per-request basis', (done) => {
-      const stripe = require('../src/stripe.cjs.node.js')('sk_test');
+    it('custom instance host overrides apiBase', (done) => {
+      const stripe = require('../src/stripe.cjs.node.js')('sk_test', {
+        host: 'custom.host.stripe.com',
+      });
 
-      const scope = nock('https://some.other.host.stripe.com')
+      const scope = nock('https://custom.host.stripe.com')
         .get('/v1/resourceWithHost')
         .reply(200, '{}');
 
-      makeResource(stripe).testMethod(
-        {},
-        {host: 'some.other.host.stripe.com'},
-        (err, response) => {
-          done(err);
-          scope.done();
-        }
-      );
-    });
-  });
-
-  describe('method with fullPath', () => {
-    it('interpolates in parameters', (callback) => {
-      const handleRequest = (req, res) => {
-        expect(req.url).to.equal('/v1/parent/hello/child/world');
-
-        // Write back JSON to close out the server.
-        res.write('{}');
-        res.end();
-      };
-
-      getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
-        const resource = new (StripeResource.extend({
-          test: stripeMethod({
-            method: 'GET',
-            fullPath: '/v1/parent/{param1}/child/{param2}',
-          }),
-        }))(stripe);
-
-        return resource.test('hello', 'world', (err, res) => {
-          closeServer();
-          // Spot check that we received a response.
-          expect(res).to.deep.equal({});
-          return callback(err);
-        });
+      makeResource(stripe).testMethod({}, (err, response) => {
+        done(err);
+        scope.done();
       });
     });
-  });
 
-  describe('streaming', () => {
-    /**
-     * Defines a fake resource with a `pdf` method
-     * with binary streaming enabled.
-     */
-    const makeResourceWithPDFMethod = (stripe) => {
-      return new (StripeResource.extend({
-        path: 'resourceWithPDF',
+    describe('method with fullPath', () => {
+      it('interpolates in parameters', (callback) => {
+        const handleRequest = (req, res) => {
+          expect(req.url).to.equal('/v1/parent/hello/child/world');
 
-        pdf: stripeMethod({
-          method: 'GET',
-          host: 'files.stripe.com',
-          streaming: true,
-        }),
-      }))(stripe);
-    };
+          // Write back JSON to close out the server.
+          res.write('{}');
+          res.end();
+        };
 
-    it('success', (callback) => {
-      const handleRequest = (req, res) => {
-        setTimeout(() => res.write('pretend'), 10);
-        setTimeout(() => res.write(' this'), 20);
-        setTimeout(() => res.write(' is a pdf'), 30);
-        setTimeout(() => res.end(), 40);
-      };
+        getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
+          const resource = new (StripeResource.extend({
+            test: stripeMethod({
+              method: 'GET',
+              fullPath: '/v1/parent/{param1}/child/{param2}',
+            }),
+          }))(stripe);
 
-      getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
-        const foos = makeResourceWithPDFMethod(stripe);
-        if (err) {
-          return callback(err);
-        }
-
-        return foos.pdf({id: 'foo_123'}, {host: 'localhost'}, (err, res) => {
-          closeServer();
-          if (err) {
+          return resource.test('hello', 'world', (err, res) => {
+            closeServer();
+            // Spot check that we received a response.
+            expect(res).to.deep.equal({});
             return callback(err);
-          }
-          const chunks = [];
-          res.on('data', (chunk) => chunks.push(chunk));
-          res.on('error', callback);
-          res.on('end', () => {
-            expect(Buffer.concat(chunks).toString()).to.equal(
-              'pretend this is a pdf'
-            );
-            return callback();
           });
         });
       });
     });
 
-    it('setting streaming in raw request works correctly', (callback) => {
-      const handleRequest = (req, res) => {
-        setTimeout(() => res.write('pretend'), 10);
-        setTimeout(() => res.write(' this'), 20);
-        setTimeout(() => res.write(' is a pdf'), 30);
-        setTimeout(() => res.end(), 40);
+    describe('streaming', () => {
+      /**
+       * Defines a fake resource with a `pdf` method
+       * with binary streaming enabled.
+       */
+      const makeResourceWithPDFMethod = (stripe) => {
+        return new (StripeResource.extend({
+          path: 'resourceWithPDF',
+
+          pdf: stripeMethod({
+            method: 'GET',
+            apiBase: 'files',
+            streaming: true,
+          }),
+        }))(stripe);
       };
 
-      getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
-        if (err) {
-          return callback(err);
-        }
+      it('success', (callback) => {
+        const handleRequest = (req, res) => {
+          setTimeout(() => res.write('pretend'), 10);
+          setTimeout(() => res.write(' this'), 20);
+          setTimeout(() => res.write(' is a pdf'), 30);
+          setTimeout(() => res.end(), 40);
+        };
 
-        stripe
-          .rawRequest(
-            'GET',
-            '/v1/files/file_123/contents',
-            {},
-            {host: 'localhost', streaming: true}
-          )
-          .then((result) => {
+        getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
+          const foos = makeResourceWithPDFMethod(stripe);
+          if (err) {
+            return callback(err);
+          }
+
+          return foos.pdf({id: 'foo_123'}, (err, res) => {
             closeServer();
+            if (err) {
+              return callback(err);
+            }
             const chunks = [];
-            result.on('data', (chunk) => chunks.push(chunk));
-            result.on('error', callback);
-            result.on('end', () => {
+            res.on('data', (chunk) => chunks.push(chunk));
+            res.on('error', callback);
+            res.on('end', () => {
               expect(Buffer.concat(chunks).toString()).to.equal(
                 'pretend this is a pdf'
               );
               return callback();
             });
-          })
-          .catch((error) => {
-            return callback(error);
           });
+        });
       });
-    });
 
-    it('failure', (callback) => {
-      const handleRequest = (_req, res, nPreviousRequests) => {
-        setTimeout(() => res.writeHead(500));
-        setTimeout(
-          () =>
-            res.write(
-              '{"error": "api_error", "error_description": "this is bad"}'
-            ),
-          10
-        );
-        setTimeout(() => res.end(), 20);
-        // fail twice, then close the server
-        return {shouldStayOpen: nPreviousRequests < 1};
-      };
+      it('setting streaming in raw request works correctly', (callback) => {
+        const handleRequest = (req, res) => {
+          setTimeout(() => res.write('pretend'), 10);
+          setTimeout(() => res.write(' this'), 20);
+          setTimeout(() => res.write(' is a pdf'), 30);
+          setTimeout(() => res.end(), 40);
+        };
 
-      getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
-        if (err) {
-          return callback(err);
-        }
-
-        const foos = makeResourceWithPDFMethod(stripe);
-
-        return foos.pdf(
-          {id: 'foo_123'},
-          {host: 'localhost', maxNetworkRetries: 1},
-          (err, res) => {
-            closeServer();
-            expect(err).to.exist;
-            expect(err.raw.type).to.equal('api_error');
-            expect(err.raw.message).to.equal('this is bad');
-            return callback();
+        getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
+          if (err) {
+            return callback(err);
           }
-        );
+
+          stripe
+            .rawRequest(
+              'GET',
+              '/v1/files/file_123/contents',
+              {},
+              {streaming: true}
+            )
+            .then((result) => {
+              closeServer();
+              const chunks = [];
+              result.on('data', (chunk) => chunks.push(chunk));
+              result.on('error', callback);
+              result.on('end', () => {
+                expect(Buffer.concat(chunks).toString()).to.equal(
+                  'pretend this is a pdf'
+                );
+                return callback();
+              });
+            })
+            .catch((error) => {
+              return callback(error);
+            });
+        });
+      });
+
+      it('failure', (callback) => {
+        const handleRequest = (_req, res, nPreviousRequests) => {
+          setTimeout(() => res.writeHead(500));
+          setTimeout(
+            () =>
+              res.write(
+                '{"error": "api_error", "error_description": "this is bad"}'
+              ),
+            10
+          );
+          setTimeout(() => res.end(), 20);
+          // fail twice, then close the server
+          return {shouldStayOpen: nPreviousRequests < 1};
+        };
+
+        getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
+          if (err) {
+            return callback(err);
+          }
+
+          const foos = makeResourceWithPDFMethod(stripe);
+
+          return foos.pdf(
+            {id: 'foo_123'},
+            {maxNetworkRetries: 1},
+            (err, res) => {
+              closeServer();
+              expect(err).to.exist;
+              expect(err.raw.type).to.equal('api_error');
+              expect(err.raw.message).to.equal('this is bad');
+              return callback();
+            }
+          );
+        });
       });
     });
-  });
-  describe('makeRequest args', () => {
-    it('does not mutate user-supplied deprecated opts', () => {
-      const args = [
-        {
-          stripe_account: 'bad',
-        },
-      ];
-      const mockSelf = new (StripeResource.extend({}))(stripe);
-      mockSelf._makeRequest(args, {}, {});
-      expect(args).to.deep.equal([
-        {
-          stripe_account: 'bad',
-        },
-      ]);
-    });
-  });
-
-  describe('usage', () => {
-    it('is passed to the request sender', (callback) => {
-      const mockSelf = new (StripeResource.extend({
-        boop: stripeMethod({
-          method: 'GET',
-          fullPath: '/v1/widgets/{widget}/boop',
-          usage: ['llama', 'bufo'],
-        }),
-      }))(stripe);
-
-      mockSelf.boop('foo', {bar: 'baz'}, (err, res) => {
-        if (err) {
-          return callback(err);
-        }
-        expect(stripe._requestSender._stripe.LAST_REQUEST.usage).to.deep.equal([
-          'llama',
-          'bufo',
+    describe('makeRequest args', () => {
+      it('does not mutate user-supplied deprecated opts', () => {
+        const args = [
+          {
+            stripe_account: 'bad',
+          },
+        ];
+        const mockSelf = new (StripeResource.extend({}))(stripe);
+        mockSelf._makeRequest(args, {}, {});
+        expect(args).to.deep.equal([
+          {
+            stripe_account: 'bad',
+          },
         ]);
-        return callback();
+      });
+    });
+
+    describe('usage', () => {
+      it('is passed to the request sender', (callback) => {
+        const mockSelf = new (StripeResource.extend({
+          boop: stripeMethod({
+            method: 'GET',
+            fullPath: '/v1/widgets/{widget}/boop',
+            usage: ['llama', 'bufo'],
+          }),
+        }))(stripe);
+
+        mockSelf.boop('foo', {bar: 'baz'}, (err, res) => {
+          if (err) {
+            return callback(err);
+          }
+          expect(
+            stripe._requestSender._stripe.LAST_REQUEST.usage
+          ).to.deep.equal(['llama', 'bufo']);
+          return callback();
+        });
       });
     });
   });
