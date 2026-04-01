@@ -49,7 +49,7 @@ export class FileResource extends StripeResource {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-      host: 'files.stripe.com',
+      apiBase: 'files',
     }).call(this, ...args);
   }
 

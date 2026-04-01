@@ -17,7 +17,7 @@ export class MeterEventStreamResource extends StripeResource {
     return stripeMethod({
       method: 'POST',
       fullPath: '/v2/billing/meter_event_stream',
-      host: 'meter-events.stripe.com',
+      apiBase: 'meter_events',
     }).call(this, ...args);
   }
 }

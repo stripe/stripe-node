@@ -7,8 +7,6 @@ import {Response, ApiListPromise, ApiList} from '../lib.js';
 
 const stripeMethod = StripeResource.method;
 
-const oAuthHost = 'connect.stripe.com';
-
 export class OAuthResource extends StripeResource {
   basePath = makeURLInterpolator('/');
 
@@ -38,7 +36,10 @@ export class OAuthResource extends StripeResource {
       params.scope = 'read_write';
     }
 
-    return `https://${oAuthHost}/${path}?${queryStringifyRequestData(params)}`;
+    const connectHost = this._stripe.resolveBaseAddress('connect');
+    return `https://${connectHost}/${path}?${queryStringifyRequestData(
+      params
+    )}`;
   }
 
   token(
@@ -50,7 +51,7 @@ export class OAuthResource extends StripeResource {
     return stripeMethod({
       method: 'POST',
       path: 'oauth/token',
-      host: oAuthHost,
+      apiBase: 'connect',
     }).call(this, ...args);
   }
 
@@ -70,7 +71,7 @@ export class OAuthResource extends StripeResource {
     return stripeMethod({
       method: 'POST',
       path: 'oauth/deauthorize',
-      host: oAuthHost,
+      apiBase: 'connect',
     }).apply(this, [params, ...args]);
   }
 }

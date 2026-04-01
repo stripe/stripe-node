@@ -281,9 +281,6 @@ const instanceofCheck2 = {} instanceof Stripe.errors.StripeAPIError;
 const instanceofCheck5 = {} instanceof stripe.errors.StripeError;
 const instanceofCheck6 = {} instanceof stripe.errors.StripeAPIError;
 
-stripe.accounts.retrieve('123', {
-  host: 'my_host',
-});
 stripe.files.create({
   purpose: 'dispute_evidence',
   file: {
@@ -293,6 +290,37 @@ stripe.files.create({
   },
   file_link_data: {create: true},
 });
+
+// rawRequest
+stripe.rawRequest(
+  'GET',
+  '/path/123',
+  {},
+  {
+    // allowed base
+    apiBase: 'files',
+  }
+);
+
+stripe.rawRequest(
+  'GET',
+  '/path/123',
+  {},
+  {
+    // @ts-expect-error - unknown base
+    apiBase: 'missing',
+  }
+);
+
+stripe.rawRequest(
+  'GET',
+  '/path/123',
+  {},
+  {
+    // @ts-expect-error - unknown key
+    host: 'example.com',
+  }
+);
 
 const v1Event = {} as Stripe.AccountApplicationAuthorizedEvent;
 // v1 event context is a string

@@ -11,6 +11,13 @@ import {Stripe} from './stripe.core.js';
 import {AppInfo} from './lib.js';
 
 export type ApiMode = 'v1' | 'v2';
+export type BaseAddress = 'api' | 'files' | 'connect' | 'meter_events';
+export const DEFAULT_BASE_ADDRESSES: Record<BaseAddress, string> = {
+  api: 'api.stripe.com',
+  files: 'files.stripe.com',
+  connect: 'connect.stripe.com',
+  meter_events: 'meter-events.stripe.com',
+};
 export type BufferedFile = {
   name: string;
   type: string;
@@ -32,7 +39,7 @@ export type MethodSpec = {
   validator?: (data: RequestData, options: {headers: RequestHeaders}) => void;
   headers?: Record<string, string>;
   streaming?: boolean;
-  host?: string;
+  apiBase?: BaseAddress;
   transformResponseData?: (response: HttpClientResponseInterface) => any;
   usage?: Array<string>;
   requestSchema?: V2RuntimeSchema;
