@@ -54,7 +54,7 @@ console.log(customer.id);
 Or using CJS:
 ```js
 const Stripe = require('stripe');
-const stripeClient = S('sk_test_...');
+const stripeClient = Stripe('sk_test_...');
 
 stripeClient.customers.create({
   email: 'customer@example.com',
