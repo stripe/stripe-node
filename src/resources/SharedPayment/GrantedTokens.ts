@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class GrantedTokenResource extends StripeResource {
   /**
@@ -12,17 +11,13 @@ export class GrantedTokenResource extends StripeResource {
     id: string,
     params?: SharedPayment.GrantedTokenRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<GrantedToken>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<GrantedToken>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath:
-        '/v1/shared_payment/granted_tokens/{shared_payment_granted_token}',
-    }).call(this, ...args);
+  ): Promise<Response<GrantedToken>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/shared_payment/granted_tokens/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface GrantedToken {

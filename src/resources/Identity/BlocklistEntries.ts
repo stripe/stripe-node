@@ -5,7 +5,6 @@ import {VerificationReport} from './VerificationReports.js';
 import {VerificationSession} from './VerificationSessions.js';
 import {PaginationParams, RangeQueryParam} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class BlocklistEntryResource extends StripeResource {
   /**
@@ -19,16 +18,17 @@ export class BlocklistEntryResource extends StripeResource {
   list(
     params?: Identity.BlocklistEntryListParams,
     options?: RequestOptions
-  ): ApiListPromise<BlocklistEntry>;
-  list(options?: RequestOptions): ApiListPromise<BlocklistEntry>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/identity/blocklist_entries',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<BlocklistEntry> {
+    return this._makeRequest(
+      'GET',
+      '/v1/identity/blocklist_entries',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Creates a BlocklistEntry object from a verification report.
    *
@@ -41,14 +41,14 @@ export class BlocklistEntryResource extends StripeResource {
   create(
     params: Identity.BlocklistEntryCreateParams,
     options?: RequestOptions
-  ): Promise<Response<BlocklistEntry>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/identity/blocklist_entries',
-    }).call(this, ...args);
+  ): Promise<Response<BlocklistEntry>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/identity/blocklist_entries',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves a BlocklistEntry object by its identifier.
    *
@@ -58,18 +58,14 @@ export class BlocklistEntryResource extends StripeResource {
     id: string,
     params?: Identity.BlocklistEntryRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<BlocklistEntry>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<BlocklistEntry>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/identity/blocklist_entries/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<BlocklistEntry>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/identity/blocklist_entries/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Disables a BlocklistEntry object.
    *
@@ -83,16 +79,13 @@ export class BlocklistEntryResource extends StripeResource {
     id: string,
     params?: Identity.BlocklistEntryDisableParams,
     options?: RequestOptions
-  ): Promise<Response<BlocklistEntry>>;
-  disable(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<BlocklistEntry>>;
-  disable(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/identity/blocklist_entries/{id}/disable',
-    }).call(this, ...args);
+  ): Promise<Response<BlocklistEntry>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/identity/blocklist_entries/${id}/disable`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface BlocklistEntry {

@@ -13,7 +13,7 @@ import {
   RequestData,
   RequestDataProcessor,
   RequestHeaders,
-  RequestOptions,
+  InternalRequestOptions,
   RequestSettings,
 } from '../src/Types.js';
 import {NodeHttpClient} from '../src/net/NodeHttpClient.js';
@@ -111,7 +111,7 @@ export const getMockStripe = (
       path: string,
       data: RequestData,
       authenticator: RequestAuthenticator,
-      options: RequestOptions = {} as any,
+      options: InternalRequestOptions = {} as any,
       usage: Array<string>,
       callback: RequestCallback,
       requestDataProcessor: RequestDataProcessor | null = null
@@ -166,7 +166,7 @@ export const getSpyableStripe = (config: Record<string, unknown>): Stripe => {
       path: string,
       data: RequestData,
       authenticator: RequestAuthenticator,
-      options: RequestOptions = {} as any,
+      options: InternalRequestOptions = {} as any,
       usage: Array<string> = [],
       callback: RequestCallback,
       requestDataProcessor: RequestDataProcessor | null = null

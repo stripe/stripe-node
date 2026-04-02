@@ -6,7 +6,6 @@ import {Invoice} from './../Invoices.js';
 import * as TestHelpers from './../TestHelpers/index.js';
 import {PaginationParams, Decimal, Metadata} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CreditBalanceTransactionResource extends StripeResource {
   /**
@@ -15,54 +14,56 @@ export class CreditBalanceTransactionResource extends StripeResource {
   list(
     params?: Billing.CreditBalanceTransactionListParams,
     options?: RequestOptions
-  ): ApiListPromise<CreditBalanceTransaction>;
-  list(options?: RequestOptions): ApiListPromise<CreditBalanceTransaction>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/credit_balance_transactions',
-      methodType: 'list',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          data: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                credit: {
-                  kind: 'nullable',
-                  inner: {
-                    kind: 'object',
-                    fields: {
-                      amount: {
-                        kind: 'object',
-                        fields: {
-                          custom_pricing_unit: {
-                            kind: 'nullable',
-                            inner: {
-                              kind: 'object',
-                              fields: {value: {kind: 'decimal_string'}},
+  ): ApiListPromise<CreditBalanceTransaction> {
+    return this._makeRequest(
+      'GET',
+      '/v1/billing/credit_balance_transactions',
+      params,
+      options,
+      {
+        methodType: 'list',
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  credit: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        amount: {
+                          kind: 'object',
+                          fields: {
+                            custom_pricing_unit: {
+                              kind: 'nullable',
+                              inner: {
+                                kind: 'object',
+                                fields: {value: {kind: 'decimal_string'}},
+                              },
                             },
                           },
                         },
                       },
                     },
                   },
-                },
-                debit: {
-                  kind: 'nullable',
-                  inner: {
-                    kind: 'object',
-                    fields: {
-                      amount: {
-                        kind: 'object',
-                        fields: {
-                          custom_pricing_unit: {
-                            kind: 'nullable',
-                            inner: {
-                              kind: 'object',
-                              fields: {value: {kind: 'decimal_string'}},
+                  debit: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        amount: {
+                          kind: 'object',
+                          fields: {
+                            custom_pricing_unit: {
+                              kind: 'nullable',
+                              inner: {
+                                kind: 'object',
+                                fields: {value: {kind: 'decimal_string'}},
+                              },
                             },
                           },
                         },
@@ -74,10 +75,9 @@ export class CreditBalanceTransactionResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Retrieves a credit balance transaction.
    */
@@ -85,51 +85,50 @@ export class CreditBalanceTransactionResource extends StripeResource {
     id: string,
     params?: Billing.CreditBalanceTransactionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<CreditBalanceTransaction>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CreditBalanceTransaction>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/credit_balance_transactions/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          credit: {
-            kind: 'nullable',
-            inner: {
-              kind: 'object',
-              fields: {
-                amount: {
-                  kind: 'object',
-                  fields: {
-                    custom_pricing_unit: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {value: {kind: 'decimal_string'}},
+  ): Promise<Response<CreditBalanceTransaction>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/billing/credit_balance_transactions/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            credit: {
+              kind: 'nullable',
+              inner: {
+                kind: 'object',
+                fields: {
+                  amount: {
+                    kind: 'object',
+                    fields: {
+                      custom_pricing_unit: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {value: {kind: 'decimal_string'}},
+                        },
                       },
                     },
                   },
                 },
               },
             },
-          },
-          debit: {
-            kind: 'nullable',
-            inner: {
-              kind: 'object',
-              fields: {
-                amount: {
-                  kind: 'object',
-                  fields: {
-                    custom_pricing_unit: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {value: {kind: 'decimal_string'}},
+            debit: {
+              kind: 'nullable',
+              inner: {
+                kind: 'object',
+                fields: {
+                  amount: {
+                    kind: 'object',
+                    fields: {
+                      custom_pricing_unit: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {value: {kind: 'decimal_string'}},
+                        },
                       },
                     },
                   },
@@ -138,8 +137,8 @@ export class CreditBalanceTransactionResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface CreditBalanceTransaction {

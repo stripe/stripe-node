@@ -5,7 +5,6 @@ import {CustomPricingUnit} from './CustomPricingUnits.js';
 import {V2Amount} from './../V2Amounts.js';
 import {Decimal} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ServiceActionResource extends StripeResource {
   /**
@@ -14,80 +13,82 @@ export class ServiceActionResource extends StripeResource {
   create(
     params: V2.Billing.ServiceActionCreateParams,
     options?: RequestOptions
-  ): Promise<Response<ServiceAction>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/service_actions',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          credit_grant: {
-            kind: 'object',
-            fields: {
-              amount: {
-                kind: 'object',
-                fields: {
-                  custom_pricing_unit: {
-                    kind: 'object',
-                    fields: {value: {kind: 'decimal_string'}},
+  ): Promise<Response<ServiceAction>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/billing/service_actions',
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            credit_grant: {
+              kind: 'object',
+              fields: {
+                amount: {
+                  kind: 'object',
+                  fields: {
+                    custom_pricing_unit: {
+                      kind: 'object',
+                      fields: {value: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
-          },
-          credit_grant_per_tenant: {
-            kind: 'object',
-            fields: {
-              amount: {
-                kind: 'object',
-                fields: {
-                  custom_pricing_unit: {
-                    kind: 'object',
-                    fields: {value: {kind: 'decimal_string'}},
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          credit_grant: {
-            kind: 'object',
-            fields: {
-              amount: {
-                kind: 'object',
-                fields: {
-                  custom_pricing_unit: {
-                    kind: 'object',
-                    fields: {value: {kind: 'decimal_string'}},
-                  },
-                },
-              },
-            },
-          },
-          credit_grant_per_tenant: {
-            kind: 'object',
-            fields: {
-              amount: {
-                kind: 'object',
-                fields: {
-                  custom_pricing_unit: {
-                    kind: 'object',
-                    fields: {value: {kind: 'decimal_string'}},
+            credit_grant_per_tenant: {
+              kind: 'object',
+              fields: {
+                amount: {
+                  kind: 'object',
+                  fields: {
+                    custom_pricing_unit: {
+                      kind: 'object',
+                      fields: {value: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            credit_grant: {
+              kind: 'object',
+              fields: {
+                amount: {
+                  kind: 'object',
+                  fields: {
+                    custom_pricing_unit: {
+                      kind: 'object',
+                      fields: {value: {kind: 'decimal_string'}},
+                    },
+                  },
+                },
+              },
+            },
+            credit_grant_per_tenant: {
+              kind: 'object',
+              fields: {
+                amount: {
+                  kind: 'object',
+                  fields: {
+                    custom_pricing_unit: {
+                      kind: 'object',
+                      fields: {value: {kind: 'decimal_string'}},
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
+    ) as any;
   }
-
   /**
    * Retrieve a Service Action object.
    */
@@ -95,51 +96,49 @@ export class ServiceActionResource extends StripeResource {
     id: string,
     params?: V2.Billing.ServiceActionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ServiceAction>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ServiceAction>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/service_actions/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          credit_grant: {
-            kind: 'object',
-            fields: {
-              amount: {
-                kind: 'object',
-                fields: {
-                  custom_pricing_unit: {
-                    kind: 'object',
-                    fields: {value: {kind: 'decimal_string'}},
+  ): Promise<Response<ServiceAction>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/service_actions/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            credit_grant: {
+              kind: 'object',
+              fields: {
+                amount: {
+                  kind: 'object',
+                  fields: {
+                    custom_pricing_unit: {
+                      kind: 'object',
+                      fields: {value: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
-          },
-          credit_grant_per_tenant: {
-            kind: 'object',
-            fields: {
-              amount: {
-                kind: 'object',
-                fields: {
-                  custom_pricing_unit: {
-                    kind: 'object',
-                    fields: {value: {kind: 'decimal_string'}},
+            credit_grant_per_tenant: {
+              kind: 'object',
+              fields: {
+                amount: {
+                  kind: 'object',
+                  fields: {
+                    custom_pricing_unit: {
+                      kind: 'object',
+                      fields: {value: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Update a ServiceAction object.
    */
@@ -147,45 +146,48 @@ export class ServiceActionResource extends StripeResource {
     id: string,
     params?: V2.Billing.ServiceActionUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<ServiceAction>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/service_actions/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          credit_grant: {
-            kind: 'object',
-            fields: {
-              amount: {
-                kind: 'object',
-                fields: {
-                  custom_pricing_unit: {
-                    kind: 'object',
-                    fields: {value: {kind: 'decimal_string'}},
+  ): Promise<Response<ServiceAction>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/service_actions/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            credit_grant: {
+              kind: 'object',
+              fields: {
+                amount: {
+                  kind: 'object',
+                  fields: {
+                    custom_pricing_unit: {
+                      kind: 'object',
+                      fields: {value: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
-          },
-          credit_grant_per_tenant: {
-            kind: 'object',
-            fields: {
-              amount: {
-                kind: 'object',
-                fields: {
-                  custom_pricing_unit: {
-                    kind: 'object',
-                    fields: {value: {kind: 'decimal_string'}},
+            credit_grant_per_tenant: {
+              kind: 'object',
+              fields: {
+                amount: {
+                  kind: 'object',
+                  fields: {
+                    custom_pricing_unit: {
+                      kind: 'object',
+                      fields: {value: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface ServiceAction {

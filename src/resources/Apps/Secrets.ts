@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class SecretResource extends StripeResource {
   /**
@@ -12,55 +11,52 @@ export class SecretResource extends StripeResource {
   list(
     params: Apps.SecretListParams,
     options?: RequestOptions
-  ): ApiListPromise<Secret>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/apps/secrets',
+  ): ApiListPromise<Secret> {
+    return this._makeRequest('GET', '/v1/apps/secrets', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Create or replace a secret in the secret store.
    */
   create(
     params: Apps.SecretCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Secret>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/apps/secrets'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Secret>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/apps/secrets',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Finds a secret in the secret store by name and scope.
    */
   find(
     params: Apps.SecretFindParams,
     options?: RequestOptions
-  ): Promise<Response<Secret>>;
-  find(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/apps/secrets/find',
-    }).call(this, ...args);
+  ): Promise<Response<Secret>> {
+    return this._makeRequest(
+      'GET',
+      '/v1/apps/secrets/find',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Deletes a secret from the secret store by name and scope.
    */
   deleteWhere(
     params: Apps.SecretDeleteWhereParams,
     options?: RequestOptions
-  ): Promise<Response<Secret>>;
-  deleteWhere(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/apps/secrets/delete',
-    }).call(this, ...args);
+  ): Promise<Response<Secret>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/apps/secrets/delete',
+      params,
+      options
+    ) as any;
   }
 }
 export interface Secret {

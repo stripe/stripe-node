@@ -3,7 +3,6 @@
 import {StripeResource} from '../StripeResource.js';
 import {MetadataParam, PaginationParams, Metadata} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class AccountNoticeResource extends StripeResource {
   /**
@@ -12,16 +11,11 @@ export class AccountNoticeResource extends StripeResource {
   list(
     params?: AccountNoticeListParams,
     options?: RequestOptions
-  ): ApiListPromise<AccountNotice>;
-  list(options?: RequestOptions): ApiListPromise<AccountNotice>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/account_notices',
+  ): ApiListPromise<AccountNotice> {
+    return this._makeRequest('GET', '/v1/account_notices', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieves an AccountNotice object.
    */
@@ -29,18 +23,14 @@ export class AccountNoticeResource extends StripeResource {
     id: string,
     params?: AccountNoticeRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<AccountNotice>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<AccountNotice>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/account_notices/{account_notice}',
-    }).call(this, ...args);
+  ): Promise<Response<AccountNotice>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/account_notices/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates an AccountNotice object.
    */
@@ -48,12 +38,13 @@ export class AccountNoticeResource extends StripeResource {
     id: string,
     params: AccountNoticeUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<AccountNotice>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/account_notices/{account_notice}',
-    }).call(this, ...args);
+  ): Promise<Response<AccountNotice>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/account_notices/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface AccountNotice {

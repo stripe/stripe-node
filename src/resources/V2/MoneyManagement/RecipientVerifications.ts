@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class RecipientVerificationResource extends StripeResource {
   /**
@@ -11,14 +10,14 @@ export class RecipientVerificationResource extends StripeResource {
   create(
     params: V2.MoneyManagement.RecipientVerificationCreateParams,
     options?: RequestOptions
-  ): Promise<Response<RecipientVerification>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/recipient_verifications',
-    }).call(this, ...args);
+  ): Promise<Response<RecipientVerification>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/money_management/recipient_verifications',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the details of an existing RecipientVerification by passing the unique RecipientVerification ID.
    */
@@ -26,18 +25,14 @@ export class RecipientVerificationResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.RecipientVerificationRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<RecipientVerification>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<RecipientVerification>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/recipient_verifications/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<RecipientVerification>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/money_management/recipient_verifications/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Acknowledges an existing RecipientVerification. Only RecipientVerification awaiting acknowledgement can be acknowledged.
    */
@@ -45,16 +40,13 @@ export class RecipientVerificationResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.RecipientVerificationAcknowledgeParams,
     options?: RequestOptions
-  ): Promise<Response<RecipientVerification>>;
-  acknowledge(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<RecipientVerification>>;
-  acknowledge(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/recipient_verifications/{id}/acknowledge',
-    }).call(this, ...args);
+  ): Promise<Response<RecipientVerification>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/money_management/recipient_verifications/${id}/acknowledge`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface RecipientVerification {

@@ -576,7 +576,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/events/ll_123',
         response:
-          '{"changes":{"int_key":123,"string_key":"value","boolean_key":true,"object_key":{"object_int_key":123,"object_string_key":"value","object_boolean_key":true},"array_key":[1,2,3]},"context":"context","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"object":"v2.core.event","reason":{"type":"request","request":{"client":{"type":"api_key","api_key":{"id":"obj_123"},"dashboard_user":{"email":"email","ip_address":"ip_address","machine_identifier":"machine_identifier"},"stripe_action":{"int_key":123,"string_key":"value","boolean_key":true,"object_key":{"object_int_key":123,"object_string_key":"value","object_boolean_key":true},"array_key":[1,2,3]}},"id":"obj_123","idempotency_key":"idempotency_key"}},"type":"type"}',
+          '{"changes":{"int_key":123,"string_key":"value","boolean_key":true,"object_key":{"object_int_key":123,"object_string_key":"value","object_boolean_key":true},"array_key":[1,2,3]},"context":"context","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"object":"v2.core.event","reason":{"type":"request","request":{"client":{"type":"api_key","api_key":{"id":"obj_123"},"dashboard_user":{"email":"email","ip_address":"ip_address","machine_identifier":"machine_identifier"},"stripe_action":{}},"id":"obj_123","idempotency_key":"idempotency_key"}},"type":"type"}',
       },
     ]);
     const event = await stripe.v2.core.events.retrieve('ll_123');
@@ -4320,6 +4320,7 @@ describe('Generated tests', function() {
                 amount: {
                   type: 'custom_pricing_unit',
                   custom_pricing_unit: {
+                    id: 'obj_123',
                     value: 'value',
                   },
                 },
@@ -7617,13 +7618,12 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.moneyManagement.outboundPayments.cancel(
-      'id_123',
-
-      (err) => {
-        expect(err).to.be.instanceOf(AlreadyCanceledError);
-      }
-    );
+    try {
+      await realStripe.v2.moneyManagement.outboundPayments.cancel('id_123');
+      expect.fail('Expected error');
+    } catch (err) {
+      expect(err).to.be.instanceOf(AlreadyCanceledError);
+    }
   });
 
   it('test_already_exists_error', async function() {
@@ -7638,15 +7638,14 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.moneyManagement.financialAccounts.create(
-      {
+    try {
+      await realStripe.v2.moneyManagement.financialAccounts.create({
         type: 'storage',
-      },
-
-      (err) => {
-        expect(err).to.be.instanceOf(AlreadyExistsError);
-      }
-    );
+      });
+      expect.fail('Expected error');
+    } catch (err) {
+      expect(err).to.be.instanceOf(AlreadyExistsError);
+    }
   });
 
   it('test_blocked_by_stripe_error', async function() {
@@ -7661,16 +7660,15 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.core.vault.usBankAccounts.create(
-      {
+    try {
+      await realStripe.v2.core.vault.usBankAccounts.create({
         account_number: 'account_number',
         currency: 'usd',
-      },
-
-      (err) => {
-        expect(err).to.be.instanceOf(BlockedByStripeError);
-      }
-    );
+      });
+      expect.fail('Expected error');
+    } catch (err) {
+      expect(err).to.be.instanceOf(BlockedByStripeError);
+    }
   });
 
   it('test_controlled_by_alternate_resource_error', async function() {
@@ -7685,9 +7683,12 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.moneyManagement.outboundSetupIntents.create((err) => {
+    try {
+      await realStripe.v2.moneyManagement.outboundSetupIntents.create();
+      expect.fail('Expected error');
+    } catch (err) {
       expect(err).to.be.instanceOf(ControlledByAlternateResourceError);
-    });
+    }
   });
 
   it('test_controlled_by_dashboard_error', async function() {
@@ -7702,13 +7703,12 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.core.vault.usBankAccounts.archive(
-      'id_123',
-
-      (err) => {
-        expect(err).to.be.instanceOf(ControlledByDashboardError);
-      }
-    );
+    try {
+      await realStripe.v2.core.vault.usBankAccounts.archive('id_123');
+      expect.fail('Expected error');
+    } catch (err) {
+      expect(err).to.be.instanceOf(ControlledByDashboardError);
+    }
   });
 
   it('test_feature_not_enabled_error', async function() {
@@ -7723,17 +7723,16 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.moneyManagement.currencyConversions.create(
-      {
+    try {
+      await realStripe.v2.moneyManagement.currencyConversions.create({
         financial_account: 'financial_account',
         from: {},
         to: {},
-      },
-
-      (err) => {
-        expect(err).to.be.instanceOf(FeatureNotEnabledError);
-      }
-    );
+      });
+      expect.fail('Expected error');
+    } catch (err) {
+      expect(err).to.be.instanceOf(FeatureNotEnabledError);
+    }
   });
 
   it('test_financial_account_not_open_error', async function() {
@@ -7748,16 +7747,15 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.moneyManagement.financialAddresses.create(
-      {
+    try {
+      await realStripe.v2.moneyManagement.financialAddresses.create({
         financial_account: 'financial_account',
         type: 'gb_bank_account',
-      },
-
-      (err) => {
-        expect(err).to.be.instanceOf(FinancialAccountNotOpenError);
-      }
-    );
+      });
+      expect.fail('Expected error');
+    } catch (err) {
+      expect(err).to.be.instanceOf(FinancialAccountNotOpenError);
+    }
   });
 
   it('test_insufficient_funds_error', async function() {
@@ -7772,8 +7770,8 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.moneyManagement.outboundPayments.create(
-      {
+    try {
+      await realStripe.v2.moneyManagement.outboundPayments.create({
         amount: {
           value: 96,
           currency: 'USD',
@@ -7785,12 +7783,11 @@ describe('Generated tests', function() {
         to: {
           recipient: 'recipient',
         },
-      },
-
-      (err) => {
-        expect(err).to.be.instanceOf(InsufficientFundsError);
-      }
-    );
+      });
+      expect.fail('Expected error');
+    } catch (err) {
+      expect(err).to.be.instanceOf(InsufficientFundsError);
+    }
   });
 
   it('test_invalid_payment_method_error', async function() {
@@ -7805,16 +7802,15 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.core.vault.usBankAccounts.create(
-      {
+    try {
+      await realStripe.v2.core.vault.usBankAccounts.create({
         account_number: 'account_number',
         currency: 'usd',
-      },
-
-      (err) => {
-        expect(err).to.be.instanceOf(InvalidPaymentMethodError);
-      }
-    );
+      });
+      expect.fail('Expected error');
+    } catch (err) {
+      expect(err).to.be.instanceOf(InvalidPaymentMethodError);
+    }
   });
 
   it('test_invalid_payout_method_error', async function() {
@@ -7829,9 +7825,12 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.moneyManagement.outboundSetupIntents.create((err) => {
+    try {
+      await realStripe.v2.moneyManagement.outboundSetupIntents.create();
+      expect.fail('Expected error');
+    } catch (err) {
       expect(err).to.be.instanceOf(InvalidPayoutMethodError);
-    });
+    }
   });
 
   it('test_non_zero_balance_error', async function() {
@@ -7846,13 +7845,12 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.moneyManagement.financialAccounts.close(
-      'id_123',
-
-      (err) => {
-        expect(err).to.be.instanceOf(NonZeroBalanceError);
-      }
-    );
+    try {
+      await realStripe.v2.moneyManagement.financialAccounts.close('id_123');
+      expect.fail('Expected error');
+    } catch (err) {
+      expect(err).to.be.instanceOf(NonZeroBalanceError);
+    }
   });
 
   it('test_not_cancelable_error', async function() {
@@ -7867,13 +7865,12 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.moneyManagement.outboundPayments.cancel(
-      'id_123',
-
-      (err) => {
-        expect(err).to.be.instanceOf(NotCancelableError);
-      }
-    );
+    try {
+      await realStripe.v2.moneyManagement.outboundPayments.cancel('id_123');
+      expect.fail('Expected error');
+    } catch (err) {
+      expect(err).to.be.instanceOf(NotCancelableError);
+    }
   });
 
   it('test_quota_exceeded_error', async function() {
@@ -7888,16 +7885,15 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.core.vault.usBankAccounts.create(
-      {
+    try {
+      await realStripe.v2.core.vault.usBankAccounts.create({
         account_number: 'account_number',
         currency: 'usd',
-      },
-
-      (err) => {
-        expect(err).to.be.instanceOf(QuotaExceededError);
-      }
-    );
+      });
+      expect.fail('Expected error');
+    } catch (err) {
+      expect(err).to.be.instanceOf(QuotaExceededError);
+    }
   });
 
   it('test_rate_limit_error', async function() {
@@ -7912,9 +7908,12 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.core.accounts.list((err) => {
+    try {
+      await realStripe.v2.core.accounts.list();
+      expect.fail('Expected error');
+    } catch (err) {
       expect(err).to.be.instanceOf(RateLimitError);
-    });
+    }
   });
 
   it('test_recipient_not_notifiable_error', async function() {
@@ -7929,8 +7928,8 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.moneyManagement.outboundPayments.create(
-      {
+    try {
+      await realStripe.v2.moneyManagement.outboundPayments.create({
         amount: {
           value: 96,
           currency: 'USD',
@@ -7942,12 +7941,11 @@ describe('Generated tests', function() {
         to: {
           recipient: 'recipient',
         },
-      },
-
-      (err) => {
-        expect(err).to.be.instanceOf(RecipientNotNotifiableError);
-      }
-    );
+      });
+      expect.fail('Expected error');
+    } catch (err) {
+      expect(err).to.be.instanceOf(RecipientNotNotifiableError);
+    }
   });
 
   it('test_temporary_session_expired_error', async function() {
@@ -7962,8 +7960,8 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.billing.meterEventStream.create(
-      {
+    try {
+      await realStripe.v2.billing.meterEventStream.create({
         events: [
           {
             event_name: 'event_name',
@@ -7972,11 +7970,10 @@ describe('Generated tests', function() {
             },
           },
         ],
-      },
-
-      (err) => {
-        expect(err).to.be.instanceOf(TemporarySessionExpiredError);
-      }
-    );
+      });
+      expect.fail('Expected error');
+    } catch (err) {
+      expect(err).to.be.instanceOf(TemporarySessionExpiredError);
+    }
   });
 });

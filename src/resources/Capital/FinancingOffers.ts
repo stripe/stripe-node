@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {PaginationParams, RangeQueryParam, Metadata} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class FinancingOfferResource extends StripeResource {
   /**
@@ -12,16 +11,17 @@ export class FinancingOfferResource extends StripeResource {
   list(
     params?: Capital.FinancingOfferListParams,
     options?: RequestOptions
-  ): ApiListPromise<FinancingOffer>;
-  list(options?: RequestOptions): ApiListPromise<FinancingOffer>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/capital/financing_offers',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<FinancingOffer> {
+    return this._makeRequest(
+      'GET',
+      '/v1/capital/financing_offers',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Get the details of the financing offer
    */
@@ -29,18 +29,14 @@ export class FinancingOfferResource extends StripeResource {
     id: string,
     params?: Capital.FinancingOfferRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<FinancingOffer>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<FinancingOffer>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/capital/financing_offers/{financing_offer}',
-    }).call(this, ...args);
+  ): Promise<Response<FinancingOffer>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/capital/financing_offers/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Acknowledges that platform has received and delivered the financing_offer to
    * the intended merchant recipient.
@@ -49,16 +45,13 @@ export class FinancingOfferResource extends StripeResource {
     id: string,
     params?: Capital.FinancingOfferMarkDeliveredParams,
     options?: RequestOptions
-  ): Promise<Response<FinancingOffer>>;
-  markDelivered(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<FinancingOffer>>;
-  markDelivered(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/capital/financing_offers/{financing_offer}/mark_delivered',
-    }).call(this, ...args);
+  ): Promise<Response<FinancingOffer>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/capital/financing_offers/${id}/mark_delivered`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface FinancingOffer {

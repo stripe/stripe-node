@@ -5,7 +5,6 @@ import {V2Amount} from './../V2Amounts.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 import {SplitResource} from './SettlementAllocationIntents/Splits.js';
-const stripeMethod = StripeResource.method;
 import {Stripe} from '../../../stripe.core.js';
 export class SettlementAllocationIntentResource extends StripeResource {
   splits: SplitResource;
@@ -20,30 +19,31 @@ export class SettlementAllocationIntentResource extends StripeResource {
   list(
     params?: V2.Payments.SettlementAllocationIntentListParams,
     options?: RequestOptions
-  ): ApiListPromise<SettlementAllocationIntent>;
-  list(options?: RequestOptions): ApiListPromise<SettlementAllocationIntent>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/payments/settlement_allocation_intents',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<SettlementAllocationIntent> {
+    return this._makeRequest(
+      'GET',
+      '/v2/payments/settlement_allocation_intents',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Create a new SettlementAllocationIntent.
    */
   create(
     params: V2.Payments.SettlementAllocationIntentCreateParams,
     options?: RequestOptions
-  ): Promise<Response<SettlementAllocationIntent>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/payments/settlement_allocation_intents',
-    }).call(this, ...args);
+  ): Promise<Response<SettlementAllocationIntent>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/payments/settlement_allocation_intents',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve an existing SettlementAllocationIntent.
    */
@@ -51,18 +51,14 @@ export class SettlementAllocationIntentResource extends StripeResource {
     id: string,
     params?: V2.Payments.SettlementAllocationIntentRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<SettlementAllocationIntent>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<SettlementAllocationIntent>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/payments/settlement_allocation_intents/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<SettlementAllocationIntent>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/payments/settlement_allocation_intents/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates SettlementAllocationIntent. Only SettlementAllocationIntent with status `pending`, `submitted` and `errored` can be updated. Only amount and reference fields can be updated for a SettlementAllocationIntent and at least one must be present. Updating an `amount` moves the SettlementAllocationIntent `pending` status and updating the `reference` for `errored` SettlementAllocationIntent moves it to `submitted`.
    */
@@ -70,14 +66,14 @@ export class SettlementAllocationIntentResource extends StripeResource {
     id: string,
     params?: V2.Payments.SettlementAllocationIntentUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<SettlementAllocationIntent>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/payments/settlement_allocation_intents/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<SettlementAllocationIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/payments/settlement_allocation_intents/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Cancels an existing SettlementAllocationIntent. Only SettlementAllocationIntent with status `pending`, `submitted` and `errored` can be `canceled`.
    */
@@ -85,18 +81,14 @@ export class SettlementAllocationIntentResource extends StripeResource {
     id: string,
     params?: V2.Payments.SettlementAllocationIntentCancelParams,
     options?: RequestOptions
-  ): Promise<Response<SettlementAllocationIntent>>;
-  cancel(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<SettlementAllocationIntent>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/payments/settlement_allocation_intents/{id}/cancel',
-    }).call(this, ...args);
+  ): Promise<Response<SettlementAllocationIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/payments/settlement_allocation_intents/${id}/cancel`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Submits a SettlementAllocationIntent. Only SettlementAllocationIntent with status `pending` can be `submitted`. The net sum of SettlementAllocationIntentSplit amount must be equal to SettlementAllocationIntent amount to be eligible to be submitted.
    */
@@ -104,16 +96,13 @@ export class SettlementAllocationIntentResource extends StripeResource {
     id: string,
     params?: V2.Payments.SettlementAllocationIntentSubmitParams,
     options?: RequestOptions
-  ): Promise<Response<SettlementAllocationIntent>>;
-  submit(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<SettlementAllocationIntent>>;
-  submit(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/payments/settlement_allocation_intents/{id}/submit',
-    }).call(this, ...args);
+  ): Promise<Response<SettlementAllocationIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/payments/settlement_allocation_intents/${id}/submit`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface SettlementAllocationIntent {

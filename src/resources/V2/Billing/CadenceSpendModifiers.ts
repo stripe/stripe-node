@@ -90,6 +90,11 @@ export namespace V2 {
         export namespace Amount {
           export interface CustomPricingUnit {
             /**
+             * The id of the custom pricing unit.
+             */
+            id?: string;
+
+            /**
              * The decimal value of custom pricing units, represented as a string.
              */
             value: string;

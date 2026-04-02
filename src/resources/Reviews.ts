@@ -5,7 +5,6 @@ import {Charge} from './Charges.js';
 import {PaymentIntent} from './PaymentIntents.js';
 import {PaginationParams, RangeQueryParam} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ReviewResource extends StripeResource {
   /**
@@ -14,16 +13,11 @@ export class ReviewResource extends StripeResource {
   list(
     params?: ReviewListParams,
     options?: RequestOptions
-  ): ApiListPromise<Review>;
-  list(options?: RequestOptions): ApiListPromise<Review>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/reviews',
+  ): ApiListPromise<Review> {
+    return this._makeRequest('GET', '/v1/reviews', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieves a Review object.
    */
@@ -31,15 +25,14 @@ export class ReviewResource extends StripeResource {
     id: string,
     params?: ReviewRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Review>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Review>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'GET', fullPath: '/v1/reviews/{review}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Review>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/reviews/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Approves a Review object, closing it and removing it from the list of reviews.
    */
@@ -47,13 +40,13 @@ export class ReviewResource extends StripeResource {
     id: string,
     params?: ReviewApproveParams,
     options?: RequestOptions
-  ): Promise<Response<Review>>;
-  approve(id: string, options?: RequestOptions): Promise<Response<Review>>;
-  approve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/reviews/{review}/approve',
-    }).call(this, ...args);
+  ): Promise<Response<Review>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/reviews/${id}/approve`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Review {

@@ -4,7 +4,6 @@ import {StripeResource} from '../../StripeResource.js';
 import {Transaction} from './Transactions.js';
 import {MetadataParam, PaginationParams, Metadata} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CreditReversalResource extends StripeResource {
   /**
@@ -13,29 +12,31 @@ export class CreditReversalResource extends StripeResource {
   list(
     params: Treasury.CreditReversalListParams,
     options?: RequestOptions
-  ): ApiListPromise<CreditReversal>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/treasury/credit_reversals',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<CreditReversal> {
+    return this._makeRequest(
+      'GET',
+      '/v1/treasury/credit_reversals',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Reverses a ReceivedCredit and creates a CreditReversal object.
    */
   create(
     params: Treasury.CreditReversalCreateParams,
     options?: RequestOptions
-  ): Promise<Response<CreditReversal>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/treasury/credit_reversals',
-    }).call(this, ...args);
+  ): Promise<Response<CreditReversal>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/treasury/credit_reversals',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the details of an existing CreditReversal by passing the unique CreditReversal ID from either the CreditReversal creation request or CreditReversal list
    */
@@ -43,16 +44,13 @@ export class CreditReversalResource extends StripeResource {
     id: string,
     params?: Treasury.CreditReversalRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<CreditReversal>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CreditReversal>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/treasury/credit_reversals/{credit_reversal}',
-    }).call(this, ...args);
+  ): Promise<Response<CreditReversal>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/treasury/credit_reversals/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface CreditReversal {

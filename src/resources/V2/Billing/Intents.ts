@@ -4,7 +4,6 @@ import {StripeResource} from '../../../StripeResource.js';
 import {Decimal, MetadataParam} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 import {ActionResource} from './Intents/Actions.js';
-const stripeMethod = StripeResource.method;
 import {Stripe} from '../../../stripe.core.js';
 export class IntentResource extends StripeResource {
   actions: ActionResource;
@@ -19,27 +18,19 @@ export class IntentResource extends StripeResource {
   list(
     params?: V2.Billing.IntentListParams,
     options?: RequestOptions
-  ): ApiListPromise<Intent>;
-  list(options?: RequestOptions): ApiListPromise<Intent>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/intents',
+  ): ApiListPromise<Intent> {
+    return this._makeRequest('GET', '/v2/billing/intents', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Create a Billing Intent.
    */
   create(
     params: V2.Billing.IntentCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Intent>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/intents',
+  ): Promise<Response<Intent>> {
+    return this._makeRequest('POST', '/v2/billing/intents', params, options, {
       requestSchema: {
         kind: 'object',
         fields: {
@@ -67,9 +58,8 @@ export class IntentResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieve a Billing Intent.
    */
@@ -77,15 +67,14 @@ export class IntentResource extends StripeResource {
     id: string,
     params?: V2.Billing.IntentRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Intent>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Intent>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/intents/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<Intent>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/intents/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Cancel a Billing Intent.
    */
@@ -93,15 +82,14 @@ export class IntentResource extends StripeResource {
     id: string,
     params?: V2.Billing.IntentCancelParams,
     options?: RequestOptions
-  ): Promise<Response<Intent>>;
-  cancel(id: string, options?: RequestOptions): Promise<Response<Intent>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/intents/{id}/cancel',
-    }).call(this, ...args);
+  ): Promise<Response<Intent>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/intents/${id}/cancel`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Commit a Billing Intent.
    */
@@ -109,15 +97,14 @@ export class IntentResource extends StripeResource {
     id: string,
     params?: V2.Billing.IntentCommitParams,
     options?: RequestOptions
-  ): Promise<Response<Intent>>;
-  commit(id: string, options?: RequestOptions): Promise<Response<Intent>>;
-  commit(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/intents/{id}/commit',
-    }).call(this, ...args);
+  ): Promise<Response<Intent>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/intents/${id}/commit`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Release a Billing Intent.
    */
@@ -125,18 +112,14 @@ export class IntentResource extends StripeResource {
     id: string,
     params?: V2.Billing.IntentReleaseReservationParams,
     options?: RequestOptions
-  ): Promise<Response<Intent>>;
-  releaseReservation(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Intent>>;
-  releaseReservation(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/intents/{id}/release_reservation',
-    }).call(this, ...args);
+  ): Promise<Response<Intent>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/intents/${id}/release_reservation`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Reserve a Billing Intent.
    */
@@ -144,13 +127,13 @@ export class IntentResource extends StripeResource {
     id: string,
     params?: V2.Billing.IntentReserveParams,
     options?: RequestOptions
-  ): Promise<Response<Intent>>;
-  reserve(id: string, options?: RequestOptions): Promise<Response<Intent>>;
-  reserve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/intents/{id}/reserve',
-    }).call(this, ...args);
+  ): Promise<Response<Intent>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/intents/${id}/reserve`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Intent {
@@ -888,6 +871,11 @@ export namespace V2 {
 
               export namespace Amount {
                 export interface CustomPricingUnit {
+                  /**
+                   * The id of the custom pricing unit.
+                   */
+                  id?: string;
+
                   /**
                    * The value of the custom pricing unit.
                    */

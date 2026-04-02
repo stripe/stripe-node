@@ -5,7 +5,6 @@ import {RateCardRate} from './../../../V2/Billing/RateCardRates.js';
 import {MetadataParam, Decimal} from '../../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
 import {DeletedObject} from './../../../V2/DeletedObject.js';
-const stripeMethod = StripeResource.method;
 
 export class RateResource extends StripeResource {
   /**
@@ -15,40 +14,41 @@ export class RateResource extends StripeResource {
     id: string,
     params?: V2.Billing.RateCards.RateListParams,
     options?: RequestOptions
-  ): ApiListPromise<RateCardRate>;
-  list(id: string, options?: RequestOptions): ApiListPromise<RateCardRate>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/rate_cards/{rate_card_id}/rates',
-      methodType: 'list',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          data: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                tiers: {
-                  kind: 'array',
-                  element: {
-                    kind: 'object',
-                    fields: {up_to_decimal: {kind: 'decimal_string'}},
+  ): ApiListPromise<RateCardRate> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/rate_cards/${id}/rates`,
+      params,
+      options,
+      {
+        methodType: 'list',
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  tiers: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {up_to_decimal: {kind: 'decimal_string'}},
+                    },
                   },
-                },
-                transform_quantity: {
-                  kind: 'object',
-                  fields: {divide_by: {kind: 'int64_string'}},
+                  transform_quantity: {
+                    kind: 'object',
+                    fields: {divide_by: {kind: 'int64_string'}},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Set the Rate for a Metered Item on the latest version of a Rate Card object. This will create a new Rate Card version
    * if the Metered Item already has a rate on the Rate Card.
@@ -57,46 +57,48 @@ export class RateResource extends StripeResource {
     id: string,
     params: V2.Billing.RateCards.RateCreateParams,
     options?: RequestOptions
-  ): Promise<Response<RateCardRate>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/rate_cards/{rate_card_id}/rates',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          tiers: {
-            kind: 'array',
-            element: {
+  ): Promise<Response<RateCardRate>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/rate_cards/${id}/rates`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            tiers: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {up_to_decimal: {kind: 'decimal_string'}},
+              },
+            },
+            transform_quantity: {
               kind: 'object',
-              fields: {up_to_decimal: {kind: 'decimal_string'}},
+              fields: {divide_by: {kind: 'int64_string'}},
             },
           },
-          transform_quantity: {
-            kind: 'object',
-            fields: {divide_by: {kind: 'int64_string'}},
-          },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          tiers: {
-            kind: 'array',
-            element: {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            tiers: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {up_to_decimal: {kind: 'decimal_string'}},
+              },
+            },
+            transform_quantity: {
               kind: 'object',
-              fields: {up_to_decimal: {kind: 'decimal_string'}},
+              fields: {divide_by: {kind: 'int64_string'}},
             },
           },
-          transform_quantity: {
-            kind: 'object',
-            fields: {divide_by: {kind: 'int64_string'}},
-          },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Remove an existing Rate from a Rate Card. This will create a new Rate Card Version without that Rate.
    */
@@ -105,19 +107,14 @@ export class RateResource extends StripeResource {
     id: string,
     params?: V2.Billing.RateCards.RateDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedObject>>;
-  del(
-    rateCardId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<DeletedObject>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v2/billing/rate_cards/{rate_card_id}/rates/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedObject>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v2/billing/rate_cards/${rateCardId}/rates/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a Rate object.
    */
@@ -126,33 +123,31 @@ export class RateResource extends StripeResource {
     id: string,
     params?: V2.Billing.RateCards.RateRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<RateCardRate>>;
-  retrieve(
-    rateCardId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<RateCardRate>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/rate_cards/{rate_card_id}/rates/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          tiers: {
-            kind: 'array',
-            element: {
+  ): Promise<Response<RateCardRate>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/rate_cards/${rateCardId}/rates/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            tiers: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {up_to_decimal: {kind: 'decimal_string'}},
+              },
+            },
+            transform_quantity: {
               kind: 'object',
-              fields: {up_to_decimal: {kind: 'decimal_string'}},
+              fields: {divide_by: {kind: 'int64_string'}},
             },
           },
-          transform_quantity: {
-            kind: 'object',
-            fields: {divide_by: {kind: 'int64_string'}},
-          },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export namespace V2 {

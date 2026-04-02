@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../../../StripeResource.js';
 import {RequestOptions, Response} from '../../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class QueryRunResource extends StripeResource {
   /**
@@ -11,25 +10,27 @@ export class QueryRunResource extends StripeResource {
   create(
     params: V2.Data.Reporting.QueryRunCreateParams,
     options?: RequestOptions
-  ): Promise<Response<QueryRun>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/data/reporting/query_runs',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          result: {
-            kind: 'object',
-            fields: {
-              file: {kind: 'object', fields: {size: {kind: 'int64_string'}}},
+  ): Promise<Response<QueryRun>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/data/reporting/query_runs',
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            result: {
+              kind: 'object',
+              fields: {
+                file: {kind: 'object', fields: {size: {kind: 'int64_string'}}},
+              },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Fetches the current state and details of a previously created `QueryRun`. If the `QueryRun`
    * has succeeded, the endpoint will provide details for how to retrieve the results.
@@ -38,24 +39,26 @@ export class QueryRunResource extends StripeResource {
     id: string,
     params?: V2.Data.Reporting.QueryRunRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<QueryRun>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<QueryRun>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/data/reporting/query_runs/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          result: {
-            kind: 'object',
-            fields: {
-              file: {kind: 'object', fields: {size: {kind: 'int64_string'}}},
+  ): Promise<Response<QueryRun>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/data/reporting/query_runs/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            result: {
+              kind: 'object',
+              fields: {
+                file: {kind: 'object', fields: {size: {kind: 'int64_string'}}},
+              },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface QueryRun {

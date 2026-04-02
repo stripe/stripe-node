@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {Decimal} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ManualRuleResource extends StripeResource {
   /**
@@ -12,12 +11,8 @@ export class ManualRuleResource extends StripeResource {
   list(
     params?: V2.Tax.ManualRuleListParams,
     options?: RequestOptions
-  ): ApiListPromise<ManualRule>;
-  list(options?: RequestOptions): ApiListPromise<ManualRule>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/tax/manual_rules',
+  ): ApiListPromise<ManualRule> {
+    return this._makeRequest('GET', '/v2/tax/manual_rules', params, options, {
       methodType: 'list',
       responseSchema: {
         kind: 'object',
@@ -47,20 +42,16 @@ export class ManualRuleResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Creates a ManualRule object.
    */
   create(
     params: V2.Tax.ManualRuleCreateParams,
     options?: RequestOptions
-  ): Promise<Response<ManualRule>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/tax/manual_rules',
+  ): Promise<Response<ManualRule>> {
+    return this._makeRequest('POST', '/v2/tax/manual_rules', params, options, {
       requestSchema: {
         kind: 'object',
         fields: {
@@ -101,9 +92,8 @@ export class ManualRuleResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieves a ManualRule object by ID.
    */
@@ -111,35 +101,36 @@ export class ManualRuleResource extends StripeResource {
     id: string,
     params?: V2.Tax.ManualRuleRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ManualRule>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<ManualRule>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/tax/manual_rules/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          scheduled_tax_rates: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                rates: {
-                  kind: 'array',
-                  element: {
-                    kind: 'object',
-                    fields: {percentage: {kind: 'decimal_string'}},
+  ): Promise<Response<ManualRule>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/tax/manual_rules/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            scheduled_tax_rates: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  rates: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {percentage: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Updates the Tax configuration for a ManualRule object.
    */
@@ -147,54 +138,56 @@ export class ManualRuleResource extends StripeResource {
     id: string,
     params: V2.Tax.ManualRuleUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<ManualRule>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/tax/manual_rules/{id}',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          scheduled_tax_rates: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                rates: {
-                  kind: 'array',
-                  element: {
-                    kind: 'object',
-                    fields: {percentage: {kind: 'decimal_string'}},
+  ): Promise<Response<ManualRule>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/tax/manual_rules/${id}`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            scheduled_tax_rates: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  rates: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {percentage: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          scheduled_tax_rates: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                rates: {
-                  kind: 'array',
-                  element: {
-                    kind: 'object',
-                    fields: {percentage: {kind: 'decimal_string'}},
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            scheduled_tax_rates: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  rates: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {percentage: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Deactivates a ManualRule object.
    */
@@ -202,36 +195,35 @@ export class ManualRuleResource extends StripeResource {
     id: string,
     params?: V2.Tax.ManualRuleDeactivateParams,
     options?: RequestOptions
-  ): Promise<Response<ManualRule>>;
-  deactivate(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ManualRule>>;
-  deactivate(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/tax/manual_rules/{id}/deactivate',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          scheduled_tax_rates: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                rates: {
-                  kind: 'array',
-                  element: {
-                    kind: 'object',
-                    fields: {percentage: {kind: 'decimal_string'}},
+  ): Promise<Response<ManualRule>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/tax/manual_rules/${id}/deactivate`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            scheduled_tax_rates: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  rates: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {percentage: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface ManualRule {

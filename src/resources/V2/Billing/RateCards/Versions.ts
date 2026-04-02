@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../../StripeResource.js';
 import {RateCardVersion} from './../../../V2/Billing/RateCardVersions.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class VersionResource extends StripeResource {
   /**
@@ -13,16 +12,17 @@ export class VersionResource extends StripeResource {
     id: string,
     params?: V2.Billing.RateCards.VersionListParams,
     options?: RequestOptions
-  ): ApiListPromise<RateCardVersion>;
-  list(id: string, options?: RequestOptions): ApiListPromise<RateCardVersion>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/rate_cards/{rate_card_id}/versions',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<RateCardVersion> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/rate_cards/${id}/versions`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieve a specific version of a Rate Card object.
    */
@@ -31,17 +31,13 @@ export class VersionResource extends StripeResource {
     id: string,
     params?: V2.Billing.RateCards.VersionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<RateCardVersion>>;
-  retrieve(
-    rateCardId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<RateCardVersion>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/rate_cards/{rate_card_id}/versions/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<RateCardVersion>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/rate_cards/${rateCardId}/versions/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export namespace V2 {

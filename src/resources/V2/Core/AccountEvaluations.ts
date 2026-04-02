@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class AccountEvaluationResource extends StripeResource {
   /**
@@ -11,12 +10,13 @@ export class AccountEvaluationResource extends StripeResource {
   create(
     params: V2.Core.AccountEvaluationCreateParams,
     options?: RequestOptions
-  ): Promise<Response<AccountEvaluation>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/account_evaluations',
-    }).call(this, ...args);
+  ): Promise<Response<AccountEvaluation>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/core/account_evaluations',
+      params,
+      options
+    ) as any;
   }
 }
 export interface AccountEvaluation {

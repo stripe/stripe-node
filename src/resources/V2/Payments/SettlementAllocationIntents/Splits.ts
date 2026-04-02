@@ -5,7 +5,6 @@ import {SettlementAllocationIntentSplit} from './../../../V2/Payments/Settlement
 import {V2Amount} from './../../V2Amounts.js';
 import {MetadataParam} from '../../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class SplitResource extends StripeResource {
   /**
@@ -15,20 +14,17 @@ export class SplitResource extends StripeResource {
     id: string,
     params?: V2.Payments.SettlementAllocationIntents.SplitListParams,
     options?: RequestOptions
-  ): ApiListPromise<SettlementAllocationIntentSplit>;
-  list(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<SettlementAllocationIntentSplit>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath:
-        '/v2/payments/settlement_allocation_intents/{settlement_allocation_intent_id}/splits',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<SettlementAllocationIntentSplit> {
+    return this._makeRequest(
+      'GET',
+      `/v2/payments/settlement_allocation_intents/${id}/splits`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Create SettlementAllocationIntentSplit API.
    */
@@ -36,15 +32,14 @@ export class SplitResource extends StripeResource {
     id: string,
     params: V2.Payments.SettlementAllocationIntents.SplitCreateParams,
     options?: RequestOptions
-  ): Promise<Response<SettlementAllocationIntentSplit>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v2/payments/settlement_allocation_intents/{settlement_allocation_intent_id}/splits',
-    }).call(this, ...args);
+  ): Promise<Response<SettlementAllocationIntentSplit>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/payments/settlement_allocation_intents/${id}/splits`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve SettlementAllocationIntentSplit API.
    */
@@ -53,20 +48,14 @@ export class SplitResource extends StripeResource {
     id: string,
     params?: V2.Payments.SettlementAllocationIntents.SplitRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<SettlementAllocationIntentSplit>>;
-  retrieve(
-    settlementAllocationIntentId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<SettlementAllocationIntentSplit>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath:
-        '/v2/payments/settlement_allocation_intents/{settlement_allocation_intent_id}/splits/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<SettlementAllocationIntentSplit>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/payments/settlement_allocation_intents/${settlementAllocationIntentId}/splits/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Cancel SettlementAllocationIntentSplit API.
    */
@@ -75,18 +64,13 @@ export class SplitResource extends StripeResource {
     id: string,
     params?: V2.Payments.SettlementAllocationIntents.SplitCancelParams,
     options?: RequestOptions
-  ): Promise<Response<SettlementAllocationIntentSplit>>;
-  cancel(
-    settlementAllocationIntentId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<SettlementAllocationIntentSplit>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v2/payments/settlement_allocation_intents/{settlement_allocation_intent_id}/splits/{id}/cancel',
-    }).call(this, ...args);
+  ): Promise<Response<SettlementAllocationIntentSplit>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/payments/settlement_allocation_intents/${settlementAllocationIntentId}/splits/${id}/cancel`,
+      params,
+      options
+    ) as any;
   }
 }
 export namespace V2 {

@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {AddressParam, Address} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class SettingResource extends StripeResource {
   /**
@@ -12,27 +11,22 @@ export class SettingResource extends StripeResource {
   retrieve(
     params?: Tax.SettingsRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Settings>>;
-  retrieve(options?: RequestOptions): Promise<Response<Settings>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'GET', fullPath: '/v1/tax/settings'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Settings>> {
+    return this._makeRequest('GET', '/v1/tax/settings', params, options) as any;
   }
-
   /**
    * Updates Tax Settings parameters used in tax calculations. All parameters are editable but none can be removed once set.
    */
   update(
     params?: Tax.SettingsUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Settings>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/tax/settings'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Settings>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/tax/settings',
+      params,
+      options
+    ) as any;
   }
 }
 export interface Settings {

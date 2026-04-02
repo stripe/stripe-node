@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {MeterUsageRow} from './MeterUsageRows.js';
 import {RequestOptions, Response, ApiList} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class MeterUsageResource extends StripeResource {
   /**
@@ -12,12 +11,13 @@ export class MeterUsageResource extends StripeResource {
   retrieve(
     params: Billing.Analytics.MeterUsageRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<MeterUsage>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/analytics/meter_usage',
-    }).call(this, ...args);
+  ): Promise<Response<MeterUsage>> {
+    return this._makeRequest(
+      'GET',
+      '/v1/billing/analytics/meter_usage',
+      params,
+      options
+    ) as any;
   }
 }
 export interface MeterUsage {

@@ -11,7 +11,6 @@ import {
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CreditGrantResource extends StripeResource {
   /**
@@ -20,29 +19,31 @@ export class CreditGrantResource extends StripeResource {
   list(
     params?: Billing.CreditGrantListParams,
     options?: RequestOptions
-  ): ApiListPromise<CreditGrant>;
-  list(options?: RequestOptions): ApiListPromise<CreditGrant>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/credit_grants',
-      methodType: 'list',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          data: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                amount: {
-                  kind: 'object',
-                  fields: {
-                    custom_pricing_unit: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {value: {kind: 'decimal_string'}},
+  ): ApiListPromise<CreditGrant> {
+    return this._makeRequest(
+      'GET',
+      '/v1/billing/credit_grants',
+      params,
+      options,
+      {
+        methodType: 'list',
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  amount: {
+                    kind: 'object',
+                    fields: {
+                      custom_pricing_unit: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {value: {kind: 'decimal_string'}},
+                        },
                       },
                     },
                   },
@@ -51,44 +52,29 @@ export class CreditGrantResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Creates a credit grant.
    */
   create(
     params: Billing.CreditGrantCreateParams,
     options?: RequestOptions
-  ): Promise<Response<CreditGrant>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing/credit_grants',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          amount: {
-            kind: 'object',
-            fields: {
-              custom_pricing_unit: {
-                kind: 'object',
-                fields: {value: {kind: 'decimal_string'}},
-              },
-            },
-          },
-        },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          amount: {
-            kind: 'object',
-            fields: {
-              custom_pricing_unit: {
-                kind: 'nullable',
-                inner: {
+  ): Promise<Response<CreditGrant>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/billing/credit_grants',
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            amount: {
+              kind: 'object',
+              fields: {
+                custom_pricing_unit: {
                   kind: 'object',
                   fields: {value: {kind: 'decimal_string'}},
                 },
@@ -96,10 +82,26 @@ export class CreditGrantResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            amount: {
+              kind: 'object',
+              fields: {
+                custom_pricing_unit: {
+                  kind: 'nullable',
+                  inner: {
+                    kind: 'object',
+                    fields: {value: {kind: 'decimal_string'}},
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
+    ) as any;
   }
-
   /**
    * Retrieves a credit grant.
    */
@@ -107,35 +109,33 @@ export class CreditGrantResource extends StripeResource {
     id: string,
     params?: Billing.CreditGrantRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<CreditGrant>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CreditGrant>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/credit_grants/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          amount: {
-            kind: 'object',
-            fields: {
-              custom_pricing_unit: {
-                kind: 'nullable',
-                inner: {
-                  kind: 'object',
-                  fields: {value: {kind: 'decimal_string'}},
+  ): Promise<Response<CreditGrant>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/billing/credit_grants/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            amount: {
+              kind: 'object',
+              fields: {
+                custom_pricing_unit: {
+                  kind: 'nullable',
+                  inner: {
+                    kind: 'object',
+                    fields: {value: {kind: 'decimal_string'}},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Updates a credit grant.
    */
@@ -143,31 +143,33 @@ export class CreditGrantResource extends StripeResource {
     id: string,
     params?: Billing.CreditGrantUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<CreditGrant>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing/credit_grants/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          amount: {
-            kind: 'object',
-            fields: {
-              custom_pricing_unit: {
-                kind: 'nullable',
-                inner: {
-                  kind: 'object',
-                  fields: {value: {kind: 'decimal_string'}},
+  ): Promise<Response<CreditGrant>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/billing/credit_grants/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            amount: {
+              kind: 'object',
+              fields: {
+                custom_pricing_unit: {
+                  kind: 'nullable',
+                  inner: {
+                    kind: 'object',
+                    fields: {value: {kind: 'decimal_string'}},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Expires a credit grant.
    */
@@ -175,32 +177,33 @@ export class CreditGrantResource extends StripeResource {
     id: string,
     params?: Billing.CreditGrantExpireParams,
     options?: RequestOptions
-  ): Promise<Response<CreditGrant>>;
-  expire(id: string, options?: RequestOptions): Promise<Response<CreditGrant>>;
-  expire(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing/credit_grants/{id}/expire',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          amount: {
-            kind: 'object',
-            fields: {
-              custom_pricing_unit: {
-                kind: 'nullable',
-                inner: {
-                  kind: 'object',
-                  fields: {value: {kind: 'decimal_string'}},
+  ): Promise<Response<CreditGrant>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/billing/credit_grants/${id}/expire`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            amount: {
+              kind: 'object',
+              fields: {
+                custom_pricing_unit: {
+                  kind: 'nullable',
+                  inner: {
+                    kind: 'object',
+                    fields: {value: {kind: 'decimal_string'}},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Voids a credit grant.
    */
@@ -208,33 +211,32 @@ export class CreditGrantResource extends StripeResource {
     id: string,
     params?: Billing.CreditGrantVoidGrantParams,
     options?: RequestOptions
-  ): Promise<Response<CreditGrant>>;
-  voidGrant(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CreditGrant>>;
-  voidGrant(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing/credit_grants/{id}/void',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          amount: {
-            kind: 'object',
-            fields: {
-              custom_pricing_unit: {
-                kind: 'nullable',
-                inner: {
-                  kind: 'object',
-                  fields: {value: {kind: 'decimal_string'}},
+  ): Promise<Response<CreditGrant>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/billing/credit_grants/${id}/void`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            amount: {
+              kind: 'object',
+              fields: {
+                custom_pricing_unit: {
+                  kind: 'nullable',
+                  inner: {
+                    kind: 'object',
+                    fields: {value: {kind: 'decimal_string'}},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface CreditGrant {

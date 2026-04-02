@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {PaymentIntent} from './../PaymentIntents.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PaymentIntentResource extends StripeResource {
   /**
@@ -13,13 +12,13 @@ export class PaymentIntentResource extends StripeResource {
     id: string,
     params: TestHelpers.PaymentIntentSimulateCryptoDepositParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>>;
-  simulateCryptoDeposit(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/test_helpers/payment_intents/{intent}/simulate_crypto_deposit',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/payment_intents/${id}/simulate_crypto_deposit`,
+      params,
+      options
+    ) as any;
   }
 }
 export namespace TestHelpers {

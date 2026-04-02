@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CustomPricingUnitResource extends StripeResource {
   /**
@@ -12,30 +11,31 @@ export class CustomPricingUnitResource extends StripeResource {
   list(
     params?: V2.Billing.CustomPricingUnitListParams,
     options?: RequestOptions
-  ): ApiListPromise<CustomPricingUnit>;
-  list(options?: RequestOptions): ApiListPromise<CustomPricingUnit>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/custom_pricing_units',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<CustomPricingUnit> {
+    return this._makeRequest(
+      'GET',
+      '/v2/billing/custom_pricing_units',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Create a Custom Pricing Unit object.
    */
   create(
     params: V2.Billing.CustomPricingUnitCreateParams,
     options?: RequestOptions
-  ): Promise<Response<CustomPricingUnit>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/custom_pricing_units',
-    }).call(this, ...args);
+  ): Promise<Response<CustomPricingUnit>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/billing/custom_pricing_units',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a Custom Pricing Unit object.
    */
@@ -43,18 +43,14 @@ export class CustomPricingUnitResource extends StripeResource {
     id: string,
     params?: V2.Billing.CustomPricingUnitRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<CustomPricingUnit>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CustomPricingUnit>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/custom_pricing_units/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<CustomPricingUnit>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/custom_pricing_units/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Update a Custom Pricing Unit object.
    */
@@ -62,12 +58,13 @@ export class CustomPricingUnitResource extends StripeResource {
     id: string,
     params?: V2.Billing.CustomPricingUnitUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<CustomPricingUnit>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/custom_pricing_units/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<CustomPricingUnit>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/custom_pricing_units/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface CustomPricingUnit {

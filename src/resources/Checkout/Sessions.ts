@@ -26,7 +26,6 @@ import {
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class SessionResource extends StripeResource {
   /**
@@ -35,12 +34,8 @@ export class SessionResource extends StripeResource {
   list(
     params?: Checkout.SessionListParams,
     options?: RequestOptions
-  ): ApiListPromise<Session>;
-  list(options?: RequestOptions): ApiListPromise<Session>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/checkout/sessions',
+  ): ApiListPromise<Session> {
+    return this._makeRequest('GET', '/v1/checkout/sessions', params, options, {
       methodType: 'list',
       responseSchema: {
         kind: 'object',
@@ -131,21 +126,16 @@ export class SessionResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Creates a Checkout Session object.
    */
   create(
     params?: Checkout.SessionCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Session>>;
-  create(options?: RequestOptions): Promise<Response<Session>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/checkout/sessions',
+  ): Promise<Response<Session>> {
+    return this._makeRequest('POST', '/v1/checkout/sessions', params, options, {
       requestSchema: {
         kind: 'object',
         fields: {
@@ -244,9 +234,8 @@ export class SessionResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieves a Checkout Session object.
    */
@@ -254,438 +243,64 @@ export class SessionResource extends StripeResource {
     id: string,
     params?: Checkout.SessionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Session>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Session>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/checkout/sessions/{session}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          currency_conversion: {
-            kind: 'nullable',
-            inner: {
-              kind: 'object',
-              fields: {fx_rate: {kind: 'decimal_string'}},
-            },
-          },
-          line_items: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    price: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          currency_options: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                tiers: {
-                                  kind: 'array',
-                                  element: {
-                                    kind: 'object',
-                                    fields: {
-                                      flat_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
-                                      },
-                                      unit_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
-                                      },
-                                    },
-                                  },
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                              },
-                            },
-                          },
-                          tiers: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                flat_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                              },
-                            },
-                          },
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
+  ): Promise<Response<Session>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/checkout/sessions/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            currency_conversion: {
+              kind: 'nullable',
+              inner: {
+                kind: 'object',
+                fields: {fx_rate: {kind: 'decimal_string'}},
               },
             },
-          },
-        },
-      },
-    }).call(this, ...args);
-  }
-
-  /**
-   * Updates a Checkout Session object.
-   *
-   * Related guide: [Dynamically update a Checkout Session](https://docs.stripe.com/payments/advanced/dynamic-updates)
-   */
-  update(
-    id: string,
-    params?: Checkout.SessionUpdateParams,
-    options?: RequestOptions
-  ): Promise<Response<Session>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/checkout/sessions/{session}',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          line_items: {
-            kind: 'array',
-            element: {
+            line_items: {
               kind: 'object',
               fields: {
-                price_data: {
-                  kind: 'object',
-                  fields: {unit_amount_decimal: {kind: 'decimal_string'}},
-                },
-              },
-            },
-          },
-        },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          currency_conversion: {
-            kind: 'nullable',
-            inner: {
-              kind: 'object',
-              fields: {fx_rate: {kind: 'decimal_string'}},
-            },
-          },
-          line_items: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    price: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          currency_options: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                tiers: {
-                                  kind: 'array',
-                                  element: {
-                                    kind: 'object',
-                                    fields: {
-                                      flat_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
-                                      },
-                                      unit_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
-                                      },
-                                    },
-                                  },
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                              },
-                            },
-                          },
-                          tiers: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                flat_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                              },
-                            },
-                          },
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    }).call(this, ...args);
-  }
-
-  /**
-   * Approves a customer's attempt to pay for a Checkout Session with approval_method set to manual.
-   */
-  approve(
-    id: string,
-    params: Checkout.SessionApproveParams,
-    options?: RequestOptions
-  ): Promise<Response<Session>>;
-  approve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/checkout/sessions/{session}/approve',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          currency_conversion: {
-            kind: 'nullable',
-            inner: {
-              kind: 'object',
-              fields: {fx_rate: {kind: 'decimal_string'}},
-            },
-          },
-          line_items: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    price: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          currency_options: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                tiers: {
-                                  kind: 'array',
-                                  element: {
-                                    kind: 'object',
-                                    fields: {
-                                      flat_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
-                                      },
-                                      unit_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
-                                      },
-                                    },
-                                  },
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                              },
-                            },
-                          },
-                          tiers: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                flat_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                              },
-                            },
-                          },
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    }).call(this, ...args);
-  }
-
-  /**
-   * A Checkout Session can be expired when it is in one of these statuses: open
-   *
-   * After it expires, a customer can't complete a Checkout Session and customers loading the Checkout Session see a message saying the Checkout Session is expired.
-   */
-  expire(
-    id: string,
-    params?: Checkout.SessionExpireParams,
-    options?: RequestOptions
-  ): Promise<Response<Session>>;
-  expire(id: string, options?: RequestOptions): Promise<Response<Session>>;
-  expire(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/checkout/sessions/{session}/expire',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          currency_conversion: {
-            kind: 'nullable',
-            inner: {
-              kind: 'object',
-              fields: {fx_rate: {kind: 'decimal_string'}},
-            },
-          },
-          line_items: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    price: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          currency_options: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                tiers: {
-                                  kind: 'array',
-                                  element: {
-                                    kind: 'object',
-                                    fields: {
-                                      flat_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
-                                      },
-                                      unit_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
-                                      },
-                                    },
-                                  },
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                              },
-                            },
-                          },
-                          tiers: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                flat_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                              },
-                            },
-                          },
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    }).call(this, ...args);
-  }
-
-  /**
-   * When retrieving a Checkout Session, there is an includable line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
-   */
-  listLineItems(
-    id: string,
-    params?: Checkout.SessionListLineItemsParams,
-    options?: RequestOptions
-  ): ApiListPromise<LineItem>;
-  listLineItems(id: string, options?: RequestOptions): ApiListPromise<LineItem>;
-  listLineItems(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/checkout/sessions/{session}/line_items',
-      methodType: 'list',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          data: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                price: {
-                  kind: 'nullable',
-                  inner: {
+                data: {
+                  kind: 'array',
+                  element: {
                     kind: 'object',
                     fields: {
-                      currency_options: {
-                        kind: 'array',
-                        element: {
+                      price: {
+                        kind: 'nullable',
+                        inner: {
                           kind: 'object',
                           fields: {
+                            currency_options: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  tiers: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        flat_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
+                                        unit_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                  unit_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                },
+                              },
+                            },
                             tiers: {
                               kind: 'array',
                               element: {
@@ -709,14 +324,115 @@ export class SessionResource extends StripeResource {
                           },
                         },
                       },
-                      tiers: {
-                        kind: 'array',
-                        element: {
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
+    ) as any;
+  }
+  /**
+   * Updates a Checkout Session object.
+   *
+   * Related guide: [Dynamically update a Checkout Session](https://docs.stripe.com/payments/advanced/dynamic-updates)
+   */
+  update(
+    id: string,
+    params?: Checkout.SessionUpdateParams,
+    options?: RequestOptions
+  ): Promise<Response<Session>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/checkout/sessions/${id}`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            line_items: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  price_data: {
+                    kind: 'object',
+                    fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+                  },
+                },
+              },
+            },
+          },
+        },
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            currency_conversion: {
+              kind: 'nullable',
+              inner: {
+                kind: 'object',
+                fields: {fx_rate: {kind: 'decimal_string'}},
+              },
+            },
+            line_items: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      price: {
+                        kind: 'nullable',
+                        inner: {
                           kind: 'object',
                           fields: {
-                            flat_amount_decimal: {
-                              kind: 'nullable',
-                              inner: {kind: 'decimal_string'},
+                            currency_options: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  tiers: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        flat_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
+                                        unit_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                  unit_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                },
+                              },
+                            },
+                            tiers: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  flat_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                  unit_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                },
+                              },
                             },
                             unit_amount_decimal: {
                               kind: 'nullable',
@@ -725,9 +441,103 @@ export class SessionResource extends StripeResource {
                           },
                         },
                       },
-                      unit_amount_decimal: {
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
+    ) as any;
+  }
+  /**
+   * Approves a customer's attempt to pay for a Checkout Session with approval_method set to manual.
+   */
+  approve(
+    id: string,
+    params: Checkout.SessionApproveParams,
+    options?: RequestOptions
+  ): Promise<Response<Session>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/checkout/sessions/${id}/approve`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            currency_conversion: {
+              kind: 'nullable',
+              inner: {
+                kind: 'object',
+                fields: {fx_rate: {kind: 'decimal_string'}},
+              },
+            },
+            line_items: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      price: {
                         kind: 'nullable',
-                        inner: {kind: 'decimal_string'},
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            currency_options: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  tiers: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        flat_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
+                                        unit_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                  unit_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                },
+                              },
+                            },
+                            tiers: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  flat_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                  unit_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                },
+                              },
+                            },
+                            unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
                       },
                     },
                   },
@@ -736,8 +546,195 @@ export class SessionResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
+  }
+  /**
+   * A Checkout Session can be expired when it is in one of these statuses: open
+   *
+   * After it expires, a customer can't complete a Checkout Session and customers loading the Checkout Session see a message saying the Checkout Session is expired.
+   */
+  expire(
+    id: string,
+    params?: Checkout.SessionExpireParams,
+    options?: RequestOptions
+  ): Promise<Response<Session>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/checkout/sessions/${id}/expire`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            currency_conversion: {
+              kind: 'nullable',
+              inner: {
+                kind: 'object',
+                fields: {fx_rate: {kind: 'decimal_string'}},
+              },
+            },
+            line_items: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      price: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            currency_options: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  tiers: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        flat_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
+                                        unit_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                  unit_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                },
+                              },
+                            },
+                            tiers: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  flat_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                  unit_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                },
+                              },
+                            },
+                            unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
+    ) as any;
+  }
+  /**
+   * When retrieving a Checkout Session, there is an includable line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
+   */
+  listLineItems(
+    id: string,
+    params?: Checkout.SessionListLineItemsParams,
+    options?: RequestOptions
+  ): ApiListPromise<LineItem> {
+    return this._makeRequest(
+      'GET',
+      `/v1/checkout/sessions/${id}/line_items`,
+      params,
+      options,
+      {
+        methodType: 'list',
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  price: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        currency_options: {
+                          kind: 'array',
+                          element: {
+                            kind: 'object',
+                            fields: {
+                              tiers: {
+                                kind: 'array',
+                                element: {
+                                  kind: 'object',
+                                  fields: {
+                                    flat_amount_decimal: {
+                                      kind: 'nullable',
+                                      inner: {kind: 'decimal_string'},
+                                    },
+                                    unit_amount_decimal: {
+                                      kind: 'nullable',
+                                      inner: {kind: 'decimal_string'},
+                                    },
+                                  },
+                                },
+                              },
+                              unit_amount_decimal: {
+                                kind: 'nullable',
+                                inner: {kind: 'decimal_string'},
+                              },
+                            },
+                          },
+                        },
+                        tiers: {
+                          kind: 'array',
+                          element: {
+                            kind: 'object',
+                            fields: {
+                              flat_amount_decimal: {
+                                kind: 'nullable',
+                                inner: {kind: 'decimal_string'},
+                              },
+                              unit_amount_decimal: {
+                                kind: 'nullable',
+                                inner: {kind: 'decimal_string'},
+                              },
+                            },
+                          },
+                        },
+                        unit_amount_decimal: {
+                          kind: 'nullable',
+                          inner: {kind: 'decimal_string'},
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
+    ) as any;
   }
 }
 export interface Session {

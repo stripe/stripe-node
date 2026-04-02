@@ -5,7 +5,6 @@ import {Institution} from './Institutions.js';
 import {Account} from './../Accounts.js';
 import {Customer} from './../Customers.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class AuthorizationResource extends StripeResource {
   /**
@@ -15,16 +14,13 @@ export class AuthorizationResource extends StripeResource {
     id: string,
     params?: FinancialConnections.AuthorizationRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Authorization>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Authorization>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/financial_connections/authorizations/{authorization}',
-    }).call(this, ...args);
+  ): Promise<Response<Authorization>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/financial_connections/authorizations/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Authorization {

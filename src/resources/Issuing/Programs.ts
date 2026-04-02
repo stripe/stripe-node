@@ -8,7 +8,6 @@ import {
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ProgramResource extends StripeResource {
   /**
@@ -17,30 +16,25 @@ export class ProgramResource extends StripeResource {
   list(
     params?: Issuing.ProgramListParams,
     options?: RequestOptions
-  ): ApiListPromise<Program>;
-  list(options?: RequestOptions): ApiListPromise<Program>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/programs',
+  ): ApiListPromise<Program> {
+    return this._makeRequest('GET', '/v1/issuing/programs', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Create a Program object.
    */
   create(
     params: Issuing.ProgramCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Program>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/issuing/programs',
-    }).call(this, ...args);
+  ): Promise<Response<Program>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/issuing/programs',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the program specified by the given id.
    */
@@ -48,15 +42,14 @@ export class ProgramResource extends StripeResource {
     id: string,
     params?: Issuing.ProgramRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Program>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Program>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/programs/{program}',
-    }).call(this, ...args);
+  ): Promise<Response<Program>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/issuing/programs/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates a Program object.
    */
@@ -64,12 +57,13 @@ export class ProgramResource extends StripeResource {
     id: string,
     params?: Issuing.ProgramUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Program>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/issuing/programs/{program}',
-    }).call(this, ...args);
+  ): Promise<Response<Program>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/issuing/programs/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Program {

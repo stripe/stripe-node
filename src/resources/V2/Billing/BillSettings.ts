@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 import {VersionResource} from './BillSettings/Versions.js';
-const stripeMethod = StripeResource.method;
 import {Stripe} from '../../../stripe.core.js';
 export class BillSettingResource extends StripeResource {
   versions: VersionResource;
@@ -18,31 +17,31 @@ export class BillSettingResource extends StripeResource {
   list(
     params?: V2.Billing.BillSettingListParams,
     options?: RequestOptions
-  ): ApiListPromise<BillSetting>;
-  list(options?: RequestOptions): ApiListPromise<BillSetting>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/bill_settings',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<BillSetting> {
+    return this._makeRequest(
+      'GET',
+      '/v2/billing/bill_settings',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Create a BillSetting object.
    */
   create(
     params?: V2.Billing.BillSettingCreateParams,
     options?: RequestOptions
-  ): Promise<Response<BillSetting>>;
-  create(options?: RequestOptions): Promise<Response<BillSetting>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/bill_settings',
-    }).call(this, ...args);
+  ): Promise<Response<BillSetting>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/billing/bill_settings',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a BillSetting object by ID.
    */
@@ -50,18 +49,14 @@ export class BillSettingResource extends StripeResource {
     id: string,
     params?: V2.Billing.BillSettingRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<BillSetting>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<BillSetting>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/bill_settings/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<BillSetting>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/bill_settings/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Update fields on an existing BillSetting object.
    */
@@ -69,12 +64,13 @@ export class BillSettingResource extends StripeResource {
     id: string,
     params?: V2.Billing.BillSettingUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<BillSetting>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/bill_settings/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<BillSetting>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/bill_settings/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface BillSetting {

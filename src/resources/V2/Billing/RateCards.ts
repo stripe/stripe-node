@@ -7,7 +7,6 @@ import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 import {CustomPricingUnitOverageRateResource} from './RateCards/CustomPricingUnitOverageRates.js';
 import {RateResource} from './RateCards/Rates.js';
 import {VersionResource} from './RateCards/Versions.js';
-const stripeMethod = StripeResource.method;
 import {Stripe} from '../../../stripe.core.js';
 export class RateCardResource extends StripeResource {
   customPricingUnitOverageRates: CustomPricingUnitOverageRateResource;
@@ -28,30 +27,25 @@ export class RateCardResource extends StripeResource {
   list(
     params?: V2.Billing.RateCardListParams,
     options?: RequestOptions
-  ): ApiListPromise<RateCard>;
-  list(options?: RequestOptions): ApiListPromise<RateCard>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/rate_cards',
+  ): ApiListPromise<RateCard> {
+    return this._makeRequest('GET', '/v2/billing/rate_cards', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Create a Rate Card object.
    */
   create(
     params: V2.Billing.RateCardCreateParams,
     options?: RequestOptions
-  ): Promise<Response<RateCard>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/rate_cards',
-    }).call(this, ...args);
+  ): Promise<Response<RateCard>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/billing/rate_cards',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve the latest version of a Rate Card object.
    */
@@ -59,15 +53,14 @@ export class RateCardResource extends StripeResource {
     id: string,
     params?: V2.Billing.RateCardRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<RateCard>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<RateCard>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/rate_cards/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<RateCard>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/rate_cards/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Update a Rate Card object.
    */
@@ -75,14 +68,14 @@ export class RateCardResource extends StripeResource {
     id: string,
     params?: V2.Billing.RateCardUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<RateCard>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/rate_cards/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<RateCard>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/rate_cards/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Creates, updates, and/or deletes multiple Rates on a Rate Card atomically.
    */
@@ -90,36 +83,39 @@ export class RateCardResource extends StripeResource {
     id: string,
     params: V2.Billing.RateCardModifyRatesParams,
     options?: RequestOptions
-  ): Promise<Response<RateCardVersion>>;
-  modifyRates(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/rate_cards/{id}/modify_rates',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          rates_to_create: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                tiers: {
-                  kind: 'array',
-                  element: {
-                    kind: 'object',
-                    fields: {up_to_decimal: {kind: 'decimal_string'}},
+  ): Promise<Response<RateCardVersion>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/rate_cards/${id}/modify_rates`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            rates_to_create: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  tiers: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {up_to_decimal: {kind: 'decimal_string'}},
+                    },
                   },
-                },
-                transform_quantity: {
-                  kind: 'object',
-                  fields: {divide_by: {kind: 'int64_string'}},
+                  transform_quantity: {
+                    kind: 'object',
+                    fields: {divide_by: {kind: 'int64_string'}},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface RateCard {

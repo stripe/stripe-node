@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ReportResource extends StripeResource {
   /**
@@ -14,13 +13,13 @@ export class ReportResource extends StripeResource {
     id: string,
     params?: V2.Reporting.ReportRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Report>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Report>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/reporting/reports/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<Report>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/reporting/reports/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Report {

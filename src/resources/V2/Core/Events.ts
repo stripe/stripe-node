@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {RangeQueryParam, Decimal} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class EventResource extends StripeResource {
   /**
@@ -12,23 +11,18 @@ export class EventResource extends StripeResource {
   list(
     params?: V2.Core.EventListParams,
     options?: RequestOptions
-  ): ApiListPromise<Event>;
-  list(options?: RequestOptions): ApiListPromise<Event>;
-  list(...args: any[]): Promise<Response<any>> {
+  ): ApiListPromise<Event> {
     const transformResponseData = (response: any): any => {
       return {
         ...response,
         data: response.data.map(this.addFetchRelatedObjectIfNeeded.bind(this)),
       };
     };
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/events',
+    return this._makeRequest('GET', '/v2/core/events', params, options, {
       methodType: 'list',
       transformResponseData: transformResponseData,
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieves the details of an event.
    */
@@ -36,19 +30,14 @@ export class EventResource extends StripeResource {
     id: string,
     params?: V2.Core.EventRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Event>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Event>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
+  ): Promise<Response<Event>> {
     const transformResponseData = (response: any): any => {
       return this.addFetchRelatedObjectIfNeeded(response);
     };
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/events/{id}',
+    return this._makeRequest('GET', `/v2/core/events/${id}`, params, options, {
       transformResponseData: transformResponseData,
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * @private
    *
@@ -65,22 +54,12 @@ export class EventResource extends StripeResource {
     return {
       ...pulledEvent,
       fetchRelatedObject: (): Promise<null | any> =>
-        // call stripeMethod with 'this' resource to fetch
-        // the related object. 'this' is needed to construct
-        // and send the request, but the method spec controls
-        // the url endpoint and method, so it doesn't matter
-        // that 'this' is an Events resource object here
-        stripeMethod({
-          method: 'GET',
-          fullPath: pulledEvent.related_object.url,
-        }).apply(this, [
-          {
-            stripeContext: pulledEvent.context,
-            headers: {
-              'Stripe-Request-Trigger': `event=${pulledEvent.id}`,
-            },
+        this._makeRequest('GET', pulledEvent.related_object.url, undefined, {
+          stripeContext: pulledEvent.context,
+          headers: {
+            'Stripe-Request-Trigger': `event=${pulledEvent.id}`,
           },
-        ]),
+        }),
     };
   }
 }
@@ -212,9 +191,7 @@ export namespace V2 {
               machine_identifier: string;
             }
 
-            export type StripeAction = {
-              [key: string]: unknown;
-            };
+            export interface StripeAction {}
           }
         }
       }

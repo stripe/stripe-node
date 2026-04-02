@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class TransactionEntryResource extends StripeResource {
   /**
@@ -12,16 +11,17 @@ export class TransactionEntryResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.TransactionEntryListParams,
     options?: RequestOptions
-  ): ApiListPromise<TransactionEntry>;
-  list(options?: RequestOptions): ApiListPromise<TransactionEntry>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/transaction_entries',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<TransactionEntry> {
+    return this._makeRequest(
+      'GET',
+      '/v2/money_management/transaction_entries',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieves the details of a TransactionEntry by ID.
    */
@@ -29,16 +29,13 @@ export class TransactionEntryResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.TransactionEntryRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<TransactionEntry>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<TransactionEntry>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/transaction_entries/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<TransactionEntry>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/money_management/transaction_entries/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface TransactionEntry {

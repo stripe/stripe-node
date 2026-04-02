@@ -4,7 +4,6 @@ import {StripeResource} from '../StripeResource.js';
 import {BalanceTransaction} from './BalanceTransactions.js';
 import {MetadataParam, Metadata} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class BalanceTransferResource extends StripeResource {
   /**
@@ -13,12 +12,13 @@ export class BalanceTransferResource extends StripeResource {
   create(
     params: BalanceTransferCreateParams,
     options?: RequestOptions
-  ): Promise<Response<BalanceTransfer>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/balance_transfers',
-    }).call(this, ...args);
+  ): Promise<Response<BalanceTransfer>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/balance_transfers',
+      params,
+      options
+    ) as any;
   }
 }
 export interface BalanceTransfer {

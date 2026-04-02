@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class LicensedItemResource extends StripeResource {
   /**
@@ -12,30 +11,31 @@ export class LicensedItemResource extends StripeResource {
   list(
     params?: V2.Billing.LicensedItemListParams,
     options?: RequestOptions
-  ): ApiListPromise<LicensedItem>;
-  list(options?: RequestOptions): ApiListPromise<LicensedItem>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/licensed_items',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<LicensedItem> {
+    return this._makeRequest(
+      'GET',
+      '/v2/billing/licensed_items',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Create a Licensed Item object.
    */
   create(
     params: V2.Billing.LicensedItemCreateParams,
     options?: RequestOptions
-  ): Promise<Response<LicensedItem>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/licensed_items',
-    }).call(this, ...args);
+  ): Promise<Response<LicensedItem>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/billing/licensed_items',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a Licensed Item object.
    */
@@ -43,18 +43,14 @@ export class LicensedItemResource extends StripeResource {
     id: string,
     params?: V2.Billing.LicensedItemRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<LicensedItem>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<LicensedItem>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/licensed_items/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<LicensedItem>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/licensed_items/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Update a Licensed Item object. At least one of the fields is required.
    */
@@ -62,12 +58,13 @@ export class LicensedItemResource extends StripeResource {
     id: string,
     params?: V2.Billing.LicensedItemUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<LicensedItem>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/licensed_items/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<LicensedItem>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/licensed_items/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface LicensedItem {

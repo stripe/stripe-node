@@ -283,20 +283,27 @@ describe('Stripe Module', function() {
             StripeCore.USER_AGENT = origUserAgent;
             return done(err);
           }
-          stripeClient.customers.create((err) => {
-            StripeCore.AI_AGENT = origAIAgent;
-            StripeCore.USER_AGENT = origUserAgent;
-            close();
-            if (err) {
-              return done(err);
-            }
-            expect(capturedHeaders['user-agent']).to.contain('AIAgent/cursor');
-            const clientUA = JSON.parse(
-              capturedHeaders['x-stripe-client-user-agent']
-            );
-            expect(clientUA).to.have.property('ai_agent', 'cursor');
-            done();
-          });
+          stripeClient.customers
+            .create({})
+            .then(() => {
+              StripeCore.AI_AGENT = origAIAgent;
+              StripeCore.USER_AGENT = origUserAgent;
+              close();
+              expect(capturedHeaders['user-agent']).to.contain(
+                'AIAgent/cursor'
+              );
+              const clientUA = JSON.parse(
+                capturedHeaders['x-stripe-client-user-agent']
+              );
+              expect(clientUA).to.have.property('ai_agent', 'cursor');
+              done();
+            })
+            .catch((err) => {
+              StripeCore.AI_AGENT = origAIAgent;
+              StripeCore.USER_AGENT = origUserAgent;
+              close();
+              done(err);
+            });
         }
       );
     });
@@ -457,81 +464,27 @@ describe('Stripe Module', function() {
     });
   });
 
-  describe('Callback support', () => {
-    describe('Any given endpoint', () => {
-      it('Will call a callback if successful', () =>
-        expect(
-          new Promise((resolve, reject) => {
-            stripe.customers.create(CUSTOMER_DETAILS, (err, customer) => {
-              resolve('Called!');
-            });
-          })
-        ).to.eventually.equal('Called!'));
+  describe('lastResponse', () => {
+    it('Will expose HTTP response object', async () => {
+      const customer = await stripe.customers.create(CUSTOMER_DETAILS);
+      const headers = customer.lastResponse.headers;
+      expect(headers).to.contain.keys('request-id');
+      expect(customer.headers).to.be.undefined;
+    });
 
-      describe('lastResponse', () => {
-        it('Will expose HTTP response object', () =>
-          expect(
-            new Promise((resolve, reject) => {
-              stripe.customers.create(CUSTOMER_DETAILS, (err, customer) => {
-                if (err) return reject(err);
-                const headers = customer.lastResponse.headers;
-                expect(headers).to.contain.keys('request-id');
+    it('Will have request id and status code', async () => {
+      const customer = await stripe.customers.create(CUSTOMER_DETAILS);
+      expect(customer.lastResponse.requestId).to.match(/^req_/);
+      expect(customer.lastResponse.statusCode).to.equal(200);
+    });
 
-                expect(customer.headers).to.be.undefined;
-
-                resolve('Called!');
-              });
-            })
-          ).to.eventually.equal('Called!'));
-
-        it('Will have request id and status code', () =>
-          expect(
-            new Promise((resolve, reject) => {
-              stripe.customers.create(CUSTOMER_DETAILS, (_err, customer) => {
-                expect(customer.lastResponse.requestId).to.match(/^req_/);
-                expect(customer.lastResponse.statusCode).to.equal(200);
-
-                resolve('Called!');
-              });
-            })
-          ).to.eventually.equal('Called!'));
-
-        it('Will have the idempotency key', () =>
-          expect(
-            new Promise((resolve, reject) => {
-              // @ts-ignore - "Property 'randomBytes' does not exist on type 'Crypto'""
-              const key = crypto.randomBytes(16).toString('hex');
-
-              stripe.customers.create(
-                CUSTOMER_DETAILS,
-                {
-                  idempotencyKey: key,
-                },
-                (err, customer) => {
-                  expect(customer.lastResponse.idempotencyKey).to.equal(key);
-
-                  resolve('Called!');
-                }
-              );
-            })
-          ).to.eventually.equal('Called!'));
+    it('Will have the idempotency key', async () => {
+      // @ts-ignore - "Property 'randomBytes' does not exist on type 'Crypto'""
+      const key = crypto.randomBytes(16).toString('hex');
+      const customer = await stripe.customers.create(CUSTOMER_DETAILS, {
+        idempotencyKey: key,
       });
-
-      it('Given an error the callback will receive it', () =>
-        expect(
-          new Promise((resolve, reject) => {
-            stripe.customers.create(
-              {this_is_not_a_real_param: 'foobar'},
-              (err, customer) => {
-                if (err) {
-                  resolve('ErrorWasPassed');
-                } else {
-                  reject(new Error('NoErrorPassed'));
-                }
-              }
-            );
-          })
-        ).to.eventually.become('ErrorWasPassed'));
+      expect(customer.lastResponse.idempotencyKey).to.equal(key);
     });
   });
 
@@ -572,30 +525,18 @@ describe('Stripe Module', function() {
         );
       });
       afterEach(() => closeServer());
-      it('is respected', (callback) => {
-        stripeClient.customers.create((err) => {
-          closeServer();
-          if (err) {
-            return callback(err);
-          }
-          expect(headers['stripe-account']).to.equal('my_stripe_account');
-          return callback();
-        });
+      it('is respected', async () => {
+        await stripeClient.customers.create({});
+        closeServer();
+        expect(headers['stripe-account']).to.equal('my_stripe_account');
       });
-      it('can still be overridden per-request', (callback) => {
-        stripeClient.customers.create(
-          {stripeAccount: 'my_other_stripe_account'},
-          (err) => {
-            closeServer();
-            if (err) {
-              return callback(err);
-            }
-            expect(headers['stripe-account']).to.equal(
-              'my_other_stripe_account'
-            );
-            return callback();
-          }
+      it('can still be overridden per-request', async () => {
+        await stripeClient.customers.create(
+          {},
+          {stripeAccount: 'my_other_stripe_account'}
         );
+        closeServer();
+        expect(headers['stripe-account']).to.equal('my_other_stripe_account');
       });
     });
     describe('gets removed', () => {
@@ -623,26 +564,16 @@ describe('Stripe Module', function() {
       });
       afterEach(() => closeServer());
 
-      it('if explicitly undefined', (callback) => {
-        stripeClient.customers.create({stripeAccount: undefined}, (err) => {
-          closeServer();
-          if (err) {
-            return callback(err);
-          }
-          expect(Object.keys(headers)).not.to.include('stripe-account');
-          return callback();
-        });
+      it('if explicitly undefined', async () => {
+        await stripeClient.customers.create({}, {stripeAccount: undefined});
+        closeServer();
+        expect(Object.keys(headers)).not.to.include('stripe-account');
       });
 
-      it('if explicitly null', (callback) => {
-        stripeClient.customers.create({stripeAccount: null}, (err) => {
-          closeServer();
-          if (err) {
-            return callback(err);
-          }
-          expect(Object.keys(headers)).not.to.include('stripe-account');
-          return callback();
-        });
+      it('if explicitly null', async () => {
+        await stripeClient.customers.create({}, {stripeAccount: null});
+        closeServer();
+        expect(Object.keys(headers)).not.to.include('stripe-account');
       });
     });
   });
@@ -674,39 +605,23 @@ describe('Stripe Module', function() {
         );
       });
       afterEach(() => closeServer());
-      it('is sent on v1 call', (callback) => {
-        stripeClient.customers.create((err) => {
-          closeServer();
-          if (err) {
-            return callback(err);
-          }
-          expect(headers['stripe-context']).to.equal('ctx_123');
-          return callback();
-        });
+      it('is sent on v1 call', async () => {
+        await stripeClient.customers.create({});
+        closeServer();
+        expect(headers['stripe-context']).to.equal('ctx_123');
       });
-      it('is respected', (callback) => {
-        stripeClient.v2.billing.meterEventSession.create((err) => {
-          closeServer();
-          if (err) {
-            return callback(err);
-          }
-          expect(headers['stripe-context']).to.equal('ctx_123');
-          return callback();
-        });
+      it('is respected', async () => {
+        await stripeClient.v2.billing.meterEventSession.create({});
+        closeServer();
+        expect(headers['stripe-context']).to.equal('ctx_123');
       });
-      it('can still be overridden per-request', (callback) => {
-        stripeClient.v2.billing.meterEventSession.create(
-          {name: 'llama'},
-          {stripeContext: 'ctx_456'},
-          (err) => {
-            closeServer();
-            if (err) {
-              return callback(err);
-            }
-            expect(headers['stripe-context']).to.equal('ctx_456');
-            return callback();
-          }
+      it('can still be overridden per-request', async () => {
+        await stripeClient.v2.billing.meterEventSession.create(
+          {},
+          {stripeContext: 'ctx_456'}
         );
+        closeServer();
+        expect(headers['stripe-context']).to.equal('ctx_456');
       });
     });
   });

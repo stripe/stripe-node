@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class AccountEvaluationResource extends StripeResource {
   /**
@@ -12,32 +11,28 @@ export class AccountEvaluationResource extends StripeResource {
     id: string,
     params?: Radar.AccountEvaluationRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<AccountEvaluation>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<AccountEvaluation>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/radar/account_evaluations/{account_evaluation}',
-    }).call(this, ...args);
+  ): Promise<Response<AccountEvaluation>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/radar/account_evaluations/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Creates a new AccountEvaluation object.
    */
   create(
     params: Radar.AccountEvaluationCreateParams,
     options?: RequestOptions
-  ): Promise<Response<AccountEvaluation>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/radar/account_evaluations',
-    }).call(this, ...args);
+  ): Promise<Response<AccountEvaluation>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/radar/account_evaluations',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Reports an event on an AccountEvaluation object.
    */
@@ -45,13 +40,13 @@ export class AccountEvaluationResource extends StripeResource {
     id: string,
     params: Radar.AccountEvaluationUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<AccountEvaluation>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/radar/account_evaluations/{account_evaluation}/report_event',
-    }).call(this, ...args);
+  ): Promise<Response<AccountEvaluation>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/radar/account_evaluations/${id}/report_event`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface AccountEvaluation {

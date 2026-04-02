@@ -5,7 +5,6 @@ import {LicensedItem} from './LicensedItems.js';
 import {MetadataParam, Decimal, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 import {VersionResource} from './LicenseFees/Versions.js';
-const stripeMethod = StripeResource.method;
 import {Stripe} from '../../../stripe.core.js';
 export class LicenseFeeResource extends StripeResource {
   versions: VersionResource;
@@ -20,85 +19,89 @@ export class LicenseFeeResource extends StripeResource {
   list(
     params: V2.Billing.LicenseFeeListParams,
     options?: RequestOptions
-  ): ApiListPromise<LicenseFee>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/license_fees',
-      methodType: 'list',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          data: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                tiers: {
-                  kind: 'array',
-                  element: {
-                    kind: 'object',
-                    fields: {up_to_decimal: {kind: 'decimal_string'}},
+  ): ApiListPromise<LicenseFee> {
+    return this._makeRequest(
+      'GET',
+      '/v2/billing/license_fees',
+      params,
+      options,
+      {
+        methodType: 'list',
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  tiers: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {up_to_decimal: {kind: 'decimal_string'}},
+                    },
                   },
-                },
-                transform_quantity: {
-                  kind: 'object',
-                  fields: {divide_by: {kind: 'int64_string'}},
+                  transform_quantity: {
+                    kind: 'object',
+                    fields: {divide_by: {kind: 'int64_string'}},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Create a License Fee object.
    */
   create(
     params: V2.Billing.LicenseFeeCreateParams,
     options?: RequestOptions
-  ): Promise<Response<LicenseFee>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/license_fees',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          tiers: {
-            kind: 'array',
-            element: {
+  ): Promise<Response<LicenseFee>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/billing/license_fees',
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            tiers: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {up_to_decimal: {kind: 'decimal_string'}},
+              },
+            },
+            transform_quantity: {
               kind: 'object',
-              fields: {up_to_decimal: {kind: 'decimal_string'}},
+              fields: {divide_by: {kind: 'int64_string'}},
             },
           },
-          transform_quantity: {
-            kind: 'object',
-            fields: {divide_by: {kind: 'int64_string'}},
-          },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          tiers: {
-            kind: 'array',
-            element: {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            tiers: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {up_to_decimal: {kind: 'decimal_string'}},
+              },
+            },
+            transform_quantity: {
               kind: 'object',
-              fields: {up_to_decimal: {kind: 'decimal_string'}},
+              fields: {divide_by: {kind: 'int64_string'}},
             },
           },
-          transform_quantity: {
-            kind: 'object',
-            fields: {divide_by: {kind: 'int64_string'}},
-          },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Retrieve a License Fee object.
    */
@@ -106,31 +109,32 @@ export class LicenseFeeResource extends StripeResource {
     id: string,
     params?: V2.Billing.LicenseFeeRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<LicenseFee>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<LicenseFee>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/license_fees/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          tiers: {
-            kind: 'array',
-            element: {
+  ): Promise<Response<LicenseFee>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/license_fees/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            tiers: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {up_to_decimal: {kind: 'decimal_string'}},
+              },
+            },
+            transform_quantity: {
               kind: 'object',
-              fields: {up_to_decimal: {kind: 'decimal_string'}},
+              fields: {divide_by: {kind: 'int64_string'}},
             },
           },
-          transform_quantity: {
-            kind: 'object',
-            fields: {divide_by: {kind: 'int64_string'}},
-          },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Update a License Fee object.
    */
@@ -138,44 +142,47 @@ export class LicenseFeeResource extends StripeResource {
     id: string,
     params?: V2.Billing.LicenseFeeUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<LicenseFee>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/license_fees/{id}',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          tiers: {
-            kind: 'array',
-            element: {
+  ): Promise<Response<LicenseFee>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/license_fees/${id}`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            tiers: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {up_to_decimal: {kind: 'decimal_string'}},
+              },
+            },
+            transform_quantity: {
               kind: 'object',
-              fields: {up_to_decimal: {kind: 'decimal_string'}},
+              fields: {divide_by: {kind: 'int64_string'}},
             },
           },
-          transform_quantity: {
-            kind: 'object',
-            fields: {divide_by: {kind: 'int64_string'}},
-          },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          tiers: {
-            kind: 'array',
-            element: {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            tiers: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {up_to_decimal: {kind: 'decimal_string'}},
+              },
+            },
+            transform_quantity: {
               kind: 'object',
-              fields: {up_to_decimal: {kind: 'decimal_string'}},
+              fields: {divide_by: {kind: 'int64_string'}},
             },
           },
-          transform_quantity: {
-            kind: 'object',
-            fields: {divide_by: {kind: 'int64_string'}},
-          },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface LicenseFee {

@@ -4,7 +4,6 @@ import {StripeResource} from '../../../StripeResource.js';
 import {GrantedToken} from './../../SharedPayment/GrantedTokens.js';
 import {Emptyable} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class GrantedTokenResource extends StripeResource {
   /**
@@ -13,14 +12,14 @@ export class GrantedTokenResource extends StripeResource {
   create(
     params: TestHelpers.SharedPayment.GrantedTokenCreateParams,
     options?: RequestOptions
-  ): Promise<Response<GrantedToken>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/shared_payment/granted_tokens',
-    }).call(this, ...args);
+  ): Promise<Response<GrantedToken>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/test_helpers/shared_payment/granted_tokens',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Revokes a test SharedPaymentGrantedToken object. This endpoint is only available in test mode and allows sellers to revoke SharedPaymentGrantedTokens for testing their integration
    */
@@ -28,14 +27,13 @@ export class GrantedTokenResource extends StripeResource {
     id: string,
     params?: TestHelpers.SharedPayment.GrantedTokenRevokeParams,
     options?: RequestOptions
-  ): Promise<Response<GrantedToken>>;
-  revoke(id: string, options?: RequestOptions): Promise<Response<GrantedToken>>;
-  revoke(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/test_helpers/shared_payment/granted_tokens/{shared_payment_granted_token}/revoke',
-    }).call(this, ...args);
+  ): Promise<Response<GrantedToken>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/shared_payment/granted_tokens/${id}/revoke`,
+      params,
+      options
+    ) as any;
   }
 }
 export namespace TestHelpers {

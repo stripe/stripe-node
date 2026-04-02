@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class AdjustmentResource extends StripeResource {
   /**
@@ -12,16 +11,17 @@ export class AdjustmentResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.AdjustmentListParams,
     options?: RequestOptions
-  ): ApiListPromise<Adjustment>;
-  list(options?: RequestOptions): ApiListPromise<Adjustment>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/adjustments',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<Adjustment> {
+    return this._makeRequest(
+      'GET',
+      '/v2/money_management/adjustments',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieves the details of an Adjustment by ID.
    */
@@ -29,13 +29,13 @@ export class AdjustmentResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.AdjustmentRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Adjustment>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Adjustment>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/adjustments/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<Adjustment>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/money_management/adjustments/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Adjustment {

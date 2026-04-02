@@ -4,7 +4,6 @@ import {StripeResource} from '../../StripeResource.js';
 import {RedactionJobValidationError} from './RedactionJobValidationErrors.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class RedactionJobResource extends StripeResource {
   /**
@@ -13,30 +12,31 @@ export class RedactionJobResource extends StripeResource {
   list(
     params?: Privacy.RedactionJobListParams,
     options?: RequestOptions
-  ): ApiListPromise<RedactionJob>;
-  list(options?: RequestOptions): ApiListPromise<RedactionJob>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/privacy/redaction_jobs',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<RedactionJob> {
+    return this._makeRequest(
+      'GET',
+      '/v1/privacy/redaction_jobs',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Creates a redaction job. When a job is created, it will start to validate.
    */
   create(
     params: Privacy.RedactionJobCreateParams,
     options?: RequestOptions
-  ): Promise<Response<RedactionJob>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/privacy/redaction_jobs',
-    }).call(this, ...args);
+  ): Promise<Response<RedactionJob>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/privacy/redaction_jobs',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the details of a previously created redaction job.
    */
@@ -44,18 +44,14 @@ export class RedactionJobResource extends StripeResource {
     id: string,
     params?: Privacy.RedactionJobRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<RedactionJob>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<RedactionJob>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/privacy/redaction_jobs/{job}',
-    }).call(this, ...args);
+  ): Promise<Response<RedactionJob>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/privacy/redaction_jobs/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates the properties of a redaction job without running or canceling the job.
    *
@@ -65,14 +61,14 @@ export class RedactionJobResource extends StripeResource {
     id: string,
     params?: Privacy.RedactionJobUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<RedactionJob>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/privacy/redaction_jobs/{job}',
-    }).call(this, ...args);
+  ): Promise<Response<RedactionJob>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/privacy/redaction_jobs/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * You can cancel a redaction job when it's in one of these statuses: ready, failed.
    *
@@ -82,15 +78,14 @@ export class RedactionJobResource extends StripeResource {
     id: string,
     params?: Privacy.RedactionJobCancelParams,
     options?: RequestOptions
-  ): Promise<Response<RedactionJob>>;
-  cancel(id: string, options?: RequestOptions): Promise<Response<RedactionJob>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/privacy/redaction_jobs/{job}/cancel',
-    }).call(this, ...args);
+  ): Promise<Response<RedactionJob>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/privacy/redaction_jobs/${id}/cancel`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Run a redaction job in a ready status.
    *
@@ -102,15 +97,14 @@ export class RedactionJobResource extends StripeResource {
     id: string,
     params?: Privacy.RedactionJobRunParams,
     options?: RequestOptions
-  ): Promise<Response<RedactionJob>>;
-  run(id: string, options?: RequestOptions): Promise<Response<RedactionJob>>;
-  run(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/privacy/redaction_jobs/{job}/run',
-    }).call(this, ...args);
+  ): Promise<Response<RedactionJob>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/privacy/redaction_jobs/${id}/run`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Validate a redaction job when it is in a failed status.
    *
@@ -122,18 +116,14 @@ export class RedactionJobResource extends StripeResource {
     id: string,
     params?: Privacy.RedactionJobValidateParams,
     options?: RequestOptions
-  ): Promise<Response<RedactionJob>>;
-  validate(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<RedactionJob>>;
-  validate(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/privacy/redaction_jobs/{job}/validate',
-    }).call(this, ...args);
+  ): Promise<Response<RedactionJob>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/privacy/redaction_jobs/${id}/validate`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Returns a list of validation errors for the specified redaction job.
    */
@@ -141,17 +131,16 @@ export class RedactionJobResource extends StripeResource {
     id: string,
     params?: Privacy.RedactionJobListValidationErrorsParams,
     options?: RequestOptions
-  ): ApiListPromise<RedactionJobValidationError>;
-  listValidationErrors(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<RedactionJobValidationError>;
-  listValidationErrors(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/privacy/redaction_jobs/{job}/validation_errors',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<RedactionJobValidationError> {
+    return this._makeRequest(
+      'GET',
+      `/v1/privacy/redaction_jobs/${id}/validation_errors`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
 }
 export interface RedactionJob {

@@ -3,7 +3,6 @@
 import {StripeResource} from '../StripeResource.js';
 import {PaginationParams} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class TaxCodeResource extends StripeResource {
   /**
@@ -12,16 +11,11 @@ export class TaxCodeResource extends StripeResource {
   list(
     params?: TaxCodeListParams,
     options?: RequestOptions
-  ): ApiListPromise<TaxCode>;
-  list(options?: RequestOptions): ApiListPromise<TaxCode>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/tax_codes',
+  ): ApiListPromise<TaxCode> {
+    return this._makeRequest('GET', '/v1/tax_codes', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieves the details of an existing tax code. Supply the unique tax code ID and Stripe will return the corresponding tax code information.
    */
@@ -29,13 +23,13 @@ export class TaxCodeResource extends StripeResource {
     id: string,
     params?: TaxCodeRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<TaxCode>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<TaxCode>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'GET', fullPath: '/v1/tax_codes/{id}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<TaxCode>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/tax_codes/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface TaxCode {

@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {MetadataParam, Metadata} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class IssuingAuthorizationEvaluationResource extends StripeResource {
   /**
@@ -12,12 +11,13 @@ export class IssuingAuthorizationEvaluationResource extends StripeResource {
   create(
     params: Radar.IssuingAuthorizationEvaluationCreateParams,
     options?: RequestOptions
-  ): Promise<Response<IssuingAuthorizationEvaluation>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/radar/issuing_authorization_evaluations',
-    }).call(this, ...args);
+  ): Promise<Response<IssuingAuthorizationEvaluation>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/radar/issuing_authorization_evaluations',
+      params,
+      options
+    ) as any;
   }
 }
 export interface IssuingAuthorizationEvaluation {

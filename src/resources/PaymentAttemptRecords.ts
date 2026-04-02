@@ -11,7 +11,6 @@ import {
   Address,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PaymentAttemptRecordResource extends StripeResource {
   /**
@@ -20,15 +19,17 @@ export class PaymentAttemptRecordResource extends StripeResource {
   list(
     params: PaymentAttemptRecordListParams,
     options?: RequestOptions
-  ): ApiListPromise<PaymentAttemptRecord>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payment_attempt_records',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<PaymentAttemptRecord> {
+    return this._makeRequest(
+      'GET',
+      '/v1/payment_attempt_records',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieves a Payment Attempt Record with the given ID
    */
@@ -36,18 +37,14 @@ export class PaymentAttemptRecordResource extends StripeResource {
     id: string,
     params?: PaymentAttemptRecordRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentAttemptRecord>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentAttemptRecord>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payment_attempt_records/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentAttemptRecord>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/payment_attempt_records/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Report that the specified Payment Attempt Record was authenticated.
    */
@@ -55,19 +52,14 @@ export class PaymentAttemptRecordResource extends StripeResource {
     id: string,
     params?: PaymentAttemptRecordReportAuthenticatedParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentAttemptRecord>>;
-  reportAuthenticated(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentAttemptRecord>>;
-  reportAuthenticated(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/payment_attempt_records/{payment_attempt_record}/report_authenticated',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentAttemptRecord>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_attempt_records/${id}/report_authenticated`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Report that the specified Payment Attempt Record was canceled.
    */
@@ -75,19 +67,14 @@ export class PaymentAttemptRecordResource extends StripeResource {
     id: string,
     params?: PaymentAttemptRecordReportCanceledParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentAttemptRecord>>;
-  reportCanceled(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentAttemptRecord>>;
-  reportCanceled(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/payment_attempt_records/{payment_attempt_record}/report_canceled',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentAttemptRecord>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_attempt_records/${id}/report_canceled`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Report that the specified Payment Attempt Record failed.
    */
@@ -95,19 +82,14 @@ export class PaymentAttemptRecordResource extends StripeResource {
     id: string,
     params?: PaymentAttemptRecordReportFailedParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentAttemptRecord>>;
-  reportFailed(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentAttemptRecord>>;
-  reportFailed(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/payment_attempt_records/{payment_attempt_record}/report_failed',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentAttemptRecord>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_attempt_records/${id}/report_failed`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Report that the specified Payment Attempt Record was guaranteed.
    */
@@ -115,19 +97,14 @@ export class PaymentAttemptRecordResource extends StripeResource {
     id: string,
     params?: PaymentAttemptRecordReportGuaranteedParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentAttemptRecord>>;
-  reportGuaranteed(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentAttemptRecord>>;
-  reportGuaranteed(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/payment_attempt_records/{payment_attempt_record}/report_guaranteed',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentAttemptRecord>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_attempt_records/${id}/report_guaranteed`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Report informational updates on the specified Payment Attempt Record.
    */
@@ -135,19 +112,14 @@ export class PaymentAttemptRecordResource extends StripeResource {
     id: string,
     params?: PaymentAttemptRecordReportInformationalParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentAttemptRecord>>;
-  reportInformational(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentAttemptRecord>>;
-  reportInformational(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/payment_attempt_records/{payment_attempt_record}/report_informational',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentAttemptRecord>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_attempt_records/${id}/report_informational`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Report that the specified Payment Attempt Record was refunded.
    */
@@ -155,13 +127,13 @@ export class PaymentAttemptRecordResource extends StripeResource {
     id: string,
     params: PaymentAttemptRecordReportRefundParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentAttemptRecord>>;
-  reportRefund(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/payment_attempt_records/{payment_attempt_record}/report_refund',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentAttemptRecord>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_attempt_records/${id}/report_refund`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface PaymentAttemptRecord {

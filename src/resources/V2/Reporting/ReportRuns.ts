@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ReportRunResource extends StripeResource {
   /**
@@ -15,25 +14,27 @@ export class ReportRunResource extends StripeResource {
   create(
     params: V2.Reporting.ReportRunCreateParams,
     options?: RequestOptions
-  ): Promise<Response<ReportRun>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/reporting/report_runs',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          result: {
-            kind: 'object',
-            fields: {
-              file: {kind: 'object', fields: {size: {kind: 'int64_string'}}},
+  ): Promise<Response<ReportRun>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/reporting/report_runs',
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            result: {
+              kind: 'object',
+              fields: {
+                file: {kind: 'object', fields: {size: {kind: 'int64_string'}}},
+              },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Fetches the current state and details of a previously created `ReportRun`. If the `ReportRun`
    * has succeeded, the endpoint will provide details for how to retrieve the results.
@@ -42,24 +43,26 @@ export class ReportRunResource extends StripeResource {
     id: string,
     params?: V2.Reporting.ReportRunRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ReportRun>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<ReportRun>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/reporting/report_runs/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          result: {
-            kind: 'object',
-            fields: {
-              file: {kind: 'object', fields: {size: {kind: 'int64_string'}}},
+  ): Promise<Response<ReportRun>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/reporting/report_runs/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            result: {
+              kind: 'object',
+              fields: {
+                file: {kind: 'object', fields: {size: {kind: 'int64_string'}}},
+              },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface ReportRun {

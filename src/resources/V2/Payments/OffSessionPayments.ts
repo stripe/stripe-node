@@ -4,7 +4,6 @@ import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {MetadataParam, AddressParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class OffSessionPaymentResource extends StripeResource {
   /**
@@ -13,30 +12,31 @@ export class OffSessionPaymentResource extends StripeResource {
   list(
     params?: V2.Payments.OffSessionPaymentListParams,
     options?: RequestOptions
-  ): ApiListPromise<OffSessionPayment>;
-  list(options?: RequestOptions): ApiListPromise<OffSessionPayment>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/payments/off_session_payments',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<OffSessionPayment> {
+    return this._makeRequest(
+      'GET',
+      '/v2/payments/off_session_payments',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Creates an OffSessionPayment object.
    */
   create(
     params: V2.Payments.OffSessionPaymentCreateParams,
     options?: RequestOptions
-  ): Promise<Response<OffSessionPayment>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/payments/off_session_payments',
-    }).call(this, ...args);
+  ): Promise<Response<OffSessionPayment>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/payments/off_session_payments',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the details of an OffSessionPayment that has previously been created.
    */
@@ -44,18 +44,14 @@ export class OffSessionPaymentResource extends StripeResource {
     id: string,
     params?: V2.Payments.OffSessionPaymentRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<OffSessionPayment>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<OffSessionPayment>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/payments/off_session_payments/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<OffSessionPayment>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/payments/off_session_payments/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Cancel an OffSessionPayment that has previously been created.
    */
@@ -63,18 +59,14 @@ export class OffSessionPaymentResource extends StripeResource {
     id: string,
     params?: V2.Payments.OffSessionPaymentCancelParams,
     options?: RequestOptions
-  ): Promise<Response<OffSessionPayment>>;
-  cancel(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<OffSessionPayment>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/payments/off_session_payments/{id}/cancel',
-    }).call(this, ...args);
+  ): Promise<Response<OffSessionPayment>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/payments/off_session_payments/${id}/cancel`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Captures an OffSessionPayment that has previously been created.
    */
@@ -82,14 +74,14 @@ export class OffSessionPaymentResource extends StripeResource {
     id: string,
     params: V2.Payments.OffSessionPaymentCaptureParams,
     options?: RequestOptions
-  ): Promise<Response<OffSessionPayment>>;
-  capture(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/payments/off_session_payments/{id}/capture',
-    }).call(this, ...args);
+  ): Promise<Response<OffSessionPayment>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/payments/off_session_payments/${id}/capture`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Pauses an OffSessionPayment that has previously been created.
    */
@@ -97,18 +89,14 @@ export class OffSessionPaymentResource extends StripeResource {
     id: string,
     params?: V2.Payments.OffSessionPaymentPauseParams,
     options?: RequestOptions
-  ): Promise<Response<OffSessionPayment>>;
-  pause(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<OffSessionPayment>>;
-  pause(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/payments/off_session_payments/{id}/pause',
-    }).call(this, ...args);
+  ): Promise<Response<OffSessionPayment>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/payments/off_session_payments/${id}/pause`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Resumes an OffSessionPayment that has previously been paused.
    */
@@ -116,16 +104,13 @@ export class OffSessionPaymentResource extends StripeResource {
     id: string,
     params?: V2.Payments.OffSessionPaymentResumeParams,
     options?: RequestOptions
-  ): Promise<Response<OffSessionPayment>>;
-  resume(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<OffSessionPayment>>;
-  resume(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/payments/off_session_payments/{id}/resume',
-    }).call(this, ...args);
+  ): Promise<Response<OffSessionPayment>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/payments/off_session_payments/${id}/resume`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface OffSessionPayment {
@@ -148,6 +133,11 @@ export interface OffSessionPayment {
    * The “presentment amount” to be collected from the customer.
    */
   amount_requested: V2Amount;
+
+  /**
+   * The amount of the application fee requested to be applied to the payment.
+   */
+  application_fee_amount_requested?: V2Amount;
 
   /**
    * The frequency of the underlying payment.
@@ -375,6 +365,12 @@ export namespace V2 {
        * [storing information in metadata](https://docs.stripe.com/payments/payment-intents#storing-information-in-metadata).
        */
       metadata: MetadataParam;
+
+      /**
+       * The amount of the application fee (if any) that will be requested to be applied to the
+       * payment and transferred to the application owner's Stripe account.
+       */
+      application_fee_amount?: V2Amount;
 
       /**
        * Details about the capture configuration for the OffSessionPayment.
@@ -614,6 +610,11 @@ export namespace V2 {
        * The amount to capture.
        */
       amount_to_capture?: number;
+
+      /**
+       * The amount of the application fee for this capture.
+       */
+      application_fee_amount?: V2Amount;
 
       /**
        * Text that appears on the customer's statement as the statement descriptor for a

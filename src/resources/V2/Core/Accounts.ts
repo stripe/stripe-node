@@ -13,7 +13,6 @@ import {
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 import {PersonResource} from './Accounts/Persons.js';
 import {PersonTokenResource} from './Accounts/PersonTokens.js';
-const stripeMethod = StripeResource.method;
 import {Stripe} from '../../../stripe.core.js';
 export class AccountResource extends StripeResource {
   persons: PersonResource;
@@ -31,12 +30,8 @@ export class AccountResource extends StripeResource {
   list(
     params?: V2.Core.AccountListParams,
     options?: RequestOptions
-  ): ApiListPromise<Account>;
-  list(options?: RequestOptions): ApiListPromise<Account>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/accounts',
+  ): ApiListPromise<Account> {
+    return this._makeRequest('GET', '/v2/core/accounts', params, options, {
       methodType: 'list',
       responseSchema: {
         kind: 'object',
@@ -65,9 +60,8 @@ export class AccountResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * An Account is a representation of a company, individual or other entity that a user interacts with. Accounts contain identifying information about the entity, and configurations that store the features an account has access to. An account can be configured as any or all of the following configurations: Customer, Merchant and/or Recipient.
    * @throws Stripe.RateLimitError
@@ -75,12 +69,8 @@ export class AccountResource extends StripeResource {
   create(
     params?: V2.Core.AccountCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  create(options?: RequestOptions): Promise<Response<Account>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/accounts',
+  ): Promise<Response<Account>> {
+    return this._makeRequest('POST', '/v2/core/accounts', params, options, {
       requestSchema: {
         kind: 'object',
         fields: {
@@ -119,9 +109,8 @@ export class AccountResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieves the details of an Account.
    * @throws Stripe.RateLimitError
@@ -130,34 +119,35 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: V2.Core.AccountRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Account>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/accounts/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          identity: {
-            kind: 'object',
-            fields: {
-              individual: {
-                kind: 'object',
-                fields: {
-                  relationship: {
-                    kind: 'object',
-                    fields: {percent_ownership: {kind: 'decimal_string'}},
+  ): Promise<Response<Account>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/core/accounts/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            identity: {
+              kind: 'object',
+              fields: {
+                individual: {
+                  kind: 'object',
+                  fields: {
+                    relationship: {
+                      kind: 'object',
+                      fields: {percent_ownership: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Updates the details of an Account.
    * @throws Stripe.RateLimitError
@@ -166,52 +156,54 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: V2.Core.AccountUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/accounts/{id}',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          identity: {
-            kind: 'object',
-            fields: {
-              individual: {
-                kind: 'object',
-                fields: {
-                  relationship: {
-                    kind: 'object',
-                    fields: {percent_ownership: {kind: 'decimal_string'}},
+  ): Promise<Response<Account>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/accounts/${id}`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            identity: {
+              kind: 'object',
+              fields: {
+                individual: {
+                  kind: 'object',
+                  fields: {
+                    relationship: {
+                      kind: 'object',
+                      fields: {percent_ownership: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          identity: {
-            kind: 'object',
-            fields: {
-              individual: {
-                kind: 'object',
-                fields: {
-                  relationship: {
-                    kind: 'object',
-                    fields: {percent_ownership: {kind: 'decimal_string'}},
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            identity: {
+              kind: 'object',
+              fields: {
+                individual: {
+                  kind: 'object',
+                  fields: {
+                    relationship: {
+                      kind: 'object',
+                      fields: {percent_ownership: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Removes access to the Account and its associated resources. Closed Accounts can no longer be operated on, but limited information can still be retrieved through the API in order to be able to track their history.
    * @throws Stripe.RateLimitError
@@ -220,32 +212,34 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: V2.Core.AccountCloseParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  close(id: string, options?: RequestOptions): Promise<Response<Account>>;
-  close(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/accounts/{id}/close',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          identity: {
-            kind: 'object',
-            fields: {
-              individual: {
-                kind: 'object',
-                fields: {
-                  relationship: {
-                    kind: 'object',
-                    fields: {percent_ownership: {kind: 'decimal_string'}},
+  ): Promise<Response<Account>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/accounts/${id}/close`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            identity: {
+              kind: 'object',
+              fields: {
+                individual: {
+                  kind: 'object',
+                  fields: {
+                    relationship: {
+                      kind: 'object',
+                      fields: {percent_ownership: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface Account {
@@ -8129,7 +8123,10 @@ export namespace V2 {
               | 'be_vat'
               | 'bg_uic'
               | 'bg_vat'
+              | 'bm_crn'
+              | 'bo_tin'
               | 'br_cnpj'
+              | 'bt_tpn'
               | 'ca_cn'
               | 'ca_crarr'
               | 'ca_gst_hst'
@@ -8137,6 +8134,7 @@ export namespace V2 {
               | 'ca_rid'
               | 'ch_chid'
               | 'ch_uid'
+              | 'co_nit'
               | 'cr_cpj'
               | 'cr_nite'
               | 'cy_he'
@@ -8150,8 +8148,10 @@ export namespace V2 {
               | 'dk_cvr'
               | 'dk_vat'
               | 'do_rcn'
+              | 'ec_ruc'
               | 'ee_rk'
               | 'ee_vat'
+              | 'eg_tin'
               | 'es_cif'
               | 'es_vat'
               | 'fi_vat'
@@ -8161,13 +8161,16 @@ export namespace V2 {
               | 'fr_vat'
               | 'gb_crn'
               | 'gb_vat'
+              | 'gh_tin'
               | 'gi_crn'
               | 'gr_afm'
               | 'gr_gemi'
               | 'gr_vat'
               | 'gt_nit'
+              | 'gy_tin'
               | 'hk_br'
               | 'hk_cr'
+              | 'hn_rtn'
               | 'hr_mbs'
               | 'hr_oib'
               | 'hr_vat'
@@ -8179,9 +8182,14 @@ export namespace V2 {
               | 'ie_vat'
               | 'it_rea'
               | 'it_vat'
+              | 'jm_trn'
+              | 'jo_crn'
               | 'jp_cn'
+              | 'ke_pin'
+              | 'ky_crn'
               | 'kz_bin'
               | 'li_uid'
+              | 'lk_tin'
               | 'lt_ccrn'
               | 'lt_vat'
               | 'lu_nif'
@@ -8189,27 +8197,33 @@ export namespace V2 {
               | 'lu_vat'
               | 'lv_urn'
               | 'lv_vat'
+              | 'mo_tin'
               | 'mt_crn'
               | 'mt_tin'
               | 'mt_vat'
+              | 'mv_tin'
               | 'mx_rfc'
               | 'my_brn'
               | 'my_coid'
               | 'my_itn'
               | 'my_sst'
               | 'mz_nuit'
+              | 'ng_tin'
               | 'nl_kvk'
               | 'nl_rsin'
               | 'nl_vat'
               | 'no_orgnr'
               | 'nz_bn'
               | 'nz_ird'
+              | 'pa_ruc'
               | 'pe_ruc'
+              | 'ph_tin'
               | 'pk_ntn'
               | 'pl_nip'
               | 'pl_regon'
               | 'pl_vat'
               | 'pt_vat'
+              | 'py_ruc'
               | 'ro_cui'
               | 'ro_orc'
               | 'ro_vat'
@@ -8224,10 +8238,15 @@ export namespace V2 {
               | 'sk_dic'
               | 'sk_ico'
               | 'sk_vat'
+              | 'sl_tin'
+              | 'sv_nit'
               | 'th_crn'
               | 'th_prn'
               | 'th_tin'
-              | 'us_ein';
+              | 'us_ein'
+              | 'uy_ruc'
+              | 'vg_cn'
+              | 'za_tin';
           }
 
           export namespace ScriptAddresses {
@@ -8679,8 +8698,11 @@ export namespace V2 {
               | 'bd_nid'
               | 'be_nrn'
               | 'bg_ucn'
+              | 'bm_pp'
               | 'bn_nric'
+              | 'bo_ci'
               | 'br_cpf'
+              | 'bt_cid'
               | 'ca_sin'
               | 'ch_oasi'
               | 'cl_rut'
@@ -8698,26 +8720,37 @@ export namespace V2 {
               | 'do_rcn'
               | 'ec_ci'
               | 'ee_ik'
+              | 'eg_tin'
               | 'es_nif'
               | 'fi_hetu'
               | 'fr_nir'
               | 'gb_nino'
+              | 'gh_pin'
               | 'gr_afm'
               | 'gt_nit'
+              | 'gy_tin'
               | 'hk_id'
+              | 'hn_rtn'
               | 'hr_oib'
               | 'hu_ad'
               | 'id_nik'
               | 'ie_ppsn'
               | 'is_kt'
               | 'it_cf'
+              | 'jm_trn'
+              | 'jo_pin'
               | 'jp_inc'
               | 'ke_pin'
+              | 'ky_pp'
               | 'kz_iin'
               | 'li_peid'
+              | 'lk_nic'
               | 'lt_ak'
               | 'lu_nif'
               | 'lv_pk'
+              | 'mo_bir'
+              | 'mt_nic'
+              | 'mv_tin'
               | 'mx_rfc'
               | 'my_nric'
               | 'mz_nuit'
@@ -8725,17 +8758,22 @@ export namespace V2 {
               | 'nl_bsn'
               | 'no_nin'
               | 'nz_ird'
+              | 'pa_ruc'
               | 'pe_dni'
+              | 'ph_tin'
               | 'pk_cnic'
               | 'pk_snic'
               | 'pl_pesel'
               | 'pt_nif'
+              | 'py_ruc'
               | 'ro_cnp'
               | 'sa_tin'
               | 'se_pin'
               | 'sg_fin'
               | 'sg_nric'
+              | 'si_pin'
               | 'sk_dic'
+              | 'sv_nit'
               | 'th_lc'
               | 'th_pin'
               | 'tr_tin'
@@ -8744,6 +8782,7 @@ export namespace V2 {
               | 'us_ssn'
               | 'us_ssn_last_4'
               | 'uy_dni'
+              | 'vg_pp'
               | 'za_id';
           }
 
@@ -12884,7 +12923,10 @@ export namespace V2 {
               | 'be_vat'
               | 'bg_uic'
               | 'bg_vat'
+              | 'bm_crn'
+              | 'bo_tin'
               | 'br_cnpj'
+              | 'bt_tpn'
               | 'ca_cn'
               | 'ca_crarr'
               | 'ca_gst_hst'
@@ -12892,6 +12934,7 @@ export namespace V2 {
               | 'ca_rid'
               | 'ch_chid'
               | 'ch_uid'
+              | 'co_nit'
               | 'cr_cpj'
               | 'cr_nite'
               | 'cy_he'
@@ -12905,8 +12948,10 @@ export namespace V2 {
               | 'dk_cvr'
               | 'dk_vat'
               | 'do_rcn'
+              | 'ec_ruc'
               | 'ee_rk'
               | 'ee_vat'
+              | 'eg_tin'
               | 'es_cif'
               | 'es_vat'
               | 'fi_vat'
@@ -12916,13 +12961,16 @@ export namespace V2 {
               | 'fr_vat'
               | 'gb_crn'
               | 'gb_vat'
+              | 'gh_tin'
               | 'gi_crn'
               | 'gr_afm'
               | 'gr_gemi'
               | 'gr_vat'
               | 'gt_nit'
+              | 'gy_tin'
               | 'hk_br'
               | 'hk_cr'
+              | 'hn_rtn'
               | 'hr_mbs'
               | 'hr_oib'
               | 'hr_vat'
@@ -12934,9 +12982,14 @@ export namespace V2 {
               | 'ie_vat'
               | 'it_rea'
               | 'it_vat'
+              | 'jm_trn'
+              | 'jo_crn'
               | 'jp_cn'
+              | 'ke_pin'
+              | 'ky_crn'
               | 'kz_bin'
               | 'li_uid'
+              | 'lk_tin'
               | 'lt_ccrn'
               | 'lt_vat'
               | 'lu_nif'
@@ -12944,27 +12997,33 @@ export namespace V2 {
               | 'lu_vat'
               | 'lv_urn'
               | 'lv_vat'
+              | 'mo_tin'
               | 'mt_crn'
               | 'mt_tin'
               | 'mt_vat'
+              | 'mv_tin'
               | 'mx_rfc'
               | 'my_brn'
               | 'my_coid'
               | 'my_itn'
               | 'my_sst'
               | 'mz_nuit'
+              | 'ng_tin'
               | 'nl_kvk'
               | 'nl_rsin'
               | 'nl_vat'
               | 'no_orgnr'
               | 'nz_bn'
               | 'nz_ird'
+              | 'pa_ruc'
               | 'pe_ruc'
+              | 'ph_tin'
               | 'pk_ntn'
               | 'pl_nip'
               | 'pl_regon'
               | 'pl_vat'
               | 'pt_vat'
+              | 'py_ruc'
               | 'ro_cui'
               | 'ro_orc'
               | 'ro_vat'
@@ -12979,10 +13038,15 @@ export namespace V2 {
               | 'sk_dic'
               | 'sk_ico'
               | 'sk_vat'
+              | 'sl_tin'
+              | 'sv_nit'
               | 'th_crn'
               | 'th_prn'
               | 'th_tin'
-              | 'us_ein';
+              | 'us_ein'
+              | 'uy_ruc'
+              | 'vg_cn'
+              | 'za_tin';
           }
 
           export namespace ScriptAddresses {
@@ -13398,8 +13462,11 @@ export namespace V2 {
               | 'bd_nid'
               | 'be_nrn'
               | 'bg_ucn'
+              | 'bm_pp'
               | 'bn_nric'
+              | 'bo_ci'
               | 'br_cpf'
+              | 'bt_cid'
               | 'ca_sin'
               | 'ch_oasi'
               | 'cl_rut'
@@ -13417,26 +13484,37 @@ export namespace V2 {
               | 'do_rcn'
               | 'ec_ci'
               | 'ee_ik'
+              | 'eg_tin'
               | 'es_nif'
               | 'fi_hetu'
               | 'fr_nir'
               | 'gb_nino'
+              | 'gh_pin'
               | 'gr_afm'
               | 'gt_nit'
+              | 'gy_tin'
               | 'hk_id'
+              | 'hn_rtn'
               | 'hr_oib'
               | 'hu_ad'
               | 'id_nik'
               | 'ie_ppsn'
               | 'is_kt'
               | 'it_cf'
+              | 'jm_trn'
+              | 'jo_pin'
               | 'jp_inc'
               | 'ke_pin'
+              | 'ky_pp'
               | 'kz_iin'
               | 'li_peid'
+              | 'lk_nic'
               | 'lt_ak'
               | 'lu_nif'
               | 'lv_pk'
+              | 'mo_bir'
+              | 'mt_nic'
+              | 'mv_tin'
               | 'mx_rfc'
               | 'my_nric'
               | 'mz_nuit'
@@ -13444,17 +13522,22 @@ export namespace V2 {
               | 'nl_bsn'
               | 'no_nin'
               | 'nz_ird'
+              | 'pa_ruc'
               | 'pe_dni'
+              | 'ph_tin'
               | 'pk_cnic'
               | 'pk_snic'
               | 'pl_pesel'
               | 'pt_nif'
+              | 'py_ruc'
               | 'ro_cnp'
               | 'sa_tin'
               | 'se_pin'
               | 'sg_fin'
               | 'sg_nric'
+              | 'si_pin'
               | 'sk_dic'
+              | 'sv_nit'
               | 'th_lc'
               | 'th_pin'
               | 'tr_tin'
@@ -13463,6 +13546,7 @@ export namespace V2 {
               | 'us_ssn'
               | 'us_ssn_last_4'
               | 'uy_dni'
+              | 'vg_pp'
               | 'za_id';
           }
 
@@ -17234,7 +17318,10 @@ export namespace V2 {
               | 'be_vat'
               | 'bg_uic'
               | 'bg_vat'
+              | 'bm_crn'
+              | 'bo_tin'
               | 'br_cnpj'
+              | 'bt_tpn'
               | 'ca_cn'
               | 'ca_crarr'
               | 'ca_gst_hst'
@@ -17242,6 +17329,7 @@ export namespace V2 {
               | 'ca_rid'
               | 'ch_chid'
               | 'ch_uid'
+              | 'co_nit'
               | 'cr_cpj'
               | 'cr_nite'
               | 'cy_he'
@@ -17255,8 +17343,10 @@ export namespace V2 {
               | 'dk_cvr'
               | 'dk_vat'
               | 'do_rcn'
+              | 'ec_ruc'
               | 'ee_rk'
               | 'ee_vat'
+              | 'eg_tin'
               | 'es_cif'
               | 'es_vat'
               | 'fi_vat'
@@ -17266,13 +17356,16 @@ export namespace V2 {
               | 'fr_vat'
               | 'gb_crn'
               | 'gb_vat'
+              | 'gh_tin'
               | 'gi_crn'
               | 'gr_afm'
               | 'gr_gemi'
               | 'gr_vat'
               | 'gt_nit'
+              | 'gy_tin'
               | 'hk_br'
               | 'hk_cr'
+              | 'hn_rtn'
               | 'hr_mbs'
               | 'hr_oib'
               | 'hr_vat'
@@ -17284,9 +17377,14 @@ export namespace V2 {
               | 'ie_vat'
               | 'it_rea'
               | 'it_vat'
+              | 'jm_trn'
+              | 'jo_crn'
               | 'jp_cn'
+              | 'ke_pin'
+              | 'ky_crn'
               | 'kz_bin'
               | 'li_uid'
+              | 'lk_tin'
               | 'lt_ccrn'
               | 'lt_vat'
               | 'lu_nif'
@@ -17294,27 +17392,33 @@ export namespace V2 {
               | 'lu_vat'
               | 'lv_urn'
               | 'lv_vat'
+              | 'mo_tin'
               | 'mt_crn'
               | 'mt_tin'
               | 'mt_vat'
+              | 'mv_tin'
               | 'mx_rfc'
               | 'my_brn'
               | 'my_coid'
               | 'my_itn'
               | 'my_sst'
               | 'mz_nuit'
+              | 'ng_tin'
               | 'nl_kvk'
               | 'nl_rsin'
               | 'nl_vat'
               | 'no_orgnr'
               | 'nz_bn'
               | 'nz_ird'
+              | 'pa_ruc'
               | 'pe_ruc'
+              | 'ph_tin'
               | 'pk_ntn'
               | 'pl_nip'
               | 'pl_regon'
               | 'pl_vat'
               | 'pt_vat'
+              | 'py_ruc'
               | 'ro_cui'
               | 'ro_orc'
               | 'ro_vat'
@@ -17329,10 +17433,15 @@ export namespace V2 {
               | 'sk_dic'
               | 'sk_ico'
               | 'sk_vat'
+              | 'sl_tin'
+              | 'sv_nit'
               | 'th_crn'
               | 'th_prn'
               | 'th_tin'
-              | 'us_ein';
+              | 'us_ein'
+              | 'uy_ruc'
+              | 'vg_cn'
+              | 'za_tin';
           }
 
           export namespace ScriptNames {
@@ -17635,8 +17744,11 @@ export namespace V2 {
               | 'bd_nid'
               | 'be_nrn'
               | 'bg_ucn'
+              | 'bm_pp'
               | 'bn_nric'
+              | 'bo_ci'
               | 'br_cpf'
+              | 'bt_cid'
               | 'ca_sin'
               | 'ch_oasi'
               | 'cl_rut'
@@ -17654,26 +17766,37 @@ export namespace V2 {
               | 'do_rcn'
               | 'ec_ci'
               | 'ee_ik'
+              | 'eg_tin'
               | 'es_nif'
               | 'fi_hetu'
               | 'fr_nir'
               | 'gb_nino'
+              | 'gh_pin'
               | 'gr_afm'
               | 'gt_nit'
+              | 'gy_tin'
               | 'hk_id'
+              | 'hn_rtn'
               | 'hr_oib'
               | 'hu_ad'
               | 'id_nik'
               | 'ie_ppsn'
               | 'is_kt'
               | 'it_cf'
+              | 'jm_trn'
+              | 'jo_pin'
               | 'jp_inc'
               | 'ke_pin'
+              | 'ky_pp'
               | 'kz_iin'
               | 'li_peid'
+              | 'lk_nic'
               | 'lt_ak'
               | 'lu_nif'
               | 'lv_pk'
+              | 'mo_bir'
+              | 'mt_nic'
+              | 'mv_tin'
               | 'mx_rfc'
               | 'my_nric'
               | 'mz_nuit'
@@ -17681,17 +17804,22 @@ export namespace V2 {
               | 'nl_bsn'
               | 'no_nin'
               | 'nz_ird'
+              | 'pa_ruc'
               | 'pe_dni'
+              | 'ph_tin'
               | 'pk_cnic'
               | 'pk_snic'
               | 'pl_pesel'
               | 'pt_nif'
+              | 'py_ruc'
               | 'ro_cnp'
               | 'sa_tin'
               | 'se_pin'
               | 'sg_fin'
               | 'sg_nric'
+              | 'si_pin'
               | 'sk_dic'
+              | 'sv_nit'
               | 'th_lc'
               | 'th_pin'
               | 'tr_tin'
@@ -17700,6 +17828,7 @@ export namespace V2 {
               | 'us_ssn'
               | 'us_ssn_last_4'
               | 'uy_dni'
+              | 'vg_pp'
               | 'za_id';
           }
 

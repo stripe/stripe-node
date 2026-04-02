@@ -8,27 +8,27 @@ import {
   FAKE_API_KEY,
 } from './testUtils.js';
 
-const stripeMethod = StripeResource.method;
-
 describe('V2 int64_string integration', () => {
   describe('request coercion', () => {
     const stripe = getSpyableStripe();
 
     it('coerces numeric int64_string fields to strings in V2 request body', () => {
-      const resource = new (StripeResource.extend({
-        create: stripeMethod({
-          method: 'POST',
-          fullPath: '/v2/test/resources',
+      const resource = new StripeResource(stripe);
+
+      resource._makeRequest(
+        'POST',
+        '/v2/test/resources',
+        {amount: 42, name: 'test'},
+        undefined,
+        {
           requestSchema: {
             kind: 'object',
             fields: {
               amount: {kind: 'int64_string'},
             },
           },
-        }),
-      }))(stripe);
-
-      resource.create({amount: 42, name: 'test'});
+        }
+      );
       expect(stripe.LAST_REQUEST.data).to.deep.equal({
         amount: '42',
         name: 'test',
@@ -36,10 +36,14 @@ describe('V2 int64_string integration', () => {
     });
 
     it('coerces nested int64_string fields in V2 request body', () => {
-      const resource = new (StripeResource.extend({
-        create: stripeMethod({
-          method: 'POST',
-          fullPath: '/v2/test/resources',
+      const resource = new StripeResource(stripe);
+
+      resource._makeRequest(
+        'POST',
+        '/v2/test/resources',
+        {transform_quantity: {divide_by: 500, round: 'up'}},
+        undefined,
+        {
           requestSchema: {
             kind: 'object',
             fields: {
@@ -51,43 +55,37 @@ describe('V2 int64_string integration', () => {
               },
             },
           },
-        }),
-      }))(stripe);
-
-      resource.create({transform_quantity: {divide_by: 500, round: 'up'}});
+        }
+      );
       expect(stripe.LAST_REQUEST.data).to.deep.equal({
         transform_quantity: {divide_by: '500', round: 'up'},
       });
     });
 
     it('does not coerce when no requestSchema is present', () => {
-      const resource = new (StripeResource.extend({
-        create: stripeMethod({
-          method: 'POST',
-          fullPath: '/v2/test/resources',
-        }),
-      }))(stripe);
+      const resource = new StripeResource(stripe);
 
-      resource.create({amount: 42});
+      resource._makeRequest(
+        'POST',
+        '/v2/test/resources',
+        {amount: 42},
+        undefined
+      );
       expect(stripe.LAST_REQUEST.data).to.deep.equal({amount: 42});
     });
 
     it('handles null body data gracefully', () => {
-      const resource = new (StripeResource.extend({
-        list: stripeMethod({
-          method: 'GET',
-          fullPath: '/v2/test/resources',
-          requestSchema: {
-            kind: 'object',
-            fields: {
-              amount: {kind: 'int64_string'},
-            },
-          },
-        }),
-      }))(stripe);
+      const resource = new StripeResource(stripe);
 
       // GET requests have no body data, so coercion should be a no-op
-      resource.list();
+      resource._makeRequest('GET', '/v2/test/resources', undefined, undefined, {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            amount: {kind: 'int64_string'},
+          },
+        },
+      });
       expect(stripe.LAST_REQUEST.data).to.equal(null);
     });
   });
@@ -102,26 +100,33 @@ describe('V2 int64_string integration', () => {
       getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
         if (err) return callback(err);
 
-        const resource = new (StripeResource.extend({
-          retrieve: stripeMethod({
-            method: 'GET',
-            fullPath: '/v2/test/resources/{id}',
-            responseSchema: {
-              kind: 'object',
-              fields: {
-                amount: {kind: 'int64_string'},
-              },
-            },
-          }),
-        }))(stripe);
+        const resource = new StripeResource(stripe);
 
-        resource.retrieve('res_123', (err, result) => {
-          closeServer();
-          if (err) return callback(err);
-          expect(result.amount).to.equal(12345n);
-          expect(result.name).to.equal('test');
-          callback();
-        });
+        resource
+          ._makeRequest(
+            'GET',
+            '/v2/test/resources/res_123',
+            undefined,
+            undefined,
+            {
+              responseSchema: {
+                kind: 'object',
+                fields: {
+                  amount: {kind: 'int64_string'},
+                },
+              },
+            }
+          )
+          .then((result) => {
+            closeServer();
+            expect(result.amount).to.equal(12345n);
+            expect(result.name).to.equal('test');
+            callback();
+          })
+          .catch((err) => {
+            closeServer();
+            callback(err);
+          });
       });
     });
 
@@ -138,31 +143,38 @@ describe('V2 int64_string integration', () => {
       getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
         if (err) return callback(err);
 
-        const resource = new (StripeResource.extend({
-          retrieve: stripeMethod({
-            method: 'GET',
-            fullPath: '/v2/test/resources/{id}',
-            responseSchema: {
-              kind: 'object',
-              fields: {
-                transform_quantity: {
-                  kind: 'object',
-                  fields: {
-                    divide_by: {kind: 'int64_string'},
+        const resource = new StripeResource(stripe);
+
+        resource
+          ._makeRequest(
+            'GET',
+            '/v2/test/resources/res_123',
+            undefined,
+            undefined,
+            {
+              responseSchema: {
+                kind: 'object',
+                fields: {
+                  transform_quantity: {
+                    kind: 'object',
+                    fields: {
+                      divide_by: {kind: 'int64_string'},
+                    },
                   },
                 },
               },
-            },
-          }),
-        }))(stripe);
-
-        resource.retrieve('res_123', (err, result) => {
-          closeServer();
-          if (err) return callback(err);
-          expect(result.transform_quantity.divide_by).to.equal(500n);
-          expect(result.transform_quantity.round).to.equal('up');
-          callback();
-        });
+            }
+          )
+          .then((result) => {
+            closeServer();
+            expect(result.transform_quantity.divide_by).to.equal(500n);
+            expect(result.transform_quantity.round).to.equal('up');
+            callback();
+          })
+          .catch((err) => {
+            closeServer();
+            callback(err);
+          });
       });
     });
 
@@ -175,19 +187,24 @@ describe('V2 int64_string integration', () => {
       getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
         if (err) return callback(err);
 
-        const resource = new (StripeResource.extend({
-          retrieve: stripeMethod({
-            method: 'GET',
-            fullPath: '/v2/test/resources/{id}',
-          }),
-        }))(stripe);
+        const resource = new StripeResource(stripe);
 
-        resource.retrieve('res_123', (err, result) => {
-          closeServer();
-          if (err) return callback(err);
-          expect(result.amount).to.equal('12345');
-          callback();
-        });
+        resource
+          ._makeRequest(
+            'GET',
+            '/v2/test/resources/res_123',
+            undefined,
+            undefined
+          )
+          .then((result) => {
+            closeServer();
+            expect(result.amount).to.equal('12345');
+            callback();
+          })
+          .catch((err) => {
+            closeServer();
+            callback(err);
+          });
       });
     });
 
@@ -200,35 +217,37 @@ describe('V2 int64_string integration', () => {
       getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
         if (err) return callback(err);
 
-        const resource = new (StripeResource.extend({
-          retrieve(...args) {
-            const transformResponseData = (response) => {
-              // By the time transformResponseData is called, the amount
-              // should already be a bigint
-              response.doubleAmount = response.amount * 2n;
-              return response;
-            };
-            return stripeMethod({
-              method: 'GET',
-              fullPath: '/v2/test/resources/{id}',
+        const resource = new StripeResource(stripe);
+
+        resource
+          ._makeRequest(
+            'GET',
+            '/v2/test/resources/res_123',
+            undefined,
+            undefined,
+            {
               responseSchema: {
                 kind: 'object',
                 fields: {
                   amount: {kind: 'int64_string'},
                 },
               },
-              transformResponseData,
-            }).apply(this, args);
-          },
-        }))(stripe);
-
-        resource.retrieve('res_123', (err, result) => {
-          closeServer();
-          if (err) return callback(err);
-          expect(result.amount).to.equal(100n);
-          expect(result.doubleAmount).to.equal(200n);
-          callback();
-        });
+              transformResponseData: (response) => {
+                response.doubleAmount = response.amount * 2n;
+                return response;
+              },
+            }
+          )
+          .then((result) => {
+            closeServer();
+            expect(result.amount).to.equal(100n);
+            expect(result.doubleAmount).to.equal(200n);
+            callback();
+          })
+          .catch((err) => {
+            closeServer();
+            callback(err);
+          });
       });
     });
   });
@@ -253,23 +272,28 @@ describe('V2 int64_string integration', () => {
         .post('/v2/test/resources', expectedBody)
         .reply(200, '{}');
 
-      const resource = new (StripeResource.extend({
-        create: stripeMethod({
-          method: 'POST',
-          fullPath: '/v2/test/resources',
-          requestSchema: {
-            kind: 'object',
-            fields: {
-              amount: {kind: 'int64_string'},
-            },
-          },
-        }),
-      }))(realStripe);
+      const resource = new StripeResource(realStripe);
 
-      resource.create({amount: 42, name: 'test'}, (err) => {
-        done(err);
-        scope.done();
-      });
+      resource
+        ._makeRequest(
+          'POST',
+          '/v2/test/resources',
+          {amount: 42, name: 'test'},
+          undefined,
+          {
+            requestSchema: {
+              kind: 'object',
+              fields: {
+                amount: {kind: 'int64_string'},
+              },
+            },
+          }
+        )
+        .then(() => {
+          done();
+          scope.done();
+        })
+        .catch(done);
     });
   });
 
@@ -277,20 +301,22 @@ describe('V2 int64_string integration', () => {
     const stripe = getSpyableStripe();
 
     it('coerces V1 request data when schemas are present', () => {
-      const resource = new (StripeResource.extend({
-        create: stripeMethod({
-          method: 'POST',
-          fullPath: '/v1/test/resources',
+      const resource = new StripeResource(stripe);
+
+      resource._makeRequest(
+        'POST',
+        '/v1/test/resources',
+        {amount: 42},
+        undefined,
+        {
           requestSchema: {
             kind: 'object',
             fields: {
               amount: {kind: 'int64_string'},
             },
           },
-        }),
-      }))(stripe);
-
-      resource.create({amount: 42});
+        }
+      );
       expect(stripe.LAST_REQUEST.data).to.deep.equal({amount: '42'});
     });
   });

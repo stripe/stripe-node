@@ -16,22 +16,19 @@ import {
   ApiList,
   FileData,
 } from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class FileResource extends StripeResource {
   /**
    * Returns a list of the files that your account has access to. Stripe sorts and returns the files by their creation dates, placing the most recently created files at the top.
    */
-  list(params?: FileListParams, options?: RequestOptions): ApiListPromise<File>;
-  list(options?: RequestOptions): ApiListPromise<File>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/files',
+  list(
+    params?: FileListParams,
+    options?: RequestOptions
+  ): ApiListPromise<File> {
+    return this._makeRequest('GET', '/v1/files', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * To upload a file to Stripe, you need to send a request of type multipart/form-data. Include the file you want to upload in the request, and the parameters for creating a file.
    *
@@ -40,19 +37,14 @@ export class FileResource extends StripeResource {
   create(
     params: FileCreateParams,
     options?: RequestOptions
-  ): Promise<Response<File>>;
-
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/files',
+  ): Promise<Response<File>> {
+    return this._makeRequest('POST', '/v1/files', params, options, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-      host: 'files.stripe.com',
-    }).call(this, ...args);
+      apiBase: 'files',
+    }) as any;
   }
-
   /**
    * Retrieves the details of an existing file object. After you supply a unique file ID, Stripe returns the corresponding file object. Learn how to [access file contents](https://docs.stripe.com/docs/file-upload#download-file-contents).
    */
@@ -60,13 +52,8 @@ export class FileResource extends StripeResource {
     id: string,
     params?: FileRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<File>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<File>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'GET', fullPath: '/v1/files/{file}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<File>> {
+    return this._makeRequest('GET', `/v1/files/${id}`, params, options) as any;
   }
 }
 export interface File {

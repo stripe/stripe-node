@@ -17,7 +17,6 @@ import {
   Metadata,
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class InvoiceItemResource extends StripeResource {
   /**
@@ -27,18 +26,14 @@ export class InvoiceItemResource extends StripeResource {
     id: string,
     params?: InvoiceItemDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedInvoiceItem>>;
-  del(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<DeletedInvoiceItem>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/invoiceitems/{invoiceitem}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedInvoiceItem>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/invoiceitems/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the invoice item with the given ID.
    */
@@ -46,15 +41,8 @@ export class InvoiceItemResource extends StripeResource {
     id: string,
     params?: InvoiceItemRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<InvoiceItem>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<InvoiceItem>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/invoiceitems/{invoiceitem}',
+  ): Promise<Response<InvoiceItem>> {
+    return this._makeRequest('GET', `/v1/invoiceitems/${id}`, params, options, {
       responseSchema: {
         kind: 'object',
         fields: {
@@ -73,9 +61,8 @@ export class InvoiceItemResource extends StripeResource {
           quantity_decimal: {kind: 'decimal_string'},
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Updates the amount or description of an invoice item on an upcoming invoice. Updating an invoice item is only possible before the invoice it's attached to is closed.
    */
@@ -83,55 +70,53 @@ export class InvoiceItemResource extends StripeResource {
     id: string,
     params?: InvoiceItemUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<InvoiceItem>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/invoiceitems/{invoiceitem}',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          price_data: {
-            kind: 'object',
-            fields: {unit_amount_decimal: {kind: 'decimal_string'}},
-          },
-          quantity_decimal: {kind: 'decimal_string'},
-          unit_amount_decimal: {kind: 'decimal_string'},
-        },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          pricing: {
-            kind: 'nullable',
-            inner: {
+  ): Promise<Response<InvoiceItem>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/invoiceitems/${id}`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            price_data: {
               kind: 'object',
-              fields: {
-                unit_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
+              fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+            },
+            quantity_decimal: {kind: 'decimal_string'},
+            unit_amount_decimal: {kind: 'decimal_string'},
+          },
+        },
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            pricing: {
+              kind: 'nullable',
+              inner: {
+                kind: 'object',
+                fields: {
+                  unit_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
                 },
               },
             },
+            quantity_decimal: {kind: 'decimal_string'},
           },
-          quantity_decimal: {kind: 'decimal_string'},
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
    */
   list(
     params?: InvoiceItemListParams,
     options?: RequestOptions
-  ): ApiListPromise<InvoiceItem>;
-  list(options?: RequestOptions): ApiListPromise<InvoiceItem>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/invoiceitems',
+  ): ApiListPromise<InvoiceItem> {
+    return this._makeRequest('GET', '/v1/invoiceitems', params, options, {
       methodType: 'list',
       responseSchema: {
         kind: 'object',
@@ -159,21 +144,16 @@ export class InvoiceItemResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Creates an item to be added to a draft invoice (up to 250 items per invoice). If no invoice is specified, the item will be on the next invoice created for the customer specified.
    */
   create(
     params?: InvoiceItemCreateParams,
     options?: RequestOptions
-  ): Promise<Response<InvoiceItem>>;
-  create(options?: RequestOptions): Promise<Response<InvoiceItem>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/invoiceitems',
+  ): Promise<Response<InvoiceItem>> {
+    return this._makeRequest('POST', '/v1/invoiceitems', params, options, {
       requestSchema: {
         kind: 'object',
         fields: {
@@ -203,7 +183,7 @@ export class InvoiceItemResource extends StripeResource {
           quantity_decimal: {kind: 'decimal_string'},
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
 }
 export interface InvoiceItem {

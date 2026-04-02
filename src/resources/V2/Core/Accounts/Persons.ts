@@ -10,7 +10,6 @@ import {
 } from '../../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
 import {DeletedObject} from './../../../V2/DeletedObject.js';
-const stripeMethod = StripeResource.method;
 
 export class PersonResource extends StripeResource {
   /**
@@ -21,33 +20,34 @@ export class PersonResource extends StripeResource {
     id: string,
     params?: V2.Core.Accounts.PersonListParams,
     options?: RequestOptions
-  ): ApiListPromise<AccountPerson>;
-  list(id: string, options?: RequestOptions): ApiListPromise<AccountPerson>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/accounts/{account_id}/persons',
-      methodType: 'list',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          data: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                relationship: {
-                  kind: 'object',
-                  fields: {percent_ownership: {kind: 'decimal_string'}},
+  ): ApiListPromise<AccountPerson> {
+    return this._makeRequest(
+      'GET',
+      `/v2/core/accounts/${id}/persons`,
+      params,
+      options,
+      {
+        methodType: 'list',
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  relationship: {
+                    kind: 'object',
+                    fields: {percent_ownership: {kind: 'decimal_string'}},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Create a Person. Adds an individual to an Account's identity. You can set relationship attributes and identity information at creation.
    * @throws Stripe.RateLimitError
@@ -56,36 +56,34 @@ export class PersonResource extends StripeResource {
     id: string,
     params?: V2.Core.Accounts.PersonCreateParams,
     options?: RequestOptions
-  ): Promise<Response<AccountPerson>>;
-  create(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<AccountPerson>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/accounts/{account_id}/persons',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          relationship: {
-            kind: 'object',
-            fields: {percent_ownership: {kind: 'decimal_string'}},
+  ): Promise<Response<AccountPerson>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/accounts/${id}/persons`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            relationship: {
+              kind: 'object',
+              fields: {percent_ownership: {kind: 'decimal_string'}},
+            },
           },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          relationship: {
-            kind: 'object',
-            fields: {percent_ownership: {kind: 'decimal_string'}},
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            relationship: {
+              kind: 'object',
+              fields: {percent_ownership: {kind: 'decimal_string'}},
+            },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Delete a Person associated with an Account.
    * @throws Stripe.RateLimitError
@@ -95,19 +93,14 @@ export class PersonResource extends StripeResource {
     id: string,
     params?: V2.Core.Accounts.PersonDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedObject>>;
-  del(
-    accountId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<DeletedObject>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v2/core/accounts/{account_id}/persons/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedObject>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v2/core/accounts/${accountId}/persons/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves a Person associated with an Account.
    * @throws Stripe.RateLimitError
@@ -117,28 +110,25 @@ export class PersonResource extends StripeResource {
     id: string,
     params?: V2.Core.Accounts.PersonRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<AccountPerson>>;
-  retrieve(
-    accountId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<AccountPerson>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/accounts/{account_id}/persons/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          relationship: {
-            kind: 'object',
-            fields: {percent_ownership: {kind: 'decimal_string'}},
+  ): Promise<Response<AccountPerson>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/core/accounts/${accountId}/persons/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            relationship: {
+              kind: 'object',
+              fields: {percent_ownership: {kind: 'decimal_string'}},
+            },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Updates a Person associated with an Account.
    * @throws Stripe.RateLimitError
@@ -148,30 +138,33 @@ export class PersonResource extends StripeResource {
     id: string,
     params?: V2.Core.Accounts.PersonUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<AccountPerson>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/accounts/{account_id}/persons/{id}',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          relationship: {
-            kind: 'object',
-            fields: {percent_ownership: {kind: 'decimal_string'}},
+  ): Promise<Response<AccountPerson>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/accounts/${accountId}/persons/${id}`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            relationship: {
+              kind: 'object',
+              fields: {percent_ownership: {kind: 'decimal_string'}},
+            },
           },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          relationship: {
-            kind: 'object',
-            fields: {percent_ownership: {kind: 'decimal_string'}},
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            relationship: {
+              kind: 'object',
+              fields: {percent_ownership: {kind: 'decimal_string'}},
+            },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export namespace V2 {
@@ -635,8 +628,11 @@ export namespace V2 {
             | 'bd_nid'
             | 'be_nrn'
             | 'bg_ucn'
+            | 'bm_pp'
             | 'bn_nric'
+            | 'bo_ci'
             | 'br_cpf'
+            | 'bt_cid'
             | 'ca_sin'
             | 'ch_oasi'
             | 'cl_rut'
@@ -654,26 +650,37 @@ export namespace V2 {
             | 'do_rcn'
             | 'ec_ci'
             | 'ee_ik'
+            | 'eg_tin'
             | 'es_nif'
             | 'fi_hetu'
             | 'fr_nir'
             | 'gb_nino'
+            | 'gh_pin'
             | 'gr_afm'
             | 'gt_nit'
+            | 'gy_tin'
             | 'hk_id'
+            | 'hn_rtn'
             | 'hr_oib'
             | 'hu_ad'
             | 'id_nik'
             | 'ie_ppsn'
             | 'is_kt'
             | 'it_cf'
+            | 'jm_trn'
+            | 'jo_pin'
             | 'jp_inc'
             | 'ke_pin'
+            | 'ky_pp'
             | 'kz_iin'
             | 'li_peid'
+            | 'lk_nic'
             | 'lt_ak'
             | 'lu_nif'
             | 'lv_pk'
+            | 'mo_bir'
+            | 'mt_nic'
+            | 'mv_tin'
             | 'mx_rfc'
             | 'my_nric'
             | 'mz_nuit'
@@ -681,17 +688,22 @@ export namespace V2 {
             | 'nl_bsn'
             | 'no_nin'
             | 'nz_ird'
+            | 'pa_ruc'
             | 'pe_dni'
+            | 'ph_tin'
             | 'pk_cnic'
             | 'pk_snic'
             | 'pl_pesel'
             | 'pt_nif'
+            | 'py_ruc'
             | 'ro_cnp'
             | 'sa_tin'
             | 'se_pin'
             | 'sg_fin'
             | 'sg_nric'
+            | 'si_pin'
             | 'sk_dic'
+            | 'sv_nit'
             | 'th_lc'
             | 'th_pin'
             | 'tr_tin'
@@ -700,6 +712,7 @@ export namespace V2 {
             | 'us_ssn'
             | 'us_ssn_last_4'
             | 'uy_dni'
+            | 'vg_pp'
             | 'za_id';
         }
 
@@ -1239,8 +1252,11 @@ export namespace V2 {
             | 'bd_nid'
             | 'be_nrn'
             | 'bg_ucn'
+            | 'bm_pp'
             | 'bn_nric'
+            | 'bo_ci'
             | 'br_cpf'
+            | 'bt_cid'
             | 'ca_sin'
             | 'ch_oasi'
             | 'cl_rut'
@@ -1258,26 +1274,37 @@ export namespace V2 {
             | 'do_rcn'
             | 'ec_ci'
             | 'ee_ik'
+            | 'eg_tin'
             | 'es_nif'
             | 'fi_hetu'
             | 'fr_nir'
             | 'gb_nino'
+            | 'gh_pin'
             | 'gr_afm'
             | 'gt_nit'
+            | 'gy_tin'
             | 'hk_id'
+            | 'hn_rtn'
             | 'hr_oib'
             | 'hu_ad'
             | 'id_nik'
             | 'ie_ppsn'
             | 'is_kt'
             | 'it_cf'
+            | 'jm_trn'
+            | 'jo_pin'
             | 'jp_inc'
             | 'ke_pin'
+            | 'ky_pp'
             | 'kz_iin'
             | 'li_peid'
+            | 'lk_nic'
             | 'lt_ak'
             | 'lu_nif'
             | 'lv_pk'
+            | 'mo_bir'
+            | 'mt_nic'
+            | 'mv_tin'
             | 'mx_rfc'
             | 'my_nric'
             | 'mz_nuit'
@@ -1285,17 +1312,22 @@ export namespace V2 {
             | 'nl_bsn'
             | 'no_nin'
             | 'nz_ird'
+            | 'pa_ruc'
             | 'pe_dni'
+            | 'ph_tin'
             | 'pk_cnic'
             | 'pk_snic'
             | 'pl_pesel'
             | 'pt_nif'
+            | 'py_ruc'
             | 'ro_cnp'
             | 'sa_tin'
             | 'se_pin'
             | 'sg_fin'
             | 'sg_nric'
+            | 'si_pin'
             | 'sk_dic'
+            | 'sv_nit'
             | 'th_lc'
             | 'th_pin'
             | 'tr_tin'
@@ -1304,6 +1336,7 @@ export namespace V2 {
             | 'us_ssn'
             | 'us_ssn_last_4'
             | 'uy_dni'
+            | 'vg_pp'
             | 'za_id';
         }
 

@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PayoutMethodResource extends StripeResource {
   /**
@@ -11,16 +10,17 @@ export class PayoutMethodResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.PayoutMethodListParams,
     options?: RequestOptions
-  ): ApiListPromise<PayoutMethod>;
-  list(options?: RequestOptions): ApiListPromise<PayoutMethod>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/payout_methods',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<PayoutMethod> {
+    return this._makeRequest(
+      'GET',
+      '/v2/money_management/payout_methods',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieve a PayoutMethod object.
    * @throws Stripe.InvalidPayoutMethodError
@@ -29,18 +29,14 @@ export class PayoutMethodResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.PayoutMethodRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<PayoutMethod>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PayoutMethod>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/payout_methods/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<PayoutMethod>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/money_management/payout_methods/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Archive a PayoutMethod object. Archived objects cannot be used as payout methods
    * and will not appear in the payout method list.
@@ -52,18 +48,14 @@ export class PayoutMethodResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.PayoutMethodArchiveParams,
     options?: RequestOptions
-  ): Promise<Response<PayoutMethod>>;
-  archive(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PayoutMethod>>;
-  archive(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/payout_methods/{id}/archive',
-    }).call(this, ...args);
+  ): Promise<Response<PayoutMethod>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/money_management/payout_methods/${id}/archive`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Unarchive an PayoutMethod object.
    * @throws Stripe.ControlledByDashboardError
@@ -74,16 +66,13 @@ export class PayoutMethodResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.PayoutMethodUnarchiveParams,
     options?: RequestOptions
-  ): Promise<Response<PayoutMethod>>;
-  unarchive(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PayoutMethod>>;
-  unarchive(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/payout_methods/{id}/unarchive',
-    }).call(this, ...args);
+  ): Promise<Response<PayoutMethod>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/money_management/payout_methods/${id}/unarchive`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface PayoutMethod {

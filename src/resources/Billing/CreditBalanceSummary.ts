@@ -4,7 +4,6 @@ import {StripeResource} from '../../StripeResource.js';
 import {Customer, DeletedCustomer} from './../Customers.js';
 import {Decimal, Metadata} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CreditBalanceSummaryResource extends StripeResource {
   /**
@@ -13,39 +12,42 @@ export class CreditBalanceSummaryResource extends StripeResource {
   retrieve(
     params: Billing.CreditBalanceSummaryRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<CreditBalanceSummary>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/credit_balance_summary',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          balances: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                available_balance: {
-                  kind: 'object',
-                  fields: {
-                    custom_pricing_unit: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {value: {kind: 'decimal_string'}},
+  ): Promise<Response<CreditBalanceSummary>> {
+    return this._makeRequest(
+      'GET',
+      '/v1/billing/credit_balance_summary',
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            balances: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  available_balance: {
+                    kind: 'object',
+                    fields: {
+                      custom_pricing_unit: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {value: {kind: 'decimal_string'}},
+                        },
                       },
                     },
                   },
-                },
-                ledger_balance: {
-                  kind: 'object',
-                  fields: {
-                    custom_pricing_unit: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {value: {kind: 'decimal_string'}},
+                  ledger_balance: {
+                    kind: 'object',
+                    fields: {
+                      custom_pricing_unit: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {value: {kind: 'decimal_string'}},
+                        },
                       },
                     },
                   },
@@ -54,8 +56,8 @@ export class CreditBalanceSummaryResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface CreditBalanceSummary {

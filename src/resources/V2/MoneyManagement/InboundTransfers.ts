@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class InboundTransferResource extends StripeResource {
   /**
@@ -12,16 +11,17 @@ export class InboundTransferResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.InboundTransferListParams,
     options?: RequestOptions
-  ): ApiListPromise<InboundTransfer>;
-  list(options?: RequestOptions): ApiListPromise<InboundTransfer>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/inbound_transfers',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<InboundTransfer> {
+    return this._makeRequest(
+      'GET',
+      '/v2/money_management/inbound_transfers',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * InboundTransfers APIs are used to create, retrieve or list InboundTransfers.
    * @throws Stripe.BlockedByStripeError
@@ -29,14 +29,14 @@ export class InboundTransferResource extends StripeResource {
   create(
     params: V2.MoneyManagement.InboundTransferCreateParams,
     options?: RequestOptions
-  ): Promise<Response<InboundTransfer>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/inbound_transfers',
-    }).call(this, ...args);
+  ): Promise<Response<InboundTransfer>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/money_management/inbound_transfers',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve an InboundTransfer by ID.
    */
@@ -44,16 +44,13 @@ export class InboundTransferResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.InboundTransferRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<InboundTransfer>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<InboundTransfer>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/inbound_transfers/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<InboundTransfer>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/money_management/inbound_transfers/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface InboundTransfer {
@@ -217,13 +214,9 @@ export namespace V2 {
           failure_reason: BankDebitFailed.FailureReason;
         }
 
-        export type BankDebitProcessing = {
-          [key: string]: unknown;
-        };
+        export interface BankDebitProcessing {}
 
-        export type BankDebitQueued = {
-          [key: string]: unknown;
-        };
+        export interface BankDebitQueued {}
 
         export interface BankDebitReturned {
           /**
@@ -232,9 +225,7 @@ export namespace V2 {
           return_reason: BankDebitReturned.ReturnReason;
         }
 
-        export type BankDebitSucceeded = {
-          [key: string]: unknown;
-        };
+        export interface BankDebitSucceeded {}
 
         export namespace BankDebitFailed {
           export type FailureReason =

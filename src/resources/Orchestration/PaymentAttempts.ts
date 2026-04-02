@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PaymentAttemptResource extends StripeResource {
   /**
@@ -12,16 +11,13 @@ export class PaymentAttemptResource extends StripeResource {
     id: string,
     params?: Orchestration.PaymentAttemptRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentAttempt>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentAttempt>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/orchestration/payment_attempts/{payment_attempt_record}',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentAttempt>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/orchestration/payment_attempts/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface PaymentAttempt {

@@ -5,7 +5,6 @@ import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 import {ComponentResource} from './PricingPlans/Components.js';
 import {VersionResource} from './PricingPlans/Versions.js';
-const stripeMethod = StripeResource.method;
 import {Stripe} from '../../../stripe.core.js';
 export class PricingPlanResource extends StripeResource {
   components: ComponentResource;
@@ -22,30 +21,31 @@ export class PricingPlanResource extends StripeResource {
   list(
     params?: V2.Billing.PricingPlanListParams,
     options?: RequestOptions
-  ): ApiListPromise<PricingPlan>;
-  list(options?: RequestOptions): ApiListPromise<PricingPlan>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/pricing_plans',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<PricingPlan> {
+    return this._makeRequest(
+      'GET',
+      '/v2/billing/pricing_plans',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Create a Pricing Plan object.
    */
   create(
     params: V2.Billing.PricingPlanCreateParams,
     options?: RequestOptions
-  ): Promise<Response<PricingPlan>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/pricing_plans',
-    }).call(this, ...args);
+  ): Promise<Response<PricingPlan>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/billing/pricing_plans',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a Pricing Plan object.
    */
@@ -53,18 +53,14 @@ export class PricingPlanResource extends StripeResource {
     id: string,
     params?: V2.Billing.PricingPlanRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<PricingPlan>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PricingPlan>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/pricing_plans/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<PricingPlan>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/pricing_plans/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Update a Pricing Plan object.
    */
@@ -72,12 +68,13 @@ export class PricingPlanResource extends StripeResource {
     id: string,
     params?: V2.Billing.PricingPlanUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<PricingPlan>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/pricing_plans/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<PricingPlan>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/pricing_plans/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface PricingPlan {

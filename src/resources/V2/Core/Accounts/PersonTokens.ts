@@ -4,7 +4,6 @@ import {StripeResource} from '../../../../StripeResource.js';
 import {AccountPersonToken} from './../../../V2/Core/AccountPersonTokens.js';
 import {JapanAddressParam, MetadataParam, Decimal} from '../../../../shared.js';
 import {RequestOptions, Response} from '../../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PersonTokenResource extends StripeResource {
   /**
@@ -15,27 +14,25 @@ export class PersonTokenResource extends StripeResource {
     id: string,
     params?: V2.Core.Accounts.PersonTokenCreateParams,
     options?: RequestOptions
-  ): Promise<Response<AccountPersonToken>>;
-  create(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<AccountPersonToken>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/accounts/{account_id}/person_tokens',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          relationship: {
-            kind: 'object',
-            fields: {percent_ownership: {kind: 'decimal_string'}},
+  ): Promise<Response<AccountPersonToken>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/accounts/${id}/person_tokens`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            relationship: {
+              kind: 'object',
+              fields: {percent_ownership: {kind: 'decimal_string'}},
+            },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Retrieves a Person Token associated with an Account.
    * @throws Stripe.RateLimitError
@@ -45,17 +42,13 @@ export class PersonTokenResource extends StripeResource {
     id: string,
     params?: V2.Core.Accounts.PersonTokenRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<AccountPersonToken>>;
-  retrieve(
-    accountId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<AccountPersonToken>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/accounts/{account_id}/person_tokens/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<AccountPersonToken>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/core/accounts/${accountId}/person_tokens/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export namespace V2 {
@@ -467,8 +460,11 @@ export namespace V2 {
             | 'bd_nid'
             | 'be_nrn'
             | 'bg_ucn'
+            | 'bm_pp'
             | 'bn_nric'
+            | 'bo_ci'
             | 'br_cpf'
+            | 'bt_cid'
             | 'ca_sin'
             | 'ch_oasi'
             | 'cl_rut'
@@ -486,26 +482,37 @@ export namespace V2 {
             | 'do_rcn'
             | 'ec_ci'
             | 'ee_ik'
+            | 'eg_tin'
             | 'es_nif'
             | 'fi_hetu'
             | 'fr_nir'
             | 'gb_nino'
+            | 'gh_pin'
             | 'gr_afm'
             | 'gt_nit'
+            | 'gy_tin'
             | 'hk_id'
+            | 'hn_rtn'
             | 'hr_oib'
             | 'hu_ad'
             | 'id_nik'
             | 'ie_ppsn'
             | 'is_kt'
             | 'it_cf'
+            | 'jm_trn'
+            | 'jo_pin'
             | 'jp_inc'
             | 'ke_pin'
+            | 'ky_pp'
             | 'kz_iin'
             | 'li_peid'
+            | 'lk_nic'
             | 'lt_ak'
             | 'lu_nif'
             | 'lv_pk'
+            | 'mo_bir'
+            | 'mt_nic'
+            | 'mv_tin'
             | 'mx_rfc'
             | 'my_nric'
             | 'mz_nuit'
@@ -513,17 +520,22 @@ export namespace V2 {
             | 'nl_bsn'
             | 'no_nin'
             | 'nz_ird'
+            | 'pa_ruc'
             | 'pe_dni'
+            | 'ph_tin'
             | 'pk_cnic'
             | 'pk_snic'
             | 'pl_pesel'
             | 'pt_nif'
+            | 'py_ruc'
             | 'ro_cnp'
             | 'sa_tin'
             | 'se_pin'
             | 'sg_fin'
             | 'sg_nric'
+            | 'si_pin'
             | 'sk_dic'
+            | 'sv_nit'
             | 'th_lc'
             | 'th_pin'
             | 'tr_tin'
@@ -532,6 +544,7 @@ export namespace V2 {
             | 'us_ssn'
             | 'us_ssn_last_4'
             | 'uy_dni'
+            | 'vg_pp'
             | 'za_id';
         }
 

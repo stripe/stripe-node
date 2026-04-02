@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import * as MoneyManagement from './../../V2/MoneyManagement/index.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class MoneyManagementResource extends StripeResource {
   /**
@@ -12,12 +11,13 @@ export class MoneyManagementResource extends StripeResource {
   recipientVerifications(
     params: V2.TestHelpers.MoneyManagementRecipientVerificationsParams,
     options?: RequestOptions
-  ): Promise<Response<MoneyManagement.RecipientVerification>>;
-  recipientVerifications(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/test_helpers/money_management/recipient_verifications',
-    }).call(this, ...args);
+  ): Promise<Response<MoneyManagement.RecipientVerification>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/test_helpers/money_management/recipient_verifications',
+      params,
+      options
+    ) as any;
   }
 }
 export namespace V2 {

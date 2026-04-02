@@ -3,7 +3,6 @@
 import {StripeResource} from '../StripeResource.js';
 import {PaginationParams} from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ApplePayDomainResource extends StripeResource {
   /**
@@ -13,18 +12,14 @@ export class ApplePayDomainResource extends StripeResource {
     id: string,
     params?: ApplePayDomainDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedApplePayDomain>>;
-  del(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<DeletedApplePayDomain>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/apple_pay/domains/{domain}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedApplePayDomain>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/apple_pay/domains/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve an apple pay domain.
    */
@@ -32,46 +27,38 @@ export class ApplePayDomainResource extends StripeResource {
     id: string,
     params?: ApplePayDomainRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ApplePayDomain>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ApplePayDomain>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/apple_pay/domains/{domain}',
-    }).call(this, ...args);
+  ): Promise<Response<ApplePayDomain>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/apple_pay/domains/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * List apple pay domains.
    */
   list(
     params?: ApplePayDomainListParams,
     options?: RequestOptions
-  ): ApiListPromise<ApplePayDomain>;
-  list(options?: RequestOptions): ApiListPromise<ApplePayDomain>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/apple_pay/domains',
+  ): ApiListPromise<ApplePayDomain> {
+    return this._makeRequest('GET', '/v1/apple_pay/domains', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Create an apple pay domain.
    */
   create(
     params: ApplePayDomainCreateParams,
     options?: RequestOptions
-  ): Promise<Response<ApplePayDomain>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/apple_pay/domains',
-    }).call(this, ...args);
+  ): Promise<Response<ApplePayDomain>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/apple_pay/domains',
+      params,
+      options
+    ) as any;
   }
 }
 export interface ApplePayDomain {

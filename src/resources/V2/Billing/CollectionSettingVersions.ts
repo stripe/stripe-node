@@ -160,13 +160,9 @@ export namespace V2 {
           funding_type?: 'bank_transfer';
         }
 
-        export type Konbini = {
-          [key: string]: unknown;
-        };
+        export interface Konbini {}
 
-        export type SepaDebit = {
-          [key: string]: unknown;
-        };
+        export interface SepaDebit {}
 
         export interface UsBankAccount {
           /**
