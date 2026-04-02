@@ -37,6 +37,7 @@ export {PersonalizationDesign} from './PersonalizationDesigns.js';
 export {PhysicalBundle} from './PhysicalBundles.js';
 export {Token} from './Tokens.js';
 export {Transaction} from './Transactions.js';
+export {Settlement} from './Settlements.js';
 
 export class Issuing {
   authorizations: AuthorizationResource;

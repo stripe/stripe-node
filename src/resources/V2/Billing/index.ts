@@ -28,6 +28,8 @@ export {MeterEvent} from './MeterEvents.js';
 export {MeterEventAdjustment} from './MeterEventAdjustments.js';
 export {MeterEventSession} from './MeterEventSession.js';
 export {Profile} from './Profiles.js';
+export {BillSettingVersion} from './BillSettingVersions.js';
+export {CollectionSettingVersion} from './CollectionSettingVersions.js';
 
 export class Billing {
   billSettings: BillSettingResource;

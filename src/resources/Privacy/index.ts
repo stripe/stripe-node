@@ -5,6 +5,7 @@ import {RedactionJob, RedactionJobResource} from './RedactionJobs.js';
 import {RedactionJobValidationError} from './RedactionJobValidationErrors.js';
 
 export {RedactionJob} from './RedactionJobs.js';
+export {RedactionJobValidationError} from './RedactionJobValidationErrors.js';
 
 export class Privacy {
   redactionJobs: RedactionJobResource;

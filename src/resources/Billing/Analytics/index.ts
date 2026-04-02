@@ -5,6 +5,7 @@ import {MeterUsage, MeterUsageResource} from './MeterUsage.js';
 import {MeterUsageRow} from './MeterUsageRows.js';
 
 export {MeterUsage} from './MeterUsage.js';
+export {MeterUsageRow} from './MeterUsageRows.js';
 
 export class Analytics {
   meterUsages: MeterUsageResource;

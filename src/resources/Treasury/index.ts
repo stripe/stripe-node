@@ -32,6 +32,7 @@ export {ReceivedCredit} from './ReceivedCredits.js';
 export {ReceivedDebit} from './ReceivedDebits.js';
 export {Transaction} from './Transactions.js';
 export {TransactionEntry} from './TransactionEntries.js';
+export {FinancialAccountFeatures} from './FinancialAccountFeatures.js';
 
 export class Treasury {
   creditReversals: CreditReversalResource;
