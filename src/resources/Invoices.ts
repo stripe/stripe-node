@@ -2552,6 +2552,11 @@ export namespace Invoice {
        * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
        */
       us_bank_account: PaymentMethodOptions.UsBankAccount | null;
+
+      /**
+       * If paying by `check_scan`, this sub-hash contains details about the Check Scan payment method options to pass to the invoice's PaymentIntent.
+       */
+      check_scan?: PaymentMethodOptions.CheckScan | null;
     }
 
     export type PaymentMethodType =
@@ -2566,6 +2571,7 @@ export namespace Invoice {
       | 'boleto'
       | 'card'
       | 'cashapp'
+      | 'check_scan'
       | 'crypto'
       | 'custom'
       | 'customer_balance'
@@ -2670,6 +2676,10 @@ export namespace Invoice {
          * Bank account verification method. The default value is `automatic`.
          */
         verification_method?: UsBankAccount.VerificationMethod;
+      }
+
+      export interface CheckScan {
+        check_deposit_address?: Address;
       }
 
       export namespace AcssDebit {
@@ -3425,6 +3435,11 @@ export namespace InvoiceCreateParams {
        * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
        */
       us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
+
+      /**
+       * If paying by `check_scan`, this sub-hash contains details about the Check Scan payment method options to pass to the invoice's PaymentIntent.
+       */
+      check_scan?: Emptyable<PaymentMethodOptions.CheckScan>;
     }
 
     export type PaymentMethodType =
@@ -3439,6 +3454,7 @@ export namespace InvoiceCreateParams {
       | 'boleto'
       | 'card'
       | 'cashapp'
+      | 'check_scan'
       | 'crypto'
       | 'custom'
       | 'customer_balance'
@@ -3563,6 +3579,10 @@ export namespace InvoiceCreateParams {
          * Verification method for the intent
          */
         verification_method?: UsBankAccount.VerificationMethod;
+      }
+
+      export interface CheckScan {
+        check_deposit_address?: AddressParam;
       }
 
       export namespace AcssDebit {
@@ -4343,6 +4363,11 @@ export namespace InvoiceUpdateParams {
        * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
        */
       us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
+
+      /**
+       * If paying by `check_scan`, this sub-hash contains details about the Check Scan payment method options to pass to the invoice's PaymentIntent.
+       */
+      check_scan?: Emptyable<PaymentMethodOptions.CheckScan>;
     }
 
     export type PaymentMethodType =
@@ -4357,6 +4382,7 @@ export namespace InvoiceUpdateParams {
       | 'boleto'
       | 'card'
       | 'cashapp'
+      | 'check_scan'
       | 'crypto'
       | 'custom'
       | 'customer_balance'
@@ -4481,6 +4507,10 @@ export namespace InvoiceUpdateParams {
          * Verification method for the intent
          */
         verification_method?: UsBankAccount.VerificationMethod;
+      }
+
+      export interface CheckScan {
+        check_deposit_address?: AddressParam;
       }
 
       export namespace AcssDebit {

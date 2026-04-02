@@ -5837,6 +5837,11 @@ export namespace PaymentIntentCreateParams {
      * Subscription details for this PaymentIntent
      */
     subscription?: PaymentDetails.Subscription;
+
+    /**
+     * Money services details for this PaymentIntent.
+     */
+    money_services?: Emptyable<PaymentDetails.MoneyServices>;
   }
 
   export interface PaymentMethodData {
@@ -7327,6 +7332,18 @@ export namespace PaymentIntentCreateParams {
       starts_at?: number;
     }
 
+    export interface MoneyServices {
+      /**
+       * Account funding transaction details including sender and beneficiary information.
+       */
+      account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: 'account_funding';
+    }
+
     export namespace Benefit {
       export interface FrMealVoucher {
         /**
@@ -8588,6 +8605,10 @@ export namespace PaymentIntentCreateParams {
       }
     }
 
+    export namespace MoneyServices {
+      export interface AccountFunding {}
+    }
+
     export namespace Subscription {
       export interface Affiliate {
         /**
@@ -9568,6 +9589,11 @@ export namespace PaymentIntentCreateParams {
        * the authentication details to use for this payment.
        */
       three_d_secure?: Card.ThreeDSecure;
+
+      /**
+       * Payment details for payment method specific funding fields.
+       */
+      payment_details?: Card.PaymentDetails;
     }
 
     export interface CardPresent {
@@ -9599,6 +9625,11 @@ export namespace PaymentIntentCreateParams {
        * Network routing priority on co-branded EMV cards supporting domestic debit and international card schemes.
        */
       routing?: CardPresent.Routing;
+
+      /**
+       * Payment details for payment method specific funding transaction fields.
+       */
+      payment_details?: CardPresent.PaymentDetails;
     }
 
     export interface Cashapp {
@@ -10363,6 +10394,11 @@ export namespace PaymentIntentCreateParams {
 
     export interface StripeBalance {
       /**
+       * Additional fields for mandate creation.
+       */
+      mandate_options?: StripeBalance.MandateOptions;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -10374,11 +10410,6 @@ export namespace PaymentIntentCreateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Emptyable<StripeBalance.SetupFutureUsage>;
-
-      /**
-       * Additional fields for mandate creation.
-       */
-      mandate_options?: StripeBalance.MandateOptions;
     }
 
     export interface Swish {
@@ -10740,6 +10771,13 @@ export namespace PaymentIntentCreateParams {
         version: ThreeDSecure.Version;
       }
 
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
       export namespace Installments {
         export interface Plan {
           /**
@@ -10768,6 +10806,19 @@ export namespace PaymentIntentCreateParams {
         export type AmountType = 'fixed' | 'maximum';
 
         export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+      }
+
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          /**
+           * Payment method specific account funding transaction details.
+           */
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {}
+        }
       }
 
       export namespace ThreeDSecure {
@@ -10832,6 +10883,26 @@ export namespace PaymentIntentCreateParams {
          * Routing requested priority
          */
         requested_priority?: Routing.RequestedPriority;
+      }
+
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          /**
+           * Payment method specific account funding transaction details.
+           */
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {}
+        }
       }
 
       export namespace Routing {
@@ -12472,14 +12543,14 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace StripeBalance {
-      export type SetupFutureUsage = 'none' | 'off_session';
-
       export interface MandateOptions {
         /**
          * The ID of the Stripe Balance Debit Agreement used for this mandate.
          */
         stripe_balance_debit_agreement?: string;
       }
+
+      export type SetupFutureUsage = 'none' | 'off_session';
     }
 
     export namespace Upi {
@@ -12969,6 +13040,11 @@ export namespace PaymentIntentUpdateParams {
      * Subscription details for this PaymentIntent
      */
     subscription?: PaymentDetails.Subscription;
+
+    /**
+     * Money services details for this PaymentIntent.
+     */
+    money_services?: Emptyable<PaymentDetails.MoneyServices>;
   }
 
   export interface PaymentMethodData {
@@ -14411,6 +14487,18 @@ export namespace PaymentIntentUpdateParams {
       starts_at?: number;
     }
 
+    export interface MoneyServices {
+      /**
+       * Account funding transaction details including sender and beneficiary information.
+       */
+      account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: 'account_funding';
+    }
+
     export namespace Benefit {
       export interface FrMealVoucher {
         /**
@@ -15672,6 +15760,10 @@ export namespace PaymentIntentUpdateParams {
       }
     }
 
+    export namespace MoneyServices {
+      export interface AccountFunding {}
+    }
+
     export namespace Subscription {
       export interface Affiliate {
         /**
@@ -16652,6 +16744,11 @@ export namespace PaymentIntentUpdateParams {
        * the authentication details to use for this payment.
        */
       three_d_secure?: Card.ThreeDSecure;
+
+      /**
+       * Payment details for payment method specific funding fields.
+       */
+      payment_details?: Card.PaymentDetails;
     }
 
     export interface CardPresent {
@@ -16683,6 +16780,11 @@ export namespace PaymentIntentUpdateParams {
        * Network routing priority on co-branded EMV cards supporting domestic debit and international card schemes.
        */
       routing?: CardPresent.Routing;
+
+      /**
+       * Payment details for payment method specific funding transaction fields.
+       */
+      payment_details?: CardPresent.PaymentDetails;
     }
 
     export interface Cashapp {
@@ -17447,6 +17549,11 @@ export namespace PaymentIntentUpdateParams {
 
     export interface StripeBalance {
       /**
+       * Additional fields for mandate creation.
+       */
+      mandate_options?: StripeBalance.MandateOptions;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -17458,11 +17565,6 @@ export namespace PaymentIntentUpdateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Emptyable<StripeBalance.SetupFutureUsage>;
-
-      /**
-       * Additional fields for mandate creation.
-       */
-      mandate_options?: StripeBalance.MandateOptions;
     }
 
     export interface Swish {
@@ -17824,6 +17926,13 @@ export namespace PaymentIntentUpdateParams {
         version: ThreeDSecure.Version;
       }
 
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
       export namespace Installments {
         export interface Plan {
           /**
@@ -17852,6 +17961,19 @@ export namespace PaymentIntentUpdateParams {
         export type AmountType = 'fixed' | 'maximum';
 
         export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+      }
+
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          /**
+           * Payment method specific account funding transaction details.
+           */
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {}
+        }
       }
 
       export namespace ThreeDSecure {
@@ -17916,6 +18038,26 @@ export namespace PaymentIntentUpdateParams {
          * Routing requested priority
          */
         requested_priority?: Routing.RequestedPriority;
+      }
+
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          /**
+           * Payment method specific account funding transaction details.
+           */
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {}
+        }
       }
 
       export namespace Routing {
@@ -19556,14 +19698,14 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace StripeBalance {
-      export type SetupFutureUsage = 'none' | 'off_session';
-
       export interface MandateOptions {
         /**
          * The ID of the Stripe Balance Debit Agreement used for this mandate.
          */
         stripe_balance_debit_agreement?: string;
       }
+
+      export type SetupFutureUsage = 'none' | 'off_session';
     }
 
     export namespace Upi {
@@ -19920,6 +20062,11 @@ export namespace PaymentIntentCaptureParams {
      * Subscription details for this PaymentIntent
      */
     subscription?: PaymentDetails.Subscription;
+
+    /**
+     * Money services details for this PaymentIntent.
+     */
+    money_services?: Emptyable<PaymentDetails.MoneyServices>;
   }
 
   export interface TransferData {
@@ -20677,6 +20824,18 @@ export namespace PaymentIntentCaptureParams {
        * Subscription start time. Measured in seconds since the Unix epoch.
        */
       starts_at?: number;
+    }
+
+    export interface MoneyServices {
+      /**
+       * Account funding transaction details including sender and beneficiary information.
+       */
+      account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: 'account_funding';
     }
 
     export namespace CarRental {
@@ -21931,6 +22090,10 @@ export namespace PaymentIntentCaptureParams {
       }
     }
 
+    export namespace MoneyServices {
+      export interface AccountFunding {}
+    }
+
     export namespace Subscription {
       export interface Affiliate {
         /**
@@ -22279,6 +22442,11 @@ export namespace PaymentIntentConfirmParams {
      * Subscription details for this PaymentIntent
      */
     subscription?: PaymentDetails.Subscription;
+
+    /**
+     * Money services details for this PaymentIntent.
+     */
+    money_services?: Emptyable<PaymentDetails.MoneyServices>;
   }
 
   export interface PaymentMethodData {
@@ -23735,6 +23903,18 @@ export namespace PaymentIntentConfirmParams {
       starts_at?: number;
     }
 
+    export interface MoneyServices {
+      /**
+       * Account funding transaction details including sender and beneficiary information.
+       */
+      account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: 'account_funding';
+    }
+
     export namespace Benefit {
       export interface FrMealVoucher {
         /**
@@ -24996,6 +25176,10 @@ export namespace PaymentIntentConfirmParams {
       }
     }
 
+    export namespace MoneyServices {
+      export interface AccountFunding {}
+    }
+
     export namespace Subscription {
       export interface Affiliate {
         /**
@@ -25976,6 +26160,11 @@ export namespace PaymentIntentConfirmParams {
        * the authentication details to use for this payment.
        */
       three_d_secure?: Card.ThreeDSecure;
+
+      /**
+       * Payment details for payment method specific funding fields.
+       */
+      payment_details?: Card.PaymentDetails;
     }
 
     export interface CardPresent {
@@ -26007,6 +26196,11 @@ export namespace PaymentIntentConfirmParams {
        * Network routing priority on co-branded EMV cards supporting domestic debit and international card schemes.
        */
       routing?: CardPresent.Routing;
+
+      /**
+       * Payment details for payment method specific funding transaction fields.
+       */
+      payment_details?: CardPresent.PaymentDetails;
     }
 
     export interface Cashapp {
@@ -26771,6 +26965,11 @@ export namespace PaymentIntentConfirmParams {
 
     export interface StripeBalance {
       /**
+       * Additional fields for mandate creation.
+       */
+      mandate_options?: StripeBalance.MandateOptions;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -26782,11 +26981,6 @@ export namespace PaymentIntentConfirmParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Emptyable<StripeBalance.SetupFutureUsage>;
-
-      /**
-       * Additional fields for mandate creation.
-       */
-      mandate_options?: StripeBalance.MandateOptions;
     }
 
     export interface Swish {
@@ -27148,6 +27342,13 @@ export namespace PaymentIntentConfirmParams {
         version: ThreeDSecure.Version;
       }
 
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
       export namespace Installments {
         export interface Plan {
           /**
@@ -27176,6 +27377,19 @@ export namespace PaymentIntentConfirmParams {
         export type AmountType = 'fixed' | 'maximum';
 
         export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+      }
+
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          /**
+           * Payment method specific account funding transaction details.
+           */
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {}
+        }
       }
 
       export namespace ThreeDSecure {
@@ -27240,6 +27454,26 @@ export namespace PaymentIntentConfirmParams {
          * Routing requested priority
          */
         requested_priority?: Routing.RequestedPriority;
+      }
+
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          /**
+           * Payment method specific account funding transaction details.
+           */
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {}
+        }
       }
 
       export namespace Routing {
@@ -28880,14 +29114,14 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace StripeBalance {
-      export type SetupFutureUsage = 'none' | 'off_session';
-
       export interface MandateOptions {
         /**
          * The ID of the Stripe Balance Debit Agreement used for this mandate.
          */
         stripe_balance_debit_agreement?: string;
       }
+
+      export type SetupFutureUsage = 'none' | 'off_session';
     }
 
     export namespace Upi {

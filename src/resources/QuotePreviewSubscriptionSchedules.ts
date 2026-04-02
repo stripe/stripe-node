@@ -185,11 +185,6 @@ export namespace QuotePreviewSubscriptionSchedule {
     applies_to: Array<BillingSchedule.AppliesTo> | null;
 
     /**
-     * Specifies the start of the billing period.
-     */
-    bill_from?: BillingSchedule.BillFrom | null;
-
-    /**
      * Specifies the end of billing period.
      */
     bill_until: BillingSchedule.BillUntil;
@@ -460,23 +455,6 @@ export namespace QuotePreviewSubscriptionSchedule {
        * Controls which subscription items the billing schedule applies to.
        */
       type: 'price';
-    }
-
-    export interface BillFrom {
-      /**
-       * The time the billing schedule applies from.
-       */
-      computed_timestamp: number;
-
-      /**
-       * Use a precise Unix timestamp for prebilling to start. Must be earlier than `bill_until`.
-       */
-      timestamp: number | null;
-
-      /**
-       * Describes how the billing schedule determines the start date. Possible values are `timestamp`.
-       */
-      type: 'timestamp';
     }
 
     export interface BillUntil {

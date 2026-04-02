@@ -3230,6 +3230,11 @@ export namespace ChargeUpdateParams {
      * Subscription details for this PaymentIntent
      */
     subscription?: PaymentDetails.Subscription;
+
+    /**
+     * Money services details for this PaymentIntent.
+     */
+    money_services?: Emptyable<PaymentDetails.MoneyServices>;
   }
 
   export interface Shipping {
@@ -3810,6 +3815,18 @@ export namespace ChargeUpdateParams {
       starts_at?: number;
     }
 
+    export interface MoneyServices {
+      /**
+       * Account funding transaction details including sender and beneficiary information.
+       */
+      account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: 'account_funding';
+    }
+
     export namespace CarRental {
       export interface Affiliate {
         /**
@@ -5062,6 +5079,10 @@ export namespace ChargeUpdateParams {
       }
     }
 
+    export namespace MoneyServices {
+      export interface AccountFunding {}
+    }
+
     export namespace Subscription {
       export interface Affiliate {
         /**
@@ -5222,6 +5243,11 @@ export namespace ChargeCaptureParams {
      * Subscription details for this PaymentIntent
      */
     subscription?: PaymentDetails.Subscription;
+
+    /**
+     * Money services details for this PaymentIntent.
+     */
+    money_services?: Emptyable<PaymentDetails.MoneyServices>;
   }
 
   export interface TransferData {
@@ -5778,6 +5804,18 @@ export namespace ChargeCaptureParams {
       starts_at?: number;
     }
 
+    export interface MoneyServices {
+      /**
+       * Account funding transaction details including sender and beneficiary information.
+       */
+      account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: 'account_funding';
+    }
+
     export namespace CarRental {
       export interface Affiliate {
         /**
@@ -7028,6 +7066,10 @@ export namespace ChargeCaptureParams {
           }
         }
       }
+    }
+
+    export namespace MoneyServices {
+      export interface AccountFunding {}
     }
 
     export namespace Subscription {

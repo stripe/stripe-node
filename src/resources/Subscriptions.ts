@@ -20,9 +20,11 @@ import {
   Emptyable,
   MetadataParam,
   Decimal,
+  AddressParam,
   PaginationParams,
   RangeQueryParam,
   Metadata,
+  Address,
 } from '../shared.js';
 import {
   RequestOptions,
@@ -1639,11 +1641,6 @@ export namespace Subscription {
     applies_to: Array<BillingSchedule.AppliesTo> | null;
 
     /**
-     * Specifies the start of the billing period.
-     */
-    bill_from?: BillingSchedule.BillFrom | null;
-
-    /**
      * Specifies the end of billing period.
      */
     bill_until: BillingSchedule.BillUntil;
@@ -1895,23 +1892,6 @@ export namespace Subscription {
       type: 'price';
     }
 
-    export interface BillFrom {
-      /**
-       * The time the billing schedule applies from.
-       */
-      computed_timestamp: number;
-
-      /**
-       * Use a precise Unix timestamp for prebilling to start. Must be earlier than `bill_until`.
-       */
-      timestamp: number | null;
-
-      /**
-       * Describes how the billing schedule determines the start date. Possible values are `timestamp`.
-       */
-      type: 'timestamp';
-    }
-
     export interface BillUntil {
       /**
        * The timestamp the billing schedule will apply until.
@@ -2065,6 +2045,11 @@ export namespace Subscription {
        * This sub-hash contains details about the ACH direct debit payment method options to pass to invoices created by the subscription.
        */
       us_bank_account: PaymentMethodOptions.UsBankAccount | null;
+
+      /**
+       * This sub-hash contains details about the Check Scan payment method options to pass to invoices created by the subscription.
+       */
+      check_scan?: PaymentMethodOptions.CheckScan | null;
     }
 
     export type PaymentMethodType =
@@ -2079,6 +2064,7 @@ export namespace Subscription {
       | 'boleto'
       | 'card'
       | 'cashapp'
+      | 'check_scan'
       | 'crypto'
       | 'custom'
       | 'customer_balance'
@@ -2187,6 +2173,10 @@ export namespace Subscription {
          * Bank account verification method. The default value is `automatic`.
          */
         verification_method?: UsBankAccount.VerificationMethod;
+      }
+
+      export interface CheckScan {
+        check_deposit_address?: Address;
       }
 
       export namespace AcssDebit {
@@ -3558,6 +3548,11 @@ export namespace SubscriptionCreateParams {
        * This sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
        */
       us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
+
+      /**
+       * This sub-hash contains details about the Check Scan payment method options to pass to the invoice's PaymentIntent.
+       */
+      check_scan?: Emptyable<PaymentMethodOptions.CheckScan>;
     }
 
     export type PaymentMethodType =
@@ -3572,6 +3567,7 @@ export namespace SubscriptionCreateParams {
       | 'boleto'
       | 'card'
       | 'cashapp'
+      | 'check_scan'
       | 'crypto'
       | 'custom'
       | 'customer_balance'
@@ -3701,6 +3697,10 @@ export namespace SubscriptionCreateParams {
          * Verification method for the intent
          */
         verification_method?: UsBankAccount.VerificationMethod;
+      }
+
+      export interface CheckScan {
+        check_deposit_address?: AddressParam;
       }
 
       export namespace AcssDebit {
@@ -5033,6 +5033,11 @@ export namespace SubscriptionUpdateParams {
        * This sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
        */
       us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
+
+      /**
+       * This sub-hash contains details about the Check Scan payment method options to pass to the invoice's PaymentIntent.
+       */
+      check_scan?: Emptyable<PaymentMethodOptions.CheckScan>;
     }
 
     export type PaymentMethodType =
@@ -5047,6 +5052,7 @@ export namespace SubscriptionUpdateParams {
       | 'boleto'
       | 'card'
       | 'cashapp'
+      | 'check_scan'
       | 'crypto'
       | 'custom'
       | 'customer_balance'
@@ -5176,6 +5182,10 @@ export namespace SubscriptionUpdateParams {
          * Verification method for the intent
          */
         verification_method?: UsBankAccount.VerificationMethod;
+      }
+
+      export interface CheckScan {
+        check_deposit_address?: AddressParam;
       }
 
       export namespace AcssDebit {
