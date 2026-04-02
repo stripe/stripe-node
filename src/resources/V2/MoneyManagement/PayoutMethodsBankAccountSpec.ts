@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PayoutMethodsBankAccountSpecResource extends StripeResource {
   /**
@@ -13,15 +12,13 @@ export class PayoutMethodsBankAccountSpecResource extends StripeResource {
   retrieve(
     params?: V2.MoneyManagement.PayoutMethodsBankAccountSpecRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<PayoutMethodsBankAccountSpec>>;
-  retrieve(
-    options?: RequestOptions
-  ): Promise<Response<PayoutMethodsBankAccountSpec>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/payout_methods_bank_account_spec',
-    }).call(this, ...args);
+  ): Promise<Response<PayoutMethodsBankAccountSpec>> {
+    return this._makeRequest(
+      'GET',
+      '/v2/money_management/payout_methods_bank_account_spec',
+      params,
+      options
+    ) as any;
   }
 }
 export interface PayoutMethodsBankAccountSpec {

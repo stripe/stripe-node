@@ -4,7 +4,6 @@ import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class OutboundTransferResource extends StripeResource {
   /**
@@ -13,16 +12,17 @@ export class OutboundTransferResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.OutboundTransferListParams,
     options?: RequestOptions
-  ): ApiListPromise<OutboundTransfer>;
-  list(options?: RequestOptions): ApiListPromise<OutboundTransfer>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/outbound_transfers',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<OutboundTransfer> {
+    return this._makeRequest(
+      'GET',
+      '/v2/money_management/outbound_transfers',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Creates an OutboundTransfer.
    * @throws Stripe.InsufficientFundsError
@@ -31,14 +31,14 @@ export class OutboundTransferResource extends StripeResource {
   create(
     params: V2.MoneyManagement.OutboundTransferCreateParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundTransfer>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/outbound_transfers',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundTransfer>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/money_management/outbound_transfers',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the details of an existing OutboundTransfer by passing the unique OutboundTransfer ID from either the OutboundPayment create or list response.
    */
@@ -46,18 +46,14 @@ export class OutboundTransferResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.OutboundTransferRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundTransfer>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<OutboundTransfer>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/outbound_transfers/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundTransfer>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/money_management/outbound_transfers/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Cancels an OutboundTransfer. Only processing OutboundTransfers can be canceled.
    * @throws Stripe.AlreadyCanceledError
@@ -67,16 +63,13 @@ export class OutboundTransferResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.OutboundTransferCancelParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundTransfer>>;
-  cancel(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<OutboundTransfer>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/outbound_transfers/{id}/cancel',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundTransfer>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/money_management/outbound_transfers/${id}/cancel`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface OutboundTransfer {

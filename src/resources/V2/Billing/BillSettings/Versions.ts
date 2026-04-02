@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../../StripeResource.js';
 import {BillSettingVersion} from './../../../V2/Billing/BillSettingVersions.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class VersionResource extends StripeResource {
   /**
@@ -13,19 +12,17 @@ export class VersionResource extends StripeResource {
     id: string,
     params?: V2.Billing.BillSettings.VersionListParams,
     options?: RequestOptions
-  ): ApiListPromise<BillSettingVersion>;
-  list(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<BillSettingVersion>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/bill_settings/{bill_setting_id}/versions',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<BillSettingVersion> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/bill_settings/${id}/versions`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieve a BillSettingVersion by ID.
    */
@@ -34,17 +31,13 @@ export class VersionResource extends StripeResource {
     id: string,
     params?: V2.Billing.BillSettings.VersionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<BillSettingVersion>>;
-  retrieve(
-    billSettingId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<BillSettingVersion>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/bill_settings/{bill_setting_id}/versions/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<BillSettingVersion>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/bill_settings/${billSettingId}/versions/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export namespace V2 {

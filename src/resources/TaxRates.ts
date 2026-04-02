@@ -9,7 +9,6 @@ import {
   Metadata,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class TaxRateResource extends StripeResource {
   /**
@@ -18,30 +17,20 @@ export class TaxRateResource extends StripeResource {
   list(
     params?: TaxRateListParams,
     options?: RequestOptions
-  ): ApiListPromise<TaxRate>;
-  list(options?: RequestOptions): ApiListPromise<TaxRate>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/tax_rates',
+  ): ApiListPromise<TaxRate> {
+    return this._makeRequest('GET', '/v1/tax_rates', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Creates a new tax rate.
    */
   create(
     params: TaxRateCreateParams,
     options?: RequestOptions
-  ): Promise<Response<TaxRate>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/tax_rates'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<TaxRate>> {
+    return this._makeRequest('POST', '/v1/tax_rates', params, options) as any;
   }
-
   /**
    * Retrieves a tax rate with the given ID
    */
@@ -49,15 +38,14 @@ export class TaxRateResource extends StripeResource {
     id: string,
     params?: TaxRateRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<TaxRate>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<TaxRate>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/tax_rates/{tax_rate}',
-    }).call(this, ...args);
+  ): Promise<Response<TaxRate>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/tax_rates/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates an existing tax rate.
    */
@@ -65,12 +53,13 @@ export class TaxRateResource extends StripeResource {
     id: string,
     params?: TaxRateUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<TaxRate>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/tax_rates/{tax_rate}',
-    }).call(this, ...args);
+  ): Promise<Response<TaxRate>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/tax_rates/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface TaxRate {

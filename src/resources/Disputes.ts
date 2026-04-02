@@ -15,7 +15,6 @@ import {
   Address,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class DisputeResource extends StripeResource {
   /**
@@ -24,16 +23,11 @@ export class DisputeResource extends StripeResource {
   list(
     params?: DisputeListParams,
     options?: RequestOptions
-  ): ApiListPromise<Dispute>;
-  list(options?: RequestOptions): ApiListPromise<Dispute>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/disputes',
+  ): ApiListPromise<Dispute> {
+    return this._makeRequest('GET', '/v1/disputes', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieves the dispute with the given ID.
    */
@@ -41,15 +35,14 @@ export class DisputeResource extends StripeResource {
     id: string,
     params?: DisputeRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Dispute>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Dispute>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/disputes/{dispute}',
-    }).call(this, ...args);
+  ): Promise<Response<Dispute>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/disputes/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * When you get a dispute, contacting your customer is always the best first step. If that doesn't work, you can submit evidence to help us resolve the dispute in your favor. You can do this in your [dashboard](https://dashboard.stripe.com/disputes), but if you prefer, you can use the API to submit evidence programmatically.
    *
@@ -59,14 +52,14 @@ export class DisputeResource extends StripeResource {
     id: string,
     params?: DisputeUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Dispute>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/disputes/{dispute}',
-    }).call(this, ...args);
+  ): Promise<Response<Dispute>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/disputes/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Closing the dispute for a charge indicates that you do not have any evidence to submit and are essentially dismissing the dispute, acknowledging it as lost.
    *
@@ -76,13 +69,13 @@ export class DisputeResource extends StripeResource {
     id: string,
     params?: DisputeCloseParams,
     options?: RequestOptions
-  ): Promise<Response<Dispute>>;
-  close(id: string, options?: RequestOptions): Promise<Response<Dispute>>;
-  close(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/disputes/{dispute}/close',
-    }).call(this, ...args);
+  ): Promise<Response<Dispute>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/disputes/${id}/close`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Dispute {

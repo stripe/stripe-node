@@ -4,7 +4,6 @@ import {StripeResource} from '../StripeResource.js';
 import {PaymentMethod} from './PaymentMethods.js';
 import {PaginationParams} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class MandateResource extends StripeResource {
   /**
@@ -13,15 +12,11 @@ export class MandateResource extends StripeResource {
   list(
     params: MandateListParams,
     options?: RequestOptions
-  ): ApiListPromise<Mandate>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/mandates',
+  ): ApiListPromise<Mandate> {
+    return this._makeRequest('GET', '/v1/mandates', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieves a Mandate object.
    */
@@ -29,13 +24,13 @@ export class MandateResource extends StripeResource {
     id: string,
     params?: MandateRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Mandate>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Mandate>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/mandates/{mandate}',
-    }).call(this, ...args);
+  ): Promise<Response<Mandate>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/mandates/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Mandate {

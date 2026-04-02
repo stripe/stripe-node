@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class FinancingTransactionResource extends StripeResource {
   /**
@@ -13,16 +12,17 @@ export class FinancingTransactionResource extends StripeResource {
   list(
     params?: Capital.FinancingTransactionListParams,
     options?: RequestOptions
-  ): ApiListPromise<FinancingTransaction>;
-  list(options?: RequestOptions): ApiListPromise<FinancingTransaction>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/capital/financing_transactions',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<FinancingTransaction> {
+    return this._makeRequest(
+      'GET',
+      '/v1/capital/financing_transactions',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieves a financing transaction for a financing offer.
    */
@@ -30,16 +30,13 @@ export class FinancingTransactionResource extends StripeResource {
     id: string,
     params?: Capital.FinancingTransactionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<FinancingTransaction>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<FinancingTransaction>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/capital/financing_transactions/{financing_transaction}',
-    }).call(this, ...args);
+  ): Promise<Response<FinancingTransaction>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/capital/financing_transactions/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface FinancingTransaction {

@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 import {VersionResource} from './CollectionSettings/Versions.js';
-const stripeMethod = StripeResource.method;
 import {Stripe} from '../../../stripe.core.js';
 export class CollectionSettingResource extends StripeResource {
   versions: VersionResource;
@@ -18,30 +17,32 @@ export class CollectionSettingResource extends StripeResource {
   list(
     params?: V2.Billing.CollectionSettingListParams,
     options?: RequestOptions
-  ): ApiListPromise<CollectionSetting>;
-  list(options?: RequestOptions): ApiListPromise<CollectionSetting>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/collection_settings',
-      methodType: 'list',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          data: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                payment_method_options: {
-                  kind: 'object',
-                  fields: {
-                    card: {
-                      kind: 'object',
-                      fields: {
-                        mandate_options: {
-                          kind: 'object',
-                          fields: {amount: {kind: 'int64_string'}},
+  ): ApiListPromise<CollectionSetting> {
+    return this._makeRequest(
+      'GET',
+      '/v2/billing/collection_settings',
+      params,
+      options,
+      {
+        methodType: 'list',
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  payment_method_options: {
+                    kind: 'object',
+                    fields: {
+                      card: {
+                        kind: 'object',
+                        fields: {
+                          mandate_options: {
+                            kind: 'object',
+                            fields: {amount: {kind: 'int64_string'}},
+                          },
                         },
                       },
                     },
@@ -51,63 +52,63 @@ export class CollectionSettingResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Create a CollectionSetting object.
    */
   create(
     params?: V2.Billing.CollectionSettingCreateParams,
     options?: RequestOptions
-  ): Promise<Response<CollectionSetting>>;
-  create(options?: RequestOptions): Promise<Response<CollectionSetting>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/collection_settings',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          payment_method_options: {
-            kind: 'object',
-            fields: {
-              card: {
-                kind: 'object',
-                fields: {
-                  mandate_options: {
-                    kind: 'object',
-                    fields: {amount: {kind: 'int64_string'}},
+  ): Promise<Response<CollectionSetting>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/billing/collection_settings',
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            payment_method_options: {
+              kind: 'object',
+              fields: {
+                card: {
+                  kind: 'object',
+                  fields: {
+                    mandate_options: {
+                      kind: 'object',
+                      fields: {amount: {kind: 'int64_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          payment_method_options: {
-            kind: 'object',
-            fields: {
-              card: {
-                kind: 'object',
-                fields: {
-                  mandate_options: {
-                    kind: 'object',
-                    fields: {amount: {kind: 'int64_string'}},
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            payment_method_options: {
+              kind: 'object',
+              fields: {
+                card: {
+                  kind: 'object',
+                  fields: {
+                    mandate_options: {
+                      kind: 'object',
+                      fields: {amount: {kind: 'int64_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Retrieve a CollectionSetting by ID.
    */
@@ -115,37 +116,35 @@ export class CollectionSettingResource extends StripeResource {
     id: string,
     params?: V2.Billing.CollectionSettingRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<CollectionSetting>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CollectionSetting>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/collection_settings/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          payment_method_options: {
-            kind: 'object',
-            fields: {
-              card: {
-                kind: 'object',
-                fields: {
-                  mandate_options: {
-                    kind: 'object',
-                    fields: {amount: {kind: 'int64_string'}},
+  ): Promise<Response<CollectionSetting>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/collection_settings/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            payment_method_options: {
+              kind: 'object',
+              fields: {
+                card: {
+                  kind: 'object',
+                  fields: {
+                    mandate_options: {
+                      kind: 'object',
+                      fields: {amount: {kind: 'int64_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Update fields on an existing CollectionSetting.
    */
@@ -153,50 +152,53 @@ export class CollectionSettingResource extends StripeResource {
     id: string,
     params?: V2.Billing.CollectionSettingUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<CollectionSetting>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/collection_settings/{id}',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          payment_method_options: {
-            kind: 'object',
-            fields: {
-              card: {
-                kind: 'object',
-                fields: {
-                  mandate_options: {
-                    kind: 'object',
-                    fields: {amount: {kind: 'int64_string'}},
+  ): Promise<Response<CollectionSetting>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/collection_settings/${id}`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            payment_method_options: {
+              kind: 'object',
+              fields: {
+                card: {
+                  kind: 'object',
+                  fields: {
+                    mandate_options: {
+                      kind: 'object',
+                      fields: {amount: {kind: 'int64_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          payment_method_options: {
-            kind: 'object',
-            fields: {
-              card: {
-                kind: 'object',
-                fields: {
-                  mandate_options: {
-                    kind: 'object',
-                    fields: {amount: {kind: 'int64_string'}},
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            payment_method_options: {
+              kind: 'object',
+              fields: {
+                card: {
+                  kind: 'object',
+                  fields: {
+                    mandate_options: {
+                      kind: 'object',
+                      fields: {amount: {kind: 'int64_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface CollectionSetting {

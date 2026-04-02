@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class MeterEventAdjustmentResource extends StripeResource {
   /**
@@ -11,12 +10,13 @@ export class MeterEventAdjustmentResource extends StripeResource {
   create(
     params: Billing.MeterEventAdjustmentCreateParams,
     options?: RequestOptions
-  ): Promise<Response<MeterEventAdjustment>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing/meter_event_adjustments',
-    }).call(this, ...args);
+  ): Promise<Response<MeterEventAdjustment>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/billing/meter_event_adjustments',
+      params,
+      options
+    ) as any;
   }
 }
 export interface MeterEventAdjustment {

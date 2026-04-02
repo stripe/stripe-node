@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ProfileResource extends StripeResource {
   /**
@@ -12,29 +11,25 @@ export class ProfileResource extends StripeResource {
   list(
     params: V2.Billing.ProfileListParams,
     options?: RequestOptions
-  ): ApiListPromise<Profile>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/profiles',
+  ): ApiListPromise<Profile> {
+    return this._makeRequest('GET', '/v2/billing/profiles', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Create a BillingProfile object.
    */
   create(
     params: V2.Billing.ProfileCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Profile>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/profiles',
-    }).call(this, ...args);
+  ): Promise<Response<Profile>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/billing/profiles',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a BillingProfile object.
    */
@@ -42,15 +37,14 @@ export class ProfileResource extends StripeResource {
     id: string,
     params?: V2.Billing.ProfileRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Profile>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Profile>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/profiles/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<Profile>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/profiles/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Update a BillingProfile object.
    */
@@ -58,12 +52,13 @@ export class ProfileResource extends StripeResource {
     id: string,
     params?: V2.Billing.ProfileUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Profile>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/profiles/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<Profile>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/profiles/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Profile {

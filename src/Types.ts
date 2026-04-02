@@ -12,6 +12,13 @@ import {Stripe} from './stripe.core.js';
 import {AppInfo} from './lib.js';
 
 export type ApiMode = 'v1' | 'v2';
+export type BaseAddress = 'api' | 'files' | 'connect' | 'meter_events';
+export const DEFAULT_BASE_ADDRESSES: Record<BaseAddress, string> = {
+  api: 'api.stripe.com',
+  files: 'files.stripe.com',
+  connect: 'connect.stripe.com',
+  meter_events: 'meter-events.stripe.com',
+};
 export type BufferedFile = {
   name: string;
   type: string;
@@ -33,7 +40,7 @@ export type MethodSpec = {
   validator?: (data: RequestData, options: {headers: RequestHeaders}) => void;
   headers?: Record<string, string>;
   streaming?: boolean;
-  host?: string;
+  apiBase?: BaseAddress;
   transformResponseData?: (response: HttpClientResponseInterface) => any;
   usage?: Array<string>;
   requestSchema?: V2RuntimeSchema;
@@ -100,14 +107,14 @@ export type RequestEvent = {
 };
 export type RequestHeaders = Record<string, string | number | string[]>;
 export type APIMode = 'preview' | 'standard';
-export type RequestOptions = {
+/**
+ * this is similar but distinct from the user-facing `RequestOptions`
+ */
+export type InternalRequestOptions = {
   settings?: RequestSettings;
   streaming?: boolean;
   headers?: RequestHeaders;
   stripeContext?: string | StripeContext;
-  /**
-   * NOTE: prefer sending `stripeContext` instead of `stripeAccount` for new code. They're currently identical, but we will eventually discourage and (later) drop support for `stripeAccount`.
-   */
   stripeAccount?: string;
 };
 export type RequestOpts = {
@@ -163,29 +170,35 @@ export type StripeRawError = {
   source?: any;
   exception?: any;
 };
+/**
+ * Stripe-generated ways to affect how a request works.
+ */
+export type MakeRequestSpec = {
+  methodType?: 'search' | 'list';
+  streaming?: boolean;
+  validator?: (data: RequestData, options: {headers: RequestHeaders}) => void;
+  headers?: Record<string, string>;
+  apiBase?: BaseAddress;
+  encode?: (data: RequestData) => RequestData;
+  usage?: Array<string>;
+  requestSchema?: V2RuntimeSchema;
+  responseSchema?: V2RuntimeSchema;
+  transformResponseData?: (response: HttpClientResponseInterface) => any;
+};
 export type StripeResourceObject = {
   _stripe: Stripe;
   basePath: UrlInterpolator;
   path: UrlInterpolator;
   resourcePath: string;
-  createResourcePathWithSymbols: (path: string | null | undefined) => string;
-  createFullPath: (
-    interpolator: UrlInterpolator,
-    urlData: RequestData
-  ) => string;
   initialize: (...args: Array<any>) => void;
-  _joinUrlParts: (urlParts: string[]) => string;
   requestDataProcessor: null | RequestDataProcessor;
   _makeRequest(
-    requestArgs: RequestArgs,
-    spec: MethodSpec,
-    overrideData: RequestData
+    method: string,
+    path: string,
+    params: RequestData | undefined,
+    options: import('./lib.js').RequestOptions | undefined,
+    spec?: MakeRequestSpec
   ): Promise<any>;
-  _getRequestOpts(
-    requestArgs: RequestArgs,
-    spec: MethodSpec,
-    overrideData: RequestData
-  ): RequestOpts;
 };
 export type RequestDataProcessor = (
   method: string,

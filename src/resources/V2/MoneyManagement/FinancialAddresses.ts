@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {JapanAddress} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class FinancialAddressResource extends StripeResource {
   /**
@@ -12,16 +11,17 @@ export class FinancialAddressResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.FinancialAddressListParams,
     options?: RequestOptions
-  ): ApiListPromise<FinancialAddress>;
-  list(options?: RequestOptions): ApiListPromise<FinancialAddress>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/financial_addresses',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<FinancialAddress> {
+    return this._makeRequest(
+      'GET',
+      '/v2/money_management/financial_addresses',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Create a new FinancialAddress for a FinancialAccount.
    * @throws Stripe.FinancialAccountNotOpenError
@@ -30,14 +30,14 @@ export class FinancialAddressResource extends StripeResource {
   create(
     params: V2.MoneyManagement.FinancialAddressCreateParams,
     options?: RequestOptions
-  ): Promise<Response<FinancialAddress>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/financial_addresses',
-    }).call(this, ...args);
+  ): Promise<Response<FinancialAddress>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/money_management/financial_addresses',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a FinancialAddress. By default, the FinancialAddress will be returned in its unexpanded state, revealing only the last 4 digits of the account number.
    */
@@ -45,16 +45,13 @@ export class FinancialAddressResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.FinancialAddressRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<FinancialAddress>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<FinancialAddress>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/financial_addresses/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<FinancialAddress>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/money_management/financial_addresses/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface FinancialAddress {

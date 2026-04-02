@@ -6,7 +6,6 @@ import {SetupAttempt} from './SetupAttempts.js';
 import {Charge} from './Charges.js';
 import {Address} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ConfirmationTokenResource extends StripeResource {
   /**
@@ -16,16 +15,13 @@ export class ConfirmationTokenResource extends StripeResource {
     id: string,
     params?: ConfirmationTokenRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ConfirmationToken>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ConfirmationToken>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/confirmation_tokens/{confirmation_token}',
-    }).call(this, ...args);
+  ): Promise<Response<ConfirmationToken>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/confirmation_tokens/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface ConfirmationToken {

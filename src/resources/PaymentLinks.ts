@@ -14,7 +14,6 @@ import {
   Metadata,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PaymentLinkResource extends StripeResource {
   /**
@@ -23,12 +22,8 @@ export class PaymentLinkResource extends StripeResource {
   list(
     params?: PaymentLinkListParams,
     options?: RequestOptions
-  ): ApiListPromise<PaymentLink>;
-  list(options?: RequestOptions): ApiListPromise<PaymentLink>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payment_links',
+  ): ApiListPromise<PaymentLink> {
+    return this._makeRequest('GET', '/v1/payment_links', params, options, {
       methodType: 'list',
       responseSchema: {
         kind: 'object',
@@ -112,20 +107,16 @@ export class PaymentLinkResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Creates a payment link.
    */
   create(
     params: PaymentLinkCreateParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentLink>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payment_links',
+  ): Promise<Response<PaymentLink>> {
+    return this._makeRequest('POST', '/v1/payment_links', params, options, {
       requestSchema: {
         kind: 'object',
         fields: {
@@ -217,9 +208,8 @@ export class PaymentLinkResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieve a payment link.
    */
@@ -227,213 +217,57 @@ export class PaymentLinkResource extends StripeResource {
     id: string,
     params?: PaymentLinkRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentLink>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentLink>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payment_links/{payment_link}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          line_items: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    price: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          currency_options: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                tiers: {
-                                  kind: 'array',
-                                  element: {
-                                    kind: 'object',
-                                    fields: {
-                                      flat_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
-                                      },
-                                      unit_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
-                                      },
-                                    },
-                                  },
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                              },
-                            },
-                          },
-                          tiers: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                flat_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                              },
-                            },
-                          },
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    }).call(this, ...args);
-  }
-
-  /**
-   * Updates a payment link.
-   */
-  update(
-    id: string,
-    params?: PaymentLinkUpdateParams,
-    options?: RequestOptions
-  ): Promise<Response<PaymentLink>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payment_links/{payment_link}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          line_items: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    price: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          currency_options: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                tiers: {
-                                  kind: 'array',
-                                  element: {
-                                    kind: 'object',
-                                    fields: {
-                                      flat_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
-                                      },
-                                      unit_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
-                                      },
-                                    },
-                                  },
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                              },
-                            },
-                          },
-                          tiers: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                flat_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                              },
-                            },
-                          },
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    }).call(this, ...args);
-  }
-
-  /**
-   * When retrieving a payment link, there is an includable line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
-   */
-  listLineItems(
-    id: string,
-    params?: PaymentLinkListLineItemsParams,
-    options?: RequestOptions
-  ): ApiListPromise<LineItem>;
-  listLineItems(id: string, options?: RequestOptions): ApiListPromise<LineItem>;
-  listLineItems(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payment_links/{payment_link}/line_items',
-      methodType: 'list',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          data: {
-            kind: 'array',
-            element: {
+  ): Promise<Response<PaymentLink>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/payment_links/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            line_items: {
               kind: 'object',
               fields: {
-                price: {
-                  kind: 'nullable',
-                  inner: {
+                data: {
+                  kind: 'array',
+                  element: {
                     kind: 'object',
                     fields: {
-                      currency_options: {
-                        kind: 'array',
-                        element: {
+                      price: {
+                        kind: 'nullable',
+                        inner: {
                           kind: 'object',
                           fields: {
+                            currency_options: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  tiers: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        flat_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
+                                        unit_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                  unit_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                },
+                              },
+                            },
                             tiers: {
                               kind: 'array',
                               element: {
@@ -457,14 +291,89 @@ export class PaymentLinkResource extends StripeResource {
                           },
                         },
                       },
-                      tiers: {
-                        kind: 'array',
-                        element: {
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
+    ) as any;
+  }
+  /**
+   * Updates a payment link.
+   */
+  update(
+    id: string,
+    params?: PaymentLinkUpdateParams,
+    options?: RequestOptions
+  ): Promise<Response<PaymentLink>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_links/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            line_items: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      price: {
+                        kind: 'nullable',
+                        inner: {
                           kind: 'object',
                           fields: {
-                            flat_amount_decimal: {
-                              kind: 'nullable',
-                              inner: {kind: 'decimal_string'},
+                            currency_options: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  tiers: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        flat_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
+                                        unit_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                  unit_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                },
+                              },
+                            },
+                            tiers: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  flat_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                  unit_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                },
+                              },
                             },
                             unit_amount_decimal: {
                               kind: 'nullable',
@@ -473,9 +382,92 @@ export class PaymentLinkResource extends StripeResource {
                           },
                         },
                       },
-                      unit_amount_decimal: {
-                        kind: 'nullable',
-                        inner: {kind: 'decimal_string'},
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
+    ) as any;
+  }
+  /**
+   * When retrieving a payment link, there is an includable line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
+   */
+  listLineItems(
+    id: string,
+    params?: PaymentLinkListLineItemsParams,
+    options?: RequestOptions
+  ): ApiListPromise<LineItem> {
+    return this._makeRequest(
+      'GET',
+      `/v1/payment_links/${id}/line_items`,
+      params,
+      options,
+      {
+        methodType: 'list',
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  price: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        currency_options: {
+                          kind: 'array',
+                          element: {
+                            kind: 'object',
+                            fields: {
+                              tiers: {
+                                kind: 'array',
+                                element: {
+                                  kind: 'object',
+                                  fields: {
+                                    flat_amount_decimal: {
+                                      kind: 'nullable',
+                                      inner: {kind: 'decimal_string'},
+                                    },
+                                    unit_amount_decimal: {
+                                      kind: 'nullable',
+                                      inner: {kind: 'decimal_string'},
+                                    },
+                                  },
+                                },
+                              },
+                              unit_amount_decimal: {
+                                kind: 'nullable',
+                                inner: {kind: 'decimal_string'},
+                              },
+                            },
+                          },
+                        },
+                        tiers: {
+                          kind: 'array',
+                          element: {
+                            kind: 'object',
+                            fields: {
+                              flat_amount_decimal: {
+                                kind: 'nullable',
+                                inner: {kind: 'decimal_string'},
+                              },
+                              unit_amount_decimal: {
+                                kind: 'nullable',
+                                inner: {kind: 'decimal_string'},
+                              },
+                            },
+                          },
+                        },
+                        unit_amount_decimal: {
+                          kind: 'nullable',
+                          inner: {kind: 'decimal_string'},
+                        },
                       },
                     },
                   },
@@ -484,8 +476,8 @@ export class PaymentLinkResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface PaymentLink {

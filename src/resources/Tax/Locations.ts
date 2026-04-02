@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {Address, Emptyable, PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class LocationResource extends StripeResource {
   /**
@@ -16,29 +15,25 @@ export class LocationResource extends StripeResource {
   list(
     params: Tax.LocationListParams,
     options?: RequestOptions
-  ): ApiListPromise<Location>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/tax/locations',
+  ): ApiListPromise<Location> {
+    return this._makeRequest('GET', '/v1/tax/locations', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Create a tax location to use in calculating taxes for a service, ticket, or other type of product. The resulting object contains the id, address, name, description, and current operational status of the tax location.
    */
   create(
     params: Tax.LocationCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Location>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/tax/locations'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Location>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/tax/locations',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Fetch the details of a specific tax location using its unique identifier. Use a tax location to calculate taxes based on the location of the end product, such as a performance, instead of the customer address. For more details, check the [integration guide](https://docs.stripe.com/tax/tax-for-tickets/integration-guide).
    */
@@ -46,13 +41,13 @@ export class LocationResource extends StripeResource {
     id: string,
     params?: Tax.LocationRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Location>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Location>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/tax/locations/{location}',
-    }).call(this, ...args);
+  ): Promise<Response<Location>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/tax/locations/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Location {

@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class DisputeSettlementDetailResource extends StripeResource {
   /**
@@ -12,16 +11,17 @@ export class DisputeSettlementDetailResource extends StripeResource {
   list(
     params?: Issuing.DisputeSettlementDetailListParams,
     options?: RequestOptions
-  ): ApiListPromise<DisputeSettlementDetail>;
-  list(options?: RequestOptions): ApiListPromise<DisputeSettlementDetail>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/dispute_settlement_details',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<DisputeSettlementDetail> {
+    return this._makeRequest(
+      'GET',
+      '/v1/issuing/dispute_settlement_details',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieves an Issuing DisputeSettlementDetail object.
    */
@@ -29,17 +29,13 @@ export class DisputeSettlementDetailResource extends StripeResource {
     id: string,
     params?: Issuing.DisputeSettlementDetailRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<DisputeSettlementDetail>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<DisputeSettlementDetail>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath:
-        '/v1/issuing/dispute_settlement_details/{dispute_settlement_detail}',
-    }).call(this, ...args);
+  ): Promise<Response<DisputeSettlementDetail>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/issuing/dispute_settlement_details/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface DisputeSettlementDetail {

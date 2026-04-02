@@ -9,7 +9,6 @@ import {
   Response,
   StripeStreamResponse,
 } from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class FormResource extends StripeResource {
   /**
@@ -18,15 +17,11 @@ export class FormResource extends StripeResource {
   list(
     params: Tax.FormListParams,
     options?: RequestOptions
-  ): ApiListPromise<Form>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/tax/forms',
+  ): ApiListPromise<Form> {
+    return this._makeRequest('GET', '/v1/tax/forms', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieves the details of a tax form that has previously been created. Supply the unique tax form ID that was returned from your previous request, and Stripe will return the corresponding tax form information.
    */
@@ -34,15 +29,14 @@ export class FormResource extends StripeResource {
     id: string,
     params?: Tax.FormRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Form>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Form>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'GET', fullPath: '/v1/tax/forms/{id}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Form>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/tax/forms/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Download the PDF for a tax form.
    */
@@ -50,15 +44,17 @@ export class FormResource extends StripeResource {
     id: string,
     params?: Tax.FormPdfParams,
     options?: RequestOptions
-  ): Promise<StripeStreamResponse>;
-  pdf(id: string, options?: RequestOptions): Promise<StripeStreamResponse>;
-  pdf(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/tax/forms/{id}/pdf',
-      host: 'files.stripe.com',
-      streaming: true,
-    }).call(this, ...args);
+  ): Promise<StripeStreamResponse> {
+    return this._makeRequest(
+      'GET',
+      `/v1/tax/forms/${id}/pdf`,
+      params,
+      options,
+      {
+        apiBase: 'files',
+        streaming: true,
+      }
+    ) as any;
   }
 }
 export interface Form {

@@ -15,14 +15,13 @@ import {
   RequestCallbackReturn,
   RequestData,
   RequestDataProcessor,
-  RequestOptions,
+  InternalRequestOptions,
   RequestSettings,
   StripeRequest,
-  RequestOpts,
-  RequestArgs,
   RequestAuthenticator,
   ApiMode,
 } from './Types.js';
+import {RawRequestOptions, RequestOptions} from './lib.js';
 import {HttpClient, HttpClientResponseInterface} from './net/HttpClient.js';
 import {Stripe} from './stripe.core.js';
 import {
@@ -32,10 +31,9 @@ import {
   queryStringifyRequestData,
   removeNullish,
   getAPIMode,
-  getOptionsFromArgs,
-  getDataFromArgs,
   parseHttpHeaderAsString,
   parseHttpHeaderAsNumber,
+  processOptions,
 } from './utils.js';
 
 export type HttpClientResponseError = {code: string};
@@ -482,11 +480,10 @@ export class RequestSender {
     method: string,
     path: string,
     params?: RequestData,
-    options?: RequestOptions,
+    options?: RawRequestOptions,
     usage?: Array<string>
   ): Promise<any> {
-    const requestPromise = new Promise<any>((resolve, reject) => {
-      let opts: RequestOpts;
+    return new Promise<any>((resolve, reject) => {
       try {
         const requestMethod = method.toUpperCase();
         if (
@@ -498,63 +495,43 @@ export class RequestSender {
             'rawRequest only supports params on POST requests. Please pass null and add your parameters to path.'
           );
         }
-        const args: RequestArgs = [].slice.call([params, options]);
-
-        // Pull request data and options (headers, auth) from args.
-        const dataFromArgs = getDataFromArgs(args);
         const data =
-          requestMethod === 'POST' ? Object.assign({}, dataFromArgs) : null;
-        const calculatedOptions = getOptionsFromArgs(args);
+          requestMethod === 'POST' ? Object.assign({}, params) : null;
 
-        const headers = calculatedOptions.headers;
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const authenticator: RequestAuthenticator = calculatedOptions.authenticator!;
-        opts = {
+        const processed = processOptions(options);
+
+        // Handle additionalHeaders from RawRequestOptions
+        if (options?.additionalHeaders) {
+          Object.assign(processed.headers, options.additionalHeaders);
+        }
+
+        const apiBase = processed.apiBase || (options?.apiBase ?? null);
+        const host = apiBase ? this._stripe.resolveBaseAddress(apiBase) : null;
+
+        this._request(
           requestMethod,
-          requestPath: path,
-          bodyData: data,
-          queryData: {},
-          authenticator,
-          headers,
-          host: calculatedOptions.host,
-          streaming: !!calculatedOptions.streaming,
-          settings: {},
-          // We use this for thin event internals, so we should record the more specific `usage`, when available
-          usage: usage || ['raw_request'],
-        };
+          host,
+          path,
+          data,
+          processed.authenticator,
+          {
+            headers: processed.headers,
+            settings: processed.settings,
+            streaming: processed.streaming,
+          },
+          usage || ['raw_request'],
+          (err: any, response: HttpClientResponseInterface): void => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(response);
+            }
+          }
+        );
       } catch (err) {
         reject(err);
-        return;
       }
-
-      function requestCallback(
-        err: any,
-        response: HttpClientResponseInterface
-      ): void {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(response);
-        }
-      }
-
-      const {headers, settings} = opts;
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const authenticator: RequestAuthenticator = opts.authenticator!;
-
-      this._request(
-        opts.requestMethod,
-        opts.host,
-        path,
-        opts.bodyData,
-        authenticator,
-        {headers, settings, streaming: opts.streaming},
-        opts.usage,
-        requestCallback
-      );
     });
-
-    return requestPromise;
   }
 
   _getContentLength(data: string | Uint8Array): number {
@@ -566,13 +543,16 @@ export class RequestSender {
       : data.length;
   }
 
+  /**
+   * This is the main HTTP method that all resources eventually call
+   */
   _request(
     method: string,
     host: string | null,
     path: string,
     data: RequestData | null,
     authenticator: RequestAuthenticator | null,
-    options: RequestOptions,
+    options: InternalRequestOptions,
     usage: Array<string> = [],
     callback: RequestCallback,
     requestDataProcessor: RequestDataProcessor | null = null

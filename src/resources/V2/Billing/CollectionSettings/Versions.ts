@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../../StripeResource.js';
 import {CollectionSettingVersion} from './../../../V2/Billing/CollectionSettingVersions.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class VersionResource extends StripeResource {
   /**
@@ -13,34 +12,32 @@ export class VersionResource extends StripeResource {
     id: string,
     params?: V2.Billing.CollectionSettings.VersionListParams,
     options?: RequestOptions
-  ): ApiListPromise<CollectionSettingVersion>;
-  list(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<CollectionSettingVersion>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath:
-        '/v2/billing/collection_settings/{collection_setting_id}/versions',
-      methodType: 'list',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          data: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                payment_method_options: {
-                  kind: 'object',
-                  fields: {
-                    card: {
-                      kind: 'object',
-                      fields: {
-                        mandate_options: {
-                          kind: 'object',
-                          fields: {amount: {kind: 'int64_string'}},
+  ): ApiListPromise<CollectionSettingVersion> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/collection_settings/${id}/versions`,
+      params,
+      options,
+      {
+        methodType: 'list',
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  payment_method_options: {
+                    kind: 'object',
+                    fields: {
+                      card: {
+                        kind: 'object',
+                        fields: {
+                          mandate_options: {
+                            kind: 'object',
+                            fields: {amount: {kind: 'int64_string'}},
+                          },
                         },
                       },
                     },
@@ -50,10 +47,9 @@ export class VersionResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Retrieve a CollectionSetting Version by ID.
    */
@@ -62,37 +58,34 @@ export class VersionResource extends StripeResource {
     id: string,
     params?: V2.Billing.CollectionSettings.VersionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<CollectionSettingVersion>>;
-  retrieve(
-    collectionSettingId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CollectionSettingVersion>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath:
-        '/v2/billing/collection_settings/{collection_setting_id}/versions/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          payment_method_options: {
-            kind: 'object',
-            fields: {
-              card: {
-                kind: 'object',
-                fields: {
-                  mandate_options: {
-                    kind: 'object',
-                    fields: {amount: {kind: 'int64_string'}},
+  ): Promise<Response<CollectionSettingVersion>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/collection_settings/${collectionSettingId}/versions/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            payment_method_options: {
+              kind: 'object',
+              fields: {
+                card: {
+                  kind: 'object',
+                  fields: {
+                    mandate_options: {
+                      kind: 'object',
+                      fields: {amount: {kind: 'int64_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export namespace V2 {

@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CadenceResource extends StripeResource {
   /**
@@ -12,12 +11,8 @@ export class CadenceResource extends StripeResource {
   list(
     params?: V2.Billing.CadenceListParams,
     options?: RequestOptions
-  ): ApiListPromise<Cadence>;
-  list(options?: RequestOptions): ApiListPromise<Cadence>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/cadences',
+  ): ApiListPromise<Cadence> {
+    return this._makeRequest('GET', '/v2/billing/cadences', params, options, {
       methodType: 'list',
       responseSchema: {
         kind: 'object',
@@ -56,20 +51,16 @@ export class CadenceResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Create a Billing Cadence object.
    */
   create(
     params: V2.Billing.CadenceCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Cadence>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/cadences',
+  ): Promise<Response<Cadence>> {
+    return this._makeRequest('POST', '/v2/billing/cadences', params, options, {
       responseSchema: {
         kind: 'object',
         fields: {
@@ -99,9 +90,8 @@ export class CadenceResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieve a Billing Cadence object.
    */
@@ -109,30 +99,32 @@ export class CadenceResource extends StripeResource {
     id: string,
     params?: V2.Billing.CadenceRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Cadence>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Cadence>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/cadences/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          settings_data: {
-            kind: 'object',
-            fields: {
-              collection: {
-                kind: 'object',
-                fields: {
-                  payment_method_options: {
-                    kind: 'object',
-                    fields: {
-                      card: {
-                        kind: 'object',
-                        fields: {
-                          mandate_options: {
-                            kind: 'object',
-                            fields: {amount: {kind: 'int64_string'}},
+  ): Promise<Response<Cadence>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/cadences/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            settings_data: {
+              kind: 'object',
+              fields: {
+                collection: {
+                  kind: 'object',
+                  fields: {
+                    payment_method_options: {
+                      kind: 'object',
+                      fields: {
+                        card: {
+                          kind: 'object',
+                          fields: {
+                            mandate_options: {
+                              kind: 'object',
+                              fields: {amount: {kind: 'int64_string'}},
+                            },
                           },
                         },
                       },
@@ -143,10 +135,9 @@ export class CadenceResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Update a Billing Cadence object.
    */
@@ -154,29 +145,32 @@ export class CadenceResource extends StripeResource {
     id: string,
     params?: V2.Billing.CadenceUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Cadence>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/cadences/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          settings_data: {
-            kind: 'object',
-            fields: {
-              collection: {
-                kind: 'object',
-                fields: {
-                  payment_method_options: {
-                    kind: 'object',
-                    fields: {
-                      card: {
-                        kind: 'object',
-                        fields: {
-                          mandate_options: {
-                            kind: 'object',
-                            fields: {amount: {kind: 'int64_string'}},
+  ): Promise<Response<Cadence>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/cadences/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            settings_data: {
+              kind: 'object',
+              fields: {
+                collection: {
+                  kind: 'object',
+                  fields: {
+                    payment_method_options: {
+                      kind: 'object',
+                      fields: {
+                        card: {
+                          kind: 'object',
+                          fields: {
+                            mandate_options: {
+                              kind: 'object',
+                              fields: {amount: {kind: 'int64_string'}},
+                            },
                           },
                         },
                       },
@@ -187,10 +181,9 @@ export class CadenceResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Cancel the Billing Cadence.
    */
@@ -198,30 +191,32 @@ export class CadenceResource extends StripeResource {
     id: string,
     params?: V2.Billing.CadenceCancelParams,
     options?: RequestOptions
-  ): Promise<Response<Cadence>>;
-  cancel(id: string, options?: RequestOptions): Promise<Response<Cadence>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/cadences/{id}/cancel',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          settings_data: {
-            kind: 'object',
-            fields: {
-              collection: {
-                kind: 'object',
-                fields: {
-                  payment_method_options: {
-                    kind: 'object',
-                    fields: {
-                      card: {
-                        kind: 'object',
-                        fields: {
-                          mandate_options: {
-                            kind: 'object',
-                            fields: {amount: {kind: 'int64_string'}},
+  ): Promise<Response<Cadence>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/cadences/${id}/cancel`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            settings_data: {
+              kind: 'object',
+              fields: {
+                collection: {
+                  kind: 'object',
+                  fields: {
+                    payment_method_options: {
+                      kind: 'object',
+                      fields: {
+                        card: {
+                          kind: 'object',
+                          fields: {
+                            mandate_options: {
+                              kind: 'object',
+                              fields: {amount: {kind: 'int64_string'}},
+                            },
                           },
                         },
                       },
@@ -232,8 +227,8 @@ export class CadenceResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface Cadence {
