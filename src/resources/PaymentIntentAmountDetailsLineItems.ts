@@ -79,6 +79,8 @@ export namespace PaymentIntentAmountDetailsLineItem {
   export namespace PaymentMethodOptions {
     export interface Card {
       commodity_code: string | null;
+
+      fleet_data?: Card.FleetData;
     }
 
     export interface CardPresent {
@@ -110,6 +112,20 @@ export namespace PaymentIntentAmountDetailsLineItem {
        * The Stripe account ID of the connected account that sells the item. This is only needed when using [Separate Charges and Transfers](https://docs.stripe.com/connect/separate-charges-and-transfers).
        */
       sold_by?: string;
+    }
+
+    export namespace Card {
+      export interface FleetData {
+        /**
+         * The type of product being purchased at this line item.
+         */
+        product_type?: string;
+
+        /**
+         * The type of service received at the acceptor location.
+         */
+        service_type?: string;
+      }
     }
 
     export namespace Paypal {

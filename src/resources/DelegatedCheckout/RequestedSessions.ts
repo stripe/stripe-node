@@ -451,7 +451,7 @@ export namespace DelegatedCheckout {
       payment_method_types: Array<SellerDetails.PaymentMethodType> | null;
     }
 
-    export type Status = 'completed' | 'expired' | 'open';
+    export type Status = 'completed' | 'expired' | 'open' | 'requires_action';
 
     export interface TotalDetails {
       /**

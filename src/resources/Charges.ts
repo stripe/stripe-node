@@ -19,6 +19,7 @@ import {
   MetadataParam,
   AddressParam,
   Address,
+  ShippingAddressParam,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -3232,6 +3233,11 @@ export namespace ChargeUpdateParams {
     subscription?: PaymentDetails.Subscription;
 
     /**
+     * Fleet data for this PaymentIntent.
+     */
+    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
+
+    /**
      * Money services details for this PaymentIntent.
      */
     money_services?: Emptyable<PaymentDetails.MoneyServices>;
@@ -3815,6 +3821,23 @@ export namespace ChargeUpdateParams {
       starts_at?: number;
     }
 
+    export interface FleetDatum {
+      /**
+       * Primary fuel fields for the transaction.
+       */
+      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
+
+      /**
+       * Station and acceptor location details.
+       */
+      station?: FleetDatum.Station;
+
+      /**
+       * VAT and Invoice on Behalf (IOB) details.
+       */
+      vat?: FleetDatum.Vat;
+    }
+
     export interface MoneyServices {
       /**
        * Account funding transaction details including sender and beneficiary information.
@@ -4351,6 +4374,197 @@ export namespace ChargeUpdateParams {
            */
           phone?: string;
         }
+      }
+    }
+
+    export namespace FleetDatum {
+      export interface PrimaryFuelFields {
+        /**
+         * The fuel brand.
+         */
+        brand?: PrimaryFuelFields.Brand;
+      }
+
+      export interface Station {
+        /**
+         * Additional contact information for the station.
+         */
+        additional_contact_info?: string;
+
+        /**
+         * The customer service phone number of the station.
+         */
+        customer_service_phone_number?: string;
+
+        /**
+         * The partner ID code of the station.
+         */
+        partner_id_code?: string;
+
+        /**
+         * The phone number of the station.
+         */
+        phone_number?: string;
+
+        /**
+         * The physical location of the station.
+         */
+        service_location?: ShippingAddressParam;
+
+        /**
+         * The URL of the station.
+         */
+        url?: string;
+      }
+
+      export interface Vat {
+        /**
+         * Indicates the merchant's agreement for Invoice on Behalf (IOB) VAT processing.
+         */
+        iob_indicator: Vat.IobIndicator;
+      }
+
+      export namespace PrimaryFuelFields {
+        export type Brand =
+          | 'aafes'
+          | 'amerada_hess'
+          | 'amoco_canada'
+          | 'amoco_petroleum_products'
+          | 'arco_products'
+          | 'asda'
+          | 'ashland_oil'
+          | 'bfl'
+          | 'bp_mobil'
+          | 'bp_oil'
+          | 'burrnah_major'
+          | 'butler_arndale'
+          | 'canadian_tire'
+          | 'canadian_turbo'
+          | 'caseys_general_store'
+          | 'cenex'
+          | 'chevron_canada'
+          | 'chevron_usa'
+          | 'circle_k_stores'
+          | 'citgo_petroleum'
+          | 'clark_brands'
+          | 'conoco_canada'
+          | 'conoco_inc'
+          | 'crown_central_petroleum'
+          | 'diamond_shamrock_inc'
+          | 'discount_tire'
+          | 'domo_gas'
+          | 'elf'
+          | 'erickson_oil'
+          | 'esso'
+          | 'esso_canada'
+          | 'exxon'
+          | 'exxonmobil'
+          | 'family_express'
+          | 'fas_gas_oil'
+          | 'federated_coop_sonic'
+          | 'fina'
+          | 'fina_inc'
+          | 'fkg_oil'
+          | 'flare'
+          | 'flying_j_inc'
+          | 'gas_america'
+          | 'gate_petroleum'
+          | 'getty_petroleum'
+          | 'giant_eagle'
+          | 'grow_mark_inc'
+          | 'gulf'
+          | 'gulf_canada'
+          | 'gulf_chevron'
+          | 'handy_way_food'
+          | 'heron'
+          | 'holiday_stores'
+          | 'home_depot'
+          | 'husky'
+          | 'hyvees'
+          | 'irving'
+          | 'irving_oil'
+          | 'j_sainsbury'
+          | 'jet_conoco'
+          | 'krogers'
+          | 'kuwait'
+          | 'kwik_trip_inc'
+          | 'lassus'
+          | 'loves_country_stores'
+          | 'mapco_express_inc'
+          | 'marathon_oil'
+          | 'martin_bailey_inc_dba_hucks'
+          | 'maxol'
+          | 'meineke'
+          | 'mfa'
+          | 'mohawk'
+          | 'mr_gas'
+          | 'murco'
+          | 'murphy_oil_canada'
+          | 'murphy_oil_usa_inc'
+          | 'nexcom'
+          | 'nordstrom_oil'
+          | 'olco'
+          | 'pdq_store'
+          | 'pennzoil_products_inc'
+          | 'petro'
+          | 'petro_canada'
+          | 'petro_t'
+          | 'phillips'
+          | 'pilot'
+          | 'pioneer'
+          | 'pure_oil'
+          | 'quaker_state'
+          | 'quarles_oil'
+          | 'quiktrip'
+          | 'racetrac_petroleum_inc'
+          | 'raceway_petroleum'
+          | 'repsol'
+          | 'rudy'
+          | 'safeway'
+          | 'seven_eleven'
+          | 'sheetz'
+          | 'shell'
+          | 'shell_canada'
+          | 'shell_oil'
+          | 'sinclair_oil'
+          | 'southland_oil'
+          | 'spar'
+          | 'speedway'
+          | 'sun_company_inc'
+          | 'suncor_sunoco_canada'
+          | 'tempo'
+          | 'tesco'
+          | 'tesoro_alaska'
+          | 'texaco'
+          | 'the_pantry_inc'
+          | 'thornton_oil'
+          | 'tosco'
+          | 'total'
+          | 'travel_centers_of_america'
+          | 'uk'
+          | 'ultramar_canada'
+          | 'unbranded_or_unassigned'
+          | 'unbranded_unassigned'
+          | 'union_76'
+          | 'united_dairy_farmer'
+          | 'united_refining_kwikfill'
+          | 'us_oil'
+          | 'usa_petroleum'
+          | 'valvoline'
+          | 'vg'
+          | 'w_morrison'
+          | 'warren_equities'
+          | 'wawa'
+          | 'western_energetix'
+          | 'wilco'
+          | 'zions';
+      }
+
+      export namespace Vat {
+        export type IobIndicator =
+          | 'issuer_to_iob'
+          | 'issuer_to_iob_and_incremental_certification'
+          | 'merchant_does_not_agree_to_iob';
       }
     }
 
@@ -5245,6 +5459,11 @@ export namespace ChargeCaptureParams {
     subscription?: PaymentDetails.Subscription;
 
     /**
+     * Fleet data for this PaymentIntent.
+     */
+    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
+
+    /**
      * Money services details for this PaymentIntent.
      */
     money_services?: Emptyable<PaymentDetails.MoneyServices>;
@@ -5804,6 +6023,23 @@ export namespace ChargeCaptureParams {
       starts_at?: number;
     }
 
+    export interface FleetDatum {
+      /**
+       * Primary fuel fields for the transaction.
+       */
+      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
+
+      /**
+       * Station and acceptor location details.
+       */
+      station?: FleetDatum.Station;
+
+      /**
+       * VAT and Invoice on Behalf (IOB) details.
+       */
+      vat?: FleetDatum.Vat;
+    }
+
     export interface MoneyServices {
       /**
        * Account funding transaction details including sender and beneficiary information.
@@ -6340,6 +6576,197 @@ export namespace ChargeCaptureParams {
            */
           phone?: string;
         }
+      }
+    }
+
+    export namespace FleetDatum {
+      export interface PrimaryFuelFields {
+        /**
+         * The fuel brand.
+         */
+        brand?: PrimaryFuelFields.Brand;
+      }
+
+      export interface Station {
+        /**
+         * Additional contact information for the station.
+         */
+        additional_contact_info?: string;
+
+        /**
+         * The customer service phone number of the station.
+         */
+        customer_service_phone_number?: string;
+
+        /**
+         * The partner ID code of the station.
+         */
+        partner_id_code?: string;
+
+        /**
+         * The phone number of the station.
+         */
+        phone_number?: string;
+
+        /**
+         * The physical location of the station.
+         */
+        service_location?: ShippingAddressParam;
+
+        /**
+         * The URL of the station.
+         */
+        url?: string;
+      }
+
+      export interface Vat {
+        /**
+         * Indicates the merchant's agreement for Invoice on Behalf (IOB) VAT processing.
+         */
+        iob_indicator: Vat.IobIndicator;
+      }
+
+      export namespace PrimaryFuelFields {
+        export type Brand =
+          | 'aafes'
+          | 'amerada_hess'
+          | 'amoco_canada'
+          | 'amoco_petroleum_products'
+          | 'arco_products'
+          | 'asda'
+          | 'ashland_oil'
+          | 'bfl'
+          | 'bp_mobil'
+          | 'bp_oil'
+          | 'burrnah_major'
+          | 'butler_arndale'
+          | 'canadian_tire'
+          | 'canadian_turbo'
+          | 'caseys_general_store'
+          | 'cenex'
+          | 'chevron_canada'
+          | 'chevron_usa'
+          | 'circle_k_stores'
+          | 'citgo_petroleum'
+          | 'clark_brands'
+          | 'conoco_canada'
+          | 'conoco_inc'
+          | 'crown_central_petroleum'
+          | 'diamond_shamrock_inc'
+          | 'discount_tire'
+          | 'domo_gas'
+          | 'elf'
+          | 'erickson_oil'
+          | 'esso'
+          | 'esso_canada'
+          | 'exxon'
+          | 'exxonmobil'
+          | 'family_express'
+          | 'fas_gas_oil'
+          | 'federated_coop_sonic'
+          | 'fina'
+          | 'fina_inc'
+          | 'fkg_oil'
+          | 'flare'
+          | 'flying_j_inc'
+          | 'gas_america'
+          | 'gate_petroleum'
+          | 'getty_petroleum'
+          | 'giant_eagle'
+          | 'grow_mark_inc'
+          | 'gulf'
+          | 'gulf_canada'
+          | 'gulf_chevron'
+          | 'handy_way_food'
+          | 'heron'
+          | 'holiday_stores'
+          | 'home_depot'
+          | 'husky'
+          | 'hyvees'
+          | 'irving'
+          | 'irving_oil'
+          | 'j_sainsbury'
+          | 'jet_conoco'
+          | 'krogers'
+          | 'kuwait'
+          | 'kwik_trip_inc'
+          | 'lassus'
+          | 'loves_country_stores'
+          | 'mapco_express_inc'
+          | 'marathon_oil'
+          | 'martin_bailey_inc_dba_hucks'
+          | 'maxol'
+          | 'meineke'
+          | 'mfa'
+          | 'mohawk'
+          | 'mr_gas'
+          | 'murco'
+          | 'murphy_oil_canada'
+          | 'murphy_oil_usa_inc'
+          | 'nexcom'
+          | 'nordstrom_oil'
+          | 'olco'
+          | 'pdq_store'
+          | 'pennzoil_products_inc'
+          | 'petro'
+          | 'petro_canada'
+          | 'petro_t'
+          | 'phillips'
+          | 'pilot'
+          | 'pioneer'
+          | 'pure_oil'
+          | 'quaker_state'
+          | 'quarles_oil'
+          | 'quiktrip'
+          | 'racetrac_petroleum_inc'
+          | 'raceway_petroleum'
+          | 'repsol'
+          | 'rudy'
+          | 'safeway'
+          | 'seven_eleven'
+          | 'sheetz'
+          | 'shell'
+          | 'shell_canada'
+          | 'shell_oil'
+          | 'sinclair_oil'
+          | 'southland_oil'
+          | 'spar'
+          | 'speedway'
+          | 'sun_company_inc'
+          | 'suncor_sunoco_canada'
+          | 'tempo'
+          | 'tesco'
+          | 'tesoro_alaska'
+          | 'texaco'
+          | 'the_pantry_inc'
+          | 'thornton_oil'
+          | 'tosco'
+          | 'total'
+          | 'travel_centers_of_america'
+          | 'uk'
+          | 'ultramar_canada'
+          | 'unbranded_or_unassigned'
+          | 'unbranded_unassigned'
+          | 'union_76'
+          | 'united_dairy_farmer'
+          | 'united_refining_kwikfill'
+          | 'us_oil'
+          | 'usa_petroleum'
+          | 'valvoline'
+          | 'vg'
+          | 'w_morrison'
+          | 'warren_equities'
+          | 'wawa'
+          | 'western_energetix'
+          | 'wilco'
+          | 'zions';
+      }
+
+      export namespace Vat {
+        export type IobIndicator =
+          | 'issuer_to_iob'
+          | 'issuer_to_iob_and_incremental_certification'
+          | 'merchant_does_not_agree_to_iob';
       }
     }
 
