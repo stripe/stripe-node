@@ -4,10 +4,12 @@ import {StripeResource} from './StripeResource.js';
 import {StripeContext} from './StripeContext.js';
 import {NodePlatformFunctions} from './platform/NodePlatformFunctions.js';
 import {
+  BaseAddress,
   RequestAuthenticator,
   UserProvidedConfig,
   RequestData,
   StripeRawError,
+  DEFAULT_BASE_ADDRESSES,
 } from './Types.js';
 import {createWebhooks} from './Webhooks.js';
 import {ApiVersion} from './apiVersion.js';
@@ -1460,6 +1462,15 @@ export class Stripe {
         return INITIAL_NETWORK_RETRY_DELAY_SEC;
     }
     return ((Stripe as unknown) as Record<string, unknown>)[c];
+  }
+
+  resolveBaseAddress(apiBase: BaseAddress): string {
+    // can override host globally, but not locally
+    const instanceHost = this.getApiField('host');
+    if (instanceHost !== DEFAULT_HOST) {
+      return instanceHost;
+    }
+    return DEFAULT_BASE_ADDRESSES[apiBase];
   }
 
   getMaxNetworkRetries(): number {

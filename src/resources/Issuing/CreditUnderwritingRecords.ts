@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {PaginationParams, MetadataParam, Metadata} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CreditUnderwritingRecordResource extends StripeResource {
   /**
@@ -12,16 +11,17 @@ export class CreditUnderwritingRecordResource extends StripeResource {
   list(
     params?: Issuing.CreditUnderwritingRecordListParams,
     options?: RequestOptions
-  ): ApiListPromise<CreditUnderwritingRecord>;
-  list(options?: RequestOptions): ApiListPromise<CreditUnderwritingRecord>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/credit_underwriting_records',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<CreditUnderwritingRecord> {
+    return this._makeRequest(
+      'GET',
+      '/v1/issuing/credit_underwriting_records',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieves a CreditUnderwritingRecord object.
    */
@@ -29,19 +29,14 @@ export class CreditUnderwritingRecordResource extends StripeResource {
     id: string,
     params?: Issuing.CreditUnderwritingRecordRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<CreditUnderwritingRecord>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CreditUnderwritingRecord>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath:
-        '/v1/issuing/credit_underwriting_records/{credit_underwriting_record}',
-    }).call(this, ...args);
+  ): Promise<Response<CreditUnderwritingRecord>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/issuing/credit_underwriting_records/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Update a CreditUnderwritingRecord object to correct mistakes.
    */
@@ -49,19 +44,14 @@ export class CreditUnderwritingRecordResource extends StripeResource {
     id: string,
     params?: Issuing.CreditUnderwritingRecordCorrectParams,
     options?: RequestOptions
-  ): Promise<Response<CreditUnderwritingRecord>>;
-  correct(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CreditUnderwritingRecord>>;
-  correct(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/issuing/credit_underwriting_records/{credit_underwriting_record}/correct',
-    }).call(this, ...args);
+  ): Promise<Response<CreditUnderwritingRecord>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/issuing/credit_underwriting_records/${id}/correct`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Update a CreditUnderwritingRecord object from a decision made on a credit application.
    */
@@ -69,43 +59,41 @@ export class CreditUnderwritingRecordResource extends StripeResource {
     id: string,
     params: Issuing.CreditUnderwritingRecordReportDecisionParams,
     options?: RequestOptions
-  ): Promise<Response<CreditUnderwritingRecord>>;
-  reportDecision(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/issuing/credit_underwriting_records/{credit_underwriting_record}/report_decision',
-    }).call(this, ...args);
+  ): Promise<Response<CreditUnderwritingRecord>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/issuing/credit_underwriting_records/${id}/report_decision`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Creates a CreditUnderwritingRecord object with information about a credit application submission.
    */
   createFromApplication(
     params: Issuing.CreditUnderwritingRecordCreateFromApplicationParams,
     options?: RequestOptions
-  ): Promise<Response<CreditUnderwritingRecord>>;
-  createFromApplication(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/issuing/credit_underwriting_records/create_from_application',
-    }).call(this, ...args);
+  ): Promise<Response<CreditUnderwritingRecord>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/issuing/credit_underwriting_records/create_from_application',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Creates a CreditUnderwritingRecord object from an underwriting decision coming from a proactive review of an existing accountholder.
    */
   createFromProactiveReview(
     params: Issuing.CreditUnderwritingRecordCreateFromProactiveReviewParams,
     options?: RequestOptions
-  ): Promise<Response<CreditUnderwritingRecord>>;
-  createFromProactiveReview(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/issuing/credit_underwriting_records/create_from_proactive_review',
-    }).call(this, ...args);
+  ): Promise<Response<CreditUnderwritingRecord>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/issuing/credit_underwriting_records/create_from_proactive_review',
+      params,
+      options
+    ) as any;
   }
 }
 export interface CreditUnderwritingRecord {

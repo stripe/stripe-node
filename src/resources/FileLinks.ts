@@ -10,7 +10,6 @@ import {
   Metadata,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class FileLinkResource extends StripeResource {
   /**
@@ -19,30 +18,20 @@ export class FileLinkResource extends StripeResource {
   list(
     params?: FileLinkListParams,
     options?: RequestOptions
-  ): ApiListPromise<FileLink>;
-  list(options?: RequestOptions): ApiListPromise<FileLink>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/file_links',
+  ): ApiListPromise<FileLink> {
+    return this._makeRequest('GET', '/v1/file_links', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Creates a new file link object.
    */
   create(
     params: FileLinkCreateParams,
     options?: RequestOptions
-  ): Promise<Response<FileLink>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/file_links'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<FileLink>> {
+    return this._makeRequest('POST', '/v1/file_links', params, options) as any;
   }
-
   /**
    * Retrieves the file link with the given ID.
    */
@@ -50,15 +39,14 @@ export class FileLinkResource extends StripeResource {
     id: string,
     params?: FileLinkRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<FileLink>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<FileLink>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/file_links/{link}',
-    }).call(this, ...args);
+  ): Promise<Response<FileLink>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/file_links/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates an existing file link object. Expired links can no longer be updated.
    */
@@ -66,12 +54,13 @@ export class FileLinkResource extends StripeResource {
     id: string,
     params?: FileLinkUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<FileLink>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/file_links/{link}',
-    }).call(this, ...args);
+  ): Promise<Response<FileLink>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/file_links/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface FileLink {

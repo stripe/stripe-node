@@ -4,7 +4,6 @@ import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class FinancialAccountResource extends StripeResource {
   /**
@@ -13,16 +12,17 @@ export class FinancialAccountResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.FinancialAccountListParams,
     options?: RequestOptions
-  ): ApiListPromise<FinancialAccount>;
-  list(options?: RequestOptions): ApiListPromise<FinancialAccount>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/financial_accounts',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<FinancialAccount> {
+    return this._makeRequest(
+      'GET',
+      '/v2/money_management/financial_accounts',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Creates a new FinancialAccount.
    * @throws Stripe.AlreadyExistsError
@@ -31,14 +31,14 @@ export class FinancialAccountResource extends StripeResource {
   create(
     params: V2.MoneyManagement.FinancialAccountCreateParams,
     options?: RequestOptions
-  ): Promise<Response<FinancialAccount>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/financial_accounts',
-    }).call(this, ...args);
+  ): Promise<Response<FinancialAccount>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/money_management/financial_accounts',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the details of an existing FinancialAccount.
    */
@@ -46,18 +46,14 @@ export class FinancialAccountResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.FinancialAccountRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<FinancialAccount>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<FinancialAccount>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/financial_accounts/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<FinancialAccount>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/money_management/financial_accounts/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates an existing FinancialAccount.
    */
@@ -65,14 +61,14 @@ export class FinancialAccountResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.FinancialAccountUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<FinancialAccount>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/financial_accounts/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<FinancialAccount>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/money_management/financial_accounts/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Closes a FinancialAccount with or without forwarding settings.
    * @throws Stripe.NonZeroBalanceError
@@ -81,16 +77,13 @@ export class FinancialAccountResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.FinancialAccountCloseParams,
     options?: RequestOptions
-  ): Promise<Response<FinancialAccount>>;
-  close(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<FinancialAccount>>;
-  close(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/financial_accounts/{id}/close',
-    }).call(this, ...args);
+  ): Promise<Response<FinancialAccount>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/money_management/financial_accounts/${id}/close`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface FinancialAccount {

@@ -5,7 +5,6 @@ import {FinancialAddressCreditSimulation} from './../../V2/FinancialAddressCredi
 import {FinancialAddressGeneratedMicrodeposits} from './../../V2/FinancialAddressGeneratedMicrodeposits.js';
 import {V2Amount} from './../V2Amounts.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class FinancialAddressResource extends StripeResource {
   /**
@@ -16,14 +15,14 @@ export class FinancialAddressResource extends StripeResource {
     id: string,
     params: V2.TestHelpers.FinancialAddressCreditParams,
     options?: RequestOptions
-  ): Promise<Response<FinancialAddressCreditSimulation>>;
-  credit(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/test_helpers/financial_addresses/{id}/credit',
-    }).call(this, ...args);
+  ): Promise<Response<FinancialAddressCreditSimulation>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/test_helpers/financial_addresses/${id}/credit`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Generates microdeposits for a FinancialAddress in a Sandbox environment.
    * @throws Stripe.FeatureNotEnabledError
@@ -32,17 +31,13 @@ export class FinancialAddressResource extends StripeResource {
     id: string,
     params?: V2.TestHelpers.FinancialAddressGenerateMicrodepositsParams,
     options?: RequestOptions
-  ): Promise<Response<FinancialAddressGeneratedMicrodeposits>>;
-  generateMicrodeposits(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<FinancialAddressGeneratedMicrodeposits>>;
-  generateMicrodeposits(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v2/test_helpers/financial_addresses/{id}/generate_microdeposits',
-    }).call(this, ...args);
+  ): Promise<Response<FinancialAddressGeneratedMicrodeposits>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/test_helpers/financial_addresses/${id}/generate_microdeposits`,
+      params,
+      options
+    ) as any;
   }
 }
 export namespace V2 {

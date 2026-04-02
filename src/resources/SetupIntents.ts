@@ -18,7 +18,6 @@ import {
   Metadata,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class SetupIntentResource extends StripeResource {
   /**
@@ -27,16 +26,11 @@ export class SetupIntentResource extends StripeResource {
   list(
     params?: SetupIntentListParams,
     options?: RequestOptions
-  ): ApiListPromise<SetupIntent>;
-  list(options?: RequestOptions): ApiListPromise<SetupIntent>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/setup_intents',
+  ): ApiListPromise<SetupIntent> {
+    return this._makeRequest('GET', '/v1/setup_intents', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Creates a SetupIntent object.
    *
@@ -46,15 +40,14 @@ export class SetupIntentResource extends StripeResource {
   create(
     params?: SetupIntentCreateParams,
     options?: RequestOptions
-  ): Promise<Response<SetupIntent>>;
-  create(options?: RequestOptions): Promise<Response<SetupIntent>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/setup_intents'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<SetupIntent>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/setup_intents',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the details of a SetupIntent that has previously been created.
    *
@@ -66,18 +59,14 @@ export class SetupIntentResource extends StripeResource {
     id: string,
     params?: SetupIntentRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<SetupIntent>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<SetupIntent>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/setup_intents/{intent}',
-    }).call(this, ...args);
+  ): Promise<Response<SetupIntent>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/setup_intents/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates a SetupIntent object.
    */
@@ -85,14 +74,14 @@ export class SetupIntentResource extends StripeResource {
     id: string,
     params?: SetupIntentUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<SetupIntent>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/setup_intents/{intent}',
-    }).call(this, ...args);
+  ): Promise<Response<SetupIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/setup_intents/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * You can cancel a SetupIntent object when it's in one of these statuses: requires_payment_method, requires_confirmation, or requires_action.
    *
@@ -102,15 +91,14 @@ export class SetupIntentResource extends StripeResource {
     id: string,
     params?: SetupIntentCancelParams,
     options?: RequestOptions
-  ): Promise<Response<SetupIntent>>;
-  cancel(id: string, options?: RequestOptions): Promise<Response<SetupIntent>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/setup_intents/{intent}/cancel',
-    }).call(this, ...args);
+  ): Promise<Response<SetupIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/setup_intents/${id}/cancel`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Confirm that your customer intends to set up the current or
    * provided payment method. For example, you would confirm a SetupIntent
@@ -131,15 +119,14 @@ export class SetupIntentResource extends StripeResource {
     id: string,
     params?: SetupIntentConfirmParams,
     options?: RequestOptions
-  ): Promise<Response<SetupIntent>>;
-  confirm(id: string, options?: RequestOptions): Promise<Response<SetupIntent>>;
-  confirm(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/setup_intents/{intent}/confirm',
-    }).call(this, ...args);
+  ): Promise<Response<SetupIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/setup_intents/${id}/confirm`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Verifies microdeposits on a SetupIntent object.
    */
@@ -147,16 +134,13 @@ export class SetupIntentResource extends StripeResource {
     id: string,
     params?: SetupIntentVerifyMicrodepositsParams,
     options?: RequestOptions
-  ): Promise<Response<SetupIntent>>;
-  verifyMicrodeposits(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<SetupIntent>>;
-  verifyMicrodeposits(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/setup_intents/{intent}/verify_microdeposits',
-    }).call(this, ...args);
+  ): Promise<Response<SetupIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/setup_intents/${id}/verify_microdeposits`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface SetupIntent {

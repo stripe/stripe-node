@@ -20,7 +20,6 @@ import {
   Metadata,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CreditNoteResource extends StripeResource {
   /**
@@ -29,12 +28,8 @@ export class CreditNoteResource extends StripeResource {
   list(
     params?: CreditNoteListParams,
     options?: RequestOptions
-  ): ApiListPromise<CreditNote>;
-  list(options?: RequestOptions): ApiListPromise<CreditNote>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/credit_notes',
+  ): ApiListPromise<CreditNote> {
+    return this._makeRequest('GET', '/v1/credit_notes', params, options, {
       methodType: 'list',
       responseSchema: {
         kind: 'object',
@@ -66,9 +61,8 @@ export class CreditNoteResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Issue a credit note to adjust the amount of a finalized invoice. A credit note will first reduce the invoice's amount_remaining (and amount_due), but not below zero.
    * This amount is indicated by the credit note's pre_payment_amount. The excess amount is indicated by post_payment_amount, and it can result in any combination of the following:
@@ -87,11 +81,8 @@ export class CreditNoteResource extends StripeResource {
   create(
     params: CreditNoteCreateParams,
     options?: RequestOptions
-  ): Promise<Response<CreditNote>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/credit_notes',
+  ): Promise<Response<CreditNote>> {
+    return this._makeRequest('POST', '/v1/credit_notes', params, options, {
       requestSchema: {
         kind: 'object',
         fields: {
@@ -126,9 +117,8 @@ export class CreditNoteResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieves the credit note object with the given identifier.
    */
@@ -136,12 +126,8 @@ export class CreditNoteResource extends StripeResource {
     id: string,
     params?: CreditNoteRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<CreditNote>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<CreditNote>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/credit_notes/{id}',
+  ): Promise<Response<CreditNote>> {
+    return this._makeRequest('GET', `/v1/credit_notes/${id}`, params, options, {
       responseSchema: {
         kind: 'object',
         fields: {
@@ -164,9 +150,8 @@ export class CreditNoteResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Updates an existing credit note.
    */
@@ -174,25 +159,28 @@ export class CreditNoteResource extends StripeResource {
     id: string,
     params?: CreditNoteUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<CreditNote>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/credit_notes/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    unit_amount_decimal: {
-                      kind: 'nullable',
-                      inner: {kind: 'decimal_string'},
+  ): Promise<Response<CreditNote>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/credit_notes/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      unit_amount_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
@@ -200,47 +188,49 @@ export class CreditNoteResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Get a preview of a credit note without creating it.
    */
   preview(
     params: CreditNotePreviewParams,
     options?: RequestOptions
-  ): Promise<Response<CreditNote>>;
-  preview(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/credit_notes/preview',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+  ): Promise<Response<CreditNote>> {
+    return this._makeRequest(
+      'GET',
+      '/v1/credit_notes/preview',
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+              },
             },
           },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    unit_amount_decimal: {
-                      kind: 'nullable',
-                      inner: {kind: 'decimal_string'},
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      unit_amount_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
@@ -248,10 +238,9 @@ export class CreditNoteResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Marks a credit note as void. Learn more about [voiding credit notes](https://docs.stripe.com/docs/billing/invoices/credit-notes#voiding).
    */
@@ -259,29 +248,28 @@ export class CreditNoteResource extends StripeResource {
     id: string,
     params?: CreditNoteVoidCreditNoteParams,
     options?: RequestOptions
-  ): Promise<Response<CreditNote>>;
-  voidCreditNote(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CreditNote>>;
-  voidCreditNote(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/credit_notes/{id}/void',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    unit_amount_decimal: {
-                      kind: 'nullable',
-                      inner: {kind: 'decimal_string'},
+  ): Promise<Response<CreditNote>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/credit_notes/${id}/void`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      unit_amount_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
@@ -289,52 +277,54 @@ export class CreditNoteResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * When retrieving a credit note preview, you'll get a lines property containing the first handful of those items. This URL you can retrieve the full (paginated) list of line items.
    */
   listPreviewLineItems(
     params: CreditNoteListPreviewLineItemsParams,
     options?: RequestOptions
-  ): ApiListPromise<CreditNoteLineItem>;
-  listPreviewLineItems(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/credit_notes/preview/lines',
-      methodType: 'list',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+  ): ApiListPromise<CreditNoteLineItem> {
+    return this._makeRequest(
+      'GET',
+      '/v1/credit_notes/preview/lines',
+      params,
+      options,
+      {
+        methodType: 'list',
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+              },
             },
           },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          data: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                unit_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  unit_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
   serializeBatchCreate(
     params: Record<string, unknown> = {},
@@ -361,34 +351,33 @@ export class CreditNoteResource extends StripeResource {
     id: string,
     params?: CreditNoteListLineItemsParams,
     options?: RequestOptions
-  ): ApiListPromise<CreditNoteLineItem>;
-  listLineItems(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<CreditNoteLineItem>;
-  listLineItems(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/credit_notes/{credit_note}/lines',
-      methodType: 'list',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          data: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                unit_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
+  ): ApiListPromise<CreditNoteLineItem> {
+    return this._makeRequest(
+      'GET',
+      `/v1/credit_notes/${id}/lines`,
+      params,
+      options,
+      {
+        methodType: 'list',
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  unit_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface CreditNote {

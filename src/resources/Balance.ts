@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {RequestOptions, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class BalanceResource extends StripeResource {
   /**
@@ -12,13 +11,8 @@ export class BalanceResource extends StripeResource {
   retrieve(
     params?: BalanceRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Balance>>;
-  retrieve(options?: RequestOptions): Promise<Response<Balance>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'GET', fullPath: '/v1/balance'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Balance>> {
+    return this._makeRequest('GET', '/v1/balance', params, options) as any;
   }
 }
 export interface Balance {

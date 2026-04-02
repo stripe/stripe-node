@@ -3,7 +3,6 @@
 import {StripeResource} from '../StripeResource.js';
 import {PaginationParams} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class FxQuoteResource extends StripeResource {
   /**
@@ -12,30 +11,20 @@ export class FxQuoteResource extends StripeResource {
   list(
     params?: FxQuoteListParams,
     options?: RequestOptions
-  ): ApiListPromise<FxQuote>;
-  list(options?: RequestOptions): ApiListPromise<FxQuote>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/fx_quotes',
+  ): ApiListPromise<FxQuote> {
+    return this._makeRequest('GET', '/v1/fx_quotes', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Creates an FX Quote object
    */
   create(
     params: FxQuoteCreateParams,
     options?: RequestOptions
-  ): Promise<Response<FxQuote>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/fx_quotes'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<FxQuote>> {
+    return this._makeRequest('POST', '/v1/fx_quotes', params, options) as any;
   }
-
   /**
    * Retrieve an FX Quote object
    */
@@ -43,13 +32,13 @@ export class FxQuoteResource extends StripeResource {
     id: string,
     params?: FxQuoteRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<FxQuote>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<FxQuote>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'GET', fullPath: '/v1/fx_quotes/{id}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<FxQuote>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/fx_quotes/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface FxQuote {

@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class FinancingSummaryResource extends StripeResource {
   /**
@@ -11,13 +10,13 @@ export class FinancingSummaryResource extends StripeResource {
   retrieve(
     params?: Capital.FinancingSummaryRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<FinancingSummary>>;
-  retrieve(options?: RequestOptions): Promise<Response<FinancingSummary>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/capital/financing_summary',
-    }).call(this, ...args);
+  ): Promise<Response<FinancingSummary>> {
+    return this._makeRequest(
+      'GET',
+      '/v1/capital/financing_summary',
+      params,
+      options
+    ) as any;
   }
 }
 export interface FinancingSummary {

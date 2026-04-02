@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../../../StripeResource.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class UsBankAccountResource extends StripeResource {
   /**
@@ -11,16 +10,17 @@ export class UsBankAccountResource extends StripeResource {
   list(
     params?: V2.Core.Vault.UsBankAccountListParams,
     options?: RequestOptions
-  ): ApiListPromise<UsBankAccount>;
-  list(options?: RequestOptions): ApiListPromise<UsBankAccount>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/vault/us_bank_accounts',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<UsBankAccount> {
+    return this._makeRequest(
+      'GET',
+      '/v2/core/vault/us_bank_accounts',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Create a USBankAccount object.
    * @throws Stripe.BlockedByStripeError
@@ -30,14 +30,14 @@ export class UsBankAccountResource extends StripeResource {
   create(
     params: V2.Core.Vault.UsBankAccountCreateParams,
     options?: RequestOptions
-  ): Promise<Response<UsBankAccount>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/vault/us_bank_accounts',
-    }).call(this, ...args);
+  ): Promise<Response<UsBankAccount>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/core/vault/us_bank_accounts',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a USBankAccount object.
    */
@@ -45,18 +45,14 @@ export class UsBankAccountResource extends StripeResource {
     id: string,
     params?: V2.Core.Vault.UsBankAccountRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<UsBankAccount>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<UsBankAccount>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/vault/us_bank_accounts/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<UsBankAccount>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/core/vault/us_bank_accounts/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Update a USBankAccount object. This is limited to supplying a previously empty routing_number field.
    * @throws Stripe.BlockedByStripeError
@@ -67,14 +63,14 @@ export class UsBankAccountResource extends StripeResource {
     id: string,
     params?: V2.Core.Vault.UsBankAccountUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<UsBankAccount>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/vault/us_bank_accounts/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<UsBankAccount>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/vault/us_bank_accounts/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Archive a USBankAccount object. USBankAccount objects will not be automatically archived by Stripe.
    * Archived USBankAccount objects cannot be used as outbound destinations
@@ -85,18 +81,14 @@ export class UsBankAccountResource extends StripeResource {
     id: string,
     params?: V2.Core.Vault.UsBankAccountArchiveParams,
     options?: RequestOptions
-  ): Promise<Response<UsBankAccount>>;
-  archive(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<UsBankAccount>>;
-  archive(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/vault/us_bank_accounts/{id}/archive',
-    }).call(this, ...args);
+  ): Promise<Response<UsBankAccount>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/vault/us_bank_accounts/${id}/archive`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Confirm microdeposits amounts or descriptor code that you have received from the Send Microdeposits request. Once you correctly confirm this, this US Bank Account will be verified and eligible to transfer funds with.
    */
@@ -104,18 +96,14 @@ export class UsBankAccountResource extends StripeResource {
     id: string,
     params?: V2.Core.Vault.UsBankAccountConfirmMicrodepositsParams,
     options?: RequestOptions
-  ): Promise<Response<UsBankAccount>>;
-  confirmMicrodeposits(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<UsBankAccount>>;
-  confirmMicrodeposits(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/vault/us_bank_accounts/{id}/confirm_microdeposits',
-    }).call(this, ...args);
+  ): Promise<Response<UsBankAccount>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/vault/us_bank_accounts/${id}/confirm_microdeposits`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Send microdeposits in order to verify your US Bank Account so it is eligible to transfer funds. This will start the verification process and you must Confirm Microdeposits to successfully verify your US Bank Account.
    */
@@ -123,16 +111,13 @@ export class UsBankAccountResource extends StripeResource {
     id: string,
     params?: V2.Core.Vault.UsBankAccountSendMicrodepositsParams,
     options?: RequestOptions
-  ): Promise<Response<UsBankAccount>>;
-  sendMicrodeposits(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<UsBankAccount>>;
-  sendMicrodeposits(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/vault/us_bank_accounts/{id}/send_microdeposits',
-    }).call(this, ...args);
+  ): Promise<Response<UsBankAccount>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/vault/us_bank_accounts/${id}/send_microdeposits`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface UsBankAccount {

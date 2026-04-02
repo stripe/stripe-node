@@ -3,7 +3,6 @@
 import {StripeResource} from '../StripeResource.js';
 import {Emptyable} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class AccountSessionResource extends StripeResource {
   /**
@@ -12,12 +11,13 @@ export class AccountSessionResource extends StripeResource {
   create(
     params: AccountSessionCreateParams,
     options?: RequestOptions
-  ): Promise<Response<AccountSession>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/account_sessions',
-    }).call(this, ...args);
+  ): Promise<Response<AccountSession>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/account_sessions',
+      params,
+      options
+    ) as any;
   }
 }
 export interface AccountSession {

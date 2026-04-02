@@ -5,7 +5,6 @@ import {PaymentMethod} from './PaymentMethods.js';
 import {Mandate} from './Mandates.js';
 import {Metadata, Address} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PaymentAttemptRecordResource extends StripeResource {
   /**
@@ -14,15 +13,17 @@ export class PaymentAttemptRecordResource extends StripeResource {
   list(
     params: PaymentAttemptRecordListParams,
     options?: RequestOptions
-  ): ApiListPromise<PaymentAttemptRecord>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payment_attempt_records',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<PaymentAttemptRecord> {
+    return this._makeRequest(
+      'GET',
+      '/v1/payment_attempt_records',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieves a Payment Attempt Record with the given ID
    */
@@ -30,16 +31,13 @@ export class PaymentAttemptRecordResource extends StripeResource {
     id: string,
     params?: PaymentAttemptRecordRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentAttemptRecord>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentAttemptRecord>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payment_attempt_records/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentAttemptRecord>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/payment_attempt_records/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface PaymentAttemptRecord {

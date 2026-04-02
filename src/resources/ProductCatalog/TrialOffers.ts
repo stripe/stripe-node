@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {Price} from './../Prices.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class TrialOfferResource extends StripeResource {
   /**
@@ -12,12 +11,13 @@ export class TrialOfferResource extends StripeResource {
   create(
     params: ProductCatalog.TrialOfferCreateParams,
     options?: RequestOptions
-  ): Promise<Response<TrialOffer>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/product_catalog/trial_offers',
-    }).call(this, ...args);
+  ): Promise<Response<TrialOffer>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/product_catalog/trial_offers',
+      params,
+      options
+    ) as any;
   }
 }
 export interface TrialOffer {

@@ -1666,8 +1666,8 @@ This release changes the pinned API version to 2025-05-28.preview.
   * Add support for `allow_redisplay` on `Terminal.ReaderProcessPaymentIntentParams.process_config` and `Terminal.ReaderProcessSetupIntentParams`
   * Add support for new value `international_transaction` on enum `Treasury.ReceivedCredit.failure_code`
   * Add support for new value `2024-09-30.acacia` on enum `WebhookEndpointCreateParams.api_version`
-  * Add support for new Usage Billing APIs `Billing.MeterEvent`, `Billing.MeterEventAdjustments`, `Billing.MeterEventSession`, `Billing.MeterEventStream` and the new Events API `Core.Events` in the [v2 namespace ](https://docs.corp.stripe.com/api-v2-overview)
-  * Add method `parseThinEvent()` on the `Stripe` class to parse [thin events](https://docs.corp.stripe.com/event-destinations#events-overview).
+  * Add support for new Usage Billing APIs `Billing.MeterEvent`, `Billing.MeterEventAdjustments`, `Billing.MeterEventSession`, `Billing.MeterEventStream` and the new Events API `Core.Events` in the [v2 namespace ](https://docs.stripe.com/api-v2-overview)
+  * Add method `parseThinEvent()` on the `Stripe` class to parse [thin events](https://docs.stripe.com/event-destinations#events-overview).
   * Add method [rawRequest()](https://github.com/stripe/stripe-node/tree/master?tab=readme-ov-file#custom-requests) on the `Stripe` class that takes a HTTP method type, url and relevant parameters to make requests to the Stripe API that are not yet supported in the SDK.
 
   ### Changes

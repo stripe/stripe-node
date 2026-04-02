@@ -4,7 +4,6 @@ import {StripeResource} from '../../StripeResource.js';
 import {BalanceTransaction} from './../BalanceTransactions.js';
 import {PaginationParams, RangeQueryParam} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class FraudLiabilityDebitResource extends StripeResource {
   /**
@@ -13,16 +12,17 @@ export class FraudLiabilityDebitResource extends StripeResource {
   list(
     params?: Issuing.FraudLiabilityDebitListParams,
     options?: RequestOptions
-  ): ApiListPromise<FraudLiabilityDebit>;
-  list(options?: RequestOptions): ApiListPromise<FraudLiabilityDebit>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/fraud_liability_debits',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<FraudLiabilityDebit> {
+    return this._makeRequest(
+      'GET',
+      '/v1/issuing/fraud_liability_debits',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieves an Issuing FraudLiabilityDebit object.
    */
@@ -30,16 +30,13 @@ export class FraudLiabilityDebitResource extends StripeResource {
     id: string,
     params?: Issuing.FraudLiabilityDebitRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<FraudLiabilityDebit>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<FraudLiabilityDebit>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/fraud_liability_debits/{fraud_liability_debit}',
-    }).call(this, ...args);
+  ): Promise<Response<FraudLiabilityDebit>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/issuing/fraud_liability_debits/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface FraudLiabilityDebit {

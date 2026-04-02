@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class OutboundPaymentQuoteResource extends StripeResource {
   /**
@@ -13,14 +12,14 @@ export class OutboundPaymentQuoteResource extends StripeResource {
   create(
     params: V2.MoneyManagement.OutboundPaymentQuoteCreateParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundPaymentQuote>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/outbound_payment_quotes',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundPaymentQuote>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/money_management/outbound_payment_quotes',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the details of an existing OutboundPaymentQuote by passing the unique OutboundPaymentQuote ID.
    */
@@ -28,16 +27,13 @@ export class OutboundPaymentQuoteResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.OutboundPaymentQuoteRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundPaymentQuote>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<OutboundPaymentQuote>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/outbound_payment_quotes/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundPaymentQuote>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/money_management/outbound_payment_quotes/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface OutboundPaymentQuote {

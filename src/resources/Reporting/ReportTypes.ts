@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ReportTypeResource extends StripeResource {
   /**
@@ -11,16 +10,17 @@ export class ReportTypeResource extends StripeResource {
   list(
     params?: Reporting.ReportTypeListParams,
     options?: RequestOptions
-  ): ApiListPromise<ReportType>;
-  list(options?: RequestOptions): ApiListPromise<ReportType>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/reporting/report_types',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<ReportType> {
+    return this._makeRequest(
+      'GET',
+      '/v1/reporting/report_types',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieves the details of a Report Type. (Certain report types require a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
    */
@@ -28,13 +28,13 @@ export class ReportTypeResource extends StripeResource {
     id: string,
     params?: Reporting.ReportTypeRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ReportType>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<ReportType>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/reporting/report_types/{report_type}',
-    }).call(this, ...args);
+  ): Promise<Response<ReportType>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/reporting/report_types/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface ReportType {

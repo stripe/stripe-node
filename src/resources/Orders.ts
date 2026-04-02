@@ -19,7 +19,6 @@ import {
   Metadata,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class OrderResource extends StripeResource {
   /**
@@ -28,12 +27,8 @@ export class OrderResource extends StripeResource {
   list(
     params?: OrderListParams,
     options?: RequestOptions
-  ): ApiListPromise<Order>;
-  list(options?: RequestOptions): ApiListPromise<Order>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/orders',
+  ): ApiListPromise<Order> {
+    return this._makeRequest('GET', '/v1/orders', params, options, {
       methodType: 'list',
       responseSchema: {
         kind: 'object',
@@ -117,20 +112,16 @@ export class OrderResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Creates a new open order object.
    */
   create(
     params: OrderCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Order>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/orders',
+  ): Promise<Response<Order>> {
+    return this._makeRequest('POST', '/v1/orders', params, options, {
       requestSchema: {
         kind: 'object',
         fields: {
@@ -222,9 +213,8 @@ export class OrderResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieves the details of an existing order. Supply the unique order ID from either an order creation request or the order list, and Stripe will return the corresponding order information.
    */
@@ -232,12 +222,8 @@ export class OrderResource extends StripeResource {
     id: string,
     params?: OrderRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Order>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Order>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/orders/{id}',
+  ): Promise<Response<Order>> {
+    return this._makeRequest('GET', `/v1/orders/${id}`, params, options, {
       responseSchema: {
         kind: 'object',
         fields: {
@@ -312,9 +298,8 @@ export class OrderResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Updates the specific order by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    */
@@ -322,11 +307,8 @@ export class OrderResource extends StripeResource {
     id: string,
     params?: OrderUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Order>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/orders/{id}',
+  ): Promise<Response<Order>> {
+    return this._makeRequest('POST', `/v1/orders/${id}`, params, options, {
       requestSchema: {
         kind: 'object',
         fields: {
@@ -418,9 +400,8 @@ export class OrderResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Submitting an Order transitions the status to processing and creates a PaymentIntent object so the order can be paid. If the Order has an amount_total of 0, no PaymentIntent object will be created. Once the order is submitted, its contents cannot be changed, unless the [reopen](https://docs.stripe.com/api#reopen_order) method is called.
    */
@@ -428,74 +409,77 @@ export class OrderResource extends StripeResource {
     id: string,
     params: OrderSubmitParams,
     options?: RequestOptions
-  ): Promise<Response<Order>>;
-  submit(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/orders/{id}/submit',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          line_items: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    price: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          currency_options: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                tiers: {
-                                  kind: 'array',
-                                  element: {
-                                    kind: 'object',
-                                    fields: {
-                                      flat_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
-                                      },
-                                      unit_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
+  ): Promise<Response<Order>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/orders/${id}/submit`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            line_items: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      price: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            currency_options: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  tiers: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        flat_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
+                                        unit_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
                                       },
                                     },
                                   },
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                              },
-                            },
-                          },
-                          tiers: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                flat_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
+                                  unit_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
                                 },
                               },
                             },
-                          },
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
+                            tiers: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  flat_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                  unit_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                },
+                              },
+                            },
+                            unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
                           },
                         },
                       },
@@ -506,8 +490,8 @@ export class OrderResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface Order {

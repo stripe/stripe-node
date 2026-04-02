@@ -14,7 +14,6 @@ import {
   Address,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PaymentMethodResource extends StripeResource {
   /**
@@ -23,16 +22,11 @@ export class PaymentMethodResource extends StripeResource {
   list(
     params?: PaymentMethodListParams,
     options?: RequestOptions
-  ): ApiListPromise<PaymentMethod>;
-  list(options?: RequestOptions): ApiListPromise<PaymentMethod>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payment_methods',
+  ): ApiListPromise<PaymentMethod> {
+    return this._makeRequest('GET', '/v1/payment_methods', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Creates a PaymentMethod object. Read the [Stripe.js reference](https://docs.stripe.com/docs/stripe-js/reference#stripe-create-payment-method) to learn how to create PaymentMethods via Stripe.js.
    *
@@ -41,15 +35,14 @@ export class PaymentMethodResource extends StripeResource {
   create(
     params?: PaymentMethodCreateParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethod>>;
-  create(options?: RequestOptions): Promise<Response<PaymentMethod>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/payment_methods'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<PaymentMethod>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/payment_methods',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves a PaymentMethod object attached to the StripeAccount. To retrieve a payment method attached to a Customer, you should use [Retrieve a Customer's PaymentMethods](https://docs.stripe.com/docs/api/payment_methods/customer)
    */
@@ -57,18 +50,14 @@ export class PaymentMethodResource extends StripeResource {
     id: string,
     params?: PaymentMethodRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethod>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentMethod>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payment_methods/{payment_method}',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentMethod>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/payment_methods/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates a PaymentMethod object. A PaymentMethod must be attached to a customer to be updated.
    */
@@ -76,14 +65,14 @@ export class PaymentMethodResource extends StripeResource {
     id: string,
     params?: PaymentMethodUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethod>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payment_methods/{payment_method}',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentMethod>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_methods/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Attaches a PaymentMethod object to a Customer.
    *
@@ -103,18 +92,14 @@ export class PaymentMethodResource extends StripeResource {
     id: string,
     params?: PaymentMethodAttachParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethod>>;
-  attach(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentMethod>>;
-  attach(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payment_methods/{payment_method}/attach',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentMethod>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_methods/${id}/attach`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Detaches a PaymentMethod object from a Customer. After a PaymentMethod is detached, it can no longer be used for a payment or re-attached to a Customer.
    */
@@ -122,16 +107,13 @@ export class PaymentMethodResource extends StripeResource {
     id: string,
     params?: PaymentMethodDetachParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethod>>;
-  detach(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentMethod>>;
-  detach(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payment_methods/{payment_method}/detach',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentMethod>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_methods/${id}/detach`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface PaymentMethod {

@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {CustomerCashBalanceTransaction} from './../CustomerCashBalanceTransactions.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CustomerResource extends StripeResource {
   /**
@@ -13,12 +12,13 @@ export class CustomerResource extends StripeResource {
     id: string,
     params: TestHelpers.CustomerFundCashBalanceParams,
     options?: RequestOptions
-  ): Promise<Response<CustomerCashBalanceTransaction>>;
-  fundCashBalance(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/customers/{customer}/fund_cash_balance',
-    }).call(this, ...args);
+  ): Promise<Response<CustomerCashBalanceTransaction>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/customers/${id}/fund_cash_balance`,
+      params,
+      options
+    ) as any;
   }
 }
 export namespace TestHelpers {
