@@ -60,7 +60,7 @@ export class CreditNoteResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Issue a credit note to adjust the amount of a finalized invoice. A credit note will first reduce the invoice's amount_remaining (and amount_due), but not below zero.
@@ -116,7 +116,7 @@ export class CreditNoteResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Retrieves the credit note object with the given identifier.
@@ -149,7 +149,7 @@ export class CreditNoteResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Updates an existing credit note.
@@ -188,7 +188,7 @@ export class CreditNoteResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Get a preview of a credit note without creating it.
@@ -238,7 +238,7 @@ export class CreditNoteResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Marks a credit note as void. Learn more about [voiding credit notes](https://docs.stripe.com/docs/billing/invoices/credit-notes#voiding).
@@ -277,7 +277,7 @@ export class CreditNoteResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * When retrieving a credit note preview, you'll get a lines property containing the first handful of those items. This URL you can retrieve the full (paginated) list of line items.
@@ -323,7 +323,7 @@ export class CreditNoteResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * When retrieving a credit note, you'll get a lines property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
@@ -358,7 +358,7 @@ export class CreditNoteResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
 }
 export interface CreditNote {

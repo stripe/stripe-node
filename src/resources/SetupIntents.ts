@@ -29,7 +29,7 @@ export class SetupIntentResource extends StripeResource {
   ): ApiListPromise<SetupIntent> {
     return this._makeRequest('GET', '/v1/setup_intents', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Creates a SetupIntent object.
@@ -41,7 +41,12 @@ export class SetupIntentResource extends StripeResource {
     params?: SetupIntentCreateParams,
     options?: RequestOptions
   ): Promise<Response<SetupIntent>> {
-    return this._makeRequest('POST', '/v1/setup_intents', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/setup_intents',
+      params,
+      options
+    ) as any;
   }
   /**
    * Retrieves the details of a SetupIntent that has previously been created.
@@ -55,7 +60,12 @@ export class SetupIntentResource extends StripeResource {
     params?: SetupIntentRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<SetupIntent>> {
-    return this._makeRequest('GET', `/v1/setup_intents/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/setup_intents/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Updates a SetupIntent object.
@@ -70,7 +80,7 @@ export class SetupIntentResource extends StripeResource {
       `/v1/setup_intents/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * You can cancel a SetupIntent object when it's in one of these statuses: requires_payment_method, requires_confirmation, or requires_action.
@@ -87,7 +97,7 @@ export class SetupIntentResource extends StripeResource {
       `/v1/setup_intents/${id}/cancel`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Confirm that your customer intends to set up the current or
@@ -115,7 +125,7 @@ export class SetupIntentResource extends StripeResource {
       `/v1/setup_intents/${id}/confirm`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Verifies microdeposits on a SetupIntent object.
@@ -130,7 +140,7 @@ export class SetupIntentResource extends StripeResource {
       `/v1/setup_intents/${id}/verify_microdeposits`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface SetupIntent {

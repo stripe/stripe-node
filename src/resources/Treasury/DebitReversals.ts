@@ -21,7 +21,7 @@ export class DebitReversalResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Reverses a ReceivedDebit and creates a DebitReversal object.
@@ -35,7 +35,7 @@ export class DebitReversalResource extends StripeResource {
       '/v1/treasury/debit_reversals',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves a DebitReversal object.
@@ -50,7 +50,7 @@ export class DebitReversalResource extends StripeResource {
       `/v1/treasury/debit_reversals/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface DebitReversal {

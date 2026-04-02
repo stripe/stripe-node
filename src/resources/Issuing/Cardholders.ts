@@ -28,7 +28,7 @@ export class CardholderResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a new Issuing Cardholder object that can be issued cards.
@@ -42,7 +42,7 @@ export class CardholderResource extends StripeResource {
       '/v1/issuing/cardholders',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves an Issuing Cardholder object.
@@ -57,7 +57,7 @@ export class CardholderResource extends StripeResource {
       `/v1/issuing/cardholders/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates the specified Issuing Cardholder object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -72,7 +72,7 @@ export class CardholderResource extends StripeResource {
       `/v1/issuing/cardholders/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Cardholder {

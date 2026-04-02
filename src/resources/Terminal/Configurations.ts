@@ -19,7 +19,7 @@ export class ConfigurationResource extends StripeResource {
       `/v1/terminal/configurations/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves a Configuration object.
@@ -34,7 +34,7 @@ export class ConfigurationResource extends StripeResource {
       `/v1/terminal/configurations/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates a new Configuration object.
@@ -49,7 +49,7 @@ export class ConfigurationResource extends StripeResource {
       `/v1/terminal/configurations/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Returns a list of Configuration objects.
@@ -66,7 +66,7 @@ export class ConfigurationResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a new Configuration object.
@@ -80,7 +80,7 @@ export class ConfigurationResource extends StripeResource {
       '/v1/terminal/configurations',
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Configuration {

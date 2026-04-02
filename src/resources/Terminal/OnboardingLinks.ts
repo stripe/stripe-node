@@ -16,7 +16,7 @@ export class OnboardingLinkResource extends StripeResource {
       '/v1/terminal/onboarding_links',
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface OnboardingLink {

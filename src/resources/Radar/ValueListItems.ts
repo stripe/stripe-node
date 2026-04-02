@@ -18,7 +18,7 @@ export class ValueListItemResource extends StripeResource {
       `/v1/radar/value_list_items/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves a ValueListItem object.
@@ -33,7 +33,7 @@ export class ValueListItemResource extends StripeResource {
       `/v1/radar/value_list_items/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Returns a list of ValueListItem objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -50,7 +50,7 @@ export class ValueListItemResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a new ValueListItem object, which is added to the specified parent value list.
@@ -64,7 +64,7 @@ export class ValueListItemResource extends StripeResource {
       '/v1/radar/value_list_items',
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface ValueListItem {

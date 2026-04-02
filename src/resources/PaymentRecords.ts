@@ -26,7 +26,7 @@ export class PaymentRecordResource extends StripeResource {
       `/v1/payment_records/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Report a new payment attempt on the specified Payment Record. A new payment
@@ -42,7 +42,7 @@ export class PaymentRecordResource extends StripeResource {
       `/v1/payment_records/${id}/report_payment_attempt`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Report that the most recent payment attempt on the specified Payment Record
@@ -58,7 +58,7 @@ export class PaymentRecordResource extends StripeResource {
       `/v1/payment_records/${id}/report_payment_attempt_canceled`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Report that the most recent payment attempt on the specified Payment Record
@@ -74,7 +74,7 @@ export class PaymentRecordResource extends StripeResource {
       `/v1/payment_records/${id}/report_payment_attempt_failed`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Report that the most recent payment attempt on the specified Payment Record
@@ -90,7 +90,7 @@ export class PaymentRecordResource extends StripeResource {
       `/v1/payment_records/${id}/report_payment_attempt_guaranteed`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Report informational updates on the specified Payment Record.
@@ -105,7 +105,7 @@ export class PaymentRecordResource extends StripeResource {
       `/v1/payment_records/${id}/report_payment_attempt_informational`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Report that the most recent payment attempt on the specified Payment Record
@@ -121,7 +121,7 @@ export class PaymentRecordResource extends StripeResource {
       `/v1/payment_records/${id}/report_refund`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Report a new Payment Record. You may report a Payment Record as it is
@@ -137,7 +137,7 @@ export class PaymentRecordResource extends StripeResource {
       '/v1/payment_records/report_payment',
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface PaymentRecord {

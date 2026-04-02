@@ -20,7 +20,7 @@ export class VerificationReportResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves an existing VerificationReport
@@ -35,7 +35,7 @@ export class VerificationReportResource extends StripeResource {
       `/v1/identity/verification_reports/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface VerificationReport {

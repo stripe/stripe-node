@@ -21,7 +21,7 @@ export class FileLinkResource extends StripeResource {
   ): ApiListPromise<FileLink> {
     return this._makeRequest('GET', '/v1/file_links', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Creates a new file link object.
@@ -30,7 +30,7 @@ export class FileLinkResource extends StripeResource {
     params: FileLinkCreateParams,
     options?: RequestOptions
   ): Promise<Response<FileLink>> {
-    return this._makeRequest('POST', '/v1/file_links', params, options);
+    return this._makeRequest('POST', '/v1/file_links', params, options) as any;
   }
   /**
    * Retrieves the file link with the given ID.
@@ -40,7 +40,12 @@ export class FileLinkResource extends StripeResource {
     params?: FileLinkRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<FileLink>> {
-    return this._makeRequest('GET', `/v1/file_links/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/file_links/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Updates an existing file link object. Expired links can no longer be updated.
@@ -50,7 +55,12 @@ export class FileLinkResource extends StripeResource {
     params?: FileLinkUpdateParams,
     options?: RequestOptions
   ): Promise<Response<FileLink>> {
-    return this._makeRequest('POST', `/v1/file_links/${id}`, params, options);
+    return this._makeRequest(
+      'POST',
+      `/v1/file_links/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface FileLink {

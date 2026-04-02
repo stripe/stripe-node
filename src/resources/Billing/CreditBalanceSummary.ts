@@ -17,7 +17,7 @@ export class CreditBalanceSummaryResource extends StripeResource {
       '/v1/billing/credit_balance_summary',
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface CreditBalanceSummary {

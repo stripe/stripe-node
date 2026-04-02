@@ -28,7 +28,7 @@ export class VerificationSessionResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a VerificationSession object.
@@ -48,7 +48,7 @@ export class VerificationSessionResource extends StripeResource {
       '/v1/identity/verification_sessions',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of a VerificationSession that was previously created.
@@ -66,7 +66,7 @@ export class VerificationSessionResource extends StripeResource {
       `/v1/identity/verification_sessions/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates a VerificationSession object.
@@ -84,7 +84,7 @@ export class VerificationSessionResource extends StripeResource {
       `/v1/identity/verification_sessions/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * A VerificationSession object can be canceled when it is in requires_input [status](https://docs.stripe.com/docs/identity/how-sessions-work).
@@ -101,7 +101,7 @@ export class VerificationSessionResource extends StripeResource {
       `/v1/identity/verification_sessions/${id}/cancel`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Redact a VerificationSession to remove all collected information from Stripe. This will redact
@@ -134,7 +134,7 @@ export class VerificationSessionResource extends StripeResource {
       `/v1/identity/verification_sessions/${id}/redact`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface VerificationSession {

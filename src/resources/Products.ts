@@ -28,7 +28,12 @@ export class ProductResource extends StripeResource {
     params?: ProductDeleteParams,
     options?: RequestOptions
   ): Promise<Response<DeletedProduct>> {
-    return this._makeRequest('DELETE', `/v1/products/${id}`, params, options);
+    return this._makeRequest(
+      'DELETE',
+      `/v1/products/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Retrieves the details of an existing product. Supply the unique product ID from either a product creation request or the product list, and Stripe will return the corresponding product information.
@@ -38,7 +43,12 @@ export class ProductResource extends StripeResource {
     params?: ProductRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Product>> {
-    return this._makeRequest('GET', `/v1/products/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/products/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Updates the specific product by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -48,7 +58,12 @@ export class ProductResource extends StripeResource {
     params?: ProductUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Product>> {
-    return this._makeRequest('POST', `/v1/products/${id}`, params, options);
+    return this._makeRequest(
+      'POST',
+      `/v1/products/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
@@ -59,7 +74,7 @@ export class ProductResource extends StripeResource {
   ): ApiListPromise<Product> {
     return this._makeRequest('GET', '/v1/products', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Creates a new product object.
@@ -99,7 +114,7 @@ export class ProductResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Search for products you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
@@ -113,7 +128,7 @@ export class ProductResource extends StripeResource {
   ): ApiSearchResultPromise<Product> {
     return this._makeRequest('GET', '/v1/products/search', params, options, {
       methodType: 'search',
-    });
+    }) as any;
   }
   /**
    * Deletes the feature attachment to a product
@@ -129,7 +144,7 @@ export class ProductResource extends StripeResource {
       `/v1/products/${productId}/features/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves a product_feature, which represents a feature attachment to a product
@@ -145,7 +160,7 @@ export class ProductResource extends StripeResource {
       `/v1/products/${productId}/features/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieve a list of features for a product
@@ -163,7 +178,7 @@ export class ProductResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a product_feature, which represents a feature attachment to a product
@@ -178,7 +193,7 @@ export class ProductResource extends StripeResource {
       `/v1/products/${id}/features`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Product {

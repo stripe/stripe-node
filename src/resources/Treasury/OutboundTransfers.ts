@@ -28,7 +28,7 @@ export class OutboundTransferResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates an OutboundTransfer.
@@ -42,7 +42,7 @@ export class OutboundTransferResource extends StripeResource {
       '/v1/treasury/outbound_transfers',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of an existing OutboundTransfer by passing the unique OutboundTransfer ID from either the OutboundTransfer creation request or OutboundTransfer list.
@@ -57,7 +57,7 @@ export class OutboundTransferResource extends StripeResource {
       `/v1/treasury/outbound_transfers/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * An OutboundTransfer can be canceled if the funds have not yet been paid out.
@@ -72,7 +72,7 @@ export class OutboundTransferResource extends StripeResource {
       `/v1/treasury/outbound_transfers/${id}/cancel`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface OutboundTransfer {

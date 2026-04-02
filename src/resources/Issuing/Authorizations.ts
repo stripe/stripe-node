@@ -210,7 +210,7 @@ export class AuthorizationResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves an Issuing Authorization object.
@@ -389,7 +389,7 @@ export class AuthorizationResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Updates the specified Issuing Authorization object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -568,7 +568,7 @@ export class AuthorizationResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * [Deprecated] Approves a pending Issuing Authorization object. This request should be made within the timeout window of the [real-time authorization](https://docs.stripe.com/docs/issuing/controls/real-time-authorizations) flow.
@@ -749,7 +749,7 @@ export class AuthorizationResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * [Deprecated] Declines a pending Issuing Authorization object. This request should be made within the timeout window of the [real time authorization](https://docs.stripe.com/docs/issuing/controls/real-time-authorizations) flow.
@@ -930,7 +930,7 @@ export class AuthorizationResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
 }
 export interface Authorization {

@@ -24,7 +24,7 @@ export class CalculationResource extends StripeResource {
       `/v1/tax/calculations/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Calculates tax based on the input and returns a Tax Calculation object.
@@ -33,7 +33,12 @@ export class CalculationResource extends StripeResource {
     params: Tax.CalculationCreateParams,
     options?: RequestOptions
   ): Promise<Response<Calculation>> {
-    return this._makeRequest('POST', '/v1/tax/calculations', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/tax/calculations',
+      params,
+      options
+    ) as any;
   }
   /**
    * Retrieves the line items of a tax calculation as a collection, if the calculation hasn't expired.
@@ -51,7 +56,7 @@ export class CalculationResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
 }
 export interface Calculation {

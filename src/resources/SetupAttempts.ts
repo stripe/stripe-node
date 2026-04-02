@@ -22,7 +22,7 @@ export class SetupAttemptResource extends StripeResource {
   ): ApiListPromise<SetupAttempt> {
     return this._makeRequest('GET', '/v1/setup_attempts', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
 }
 export interface SetupAttempt {

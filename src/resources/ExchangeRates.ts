@@ -17,7 +17,7 @@ export class ExchangeRateResource extends StripeResource {
   ): ApiListPromise<ExchangeRate> {
     return this._makeRequest('GET', '/v1/exchange_rates', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * [Deprecated] The ExchangeRate APIs are deprecated. Please use the [FX Quotes API](https://docs.stripe.com/payments/currencies/localize-prices/fx-quotes-api) instead.
@@ -35,7 +35,7 @@ export class ExchangeRateResource extends StripeResource {
       `/v1/exchange_rates/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface ExchangeRate {

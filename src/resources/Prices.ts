@@ -88,7 +88,7 @@ export class PriceResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Creates a new [Price for an existing <a href="https://docs.stripe.com/api/products">Product](https://docs.stripe.com/api/prices). The Price can be recurring or one-time.
@@ -186,7 +186,7 @@ export class PriceResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Retrieves the price with the given ID.
@@ -250,7 +250,7 @@ export class PriceResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Updates the specified price by setting the values of the parameters passed. Any parameters not provided are left unchanged.
@@ -314,7 +314,7 @@ export class PriceResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Search for prices you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
@@ -389,7 +389,7 @@ export class PriceResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
 }
 export interface Price {

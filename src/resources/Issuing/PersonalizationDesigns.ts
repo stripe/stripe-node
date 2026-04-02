@@ -27,7 +27,7 @@ export class PersonalizationDesignResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a personalization design object.
@@ -41,7 +41,7 @@ export class PersonalizationDesignResource extends StripeResource {
       '/v1/issuing/personalization_designs',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves a personalization design object.
@@ -56,7 +56,7 @@ export class PersonalizationDesignResource extends StripeResource {
       `/v1/issuing/personalization_designs/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates a card personalization object.
@@ -71,7 +71,7 @@ export class PersonalizationDesignResource extends StripeResource {
       `/v1/issuing/personalization_designs/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface PersonalizationDesign {

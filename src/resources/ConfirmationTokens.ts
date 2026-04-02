@@ -21,7 +21,7 @@ export class ConfirmationTokenResource extends StripeResource {
       `/v1/confirmation_tokens/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface ConfirmationToken {

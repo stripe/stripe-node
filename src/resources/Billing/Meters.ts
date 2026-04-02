@@ -15,7 +15,7 @@ export class MeterResource extends StripeResource {
   ): ApiListPromise<Meter> {
     return this._makeRequest('GET', '/v1/billing/meters', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Creates a billing meter.
@@ -24,7 +24,12 @@ export class MeterResource extends StripeResource {
     params: Billing.MeterCreateParams,
     options?: RequestOptions
   ): Promise<Response<Meter>> {
-    return this._makeRequest('POST', '/v1/billing/meters', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/billing/meters',
+      params,
+      options
+    ) as any;
   }
   /**
    * Retrieves a billing meter given an ID.
@@ -39,7 +44,7 @@ export class MeterResource extends StripeResource {
       `/v1/billing/meters/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates a billing meter.
@@ -54,7 +59,7 @@ export class MeterResource extends StripeResource {
       `/v1/billing/meters/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * When a meter is deactivated, no more meter events will be accepted for this meter. You can't attach a deactivated meter to a price.
@@ -69,7 +74,7 @@ export class MeterResource extends StripeResource {
       `/v1/billing/meters/${id}/deactivate`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * When a meter is reactivated, events for this meter can be accepted and you can attach the meter to a price.
@@ -84,7 +89,7 @@ export class MeterResource extends StripeResource {
       `/v1/billing/meters/${id}/reactivate`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieve a list of billing meter event summaries.
@@ -102,7 +107,7 @@ export class MeterResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
 }
 export interface Meter {

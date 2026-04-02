@@ -12,7 +12,7 @@ export class SettingResource extends StripeResource {
     params?: Tax.SettingsRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Settings>> {
-    return this._makeRequest('GET', '/v1/tax/settings', params, options);
+    return this._makeRequest('GET', '/v1/tax/settings', params, options) as any;
   }
   /**
    * Updates Tax Settings parameters used in tax calculations. All parameters are editable but none can be removed once set.
@@ -21,7 +21,12 @@ export class SettingResource extends StripeResource {
     params?: Tax.SettingsUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Settings>> {
-    return this._makeRequest('POST', '/v1/tax/settings', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/tax/settings',
+      params,
+      options
+    ) as any;
   }
 }
 export interface Settings {

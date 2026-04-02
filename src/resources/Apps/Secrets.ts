@@ -14,7 +14,7 @@ export class SecretResource extends StripeResource {
   ): ApiListPromise<Secret> {
     return this._makeRequest('GET', '/v1/apps/secrets', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Create or replace a secret in the secret store.
@@ -23,7 +23,12 @@ export class SecretResource extends StripeResource {
     params: Apps.SecretCreateParams,
     options?: RequestOptions
   ): Promise<Response<Secret>> {
-    return this._makeRequest('POST', '/v1/apps/secrets', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/apps/secrets',
+      params,
+      options
+    ) as any;
   }
   /**
    * Finds a secret in the secret store by name and scope.
@@ -32,7 +37,12 @@ export class SecretResource extends StripeResource {
     params: Apps.SecretFindParams,
     options?: RequestOptions
   ): Promise<Response<Secret>> {
-    return this._makeRequest('GET', '/v1/apps/secrets/find', params, options);
+    return this._makeRequest(
+      'GET',
+      '/v1/apps/secrets/find',
+      params,
+      options
+    ) as any;
   }
   /**
    * Deletes a secret from the secret store by name and scope.
@@ -46,7 +56,7 @@ export class SecretResource extends StripeResource {
       '/v1/apps/secrets/delete',
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Secret {

@@ -23,7 +23,7 @@ export class CreditBalanceTransactionResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves a credit balance transaction.
@@ -38,7 +38,7 @@ export class CreditBalanceTransactionResource extends StripeResource {
       `/v1/billing/credit_balance_transactions/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface CreditBalanceTransaction {

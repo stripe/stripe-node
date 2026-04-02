@@ -21,7 +21,7 @@ export class CreditReversalResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Reverses a ReceivedCredit and creates a CreditReversal object.
@@ -35,7 +35,7 @@ export class CreditReversalResource extends StripeResource {
       '/v1/treasury/credit_reversals',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of an existing CreditReversal by passing the unique CreditReversal ID from either the CreditReversal creation request or CreditReversal list
@@ -50,7 +50,7 @@ export class CreditReversalResource extends StripeResource {
       `/v1/treasury/credit_reversals/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface CreditReversal {

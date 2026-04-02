@@ -16,7 +16,7 @@ export class ConnectionTokenResource extends StripeResource {
       '/v1/terminal/connection_tokens',
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface ConnectionToken {

@@ -17,7 +17,7 @@ export class SessionResource extends StripeResource {
       '/v1/billing_portal/sessions',
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Session {

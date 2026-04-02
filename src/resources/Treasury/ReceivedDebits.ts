@@ -21,7 +21,7 @@ export class ReceivedDebitResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of an existing ReceivedDebit by passing the unique ReceivedDebit ID from the ReceivedDebit list
@@ -36,7 +36,7 @@ export class ReceivedDebitResource extends StripeResource {
       `/v1/treasury/received_debits/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface ReceivedDebit {

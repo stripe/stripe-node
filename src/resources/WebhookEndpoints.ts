@@ -23,7 +23,7 @@ export class WebhookEndpointResource extends StripeResource {
       `/v1/webhook_endpoints/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves the webhook endpoint with the given ID.
@@ -38,7 +38,7 @@ export class WebhookEndpointResource extends StripeResource {
       `/v1/webhook_endpoints/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates the webhook endpoint. You may edit the url, the list of enabled_events, and the status of your endpoint.
@@ -53,7 +53,7 @@ export class WebhookEndpointResource extends StripeResource {
       `/v1/webhook_endpoints/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Returns a list of your webhook endpoints.
@@ -64,7 +64,7 @@ export class WebhookEndpointResource extends StripeResource {
   ): ApiListPromise<WebhookEndpoint> {
     return this._makeRequest('GET', '/v1/webhook_endpoints', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * A webhook endpoint must have a url and a list of enabled_events. You may optionally specify the Boolean connect parameter. If set to true, then a Connect webhook endpoint that notifies the specified url about events from all connected accounts is created; otherwise an account webhook endpoint that notifies the specified url only about events from your account is created. You can also create webhook endpoints in the [webhooks settings](https://dashboard.stripe.com/account/webhooks) section of the Dashboard.
@@ -73,7 +73,12 @@ export class WebhookEndpointResource extends StripeResource {
     params: WebhookEndpointCreateParams,
     options?: RequestOptions
   ): Promise<Response<WebhookEndpoint>> {
-    return this._makeRequest('POST', '/v1/webhook_endpoints', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/webhook_endpoints',
+      params,
+      options
+    ) as any;
   }
 }
 export interface WebhookEndpoint {

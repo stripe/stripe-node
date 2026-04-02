@@ -44,7 +44,12 @@ export class InvoiceResource extends StripeResource {
     params?: InvoiceDeleteParams,
     options?: RequestOptions
   ): Promise<Response<DeletedInvoice>> {
-    return this._makeRequest('DELETE', `/v1/invoices/${id}`, params, options);
+    return this._makeRequest(
+      'DELETE',
+      `/v1/invoices/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Retrieves the invoice with the given ID.
@@ -89,7 +94,7 @@ export class InvoiceResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Draft invoices are fully editable. Once an invoice is [finalized](https://docs.stripe.com/docs/billing/invoices/workflow#finalized),
@@ -139,7 +144,7 @@ export class InvoiceResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * You can list all invoices, or list the invoices for a specific customer. The invoices are returned sorted by creation date, with the most recently created invoices appearing first.
@@ -192,7 +197,7 @@ export class InvoiceResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * This endpoint creates a draft invoice for a given customer. The invoice remains a draft until you [finalize the invoice, which allows you to [pay](/api/invoices/pay) or <a href="/api/invoices/send">send](https://docs.stripe.com/api/invoices/finalize) the invoice to your customers.
@@ -236,7 +241,7 @@ export class InvoiceResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Search for invoices you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
@@ -292,7 +297,7 @@ export class InvoiceResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Adds multiple line items to an invoice. This is only possible when an invoice is still a draft.
@@ -361,7 +366,7 @@ export class InvoiceResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Attaches a PaymentIntent or an Out of Band Payment to the invoice, adding it to the list of payments.
@@ -421,7 +426,7 @@ export class InvoiceResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if you'd like to finalize a draft invoice manually, you can do so using this method.
@@ -472,7 +477,7 @@ export class InvoiceResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Marking an invoice as uncollectible is useful for keeping track of bad debts that can be written off for accounting purposes.
@@ -523,7 +528,7 @@ export class InvoiceResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Stripe automatically creates and then attempts to collect payment on invoices for customers on subscriptions according to your [subscriptions settings](https://dashboard.stripe.com/account/billing/automatic). However, if you'd like to attempt payment on an invoice out of the normal collection schedule or for some other reason, you can do so.
@@ -574,7 +579,7 @@ export class InvoiceResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Removes multiple line items from an invoice. This is only possible when an invoice is still a draft.
@@ -625,7 +630,7 @@ export class InvoiceResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Stripe will automatically send invoices to customers according to your [subscriptions settings](https://dashboard.stripe.com/account/billing/automatic). However, if you'd like to manually send an invoice to your customer out of the normal schedule, you can do so. When sending invoices that have already been paid, there will be no reference to the payment in the email.
@@ -678,7 +683,7 @@ export class InvoiceResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Updates multiple line items on an invoice. This is only possible when an invoice is still a draft.
@@ -747,7 +752,7 @@ export class InvoiceResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Mark a finalized invoice as void. This cannot be undone. Voiding an invoice is similar to [deletion](https://docs.stripe.com/api/invoices/delete), however it only applies to finalized invoices and maintains a papertrail where the invoice can still be found.
@@ -800,7 +805,7 @@ export class InvoiceResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * At any time, you can preview the upcoming invoice for a subscription or subscription schedule. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discounts that are applicable to the invoice.
@@ -935,7 +940,7 @@ export class InvoiceResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
@@ -982,7 +987,7 @@ export class InvoiceResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Updates an invoice's line item. Some fields, such as tax_amounts, only live on the invoice line item,
@@ -1034,7 +1039,7 @@ export class InvoiceResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
 }
 export interface Invoice {

@@ -24,7 +24,7 @@ export class ApplicationFeeResource extends StripeResource {
   ): ApiListPromise<ApplicationFee> {
     return this._makeRequest('GET', '/v1/application_fees', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Retrieves the details of an application fee that your account has collected. The same information is returned when refunding the application fee.
@@ -39,7 +39,7 @@ export class ApplicationFeeResource extends StripeResource {
       `/v1/application_fees/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * By default, you can see the 10 most recent refunds stored directly on the application fee object, but you can also retrieve details about a specific refund stored on the application fee.
@@ -55,7 +55,7 @@ export class ApplicationFeeResource extends StripeResource {
       `/v1/application_fees/${feeId}/refunds/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates the specified application fee refund by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -73,7 +73,7 @@ export class ApplicationFeeResource extends StripeResource {
       `/v1/application_fees/${feeId}/refunds/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * You can see a list of the refunds belonging to a specific application fee. Note that the 10 most recent refunds are always available by default on the application fee object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional refunds.
@@ -91,7 +91,7 @@ export class ApplicationFeeResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Refunds an application fee that has previously been collected but not yet refunded.
@@ -114,7 +114,7 @@ export class ApplicationFeeResource extends StripeResource {
       `/v1/application_fees/${id}/refunds`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface ApplicationFee {

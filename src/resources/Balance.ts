@@ -12,7 +12,7 @@ export class BalanceResource extends StripeResource {
     params?: BalanceRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Balance>> {
-    return this._makeRequest('GET', '/v1/balance', params, options);
+    return this._makeRequest('GET', '/v1/balance', params, options) as any;
   }
 }
 export interface Balance {

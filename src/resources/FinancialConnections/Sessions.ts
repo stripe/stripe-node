@@ -19,7 +19,7 @@ export class SessionResource extends StripeResource {
       `/v1/financial_connections/sessions/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * To launch the Financial Connections authorization flow, create a Session. The session's client_secret can be used to launch the flow using Stripe.js.
@@ -33,7 +33,7 @@ export class SessionResource extends StripeResource {
       '/v1/financial_connections/sessions',
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Session {

@@ -34,7 +34,12 @@ export class AccountResource extends StripeResource {
     params?: AccountDeleteParams,
     options?: RequestOptions
   ): Promise<Response<DeletedAccount>> {
-    return this._makeRequest('DELETE', `/v1/accounts/${id}`, params, options);
+    return this._makeRequest(
+      'DELETE',
+      `/v1/accounts/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Retrieves the details of an account. Pass `null` as the account id to retrieve details about your own account.
@@ -75,7 +80,12 @@ export class AccountResource extends StripeResource {
     params?: AccountUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Account>> {
-    return this._makeRequest('POST', `/v1/accounts/${id}`, params, options);
+    return this._makeRequest(
+      'POST',
+      `/v1/accounts/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Retrieves the details of an account.
@@ -84,7 +94,7 @@ export class AccountResource extends StripeResource {
     params?: AccountRetrieveCurrentParams,
     options?: RequestOptions
   ): Promise<Response<Account>> {
-    return this._makeRequest('GET', '/v1/account', params, options);
+    return this._makeRequest('GET', '/v1/account', params, options) as any;
   }
   /**
    * Returns a list of accounts connected to your platform via [Connect](https://docs.stripe.com/docs/connect). If you're not a platform, the list is empty.
@@ -95,7 +105,7 @@ export class AccountResource extends StripeResource {
   ): ApiListPromise<Account> {
     return this._makeRequest('GET', '/v1/accounts', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * With [Connect](https://docs.stripe.com/docs/connect), you can create Stripe accounts for your users.
@@ -109,7 +119,7 @@ export class AccountResource extends StripeResource {
     params?: AccountCreateParams,
     options?: RequestOptions
   ): Promise<Response<Account>> {
-    return this._makeRequest('POST', '/v1/accounts', params, options);
+    return this._makeRequest('POST', '/v1/accounts', params, options) as any;
   }
   /**
    * With [Connect](https://docs.stripe.com/connect), you can reject accounts that you have flagged as suspicious.
@@ -126,7 +136,7 @@ export class AccountResource extends StripeResource {
       `/v1/accounts/${id}/reject`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
@@ -144,7 +154,7 @@ export class AccountResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves information about the specified Account Capability.
@@ -160,7 +170,7 @@ export class AccountResource extends StripeResource {
       `/v1/accounts/${accountId}/capabilities/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates an existing Account Capability. Request or remove a capability by updating its requested parameter.
@@ -176,7 +186,7 @@ export class AccountResource extends StripeResource {
       `/v1/accounts/${accountId}/capabilities/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Delete a specified external account for a given account.
@@ -192,7 +202,7 @@ export class AccountResource extends StripeResource {
       `/v1/accounts/${accountId}/external_accounts/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieve a specified external account for a given account.
@@ -208,7 +218,7 @@ export class AccountResource extends StripeResource {
       `/v1/accounts/${accountId}/external_accounts/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates the metadata, account holder name, account holder type of a bank account belonging to
@@ -231,7 +241,7 @@ export class AccountResource extends StripeResource {
       `/v1/accounts/${accountId}/external_accounts/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * List external accounts for an account.
@@ -249,7 +259,7 @@ export class AccountResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Create an external account for a given account.
@@ -264,7 +274,7 @@ export class AccountResource extends StripeResource {
       `/v1/accounts/${id}/external_accounts`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Creates a login link for a connected account to access the Express Dashboard.
@@ -281,7 +291,7 @@ export class AccountResource extends StripeResource {
       `/v1/accounts/${id}/login_links`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
@@ -297,7 +307,7 @@ export class AccountResource extends StripeResource {
       `/v1/accounts/${accountId}/persons/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves an existing person.
@@ -313,7 +323,7 @@ export class AccountResource extends StripeResource {
       `/v1/accounts/${accountId}/persons/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates an existing person.
@@ -329,7 +339,7 @@ export class AccountResource extends StripeResource {
       `/v1/accounts/${accountId}/persons/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
@@ -347,7 +357,7 @@ export class AccountResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a new person.
@@ -362,7 +372,7 @@ export class AccountResource extends StripeResource {
       `/v1/accounts/${id}/persons`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Account {

@@ -23,7 +23,7 @@ export class AccountResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of an Financial Connections Account.
@@ -38,7 +38,7 @@ export class AccountResource extends StripeResource {
       `/v1/financial_connections/accounts/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Disables your access to a Financial Connections Account. You will no longer be able to access data associated with the account (e.g. balances, transactions).
@@ -53,7 +53,7 @@ export class AccountResource extends StripeResource {
       `/v1/financial_connections/accounts/${id}/disconnect`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Refreshes the data associated with a Financial Connections Account.
@@ -68,7 +68,7 @@ export class AccountResource extends StripeResource {
       `/v1/financial_connections/accounts/${id}/refresh`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Subscribes to periodic refreshes of data associated with a Financial Connections Account. When the account status is active, data is typically refreshed once a day.
@@ -83,7 +83,7 @@ export class AccountResource extends StripeResource {
       `/v1/financial_connections/accounts/${id}/subscribe`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Unsubscribes from periodic refreshes of data associated with a Financial Connections Account.
@@ -98,7 +98,7 @@ export class AccountResource extends StripeResource {
       `/v1/financial_connections/accounts/${id}/unsubscribe`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Lists all owners for a given Account
@@ -116,7 +116,7 @@ export class AccountResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
 }
 export interface Account {

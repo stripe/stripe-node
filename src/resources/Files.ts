@@ -27,7 +27,7 @@ export class FileResource extends StripeResource {
   ): ApiListPromise<File> {
     return this._makeRequest('GET', '/v1/files', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * To upload a file to Stripe, you need to send a request of type multipart/form-data. Include the file you want to upload in the request, and the parameters for creating a file.
@@ -53,7 +53,7 @@ export class FileResource extends StripeResource {
     params?: FileRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<File>> {
-    return this._makeRequest('GET', `/v1/files/${id}`, params, options);
+    return this._makeRequest('GET', `/v1/files/${id}`, params, options) as any;
   }
 }
 export interface File {

@@ -107,7 +107,7 @@ export class PaymentLinkResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Creates a payment link.
@@ -208,7 +208,7 @@ export class PaymentLinkResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Retrieve a payment link.
@@ -299,7 +299,7 @@ export class PaymentLinkResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Updates a payment link.
@@ -390,7 +390,7 @@ export class PaymentLinkResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * When retrieving a payment link, there is an includable line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
@@ -477,7 +477,7 @@ export class PaymentLinkResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
 }
 export interface PaymentLink {

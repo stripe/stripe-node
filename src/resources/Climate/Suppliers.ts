@@ -14,7 +14,7 @@ export class SupplierResource extends StripeResource {
   ): ApiListPromise<Supplier> {
     return this._makeRequest('GET', '/v1/climate/suppliers', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Retrieves a Climate supplier object.
@@ -29,7 +29,7 @@ export class SupplierResource extends StripeResource {
       `/v1/climate/suppliers/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Supplier {

@@ -22,7 +22,7 @@ export class EarlyFraudWarningResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of an early fraud warning that has previously been created.
@@ -39,7 +39,7 @@ export class EarlyFraudWarningResource extends StripeResource {
       `/v1/radar/early_fraud_warnings/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface EarlyFraudWarning {

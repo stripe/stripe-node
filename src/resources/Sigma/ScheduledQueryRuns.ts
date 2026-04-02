@@ -21,7 +21,7 @@ export class ScheduledQueryRunResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of an scheduled query run.
@@ -36,7 +36,7 @@ export class ScheduledQueryRunResource extends StripeResource {
       `/v1/sigma/scheduled_query_runs/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface ScheduledQueryRun {

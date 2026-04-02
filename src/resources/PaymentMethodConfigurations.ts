@@ -20,7 +20,7 @@ export class PaymentMethodConfigurationResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a payment method configuration
@@ -34,7 +34,7 @@ export class PaymentMethodConfigurationResource extends StripeResource {
       '/v1/payment_method_configurations',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieve payment method configuration
@@ -49,7 +49,7 @@ export class PaymentMethodConfigurationResource extends StripeResource {
       `/v1/payment_method_configurations/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Update payment method configuration
@@ -64,7 +64,7 @@ export class PaymentMethodConfigurationResource extends StripeResource {
       `/v1/payment_method_configurations/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface PaymentMethodConfiguration {

@@ -19,7 +19,12 @@ export class CouponResource extends StripeResource {
     params?: CouponDeleteParams,
     options?: RequestOptions
   ): Promise<Response<DeletedCoupon>> {
-    return this._makeRequest('DELETE', `/v1/coupons/${id}`, params, options);
+    return this._makeRequest(
+      'DELETE',
+      `/v1/coupons/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Retrieves the coupon with the given ID.
@@ -29,7 +34,12 @@ export class CouponResource extends StripeResource {
     params?: CouponRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Coupon>> {
-    return this._makeRequest('GET', `/v1/coupons/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/coupons/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Updates the metadata of a coupon. Other coupon details (currency, duration, amount_off) are, by design, not editable.
@@ -39,7 +49,12 @@ export class CouponResource extends StripeResource {
     params?: CouponUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Coupon>> {
-    return this._makeRequest('POST', `/v1/coupons/${id}`, params, options);
+    return this._makeRequest(
+      'POST',
+      `/v1/coupons/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Returns a list of your coupons.
@@ -50,7 +65,7 @@ export class CouponResource extends StripeResource {
   ): ApiListPromise<Coupon> {
     return this._makeRequest('GET', '/v1/coupons', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * You can create coupons easily via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. Coupon creation is also accessible via the API if you need to create coupons on the fly.
@@ -61,7 +76,7 @@ export class CouponResource extends StripeResource {
     params?: CouponCreateParams,
     options?: RequestOptions
   ): Promise<Response<Coupon>> {
-    return this._makeRequest('POST', '/v1/coupons', params, options);
+    return this._makeRequest('POST', '/v1/coupons', params, options) as any;
   }
 }
 export interface Coupon {

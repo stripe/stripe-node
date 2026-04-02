@@ -20,7 +20,7 @@ export class PhysicalBundleResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves a physical bundle object.
@@ -35,7 +35,7 @@ export class PhysicalBundleResource extends StripeResource {
       `/v1/issuing/physical_bundles/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface PhysicalBundle {

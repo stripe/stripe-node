@@ -26,7 +26,7 @@ export class ConfigurationResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a configuration that describes the functionality and behavior of a PortalSession
@@ -40,7 +40,7 @@ export class ConfigurationResource extends StripeResource {
       '/v1/billing_portal/configurations',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves a configuration that describes the functionality of the customer portal.
@@ -55,7 +55,7 @@ export class ConfigurationResource extends StripeResource {
       `/v1/billing_portal/configurations/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates a configuration that describes the functionality of the customer portal.
@@ -70,7 +70,7 @@ export class ConfigurationResource extends StripeResource {
       `/v1/billing_portal/configurations/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Configuration {

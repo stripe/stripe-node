@@ -25,7 +25,7 @@ export class RequestResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a ForwardingRequest object.
@@ -39,7 +39,7 @@ export class RequestResource extends StripeResource {
       '/v1/forwarding/requests',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves a ForwardingRequest object.
@@ -54,7 +54,7 @@ export class RequestResource extends StripeResource {
       `/v1/forwarding/requests/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Request {

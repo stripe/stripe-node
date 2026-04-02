@@ -18,7 +18,7 @@ export class ApplePayDomainResource extends StripeResource {
       `/v1/apple_pay/domains/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieve an apple pay domain.
@@ -33,7 +33,7 @@ export class ApplePayDomainResource extends StripeResource {
       `/v1/apple_pay/domains/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * List apple pay domains.
@@ -44,7 +44,7 @@ export class ApplePayDomainResource extends StripeResource {
   ): ApiListPromise<ApplePayDomain> {
     return this._makeRequest('GET', '/v1/apple_pay/domains', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Create an apple pay domain.
@@ -53,7 +53,12 @@ export class ApplePayDomainResource extends StripeResource {
     params: ApplePayDomainCreateParams,
     options?: RequestOptions
   ): Promise<Response<ApplePayDomain>> {
-    return this._makeRequest('POST', '/v1/apple_pay/domains', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/apple_pay/domains',
+      params,
+      options
+    ) as any;
   }
 }
 export interface ApplePayDomain {

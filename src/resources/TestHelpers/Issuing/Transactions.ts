@@ -103,7 +103,7 @@ export class TransactionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Allows the user to capture an arbitrary amount, also known as a forced capture.
@@ -254,7 +254,7 @@ export class TransactionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Allows the user to refund an arbitrary amount, also known as a unlinked refund.
@@ -405,7 +405,7 @@ export class TransactionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
 }
 export namespace TestHelpers {

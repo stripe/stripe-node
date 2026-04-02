@@ -60,7 +60,7 @@ export class AccountResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * An Account is a representation of a company, individual or other entity that a user interacts with. Accounts contain identifying information about the entity, and configurations that store the features an account has access to. An account can be configured as any or all of the following configurations: Customer, Merchant and/or Recipient.
@@ -109,7 +109,7 @@ export class AccountResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Retrieves the details of an Account.
@@ -146,7 +146,7 @@ export class AccountResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Updates the details of an Account.
@@ -202,7 +202,7 @@ export class AccountResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Removes access to the Account and its associated resources. Closed Accounts can no longer be operated on, but limited information can still be retrieved through the API in order to be able to track their history.
@@ -239,7 +239,7 @@ export class AccountResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
 }
 export interface Account {

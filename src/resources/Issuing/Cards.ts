@@ -23,7 +23,7 @@ export class CardResource extends StripeResource {
   ): ApiListPromise<Card> {
     return this._makeRequest('GET', '/v1/issuing/cards', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Creates an Issuing Card object.
@@ -32,7 +32,12 @@ export class CardResource extends StripeResource {
     params: Issuing.CardCreateParams,
     options?: RequestOptions
   ): Promise<Response<Card>> {
-    return this._makeRequest('POST', '/v1/issuing/cards', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/issuing/cards',
+      params,
+      options
+    ) as any;
   }
   /**
    * Retrieves an Issuing Card object.
@@ -42,7 +47,12 @@ export class CardResource extends StripeResource {
     params?: Issuing.CardRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Card>> {
-    return this._makeRequest('GET', `/v1/issuing/cards/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/issuing/cards/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Updates the specified Issuing Card object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -57,7 +67,7 @@ export class CardResource extends StripeResource {
       `/v1/issuing/cards/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Card {

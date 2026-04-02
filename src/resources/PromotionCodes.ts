@@ -22,7 +22,7 @@ export class PromotionCodeResource extends StripeResource {
   ): ApiListPromise<PromotionCode> {
     return this._makeRequest('GET', '/v1/promotion_codes', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * A promotion code points to an underlying promotion. You can optionally restrict the code to a specific customer, redemption limit, and expiration date.
@@ -31,7 +31,12 @@ export class PromotionCodeResource extends StripeResource {
     params: PromotionCodeCreateParams,
     options?: RequestOptions
   ): Promise<Response<PromotionCode>> {
-    return this._makeRequest('POST', '/v1/promotion_codes', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/promotion_codes',
+      params,
+      options
+    ) as any;
   }
   /**
    * Retrieves the promotion code with the given ID. In order to retrieve a promotion code by the customer-facing code use [list](https://docs.stripe.com/docs/api/promotion_codes/list) with the desired code.
@@ -46,7 +51,7 @@ export class PromotionCodeResource extends StripeResource {
       `/v1/promotion_codes/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates the specified promotion code by setting the values of the parameters passed. Most fields are, by design, not editable.
@@ -61,7 +66,7 @@ export class PromotionCodeResource extends StripeResource {
       `/v1/promotion_codes/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface PromotionCode {

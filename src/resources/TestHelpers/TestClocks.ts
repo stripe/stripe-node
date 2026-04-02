@@ -18,7 +18,7 @@ export class TestClockResource extends StripeResource {
       `/v1/test_helpers/test_clocks/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves a test clock.
@@ -33,7 +33,7 @@ export class TestClockResource extends StripeResource {
       `/v1/test_helpers/test_clocks/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Returns a list of your test clocks.
@@ -50,7 +50,7 @@ export class TestClockResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a new test clock that can be attached to new customers and quotes.
@@ -64,7 +64,7 @@ export class TestClockResource extends StripeResource {
       '/v1/test_helpers/test_clocks',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Starts advancing a test clock to a specified time in the future. Advancement is done when status changes to Ready.
@@ -79,7 +79,7 @@ export class TestClockResource extends StripeResource {
       `/v1/test_helpers/test_clocks/${id}/advance`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface TestClock {

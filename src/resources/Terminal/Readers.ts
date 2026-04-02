@@ -29,7 +29,7 @@ export class ReaderResource extends StripeResource {
       `/v1/terminal/readers/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves a Reader object.
@@ -44,7 +44,7 @@ export class ReaderResource extends StripeResource {
       `/v1/terminal/readers/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates a Reader object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -59,7 +59,7 @@ export class ReaderResource extends StripeResource {
       `/v1/terminal/readers/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Returns a list of Reader objects.
@@ -70,7 +70,7 @@ export class ReaderResource extends StripeResource {
   ): ApiListPromise<Reader> {
     return this._makeRequest('GET', '/v1/terminal/readers', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Creates a new Reader object.
@@ -79,7 +79,12 @@ export class ReaderResource extends StripeResource {
     params: Terminal.ReaderCreateParams,
     options?: RequestOptions
   ): Promise<Response<Reader>> {
-    return this._makeRequest('POST', '/v1/terminal/readers', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/terminal/readers',
+      params,
+      options
+    ) as any;
   }
   /**
    * Cancels the current reader action. See [Programmatic Cancellation](https://docs.stripe.com/docs/terminal/payments/collect-card-payment?terminal-sdk-platform=server-driven#programmatic-cancellation) for more details.
@@ -94,7 +99,7 @@ export class ReaderResource extends StripeResource {
       `/v1/terminal/readers/${id}/cancel_action`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Initiates an [input collection flow](https://docs.stripe.com/docs/terminal/features/collect-inputs) on a Reader to display input forms and collect information from your customers.
@@ -109,7 +114,7 @@ export class ReaderResource extends StripeResource {
       `/v1/terminal/readers/${id}/collect_inputs`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Initiates a payment flow on a Reader and updates the PaymentIntent with card details before manual confirmation. See [Collecting a Payment method](https://docs.stripe.com/docs/terminal/payments/collect-card-payment?terminal-sdk-platform=server-driven&process=inspect#collect-a-paymentmethod) for more details.
@@ -124,7 +129,7 @@ export class ReaderResource extends StripeResource {
       `/v1/terminal/readers/${id}/collect_payment_method`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Finalizes a payment on a Reader. See [Confirming a Payment](https://docs.stripe.com/docs/terminal/payments/collect-card-payment?terminal-sdk-platform=server-driven&process=inspect#confirm-the-paymentintent) for more details.
@@ -139,7 +144,7 @@ export class ReaderResource extends StripeResource {
       `/v1/terminal/readers/${id}/confirm_payment_intent`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Initiates a payment flow on a Reader. See [process the payment](https://docs.stripe.com/docs/terminal/payments/collect-card-payment?terminal-sdk-platform=server-driven&process=immediately#process-payment) for more details.
@@ -154,7 +159,7 @@ export class ReaderResource extends StripeResource {
       `/v1/terminal/readers/${id}/process_payment_intent`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Initiates a SetupIntent flow on a Reader. See [Save directly without charging](https://docs.stripe.com/docs/terminal/features/saving-payment-details/save-directly) for more details.
@@ -169,7 +174,7 @@ export class ReaderResource extends StripeResource {
       `/v1/terminal/readers/${id}/process_setup_intent`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Initiates an in-person refund on a Reader. See [Refund an Interac Payment](https://docs.stripe.com/docs/terminal/payments/regional?integration-country=CA#refund-an-interac-payment) for more details.
@@ -184,7 +189,7 @@ export class ReaderResource extends StripeResource {
       `/v1/terminal/readers/${id}/refund_payment`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Sets the reader display to show [cart details](https://docs.stripe.com/docs/terminal/features/display).
@@ -199,7 +204,7 @@ export class ReaderResource extends StripeResource {
       `/v1/terminal/readers/${id}/set_reader_display`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Reader {

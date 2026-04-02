@@ -40,7 +40,7 @@ export class SubscriptionScheduleResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a new subscription schedule object. Each customer can have up to 500 active or scheduled subscriptions.
@@ -97,7 +97,7 @@ export class SubscriptionScheduleResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of an existing subscription schedule. You only need to supply the unique subscription schedule identifier that was returned upon subscription schedule creation.
@@ -112,7 +112,7 @@ export class SubscriptionScheduleResource extends StripeResource {
       `/v1/subscription_schedules/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates an existing subscription schedule.
@@ -170,7 +170,7 @@ export class SubscriptionScheduleResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Cancels a subscription schedule and its associated subscription immediately (if the subscription schedule has an active subscription). A subscription schedule can only be canceled if its status is not_started or active.
@@ -185,7 +185,7 @@ export class SubscriptionScheduleResource extends StripeResource {
       `/v1/subscription_schedules/${id}/cancel`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Releases the subscription schedule immediately, which will stop scheduling of its phases, but leave any existing subscription in place. A schedule can only be released if its status is not_started or active. If the subscription schedule is currently associated with a subscription, releasing it will remove its subscription property and set the subscription's ID to the released_subscription property.
@@ -200,7 +200,7 @@ export class SubscriptionScheduleResource extends StripeResource {
       `/v1/subscription_schedules/${id}/release`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface SubscriptionSchedule {

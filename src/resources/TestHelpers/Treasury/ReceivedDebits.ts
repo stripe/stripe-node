@@ -17,7 +17,7 @@ export class ReceivedDebitResource extends StripeResource {
       '/v1/test_helpers/treasury/received_debits',
       params,
       options
-    );
+    ) as any;
   }
 }
 export namespace TestHelpers {

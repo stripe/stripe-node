@@ -23,7 +23,7 @@ export class PayoutResource extends StripeResource {
   ): ApiListPromise<Payout> {
     return this._makeRequest('GET', '/v1/payouts', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * To send funds to your own bank account, create a new payout object. Your [Stripe balance](https://docs.stripe.com/api#balance) must cover the payout amount. If it doesn't, you receive an “Insufficient Funds” error.
@@ -36,7 +36,7 @@ export class PayoutResource extends StripeResource {
     params: PayoutCreateParams,
     options?: RequestOptions
   ): Promise<Response<Payout>> {
-    return this._makeRequest('POST', '/v1/payouts', params, options);
+    return this._makeRequest('POST', '/v1/payouts', params, options) as any;
   }
   /**
    * Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list. Stripe returns the corresponding payout information.
@@ -46,7 +46,12 @@ export class PayoutResource extends StripeResource {
     params?: PayoutRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Payout>> {
-    return this._makeRequest('GET', `/v1/payouts/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/payouts/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Updates the specified payout by setting the values of the parameters you pass. We don't change parameters that you don't provide. This request only accepts the metadata as arguments.
@@ -56,7 +61,12 @@ export class PayoutResource extends StripeResource {
     params?: PayoutUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Payout>> {
-    return this._makeRequest('POST', `/v1/payouts/${id}`, params, options);
+    return this._makeRequest(
+      'POST',
+      `/v1/payouts/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * You can cancel a previously created payout if its status is pending. Stripe refunds the funds to your available balance. You can't cancel automatic Stripe payouts.
@@ -71,7 +81,7 @@ export class PayoutResource extends StripeResource {
       `/v1/payouts/${id}/cancel`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Reverses a payout by debiting the destination bank account. At this time, you can only reverse payouts for connected accounts to US and Canadian bank accounts. If the payout is manual and in the pending status, use /v1/payouts/:id/cancel instead.
@@ -88,7 +98,7 @@ export class PayoutResource extends StripeResource {
       `/v1/payouts/${id}/reverse`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Payout {

@@ -13,7 +13,12 @@ export class MandateResource extends StripeResource {
     params?: MandateRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Mandate>> {
-    return this._makeRequest('GET', `/v1/mandates/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/mandates/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Mandate {

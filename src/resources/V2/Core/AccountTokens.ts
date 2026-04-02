@@ -40,7 +40,7 @@ export class AccountTokenResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves an Account Token.
@@ -56,7 +56,7 @@ export class AccountTokenResource extends StripeResource {
       `/v2/core/account_tokens/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface AccountToken {

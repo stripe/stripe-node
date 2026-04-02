@@ -26,7 +26,7 @@ export class LocationResource extends StripeResource {
       `/v1/terminal/locations/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves a Location object.
@@ -41,7 +41,7 @@ export class LocationResource extends StripeResource {
       `/v1/terminal/locations/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates a Location object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -56,7 +56,7 @@ export class LocationResource extends StripeResource {
       `/v1/terminal/locations/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Returns a list of Location objects.
@@ -67,7 +67,7 @@ export class LocationResource extends StripeResource {
   ): ApiListPromise<Location> {
     return this._makeRequest('GET', '/v1/terminal/locations', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Creates a new Location object.
@@ -77,7 +77,12 @@ export class LocationResource extends StripeResource {
     params?: Terminal.LocationCreateParams,
     options?: RequestOptions
   ): Promise<Response<Location>> {
-    return this._makeRequest('POST', '/v1/terminal/locations', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/terminal/locations',
+      params,
+      options
+    ) as any;
   }
 }
 export interface Location {

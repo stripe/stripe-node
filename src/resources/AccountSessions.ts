@@ -11,7 +11,12 @@ export class AccountSessionResource extends StripeResource {
     params: AccountSessionCreateParams,
     options?: RequestOptions
   ): Promise<Response<AccountSession>> {
-    return this._makeRequest('POST', '/v1/account_sessions', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/account_sessions',
+      params,
+      options
+    ) as any;
   }
 }
 export interface AccountSession {

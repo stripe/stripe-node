@@ -16,7 +16,7 @@ export class ReviewResource extends StripeResource {
   ): ApiListPromise<Review> {
     return this._makeRequest('GET', '/v1/reviews', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Retrieves a Review object.
@@ -26,7 +26,12 @@ export class ReviewResource extends StripeResource {
     params?: ReviewRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Review>> {
-    return this._makeRequest('GET', `/v1/reviews/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/reviews/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Approves a Review object, closing it and removing it from the list of reviews.
@@ -41,7 +46,7 @@ export class ReviewResource extends StripeResource {
       `/v1/reviews/${id}/approve`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Review {

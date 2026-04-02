@@ -15,7 +15,7 @@ export class TokenResource extends StripeResource {
   ): ApiListPromise<Token> {
     return this._makeRequest('GET', '/v1/issuing/tokens', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Retrieves an Issuing Token object.
@@ -30,7 +30,7 @@ export class TokenResource extends StripeResource {
       `/v1/issuing/tokens/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Attempts to update the specified Issuing Token object to the status specified.
@@ -45,7 +45,7 @@ export class TokenResource extends StripeResource {
       `/v1/issuing/tokens/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Token {

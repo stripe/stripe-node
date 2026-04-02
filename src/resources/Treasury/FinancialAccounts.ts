@@ -27,7 +27,7 @@ export class FinancialAccountResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a new FinancialAccount. Each connected account can have up to three FinancialAccounts by default.
@@ -41,7 +41,7 @@ export class FinancialAccountResource extends StripeResource {
       '/v1/treasury/financial_accounts',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of a FinancialAccount.
@@ -56,7 +56,7 @@ export class FinancialAccountResource extends StripeResource {
       `/v1/treasury/financial_accounts/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates the details of a FinancialAccount.
@@ -71,7 +71,7 @@ export class FinancialAccountResource extends StripeResource {
       `/v1/treasury/financial_accounts/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Closes a FinancialAccount. A FinancialAccount can only be closed if it has a zero balance, has no pending InboundTransfers, and has canceled all attached Issuing cards.
@@ -86,7 +86,7 @@ export class FinancialAccountResource extends StripeResource {
       `/v1/treasury/financial_accounts/${id}/close`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates the Features associated with a FinancialAccount.
@@ -101,7 +101,7 @@ export class FinancialAccountResource extends StripeResource {
       `/v1/treasury/financial_accounts/${id}/features`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves Features information associated with the FinancialAccount.
@@ -116,7 +116,7 @@ export class FinancialAccountResource extends StripeResource {
       `/v1/treasury/financial_accounts/${id}/features`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface FinancialAccount {

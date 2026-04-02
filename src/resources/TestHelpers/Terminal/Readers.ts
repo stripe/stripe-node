@@ -18,7 +18,7 @@ export class ReaderResource extends StripeResource {
       `/v1/test_helpers/terminal/readers/${id}/present_payment_method`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Use this endpoint to trigger a successful input collection on a simulated reader.
@@ -33,7 +33,7 @@ export class ReaderResource extends StripeResource {
       `/v1/test_helpers/terminal/readers/${id}/succeed_input_collection`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Use this endpoint to complete an input collection with a timeout error on a simulated reader.
@@ -48,7 +48,7 @@ export class ReaderResource extends StripeResource {
       `/v1/test_helpers/terminal/readers/${id}/timeout_input_collection`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export namespace TestHelpers {

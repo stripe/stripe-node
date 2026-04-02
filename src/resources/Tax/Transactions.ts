@@ -24,7 +24,7 @@ export class TransactionResource extends StripeResource {
       `/v1/tax/transactions/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Creates a Tax Transaction from a calculation, if that calculation hasn't expired. Calculations expire after 90 days.
@@ -38,7 +38,7 @@ export class TransactionResource extends StripeResource {
       '/v1/tax/transactions/create_from_calculation',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Partially or fully reverses a previously created Transaction.
@@ -52,7 +52,7 @@ export class TransactionResource extends StripeResource {
       '/v1/tax/transactions/create_reversal',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves the line items of a committed standalone transaction as a collection.
@@ -70,7 +70,7 @@ export class TransactionResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
 }
 export interface Transaction {

@@ -16,7 +16,7 @@ export class AlertResource extends StripeResource {
   ): ApiListPromise<Alert> {
     return this._makeRequest('GET', '/v1/billing/alerts', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Creates a billing alert
@@ -25,7 +25,12 @@ export class AlertResource extends StripeResource {
     params: Billing.AlertCreateParams,
     options?: RequestOptions
   ): Promise<Response<Alert>> {
-    return this._makeRequest('POST', '/v1/billing/alerts', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/billing/alerts',
+      params,
+      options
+    ) as any;
   }
   /**
    * Retrieves a billing alert given an ID
@@ -40,7 +45,7 @@ export class AlertResource extends StripeResource {
       `/v1/billing/alerts/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Reactivates this alert, allowing it to trigger again.
@@ -55,7 +60,7 @@ export class AlertResource extends StripeResource {
       `/v1/billing/alerts/${id}/activate`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Archives this alert, removing it from the list view and APIs. This is non-reversible.
@@ -70,7 +75,7 @@ export class AlertResource extends StripeResource {
       `/v1/billing/alerts/${id}/archive`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Deactivates this alert, preventing it from triggering.
@@ -85,7 +90,7 @@ export class AlertResource extends StripeResource {
       `/v1/billing/alerts/${id}/deactivate`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Alert {

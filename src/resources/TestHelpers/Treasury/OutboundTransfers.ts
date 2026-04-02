@@ -18,7 +18,7 @@ export class OutboundTransferResource extends StripeResource {
       `/v1/test_helpers/treasury/outbound_transfers/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Transitions a test mode created OutboundTransfer to the failed status. The OutboundTransfer must already be in the processing state.
@@ -33,7 +33,7 @@ export class OutboundTransferResource extends StripeResource {
       `/v1/test_helpers/treasury/outbound_transfers/${id}/fail`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Transitions a test mode created OutboundTransfer to the posted status. The OutboundTransfer must already be in the processing state.
@@ -48,7 +48,7 @@ export class OutboundTransferResource extends StripeResource {
       `/v1/test_helpers/treasury/outbound_transfers/${id}/post`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Transitions a test mode created OutboundTransfer to the returned status. The OutboundTransfer must already be in the processing state.
@@ -63,7 +63,7 @@ export class OutboundTransferResource extends StripeResource {
       `/v1/test_helpers/treasury/outbound_transfers/${id}/return`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export namespace TestHelpers {

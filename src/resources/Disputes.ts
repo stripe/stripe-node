@@ -26,7 +26,7 @@ export class DisputeResource extends StripeResource {
   ): ApiListPromise<Dispute> {
     return this._makeRequest('GET', '/v1/disputes', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Retrieves the dispute with the given ID.
@@ -36,7 +36,12 @@ export class DisputeResource extends StripeResource {
     params?: DisputeRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Dispute>> {
-    return this._makeRequest('GET', `/v1/disputes/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/disputes/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * When you get a dispute, contacting your customer is always the best first step. If that doesn't work, you can submit evidence to help us resolve the dispute in your favor. You can do this in your [dashboard](https://dashboard.stripe.com/disputes), but if you prefer, you can use the API to submit evidence programmatically.
@@ -48,7 +53,12 @@ export class DisputeResource extends StripeResource {
     params?: DisputeUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Dispute>> {
-    return this._makeRequest('POST', `/v1/disputes/${id}`, params, options);
+    return this._makeRequest(
+      'POST',
+      `/v1/disputes/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Closing the dispute for a charge indicates that you do not have any evidence to submit and are essentially dismissing the dispute, acknowledging it as lost.
@@ -65,7 +75,7 @@ export class DisputeResource extends StripeResource {
       `/v1/disputes/${id}/close`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Dispute {

@@ -22,7 +22,7 @@ export class EventDestinationResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Create a new event destination.
@@ -36,7 +36,7 @@ export class EventDestinationResource extends StripeResource {
       '/v2/core/event_destinations',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Delete an event destination.
@@ -51,7 +51,7 @@ export class EventDestinationResource extends StripeResource {
       `/v2/core/event_destinations/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of an event destination.
@@ -66,7 +66,7 @@ export class EventDestinationResource extends StripeResource {
       `/v2/core/event_destinations/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Update the details of an event destination.
@@ -81,7 +81,7 @@ export class EventDestinationResource extends StripeResource {
       `/v2/core/event_destinations/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Disable an event destination.
@@ -96,7 +96,7 @@ export class EventDestinationResource extends StripeResource {
       `/v2/core/event_destinations/${id}/disable`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Enable an event destination.
@@ -111,7 +111,7 @@ export class EventDestinationResource extends StripeResource {
       `/v2/core/event_destinations/${id}/enable`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Send a `ping` event to an event destination.
@@ -126,7 +126,7 @@ export class EventDestinationResource extends StripeResource {
       `/v2/core/event_destinations/${id}/ping`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface EventDestination {

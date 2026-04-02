@@ -226,7 +226,7 @@ export class TransactionEntryResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves a TransactionEntry object.
@@ -428,7 +428,7 @@ export class TransactionEntryResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
 }
 export interface TransactionEntry {

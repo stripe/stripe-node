@@ -16,7 +16,7 @@ export class MeterEventSessionResource extends StripeResource {
       '/v2/billing/meter_event_session',
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface MeterEventSession {

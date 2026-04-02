@@ -24,7 +24,7 @@ export class RefundResource extends StripeResource {
   ): ApiListPromise<Refund> {
     return this._makeRequest('GET', '/v1/refunds', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * When you create a new refund, you must specify a Charge or a PaymentIntent object on which to create it.
@@ -43,7 +43,7 @@ export class RefundResource extends StripeResource {
     params?: RefundCreateParams,
     options?: RequestOptions
   ): Promise<Response<Refund>> {
-    return this._makeRequest('POST', '/v1/refunds', params, options);
+    return this._makeRequest('POST', '/v1/refunds', params, options) as any;
   }
   /**
    * Retrieves the details of an existing refund.
@@ -53,7 +53,12 @@ export class RefundResource extends StripeResource {
     params?: RefundRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Refund>> {
-    return this._makeRequest('GET', `/v1/refunds/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/refunds/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Updates the refund that you specify by setting the values of the passed parameters. Any parameters that you don't provide remain unchanged.
@@ -65,7 +70,12 @@ export class RefundResource extends StripeResource {
     params?: RefundUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Refund>> {
-    return this._makeRequest('POST', `/v1/refunds/${id}`, params, options);
+    return this._makeRequest(
+      'POST',
+      `/v1/refunds/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Cancels a refund with a status of requires_action.
@@ -82,7 +92,7 @@ export class RefundResource extends StripeResource {
       `/v1/refunds/${id}/cancel`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Refund {

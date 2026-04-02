@@ -18,7 +18,7 @@ export class InboundTransferResource extends StripeResource {
       `/v1/test_helpers/treasury/inbound_transfers/${id}/fail`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Marks the test mode InboundTransfer object as returned and links the InboundTransfer to a ReceivedDebit. The InboundTransfer must already be in the succeeded state.
@@ -33,7 +33,7 @@ export class InboundTransferResource extends StripeResource {
       `/v1/test_helpers/treasury/inbound_transfers/${id}/return`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Transitions a test mode created InboundTransfer to the succeeded status. The InboundTransfer must already be in the processing state.
@@ -48,7 +48,7 @@ export class InboundTransferResource extends StripeResource {
       `/v1/test_helpers/treasury/inbound_transfers/${id}/succeed`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export namespace TestHelpers {

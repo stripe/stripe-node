@@ -20,7 +20,7 @@ export class PaymentMethodDomainResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a payment method domain.
@@ -34,7 +34,7 @@ export class PaymentMethodDomainResource extends StripeResource {
       '/v1/payment_method_domains',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of an existing payment method domain.
@@ -49,7 +49,7 @@ export class PaymentMethodDomainResource extends StripeResource {
       `/v1/payment_method_domains/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates an existing payment method domain.
@@ -64,7 +64,7 @@ export class PaymentMethodDomainResource extends StripeResource {
       `/v1/payment_method_domains/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Some payment methods might require additional steps to register a domain. If the requirements weren't satisfied when the domain was created, the payment method will be inactive on the domain.
@@ -84,7 +84,7 @@ export class PaymentMethodDomainResource extends StripeResource {
       `/v1/payment_method_domains/${id}/validate`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface PaymentMethodDomain {

@@ -14,7 +14,7 @@ export class CountrySpecResource extends StripeResource {
   ): ApiListPromise<CountrySpec> {
     return this._makeRequest('GET', '/v1/country_specs', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Returns a Country Spec for a given Country code.
@@ -24,7 +24,12 @@ export class CountrySpecResource extends StripeResource {
     params?: CountrySpecRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<CountrySpec>> {
-    return this._makeRequest('GET', `/v1/country_specs/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/country_specs/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface CountrySpec {

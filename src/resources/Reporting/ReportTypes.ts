@@ -19,7 +19,7 @@ export class ReportTypeResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of a Report Type. (Certain report types require a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
@@ -34,7 +34,7 @@ export class ReportTypeResource extends StripeResource {
       `/v1/reporting/report_types/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface ReportType {

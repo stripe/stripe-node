@@ -28,7 +28,7 @@ export class SubscriptionItemResource extends StripeResource {
       `/v1/subscription_items/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves the subscription item with the given ID.
@@ -128,7 +128,7 @@ export class SubscriptionItemResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Updates the plan or quantity of an item on a current subscription.
@@ -237,7 +237,7 @@ export class SubscriptionItemResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Returns a list of your subscription items for a given subscription.
@@ -339,7 +339,7 @@ export class SubscriptionItemResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Adds a new item to an existing subscription. No existing items will be changed or replaced.
@@ -447,7 +447,7 @@ export class SubscriptionItemResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
 }
 export interface SubscriptionItem {

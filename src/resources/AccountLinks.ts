@@ -11,7 +11,12 @@ export class AccountLinkResource extends StripeResource {
     params: AccountLinkCreateParams,
     options?: RequestOptions
   ): Promise<Response<AccountLink>> {
-    return this._makeRequest('POST', '/v1/account_links', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/account_links',
+      params,
+      options
+    ) as any;
   }
 }
 export interface AccountLink {

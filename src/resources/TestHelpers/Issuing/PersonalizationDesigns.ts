@@ -18,7 +18,7 @@ export class PersonalizationDesignResource extends StripeResource {
       `/v1/test_helpers/issuing/personalization_designs/${id}/activate`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates the status of the specified testmode personalization design object to inactive.
@@ -33,7 +33,7 @@ export class PersonalizationDesignResource extends StripeResource {
       `/v1/test_helpers/issuing/personalization_designs/${id}/deactivate`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates the status of the specified testmode personalization design object to rejected.
@@ -48,7 +48,7 @@ export class PersonalizationDesignResource extends StripeResource {
       `/v1/test_helpers/issuing/personalization_designs/${id}/reject`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export namespace TestHelpers {

@@ -22,7 +22,7 @@ export class PaymentAttemptRecordResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves a Payment Attempt Record with the given ID
@@ -37,7 +37,7 @@ export class PaymentAttemptRecordResource extends StripeResource {
       `/v1/payment_attempt_records/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface PaymentAttemptRecord {

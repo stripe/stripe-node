@@ -23,7 +23,7 @@ export class BalanceTransactionResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves the balance transaction with the given ID.
@@ -40,7 +40,7 @@ export class BalanceTransactionResource extends StripeResource {
       `/v1/balance_transactions/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface BalanceTransaction {

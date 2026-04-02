@@ -31,7 +31,7 @@ export class InvoiceItemResource extends StripeResource {
       `/v1/invoiceitems/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves the invoice item with the given ID.
@@ -60,7 +60,7 @@ export class InvoiceItemResource extends StripeResource {
           quantity_decimal: {kind: 'decimal_string'},
         },
       },
-    });
+    }) as any;
   }
   /**
    * Updates the amount or description of an invoice item on an upcoming invoice. Updating an invoice item is only possible before the invoice it's attached to is closed.
@@ -106,7 +106,7 @@ export class InvoiceItemResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
@@ -143,7 +143,7 @@ export class InvoiceItemResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Creates an item to be added to a draft invoice (up to 250 items per invoice). If no invoice is specified, the item will be on the next invoice created for the customer specified.
@@ -182,7 +182,7 @@ export class InvoiceItemResource extends StripeResource {
           quantity_decimal: {kind: 'decimal_string'},
         },
       },
-    });
+    }) as any;
   }
 }
 export interface InvoiceItem {

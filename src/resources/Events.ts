@@ -14,7 +14,7 @@ export class EventResource extends StripeResource {
   ): ApiListPromise<Event> {
     return this._makeRequest('GET', '/v1/events', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Retrieves the details of an event if it was created in the last 30 days. Supply the unique identifier of the event, which you might have received in a webhook.
@@ -24,7 +24,7 @@ export class EventResource extends StripeResource {
     params?: EventRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Event>> {
-    return this._makeRequest('GET', `/v1/events/${id}`, params, options);
+    return this._makeRequest('GET', `/v1/events/${id}`, params, options) as any;
   }
 }
 export interface EventBase {

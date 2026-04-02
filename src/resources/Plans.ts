@@ -21,7 +21,12 @@ export class PlanResource extends StripeResource {
     params?: PlanDeleteParams,
     options?: RequestOptions
   ): Promise<Response<DeletedPlan>> {
-    return this._makeRequest('DELETE', `/v1/plans/${id}`, params, options);
+    return this._makeRequest(
+      'DELETE',
+      `/v1/plans/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Retrieves the plan with the given ID.
@@ -54,7 +59,7 @@ export class PlanResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Updates the specified plan by setting the values of the parameters passed. Any parameters not provided are left unchanged. By design, you cannot change a plan's ID, amount, currency, or billing cycle.
@@ -87,7 +92,7 @@ export class PlanResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Returns a list of your plans.
@@ -131,7 +136,7 @@ export class PlanResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * You can now model subscriptions more flexibly using the [Prices API](https://docs.stripe.com/api#prices). It replaces the Plans API and is backwards compatible to simplify your migration.
@@ -179,7 +184,7 @@ export class PlanResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
 }
 export interface Plan {

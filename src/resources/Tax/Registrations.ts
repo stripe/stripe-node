@@ -14,7 +14,7 @@ export class RegistrationResource extends StripeResource {
   ): ApiListPromise<Registration> {
     return this._makeRequest('GET', '/v1/tax/registrations', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Creates a new Tax Registration object.
@@ -23,7 +23,12 @@ export class RegistrationResource extends StripeResource {
     params: Tax.RegistrationCreateParams,
     options?: RequestOptions
   ): Promise<Response<Registration>> {
-    return this._makeRequest('POST', '/v1/tax/registrations', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/tax/registrations',
+      params,
+      options
+    ) as any;
   }
   /**
    * Returns a Tax Registration object.
@@ -38,7 +43,7 @@ export class RegistrationResource extends StripeResource {
       `/v1/tax/registrations/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates an existing Tax Registration object.
@@ -55,7 +60,7 @@ export class RegistrationResource extends StripeResource {
       `/v1/tax/registrations/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Registration {

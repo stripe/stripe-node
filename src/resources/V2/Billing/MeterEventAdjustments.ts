@@ -16,7 +16,7 @@ export class MeterEventAdjustmentResource extends StripeResource {
       '/v2/billing/meter_event_adjustments',
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface MeterEventAdjustment {

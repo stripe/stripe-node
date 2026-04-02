@@ -16,7 +16,12 @@ export class TaxIdResource extends StripeResource {
     params?: TaxIdDeleteParams,
     options?: RequestOptions
   ): Promise<Response<DeletedTaxId>> {
-    return this._makeRequest('DELETE', `/v1/tax_ids/${id}`, params, options);
+    return this._makeRequest(
+      'DELETE',
+      `/v1/tax_ids/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Retrieves an account or customer tax_id object.
@@ -26,7 +31,12 @@ export class TaxIdResource extends StripeResource {
     params?: TaxIdRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<TaxId>> {
-    return this._makeRequest('GET', `/v1/tax_ids/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/tax_ids/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Returns a list of tax IDs.
@@ -37,7 +47,7 @@ export class TaxIdResource extends StripeResource {
   ): ApiListPromise<TaxId> {
     return this._makeRequest('GET', '/v1/tax_ids', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Creates a new account or customer tax_id object.
@@ -46,7 +56,7 @@ export class TaxIdResource extends StripeResource {
     params: TaxIdCreateParams,
     options?: RequestOptions
   ): Promise<Response<TaxId>> {
-    return this._makeRequest('POST', '/v1/tax_ids', params, options);
+    return this._makeRequest('POST', '/v1/tax_ids', params, options) as any;
   }
 }
 export interface TaxId {

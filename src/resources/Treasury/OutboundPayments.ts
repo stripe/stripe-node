@@ -30,7 +30,7 @@ export class OutboundPaymentResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates an OutboundPayment.
@@ -44,7 +44,7 @@ export class OutboundPaymentResource extends StripeResource {
       '/v1/treasury/outbound_payments',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of an existing OutboundPayment by passing the unique OutboundPayment ID from either the OutboundPayment creation request or OutboundPayment list.
@@ -59,7 +59,7 @@ export class OutboundPaymentResource extends StripeResource {
       `/v1/treasury/outbound_payments/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Cancel an OutboundPayment.
@@ -74,7 +74,7 @@ export class OutboundPaymentResource extends StripeResource {
       `/v1/treasury/outbound_payments/${id}/cancel`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface OutboundPayment {

@@ -18,7 +18,7 @@ export class RefundResource extends StripeResource {
       `/v1/test_helpers/refunds/${id}/expire`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export namespace TestHelpers {

@@ -268,7 +268,7 @@ export class TransactionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of an existing Transaction.
@@ -504,7 +504,7 @@ export class TransactionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
 }
 export interface Transaction {

@@ -13,7 +13,12 @@ export class BalanceSettingResource extends StripeResource {
     params?: BalanceSettingsRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<BalanceSettings>> {
-    return this._makeRequest('GET', '/v1/balance_settings', params, options);
+    return this._makeRequest(
+      'GET',
+      '/v1/balance_settings',
+      params,
+      options
+    ) as any;
   }
   /**
    * Updates balance settings for a given connected account.
@@ -23,7 +28,12 @@ export class BalanceSettingResource extends StripeResource {
     params?: BalanceSettingsUpdateParams,
     options?: RequestOptions
   ): Promise<Response<BalanceSettings>> {
-    return this._makeRequest('POST', '/v1/balance_settings', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/balance_settings',
+      params,
+      options
+    ) as any;
   }
 }
 export interface BalanceSettings {

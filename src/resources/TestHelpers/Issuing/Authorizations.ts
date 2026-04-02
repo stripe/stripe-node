@@ -219,7 +219,7 @@ export class AuthorizationResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Capture a test-mode authorization.
@@ -451,7 +451,7 @@ export class AuthorizationResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Expire a test-mode Authorization.
@@ -630,7 +630,7 @@ export class AuthorizationResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Finalize the amount on an Authorization prior to capture, when the initial authorization was for an estimated amount.
@@ -846,7 +846,7 @@ export class AuthorizationResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Respond to a fraud challenge on a testmode Issuing authorization, simulating either a confirmation of fraud or a correction of legitimacy.
@@ -1025,7 +1025,7 @@ export class AuthorizationResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Increment a test-mode Authorization.
@@ -1204,7 +1204,7 @@ export class AuthorizationResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Reverse a test-mode Authorization.
@@ -1383,7 +1383,7 @@ export class AuthorizationResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
 }
 export namespace TestHelpers {

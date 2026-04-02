@@ -16,7 +16,7 @@ export class MeterEventResource extends StripeResource {
       '/v2/billing/meter_events',
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface MeterEvent {

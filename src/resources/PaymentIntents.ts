@@ -37,7 +37,7 @@ export class PaymentIntentResource extends StripeResource {
   ): ApiListPromise<PaymentIntent> {
     return this._makeRequest('GET', '/v1/payment_intents', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Creates a PaymentIntent object.
@@ -55,7 +55,12 @@ export class PaymentIntentResource extends StripeResource {
     params: PaymentIntentCreateParams,
     options?: RequestOptions
   ): Promise<Response<PaymentIntent>> {
-    return this._makeRequest('POST', '/v1/payment_intents', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/payment_intents',
+      params,
+      options
+    ) as any;
   }
   /**
    * Retrieves the details of a PaymentIntent that has previously been created.
@@ -74,7 +79,7 @@ export class PaymentIntentResource extends StripeResource {
       `/v1/payment_intents/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates properties on a PaymentIntent object without confirming.
@@ -95,7 +100,7 @@ export class PaymentIntentResource extends StripeResource {
       `/v1/payment_intents/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Search for PaymentIntents you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
@@ -115,7 +120,7 @@ export class PaymentIntentResource extends StripeResource {
       {
         methodType: 'search',
       }
-    );
+    ) as any;
   }
   /**
    * Manually reconcile the remaining amount for a customer_balance PaymentIntent.
@@ -130,7 +135,7 @@ export class PaymentIntentResource extends StripeResource {
       `/v1/payment_intents/${id}/apply_customer_balance`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * You can cancel a PaymentIntent object when it's in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action or, [in rare cases](https://docs.stripe.com/docs/payments/intents), processing.
@@ -149,7 +154,7 @@ export class PaymentIntentResource extends StripeResource {
       `/v1/payment_intents/${id}/cancel`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Capture the funds of an existing uncaptured PaymentIntent when its status is requires_capture.
@@ -168,7 +173,7 @@ export class PaymentIntentResource extends StripeResource {
       `/v1/payment_intents/${id}/capture`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Confirm that your customer intends to pay with current or provided
@@ -212,7 +217,7 @@ export class PaymentIntentResource extends StripeResource {
       `/v1/payment_intents/${id}/confirm`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Perform an incremental authorization on an eligible
@@ -250,7 +255,7 @@ export class PaymentIntentResource extends StripeResource {
       `/v1/payment_intents/${id}/increment_authorization`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Verifies microdeposits on a PaymentIntent object.
@@ -265,7 +270,7 @@ export class PaymentIntentResource extends StripeResource {
       `/v1/payment_intents/${id}/verify_microdeposits`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Lists all LineItems of a given PaymentIntent.
@@ -283,7 +288,7 @@ export class PaymentIntentResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
 }
 export interface PaymentIntent {

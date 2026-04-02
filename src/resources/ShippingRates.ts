@@ -21,7 +21,7 @@ export class ShippingRateResource extends StripeResource {
   ): ApiListPromise<ShippingRate> {
     return this._makeRequest('GET', '/v1/shipping_rates', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Creates a new shipping rate object.
@@ -30,7 +30,12 @@ export class ShippingRateResource extends StripeResource {
     params: ShippingRateCreateParams,
     options?: RequestOptions
   ): Promise<Response<ShippingRate>> {
-    return this._makeRequest('POST', '/v1/shipping_rates', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/shipping_rates',
+      params,
+      options
+    ) as any;
   }
   /**
    * Returns the shipping rate object with the given ID.
@@ -45,7 +50,7 @@ export class ShippingRateResource extends StripeResource {
       `/v1/shipping_rates/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates an existing shipping rate object.
@@ -60,7 +65,7 @@ export class ShippingRateResource extends StripeResource {
       `/v1/shipping_rates/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface ShippingRate {

@@ -24,7 +24,7 @@ export class ValueListResource extends StripeResource {
       `/v1/radar/value_lists/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves a ValueList object.
@@ -39,7 +39,7 @@ export class ValueListResource extends StripeResource {
       `/v1/radar/value_lists/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates a ValueList object by setting the values of the parameters passed. Any parameters not provided will be left unchanged. Note that item_type is immutable.
@@ -54,7 +54,7 @@ export class ValueListResource extends StripeResource {
       `/v1/radar/value_lists/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Returns a list of ValueList objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -65,7 +65,7 @@ export class ValueListResource extends StripeResource {
   ): ApiListPromise<ValueList> {
     return this._makeRequest('GET', '/v1/radar/value_lists', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Creates a new ValueList object, which can then be referenced in rules.
@@ -74,7 +74,12 @@ export class ValueListResource extends StripeResource {
     params: Radar.ValueListCreateParams,
     options?: RequestOptions
   ): Promise<Response<ValueList>> {
-    return this._makeRequest('POST', '/v1/radar/value_lists', params, options);
+    return this._makeRequest(
+      'POST',
+      '/v1/radar/value_lists',
+      params,
+      options
+    ) as any;
   }
 }
 export interface ValueList {

@@ -21,7 +21,7 @@ export class EventResource extends StripeResource {
     return this._makeRequest('GET', '/v2/core/events', params, options, {
       methodType: 'list',
       transformResponseData: transformResponseData,
-    });
+    }) as any;
   }
   /**
    * Retrieves the details of an event.
@@ -36,7 +36,7 @@ export class EventResource extends StripeResource {
     };
     return this._makeRequest('GET', `/v2/core/events/${id}`, params, options, {
       transformResponseData: transformResponseData,
-    });
+    }) as any;
   }
   /**
    * @private

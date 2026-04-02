@@ -46,7 +46,7 @@ export class PersonResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Create a Person. Adds an individual to an Account's identity. You can set relationship attributes and identity information at creation.
@@ -82,7 +82,7 @@ export class PersonResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Delete a Person associated with an Account.
@@ -99,7 +99,7 @@ export class PersonResource extends StripeResource {
       `/v2/core/accounts/${accountId}/persons/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves a Person associated with an Account.
@@ -127,7 +127,7 @@ export class PersonResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Updates a Person associated with an Account.
@@ -164,7 +164,7 @@ export class PersonResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
 }
 export namespace V2 {

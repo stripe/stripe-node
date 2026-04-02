@@ -25,7 +25,7 @@ export class ReceivedCreditResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of an existing ReceivedCredit by passing the unique ReceivedCredit ID from the ReceivedCredit list.
@@ -40,7 +40,7 @@ export class ReceivedCreditResource extends StripeResource {
       `/v1/treasury/received_credits/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface ReceivedCredit {

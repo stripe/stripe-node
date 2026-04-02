@@ -18,7 +18,7 @@ export class PaymentEvaluationResource extends StripeResource {
       '/v1/radar/payment_evaluations',
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface PaymentEvaluation {

@@ -132,7 +132,7 @@ export class QuoteResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * A quote models prices and services for a customer. Default options for header, description, footer, and expires_at can be set in the dashboard via the [quote template](https://dashboard.stripe.com/settings/billing/quote).
@@ -243,7 +243,7 @@ export class QuoteResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Retrieves the quote with the given ID.
@@ -338,7 +338,7 @@ export class QuoteResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * A quote models prices and services for a customer.
@@ -450,7 +450,7 @@ export class QuoteResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Accepts the specified quote.
@@ -555,7 +555,7 @@ export class QuoteResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Cancels the quote.
@@ -660,7 +660,7 @@ export class QuoteResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Finalizes the quote.
@@ -765,7 +765,7 @@ export class QuoteResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Download the PDF for a finalized quote. Explanation for special handling can be found [here](https://docs.stripe.com/quotes/overview#quote_pdf)
@@ -778,7 +778,7 @@ export class QuoteResource extends StripeResource {
     return this._makeRequest('GET', `/v1/quotes/${id}/pdf`, params, options, {
       apiBase: 'files',
       streaming: true,
-    });
+    }) as any;
   }
   /**
    * When retrieving a quote, there is an includable [computed.upfront.line_items](https://stripe.com/docs/api/quotes/object#quote_object-computed-upfront-line_items) property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of upfront line items.
@@ -865,7 +865,7 @@ export class QuoteResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * When retrieving a quote, there is an includable line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
@@ -952,7 +952,7 @@ export class QuoteResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
 }
 export interface Quote {

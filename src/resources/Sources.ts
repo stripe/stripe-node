@@ -22,7 +22,12 @@ export class SourceResource extends StripeResource {
     params?: SourceRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Source>> {
-    return this._makeRequest('GET', `/v1/sources/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/sources/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Updates the specified source by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -34,7 +39,12 @@ export class SourceResource extends StripeResource {
     params?: SourceUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Source>> {
-    return this._makeRequest('POST', `/v1/sources/${id}`, params, options);
+    return this._makeRequest(
+      'POST',
+      `/v1/sources/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Creates a new source object.
@@ -43,7 +53,7 @@ export class SourceResource extends StripeResource {
     params?: SourceCreateParams,
     options?: RequestOptions
   ): Promise<Response<Source>> {
-    return this._makeRequest('POST', '/v1/sources', params, options);
+    return this._makeRequest('POST', '/v1/sources', params, options) as any;
   }
   /**
    * Verify a given source.
@@ -58,7 +68,7 @@ export class SourceResource extends StripeResource {
       `/v1/sources/${id}/verify`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * List source transactions for a given source.
@@ -76,7 +86,7 @@ export class SourceResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
 }
 export interface Source {

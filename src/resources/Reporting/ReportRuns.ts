@@ -21,7 +21,7 @@ export class ReportRunResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a new object and begin running the report. (Certain report types require a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
@@ -35,7 +35,7 @@ export class ReportRunResource extends StripeResource {
       '/v1/reporting/report_runs',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of an existing Report Run.
@@ -50,7 +50,7 @@ export class ReportRunResource extends StripeResource {
       `/v1/reporting/report_runs/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface ReportRun {

@@ -35,7 +35,7 @@ export class OrderResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Creates a Climate order object for a given Climate product. The order will be processed immediately
@@ -54,7 +54,7 @@ export class OrderResource extends StripeResource {
         kind: 'object',
         fields: {metric_tons: {kind: 'decimal_string'}},
       },
-    });
+    }) as any;
   }
   /**
    * Retrieves the details of a Climate order object with the given ID.
@@ -75,7 +75,7 @@ export class OrderResource extends StripeResource {
           fields: {metric_tons: {kind: 'decimal_string'}},
         },
       }
-    );
+    ) as any;
   }
   /**
    * Updates the specified order by setting the values of the parameters passed.
@@ -96,7 +96,7 @@ export class OrderResource extends StripeResource {
           fields: {metric_tons: {kind: 'decimal_string'}},
         },
       }
-    );
+    ) as any;
   }
   /**
    * Cancels a Climate order. You can cancel an order within 24 hours of creation. Stripe refunds the
@@ -120,7 +120,7 @@ export class OrderResource extends StripeResource {
           fields: {metric_tons: {kind: 'decimal_string'}},
         },
       }
-    );
+    ) as any;
   }
 }
 export interface Order {

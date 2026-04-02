@@ -18,7 +18,7 @@ export class OutboundPaymentResource extends StripeResource {
       `/v1/test_helpers/treasury/outbound_payments/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Transitions a test mode created OutboundPayment to the failed status. The OutboundPayment must already be in the processing state.
@@ -33,7 +33,7 @@ export class OutboundPaymentResource extends StripeResource {
       `/v1/test_helpers/treasury/outbound_payments/${id}/fail`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Transitions a test mode created OutboundPayment to the posted status. The OutboundPayment must already be in the processing state.
@@ -48,7 +48,7 @@ export class OutboundPaymentResource extends StripeResource {
       `/v1/test_helpers/treasury/outbound_payments/${id}/post`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Transitions a test mode created OutboundPayment to the returned status. The OutboundPayment must already be in the processing state.
@@ -63,7 +63,7 @@ export class OutboundPaymentResource extends StripeResource {
       `/v1/test_helpers/treasury/outbound_payments/${id}/return`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export namespace TestHelpers {

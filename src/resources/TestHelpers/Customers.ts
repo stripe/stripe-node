@@ -18,7 +18,7 @@ export class CustomerResource extends StripeResource {
       `/v1/test_helpers/customers/${id}/fund_cash_balance`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export namespace TestHelpers {

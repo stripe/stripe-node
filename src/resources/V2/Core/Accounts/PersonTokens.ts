@@ -31,7 +31,7 @@ export class PersonTokenResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves a Person Token associated with an Account.
@@ -48,7 +48,7 @@ export class PersonTokenResource extends StripeResource {
       `/v2/core/accounts/${accountId}/person_tokens/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export namespace V2 {

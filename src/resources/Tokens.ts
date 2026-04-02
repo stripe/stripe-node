@@ -20,7 +20,7 @@ export class TokenResource extends StripeResource {
     params?: TokenRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Token>> {
-    return this._makeRequest('GET', `/v1/tokens/${id}`, params, options);
+    return this._makeRequest('GET', `/v1/tokens/${id}`, params, options) as any;
   }
   /**
    * Creates a single-use token that represents a bank account's details.
@@ -30,7 +30,7 @@ export class TokenResource extends StripeResource {
     params?: TokenCreateParams,
     options?: RequestOptions
   ): Promise<Response<Token>> {
-    return this._makeRequest('POST', '/v1/tokens', params, options);
+    return this._makeRequest('POST', '/v1/tokens', params, options) as any;
   }
 }
 export interface Token {

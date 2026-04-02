@@ -18,7 +18,7 @@ export class ConfirmationTokenResource extends StripeResource {
       '/v1/test_helpers/confirmation_tokens',
       params,
       options
-    );
+    ) as any;
   }
 }
 export namespace TestHelpers {

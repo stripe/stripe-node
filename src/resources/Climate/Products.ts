@@ -27,7 +27,7 @@ export class ProductResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Retrieves the details of a Climate product with the given ID.
@@ -48,7 +48,7 @@ export class ProductResource extends StripeResource {
           fields: {metric_tons_available: {kind: 'decimal_string'}},
         },
       }
-    );
+    ) as any;
   }
 }
 export interface Product {

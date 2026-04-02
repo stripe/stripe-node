@@ -20,7 +20,7 @@ export class TaxRateResource extends StripeResource {
   ): ApiListPromise<TaxRate> {
     return this._makeRequest('GET', '/v1/tax_rates', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Creates a new tax rate.
@@ -29,7 +29,7 @@ export class TaxRateResource extends StripeResource {
     params: TaxRateCreateParams,
     options?: RequestOptions
   ): Promise<Response<TaxRate>> {
-    return this._makeRequest('POST', '/v1/tax_rates', params, options);
+    return this._makeRequest('POST', '/v1/tax_rates', params, options) as any;
   }
   /**
    * Retrieves a tax rate with the given ID
@@ -39,7 +39,12 @@ export class TaxRateResource extends StripeResource {
     params?: TaxRateRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<TaxRate>> {
-    return this._makeRequest('GET', `/v1/tax_rates/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/tax_rates/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Updates an existing tax rate.
@@ -49,7 +54,12 @@ export class TaxRateResource extends StripeResource {
     params?: TaxRateUpdateParams,
     options?: RequestOptions
   ): Promise<Response<TaxRate>> {
-    return this._makeRequest('POST', `/v1/tax_rates/${id}`, params, options);
+    return this._makeRequest(
+      'POST',
+      `/v1/tax_rates/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface TaxRate {

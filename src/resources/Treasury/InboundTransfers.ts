@@ -27,7 +27,7 @@ export class InboundTransferResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates an InboundTransfer.
@@ -41,7 +41,7 @@ export class InboundTransferResource extends StripeResource {
       '/v1/treasury/inbound_transfers',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of an existing InboundTransfer.
@@ -56,7 +56,7 @@ export class InboundTransferResource extends StripeResource {
       `/v1/treasury/inbound_transfers/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Cancels an InboundTransfer.
@@ -71,7 +71,7 @@ export class InboundTransferResource extends StripeResource {
       `/v1/treasury/inbound_transfers/${id}/cancel`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface InboundTransfer {

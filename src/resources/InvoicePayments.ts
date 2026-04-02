@@ -18,7 +18,7 @@ export class InvoicePaymentResource extends StripeResource {
   ): ApiListPromise<InvoicePayment> {
     return this._makeRequest('GET', '/v1/invoice_payments', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Retrieves the invoice payment with the given ID.
@@ -33,7 +33,7 @@ export class InvoicePaymentResource extends StripeResource {
       `/v1/invoice_payments/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface InvoicePayment {

@@ -40,7 +40,7 @@ export class ChargeResource extends StripeResource {
   ): ApiListPromise<Charge> {
     return this._makeRequest('GET', '/v1/charges', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * This method is no longer recommended—use the [Payment Intents API](https://docs.stripe.com/docs/api/payment_intents)
@@ -51,7 +51,7 @@ export class ChargeResource extends StripeResource {
     params?: ChargeCreateParams,
     options?: RequestOptions
   ): Promise<Response<Charge>> {
-    return this._makeRequest('POST', '/v1/charges', params, options);
+    return this._makeRequest('POST', '/v1/charges', params, options) as any;
   }
   /**
    * Retrieves the details of a charge that has previously been created. Supply the unique charge ID that was returned from your previous request, and Stripe will return the corresponding charge information. The same information is returned when creating or refunding the charge.
@@ -61,7 +61,12 @@ export class ChargeResource extends StripeResource {
     params?: ChargeRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Charge>> {
-    return this._makeRequest('GET', `/v1/charges/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/charges/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Updates the specified charge by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -71,7 +76,12 @@ export class ChargeResource extends StripeResource {
     params?: ChargeUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Charge>> {
-    return this._makeRequest('POST', `/v1/charges/${id}`, params, options);
+    return this._makeRequest(
+      'POST',
+      `/v1/charges/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Search for charges you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
@@ -85,7 +95,7 @@ export class ChargeResource extends StripeResource {
   ): ApiSearchResultPromise<Charge> {
     return this._makeRequest('GET', '/v1/charges/search', params, options, {
       methodType: 'search',
-    });
+    }) as any;
   }
   /**
    * Capture the payment of an existing, uncaptured charge that was created with the capture option set to false.
@@ -104,7 +114,7 @@ export class ChargeResource extends StripeResource {
       `/v1/charges/${id}/capture`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Charge {

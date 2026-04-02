@@ -146,7 +146,7 @@ export class SubscriptionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves the subscription with the given ID.
@@ -259,7 +259,7 @@ export class SubscriptionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Updates an existing subscription to match the specified parameters.
@@ -421,7 +421,7 @@ export class SubscriptionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Removes the currently applied discount on a subscription.
@@ -436,7 +436,7 @@ export class SubscriptionResource extends StripeResource {
       `/v1/subscriptions/${id}/discount`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * By default, returns a list of subscriptions that have not been canceled. In order to list canceled subscriptions, specify status=canceled.
@@ -551,7 +551,7 @@ export class SubscriptionResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Creates a new subscription on an existing customer. Each customer can have up to 500 active or scheduled subscriptions.
@@ -692,7 +692,7 @@ export class SubscriptionResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Search for subscriptions you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
@@ -816,7 +816,7 @@ export class SubscriptionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Upgrade the billing_mode of an existing subscription.
@@ -929,7 +929,7 @@ export class SubscriptionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Initiates resumption of a paused subscription, optionally resetting the billing cycle anchor and creating prorations. If no resumption invoice is generated, the subscription becomes active immediately. If a resumption invoice is generated, the subscription remains paused until the invoice is paid or marked uncollectible. If the invoice is not paid by the expiration date, it is voided and the subscription remains paused.
@@ -1042,7 +1042,7 @@ export class SubscriptionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
 }
 export interface Subscription {

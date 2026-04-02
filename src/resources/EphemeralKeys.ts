@@ -17,7 +17,7 @@ export class EphemeralKeyResource extends StripeResource {
       `/v1/ephemeral_keys/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   create(
     params?: EphemeralKeyCreateParams,

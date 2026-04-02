@@ -20,7 +20,7 @@ export class TransactionResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves the details of a Financial Connections Transaction
@@ -35,7 +35,7 @@ export class TransactionResource extends StripeResource {
       `/v1/financial_connections/transactions/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Transaction {

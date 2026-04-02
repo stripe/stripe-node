@@ -126,7 +126,7 @@ export class SessionResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Creates a Checkout Session object.
@@ -234,7 +234,7 @@ export class SessionResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Retrieves a Checkout Session object.
@@ -332,7 +332,7 @@ export class SessionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Updates a Checkout Session object.
@@ -449,7 +449,7 @@ export class SessionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * A Checkout Session can be expired when it is in one of these statuses: open
@@ -549,7 +549,7 @@ export class SessionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * When retrieving a Checkout Session, there is an includable line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
@@ -636,7 +636,7 @@ export class SessionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
 }
 export interface Session {

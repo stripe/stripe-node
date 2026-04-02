@@ -21,7 +21,7 @@ export class ActiveEntitlementResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Retrieve an active entitlement
@@ -36,7 +36,7 @@ export class ActiveEntitlementResource extends StripeResource {
       `/v1/entitlements/active_entitlements/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface ActiveEntitlement {

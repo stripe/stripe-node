@@ -38,7 +38,12 @@ export class CustomerResource extends StripeResource {
     params?: CustomerDeleteParams,
     options?: RequestOptions
   ): Promise<Response<DeletedCustomer>> {
-    return this._makeRequest('DELETE', `/v1/customers/${id}`, params, options);
+    return this._makeRequest(
+      'DELETE',
+      `/v1/customers/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Retrieves a Customer object.
@@ -48,7 +53,12 @@ export class CustomerResource extends StripeResource {
     params?: CustomerRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Customer | DeletedCustomer>> {
-    return this._makeRequest('GET', `/v1/customers/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/customers/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Updates the specified customer by setting the values of the parameters passed. Any parameters not provided are left unchanged. For example, if you pass the source parameter, that becomes the customer's active source (such as a card) to be used for all charges in the future. When you update a customer to a new valid card source by passing the source parameter: for each of the customer's current subscriptions, if the subscription bills automatically and is in the past_due state, then the latest open invoice for the subscription with automatic collection enabled is retried. This retry doesn't count as an automatic retry, and doesn't affect the next regularly scheduled payment for the invoice. Changing the default_source for a customer doesn't trigger this behavior.
@@ -170,7 +180,7 @@ export class CustomerResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Removes the currently applied discount on a customer.
@@ -185,7 +195,7 @@ export class CustomerResource extends StripeResource {
       `/v1/customers/${id}/discount`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Returns a list of your customers. The customers are returned sorted by creation date, with the most recent customers appearing first.
@@ -317,7 +327,7 @@ export class CustomerResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Creates a new customer object.
@@ -436,7 +446,7 @@ export class CustomerResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Search for customers you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
@@ -571,7 +581,7 @@ export class CustomerResource extends StripeResource {
           },
         },
       },
-    });
+    }) as any;
   }
   /**
    * Returns a list of transactions that updated the customer's [balances](https://docs.stripe.com/docs/billing/customer/balance).
@@ -589,7 +599,7 @@ export class CustomerResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates an immutable transaction that updates the customer's credit [balance](https://docs.stripe.com/docs/billing/customer/balance).
@@ -604,7 +614,7 @@ export class CustomerResource extends StripeResource {
       `/v1/customers/${id}/balance_transactions`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves a specific customer balance transaction that updated the customer's [balances](https://docs.stripe.com/docs/billing/customer/balance).
@@ -620,7 +630,7 @@ export class CustomerResource extends StripeResource {
       `/v1/customers/${customerId}/balance_transactions/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Most credit balance transaction fields are immutable, but you may update its description and metadata.
@@ -636,7 +646,7 @@ export class CustomerResource extends StripeResource {
       `/v1/customers/${customerId}/balance_transactions/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves a customer's cash balance.
@@ -651,7 +661,7 @@ export class CustomerResource extends StripeResource {
       `/v1/customers/${id}/cash_balance`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Changes the settings on a customer's cash balance.
@@ -666,7 +676,7 @@ export class CustomerResource extends StripeResource {
       `/v1/customers/${id}/cash_balance`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Returns a list of transactions that modified the customer's [cash balance](https://docs.stripe.com/docs/payments/customer-balance).
@@ -684,7 +694,7 @@ export class CustomerResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves a specific cash balance transaction, which updated the customer's [cash balance](https://docs.stripe.com/docs/payments/customer-balance).
@@ -700,7 +710,7 @@ export class CustomerResource extends StripeResource {
       `/v1/customers/${customerId}/cash_balance_transactions/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieve funding instructions for a customer cash balance. If funding instructions do not yet exist for the customer, new
@@ -717,7 +727,7 @@ export class CustomerResource extends StripeResource {
       `/v1/customers/${id}/funding_instructions`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Returns a list of PaymentMethods for a given Customer
@@ -735,7 +745,7 @@ export class CustomerResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves a PaymentMethod object for a given Customer.
@@ -751,7 +761,7 @@ export class CustomerResource extends StripeResource {
       `/v1/customers/${customerId}/payment_methods/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * List sources for a specified customer.
@@ -769,7 +779,7 @@ export class CustomerResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * When you create a new credit card, you must specify a customer or recipient on which to create it.
@@ -788,7 +798,7 @@ export class CustomerResource extends StripeResource {
       `/v1/customers/${id}/sources`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieve a specified source for a given customer.
@@ -804,7 +814,7 @@ export class CustomerResource extends StripeResource {
       `/v1/customers/${customerId}/sources/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Update a specified source for a given customer.
@@ -820,7 +830,7 @@ export class CustomerResource extends StripeResource {
       `/v1/customers/${customerId}/sources/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Delete a specified source for a given customer.
@@ -836,7 +846,7 @@ export class CustomerResource extends StripeResource {
       `/v1/customers/${customerId}/sources/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Verify a specified bank account for a given customer.
@@ -852,7 +862,7 @@ export class CustomerResource extends StripeResource {
       `/v1/customers/${customerId}/sources/${id}/verify`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Deletes an existing tax_id object.
@@ -868,7 +878,7 @@ export class CustomerResource extends StripeResource {
       `/v1/customers/${customerId}/tax_ids/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves the tax_id object with the given identifier.
@@ -884,7 +894,7 @@ export class CustomerResource extends StripeResource {
       `/v1/customers/${customerId}/tax_ids/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Returns a list of tax IDs for a customer.
@@ -902,7 +912,7 @@ export class CustomerResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a new tax_id object for a customer.
@@ -917,7 +927,7 @@ export class CustomerResource extends StripeResource {
       `/v1/customers/${id}/tax_ids`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Customer {

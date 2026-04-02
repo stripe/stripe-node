@@ -14,7 +14,7 @@ export class TaxCodeResource extends StripeResource {
   ): ApiListPromise<TaxCode> {
     return this._makeRequest('GET', '/v1/tax_codes', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Retrieves the details of an existing tax code. Supply the unique tax code ID and Stripe will return the corresponding tax code information.
@@ -24,7 +24,12 @@ export class TaxCodeResource extends StripeResource {
     params?: TaxCodeRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<TaxCode>> {
-    return this._makeRequest('GET', `/v1/tax_codes/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/tax_codes/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface TaxCode {

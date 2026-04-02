@@ -20,7 +20,7 @@ export class MeterEventStreamResource extends StripeResource {
       {
         apiBase: 'meter_events',
       }
-    );
+    ) as any;
   }
 }
 export namespace V2 {

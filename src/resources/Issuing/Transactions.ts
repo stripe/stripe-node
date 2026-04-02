@@ -123,7 +123,7 @@ export class TransactionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Retrieves an Issuing Transaction object.
@@ -222,7 +222,7 @@ export class TransactionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
   /**
    * Updates the specified Issuing Transaction object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -321,7 +321,7 @@ export class TransactionResource extends StripeResource {
           },
         },
       }
-    );
+    ) as any;
   }
 }
 export interface Transaction {

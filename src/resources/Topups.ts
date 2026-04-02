@@ -22,7 +22,7 @@ export class TopupResource extends StripeResource {
   ): ApiListPromise<Topup> {
     return this._makeRequest('GET', '/v1/topups', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * Top up the balance of an account
@@ -31,7 +31,7 @@ export class TopupResource extends StripeResource {
     params: TopupCreateParams,
     options?: RequestOptions
   ): Promise<Response<Topup>> {
-    return this._makeRequest('POST', '/v1/topups', params, options);
+    return this._makeRequest('POST', '/v1/topups', params, options) as any;
   }
   /**
    * Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.
@@ -41,7 +41,7 @@ export class TopupResource extends StripeResource {
     params?: TopupRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Topup>> {
-    return this._makeRequest('GET', `/v1/topups/${id}`, params, options);
+    return this._makeRequest('GET', `/v1/topups/${id}`, params, options) as any;
   }
   /**
    * Updates the metadata of a top-up. Other top-up details are not editable by design.
@@ -51,7 +51,12 @@ export class TopupResource extends StripeResource {
     params?: TopupUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Topup>> {
-    return this._makeRequest('POST', `/v1/topups/${id}`, params, options);
+    return this._makeRequest(
+      'POST',
+      `/v1/topups/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Cancels a top-up. Only pending top-ups can be canceled.
@@ -66,7 +71,7 @@ export class TopupResource extends StripeResource {
       `/v1/topups/${id}/cancel`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Topup {

@@ -27,7 +27,7 @@ export class CreditGrantResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a credit grant.
@@ -41,7 +41,7 @@ export class CreditGrantResource extends StripeResource {
       '/v1/billing/credit_grants',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves a credit grant.
@@ -56,7 +56,7 @@ export class CreditGrantResource extends StripeResource {
       `/v1/billing/credit_grants/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates a credit grant.
@@ -71,7 +71,7 @@ export class CreditGrantResource extends StripeResource {
       `/v1/billing/credit_grants/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Expires a credit grant.
@@ -86,7 +86,7 @@ export class CreditGrantResource extends StripeResource {
       `/v1/billing/credit_grants/${id}/expire`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Voids a credit grant.
@@ -101,7 +101,7 @@ export class CreditGrantResource extends StripeResource {
       `/v1/billing/credit_grants/${id}/void`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface CreditGrant {

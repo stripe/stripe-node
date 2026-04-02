@@ -24,7 +24,7 @@ export class TransferResource extends StripeResource {
   ): ApiListPromise<Transfer> {
     return this._makeRequest('GET', '/v1/transfers', params, options, {
       methodType: 'list',
-    });
+    }) as any;
   }
   /**
    * To send funds from your Stripe account to a connected account, you create a new transfer object. Your [Stripe balance](https://docs.stripe.com/api#balance) must be able to cover the transfer amount, or you'll receive an “Insufficient Funds” error.
@@ -33,7 +33,7 @@ export class TransferResource extends StripeResource {
     params: TransferCreateParams,
     options?: RequestOptions
   ): Promise<Response<Transfer>> {
-    return this._makeRequest('POST', '/v1/transfers', params, options);
+    return this._makeRequest('POST', '/v1/transfers', params, options) as any;
   }
   /**
    * Retrieves the details of an existing transfer. Supply the unique transfer ID from either a transfer creation request or the transfer list, and Stripe will return the corresponding transfer information.
@@ -43,7 +43,12 @@ export class TransferResource extends StripeResource {
     params?: TransferRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Transfer>> {
-    return this._makeRequest('GET', `/v1/transfers/${id}`, params, options);
+    return this._makeRequest(
+      'GET',
+      `/v1/transfers/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Updates the specified transfer by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -55,7 +60,12 @@ export class TransferResource extends StripeResource {
     params?: TransferUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Transfer>> {
-    return this._makeRequest('POST', `/v1/transfers/${id}`, params, options);
+    return this._makeRequest(
+      'POST',
+      `/v1/transfers/${id}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * You can see a list of the reversals belonging to a specific transfer. Note that the 10 most recent reversals are always available by default on the transfer object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional reversals.
@@ -73,7 +83,7 @@ export class TransferResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * When you create a new reversal, you must specify a transfer to create it on.
@@ -92,7 +102,7 @@ export class TransferResource extends StripeResource {
       `/v1/transfers/${id}/reversals`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * By default, you can see the 10 most recent reversals stored directly on the transfer object, but you can also retrieve details about a specific reversal stored on the transfer.
@@ -108,7 +118,7 @@ export class TransferResource extends StripeResource {
       `/v1/transfers/${transferId}/reversals/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Updates the specified reversal by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -126,7 +136,7 @@ export class TransferResource extends StripeResource {
       `/v1/transfers/${transferId}/reversals/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Transfer {

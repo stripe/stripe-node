@@ -16,7 +16,7 @@ export class AssociationResource extends StripeResource {
       '/v1/tax/associations/find',
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Association {

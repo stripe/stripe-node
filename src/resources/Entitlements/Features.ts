@@ -25,7 +25,7 @@ export class FeatureResource extends StripeResource {
       {
         methodType: 'list',
       }
-    );
+    ) as any;
   }
   /**
    * Creates a feature
@@ -39,7 +39,7 @@ export class FeatureResource extends StripeResource {
       '/v1/entitlements/features',
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Retrieves a feature
@@ -54,7 +54,7 @@ export class FeatureResource extends StripeResource {
       `/v1/entitlements/features/${id}`,
       params,
       options
-    );
+    ) as any;
   }
   /**
    * Update a feature's metadata or permanently deactivate it.
@@ -69,7 +69,7 @@ export class FeatureResource extends StripeResource {
       `/v1/entitlements/features/${id}`,
       params,
       options
-    );
+    ) as any;
   }
 }
 export interface Feature {
