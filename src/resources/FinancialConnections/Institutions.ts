@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class InstitutionResource extends StripeResource {
   /**
@@ -12,16 +11,17 @@ export class InstitutionResource extends StripeResource {
   list(
     params?: FinancialConnections.InstitutionListParams,
     options?: RequestOptions
-  ): ApiListPromise<Institution>;
-  list(options?: RequestOptions): ApiListPromise<Institution>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/financial_connections/institutions',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<Institution> {
+    return this._makeRequest(
+      'GET',
+      '/v1/financial_connections/institutions',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieves the details of a Financial Connections Institution.
    */
@@ -29,16 +29,13 @@ export class InstitutionResource extends StripeResource {
     id: string,
     params?: FinancialConnections.InstitutionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Institution>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Institution>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/financial_connections/institutions/{institution}',
-    }).call(this, ...args);
+  ): Promise<Response<Institution>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/financial_connections/institutions/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Institution {

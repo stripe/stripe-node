@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class MeteredItemResource extends StripeResource {
   /**
@@ -12,30 +11,31 @@ export class MeteredItemResource extends StripeResource {
   list(
     params?: V2.Billing.MeteredItemListParams,
     options?: RequestOptions
-  ): ApiListPromise<MeteredItem>;
-  list(options?: RequestOptions): ApiListPromise<MeteredItem>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/metered_items',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<MeteredItem> {
+    return this._makeRequest(
+      'GET',
+      '/v2/billing/metered_items',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Create a Metered Item object.
    */
   create(
     params: V2.Billing.MeteredItemCreateParams,
     options?: RequestOptions
-  ): Promise<Response<MeteredItem>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/metered_items',
-    }).call(this, ...args);
+  ): Promise<Response<MeteredItem>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/billing/metered_items',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a Metered Item object.
    */
@@ -43,18 +43,14 @@ export class MeteredItemResource extends StripeResource {
     id: string,
     params?: V2.Billing.MeteredItemRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<MeteredItem>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<MeteredItem>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/metered_items/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<MeteredItem>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/metered_items/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Update a Metered Item object. At least one of the fields is required.
    */
@@ -62,12 +58,13 @@ export class MeteredItemResource extends StripeResource {
     id: string,
     params?: V2.Billing.MeteredItemUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<MeteredItem>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/metered_items/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<MeteredItem>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/metered_items/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface MeteredItem {

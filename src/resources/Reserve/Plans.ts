@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {Metadata} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PlanResource extends StripeResource {
   /**
@@ -13,13 +12,13 @@ export class PlanResource extends StripeResource {
     id: string,
     params?: Reserve.PlanRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Plan>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Plan>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/reserve/plans/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<Plan>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/reserve/plans/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Plan {

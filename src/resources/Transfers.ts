@@ -14,7 +14,6 @@ import {
   Metadata,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class TransferResource extends StripeResource {
   /**
@@ -23,30 +22,20 @@ export class TransferResource extends StripeResource {
   list(
     params?: TransferListParams,
     options?: RequestOptions
-  ): ApiListPromise<Transfer>;
-  list(options?: RequestOptions): ApiListPromise<Transfer>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/transfers',
+  ): ApiListPromise<Transfer> {
+    return this._makeRequest('GET', '/v1/transfers', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * To send funds from your Stripe account to a connected account, you create a new transfer object. Your [Stripe balance](https://docs.stripe.com/api#balance) must be able to cover the transfer amount, or you'll receive an “Insufficient Funds” error.
    */
   create(
     params: TransferCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Transfer>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/transfers'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Transfer>> {
+    return this._makeRequest('POST', '/v1/transfers', params, options) as any;
   }
-
   /**
    * Retrieves the details of an existing transfer. Supply the unique transfer ID from either a transfer creation request or the transfer list, and Stripe will return the corresponding transfer information.
    */
@@ -54,15 +43,14 @@ export class TransferResource extends StripeResource {
     id: string,
     params?: TransferRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Transfer>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Transfer>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/transfers/{transfer}',
-    }).call(this, ...args);
+  ): Promise<Response<Transfer>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/transfers/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates the specified transfer by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    *
@@ -72,14 +60,14 @@ export class TransferResource extends StripeResource {
     id: string,
     params?: TransferUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Transfer>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/transfers/{transfer}',
-    }).call(this, ...args);
+  ): Promise<Response<Transfer>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/transfers/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * You can see a list of the reversals belonging to a specific transfer. Note that the 10 most recent reversals are always available by default on the transfer object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional reversals.
    */
@@ -87,19 +75,17 @@ export class TransferResource extends StripeResource {
     id: string,
     params?: TransferListReversalsParams,
     options?: RequestOptions
-  ): ApiListPromise<TransferReversal>;
-  listReversals(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<TransferReversal>;
-  listReversals(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/transfers/{id}/reversals',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<TransferReversal> {
+    return this._makeRequest(
+      'GET',
+      `/v1/transfers/${id}/reversals`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * When you create a new reversal, you must specify a transfer to create it on.
    *
@@ -111,18 +97,14 @@ export class TransferResource extends StripeResource {
     id: string,
     params?: TransferCreateReversalParams,
     options?: RequestOptions
-  ): Promise<Response<TransferReversal>>;
-  createReversal(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<TransferReversal>>;
-  createReversal(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/transfers/{id}/reversals',
-    }).call(this, ...args);
+  ): Promise<Response<TransferReversal>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/transfers/${id}/reversals`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * By default, you can see the 10 most recent reversals stored directly on the transfer object, but you can also retrieve details about a specific reversal stored on the transfer.
    */
@@ -131,19 +113,14 @@ export class TransferResource extends StripeResource {
     id: string,
     params?: TransferRetrieveReversalParams,
     options?: RequestOptions
-  ): Promise<Response<TransferReversal>>;
-  retrieveReversal(
-    transferId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<TransferReversal>>;
-  retrieveReversal(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/transfers/{transfer}/reversals/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<TransferReversal>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/transfers/${transferId}/reversals/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates the specified reversal by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    *
@@ -154,17 +131,13 @@ export class TransferResource extends StripeResource {
     id: string,
     params?: TransferUpdateReversalParams,
     options?: RequestOptions
-  ): Promise<Response<TransferReversal>>;
-  updateReversal(
-    transferId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<TransferReversal>>;
-  updateReversal(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/transfers/{transfer}/reversals/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<TransferReversal>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/transfers/${transferId}/reversals/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Transfer {

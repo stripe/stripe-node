@@ -10,7 +10,6 @@ import {
   Address,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class InboundTransferResource extends StripeResource {
   /**
@@ -19,29 +18,31 @@ export class InboundTransferResource extends StripeResource {
   list(
     params: Treasury.InboundTransferListParams,
     options?: RequestOptions
-  ): ApiListPromise<InboundTransfer>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/treasury/inbound_transfers',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<InboundTransfer> {
+    return this._makeRequest(
+      'GET',
+      '/v1/treasury/inbound_transfers',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Creates an InboundTransfer.
    */
   create(
     params: Treasury.InboundTransferCreateParams,
     options?: RequestOptions
-  ): Promise<Response<InboundTransfer>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/treasury/inbound_transfers',
-    }).call(this, ...args);
+  ): Promise<Response<InboundTransfer>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/treasury/inbound_transfers',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the details of an existing InboundTransfer.
    */
@@ -49,18 +50,14 @@ export class InboundTransferResource extends StripeResource {
     id: string,
     params?: Treasury.InboundTransferRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<InboundTransfer>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<InboundTransfer>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/treasury/inbound_transfers/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<InboundTransfer>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/treasury/inbound_transfers/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Cancels an InboundTransfer.
    */
@@ -68,16 +65,13 @@ export class InboundTransferResource extends StripeResource {
     id: string,
     params?: Treasury.InboundTransferCancelParams,
     options?: RequestOptions
-  ): Promise<Response<InboundTransfer>>;
-  cancel(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<InboundTransfer>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/treasury/inbound_transfers/{inbound_transfer}/cancel',
-    }).call(this, ...args);
+  ): Promise<Response<InboundTransfer>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/treasury/inbound_transfers/${id}/cancel`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface InboundTransfer {

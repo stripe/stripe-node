@@ -5,7 +5,6 @@ import {CustomPricingUnit} from './CustomPricingUnits.js';
 import {V2Amount} from './../V2Amounts.js';
 import {MetadataParam, Metadata, Decimal} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PricingPlanSubscriptionResource extends StripeResource {
   /**
@@ -14,68 +13,72 @@ export class PricingPlanSubscriptionResource extends StripeResource {
   list(
     params?: V2.Billing.PricingPlanSubscriptionListParams,
     options?: RequestOptions
-  ): ApiListPromise<PricingPlanSubscription>;
-  list(options?: RequestOptions): ApiListPromise<PricingPlanSubscription>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/pricing_plan_subscriptions',
-      methodType: 'list',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          data: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                pricing_plan_component_details: {
-                  kind: 'array',
-                  element: {
-                    kind: 'object',
-                    fields: {
-                      license_fee_details: {
-                        kind: 'object',
-                        fields: {
-                          tiers: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {up_to_decimal: {kind: 'decimal_string'}},
-                            },
-                          },
-                          transform_quantity: {
-                            kind: 'object',
-                            fields: {divide_by: {kind: 'int64_string'}},
-                          },
-                        },
-                      },
-                      recurring_credit_grant_details: {
-                        kind: 'object',
-                        fields: {
-                          credit_grant_details: {
-                            kind: 'object',
-                            fields: {
-                              amount: {
+  ): ApiListPromise<PricingPlanSubscription> {
+    return this._makeRequest(
+      'GET',
+      '/v2/billing/pricing_plan_subscriptions',
+      params,
+      options,
+      {
+        methodType: 'list',
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  pricing_plan_component_details: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {
+                        license_fee_details: {
+                          kind: 'object',
+                          fields: {
+                            tiers: {
+                              kind: 'array',
+                              element: {
                                 kind: 'object',
                                 fields: {
-                                  custom_pricing_unit: {
-                                    kind: 'object',
-                                    fields: {value: {kind: 'decimal_string'}},
+                                  up_to_decimal: {kind: 'decimal_string'},
+                                },
+                              },
+                            },
+                            transform_quantity: {
+                              kind: 'object',
+                              fields: {divide_by: {kind: 'int64_string'}},
+                            },
+                          },
+                        },
+                        recurring_credit_grant_details: {
+                          kind: 'object',
+                          fields: {
+                            credit_grant_details: {
+                              kind: 'object',
+                              fields: {
+                                amount: {
+                                  kind: 'object',
+                                  fields: {
+                                    custom_pricing_unit: {
+                                      kind: 'object',
+                                      fields: {value: {kind: 'decimal_string'}},
+                                    },
                                   },
                                 },
                               },
                             },
-                          },
-                          credit_grant_per_tenant_details: {
-                            kind: 'object',
-                            fields: {
-                              amount: {
-                                kind: 'object',
-                                fields: {
-                                  custom_pricing_unit: {
-                                    kind: 'object',
-                                    fields: {value: {kind: 'decimal_string'}},
+                            credit_grant_per_tenant_details: {
+                              kind: 'object',
+                              fields: {
+                                amount: {
+                                  kind: 'object',
+                                  fields: {
+                                    custom_pricing_unit: {
+                                      kind: 'object',
+                                      fields: {value: {kind: 'decimal_string'}},
+                                    },
                                   },
                                 },
                               },
@@ -90,10 +93,9 @@ export class PricingPlanSubscriptionResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Retrieve a Pricing Plan Subscription object.
    */
@@ -101,65 +103,64 @@ export class PricingPlanSubscriptionResource extends StripeResource {
     id: string,
     params?: V2.Billing.PricingPlanSubscriptionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<PricingPlanSubscription>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PricingPlanSubscription>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/pricing_plan_subscriptions/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          pricing_plan_component_details: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                license_fee_details: {
-                  kind: 'object',
-                  fields: {
-                    tiers: {
-                      kind: 'array',
-                      element: {
+  ): Promise<Response<PricingPlanSubscription>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/pricing_plan_subscriptions/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            pricing_plan_component_details: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  license_fee_details: {
+                    kind: 'object',
+                    fields: {
+                      tiers: {
+                        kind: 'array',
+                        element: {
+                          kind: 'object',
+                          fields: {up_to_decimal: {kind: 'decimal_string'}},
+                        },
+                      },
+                      transform_quantity: {
                         kind: 'object',
-                        fields: {up_to_decimal: {kind: 'decimal_string'}},
+                        fields: {divide_by: {kind: 'int64_string'}},
                       },
                     },
-                    transform_quantity: {
-                      kind: 'object',
-                      fields: {divide_by: {kind: 'int64_string'}},
-                    },
                   },
-                },
-                recurring_credit_grant_details: {
-                  kind: 'object',
-                  fields: {
-                    credit_grant_details: {
-                      kind: 'object',
-                      fields: {
-                        amount: {
-                          kind: 'object',
-                          fields: {
-                            custom_pricing_unit: {
-                              kind: 'object',
-                              fields: {value: {kind: 'decimal_string'}},
+                  recurring_credit_grant_details: {
+                    kind: 'object',
+                    fields: {
+                      credit_grant_details: {
+                        kind: 'object',
+                        fields: {
+                          amount: {
+                            kind: 'object',
+                            fields: {
+                              custom_pricing_unit: {
+                                kind: 'object',
+                                fields: {value: {kind: 'decimal_string'}},
+                              },
                             },
                           },
                         },
                       },
-                    },
-                    credit_grant_per_tenant_details: {
-                      kind: 'object',
-                      fields: {
-                        amount: {
-                          kind: 'object',
-                          fields: {
-                            custom_pricing_unit: {
-                              kind: 'object',
-                              fields: {value: {kind: 'decimal_string'}},
+                      credit_grant_per_tenant_details: {
+                        kind: 'object',
+                        fields: {
+                          amount: {
+                            kind: 'object',
+                            fields: {
+                              custom_pricing_unit: {
+                                kind: 'object',
+                                fields: {value: {kind: 'decimal_string'}},
+                              },
                             },
                           },
                         },
@@ -171,10 +172,9 @@ export class PricingPlanSubscriptionResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Update a Pricing Plan Subscription object.
    */
@@ -182,61 +182,64 @@ export class PricingPlanSubscriptionResource extends StripeResource {
     id: string,
     params?: V2.Billing.PricingPlanSubscriptionUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<PricingPlanSubscription>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/pricing_plan_subscriptions/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          pricing_plan_component_details: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                license_fee_details: {
-                  kind: 'object',
-                  fields: {
-                    tiers: {
-                      kind: 'array',
-                      element: {
+  ): Promise<Response<PricingPlanSubscription>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/pricing_plan_subscriptions/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            pricing_plan_component_details: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  license_fee_details: {
+                    kind: 'object',
+                    fields: {
+                      tiers: {
+                        kind: 'array',
+                        element: {
+                          kind: 'object',
+                          fields: {up_to_decimal: {kind: 'decimal_string'}},
+                        },
+                      },
+                      transform_quantity: {
                         kind: 'object',
-                        fields: {up_to_decimal: {kind: 'decimal_string'}},
+                        fields: {divide_by: {kind: 'int64_string'}},
                       },
                     },
-                    transform_quantity: {
-                      kind: 'object',
-                      fields: {divide_by: {kind: 'int64_string'}},
-                    },
                   },
-                },
-                recurring_credit_grant_details: {
-                  kind: 'object',
-                  fields: {
-                    credit_grant_details: {
-                      kind: 'object',
-                      fields: {
-                        amount: {
-                          kind: 'object',
-                          fields: {
-                            custom_pricing_unit: {
-                              kind: 'object',
-                              fields: {value: {kind: 'decimal_string'}},
+                  recurring_credit_grant_details: {
+                    kind: 'object',
+                    fields: {
+                      credit_grant_details: {
+                        kind: 'object',
+                        fields: {
+                          amount: {
+                            kind: 'object',
+                            fields: {
+                              custom_pricing_unit: {
+                                kind: 'object',
+                                fields: {value: {kind: 'decimal_string'}},
+                              },
                             },
                           },
                         },
                       },
-                    },
-                    credit_grant_per_tenant_details: {
-                      kind: 'object',
-                      fields: {
-                        amount: {
-                          kind: 'object',
-                          fields: {
-                            custom_pricing_unit: {
-                              kind: 'object',
-                              fields: {value: {kind: 'decimal_string'}},
+                      credit_grant_per_tenant_details: {
+                        kind: 'object',
+                        fields: {
+                          amount: {
+                            kind: 'object',
+                            fields: {
+                              custom_pricing_unit: {
+                                kind: 'object',
+                                fields: {value: {kind: 'decimal_string'}},
+                              },
                             },
                           },
                         },
@@ -248,10 +251,9 @@ export class PricingPlanSubscriptionResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Remove Discounts from a Pricing Plan Subscription.
    */
@@ -259,65 +261,64 @@ export class PricingPlanSubscriptionResource extends StripeResource {
     id: string,
     params?: V2.Billing.PricingPlanSubscriptionRemoveDiscountsParams,
     options?: RequestOptions
-  ): Promise<Response<PricingPlanSubscription>>;
-  removeDiscounts(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PricingPlanSubscription>>;
-  removeDiscounts(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/pricing_plan_subscriptions/{id}/remove_discounts',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          pricing_plan_component_details: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                license_fee_details: {
-                  kind: 'object',
-                  fields: {
-                    tiers: {
-                      kind: 'array',
-                      element: {
+  ): Promise<Response<PricingPlanSubscription>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/pricing_plan_subscriptions/${id}/remove_discounts`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            pricing_plan_component_details: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  license_fee_details: {
+                    kind: 'object',
+                    fields: {
+                      tiers: {
+                        kind: 'array',
+                        element: {
+                          kind: 'object',
+                          fields: {up_to_decimal: {kind: 'decimal_string'}},
+                        },
+                      },
+                      transform_quantity: {
                         kind: 'object',
-                        fields: {up_to_decimal: {kind: 'decimal_string'}},
+                        fields: {divide_by: {kind: 'int64_string'}},
                       },
                     },
-                    transform_quantity: {
-                      kind: 'object',
-                      fields: {divide_by: {kind: 'int64_string'}},
-                    },
                   },
-                },
-                recurring_credit_grant_details: {
-                  kind: 'object',
-                  fields: {
-                    credit_grant_details: {
-                      kind: 'object',
-                      fields: {
-                        amount: {
-                          kind: 'object',
-                          fields: {
-                            custom_pricing_unit: {
-                              kind: 'object',
-                              fields: {value: {kind: 'decimal_string'}},
+                  recurring_credit_grant_details: {
+                    kind: 'object',
+                    fields: {
+                      credit_grant_details: {
+                        kind: 'object',
+                        fields: {
+                          amount: {
+                            kind: 'object',
+                            fields: {
+                              custom_pricing_unit: {
+                                kind: 'object',
+                                fields: {value: {kind: 'decimal_string'}},
+                              },
                             },
                           },
                         },
                       },
-                    },
-                    credit_grant_per_tenant_details: {
-                      kind: 'object',
-                      fields: {
-                        amount: {
-                          kind: 'object',
-                          fields: {
-                            custom_pricing_unit: {
-                              kind: 'object',
-                              fields: {value: {kind: 'decimal_string'}},
+                      credit_grant_per_tenant_details: {
+                        kind: 'object',
+                        fields: {
+                          amount: {
+                            kind: 'object',
+                            fields: {
+                              custom_pricing_unit: {
+                                kind: 'object',
+                                fields: {value: {kind: 'decimal_string'}},
+                              },
                             },
                           },
                         },
@@ -329,8 +330,8 @@ export class PricingPlanSubscriptionResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface PricingPlanSubscription {

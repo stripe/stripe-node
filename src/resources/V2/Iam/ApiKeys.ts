@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ApiKeyResource extends StripeResource {
   /**
@@ -11,30 +10,25 @@ export class ApiKeyResource extends StripeResource {
   list(
     params?: V2.Iam.ApiKeyListParams,
     options?: RequestOptions
-  ): ApiListPromise<ApiKey>;
-  list(options?: RequestOptions): ApiListPromise<ApiKey>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/iam/api_keys',
+  ): ApiListPromise<ApiKey> {
+    return this._makeRequest('GET', '/v2/iam/api_keys', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Create an API Key. To create a secret key in livemode, a public key for encryption must be provided.
    */
   create(
     params: V2.Iam.ApiKeyCreateParams,
     options?: RequestOptions
-  ): Promise<Response<ApiKey>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v2/iam/api_keys'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<ApiKey>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/iam/api_keys',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve an API Key. For livemode secret keys, secret tokens are only returned on creation, and never returned here.
    */
@@ -42,15 +36,14 @@ export class ApiKeyResource extends StripeResource {
     id: string,
     params?: V2.Iam.ApiKeyRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ApiKey>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<ApiKey>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/iam/api_keys/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<ApiKey>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/iam/api_keys/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Update an API Key. Only parameters that are specified in the request will be updated.
    */
@@ -58,14 +51,14 @@ export class ApiKeyResource extends StripeResource {
     id: string,
     params?: V2.Iam.ApiKeyUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<ApiKey>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/iam/api_keys/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<ApiKey>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/iam/api_keys/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Expire an API Key. The specified key becomes invalid immediately.
    */
@@ -73,15 +66,14 @@ export class ApiKeyResource extends StripeResource {
     id: string,
     params?: V2.Iam.ApiKeyExpireParams,
     options?: RequestOptions
-  ): Promise<Response<ApiKey>>;
-  expire(id: string, options?: RequestOptions): Promise<Response<ApiKey>>;
-  expire(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/iam/api_keys/{id}/expire',
-    }).call(this, ...args);
+  ): Promise<Response<ApiKey>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/iam/api_keys/${id}/expire`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Rotate an API Key. A new key with the same properties is created and returned. The existing key is expired immediately, unless an expiry time is specified.
    */
@@ -89,13 +81,13 @@ export class ApiKeyResource extends StripeResource {
     id: string,
     params?: V2.Iam.ApiKeyRotateParams,
     options?: RequestOptions
-  ): Promise<Response<ApiKey>>;
-  rotate(id: string, options?: RequestOptions): Promise<Response<ApiKey>>;
-  rotate(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/iam/api_keys/{id}/rotate',
-    }).call(this, ...args);
+  ): Promise<Response<ApiKey>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/iam/api_keys/${id}/rotate`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface ApiKey {

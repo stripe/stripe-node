@@ -5,7 +5,6 @@ import {Card, DeletedCard} from './Cards.js';
 import {BankAccount, DeletedBankAccount} from './BankAccounts.js';
 import {MetadataParam, Emptyable, PaginationParams} from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ExternalAccountResource extends StripeResource {
   /**
@@ -15,18 +14,14 @@ export class ExternalAccountResource extends StripeResource {
     id: string,
     params?: ExternalAccountDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedExternalAccount>>;
-  del(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<DeletedExternalAccount>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/external_accounts/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedExternalAccount>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/external_accounts/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a specified external account for a given account.
    */
@@ -34,18 +29,14 @@ export class ExternalAccountResource extends StripeResource {
     id: string,
     params?: ExternalAccountRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ExternalAccount>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ExternalAccount>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/external_accounts/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<ExternalAccount>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/external_accounts/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates the metadata, account holder name, account holder type of a bank account belonging to
    * a connected account and optionally sets it as the default for its currency. Other bank account
@@ -60,42 +51,38 @@ export class ExternalAccountResource extends StripeResource {
     id: string,
     params?: ExternalAccountUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<ExternalAccount>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/external_accounts/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<ExternalAccount>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/external_accounts/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * List external accounts for an account.
    */
   list(
     params?: ExternalAccountListParams,
     options?: RequestOptions
-  ): ApiListPromise<ExternalAccount>;
-  list(options?: RequestOptions): ApiListPromise<ExternalAccount>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/external_accounts',
+  ): ApiListPromise<ExternalAccount> {
+    return this._makeRequest('GET', '/v1/external_accounts', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Create an external account for a given connected account.
    */
   create(
     params: ExternalAccountCreateParams,
     options?: RequestOptions
-  ): Promise<Response<ExternalAccount>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/external_accounts',
-    }).call(this, ...args);
+  ): Promise<Response<ExternalAccount>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/external_accounts',
+      params,
+      options
+    ) as any;
   }
 }
 export type ExternalAccount = BankAccount | Card;

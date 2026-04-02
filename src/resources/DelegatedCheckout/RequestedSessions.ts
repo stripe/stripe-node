@@ -4,7 +4,6 @@ import {StripeResource} from '../../StripeResource.js';
 import {Profile} from './../Profiles.js';
 import {MetadataParam, Address, Emptyable, Metadata} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class RequestedSessionResource extends StripeResource {
   /**
@@ -14,18 +13,14 @@ export class RequestedSessionResource extends StripeResource {
     id: string,
     params?: DelegatedCheckout.RequestedSessionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<RequestedSession>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<RequestedSession>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/delegated_checkout/requested_sessions/{requested_session}',
-    }).call(this, ...args);
+  ): Promise<Response<RequestedSession>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/delegated_checkout/requested_sessions/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates a requested session
    */
@@ -33,28 +28,28 @@ export class RequestedSessionResource extends StripeResource {
     id: string,
     params?: DelegatedCheckout.RequestedSessionUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<RequestedSession>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/delegated_checkout/requested_sessions/{requested_session}',
-    }).call(this, ...args);
+  ): Promise<Response<RequestedSession>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/delegated_checkout/requested_sessions/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Creates a requested session
    */
   create(
     params: DelegatedCheckout.RequestedSessionCreateParams,
     options?: RequestOptions
-  ): Promise<Response<RequestedSession>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/delegated_checkout/requested_sessions',
-    }).call(this, ...args);
+  ): Promise<Response<RequestedSession>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/delegated_checkout/requested_sessions',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Confirms a requested session
    */
@@ -62,19 +57,14 @@ export class RequestedSessionResource extends StripeResource {
     id: string,
     params?: DelegatedCheckout.RequestedSessionConfirmParams,
     options?: RequestOptions
-  ): Promise<Response<RequestedSession>>;
-  confirm(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<RequestedSession>>;
-  confirm(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/delegated_checkout/requested_sessions/{requested_session}/confirm',
-    }).call(this, ...args);
+  ): Promise<Response<RequestedSession>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/delegated_checkout/requested_sessions/${id}/confirm`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Expires a requested session
    */
@@ -82,17 +72,13 @@ export class RequestedSessionResource extends StripeResource {
     id: string,
     params?: DelegatedCheckout.RequestedSessionExpireParams,
     options?: RequestOptions
-  ): Promise<Response<RequestedSession>>;
-  expire(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<RequestedSession>>;
-  expire(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/delegated_checkout/requested_sessions/{requested_session}/expire',
-    }).call(this, ...args);
+  ): Promise<Response<RequestedSession>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/delegated_checkout/requested_sessions/${id}/expire`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface RequestedSession {

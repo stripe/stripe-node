@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CustomerEvaluationResource extends StripeResource {
   /**
@@ -11,14 +10,14 @@ export class CustomerEvaluationResource extends StripeResource {
   create(
     params: Radar.CustomerEvaluationCreateParams,
     options?: RequestOptions
-  ): Promise<Response<CustomerEvaluation>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/radar/customer_evaluations',
-    }).call(this, ...args);
+  ): Promise<Response<CustomerEvaluation>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/radar/customer_evaluations',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Reports an event on a CustomerEvaluation object.
    */
@@ -26,12 +25,13 @@ export class CustomerEvaluationResource extends StripeResource {
     id: string,
     params: Radar.CustomerEvaluationUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<CustomerEvaluation>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/radar/customer_evaluations/{customer_evaluation}/report',
-    }).call(this, ...args);
+  ): Promise<Response<CustomerEvaluation>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/radar/customer_evaluations/${id}/report`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface CustomerEvaluation {

@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class OneTimeItemResource extends StripeResource {
   /**
@@ -12,30 +11,31 @@ export class OneTimeItemResource extends StripeResource {
   list(
     params?: V2.Billing.OneTimeItemListParams,
     options?: RequestOptions
-  ): ApiListPromise<OneTimeItem>;
-  list(options?: RequestOptions): ApiListPromise<OneTimeItem>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/one_time_items',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<OneTimeItem> {
+    return this._makeRequest(
+      'GET',
+      '/v2/billing/one_time_items',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Create a One-Time Item object.
    */
   create(
     params: V2.Billing.OneTimeItemCreateParams,
     options?: RequestOptions
-  ): Promise<Response<OneTimeItem>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/one_time_items',
-    }).call(this, ...args);
+  ): Promise<Response<OneTimeItem>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/billing/one_time_items',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a One-Time Item object.
    */
@@ -43,18 +43,14 @@ export class OneTimeItemResource extends StripeResource {
     id: string,
     params?: V2.Billing.OneTimeItemRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<OneTimeItem>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<OneTimeItem>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/one_time_items/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<OneTimeItem>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/one_time_items/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Update a One-Time Item object.
    */
@@ -62,12 +58,13 @@ export class OneTimeItemResource extends StripeResource {
     id: string,
     params?: V2.Billing.OneTimeItemUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<OneTimeItem>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/one_time_items/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<OneTimeItem>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/one_time_items/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface OneTimeItem {

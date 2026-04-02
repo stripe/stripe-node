@@ -8,7 +8,6 @@ import {AccountOwnership} from './AccountOwnerships.js';
 import {Customer} from './../Customers.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class AccountResource extends StripeResource {
   /**
@@ -17,16 +16,17 @@ export class AccountResource extends StripeResource {
   list(
     params?: FinancialConnections.AccountListParams,
     options?: RequestOptions
-  ): ApiListPromise<Account>;
-  list(options?: RequestOptions): ApiListPromise<Account>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/financial_connections/accounts',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<Account> {
+    return this._makeRequest(
+      'GET',
+      '/v1/financial_connections/accounts',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieves the details of an Financial Connections Account.
    */
@@ -34,15 +34,14 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: FinancialConnections.AccountRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Account>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/financial_connections/accounts/{account}',
-    }).call(this, ...args);
+  ): Promise<Response<Account>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/financial_connections/accounts/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Disables your access to a Financial Connections Account. You will no longer be able to access data associated with the account (e.g. balances, transactions).
    */
@@ -50,15 +49,14 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: FinancialConnections.AccountDisconnectParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  disconnect(id: string, options?: RequestOptions): Promise<Response<Account>>;
-  disconnect(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/financial_connections/accounts/{account}/disconnect',
-    }).call(this, ...args);
+  ): Promise<Response<Account>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/financial_connections/accounts/${id}/disconnect`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Refreshes the data associated with a Financial Connections Account.
    */
@@ -66,14 +64,14 @@ export class AccountResource extends StripeResource {
     id: string,
     params: FinancialConnections.AccountRefreshParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  refresh(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/financial_connections/accounts/{account}/refresh',
-    }).call(this, ...args);
+  ): Promise<Response<Account>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/financial_connections/accounts/${id}/refresh`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Subscribes to periodic refreshes of data associated with a Financial Connections Account. When the account status is active, data is typically refreshed once a day.
    */
@@ -81,14 +79,14 @@ export class AccountResource extends StripeResource {
     id: string,
     params: FinancialConnections.AccountSubscribeParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  subscribe(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/financial_connections/accounts/{account}/subscribe',
-    }).call(this, ...args);
+  ): Promise<Response<Account>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/financial_connections/accounts/${id}/subscribe`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Unsubscribes from periodic refreshes of data associated with a Financial Connections Account.
    */
@@ -96,14 +94,14 @@ export class AccountResource extends StripeResource {
     id: string,
     params: FinancialConnections.AccountUnsubscribeParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  unsubscribe(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/financial_connections/accounts/{account}/unsubscribe',
-    }).call(this, ...args);
+  ): Promise<Response<Account>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/financial_connections/accounts/${id}/unsubscribe`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Lists the recorded inferred balances for a Financial Connections Account.
    */
@@ -111,20 +109,17 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: FinancialConnections.AccountListInferredBalancesParams,
     options?: RequestOptions
-  ): ApiListPromise<AccountInferredBalance>;
-  listInferredBalances(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<AccountInferredBalance>;
-  listInferredBalances(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath:
-        '/v1/financial_connections/accounts/{account}/inferred_balances',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<AccountInferredBalance> {
+    return this._makeRequest(
+      'GET',
+      `/v1/financial_connections/accounts/${id}/inferred_balances`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Lists all owners for a given Account
    */
@@ -132,13 +127,16 @@ export class AccountResource extends StripeResource {
     id: string,
     params: FinancialConnections.AccountListOwnersParams,
     options?: RequestOptions
-  ): ApiListPromise<AccountOwner>;
-  listOwners(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/financial_connections/accounts/{account}/owners',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<AccountOwner> {
+    return this._makeRequest(
+      'GET',
+      `/v1/financial_connections/accounts/${id}/owners`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
 }
 export interface Account {

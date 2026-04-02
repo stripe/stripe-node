@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../../../StripeResource.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class GbBankAccountResource extends StripeResource {
   /**
@@ -11,30 +10,31 @@ export class GbBankAccountResource extends StripeResource {
   list(
     params?: V2.Core.Vault.GbBankAccountListParams,
     options?: RequestOptions
-  ): ApiListPromise<GbBankAccount>;
-  list(options?: RequestOptions): ApiListPromise<GbBankAccount>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/vault/gb_bank_accounts',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<GbBankAccount> {
+    return this._makeRequest(
+      'GET',
+      '/v2/core/vault/gb_bank_accounts',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Create a GB bank account.
    */
   create(
     params: V2.Core.Vault.GbBankAccountCreateParams,
     options?: RequestOptions
-  ): Promise<Response<GbBankAccount>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/vault/gb_bank_accounts',
-    }).call(this, ...args);
+  ): Promise<Response<GbBankAccount>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/core/vault/gb_bank_accounts',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a GB bank account.
    */
@@ -42,18 +42,14 @@ export class GbBankAccountResource extends StripeResource {
     id: string,
     params?: V2.Core.Vault.GbBankAccountRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<GbBankAccount>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<GbBankAccount>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/vault/gb_bank_accounts/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<GbBankAccount>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/core/vault/gb_bank_accounts/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Confirm that you have received the result of the Confirmation of Payee request, and that you are okay with
    * proceeding to pay out to this bank account despite the account not matching, partially matching, or the service
@@ -64,19 +60,14 @@ export class GbBankAccountResource extends StripeResource {
     id: string,
     params?: V2.Core.Vault.GbBankAccountAcknowledgeConfirmationOfPayeeParams,
     options?: RequestOptions
-  ): Promise<Response<GbBankAccount>>;
-  acknowledgeConfirmationOfPayee(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<GbBankAccount>>;
-  acknowledgeConfirmationOfPayee(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v2/core/vault/gb_bank_accounts/{id}/acknowledge_confirmation_of_payee',
-    }).call(this, ...args);
+  ): Promise<Response<GbBankAccount>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/vault/gb_bank_accounts/${id}/acknowledge_confirmation_of_payee`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Archive a GBBankAccount object. Archived GBBankAccount objects cannot be used as outbound destinations
    * and will not appear in the outbound destination list.
@@ -85,18 +76,14 @@ export class GbBankAccountResource extends StripeResource {
     id: string,
     params?: V2.Core.Vault.GbBankAccountArchiveParams,
     options?: RequestOptions
-  ): Promise<Response<GbBankAccount>>;
-  archive(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<GbBankAccount>>;
-  archive(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/vault/gb_bank_accounts/{id}/archive',
-    }).call(this, ...args);
+  ): Promise<Response<GbBankAccount>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/vault/gb_bank_accounts/${id}/archive`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Initiate Confirmation of Payee (CoP) in order to verify that the owner of a UK bank account matches
    * who you expect. This must be done on all UK bank accounts before sending domestic OutboundPayments. If
@@ -107,17 +94,13 @@ export class GbBankAccountResource extends StripeResource {
     id: string,
     params?: V2.Core.Vault.GbBankAccountInitiateConfirmationOfPayeeParams,
     options?: RequestOptions
-  ): Promise<Response<GbBankAccount>>;
-  initiateConfirmationOfPayee(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<GbBankAccount>>;
-  initiateConfirmationOfPayee(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v2/core/vault/gb_bank_accounts/{id}/initiate_confirmation_of_payee',
-    }).call(this, ...args);
+  ): Promise<Response<GbBankAccount>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/vault/gb_bank_accounts/${id}/initiate_confirmation_of_payee`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface GbBankAccount {

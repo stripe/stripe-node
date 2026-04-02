@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ClaimableSandboxResource extends StripeResource {
   /**
@@ -12,14 +11,14 @@ export class ClaimableSandboxResource extends StripeResource {
   create(
     params: V2.Core.ClaimableSandboxCreateParams,
     options?: RequestOptions
-  ): Promise<Response<ClaimableSandbox>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/claimable_sandboxes',
-    }).call(this, ...args);
+  ): Promise<Response<ClaimableSandbox>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/core/claimable_sandboxes',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the details of a claimable sandbox that was previously been created.
    * Supply the unique claimable sandbox ID that was returned from your creation request,
@@ -29,16 +28,13 @@ export class ClaimableSandboxResource extends StripeResource {
     id: string,
     params?: V2.Core.ClaimableSandboxRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ClaimableSandbox>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ClaimableSandbox>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/claimable_sandboxes/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<ClaimableSandbox>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/core/claimable_sandboxes/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface ClaimableSandbox {

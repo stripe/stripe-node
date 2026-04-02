@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class RateCardSubscriptionResource extends StripeResource {
   /**
@@ -12,30 +11,31 @@ export class RateCardSubscriptionResource extends StripeResource {
   list(
     params?: V2.Billing.RateCardSubscriptionListParams,
     options?: RequestOptions
-  ): ApiListPromise<RateCardSubscription>;
-  list(options?: RequestOptions): ApiListPromise<RateCardSubscription>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/rate_card_subscriptions',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<RateCardSubscription> {
+    return this._makeRequest(
+      'GET',
+      '/v2/billing/rate_card_subscriptions',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Create a Rate Card Subscription to bill a Rate Card on a specified Billing Cadence.
    */
   create(
     params: V2.Billing.RateCardSubscriptionCreateParams,
     options?: RequestOptions
-  ): Promise<Response<RateCardSubscription>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/rate_card_subscriptions',
-    }).call(this, ...args);
+  ): Promise<Response<RateCardSubscription>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/billing/rate_card_subscriptions',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a Rate Card Subscription by ID.
    */
@@ -43,18 +43,14 @@ export class RateCardSubscriptionResource extends StripeResource {
     id: string,
     params?: V2.Billing.RateCardSubscriptionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<RateCardSubscription>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<RateCardSubscription>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/rate_card_subscriptions/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<RateCardSubscription>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/rate_card_subscriptions/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Update fields on an existing, active Rate Card Subscription.
    */
@@ -62,14 +58,14 @@ export class RateCardSubscriptionResource extends StripeResource {
     id: string,
     params?: V2.Billing.RateCardSubscriptionUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<RateCardSubscription>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/rate_card_subscriptions/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<RateCardSubscription>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/rate_card_subscriptions/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Cancel an existing, active Rate Card Subscription.
    */
@@ -77,16 +73,13 @@ export class RateCardSubscriptionResource extends StripeResource {
     id: string,
     params?: V2.Billing.RateCardSubscriptionCancelParams,
     options?: RequestOptions
-  ): Promise<Response<RateCardSubscription>>;
-  cancel(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<RateCardSubscription>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/rate_card_subscriptions/{id}/cancel',
-    }).call(this, ...args);
+  ): Promise<Response<RateCardSubscription>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/rate_card_subscriptions/${id}/cancel`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface RateCardSubscription {

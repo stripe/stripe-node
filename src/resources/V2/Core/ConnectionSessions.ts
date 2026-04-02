@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ConnectionSessionResource extends StripeResource {
   /**
@@ -11,14 +10,14 @@ export class ConnectionSessionResource extends StripeResource {
   create(
     params: V2.Core.ConnectionSessionCreateParams,
     options?: RequestOptions
-  ): Promise<Response<ConnectionSession>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/connection_sessions',
-    }).call(this, ...args);
+  ): Promise<Response<ConnectionSession>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/core/connection_sessions',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a ConnectionSession.
    */
@@ -26,16 +25,13 @@ export class ConnectionSessionResource extends StripeResource {
     id: string,
     params?: V2.Core.ConnectionSessionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ConnectionSession>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ConnectionSession>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/connection_sessions/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<ConnectionSession>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/core/connection_sessions/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface ConnectionSession {

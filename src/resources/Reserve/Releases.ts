@@ -7,7 +7,6 @@ import {Dispute} from './../Disputes.js';
 import {Refund} from './../Refunds.js';
 import {PaginationParams, Metadata} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ReleaseResource extends StripeResource {
   /**
@@ -16,16 +15,11 @@ export class ReleaseResource extends StripeResource {
   list(
     params?: Reserve.ReleaseListParams,
     options?: RequestOptions
-  ): ApiListPromise<Release>;
-  list(options?: RequestOptions): ApiListPromise<Release>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/reserve/releases',
+  ): ApiListPromise<Release> {
+    return this._makeRequest('GET', '/v1/reserve/releases', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieve a ReserveRelease.
    */
@@ -33,13 +27,13 @@ export class ReleaseResource extends StripeResource {
     id: string,
     params?: Reserve.ReleaseRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Release>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Release>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/reserve/releases/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<Release>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/reserve/releases/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Release {

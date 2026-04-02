@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ReceivedDebitResource extends StripeResource {
   /**
@@ -12,16 +11,17 @@ export class ReceivedDebitResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.ReceivedDebitListParams,
     options?: RequestOptions
-  ): ApiListPromise<ReceivedDebit>;
-  list(options?: RequestOptions): ApiListPromise<ReceivedDebit>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/received_debits',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<ReceivedDebit> {
+    return this._makeRequest(
+      'GET',
+      '/v2/money_management/received_debits',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieves a single ReceivedDebit by ID.
    */
@@ -29,16 +29,13 @@ export class ReceivedDebitResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.ReceivedDebitRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ReceivedDebit>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ReceivedDebit>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/received_debits/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<ReceivedDebit>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/money_management/received_debits/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface ReceivedDebit {

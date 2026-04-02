@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CurrencyConversionResource extends StripeResource {
   /**
@@ -12,16 +11,17 @@ export class CurrencyConversionResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.CurrencyConversionListParams,
     options?: RequestOptions
-  ): ApiListPromise<CurrencyConversion>;
-  list(options?: RequestOptions): ApiListPromise<CurrencyConversion>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/currency_conversions',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<CurrencyConversion> {
+    return this._makeRequest(
+      'GET',
+      '/v2/money_management/currency_conversions',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Create a CurrencyConversion.
    * @throws Stripe.FeatureNotEnabledError
@@ -29,14 +29,14 @@ export class CurrencyConversionResource extends StripeResource {
   create(
     params: V2.MoneyManagement.CurrencyConversionCreateParams,
     options?: RequestOptions
-  ): Promise<Response<CurrencyConversion>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/currency_conversions',
-    }).call(this, ...args);
+  ): Promise<Response<CurrencyConversion>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/money_management/currency_conversions',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve details of a CurrencyConversion by id.
    */
@@ -44,16 +44,13 @@ export class CurrencyConversionResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.CurrencyConversionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<CurrencyConversion>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CurrencyConversion>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/currency_conversions/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<CurrencyConversion>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/money_management/currency_conversions/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface CurrencyConversion {

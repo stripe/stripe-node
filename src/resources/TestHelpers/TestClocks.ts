@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class TestClockResource extends StripeResource {
   /**
@@ -13,18 +12,14 @@ export class TestClockResource extends StripeResource {
     id: string,
     params?: TestHelpers.TestClockDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<TestHelpers.DeletedTestClock>>;
-  del(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<TestHelpers.DeletedTestClock>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/test_helpers/test_clocks/{test_clock}',
-    }).call(this, ...args);
+  ): Promise<Response<TestHelpers.DeletedTestClock>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/test_helpers/test_clocks/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves a test clock.
    */
@@ -32,45 +27,45 @@ export class TestClockResource extends StripeResource {
     id: string,
     params?: TestHelpers.TestClockRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<TestClock>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<TestClock>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/test_helpers/test_clocks/{test_clock}',
-    }).call(this, ...args);
+  ): Promise<Response<TestClock>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/test_helpers/test_clocks/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Returns a list of your test clocks.
    */
   list(
     params?: TestHelpers.TestClockListParams,
     options?: RequestOptions
-  ): ApiListPromise<TestClock>;
-  list(options?: RequestOptions): ApiListPromise<TestClock>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/test_helpers/test_clocks',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<TestClock> {
+    return this._makeRequest(
+      'GET',
+      '/v1/test_helpers/test_clocks',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Creates a new test clock that can be attached to new customers and quotes.
    */
   create(
     params: TestHelpers.TestClockCreateParams,
     options?: RequestOptions
-  ): Promise<Response<TestClock>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/test_clocks',
-    }).call(this, ...args);
+  ): Promise<Response<TestClock>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/test_helpers/test_clocks',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Starts advancing a test clock to a specified time in the future. Advancement is done when status changes to Ready.
    */
@@ -78,12 +73,13 @@ export class TestClockResource extends StripeResource {
     id: string,
     params: TestHelpers.TestClockAdvanceParams,
     options?: RequestOptions
-  ): Promise<Response<TestClock>>;
-  advance(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/test_clocks/{test_clock}/advance',
-    }).call(this, ...args);
+  ): Promise<Response<TestClock>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/test_clocks/${id}/advance`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface TestClock {

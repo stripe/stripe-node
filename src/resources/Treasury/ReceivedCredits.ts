@@ -8,7 +8,6 @@ import {OutboundTransfer} from './OutboundTransfers.js';
 import {Payout} from './../Payouts.js';
 import {PaginationParams, Address} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ReceivedCreditResource extends StripeResource {
   /**
@@ -17,15 +16,17 @@ export class ReceivedCreditResource extends StripeResource {
   list(
     params: Treasury.ReceivedCreditListParams,
     options?: RequestOptions
-  ): ApiListPromise<ReceivedCredit>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/treasury/received_credits',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<ReceivedCredit> {
+    return this._makeRequest(
+      'GET',
+      '/v1/treasury/received_credits',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieves the details of an existing ReceivedCredit by passing the unique ReceivedCredit ID from the ReceivedCredit list.
    */
@@ -33,16 +34,13 @@ export class ReceivedCreditResource extends StripeResource {
     id: string,
     params?: Treasury.ReceivedCreditRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ReceivedCredit>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ReceivedCredit>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/treasury/received_credits/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<ReceivedCredit>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/treasury/received_credits/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface ReceivedCredit {

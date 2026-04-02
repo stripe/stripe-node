@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {FinancingOffer} from './../../Capital/FinancingOffers.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class FinancingOfferResource extends StripeResource {
   /**
@@ -12,14 +11,14 @@ export class FinancingOfferResource extends StripeResource {
   create(
     params: TestHelpers.Capital.FinancingOfferCreateParams,
     options?: RequestOptions
-  ): Promise<Response<FinancingOffer>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/capital/financing_offers',
-    }).call(this, ...args);
+  ): Promise<Response<FinancingOffer>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/test_helpers/capital/financing_offers',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Refills a test financing offer for a connected account.
    */
@@ -27,13 +26,13 @@ export class FinancingOfferResource extends StripeResource {
     id: string,
     params: TestHelpers.Capital.FinancingOfferRefillParams,
     options?: RequestOptions
-  ): Promise<Response<FinancingOffer>>;
-  refill(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/test_helpers/capital/financing_offers/{financing_offer}/refill',
-    }).call(this, ...args);
+  ): Promise<Response<FinancingOffer>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/capital/financing_offers/${id}/refill`,
+      params,
+      options
+    ) as any;
   }
 }
 export namespace TestHelpers {

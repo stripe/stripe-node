@@ -5,7 +5,6 @@ import {RateCardCustomPricingUnitOverageRate} from './../../../V2/Billing/RateCa
 import {MetadataParam} from '../../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
 import {DeletedObject} from './../../../V2/DeletedObject.js';
-const stripeMethod = StripeResource.method;
 
 export class CustomPricingUnitOverageRateResource extends StripeResource {
   /**
@@ -15,20 +14,17 @@ export class CustomPricingUnitOverageRateResource extends StripeResource {
     id: string,
     params?: V2.Billing.RateCards.CustomPricingUnitOverageRateListParams,
     options?: RequestOptions
-  ): ApiListPromise<RateCardCustomPricingUnitOverageRate>;
-  list(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<RateCardCustomPricingUnitOverageRate>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath:
-        '/v2/billing/rate_cards/{rate_card_id}/custom_pricing_unit_overage_rates',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<RateCardCustomPricingUnitOverageRate> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/rate_cards/${id}/custom_pricing_unit_overage_rates`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Create a Rate Card Custom Pricing Unit Overage Rate on a Rate Card.
    */
@@ -36,15 +32,14 @@ export class CustomPricingUnitOverageRateResource extends StripeResource {
     id: string,
     params: V2.Billing.RateCards.CustomPricingUnitOverageRateCreateParams,
     options?: RequestOptions
-  ): Promise<Response<RateCardCustomPricingUnitOverageRate>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v2/billing/rate_cards/{rate_card_id}/custom_pricing_unit_overage_rates',
-    }).call(this, ...args);
+  ): Promise<Response<RateCardCustomPricingUnitOverageRate>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/rate_cards/${id}/custom_pricing_unit_overage_rates`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Delete a Rate Card Custom Pricing Unit Overage Rate from a Rate Card.
    */
@@ -53,20 +48,14 @@ export class CustomPricingUnitOverageRateResource extends StripeResource {
     id: string,
     params?: V2.Billing.RateCards.CustomPricingUnitOverageRateDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedObject>>;
-  del(
-    rateCardId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<DeletedObject>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath:
-        '/v2/billing/rate_cards/{rate_card_id}/custom_pricing_unit_overage_rates/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedObject>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v2/billing/rate_cards/${rateCardId}/custom_pricing_unit_overage_rates/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a Rate Card Custom Pricing Unit Overage Rate from a Rate Card.
    */
@@ -75,18 +64,13 @@ export class CustomPricingUnitOverageRateResource extends StripeResource {
     id: string,
     params?: V2.Billing.RateCards.CustomPricingUnitOverageRateRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<RateCardCustomPricingUnitOverageRate>>;
-  retrieve(
-    rateCardId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<RateCardCustomPricingUnitOverageRate>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath:
-        '/v2/billing/rate_cards/{rate_card_id}/custom_pricing_unit_overage_rates/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<RateCardCustomPricingUnitOverageRate>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/rate_cards/${rateCardId}/custom_pricing_unit_overage_rates/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export namespace V2 {

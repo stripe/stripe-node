@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class AssociationResource extends StripeResource {
   /**
@@ -11,12 +10,13 @@ export class AssociationResource extends StripeResource {
   find(
     params: Tax.AssociationFindParams,
     options?: RequestOptions
-  ): Promise<Response<Association>>;
-  find(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/tax/associations/find',
-    }).call(this, ...args);
+  ): Promise<Response<Association>> {
+    return this._makeRequest(
+      'GET',
+      '/v1/tax/associations/find',
+      params,
+      options
+    ) as any;
   }
 }
 export interface Association {

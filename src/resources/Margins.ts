@@ -3,7 +3,6 @@
 import {StripeResource} from '../StripeResource.js';
 import {MetadataParam, PaginationParams, Metadata} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class MarginResource extends StripeResource {
   /**
@@ -12,30 +11,25 @@ export class MarginResource extends StripeResource {
   list(
     params?: MarginListParams,
     options?: RequestOptions
-  ): ApiListPromise<Margin>;
-  list(options?: RequestOptions): ApiListPromise<Margin>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/margins',
+  ): ApiListPromise<Margin> {
+    return this._makeRequest('GET', '/v1/billing/margins', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Create a margin object to be used with invoices, invoice items, and invoice line items for a customer to represent a partner discount. A margin has a percent_off which is the percent that will be taken off the subtotal after all items and other discounts and promotions) of any invoices for a customer. Calculation of prorations do not include any partner margins applied on the original invoice item.
    */
   create(
     params: MarginCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Margin>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/billing/margins'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Margin>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/billing/margins',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a margin object with the given ID.
    */
@@ -43,15 +37,14 @@ export class MarginResource extends StripeResource {
     id: string,
     params?: MarginRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Margin>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Margin>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/margins/{margin}',
-    }).call(this, ...args);
+  ): Promise<Response<Margin>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/billing/margins/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Update the specified margin object. Certain fields of the margin object are not editable.
    */
@@ -59,12 +52,13 @@ export class MarginResource extends StripeResource {
     id: string,
     params?: MarginUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Margin>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing/margins/{margin}',
-    }).call(this, ...args);
+  ): Promise<Response<Margin>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/billing/margins/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Margin {

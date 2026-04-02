@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class BatchJobResource extends StripeResource {
   /**
@@ -12,11 +11,8 @@ export class BatchJobResource extends StripeResource {
   create(
     params: V2.Core.BatchJobCreateParams,
     options?: RequestOptions
-  ): Promise<Response<BatchJob>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/batch_jobs',
+  ): Promise<Response<BatchJob>> {
+    return this._makeRequest('POST', '/v2/core/batch_jobs', params, options, {
       responseSchema: {
         kind: 'object',
         fields: {
@@ -82,9 +78,8 @@ export class BatchJobResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieves an existing batch job.
    */
@@ -92,80 +87,81 @@ export class BatchJobResource extends StripeResource {
     id: string,
     params?: V2.Core.BatchJobRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<BatchJob>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<BatchJob>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/batch_jobs/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          status_details: {
-            kind: 'object',
-            fields: {
-              canceled: {
-                kind: 'object',
-                fields: {
-                  failure_count: {kind: 'int64_string'},
-                  output_file: {
-                    kind: 'object',
-                    fields: {size: {kind: 'int64_string'}},
+  ): Promise<Response<BatchJob>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/core/batch_jobs/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            status_details: {
+              kind: 'object',
+              fields: {
+                canceled: {
+                  kind: 'object',
+                  fields: {
+                    failure_count: {kind: 'int64_string'},
+                    output_file: {
+                      kind: 'object',
+                      fields: {size: {kind: 'int64_string'}},
+                    },
+                    success_count: {kind: 'int64_string'},
                   },
-                  success_count: {kind: 'int64_string'},
                 },
-              },
-              complete: {
-                kind: 'object',
-                fields: {
-                  failure_count: {kind: 'int64_string'},
-                  output_file: {
-                    kind: 'object',
-                    fields: {size: {kind: 'int64_string'}},
+                complete: {
+                  kind: 'object',
+                  fields: {
+                    failure_count: {kind: 'int64_string'},
+                    output_file: {
+                      kind: 'object',
+                      fields: {size: {kind: 'int64_string'}},
+                    },
+                    success_count: {kind: 'int64_string'},
                   },
-                  success_count: {kind: 'int64_string'},
                 },
-              },
-              in_progress: {
-                kind: 'object',
-                fields: {
-                  failure_count: {kind: 'int64_string'},
-                  success_count: {kind: 'int64_string'},
-                },
-              },
-              timeout: {
-                kind: 'object',
-                fields: {
-                  failure_count: {kind: 'int64_string'},
-                  output_file: {
-                    kind: 'object',
-                    fields: {size: {kind: 'int64_string'}},
+                in_progress: {
+                  kind: 'object',
+                  fields: {
+                    failure_count: {kind: 'int64_string'},
+                    success_count: {kind: 'int64_string'},
                   },
-                  success_count: {kind: 'int64_string'},
                 },
-              },
-              validating: {
-                kind: 'object',
-                fields: {validated_count: {kind: 'int64_string'}},
-              },
-              validation_failed: {
-                kind: 'object',
-                fields: {
-                  failure_count: {kind: 'int64_string'},
-                  output_file: {
-                    kind: 'object',
-                    fields: {size: {kind: 'int64_string'}},
+                timeout: {
+                  kind: 'object',
+                  fields: {
+                    failure_count: {kind: 'int64_string'},
+                    output_file: {
+                      kind: 'object',
+                      fields: {size: {kind: 'int64_string'}},
+                    },
+                    success_count: {kind: 'int64_string'},
                   },
-                  success_count: {kind: 'int64_string'},
+                },
+                validating: {
+                  kind: 'object',
+                  fields: {validated_count: {kind: 'int64_string'}},
+                },
+                validation_failed: {
+                  kind: 'object',
+                  fields: {
+                    failure_count: {kind: 'int64_string'},
+                    output_file: {
+                      kind: 'object',
+                      fields: {size: {kind: 'int64_string'}},
+                    },
+                    success_count: {kind: 'int64_string'},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Cancels an existing batch job.
    */
@@ -173,78 +169,80 @@ export class BatchJobResource extends StripeResource {
     id: string,
     params?: V2.Core.BatchJobCancelParams,
     options?: RequestOptions
-  ): Promise<Response<BatchJob>>;
-  cancel(id: string, options?: RequestOptions): Promise<Response<BatchJob>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/batch_jobs/{id}/cancel',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          status_details: {
-            kind: 'object',
-            fields: {
-              canceled: {
-                kind: 'object',
-                fields: {
-                  failure_count: {kind: 'int64_string'},
-                  output_file: {
-                    kind: 'object',
-                    fields: {size: {kind: 'int64_string'}},
+  ): Promise<Response<BatchJob>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/batch_jobs/${id}/cancel`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            status_details: {
+              kind: 'object',
+              fields: {
+                canceled: {
+                  kind: 'object',
+                  fields: {
+                    failure_count: {kind: 'int64_string'},
+                    output_file: {
+                      kind: 'object',
+                      fields: {size: {kind: 'int64_string'}},
+                    },
+                    success_count: {kind: 'int64_string'},
                   },
-                  success_count: {kind: 'int64_string'},
                 },
-              },
-              complete: {
-                kind: 'object',
-                fields: {
-                  failure_count: {kind: 'int64_string'},
-                  output_file: {
-                    kind: 'object',
-                    fields: {size: {kind: 'int64_string'}},
+                complete: {
+                  kind: 'object',
+                  fields: {
+                    failure_count: {kind: 'int64_string'},
+                    output_file: {
+                      kind: 'object',
+                      fields: {size: {kind: 'int64_string'}},
+                    },
+                    success_count: {kind: 'int64_string'},
                   },
-                  success_count: {kind: 'int64_string'},
                 },
-              },
-              in_progress: {
-                kind: 'object',
-                fields: {
-                  failure_count: {kind: 'int64_string'},
-                  success_count: {kind: 'int64_string'},
-                },
-              },
-              timeout: {
-                kind: 'object',
-                fields: {
-                  failure_count: {kind: 'int64_string'},
-                  output_file: {
-                    kind: 'object',
-                    fields: {size: {kind: 'int64_string'}},
+                in_progress: {
+                  kind: 'object',
+                  fields: {
+                    failure_count: {kind: 'int64_string'},
+                    success_count: {kind: 'int64_string'},
                   },
-                  success_count: {kind: 'int64_string'},
                 },
-              },
-              validating: {
-                kind: 'object',
-                fields: {validated_count: {kind: 'int64_string'}},
-              },
-              validation_failed: {
-                kind: 'object',
-                fields: {
-                  failure_count: {kind: 'int64_string'},
-                  output_file: {
-                    kind: 'object',
-                    fields: {size: {kind: 'int64_string'}},
+                timeout: {
+                  kind: 'object',
+                  fields: {
+                    failure_count: {kind: 'int64_string'},
+                    output_file: {
+                      kind: 'object',
+                      fields: {size: {kind: 'int64_string'}},
+                    },
+                    success_count: {kind: 'int64_string'},
                   },
-                  success_count: {kind: 'int64_string'},
+                },
+                validating: {
+                  kind: 'object',
+                  fields: {validated_count: {kind: 'int64_string'}},
+                },
+                validation_failed: {
+                  kind: 'object',
+                  fields: {
+                    failure_count: {kind: 'int64_string'},
+                    output_file: {
+                      kind: 'object',
+                      fields: {size: {kind: 'int64_string'}},
+                    },
+                    success_count: {kind: 'int64_string'},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface BatchJob {

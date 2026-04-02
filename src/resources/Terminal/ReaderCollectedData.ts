@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ReaderCollectedDatumResource extends StripeResource {
   /**
@@ -12,16 +11,13 @@ export class ReaderCollectedDatumResource extends StripeResource {
     id: string,
     params?: Terminal.ReaderCollectedDataRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ReaderCollectedData>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ReaderCollectedData>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/terminal/reader_collected_data/{reader_collected_data}',
-    }).call(this, ...args);
+  ): Promise<Response<ReaderCollectedData>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/terminal/reader_collected_data/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface ReaderCollectedData {

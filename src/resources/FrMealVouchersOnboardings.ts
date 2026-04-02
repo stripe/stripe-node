@@ -3,7 +3,6 @@
 import {StripeResource} from '../StripeResource.js';
 import {MetadataParam, PaginationParams, Metadata} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class FrMealVouchersOnboardingResource extends StripeResource {
   /**
@@ -12,30 +11,31 @@ export class FrMealVouchersOnboardingResource extends StripeResource {
   list(
     params?: FrMealVouchersOnboardingListParams,
     options?: RequestOptions
-  ): ApiListPromise<FrMealVouchersOnboarding>;
-  list(options?: RequestOptions): ApiListPromise<FrMealVouchersOnboarding>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/fr_meal_vouchers_onboardings',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<FrMealVouchersOnboarding> {
+    return this._makeRequest(
+      'GET',
+      '/v1/fr_meal_vouchers_onboardings',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Creates a French Meal Vouchers Onboarding object that represents a restaurant's onboarding status and starts the onboarding process.
    */
   create(
     params: FrMealVouchersOnboardingCreateParams,
     options?: RequestOptions
-  ): Promise<Response<FrMealVouchersOnboarding>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/fr_meal_vouchers_onboardings',
-    }).call(this, ...args);
+  ): Promise<Response<FrMealVouchersOnboarding>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/fr_meal_vouchers_onboardings',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the details of a previously created French Meal Vouchers Onboarding object.
    *
@@ -46,18 +46,14 @@ export class FrMealVouchersOnboardingResource extends StripeResource {
     id: string,
     params?: FrMealVouchersOnboardingRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<FrMealVouchersOnboarding>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<FrMealVouchersOnboarding>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/fr_meal_vouchers_onboardings/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<FrMealVouchersOnboarding>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/fr_meal_vouchers_onboardings/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates the details of a restaurant's French Meal Vouchers Onboarding object by
    * setting the values of the parameters passed. Any parameters not provided are left unchanged.
@@ -69,12 +65,13 @@ export class FrMealVouchersOnboardingResource extends StripeResource {
     id: string,
     params: FrMealVouchersOnboardingUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<FrMealVouchersOnboarding>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/fr_meal_vouchers_onboardings/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<FrMealVouchersOnboarding>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/fr_meal_vouchers_onboardings/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface FrMealVouchersOnboarding {

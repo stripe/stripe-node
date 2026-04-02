@@ -8,7 +8,6 @@ import {
   Metadata,
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class WebhookEndpointResource extends StripeResource {
   /**
@@ -18,18 +17,14 @@ export class WebhookEndpointResource extends StripeResource {
     id: string,
     params?: WebhookEndpointDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedWebhookEndpoint>>;
-  del(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<DeletedWebhookEndpoint>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/webhook_endpoints/{webhook_endpoint}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedWebhookEndpoint>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/webhook_endpoints/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the webhook endpoint with the given ID.
    */
@@ -37,18 +32,14 @@ export class WebhookEndpointResource extends StripeResource {
     id: string,
     params?: WebhookEndpointRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<WebhookEndpoint>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<WebhookEndpoint>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/webhook_endpoints/{webhook_endpoint}',
-    }).call(this, ...args);
+  ): Promise<Response<WebhookEndpoint>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/webhook_endpoints/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates the webhook endpoint. You may edit the url, the list of enabled_events, and the status of your endpoint.
    */
@@ -56,42 +47,38 @@ export class WebhookEndpointResource extends StripeResource {
     id: string,
     params?: WebhookEndpointUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<WebhookEndpoint>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/webhook_endpoints/{webhook_endpoint}',
-    }).call(this, ...args);
+  ): Promise<Response<WebhookEndpoint>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/webhook_endpoints/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Returns a list of your webhook endpoints.
    */
   list(
     params?: WebhookEndpointListParams,
     options?: RequestOptions
-  ): ApiListPromise<WebhookEndpoint>;
-  list(options?: RequestOptions): ApiListPromise<WebhookEndpoint>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/webhook_endpoints',
+  ): ApiListPromise<WebhookEndpoint> {
+    return this._makeRequest('GET', '/v1/webhook_endpoints', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * A webhook endpoint must have a url and a list of enabled_events. You may optionally specify the Boolean connect parameter. If set to true, then a Connect webhook endpoint that notifies the specified url about events from all connected accounts is created; otherwise an account webhook endpoint that notifies the specified url only about events from your account is created. You can also create webhook endpoints in the [webhooks settings](https://dashboard.stripe.com/account/webhooks) section of the Dashboard.
    */
   create(
     params: WebhookEndpointCreateParams,
     options?: RequestOptions
-  ): Promise<Response<WebhookEndpoint>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/webhook_endpoints',
-    }).call(this, ...args);
+  ): Promise<Response<WebhookEndpoint>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/webhook_endpoints',
+      params,
+      options
+    ) as any;
   }
 }
 export interface WebhookEndpoint {

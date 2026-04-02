@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../../StripeResource.js';
 import {LicenseFeeVersion} from './../../../V2/Billing/LicenseFeeVersions.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class VersionResource extends StripeResource {
   /**
@@ -13,40 +12,41 @@ export class VersionResource extends StripeResource {
     id: string,
     params?: V2.Billing.LicenseFees.VersionListParams,
     options?: RequestOptions
-  ): ApiListPromise<LicenseFeeVersion>;
-  list(id: string, options?: RequestOptions): ApiListPromise<LicenseFeeVersion>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/license_fees/{license_fee_id}/versions',
-      methodType: 'list',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          data: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                tiers: {
-                  kind: 'array',
-                  element: {
-                    kind: 'object',
-                    fields: {up_to_decimal: {kind: 'decimal_string'}},
+  ): ApiListPromise<LicenseFeeVersion> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/license_fees/${id}/versions`,
+      params,
+      options,
+      {
+        methodType: 'list',
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  tiers: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {up_to_decimal: {kind: 'decimal_string'}},
+                    },
                   },
-                },
-                transform_quantity: {
-                  kind: 'object',
-                  fields: {divide_by: {kind: 'int64_string'}},
+                  transform_quantity: {
+                    kind: 'object',
+                    fields: {divide_by: {kind: 'int64_string'}},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Retrieve a License Fee Version object.
    */
@@ -55,33 +55,31 @@ export class VersionResource extends StripeResource {
     id: string,
     params?: V2.Billing.LicenseFees.VersionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<LicenseFeeVersion>>;
-  retrieve(
-    licenseFeeId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<LicenseFeeVersion>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/license_fees/{license_fee_id}/versions/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          tiers: {
-            kind: 'array',
-            element: {
+  ): Promise<Response<LicenseFeeVersion>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/license_fees/${licenseFeeId}/versions/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            tiers: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {up_to_decimal: {kind: 'decimal_string'}},
+              },
+            },
+            transform_quantity: {
               kind: 'object',
-              fields: {up_to_decimal: {kind: 'decimal_string'}},
+              fields: {divide_by: {kind: 'int64_string'}},
             },
           },
-          transform_quantity: {
-            kind: 'object',
-            fields: {divide_by: {kind: 'int64_string'}},
-          },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export namespace V2 {

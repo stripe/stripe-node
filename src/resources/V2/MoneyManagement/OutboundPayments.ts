@@ -4,7 +4,6 @@ import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class OutboundPaymentResource extends StripeResource {
   /**
@@ -13,16 +12,17 @@ export class OutboundPaymentResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.OutboundPaymentListParams,
     options?: RequestOptions
-  ): ApiListPromise<OutboundPayment>;
-  list(options?: RequestOptions): ApiListPromise<OutboundPayment>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/outbound_payments',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<OutboundPayment> {
+    return this._makeRequest(
+      'GET',
+      '/v2/money_management/outbound_payments',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Creates an OutboundPayment.
    * @throws Stripe.InsufficientFundsError
@@ -33,14 +33,14 @@ export class OutboundPaymentResource extends StripeResource {
   create(
     params: V2.MoneyManagement.OutboundPaymentCreateParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundPayment>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/outbound_payments',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundPayment>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/money_management/outbound_payments',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the details of an existing OutboundPayment by passing the unique OutboundPayment ID from either the OutboundPayment create or list response.
    */
@@ -48,18 +48,14 @@ export class OutboundPaymentResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.OutboundPaymentRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundPayment>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<OutboundPayment>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/outbound_payments/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundPayment>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/money_management/outbound_payments/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Cancels an OutboundPayment. Only processing OutboundPayments can be canceled.
    * @throws Stripe.AlreadyCanceledError
@@ -69,16 +65,13 @@ export class OutboundPaymentResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.OutboundPaymentCancelParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundPayment>>;
-  cancel(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<OutboundPayment>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/outbound_payments/{id}/cancel',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundPayment>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/money_management/outbound_payments/${id}/cancel`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface OutboundPayment {

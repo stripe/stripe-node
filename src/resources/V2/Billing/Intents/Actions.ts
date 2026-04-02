@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../../StripeResource.js';
 import {IntentAction} from './../../../V2/Billing/IntentActions.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ActionResource extends StripeResource {
   /**
@@ -13,30 +12,32 @@ export class ActionResource extends StripeResource {
     id: string,
     params?: V2.Billing.Intents.ActionListParams,
     options?: RequestOptions
-  ): ApiListPromise<IntentAction>;
-  list(id: string, options?: RequestOptions): ApiListPromise<IntentAction>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/intents/{intent_id}/actions',
-      methodType: 'list',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          data: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                apply: {
-                  kind: 'object',
-                  fields: {
-                    invoice_discount_rule: {
-                      kind: 'object',
-                      fields: {
-                        percent_off: {
-                          kind: 'object',
-                          fields: {percent_off: {kind: 'decimal_string'}},
+  ): ApiListPromise<IntentAction> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/intents/${id}/actions`,
+      params,
+      options,
+      {
+        methodType: 'list',
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  apply: {
+                    kind: 'object',
+                    fields: {
+                      invoice_discount_rule: {
+                        kind: 'object',
+                        fields: {
+                          percent_off: {
+                            kind: 'object',
+                            fields: {percent_off: {kind: 'decimal_string'}},
+                          },
                         },
                       },
                     },
@@ -46,10 +47,9 @@ export class ActionResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Retrieve a Billing Intent Action.
    */
@@ -58,36 +58,34 @@ export class ActionResource extends StripeResource {
     id: string,
     params?: V2.Billing.Intents.ActionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<IntentAction>>;
-  retrieve(
-    intentId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<IntentAction>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/intents/{intent_id}/actions/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          apply: {
-            kind: 'object',
-            fields: {
-              invoice_discount_rule: {
-                kind: 'object',
-                fields: {
-                  percent_off: {
-                    kind: 'object',
-                    fields: {percent_off: {kind: 'decimal_string'}},
+  ): Promise<Response<IntentAction>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/intents/${intentId}/actions/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            apply: {
+              kind: 'object',
+              fields: {
+                invoice_discount_rule: {
+                  kind: 'object',
+                  fields: {
+                    percent_off: {
+                      kind: 'object',
+                      fields: {percent_off: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export namespace V2 {

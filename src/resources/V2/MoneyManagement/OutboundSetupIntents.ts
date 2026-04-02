@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {PayoutMethod} from './PayoutMethods.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class OutboundSetupIntentResource extends StripeResource {
   /**
@@ -12,16 +11,17 @@ export class OutboundSetupIntentResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.OutboundSetupIntentListParams,
     options?: RequestOptions
-  ): ApiListPromise<OutboundSetupIntent>;
-  list(options?: RequestOptions): ApiListPromise<OutboundSetupIntent>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/outbound_setup_intents',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<OutboundSetupIntent> {
+    return this._makeRequest(
+      'GET',
+      '/v2/money_management/outbound_setup_intents',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Create an OutboundSetupIntent object.
    * @throws Stripe.BlockedByStripeError
@@ -32,15 +32,14 @@ export class OutboundSetupIntentResource extends StripeResource {
   create(
     params?: V2.MoneyManagement.OutboundSetupIntentCreateParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundSetupIntent>>;
-  create(options?: RequestOptions): Promise<Response<OutboundSetupIntent>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/outbound_setup_intents',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundSetupIntent>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/money_management/outbound_setup_intents',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve an OutboundSetupIntent object.
    */
@@ -48,18 +47,14 @@ export class OutboundSetupIntentResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.OutboundSetupIntentRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundSetupIntent>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<OutboundSetupIntent>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/money_management/outbound_setup_intents/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundSetupIntent>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/money_management/outbound_setup_intents/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Update an OutboundSetupIntent object.
    * @throws Stripe.QuotaExceededError
@@ -71,14 +66,14 @@ export class OutboundSetupIntentResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.OutboundSetupIntentUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundSetupIntent>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/outbound_setup_intents/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundSetupIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/money_management/outbound_setup_intents/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Cancel an OutboundSetupIntent object.
    */
@@ -86,16 +81,13 @@ export class OutboundSetupIntentResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.OutboundSetupIntentCancelParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundSetupIntent>>;
-  cancel(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<OutboundSetupIntent>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/money_management/outbound_setup_intents/{id}/cancel',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundSetupIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/money_management/outbound_setup_intents/${id}/cancel`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface OutboundSetupIntent {

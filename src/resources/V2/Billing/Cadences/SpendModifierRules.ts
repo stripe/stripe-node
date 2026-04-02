@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../../StripeResource.js';
 import {CadenceSpendModifier} from './../../../V2/Billing/CadenceSpendModifiers.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class SpendModifierRuleResource extends StripeResource {
   /**
@@ -13,19 +12,17 @@ export class SpendModifierRuleResource extends StripeResource {
     id: string,
     params?: V2.Billing.Cadences.SpendModifierRuleListParams,
     options?: RequestOptions
-  ): ApiListPromise<CadenceSpendModifier>;
-  list(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<CadenceSpendModifier>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/cadences/{cadence_id}/spend_modifier_rules',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<CadenceSpendModifier> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/cadences/${id}/spend_modifier_rules`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieve a Spend Modifier associated with a Billing Cadence.
    */
@@ -34,17 +31,13 @@ export class SpendModifierRuleResource extends StripeResource {
     id: string,
     params?: V2.Billing.Cadences.SpendModifierRuleRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<CadenceSpendModifier>>;
-  retrieve(
-    cadenceId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CadenceSpendModifier>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/cadences/{cadence_id}/spend_modifier_rules/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<CadenceSpendModifier>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/cadences/${cadenceId}/spend_modifier_rules/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export namespace V2 {

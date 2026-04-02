@@ -5,7 +5,6 @@ import {Plan} from './Plans.js';
 import {Charge} from './../Charges.js';
 import {PaginationParams, Metadata} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class HoldResource extends StripeResource {
   /**
@@ -14,16 +13,11 @@ export class HoldResource extends StripeResource {
   list(
     params?: Reserve.HoldListParams,
     options?: RequestOptions
-  ): ApiListPromise<Hold>;
-  list(options?: RequestOptions): ApiListPromise<Hold>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/reserve/holds',
+  ): ApiListPromise<Hold> {
+    return this._makeRequest('GET', '/v1/reserve/holds', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieve a ReserveHold.
    */
@@ -31,13 +25,13 @@ export class HoldResource extends StripeResource {
     id: string,
     params?: Reserve.HoldRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Hold>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Hold>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/reserve/holds/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<Hold>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/reserve/holds/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Hold {

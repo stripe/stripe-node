@@ -5,7 +5,6 @@ import {PricingPlanComponent} from './../../../V2/Billing/PricingPlanComponents.
 import {MetadataParam} from '../../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
 import {DeletedObject} from './../../../V2/DeletedObject.js';
-const stripeMethod = StripeResource.method;
 
 export class ComponentResource extends StripeResource {
   /**
@@ -15,19 +14,17 @@ export class ComponentResource extends StripeResource {
     id: string,
     params?: V2.Billing.PricingPlans.ComponentListParams,
     options?: RequestOptions
-  ): ApiListPromise<PricingPlanComponent>;
-  list(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<PricingPlanComponent>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/pricing_plans/{pricing_plan_id}/components',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<PricingPlanComponent> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/pricing_plans/${id}/components`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Create a Pricing Plan Component object.
    */
@@ -35,14 +32,14 @@ export class ComponentResource extends StripeResource {
     id: string,
     params: V2.Billing.PricingPlans.ComponentCreateParams,
     options?: RequestOptions
-  ): Promise<Response<PricingPlanComponent>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/pricing_plans/{pricing_plan_id}/components',
-    }).call(this, ...args);
+  ): Promise<Response<PricingPlanComponent>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/pricing_plans/${id}/components`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Remove a Pricing Plan Component from the latest version of a Pricing Plan.
    */
@@ -51,19 +48,14 @@ export class ComponentResource extends StripeResource {
     id: string,
     params?: V2.Billing.PricingPlans.ComponentDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedObject>>;
-  del(
-    pricingPlanId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<DeletedObject>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v2/billing/pricing_plans/{pricing_plan_id}/components/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedObject>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v2/billing/pricing_plans/${pricingPlanId}/components/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a Pricing Plan Component object.
    */
@@ -72,19 +64,14 @@ export class ComponentResource extends StripeResource {
     id: string,
     params?: V2.Billing.PricingPlans.ComponentRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<PricingPlanComponent>>;
-  retrieve(
-    pricingPlanId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PricingPlanComponent>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/billing/pricing_plans/{pricing_plan_id}/components/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<PricingPlanComponent>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/billing/pricing_plans/${pricingPlanId}/components/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Update a Pricing Plan Component object.
    */
@@ -93,12 +80,13 @@ export class ComponentResource extends StripeResource {
     id: string,
     params?: V2.Billing.PricingPlans.ComponentUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<PricingPlanComponent>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/pricing_plans/{pricing_plan_id}/components/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<PricingPlanComponent>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/billing/pricing_plans/${pricingPlanId}/components/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export namespace V2 {
