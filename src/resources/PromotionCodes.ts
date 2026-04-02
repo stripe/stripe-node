@@ -11,7 +11,6 @@ import {
   Metadata,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PromotionCodeResource extends StripeResource {
   /**
@@ -20,30 +19,25 @@ export class PromotionCodeResource extends StripeResource {
   list(
     params?: PromotionCodeListParams,
     options?: RequestOptions
-  ): ApiListPromise<PromotionCode>;
-  list(options?: RequestOptions): ApiListPromise<PromotionCode>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/promotion_codes',
+  ): ApiListPromise<PromotionCode> {
+    return this._makeRequest('GET', '/v1/promotion_codes', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * A promotion code points to an underlying promotion. You can optionally restrict the code to a specific customer, redemption limit, and expiration date.
    */
   create(
     params: PromotionCodeCreateParams,
     options?: RequestOptions
-  ): Promise<Response<PromotionCode>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/promotion_codes'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<PromotionCode>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/promotion_codes',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the promotion code with the given ID. In order to retrieve a promotion code by the customer-facing code use [list](https://docs.stripe.com/docs/api/promotion_codes/list) with the desired code.
    */
@@ -51,18 +45,14 @@ export class PromotionCodeResource extends StripeResource {
     id: string,
     params?: PromotionCodeRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<PromotionCode>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PromotionCode>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/promotion_codes/{promotion_code}',
-    }).call(this, ...args);
+  ): Promise<Response<PromotionCode>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/promotion_codes/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates the specified promotion code by setting the values of the parameters passed. Most fields are, by design, not editable.
    */
@@ -70,12 +60,13 @@ export class PromotionCodeResource extends StripeResource {
     id: string,
     params?: PromotionCodeUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<PromotionCode>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/promotion_codes/{promotion_code}',
-    }).call(this, ...args);
+  ): Promise<Response<PromotionCode>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/promotion_codes/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface PromotionCode {

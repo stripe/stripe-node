@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {PersonalizationDesign} from './../../Issuing/PersonalizationDesigns.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PersonalizationDesignResource extends StripeResource {
   /**
@@ -13,19 +12,14 @@ export class PersonalizationDesignResource extends StripeResource {
     id: string,
     params?: TestHelpers.Issuing.PersonalizationDesignActivateParams,
     options?: RequestOptions
-  ): Promise<Response<PersonalizationDesign>>;
-  activate(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PersonalizationDesign>>;
-  activate(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/test_helpers/issuing/personalization_designs/{personalization_design}/activate',
-    }).call(this, ...args);
+  ): Promise<Response<PersonalizationDesign>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/issuing/personalization_designs/${id}/activate`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates the status of the specified testmode personalization design object to inactive.
    */
@@ -33,19 +27,14 @@ export class PersonalizationDesignResource extends StripeResource {
     id: string,
     params?: TestHelpers.Issuing.PersonalizationDesignDeactivateParams,
     options?: RequestOptions
-  ): Promise<Response<PersonalizationDesign>>;
-  deactivate(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PersonalizationDesign>>;
-  deactivate(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/test_helpers/issuing/personalization_designs/{personalization_design}/deactivate',
-    }).call(this, ...args);
+  ): Promise<Response<PersonalizationDesign>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/issuing/personalization_designs/${id}/deactivate`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates the status of the specified testmode personalization design object to rejected.
    */
@@ -53,13 +42,13 @@ export class PersonalizationDesignResource extends StripeResource {
     id: string,
     params: TestHelpers.Issuing.PersonalizationDesignRejectParams,
     options?: RequestOptions
-  ): Promise<Response<PersonalizationDesign>>;
-  reject(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/test_helpers/issuing/personalization_designs/{personalization_design}/reject',
-    }).call(this, ...args);
+  ): Promise<Response<PersonalizationDesign>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/issuing/personalization_designs/${id}/reject`,
+      params,
+      options
+    ) as any;
   }
 }
 export namespace TestHelpers {

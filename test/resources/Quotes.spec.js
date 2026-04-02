@@ -145,14 +145,10 @@ describe('Quotes Resource', () => {
             return callback(err);
           }
 
-          return stripe.quotes.pdf(
-            'foo_123',
-            {host: 'localhost'},
-            (err, res) => {
+          return stripe.quotes
+            .pdf('foo_123')
+            .then((res) => {
               closeServer();
-              if (err) {
-                return callback(err);
-              }
               const chunks = [];
               res.on('data', (chunk) => chunks.push(chunk));
               res.on('error', callback);
@@ -162,8 +158,11 @@ describe('Quotes Resource', () => {
                 );
                 return callback();
               });
-            }
-          );
+            })
+            .catch((err) => {
+              closeServer();
+              return callback(err);
+            });
         }
       );
     });
@@ -190,17 +189,19 @@ describe('Quotes Resource', () => {
             return callback(err);
           }
 
-          return stripe.quotes.pdf(
-            'foo_123',
-            {host: 'localhost', maxNetworkRetries: 1},
-            (err, res) => {
+          return stripe.quotes
+            .pdf('foo_123', undefined, {maxNetworkRetries: 1})
+            .then(() => {
+              closeServer();
+              return callback(new Error('Expected error'));
+            })
+            .catch((err) => {
               closeServer();
               expect(err).to.exist;
               expect(err.raw.type).to.equal('api_error');
               expect(err.raw.message).to.equal('this is bad');
               return callback();
-            }
-          );
+            });
         }
       );
     });

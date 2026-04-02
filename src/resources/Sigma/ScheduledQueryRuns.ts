@@ -4,7 +4,6 @@ import {StripeResource} from '../../StripeResource.js';
 import {File} from './../Files.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ScheduledQueryRunResource extends StripeResource {
   /**
@@ -13,16 +12,17 @@ export class ScheduledQueryRunResource extends StripeResource {
   list(
     params?: Sigma.ScheduledQueryRunListParams,
     options?: RequestOptions
-  ): ApiListPromise<ScheduledQueryRun>;
-  list(options?: RequestOptions): ApiListPromise<ScheduledQueryRun>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/sigma/scheduled_query_runs',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<ScheduledQueryRun> {
+    return this._makeRequest(
+      'GET',
+      '/v1/sigma/scheduled_query_runs',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieves the details of an scheduled query run.
    */
@@ -30,16 +30,13 @@ export class ScheduledQueryRunResource extends StripeResource {
     id: string,
     params?: Sigma.ScheduledQueryRunRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ScheduledQueryRun>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ScheduledQueryRun>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/sigma/scheduled_query_runs/{scheduled_query_run}',
-    }).call(this, ...args);
+  ): Promise<Response<ScheduledQueryRun>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/sigma/scheduled_query_runs/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface ScheduledQueryRun {

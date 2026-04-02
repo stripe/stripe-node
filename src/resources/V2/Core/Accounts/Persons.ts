@@ -10,7 +10,6 @@ import {
 } from '../../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
 import {DeletedObject} from './../../../V2/DeletedObject.js';
-const stripeMethod = StripeResource.method;
 
 export class PersonResource extends StripeResource {
   /**
@@ -21,33 +20,34 @@ export class PersonResource extends StripeResource {
     id: string,
     params?: V2.Core.Accounts.PersonListParams,
     options?: RequestOptions
-  ): ApiListPromise<AccountPerson>;
-  list(id: string, options?: RequestOptions): ApiListPromise<AccountPerson>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/accounts/{account_id}/persons',
-      methodType: 'list',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          data: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                relationship: {
-                  kind: 'object',
-                  fields: {percent_ownership: {kind: 'decimal_string'}},
+  ): ApiListPromise<AccountPerson> {
+    return this._makeRequest(
+      'GET',
+      `/v2/core/accounts/${id}/persons`,
+      params,
+      options,
+      {
+        methodType: 'list',
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  relationship: {
+                    kind: 'object',
+                    fields: {percent_ownership: {kind: 'decimal_string'}},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Create a Person. Adds an individual to an Account's identity. You can set relationship attributes and identity information at creation.
    * @throws Stripe.RateLimitError
@@ -56,36 +56,34 @@ export class PersonResource extends StripeResource {
     id: string,
     params?: V2.Core.Accounts.PersonCreateParams,
     options?: RequestOptions
-  ): Promise<Response<AccountPerson>>;
-  create(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<AccountPerson>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/accounts/{account_id}/persons',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          relationship: {
-            kind: 'object',
-            fields: {percent_ownership: {kind: 'decimal_string'}},
+  ): Promise<Response<AccountPerson>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/accounts/${id}/persons`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            relationship: {
+              kind: 'object',
+              fields: {percent_ownership: {kind: 'decimal_string'}},
+            },
           },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          relationship: {
-            kind: 'object',
-            fields: {percent_ownership: {kind: 'decimal_string'}},
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            relationship: {
+              kind: 'object',
+              fields: {percent_ownership: {kind: 'decimal_string'}},
+            },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Delete a Person associated with an Account.
    * @throws Stripe.RateLimitError
@@ -95,19 +93,14 @@ export class PersonResource extends StripeResource {
     id: string,
     params?: V2.Core.Accounts.PersonDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedObject>>;
-  del(
-    accountId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<DeletedObject>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v2/core/accounts/{account_id}/persons/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedObject>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v2/core/accounts/${accountId}/persons/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves a Person associated with an Account.
    * @throws Stripe.RateLimitError
@@ -117,28 +110,25 @@ export class PersonResource extends StripeResource {
     id: string,
     params?: V2.Core.Accounts.PersonRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<AccountPerson>>;
-  retrieve(
-    accountId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<AccountPerson>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/accounts/{account_id}/persons/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          relationship: {
-            kind: 'object',
-            fields: {percent_ownership: {kind: 'decimal_string'}},
+  ): Promise<Response<AccountPerson>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/core/accounts/${accountId}/persons/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            relationship: {
+              kind: 'object',
+              fields: {percent_ownership: {kind: 'decimal_string'}},
+            },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Updates a Person associated with an Account.
    * @throws Stripe.RateLimitError
@@ -148,30 +138,33 @@ export class PersonResource extends StripeResource {
     id: string,
     params?: V2.Core.Accounts.PersonUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<AccountPerson>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/accounts/{account_id}/persons/{id}',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          relationship: {
-            kind: 'object',
-            fields: {percent_ownership: {kind: 'decimal_string'}},
+  ): Promise<Response<AccountPerson>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/accounts/${accountId}/persons/${id}`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            relationship: {
+              kind: 'object',
+              fields: {percent_ownership: {kind: 'decimal_string'}},
+            },
           },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          relationship: {
-            kind: 'object',
-            fields: {percent_ownership: {kind: 'decimal_string'}},
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            relationship: {
+              kind: 'object',
+              fields: {percent_ownership: {kind: 'decimal_string'}},
+            },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export namespace V2 {
