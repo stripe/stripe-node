@@ -1,9 +1,8 @@
+import {RequestOptions} from './lib.js';
 import {
   BaseAddress,
   RequestData,
   UrlInterpolator,
-  RequestArgs,
-  StripeResourceObject,
   RequestHeaders,
   MultipartRequestData,
   RequestAuthenticator,
@@ -177,43 +176,6 @@ export function extractUrlParams(path: string): Array<string> {
 }
 
 /**
- * Return the data argument from a list of arguments
- *
- * @param {object[]} args
- * @returns {object}
- */
-export function getDataFromArgs(args: RequestArgs): RequestData {
-  if (!Array.isArray(args) || !args[0] || typeof args[0] !== 'object') {
-    return {};
-  }
-
-  if (!isOptionsHash(args[0])) {
-    return args.shift();
-  }
-
-  const argKeys = Object.keys(args[0]);
-
-  const optionKeysInArgs = argKeys.filter((key) => OPTIONS_KEYS.includes(key));
-
-  // In some cases options may be the provided as the first argument.
-  // Here we're detecting a case where there are two distinct arguments
-  // (the first being args and the second options) and with known
-  // option keys in the first so that we can warn the user about it.
-  if (
-    optionKeysInArgs.length > 0 &&
-    optionKeysInArgs.length !== argKeys.length
-  ) {
-    emitWarning(
-      `Options found in arguments (${optionKeysInArgs.join(
-        ', '
-      )}). Did you mean to pass an options object? See https://github.com/stripe/stripe-node/wiki/Passing-Options.`
-    );
-  }
-
-  return {};
-}
-
-/**
  * enforces that only supplied API bases are allowed.
  */
 export const validateApiBase = (apiBase: unknown): apiBase is BaseAddress => {
@@ -223,129 +185,73 @@ export const validateApiBase = (apiBase: unknown): apiBase is BaseAddress => {
   return apiBase in DEFAULT_BASE_ADDRESSES;
 };
 
-/**
- * Return the options hash from a list of arguments
- */
-// eslint-disable-next-line complexity
-export function getOptionsFromArgs(args: RequestArgs): Options {
-  const opts: Options = {
-    apiBase: null,
+export type ProcessedOptions = {
+  authenticator: RequestAuthenticator | null;
+  headers: RequestHeaders;
+  settings: {timeout?: number; maxNetworkRetries?: number};
+  streaming: boolean;
+  apiBase: BaseAddress | null;
+};
+
+export function processOptions(
+  options: RequestOptions | undefined
+): ProcessedOptions {
+  const result: ProcessedOptions = {
+    authenticator: null,
     headers: {},
     settings: {},
     streaming: false,
+    apiBase: null,
   };
-  if (args.length > 0) {
-    const arg = args[args.length - 1];
-    if (typeof arg === 'string') {
-      opts.authenticator = createApiKeyAuthenticator(args.pop() as string);
-    } else if (isOptionsHash(arg)) {
-      const params = {...(args.pop() as Record<string, unknown>)};
 
-      const extraKeys = Object.keys(params).filter(
-        (key) => !OPTIONS_KEYS.includes(key)
-      );
-
-      if (extraKeys.length) {
-        emitWarning(
-          `Invalid options found (${extraKeys.join(', ')}); ignoring.`
-        );
-      }
-
-      if (params.apiKey) {
-        opts.authenticator = createApiKeyAuthenticator(params.apiKey as string);
-      }
-      if (params.idempotencyKey) {
-        opts.headers['Idempotency-Key'] = params.idempotencyKey as string;
-      }
-      if (params.stripeAccount) {
-        opts.headers['Stripe-Account'] = params.stripeAccount as string;
-      }
-      if (params.stripeContext) {
-        if (opts.headers['Stripe-Account']) {
-          throw new Error(
-            "Can't specify both stripeAccount and stripeContext."
-          );
-        }
-        opts.headers['Stripe-Context'] = params.stripeContext as string;
-      }
-      if (params.apiVersion) {
-        opts.headers['Stripe-Version'] = params.apiVersion as string;
-      }
-      if (Number.isInteger(params.maxNetworkRetries)) {
-        opts.settings.maxNetworkRetries = params.maxNetworkRetries as number;
-      }
-      if (Number.isInteger(params.timeout)) {
-        opts.settings.timeout = params.timeout as number;
-      }
-      if (params.apiBase && validateApiBase(params.apiBase)) {
-        opts.apiBase = params.apiBase;
-      }
-      if (params.authenticator) {
-        if (params.apiKey) {
-          throw new Error("Can't specify both apiKey and authenticator.");
-        }
-        if (typeof params.authenticator !== 'function') {
-          throw new Error(
-            'The authenticator must be a function ' +
-              'receiving a request as the first parameter.'
-          );
-        }
-        opts.authenticator = params.authenticator as RequestAuthenticator;
-      }
-      // these are sent by us from _rawRequest, which is what powers all generated requests
-      if (params.headers) {
-        Object.assign(opts.headers, params.headers);
-      }
-      // these are sent from the user-facing RawRequest
-      if (params.additionalHeaders) {
-        Object.assign(opts.headers, params.additionalHeaders);
-      }
-      if (params.streaming) {
-        opts.streaming = true;
-      }
-    }
+  if (!options) {
+    return result;
   }
-  return opts;
-}
 
-/**
- * Provide simple "Class" extension mechanism.
- * <!-- Public API accessible via Stripe.StripeResource.extend -->
- */
-export function protoExtend<T extends Record<string, any>>(
-  this: any,
-  sub: T
-): {new (...args: any[]): StripeResourceObject & T} {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const Super = this;
-
-  // This initialization logic is somewhat sensitive to be compatible with
-  // divergent JS implementations like the one found in Qt. See here for more
-  // context:
-  //
-  // https://github.com/stripe/stripe-node/pull/334
-  // Create a subclass that properly extends the parent class (works with ES6 classes)
-  const Constructor = class extends Super {
-    constructor(...args: any[]) {
-      super(...args);
-      // Apply any custom constructor logic from sub
-      if (
-        Object.prototype.hasOwnProperty.call(sub, 'constructor') &&
-        typeof sub.constructor === 'function'
-      ) {
-        sub.constructor.apply(this, args);
-      }
+  if (options.apiKey) {
+    result.authenticator = createApiKeyAuthenticator(options.apiKey);
+  }
+  if (options.idempotencyKey) {
+    result.headers['Idempotency-Key'] = options.idempotencyKey;
+  }
+  if (options.stripeAccount) {
+    result.headers['Stripe-Account'] = options.stripeAccount;
+  }
+  if (options.stripeContext) {
+    if (result.headers['Stripe-Account']) {
+      throw new Error("Can't specify both stripeAccount and stripeContext.");
     }
-  };
+    result.headers['Stripe-Context'] = options.stripeContext as string;
+  }
+  if (options.apiVersion) {
+    result.headers['Stripe-Version'] = options.apiVersion;
+  }
+  if (Number.isInteger(options.maxNetworkRetries)) {
+    result.settings.maxNetworkRetries = options.maxNetworkRetries;
+  }
+  if (Number.isInteger(options.timeout)) {
+    result.settings.timeout = options.timeout;
+  }
+  if (options.authenticator) {
+    if (options.apiKey) {
+      throw new Error("Can't specify both apiKey and authenticator.");
+    }
+    if (typeof options.authenticator !== 'function') {
+      throw new Error(
+        'The authenticator must be a function ' +
+          'receiving a request as the first parameter.'
+      );
+    }
+    result.authenticator = options.authenticator;
+  }
+  if (options.headers) {
+    Object.assign(result.headers, options.headers);
+  }
+  if (options.streaming) {
+    result.streaming = true;
+  }
 
-  // Copy static properties from Super to Constructor
-  Object.assign(Constructor, Super);
-  // Copy prototype methods from sub to Constructor.prototype
-  Object.assign(Constructor.prototype, sub);
-
-  return (Constructor as unknown) as {
-    new (...args: any[]): StripeResourceObject & T;
-  };
+  return result;
 }
 
 /**
@@ -392,29 +298,6 @@ export function normalizeHeader(header: string): string {
     .split('-')
     .map((text) => text.charAt(0).toUpperCase() + text.substr(1).toLowerCase())
     .join('-');
-}
-
-export function callbackifyPromiseWithTimeout<T>(
-  promise: Promise<T>,
-  callback: ((error: unknown, result: T | null) => void) | null
-): Promise<T | void> {
-  if (callback) {
-    // Ensure callback is called outside of promise stack.
-    return promise.then(
-      (res) => {
-        setTimeout(() => {
-          callback(null, res);
-        }, 0);
-      },
-      (err) => {
-        setTimeout(() => {
-          callback(err, null);
-        }, 0);
-      }
-    );
-  }
-
-  return promise;
 }
 
 /**

@@ -18,9 +18,7 @@ import {
   Address,
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise, ApiList} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
-// Since path can either be `account` or `accounts`, support both through stripeMethod path
 export class AccountResource extends StripeResource {
   /**
    * With [Connect](https://docs.stripe.com/connect), you can delete accounts you manage.
@@ -35,41 +33,31 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: AccountDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedAccount>>;
-  del(id: string, options?: RequestOptions): Promise<Response<DeletedAccount>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/accounts/{account}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedAccount>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/accounts/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
-   * Retrieves the details of an account.
+   * Retrieves the details of an account. Pass `null` as the account id to retrieve details about your own account.
    */
   retrieve(
-    id: string,
+    id: string | null,
     params?: AccountRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Account>>;
-  retrieve(id: string, ...args: any[]): Promise<Response<any>> {
-    // No longer allow an api key to be passed as the first string to this function due to ambiguity between
-    // old account ids and api keys. To request the account for an api key, send null as the id
+  ): Promise<Response<Account>> {
     if (typeof id === 'string') {
-      return stripeMethod({
-        method: 'GET',
-        fullPath: '/v1/accounts/{id}',
-      }).apply(this, [id, ...args]);
+      return this._makeRequest(
+        'GET',
+        `/v1/accounts/${id}`,
+        params,
+        options
+      ) as any;
     } else {
-      if (id === null || id === undefined) {
-        // Remove id as stripeMethod would complain of unexpected argument
-        [].shift.apply([id, ...args]);
-      }
-      return stripeMethod({
-        method: 'GET',
-        fullPath: '/v1/account',
-      }).apply(this, [id, ...args]);
+      return this._makeRequest('GET', '/v1/account', params, options) as any;
     }
   }
   /**
@@ -91,45 +79,34 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: AccountUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/accounts/{account}',
-    }).call(this, ...args);
+  ): Promise<Response<Account>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/accounts/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the details of an account.
    */
   retrieveCurrent(
     params?: AccountRetrieveCurrentParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  retrieveCurrent(options?: RequestOptions): Promise<Response<Account>>;
-  retrieveCurrent(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'GET', fullPath: '/v1/account'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Account>> {
+    return this._makeRequest('GET', '/v1/account', params, options) as any;
   }
-
   /**
    * Returns a list of accounts connected to your platform via [Connect](https://docs.stripe.com/docs/connect). If you're not a platform, the list is empty.
    */
   list(
     params?: AccountListParams,
     options?: RequestOptions
-  ): ApiListPromise<Account>;
-  list(options?: RequestOptions): ApiListPromise<Account>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/accounts',
+  ): ApiListPromise<Account> {
+    return this._makeRequest('GET', '/v1/accounts', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * With [Connect](https://docs.stripe.com/docs/connect), you can create Stripe accounts for your users.
    * To do this, you'll first need to [register your platform](https://dashboard.stripe.com/account/applications/settings).
@@ -141,15 +118,9 @@ export class AccountResource extends StripeResource {
   create(
     params?: AccountCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  create(options?: RequestOptions): Promise<Response<Account>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/accounts'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Account>> {
+    return this._makeRequest('POST', '/v1/accounts', params, options) as any;
   }
-
   /**
    * With [Connect](https://docs.stripe.com/connect), you can reject accounts that you have flagged as suspicious.
    *
@@ -159,14 +130,14 @@ export class AccountResource extends StripeResource {
     id: string,
     params: AccountRejectParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  reject(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/accounts/{account}/reject',
-    }).call(this, ...args);
+  ): Promise<Response<Account>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/accounts/${id}/reject`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
    */
@@ -174,19 +145,17 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: AccountListCapabilitiesParams,
     options?: RequestOptions
-  ): ApiListPromise<Capability>;
-  listCapabilities(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<Capability>;
-  listCapabilities(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/accounts/{account}/capabilities',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<Capability> {
+    return this._makeRequest(
+      'GET',
+      `/v1/accounts/${id}/capabilities`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieves information about the specified Account Capability.
    */
@@ -195,19 +164,14 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: AccountRetrieveCapabilityParams,
     options?: RequestOptions
-  ): Promise<Response<Capability>>;
-  retrieveCapability(
-    accountId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Capability>>;
-  retrieveCapability(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/accounts/{account}/capabilities/{capability}',
-    }).call(this, ...args);
+  ): Promise<Response<Capability>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/accounts/${accountId}/capabilities/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates an existing Account Capability. Request or remove a capability by updating its requested parameter.
    */
@@ -216,19 +180,14 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: AccountUpdateCapabilityParams,
     options?: RequestOptions
-  ): Promise<Response<Capability>>;
-  updateCapability(
-    accountId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Capability>>;
-  updateCapability(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/accounts/{account}/capabilities/{capability}',
-    }).call(this, ...args);
+  ): Promise<Response<Capability>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/accounts/${accountId}/capabilities/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Delete a specified external account for a given account.
    */
@@ -237,19 +196,14 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: AccountDeleteExternalAccountParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedExternalAccount>>;
-  deleteExternalAccount(
-    accountId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<DeletedExternalAccount>>;
-  deleteExternalAccount(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/accounts/{account}/external_accounts/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedExternalAccount>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/accounts/${accountId}/external_accounts/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a specified external account for a given account.
    */
@@ -258,19 +212,14 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: AccountRetrieveExternalAccountParams,
     options?: RequestOptions
-  ): Promise<Response<ExternalAccount>>;
-  retrieveExternalAccount(
-    accountId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ExternalAccount>>;
-  retrieveExternalAccount(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/accounts/{account}/external_accounts/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<ExternalAccount>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/accounts/${accountId}/external_accounts/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates the metadata, account holder name, account holder type of a bank account belonging to
    * a connected account and optionally sets it as the default for its currency. Other bank account
@@ -286,19 +235,14 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: AccountUpdateExternalAccountParams,
     options?: RequestOptions
-  ): Promise<Response<ExternalAccount>>;
-  updateExternalAccount(
-    accountId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ExternalAccount>>;
-  updateExternalAccount(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/accounts/{account}/external_accounts/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<ExternalAccount>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/accounts/${accountId}/external_accounts/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * List external accounts for an account.
    */
@@ -306,19 +250,17 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: AccountListExternalAccountsParams,
     options?: RequestOptions
-  ): ApiListPromise<ExternalAccount>;
-  listExternalAccounts(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<ExternalAccount>;
-  listExternalAccounts(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/accounts/{account}/external_accounts',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<ExternalAccount> {
+    return this._makeRequest(
+      'GET',
+      `/v1/accounts/${id}/external_accounts`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Create an external account for a given account.
    */
@@ -326,14 +268,14 @@ export class AccountResource extends StripeResource {
     id: string,
     params: AccountCreateExternalAccountParams,
     options?: RequestOptions
-  ): Promise<Response<ExternalAccount>>;
-  createExternalAccount(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/accounts/{account}/external_accounts',
-    }).call(this, ...args);
+  ): Promise<Response<ExternalAccount>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/accounts/${id}/external_accounts`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Creates a login link for a connected account to access the Express Dashboard.
    *
@@ -343,18 +285,14 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: AccountCreateLoginLinkParams,
     options?: RequestOptions
-  ): Promise<Response<LoginLink>>;
-  createLoginLink(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<LoginLink>>;
-  createLoginLink(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/accounts/{account}/login_links',
-    }).call(this, ...args);
+  ): Promise<Response<LoginLink>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/accounts/${id}/login_links`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
    */
@@ -363,19 +301,14 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: AccountDeletePersonParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedPerson>>;
-  deletePerson(
-    accountId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<DeletedPerson>>;
-  deletePerson(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/accounts/{account}/persons/{person}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedPerson>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/accounts/${accountId}/persons/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves an existing person.
    */
@@ -384,19 +317,14 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: AccountRetrievePersonParams,
     options?: RequestOptions
-  ): Promise<Response<Person>>;
-  retrievePerson(
-    accountId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Person>>;
-  retrievePerson(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/accounts/{account}/persons/{person}',
-    }).call(this, ...args);
+  ): Promise<Response<Person>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/accounts/${accountId}/persons/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates an existing person.
    */
@@ -405,19 +333,14 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: AccountUpdatePersonParams,
     options?: RequestOptions
-  ): Promise<Response<Person>>;
-  updatePerson(
-    accountId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Person>>;
-  updatePerson(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/accounts/{account}/persons/{person}',
-    }).call(this, ...args);
+  ): Promise<Response<Person>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/accounts/${accountId}/persons/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
    */
@@ -425,16 +348,17 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: AccountListPersonsParams,
     options?: RequestOptions
-  ): ApiListPromise<Person>;
-  listPersons(id: string, options?: RequestOptions): ApiListPromise<Person>;
-  listPersons(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/accounts/{account}/persons',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<Person> {
+    return this._makeRequest(
+      'GET',
+      `/v1/accounts/${id}/persons`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Creates a new person.
    */
@@ -442,13 +366,13 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: AccountCreatePersonParams,
     options?: RequestOptions
-  ): Promise<Response<Person>>;
-  createPerson(id: string, options?: RequestOptions): Promise<Response<Person>>;
-  createPerson(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/accounts/{account}/persons',
-    }).call(this, ...args);
+  ): Promise<Response<Person>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/accounts/${id}/persons`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Account {

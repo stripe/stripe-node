@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {PaginationParams, RangeQueryParam} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class TransactionResource extends StripeResource {
   /**
@@ -12,15 +11,17 @@ export class TransactionResource extends StripeResource {
   list(
     params: FinancialConnections.TransactionListParams,
     options?: RequestOptions
-  ): ApiListPromise<Transaction>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/financial_connections/transactions',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<Transaction> {
+    return this._makeRequest(
+      'GET',
+      '/v1/financial_connections/transactions',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieves the details of a Financial Connections Transaction
    */
@@ -28,16 +29,13 @@ export class TransactionResource extends StripeResource {
     id: string,
     params?: FinancialConnections.TransactionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Transaction>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Transaction>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/financial_connections/transactions/{transaction}',
-    }).call(this, ...args);
+  ): Promise<Response<Transaction>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/financial_connections/transactions/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Transaction {

@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {Configuration} from './Configurations.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class SessionResource extends StripeResource {
   /**
@@ -12,13 +11,13 @@ export class SessionResource extends StripeResource {
   create(
     params?: BillingPortal.SessionCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Session>>;
-  create(options?: RequestOptions): Promise<Response<Session>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing_portal/sessions',
-    }).call(this, ...args);
+  ): Promise<Response<Session>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/billing_portal/sessions',
+      params,
+      options
+    ) as any;
   }
 }
 export interface Session {

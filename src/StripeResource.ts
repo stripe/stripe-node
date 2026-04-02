@@ -1,39 +1,30 @@
 import {
-  getDataFromArgs,
-  getOptionsFromArgs,
   makeURLInterpolator,
-  protoExtend,
+  processOptions,
   queryStringifyRequestData,
 } from './utils.js';
-import {stripeMethod} from './StripeMethod.js';
 import {
   StripeResourceObject,
-  RequestArgs,
-  MethodSpec,
+  MakeRequestSpec,
   RequestData,
-  RequestOpts,
   UrlInterpolator,
 } from './Types.js';
 import {HttpClientResponseInterface} from './net/HttpClient.js';
 import {coerceV2RequestData, coerceV2ResponseData} from './V2Coercion.js';
+import {makeAutoPaginationMethods} from './autoPagination.js';
 import {Stripe} from './stripe.core.js';
+import {RequestOptions} from './lib.js';
 
 /**
  * Encapsulates request logic for a Stripe Resource
  */
 class StripeResource implements StripeResourceObject {
-  // Static properties
-  static extend = protoExtend;
-  static method = stripeMethod;
   static MAX_BUFFERED_REQUEST_METRICS = 100;
 
   // Instance properties
   _stripe!: Stripe;
-  // Note: path is declared without an initializer so that subclasses created via
-  // protoExtend can set it on the prototype and it won't be shadowed by an instance property
   path!: UrlInterpolator;
   resourcePath = '';
-  // Methods that don't use the API's default '/v1' path can override it with this setting.
   basePath!: UrlInterpolator;
 
   // Function to override the default data processor. This allows full control
@@ -41,10 +32,6 @@ class StripeResource implements StripeResourceObject {
   // body. This is useful for non-standard HTTP requests. The function should
   // take method name, data, and headers as arguments.
   requestDataProcessor: any = null;
-
-  // Function to add a validation checks before sending the request, errors should
-  // be thrown, and they will be passed to the callback/promise.
-  validateRequest: any = null;
 
   constructor(stripe: Stripe, deprecatedUrlData?: never) {
     this._stripe = stripe;
@@ -55,7 +42,7 @@ class StripeResource implements StripeResourceObject {
     }
 
     this.basePath = makeURLInterpolator(
-      // @ts-ignore changing type of basePath
+      // @ts-expect-error changing type of basePath
       this.basePath || stripe.getApiField('basePath')
     );
     // @ts-ignore changing type of path - path comes from prototype as string, convert to interpolator
@@ -68,154 +55,44 @@ class StripeResource implements StripeResourceObject {
 
   initialize(_stripe?: Stripe, _deprecatedUrlData?: never): void {}
 
-  createFullPath(
-    commandPath: string | ((urlData: Record<string, unknown>) => string),
-    urlData: Record<string, unknown>
-  ): string {
-    const urlParts = [this.basePath(urlData), this.path(urlData)];
-
-    if (typeof commandPath === 'function') {
-      const computedCommandPath = commandPath(urlData);
-      // If we have no actual command path, we just omit it to avoid adding a
-      // trailing slash. This is important for top-level listing requests, which
-      // do not have a command path.
-      if (computedCommandPath) {
-        urlParts.push(computedCommandPath);
-      }
-    } else {
-      urlParts.push(commandPath);
-    }
-
-    return this._joinUrlParts(urlParts);
-  }
-
-  // Creates a relative resource path with symbols left in (unlike
-  // createFullPath which takes some data to replace them with). For example it
-  // might produce: /invoices/{id}
-  createResourcePathWithSymbols(
-    pathWithSymbols: string | null | undefined
-  ): string {
-    // If there is no path beyond the resource path, we want to produce just
-    // /<resource path> rather than /<resource path>/.
-    if (pathWithSymbols) {
-      return `/${this._joinUrlParts([this.resourcePath, pathWithSymbols])}`;
-    } else {
-      return `/${this.resourcePath}`;
-    }
-  }
-
-  _joinUrlParts(parts: Array<string>): string {
-    // Replace any accidentally doubled up slashes. This previously used
-    // path.join, which would do this as well. Unfortunately we need to do this
-    // as the functions for creating paths are technically part of the public
-    // interface and so we need to preserve backwards compatibility.
-    return parts.join('/').replace(/\/{2,}/g, '/');
-  }
-
-  // eslint-disable-next-line complexity
-  _getRequestOpts(
-    requestArgs: RequestArgs,
-    spec: MethodSpec,
-    overrideData: RequestData
-  ): RequestOpts {
-    // Extract spec values with defaults.
-    const requestMethod = (spec.method || 'GET').toUpperCase();
-    const usage = spec.usage || [];
-    const urlParams = spec.urlParams || [];
-    const encode = spec.encode || ((data): RequestData => data);
-
-    const isUsingFullPath = !!spec.fullPath;
-    const commandPath: UrlInterpolator = makeURLInterpolator(
-      isUsingFullPath ? spec.fullPath ?? '' : spec.path || ''
-    );
-    // When using fullPath, we ignore the resource path as it should already be
-    // fully qualified.
-    const path = isUsingFullPath
-      ? spec.fullPath
-      : this.createResourcePathWithSymbols(spec.path ?? null);
-
-    // Don't mutate args externally.
-    const args: RequestArgs = [].slice.call(requestArgs);
-
-    // Generate and validate url params.
-    const urlData = urlParams.reduce<RequestData>((urlData, param) => {
-      const arg = args.shift();
-      if (typeof arg !== 'string') {
-        throw new Error(
-          `Stripe: Argument "${param}" must be a string, but got: ${arg} (on API request to \`${requestMethod} ${path}\`)`
-        );
-      }
-
-      urlData[param] = arg;
-      return urlData;
-    }, {});
-
-    // Pull request data and options (headers, auth) from args.
-    const dataFromArgs = getDataFromArgs(args);
-    const data = encode(Object.assign({}, dataFromArgs, overrideData));
-    const options = getOptionsFromArgs(args);
-    const apiBase = options.apiBase || spec.apiBase;
-    const host = apiBase ? this._stripe.resolveBaseAddress(apiBase) : null;
-    const streaming = !!spec.streaming || !!options.streaming;
-    // Validate that there are no more args.
-    if (args.filter((x) => x != null).length) {
-      throw new Error(
-        `Stripe: Unknown arguments (${args}). Did you mean to pass an options object? See https://github.com/stripe/stripe-node/wiki/Passing-Options. (on API request to ${requestMethod} \`${path}\`)`
-      );
-    }
-
-    // When using full path, we can just invoke the URL interpolator directly
-    // as we don't need to use the resource to create a full path.
-    const requestPath = isUsingFullPath
-      ? commandPath(urlData)
-      : this.createFullPath(commandPath, urlData);
-
-    const headers = Object.assign(options.headers, spec.headers);
-
-    if (spec.validator) {
-      spec.validator(data, {headers});
-    }
-
-    const dataInQuery = spec.method === 'GET' || spec.method === 'DELETE';
-    const bodyData = dataInQuery ? null : data;
-    const queryData = dataInQuery ? data : {};
-
-    return {
-      requestMethod,
-      requestPath,
-      bodyData,
-      queryData,
-      authenticator: options.authenticator ?? null,
-      headers,
-      host: host ?? null,
-      streaming,
-      settings: options.settings,
-      usage,
-    };
-  }
-
   _makeRequest(
-    requestArgs: RequestArgs,
-    spec: MethodSpec,
-    overrideData: RequestData
+    method: string,
+    path: string,
+    params: RequestData | undefined,
+    options: RequestOptions | undefined,
+    spec?: MakeRequestSpec
   ): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      let opts: RequestOpts;
-      try {
-        opts = this._getRequestOpts(requestArgs, spec, overrideData);
-      } catch (err) {
-        reject(err);
-        return;
+    const requestMethod = method.toUpperCase();
+    const encode = spec?.encode || ((data: RequestData): RequestData => data);
+    const data = encode(params ? {...params} : {});
+    const processed = processOptions(options);
+    const apiBase = processed.apiBase || spec?.apiBase || null;
+    const host = apiBase ? this._stripe.resolveBaseAddress(apiBase) : null;
+    const streaming = processed.streaming || !!spec?.streaming;
+    const headers = Object.assign(processed.headers, spec?.headers);
+    const usage = spec?.usage || [];
+
+    const dataInQuery = requestMethod === 'GET' || requestMethod === 'DELETE';
+    let bodyData: RequestData | null = dataInQuery ? null : data;
+    const queryData: RequestData = dataInQuery ? data : {};
+
+    try {
+      if (spec?.validator) {
+        spec.validator(data, {headers});
       }
 
-      // Coerce int64_string/decimal_string fields in request body: number/Decimal → string
-      if (spec.requestSchema && opts.bodyData) {
-        opts.bodyData = coerceV2RequestData(
-          opts.bodyData,
+      // Coerce int64_string/decimal_string fields in request body
+      if (spec?.requestSchema && bodyData) {
+        bodyData = coerceV2RequestData(
+          bodyData,
           spec.requestSchema
         ) as RequestData;
       }
+    } catch (err) {
+      return Promise.reject(err);
+    }
 
+    const innerPromise = new Promise<any>((resolve, reject) => {
       function requestCallback(
         err: any,
         response: HttpClientResponseInterface
@@ -223,13 +100,12 @@ class StripeResource implements StripeResourceObject {
         if (err) {
           reject(err);
         } else {
-          // Coerce int64_string/decimal_string fields in response: string → bigint/Decimal
           try {
-            if (spec.responseSchema) {
+            if (spec?.responseSchema) {
               coerceV2ResponseData(response, spec.responseSchema);
             }
             resolve(
-              spec.transformResponseData
+              spec?.transformResponseData
                 ? spec.transformResponseData(response)
                 : response
             );
@@ -239,31 +115,47 @@ class StripeResource implements StripeResourceObject {
         }
       }
 
-      const emptyQuery = Object.keys(opts.queryData).length === 0;
-      const path = [
-        opts.requestPath,
+      const emptyQuery = Object.keys(queryData).length === 0;
+      const fullPath = [
+        path,
         emptyQuery ? '' : '?',
-        queryStringifyRequestData(opts.queryData),
+        queryStringifyRequestData(queryData),
       ].join('');
 
-      const {headers, settings} = opts;
-
       this._stripe._requestSender._request(
-        opts.requestMethod,
-        opts.host,
-        path,
-        opts.bodyData,
-        opts.authenticator,
+        requestMethod,
+        host,
+        fullPath,
+        bodyData,
+        processed.authenticator,
         {
           headers,
-          settings,
-          streaming: opts.streaming,
+          settings: processed.settings,
+          streaming,
         },
-        opts.usage,
+        usage,
         requestCallback,
         this.requestDataProcessor?.bind(this)
       );
     });
+
+    // Attach auto-pagination methods for list/search endpoints
+    if (spec?.methodType) {
+      Object.assign(
+        innerPromise,
+        makeAutoPaginationMethods(
+          this,
+          params ? {...params} : {},
+          options,
+          requestMethod,
+          path,
+          spec,
+          innerPromise
+        )
+      );
+    }
+
+    return innerPromise;
   }
 }
 
