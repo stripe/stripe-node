@@ -5,6 +5,7 @@ import {GrantedToken, GrantedTokenResource} from './GrantedTokens.js';
 import {IssuedToken} from './IssuedTokens.js';
 
 export {GrantedToken} from './GrantedTokens.js';
+export {IssuedToken} from './IssuedTokens.js';
 
 export class SharedPayment {
   grantedTokens: GrantedTokenResource;

@@ -15,6 +15,9 @@ export {Authorization} from './Authorizations.js';
 export {Institution} from './Institutions.js';
 export {Session} from './Sessions.js';
 export {Transaction} from './Transactions.js';
+export {AccountOwner} from './AccountOwners.js';
+export {AccountOwnership} from './AccountOwnerships.js';
+export {AccountInferredBalance} from './AccountInferredBalances.js';
 
 export class FinancialConnections {
   accounts: AccountResource;

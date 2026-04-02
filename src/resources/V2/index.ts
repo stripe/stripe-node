@@ -14,6 +14,10 @@ import {Reporting} from './Reporting/index.js';
 import {Tax} from './Tax/index.js';
 import {TestHelpers} from './TestHelpers/index.js';
 
+export {DeletedObject} from './DeletedObject.js';
+export {FinancialAddressCreditSimulation} from './FinancialAddressCreditSimulations.js';
+export {FinancialAddressGeneratedMicrodeposits} from './FinancialAddressGeneratedMicrodeposits.js';
+
 export class V2 {
   billing: Billing;
   core: Core;

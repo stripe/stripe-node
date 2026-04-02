@@ -18,6 +18,8 @@ export {Location} from './Locations.js';
 export {Registration} from './Registrations.js';
 export {Settings} from './Settings.js';
 export {Transaction} from './Transactions.js';
+export {CalculationLineItem} from './CalculationLineItems.js';
+export {TransactionLineItem} from './TransactionLineItems.js';
 
 export class Tax {
   associations: AssociationResource;

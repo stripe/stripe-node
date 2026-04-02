@@ -10,6 +10,7 @@ import {ActiveEntitlementSummary} from './ActiveEntitlementSummaries.js';
 
 export {ActiveEntitlement} from './ActiveEntitlements.js';
 export {Feature} from './Features.js';
+export {ActiveEntitlementSummary} from './ActiveEntitlementSummaries.js';
 
 export class Entitlements {
   activeEntitlements: ActiveEntitlementResource;

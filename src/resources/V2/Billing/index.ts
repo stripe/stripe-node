@@ -67,6 +67,16 @@ export {Profile} from './Profiles.js';
 export {RateCard} from './RateCards.js';
 export {RateCardSubscription} from './RateCardSubscriptions.js';
 export {ServiceAction} from './ServiceActions.js';
+export {BillSettingVersion} from './BillSettingVersions.js';
+export {CadenceSpendModifier} from './CadenceSpendModifiers.js';
+export {CollectionSettingVersion} from './CollectionSettingVersions.js';
+export {IntentAction} from './IntentActions.js';
+export {LicenseFeeVersion} from './LicenseFeeVersions.js';
+export {PricingPlanComponent} from './PricingPlanComponents.js';
+export {PricingPlanVersion} from './PricingPlanVersions.js';
+export {RateCardCustomPricingUnitOverageRate} from './RateCardCustomPricingUnitOverageRates.js';
+export {RateCardRate} from './RateCardRates.js';
+export {RateCardVersion} from './RateCardVersions.js';
 
 export class Billing {
   billSettings: BillSettingResource;
