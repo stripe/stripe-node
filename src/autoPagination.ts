@@ -323,6 +323,17 @@ function getDoneCallback(args: Array<any>): IterationDoneCallback | null {
   return onDone;
 }
 
+/**
+ * We allow four forms of the `onItem` callback (the middle two being equivalent),
+ *
+ *   1. `.autoPagingEach((item) => { doSomething(item); return false; });`
+ *   2. `.autoPagingEach(async (item) => { await doSomething(item); return false; });`
+ *   3. `.autoPagingEach((item) => doSomething(item).then(() => false));`
+ *   4. `.autoPagingEach((item, next) => { doSomething(item); next(false); });`
+ *
+ * In addition to standard validation, this helper
+ * coalesces the former forms into the latter form.
+ */
 function getItemCallback<T>(
   args: Array<any>
 ): IterationItemCallback<T> | undefined {
@@ -347,6 +358,10 @@ function getItemCallback<T>(
     );
   }
 
+  // This magically handles all three of these usecases (the latter two being functionally identical):
+  // 1. `.autoPagingEach((item) => { doSomething(item); return false; });`
+  // 2. `.autoPagingEach(async (item) => { await doSomething(item); return false; });`
+  // 3. `.autoPagingEach((item) => doSomething(item).then(() => false));`
   return function _onItem(item, next): void {
     const shouldContinue = onItem(item);
     next(shouldContinue);
@@ -450,6 +465,9 @@ function wrapAsyncIteratorWithCallback<T>(
 
       const item = iterResult.value;
       return new Promise((next) => {
+        // Bit confusing, perhaps; we pass a `resolve` fn
+        // to the user, so they can decide when and if to continue.
+        // They can return false, or a promise which resolves to false, to break.
         onItem(item, next);
       }).then((shouldContinue) => {
         if (shouldContinue === false) {
