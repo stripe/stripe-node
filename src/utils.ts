@@ -1,10 +1,8 @@
-import {type RequestOptions} from './lib.js';
+import {RequestOptions} from './lib.js';
 import {
   BaseAddress,
   RequestData,
   UrlInterpolator,
-  RequestArgs,
-  StripeResourceObject,
   RequestHeaders,
   MultipartRequestData,
   RequestAuthenticator,

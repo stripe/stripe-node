@@ -3,7 +3,6 @@ import {Agent} from 'http';
 import {ApiVersion} from './apiVersion.js';
 import {HttpClient} from './net/HttpClient.js';
 import {StripeContext} from './StripeContext.js';
-import {Stripe} from '../src/stripe.core.js';
 
 export declare class StripeResource {
   static MAX_BUFFERED_REQUEST_METRICS: number;
