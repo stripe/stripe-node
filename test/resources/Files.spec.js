@@ -21,7 +21,7 @@ describe('Files Resource', () => {
     });
 
     it('Sends the correct request [with specified auth]', () => {
-      stripe.files.retrieve('fil_12345', TEST_AUTH_KEY);
+      stripe.files.retrieve('fil_12345', undefined, {apiKey: TEST_AUTH_KEY});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/files/fil_12345',
@@ -80,7 +80,7 @@ describe('Files Resource', () => {
           },
           file_link_data: {create: true},
         },
-        TEST_AUTH_KEY
+        {apiKey: TEST_AUTH_KEY}
       );
 
       expect(stripe.LAST_REQUEST).to.deep.property('host', 'files.stripe.com');
@@ -128,7 +128,7 @@ describe('Files Resource', () => {
             },
             file_link_data: {create: true},
           },
-          TEST_AUTH_KEY
+          {apiKey: TEST_AUTH_KEY}
         )
         .then(() => {
           expect(stripe.LAST_REQUEST).to.deep.property(

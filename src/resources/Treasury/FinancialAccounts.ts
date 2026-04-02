@@ -10,7 +10,6 @@ import {
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class FinancialAccountResource extends StripeResource {
   /**
@@ -19,30 +18,31 @@ export class FinancialAccountResource extends StripeResource {
   list(
     params?: Treasury.FinancialAccountListParams,
     options?: RequestOptions
-  ): ApiListPromise<FinancialAccount>;
-  list(options?: RequestOptions): ApiListPromise<FinancialAccount>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/treasury/financial_accounts',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<FinancialAccount> {
+    return this._makeRequest(
+      'GET',
+      '/v1/treasury/financial_accounts',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Creates a new FinancialAccount. Each connected account can have up to three FinancialAccounts by default.
    */
   create(
     params: Treasury.FinancialAccountCreateParams,
     options?: RequestOptions
-  ): Promise<Response<FinancialAccount>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/treasury/financial_accounts',
-    }).call(this, ...args);
+  ): Promise<Response<FinancialAccount>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/treasury/financial_accounts',
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves the details of a FinancialAccount.
    */
@@ -50,18 +50,14 @@ export class FinancialAccountResource extends StripeResource {
     id: string,
     params?: Treasury.FinancialAccountRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<FinancialAccount>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<FinancialAccount>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/treasury/financial_accounts/{financial_account}',
-    }).call(this, ...args);
+  ): Promise<Response<FinancialAccount>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/treasury/financial_accounts/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates the details of a FinancialAccount.
    */
@@ -69,14 +65,14 @@ export class FinancialAccountResource extends StripeResource {
     id: string,
     params?: Treasury.FinancialAccountUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<FinancialAccount>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/treasury/financial_accounts/{financial_account}',
-    }).call(this, ...args);
+  ): Promise<Response<FinancialAccount>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/treasury/financial_accounts/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Closes a FinancialAccount. A FinancialAccount can only be closed if it has a zero balance, has no pending InboundTransfers, and has canceled all attached Issuing cards.
    */
@@ -84,18 +80,14 @@ export class FinancialAccountResource extends StripeResource {
     id: string,
     params?: Treasury.FinancialAccountCloseParams,
     options?: RequestOptions
-  ): Promise<Response<FinancialAccount>>;
-  close(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<FinancialAccount>>;
-  close(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/treasury/financial_accounts/{financial_account}/close',
-    }).call(this, ...args);
+  ): Promise<Response<FinancialAccount>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/treasury/financial_accounts/${id}/close`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates the Features associated with a FinancialAccount.
    */
@@ -103,18 +95,14 @@ export class FinancialAccountResource extends StripeResource {
     id: string,
     params?: Treasury.FinancialAccountUpdateFeaturesParams,
     options?: RequestOptions
-  ): Promise<Response<FinancialAccountFeatures>>;
-  updateFeatures(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<FinancialAccountFeatures>>;
-  updateFeatures(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/treasury/financial_accounts/{financial_account}/features',
-    }).call(this, ...args);
+  ): Promise<Response<FinancialAccountFeatures>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/treasury/financial_accounts/${id}/features`,
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves Features information associated with the FinancialAccount.
    */
@@ -122,16 +110,13 @@ export class FinancialAccountResource extends StripeResource {
     id: string,
     params?: Treasury.FinancialAccountRetrieveFeaturesParams,
     options?: RequestOptions
-  ): Promise<Response<FinancialAccountFeatures>>;
-  retrieveFeatures(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<FinancialAccountFeatures>>;
-  retrieveFeatures(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/treasury/financial_accounts/{financial_account}/features',
-    }).call(this, ...args);
+  ): Promise<Response<FinancialAccountFeatures>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/treasury/financial_accounts/${id}/features`,
+      params,
+      options
+    );
   }
 }
 export interface FinancialAccount {

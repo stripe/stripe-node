@@ -10,7 +10,6 @@ import {
   Metadata,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ShippingRateResource extends StripeResource {
   /**
@@ -19,30 +18,20 @@ export class ShippingRateResource extends StripeResource {
   list(
     params?: ShippingRateListParams,
     options?: RequestOptions
-  ): ApiListPromise<ShippingRate>;
-  list(options?: RequestOptions): ApiListPromise<ShippingRate>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/shipping_rates',
+  ): ApiListPromise<ShippingRate> {
+    return this._makeRequest('GET', '/v1/shipping_rates', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Creates a new shipping rate object.
    */
   create(
     params: ShippingRateCreateParams,
     options?: RequestOptions
-  ): Promise<Response<ShippingRate>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/shipping_rates'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<ShippingRate>> {
+    return this._makeRequest('POST', '/v1/shipping_rates', params, options);
   }
-
   /**
    * Returns the shipping rate object with the given ID.
    */
@@ -50,18 +39,14 @@ export class ShippingRateResource extends StripeResource {
     id: string,
     params?: ShippingRateRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ShippingRate>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ShippingRate>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/shipping_rates/{shipping_rate_token}',
-    }).call(this, ...args);
+  ): Promise<Response<ShippingRate>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/shipping_rates/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates an existing shipping rate object.
    */
@@ -69,12 +54,13 @@ export class ShippingRateResource extends StripeResource {
     id: string,
     params?: ShippingRateUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<ShippingRate>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/shipping_rates/{shipping_rate_token}',
-    }).call(this, ...args);
+  ): Promise<Response<ShippingRate>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/shipping_rates/${id}`,
+      params,
+      options
+    );
   }
 }
 export interface ShippingRate {

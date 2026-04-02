@@ -28,7 +28,6 @@ import {
   ApiList,
   ApiSearchResultPromise,
 } from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CustomerResource extends StripeResource {
   /**
@@ -38,15 +37,9 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedCustomer>>;
-  del(id: string, options?: RequestOptions): Promise<Response<DeletedCustomer>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/customers/{customer}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedCustomer>> {
+    return this._makeRequest('DELETE', `/v1/customers/${id}`, params, options);
   }
-
   /**
    * Retrieves a Customer object.
    */
@@ -54,18 +47,9 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Customer | DeletedCustomer>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Customer | DeletedCustomer>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/customers/{customer}',
-    }).call(this, ...args);
+  ): Promise<Response<Customer | DeletedCustomer>> {
+    return this._makeRequest('GET', `/v1/customers/${id}`, params, options);
   }
-
   /**
    * Updates the specified customer by setting the values of the parameters passed. Any parameters not provided are left unchanged. For example, if you pass the source parameter, that becomes the customer's active source (such as a card) to be used for all charges in the future. When you update a customer to a new valid card source by passing the source parameter: for each of the customer's current subscriptions, if the subscription bills automatically and is in the past_due state, then the latest open invoice for the subscription with automatic collection enabled is retried. This retry doesn't count as an automatic retry, and doesn't affect the next regularly scheduled payment for the invoice. Changing the default_source for a customer doesn't trigger this behavior.
    *
@@ -75,11 +59,8 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Customer>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/customers/{customer}',
+  ): Promise<Response<Customer>> {
+    return this._makeRequest('POST', `/v1/customers/${id}`, params, options, {
       responseSchema: {
         kind: 'object',
         fields: {
@@ -189,9 +170,8 @@ export class CustomerResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Removes the currently applied discount on a customer.
    */
@@ -199,30 +179,22 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerDeleteDiscountParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedDiscount>>;
-  deleteDiscount(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<DeletedDiscount>>;
-  deleteDiscount(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/customers/{customer}/discount',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedDiscount>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/customers/${id}/discount`,
+      params,
+      options
+    );
   }
-
   /**
    * Returns a list of your customers. The customers are returned sorted by creation date, with the most recent customers appearing first.
    */
   list(
     params?: CustomerListParams,
     options?: RequestOptions
-  ): ApiListPromise<Customer>;
-  list(options?: RequestOptions): ApiListPromise<Customer>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/customers',
+  ): ApiListPromise<Customer> {
+    return this._makeRequest('GET', '/v1/customers', params, options, {
       methodType: 'list',
       responseSchema: {
         kind: 'object',
@@ -345,21 +317,16 @@ export class CustomerResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Creates a new customer object.
    */
   create(
     params?: CustomerCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Customer>>;
-  create(options?: RequestOptions): Promise<Response<Customer>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/customers',
+  ): Promise<Response<Customer>> {
+    return this._makeRequest('POST', '/v1/customers', params, options, {
       responseSchema: {
         kind: 'object',
         fields: {
@@ -469,9 +436,8 @@ export class CustomerResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Search for customers you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
    * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
@@ -481,11 +447,8 @@ export class CustomerResource extends StripeResource {
   search(
     params: CustomerSearchParams,
     options?: RequestOptions
-  ): ApiSearchResultPromise<Customer>;
-  search(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/customers/search',
+  ): ApiSearchResultPromise<Customer> {
+    return this._makeRequest('GET', '/v1/customers/search', params, options, {
       methodType: 'search',
       responseSchema: {
         kind: 'object',
@@ -608,9 +571,8 @@ export class CustomerResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Returns a list of transactions that updated the customer's [balances](https://docs.stripe.com/docs/billing/customer/balance).
    */
@@ -618,19 +580,17 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerListBalanceTransactionsParams,
     options?: RequestOptions
-  ): ApiListPromise<CustomerBalanceTransaction>;
-  listBalanceTransactions(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<CustomerBalanceTransaction>;
-  listBalanceTransactions(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/customers/{customer}/balance_transactions',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<CustomerBalanceTransaction> {
+    return this._makeRequest(
+      'GET',
+      `/v1/customers/${id}/balance_transactions`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Creates an immutable transaction that updates the customer's credit [balance](https://docs.stripe.com/docs/billing/customer/balance).
    */
@@ -638,14 +598,14 @@ export class CustomerResource extends StripeResource {
     id: string,
     params: CustomerCreateBalanceTransactionParams,
     options?: RequestOptions
-  ): Promise<Response<CustomerBalanceTransaction>>;
-  createBalanceTransaction(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/customers/{customer}/balance_transactions',
-    }).call(this, ...args);
+  ): Promise<Response<CustomerBalanceTransaction>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/customers/${id}/balance_transactions`,
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves a specific customer balance transaction that updated the customer's [balances](https://docs.stripe.com/docs/billing/customer/balance).
    */
@@ -654,19 +614,14 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerRetrieveBalanceTransactionParams,
     options?: RequestOptions
-  ): Promise<Response<CustomerBalanceTransaction>>;
-  retrieveBalanceTransaction(
-    customerId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CustomerBalanceTransaction>>;
-  retrieveBalanceTransaction(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/customers/{customer}/balance_transactions/{transaction}',
-    }).call(this, ...args);
+  ): Promise<Response<CustomerBalanceTransaction>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/customers/${customerId}/balance_transactions/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Most credit balance transaction fields are immutable, but you may update its description and metadata.
    */
@@ -675,19 +630,14 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerUpdateBalanceTransactionParams,
     options?: RequestOptions
-  ): Promise<Response<CustomerBalanceTransaction>>;
-  updateBalanceTransaction(
-    customerId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CustomerBalanceTransaction>>;
-  updateBalanceTransaction(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/customers/{customer}/balance_transactions/{transaction}',
-    }).call(this, ...args);
+  ): Promise<Response<CustomerBalanceTransaction>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/customers/${customerId}/balance_transactions/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves a customer's cash balance.
    */
@@ -695,18 +645,14 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerRetrieveCashBalanceParams,
     options?: RequestOptions
-  ): Promise<Response<CashBalance>>;
-  retrieveCashBalance(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CashBalance>>;
-  retrieveCashBalance(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/customers/{customer}/cash_balance',
-    }).call(this, ...args);
+  ): Promise<Response<CashBalance>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/customers/${id}/cash_balance`,
+      params,
+      options
+    );
   }
-
   /**
    * Changes the settings on a customer's cash balance.
    */
@@ -714,18 +660,14 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerUpdateCashBalanceParams,
     options?: RequestOptions
-  ): Promise<Response<CashBalance>>;
-  updateCashBalance(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CashBalance>>;
-  updateCashBalance(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/customers/{customer}/cash_balance',
-    }).call(this, ...args);
+  ): Promise<Response<CashBalance>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/customers/${id}/cash_balance`,
+      params,
+      options
+    );
   }
-
   /**
    * Returns a list of transactions that modified the customer's [cash balance](https://docs.stripe.com/docs/payments/customer-balance).
    */
@@ -733,19 +675,17 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerListCashBalanceTransactionsParams,
     options?: RequestOptions
-  ): ApiListPromise<CustomerCashBalanceTransaction>;
-  listCashBalanceTransactions(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<CustomerCashBalanceTransaction>;
-  listCashBalanceTransactions(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/customers/{customer}/cash_balance_transactions',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<CustomerCashBalanceTransaction> {
+    return this._makeRequest(
+      'GET',
+      `/v1/customers/${id}/cash_balance_transactions`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Retrieves a specific cash balance transaction, which updated the customer's [cash balance](https://docs.stripe.com/docs/payments/customer-balance).
    */
@@ -754,20 +694,14 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerRetrieveCashBalanceTransactionParams,
     options?: RequestOptions
-  ): Promise<Response<CustomerCashBalanceTransaction>>;
-  retrieveCashBalanceTransaction(
-    customerId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CustomerCashBalanceTransaction>>;
-  retrieveCashBalanceTransaction(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath:
-        '/v1/customers/{customer}/cash_balance_transactions/{transaction}',
-    }).call(this, ...args);
+  ): Promise<Response<CustomerCashBalanceTransaction>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/customers/${customerId}/cash_balance_transactions/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Retrieve funding instructions for a customer cash balance. If funding instructions do not yet exist for the customer, new
    * funding instructions will be created. If funding instructions have already been created for a given customer, the same
@@ -777,14 +711,14 @@ export class CustomerResource extends StripeResource {
     id: string,
     params: CustomerCreateFundingInstructionsParams,
     options?: RequestOptions
-  ): Promise<Response<FundingInstructions>>;
-  createFundingInstructions(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/customers/{customer}/funding_instructions',
-    }).call(this, ...args);
+  ): Promise<Response<FundingInstructions>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/customers/${id}/funding_instructions`,
+      params,
+      options
+    );
   }
-
   /**
    * Returns a list of PaymentMethods for a given Customer
    */
@@ -792,19 +726,17 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerListPaymentMethodsParams,
     options?: RequestOptions
-  ): ApiListPromise<PaymentMethod>;
-  listPaymentMethods(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<PaymentMethod>;
-  listPaymentMethods(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/customers/{customer}/payment_methods',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<PaymentMethod> {
+    return this._makeRequest(
+      'GET',
+      `/v1/customers/${id}/payment_methods`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Retrieves a PaymentMethod object for a given Customer.
    */
@@ -813,19 +745,14 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerRetrievePaymentMethodParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethod>>;
-  retrievePaymentMethod(
-    customerId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentMethod>>;
-  retrievePaymentMethod(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/customers/{customer}/payment_methods/{payment_method}',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentMethod>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/customers/${customerId}/payment_methods/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * List sources for a specified customer.
    */
@@ -833,19 +760,17 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerListSourcesParams,
     options?: RequestOptions
-  ): ApiListPromise<CustomerSource>;
-  listSources(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<CustomerSource>;
-  listSources(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/customers/{customer}/sources',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<CustomerSource> {
+    return this._makeRequest(
+      'GET',
+      `/v1/customers/${id}/sources`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * When you create a new credit card, you must specify a customer or recipient on which to create it.
    *
@@ -857,14 +782,14 @@ export class CustomerResource extends StripeResource {
     id: string,
     params: CustomerCreateSourceParams,
     options?: RequestOptions
-  ): Promise<Response<CustomerSource>>;
-  createSource(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/customers/{customer}/sources',
-    }).call(this, ...args);
+  ): Promise<Response<CustomerSource>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/customers/${id}/sources`,
+      params,
+      options
+    );
   }
-
   /**
    * Retrieve a specified source for a given customer.
    */
@@ -873,19 +798,14 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerRetrieveSourceParams,
     options?: RequestOptions
-  ): Promise<Response<CustomerSource>>;
-  retrieveSource(
-    customerId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CustomerSource>>;
-  retrieveSource(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/customers/{customer}/sources/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<CustomerSource>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/customers/${customerId}/sources/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Update a specified source for a given customer.
    */
@@ -894,19 +814,14 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerUpdateSourceParams,
     options?: RequestOptions
-  ): Promise<Response<CustomerSource>>;
-  updateSource(
-    customerId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CustomerSource>>;
-  updateSource(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/customers/{customer}/sources/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<CustomerSource>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/customers/${customerId}/sources/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Delete a specified source for a given customer.
    */
@@ -915,19 +830,14 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerDeleteSourceParams,
     options?: RequestOptions
-  ): Promise<Response<CustomerSource | DeletedCustomerSource>>;
-  deleteSource(
-    customerId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CustomerSource | DeletedCustomerSource>>;
-  deleteSource(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/customers/{customer}/sources/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<CustomerSource | DeletedCustomerSource>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/customers/${customerId}/sources/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Verify a specified bank account for a given customer.
    */
@@ -936,19 +846,14 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerVerifySourceParams,
     options?: RequestOptions
-  ): Promise<Response<BankAccount>>;
-  verifySource(
-    customerId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<BankAccount>>;
-  verifySource(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/customers/{customer}/sources/{id}/verify',
-    }).call(this, ...args);
+  ): Promise<Response<BankAccount>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/customers/${customerId}/sources/${id}/verify`,
+      params,
+      options
+    );
   }
-
   /**
    * Deletes an existing tax_id object.
    */
@@ -957,19 +862,14 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerDeleteTaxIdParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedTaxId>>;
-  deleteTaxId(
-    customerId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<DeletedTaxId>>;
-  deleteTaxId(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/customers/{customer}/tax_ids/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedTaxId>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/customers/${customerId}/tax_ids/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves the tax_id object with the given identifier.
    */
@@ -978,19 +878,14 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerRetrieveTaxIdParams,
     options?: RequestOptions
-  ): Promise<Response<TaxId>>;
-  retrieveTaxId(
-    customerId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<TaxId>>;
-  retrieveTaxId(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/customers/{customer}/tax_ids/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<TaxId>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/customers/${customerId}/tax_ids/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Returns a list of tax IDs for a customer.
    */
@@ -998,16 +893,17 @@ export class CustomerResource extends StripeResource {
     id: string,
     params?: CustomerListTaxIdsParams,
     options?: RequestOptions
-  ): ApiListPromise<TaxId>;
-  listTaxIds(id: string, options?: RequestOptions): ApiListPromise<TaxId>;
-  listTaxIds(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/customers/{customer}/tax_ids',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<TaxId> {
+    return this._makeRequest(
+      'GET',
+      `/v1/customers/${id}/tax_ids`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Creates a new tax_id object for a customer.
    */
@@ -1015,12 +911,13 @@ export class CustomerResource extends StripeResource {
     id: string,
     params: CustomerCreateTaxIdParams,
     options?: RequestOptions
-  ): Promise<Response<TaxId>>;
-  createTaxId(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/customers/{customer}/tax_ids',
-    }).call(this, ...args);
+  ): Promise<Response<TaxId>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/customers/${id}/tax_ids`,
+      params,
+      options
+    );
   }
 }
 export interface Customer {

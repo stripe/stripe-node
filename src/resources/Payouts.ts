@@ -12,7 +12,6 @@ import {
   Metadata,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PayoutResource extends StripeResource {
   /**
@@ -21,16 +20,11 @@ export class PayoutResource extends StripeResource {
   list(
     params?: PayoutListParams,
     options?: RequestOptions
-  ): ApiListPromise<Payout>;
-  list(options?: RequestOptions): ApiListPromise<Payout>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payouts',
+  ): ApiListPromise<Payout> {
+    return this._makeRequest('GET', '/v1/payouts', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * To send funds to your own bank account, create a new payout object. Your [Stripe balance](https://docs.stripe.com/api#balance) must cover the payout amount. If it doesn't, you receive an “Insufficient Funds” error.
    *
@@ -41,14 +35,9 @@ export class PayoutResource extends StripeResource {
   create(
     params: PayoutCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Payout>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/payouts'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Payout>> {
+    return this._makeRequest('POST', '/v1/payouts', params, options);
   }
-
   /**
    * Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list. Stripe returns the corresponding payout information.
    */
@@ -56,15 +45,9 @@ export class PayoutResource extends StripeResource {
     id: string,
     params?: PayoutRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Payout>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Payout>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'GET', fullPath: '/v1/payouts/{payout}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Payout>> {
+    return this._makeRequest('GET', `/v1/payouts/${id}`, params, options);
   }
-
   /**
    * Updates the specified payout by setting the values of the parameters you pass. We don't change parameters that you don't provide. This request only accepts the metadata as arguments.
    */
@@ -72,14 +55,9 @@ export class PayoutResource extends StripeResource {
     id: string,
     params?: PayoutUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Payout>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payouts/{payout}',
-    }).call(this, ...args);
+  ): Promise<Response<Payout>> {
+    return this._makeRequest('POST', `/v1/payouts/${id}`, params, options);
   }
-
   /**
    * You can cancel a previously created payout if its status is pending. Stripe refunds the funds to your available balance. You can't cancel automatic Stripe payouts.
    */
@@ -87,15 +65,14 @@ export class PayoutResource extends StripeResource {
     id: string,
     params?: PayoutCancelParams,
     options?: RequestOptions
-  ): Promise<Response<Payout>>;
-  cancel(id: string, options?: RequestOptions): Promise<Response<Payout>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payouts/{payout}/cancel',
-    }).call(this, ...args);
+  ): Promise<Response<Payout>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payouts/${id}/cancel`,
+      params,
+      options
+    );
   }
-
   /**
    * Reverses a payout by debiting the destination bank account. At this time, you can only reverse payouts for connected accounts to US and Canadian bank accounts. If the payout is manual and in the pending status, use /v1/payouts/:id/cancel instead.
    *
@@ -105,13 +82,13 @@ export class PayoutResource extends StripeResource {
     id: string,
     params?: PayoutReverseParams,
     options?: RequestOptions
-  ): Promise<Response<Payout>>;
-  reverse(id: string, options?: RequestOptions): Promise<Response<Payout>>;
-  reverse(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payouts/{payout}/reverse',
-    }).call(this, ...args);
+  ): Promise<Response<Payout>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payouts/${id}/reverse`,
+      params,
+      options
+    );
   }
 }
 export interface Payout {

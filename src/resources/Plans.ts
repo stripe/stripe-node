@@ -11,7 +11,6 @@ import {
   Metadata,
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PlanResource extends StripeResource {
   /**
@@ -21,15 +20,9 @@ export class PlanResource extends StripeResource {
     id: string,
     params?: PlanDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedPlan>>;
-  del(id: string, options?: RequestOptions): Promise<Response<DeletedPlan>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'DELETE', fullPath: '/v1/plans/{plan}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<DeletedPlan>> {
+    return this._makeRequest('DELETE', `/v1/plans/${id}`, params, options);
   }
-
   /**
    * Retrieves the plan with the given ID.
    */
@@ -37,12 +30,8 @@ export class PlanResource extends StripeResource {
     id: string,
     params?: PlanRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Plan>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Plan>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/plans/{plan}',
+  ): Promise<Response<Plan>> {
+    return this._makeRequest('GET', `/v1/plans/${id}`, params, options, {
       responseSchema: {
         kind: 'object',
         fields: {
@@ -65,9 +54,8 @@ export class PlanResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Updates the specified plan by setting the values of the parameters passed. Any parameters not provided are left unchanged. By design, you cannot change a plan's ID, amount, currency, or billing cycle.
    */
@@ -75,11 +63,8 @@ export class PlanResource extends StripeResource {
     id: string,
     params?: PlanUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Plan>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/plans/{plan}',
+  ): Promise<Response<Plan>> {
+    return this._makeRequest('POST', `/v1/plans/${id}`, params, options, {
       responseSchema: {
         kind: 'object',
         fields: {
@@ -102,18 +87,16 @@ export class PlanResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Returns a list of your plans.
    */
-  list(params?: PlanListParams, options?: RequestOptions): ApiListPromise<Plan>;
-  list(options?: RequestOptions): ApiListPromise<Plan>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/plans',
+  list(
+    params?: PlanListParams,
+    options?: RequestOptions
+  ): ApiListPromise<Plan> {
+    return this._makeRequest('GET', '/v1/plans', params, options, {
       methodType: 'list',
       responseSchema: {
         kind: 'object',
@@ -148,20 +131,16 @@ export class PlanResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * You can now model subscriptions more flexibly using the [Prices API](https://docs.stripe.com/api#prices). It replaces the Plans API and is backwards compatible to simplify your migration.
    */
   create(
     params: PlanCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Plan>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/plans',
+  ): Promise<Response<Plan>> {
+    return this._makeRequest('POST', '/v1/plans', params, options, {
       requestSchema: {
         kind: 'object',
         fields: {
@@ -200,7 +179,7 @@ export class PlanResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
 }
 export interface Plan {

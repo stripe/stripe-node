@@ -3,7 +3,6 @@
 import {StripeResource} from '../StripeResource.js';
 import {Emptyable} from '../shared.js';
 import {RequestOptions, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class BalanceSettingResource extends StripeResource {
   /**
@@ -13,15 +12,9 @@ export class BalanceSettingResource extends StripeResource {
   retrieve(
     params?: BalanceSettingsRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<BalanceSettings>>;
-  retrieve(options?: RequestOptions): Promise<Response<BalanceSettings>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'GET', fullPath: '/v1/balance_settings'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<BalanceSettings>> {
+    return this._makeRequest('GET', '/v1/balance_settings', params, options);
   }
-
   /**
    * Updates balance settings for a given connected account.
    *  Related guide: [Making API calls for connected accounts](https://docs.stripe.com/connect/authentication)
@@ -29,12 +22,8 @@ export class BalanceSettingResource extends StripeResource {
   update(
     params?: BalanceSettingsUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<BalanceSettings>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/balance_settings',
-    }).call(this, ...args);
+  ): Promise<Response<BalanceSettings>> {
+    return this._makeRequest('POST', '/v1/balance_settings', params, options);
   }
 }
 export interface BalanceSettings {

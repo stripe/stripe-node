@@ -6,7 +6,6 @@ import {Account} from './Accounts.js';
 import {Application} from './Applications.js';
 import {PaginationParams} from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class TaxIdResource extends StripeResource {
   /**
@@ -16,15 +15,9 @@ export class TaxIdResource extends StripeResource {
     id: string,
     params?: TaxIdDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedTaxId>>;
-  del(id: string, options?: RequestOptions): Promise<Response<DeletedTaxId>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'DELETE', fullPath: '/v1/tax_ids/{id}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<DeletedTaxId>> {
+    return this._makeRequest('DELETE', `/v1/tax_ids/${id}`, params, options);
   }
-
   /**
    * Retrieves an account or customer tax_id object.
    */
@@ -32,43 +25,28 @@ export class TaxIdResource extends StripeResource {
     id: string,
     params?: TaxIdRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<TaxId>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<TaxId>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'GET', fullPath: '/v1/tax_ids/{id}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<TaxId>> {
+    return this._makeRequest('GET', `/v1/tax_ids/${id}`, params, options);
   }
-
   /**
    * Returns a list of tax IDs.
    */
   list(
     params?: TaxIdListParams,
     options?: RequestOptions
-  ): ApiListPromise<TaxId>;
-  list(options?: RequestOptions): ApiListPromise<TaxId>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/tax_ids',
+  ): ApiListPromise<TaxId> {
+    return this._makeRequest('GET', '/v1/tax_ids', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Creates a new account or customer tax_id object.
    */
   create(
     params: TaxIdCreateParams,
     options?: RequestOptions
-  ): Promise<Response<TaxId>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/tax_ids'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<TaxId>> {
+    return this._makeRequest('POST', '/v1/tax_ids', params, options);
   }
 }
 export interface TaxId {

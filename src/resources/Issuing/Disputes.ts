@@ -12,7 +12,6 @@ import {
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class DisputeResource extends StripeResource {
   /**
@@ -21,31 +20,20 @@ export class DisputeResource extends StripeResource {
   list(
     params?: Issuing.DisputeListParams,
     options?: RequestOptions
-  ): ApiListPromise<Dispute>;
-  list(options?: RequestOptions): ApiListPromise<Dispute>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/disputes',
+  ): ApiListPromise<Dispute> {
+    return this._makeRequest('GET', '/v1/issuing/disputes', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Creates an Issuing Dispute object. Individual pieces of evidence within the evidence object are optional at this point. Stripe only validates that required evidence is present during submission. Refer to [Dispute reasons and evidence](https://docs.stripe.com/docs/issuing/purchases/disputes#dispute-reasons-and-evidence) for more details about evidence requirements.
    */
   create(
     params?: Issuing.DisputeCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Dispute>>;
-  create(options?: RequestOptions): Promise<Response<Dispute>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/issuing/disputes',
-    }).call(this, ...args);
+  ): Promise<Response<Dispute>> {
+    return this._makeRequest('POST', '/v1/issuing/disputes', params, options);
   }
-
   /**
    * Retrieves an Issuing Dispute object.
    */
@@ -53,15 +41,14 @@ export class DisputeResource extends StripeResource {
     id: string,
     params?: Issuing.DisputeRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Dispute>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Dispute>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/disputes/{dispute}',
-    }).call(this, ...args);
+  ): Promise<Response<Dispute>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/issuing/disputes/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates the specified Issuing Dispute object by setting the values of the parameters passed. Any parameters not provided will be left unchanged. Properties on the evidence object can be unset by passing in an empty string.
    */
@@ -69,14 +56,14 @@ export class DisputeResource extends StripeResource {
     id: string,
     params?: Issuing.DisputeUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Dispute>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/issuing/disputes/{dispute}',
-    }).call(this, ...args);
+  ): Promise<Response<Dispute>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/issuing/disputes/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Submits an Issuing Dispute to the card network. Stripe validates that all evidence fields required for the dispute's reason are present. For more details, see [Dispute reasons and evidence](https://docs.stripe.com/docs/issuing/purchases/disputes#dispute-reasons-and-evidence).
    */
@@ -84,13 +71,13 @@ export class DisputeResource extends StripeResource {
     id: string,
     params?: Issuing.DisputeSubmitParams,
     options?: RequestOptions
-  ): Promise<Response<Dispute>>;
-  submit(id: string, options?: RequestOptions): Promise<Response<Dispute>>;
-  submit(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/issuing/disputes/{dispute}/submit',
-    }).call(this, ...args);
+  ): Promise<Response<Dispute>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/issuing/disputes/${id}/submit`,
+      params,
+      options
+    );
   }
 }
 export interface Dispute {

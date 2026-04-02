@@ -6,7 +6,6 @@ import {Invoice} from './../Invoices.js';
 import * as TestHelpers from './../TestHelpers/index.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CreditBalanceTransactionResource extends StripeResource {
   /**
@@ -15,16 +14,17 @@ export class CreditBalanceTransactionResource extends StripeResource {
   list(
     params?: Billing.CreditBalanceTransactionListParams,
     options?: RequestOptions
-  ): ApiListPromise<CreditBalanceTransaction>;
-  list(options?: RequestOptions): ApiListPromise<CreditBalanceTransaction>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/credit_balance_transactions',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<CreditBalanceTransaction> {
+    return this._makeRequest(
+      'GET',
+      '/v1/billing/credit_balance_transactions',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Retrieves a credit balance transaction.
    */
@@ -32,16 +32,13 @@ export class CreditBalanceTransactionResource extends StripeResource {
     id: string,
     params?: Billing.CreditBalanceTransactionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<CreditBalanceTransaction>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CreditBalanceTransaction>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/credit_balance_transactions/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<CreditBalanceTransaction>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/billing/credit_balance_transactions/${id}`,
+      params,
+      options
+    );
   }
 }
 export interface CreditBalanceTransaction {

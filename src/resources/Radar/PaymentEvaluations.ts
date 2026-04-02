@@ -4,7 +4,6 @@ import {StripeResource} from '../../StripeResource.js';
 import {PaymentMethod} from './../PaymentMethods.js';
 import {MetadataParam, AddressParam, Metadata, Address} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PaymentEvaluationResource extends StripeResource {
   /**
@@ -13,12 +12,13 @@ export class PaymentEvaluationResource extends StripeResource {
   create(
     params: Radar.PaymentEvaluationCreateParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentEvaluation>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/radar/payment_evaluations',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentEvaluation>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/radar/payment_evaluations',
+      params,
+      options
+    );
   }
 }
 export interface PaymentEvaluation {

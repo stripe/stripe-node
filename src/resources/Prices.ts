@@ -16,7 +16,6 @@ import {
   Response,
   ApiSearchResultPromise,
 } from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PriceResource extends StripeResource {
   /**
@@ -25,12 +24,8 @@ export class PriceResource extends StripeResource {
   list(
     params?: PriceListParams,
     options?: RequestOptions
-  ): ApiListPromise<Price>;
-  list(options?: RequestOptions): ApiListPromise<Price>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/prices',
+  ): ApiListPromise<Price> {
+    return this._makeRequest('GET', '/v1/prices', params, options, {
       methodType: 'list',
       responseSchema: {
         kind: 'object',
@@ -93,20 +88,16 @@ export class PriceResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Creates a new [Price for an existing <a href="https://docs.stripe.com/api/products">Product](https://docs.stripe.com/api/prices). The Price can be recurring or one-time.
    */
   create(
     params: PriceCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Price>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/prices',
+  ): Promise<Response<Price>> {
+    return this._makeRequest('POST', '/v1/prices', params, options, {
       requestSchema: {
         kind: 'object',
         fields: {
@@ -195,9 +186,8 @@ export class PriceResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Retrieves the price with the given ID.
    */
@@ -205,12 +195,8 @@ export class PriceResource extends StripeResource {
     id: string,
     params?: PriceRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Price>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Price>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/prices/{price}',
+  ): Promise<Response<Price>> {
+    return this._makeRequest('GET', `/v1/prices/${id}`, params, options, {
       responseSchema: {
         kind: 'object',
         fields: {
@@ -264,9 +250,8 @@ export class PriceResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Updates the specified price by setting the values of the parameters passed. Any parameters not provided are left unchanged.
    */
@@ -274,11 +259,8 @@ export class PriceResource extends StripeResource {
     id: string,
     params?: PriceUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Price>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/prices/{price}',
+  ): Promise<Response<Price>> {
+    return this._makeRequest('POST', `/v1/prices/${id}`, params, options, {
       responseSchema: {
         kind: 'object',
         fields: {
@@ -332,9 +314,8 @@ export class PriceResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Search for prices you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
    * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
@@ -344,11 +325,8 @@ export class PriceResource extends StripeResource {
   search(
     params: PriceSearchParams,
     options?: RequestOptions
-  ): ApiSearchResultPromise<Price>;
-  search(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/prices/search',
+  ): ApiSearchResultPromise<Price> {
+    return this._makeRequest('GET', '/v1/prices/search', params, options, {
       methodType: 'search',
       responseSchema: {
         kind: 'object',
@@ -411,7 +389,7 @@ export class PriceResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
 }
 export interface Price {

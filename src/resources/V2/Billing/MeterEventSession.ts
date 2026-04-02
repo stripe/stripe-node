@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class MeterEventSessionResource extends StripeResource {
   /**
@@ -11,13 +10,13 @@ export class MeterEventSessionResource extends StripeResource {
   create(
     params?: V2.Billing.MeterEventSessionCreateParams,
     options?: RequestOptions
-  ): Promise<Response<MeterEventSession>>;
-  create(options?: RequestOptions): Promise<Response<MeterEventSession>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/meter_event_session',
-    }).call(this, ...args);
+  ): Promise<Response<MeterEventSession>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/billing/meter_event_session',
+      params,
+      options
+    );
   }
 }
 export interface MeterEventSession {

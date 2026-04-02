@@ -43,8 +43,6 @@ assert(Stripe.errors.StripeAPIError);
 
 assert(Stripe.StripeResource);
 assert(Stripe.StripeContext);
-assert(Stripe.StripeResource.method);
-assert(Stripe.StripeResource.extend);
 assert(Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
 assert(Stripe.webhooks);

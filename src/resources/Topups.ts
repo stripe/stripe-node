@@ -11,7 +11,6 @@ import {
   Metadata,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class TopupResource extends StripeResource {
   /**
@@ -20,30 +19,20 @@ export class TopupResource extends StripeResource {
   list(
     params?: TopupListParams,
     options?: RequestOptions
-  ): ApiListPromise<Topup>;
-  list(options?: RequestOptions): ApiListPromise<Topup>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/topups',
+  ): ApiListPromise<Topup> {
+    return this._makeRequest('GET', '/v1/topups', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Top up the balance of an account
    */
   create(
     params: TopupCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Topup>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/topups'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Topup>> {
+    return this._makeRequest('POST', '/v1/topups', params, options);
   }
-
   /**
    * Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.
    */
@@ -51,15 +40,9 @@ export class TopupResource extends StripeResource {
     id: string,
     params?: TopupRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Topup>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Topup>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'GET', fullPath: '/v1/topups/{topup}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Topup>> {
+    return this._makeRequest('GET', `/v1/topups/${id}`, params, options);
   }
-
   /**
    * Updates the metadata of a top-up. Other top-up details are not editable by design.
    */
@@ -67,14 +50,9 @@ export class TopupResource extends StripeResource {
     id: string,
     params?: TopupUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Topup>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/topups/{topup}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Topup>> {
+    return this._makeRequest('POST', `/v1/topups/${id}`, params, options);
   }
-
   /**
    * Cancels a top-up. Only pending top-ups can be canceled.
    */
@@ -82,13 +60,13 @@ export class TopupResource extends StripeResource {
     id: string,
     params?: TopupCancelParams,
     options?: RequestOptions
-  ): Promise<Response<Topup>>;
-  cancel(id: string, options?: RequestOptions): Promise<Response<Topup>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/topups/{topup}/cancel',
-    }).call(this, ...args);
+  ): Promise<Response<Topup>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/topups/${id}/cancel`,
+      params,
+      options
+    );
   }
 }
 export interface Topup {

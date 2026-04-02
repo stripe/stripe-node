@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class OnboardingLinkResource extends StripeResource {
   /**
@@ -11,12 +10,13 @@ export class OnboardingLinkResource extends StripeResource {
   create(
     params: Terminal.OnboardingLinkCreateParams,
     options?: RequestOptions
-  ): Promise<Response<OnboardingLink>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/terminal/onboarding_links',
-    }).call(this, ...args);
+  ): Promise<Response<OnboardingLink>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/terminal/onboarding_links',
+      params,
+      options
+    );
   }
 }
 export interface OnboardingLink {

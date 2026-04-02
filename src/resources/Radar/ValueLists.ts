@@ -9,7 +9,6 @@ import {
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise, ApiList} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ValueListResource extends StripeResource {
   /**
@@ -19,18 +18,14 @@ export class ValueListResource extends StripeResource {
     id: string,
     params?: Radar.ValueListDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<Radar.DeletedValueList>>;
-  del(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Radar.DeletedValueList>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/radar/value_lists/{value_list}',
-    }).call(this, ...args);
+  ): Promise<Response<Radar.DeletedValueList>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/radar/value_lists/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves a ValueList object.
    */
@@ -38,15 +33,14 @@ export class ValueListResource extends StripeResource {
     id: string,
     params?: Radar.ValueListRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ValueList>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<ValueList>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/radar/value_lists/{value_list}',
-    }).call(this, ...args);
+  ): Promise<Response<ValueList>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/radar/value_lists/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates a ValueList object by setting the values of the parameters passed. Any parameters not provided will be left unchanged. Note that item_type is immutable.
    */
@@ -54,42 +48,33 @@ export class ValueListResource extends StripeResource {
     id: string,
     params?: Radar.ValueListUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<ValueList>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/radar/value_lists/{value_list}',
-    }).call(this, ...args);
+  ): Promise<Response<ValueList>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/radar/value_lists/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Returns a list of ValueList objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
    */
   list(
     params?: Radar.ValueListListParams,
     options?: RequestOptions
-  ): ApiListPromise<ValueList>;
-  list(options?: RequestOptions): ApiListPromise<ValueList>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/radar/value_lists',
+  ): ApiListPromise<ValueList> {
+    return this._makeRequest('GET', '/v1/radar/value_lists', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Creates a new ValueList object, which can then be referenced in rules.
    */
   create(
     params: Radar.ValueListCreateParams,
     options?: RequestOptions
-  ): Promise<Response<ValueList>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/radar/value_lists',
-    }).call(this, ...args);
+  ): Promise<Response<ValueList>> {
+    return this._makeRequest('POST', '/v1/radar/value_lists', params, options);
   }
 }
 export interface ValueList {

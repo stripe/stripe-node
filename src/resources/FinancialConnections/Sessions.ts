@@ -4,7 +4,6 @@ import {StripeResource} from '../../StripeResource.js';
 import {Account} from './Accounts.js';
 import {Customer} from './../Customers.js';
 import {RequestOptions, Response, ApiList} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class SessionResource extends StripeResource {
   /**
@@ -14,27 +13,27 @@ export class SessionResource extends StripeResource {
     id: string,
     params?: FinancialConnections.SessionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Session>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Session>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/financial_connections/sessions/{session}',
-    }).call(this, ...args);
+  ): Promise<Response<Session>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/financial_connections/sessions/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * To launch the Financial Connections authorization flow, create a Session. The session's client_secret can be used to launch the flow using Stripe.js.
    */
   create(
     params: FinancialConnections.SessionCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Session>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/financial_connections/sessions',
-    }).call(this, ...args);
+  ): Promise<Response<Session>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/financial_connections/sessions',
+      params,
+      options
+    );
   }
 }
 export interface Session {

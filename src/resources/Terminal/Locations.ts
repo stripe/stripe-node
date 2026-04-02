@@ -11,7 +11,6 @@ import {
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class LocationResource extends StripeResource {
   /**
@@ -21,18 +20,14 @@ export class LocationResource extends StripeResource {
     id: string,
     params?: Terminal.LocationDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<Terminal.DeletedLocation>>;
-  del(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Terminal.DeletedLocation>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/terminal/locations/{location}',
-    }).call(this, ...args);
+  ): Promise<Response<Terminal.DeletedLocation>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/terminal/locations/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves a Location object.
    */
@@ -40,18 +35,14 @@ export class LocationResource extends StripeResource {
     id: string,
     params?: Terminal.LocationRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Location | Terminal.DeletedLocation>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Location | Terminal.DeletedLocation>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/terminal/locations/{location}',
-    }).call(this, ...args);
+  ): Promise<Response<Location | Terminal.DeletedLocation>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/terminal/locations/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates a Location object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    */
@@ -59,30 +50,25 @@ export class LocationResource extends StripeResource {
     id: string,
     params?: Terminal.LocationUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Location | Terminal.DeletedLocation>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/terminal/locations/{location}',
-    }).call(this, ...args);
+  ): Promise<Response<Location | Terminal.DeletedLocation>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/terminal/locations/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Returns a list of Location objects.
    */
   list(
     params?: Terminal.LocationListParams,
     options?: RequestOptions
-  ): ApiListPromise<Location>;
-  list(options?: RequestOptions): ApiListPromise<Location>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/terminal/locations',
+  ): ApiListPromise<Location> {
+    return this._makeRequest('GET', '/v1/terminal/locations', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Creates a new Location object.
    * For further details, including which address fields are required in each country, see the [Manage locations](https://docs.stripe.com/docs/terminal/fleet/locations) guide.
@@ -90,13 +76,8 @@ export class LocationResource extends StripeResource {
   create(
     params?: Terminal.LocationCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Location>>;
-  create(options?: RequestOptions): Promise<Response<Location>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/terminal/locations',
-    }).call(this, ...args);
+  ): Promise<Response<Location>> {
+    return this._makeRequest('POST', '/v1/terminal/locations', params, options);
   }
 }
 export interface Location {

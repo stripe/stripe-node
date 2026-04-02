@@ -4,7 +4,6 @@ import {StripeResource} from '../StripeResource.js';
 import {BalanceTransactionSource} from './BalanceTransactionSources.js';
 import {PaginationParams, RangeQueryParam} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class BalanceTransactionResource extends StripeResource {
   /**
@@ -15,16 +14,17 @@ export class BalanceTransactionResource extends StripeResource {
   list(
     params?: BalanceTransactionListParams,
     options?: RequestOptions
-  ): ApiListPromise<BalanceTransaction>;
-  list(options?: RequestOptions): ApiListPromise<BalanceTransaction>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/balance_transactions',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<BalanceTransaction> {
+    return this._makeRequest(
+      'GET',
+      '/v1/balance_transactions',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Retrieves the balance transaction with the given ID.
    *
@@ -34,16 +34,13 @@ export class BalanceTransactionResource extends StripeResource {
     id: string,
     params?: BalanceTransactionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<BalanceTransaction>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<BalanceTransaction>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/balance_transactions/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<BalanceTransaction>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/balance_transactions/${id}`,
+      params,
+      options
+    );
   }
 }
 export interface BalanceTransaction {

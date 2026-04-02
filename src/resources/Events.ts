@@ -3,7 +3,6 @@
 import {StripeResource} from '../StripeResource.js';
 import {PaginationParams, RangeQueryParam} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class EventResource extends StripeResource {
   /**
@@ -12,16 +11,11 @@ export class EventResource extends StripeResource {
   list(
     params?: EventListParams,
     options?: RequestOptions
-  ): ApiListPromise<Event>;
-  list(options?: RequestOptions): ApiListPromise<Event>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/events',
+  ): ApiListPromise<Event> {
+    return this._makeRequest('GET', '/v1/events', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Retrieves the details of an event if it was created in the last 30 days. Supply the unique identifier of the event, which you might have received in a webhook.
    */
@@ -29,13 +23,8 @@ export class EventResource extends StripeResource {
     id: string,
     params?: EventRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Event>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Event>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'GET', fullPath: '/v1/events/{id}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Event>> {
+    return this._makeRequest('GET', `/v1/events/${id}`, params, options);
   }
 }
 export interface EventBase {

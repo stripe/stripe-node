@@ -5,26 +5,7 @@ import {HttpClient} from './net/HttpClient.js';
 import {StripeContext} from './StripeContext.js';
 import {Stripe} from '../src/stripe.core.js';
 
-type StripeResourceClass = typeof StripeResource;
-
-interface StripeResourceExtension<T extends Record<string, unknown>>
-  extends StripeResourceClass {
-  new (stripe: Stripe): StripeResource & T;
-}
-
 export declare class StripeResource {
-  static extend<
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    T extends {[prop: string]: any}
-  >(spec: T): StripeResourceExtension<T>;
-  static method<ResponseObject = Record<string, unknown>>(spec: {
-    method: string;
-    path?: string;
-    fullPath?: string;
-    // Please note, methodType === 'search' is beta functionality and is subject to
-    // change/removal at any time.
-    methodType?: 'list' | 'search';
-  }): (...args: any[]) => Response<ResponseObject>; // eslint-disable-line @typescript-eslint/no-explicit-any
   static MAX_BUFFERED_REQUEST_METRICS: number;
 }
 export type LatestApiVersion = typeof ApiVersion;
@@ -114,7 +95,7 @@ export interface StripeConfig {
   stripeAccount?: string;
 
   /**
-   * An account on whose behalf you wish to make every request. See https://docs.corp.stripe.com/context for more information.
+   * An account on whose behalf you wish to make every request. See https://docs.stripe.com/context for more information.
    */
   stripeContext?: string;
 }
@@ -122,7 +103,7 @@ export interface StripeConfig {
 export interface RequestOptions {
   /**
    * Use a specific API Key for this request.
-   * For Connect, we recommend using `stripeAccount` instead.
+   * For Connect, we recommend using `stripeContext` instead.
    */
   apiKey?: string;
 
@@ -133,11 +114,13 @@ export interface RequestOptions {
 
   /**
    * An account id on whose behalf you wish to make a request.
+   *
+   * NOTE: prefer sending `stripeContext` instead of `stripeAccount` for new code. They're currently identical, but we will eventually discourage and (later) drop support for `stripeAccount`.
    */
   stripeAccount?: string;
 
   /**
-   * An account on whose behalf you wish to make a request. See https://docs.corp.stripe.com/context for more information.
+   * An account on whose behalf you wish to make a request. See https://docs.stripe.com/context for more information.
    */
   stripeContext?: string | StripeContext;
 
@@ -156,6 +139,21 @@ export interface RequestOptions {
    * Specify a timeout for this request in milliseconds.
    */
   timeout?: number;
+
+  /**
+   * Provide a custom authenticator function for this request.
+   */
+  authenticator?: import('./Types.js').RequestAuthenticator;
+
+  /**
+   * Specify additional request headers.
+   */
+  headers?: {[headerName: string]: string};
+
+  /**
+   * Whether to stream the response body.
+   */
+  streaming?: boolean;
 }
 
 export type RawRequestOptions = RequestOptions & {

@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ConnectionTokenResource extends StripeResource {
   /**
@@ -11,13 +10,13 @@ export class ConnectionTokenResource extends StripeResource {
   create(
     params?: Terminal.ConnectionTokenCreateParams,
     options?: RequestOptions
-  ): Promise<Response<ConnectionToken>>;
-  create(options?: RequestOptions): Promise<Response<ConnectionToken>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/terminal/connection_tokens',
-    }).call(this, ...args);
+  ): Promise<Response<ConnectionToken>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/terminal/connection_tokens',
+      params,
+      options
+    );
   }
 }
 export interface ConnectionToken {

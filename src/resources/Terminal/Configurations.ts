@@ -4,7 +4,6 @@ import {StripeResource} from '../../StripeResource.js';
 import {File} from './../Files.js';
 import {Emptyable, PaginationParams} from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ConfigurationResource extends StripeResource {
   /**
@@ -14,18 +13,14 @@ export class ConfigurationResource extends StripeResource {
     id: string,
     params?: Terminal.ConfigurationDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<Terminal.DeletedConfiguration>>;
-  del(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Terminal.DeletedConfiguration>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/terminal/configurations/{configuration}',
-    }).call(this, ...args);
+  ): Promise<Response<Terminal.DeletedConfiguration>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/terminal/configurations/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves a Configuration object.
    */
@@ -33,18 +28,14 @@ export class ConfigurationResource extends StripeResource {
     id: string,
     params?: Terminal.ConfigurationRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Configuration | Terminal.DeletedConfiguration>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Configuration | Terminal.DeletedConfiguration>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/terminal/configurations/{configuration}',
-    }).call(this, ...args);
+  ): Promise<Response<Configuration | Terminal.DeletedConfiguration>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/terminal/configurations/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates a new Configuration object.
    */
@@ -52,43 +43,44 @@ export class ConfigurationResource extends StripeResource {
     id: string,
     params?: Terminal.ConfigurationUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Configuration | Terminal.DeletedConfiguration>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/terminal/configurations/{configuration}',
-    }).call(this, ...args);
+  ): Promise<Response<Configuration | Terminal.DeletedConfiguration>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/terminal/configurations/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Returns a list of Configuration objects.
    */
   list(
     params?: Terminal.ConfigurationListParams,
     options?: RequestOptions
-  ): ApiListPromise<Configuration>;
-  list(options?: RequestOptions): ApiListPromise<Configuration>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/terminal/configurations',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<Configuration> {
+    return this._makeRequest(
+      'GET',
+      '/v1/terminal/configurations',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Creates a new Configuration object.
    */
   create(
     params?: Terminal.ConfigurationCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Configuration>>;
-  create(options?: RequestOptions): Promise<Response<Configuration>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/terminal/configurations',
-    }).call(this, ...args);
+  ): Promise<Response<Configuration>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/terminal/configurations',
+      params,
+      options
+    );
   }
 }
 export interface Configuration {

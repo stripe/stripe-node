@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PhysicalBundleResource extends StripeResource {
   /**
@@ -12,16 +11,17 @@ export class PhysicalBundleResource extends StripeResource {
   list(
     params?: Issuing.PhysicalBundleListParams,
     options?: RequestOptions
-  ): ApiListPromise<PhysicalBundle>;
-  list(options?: RequestOptions): ApiListPromise<PhysicalBundle>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/physical_bundles',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<PhysicalBundle> {
+    return this._makeRequest(
+      'GET',
+      '/v1/issuing/physical_bundles',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Retrieves a physical bundle object.
    */
@@ -29,16 +29,13 @@ export class PhysicalBundleResource extends StripeResource {
     id: string,
     params?: Issuing.PhysicalBundleRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<PhysicalBundle>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PhysicalBundle>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/physical_bundles/{physical_bundle}',
-    }).call(this, ...args);
+  ): Promise<Response<PhysicalBundle>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/issuing/physical_bundles/${id}`,
+      params,
+      options
+    );
   }
 }
 export interface PhysicalBundle {

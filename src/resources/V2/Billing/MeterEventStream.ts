@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class MeterEventStreamResource extends StripeResource {
   /**
@@ -12,13 +11,16 @@ export class MeterEventStreamResource extends StripeResource {
   create(
     params: V2.Billing.MeterEventStreamCreateParams,
     options?: RequestOptions
-  ): Promise<void>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/billing/meter_event_stream',
-      apiBase: 'meter_events',
-    }).call(this, ...args);
+  ): Promise<void> {
+    return this._makeRequest(
+      'POST',
+      '/v2/billing/meter_event_stream',
+      params,
+      options,
+      {
+        apiBase: 'meter_events',
+      }
+    );
   }
 }
 export namespace V2 {

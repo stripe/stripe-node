@@ -13,7 +13,6 @@ import {
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 import {PersonResource} from './Accounts/Persons.js';
 import {PersonTokenResource} from './Accounts/PersonTokens.js';
-const stripeMethod = StripeResource.method;
 import {Stripe} from '../../../stripe.core.js';
 export class AccountResource extends StripeResource {
   persons: PersonResource;
@@ -31,12 +30,8 @@ export class AccountResource extends StripeResource {
   list(
     params?: V2.Core.AccountListParams,
     options?: RequestOptions
-  ): ApiListPromise<Account>;
-  list(options?: RequestOptions): ApiListPromise<Account>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/accounts',
+  ): ApiListPromise<Account> {
+    return this._makeRequest('GET', '/v2/core/accounts', params, options, {
       methodType: 'list',
       responseSchema: {
         kind: 'object',
@@ -65,9 +60,8 @@ export class AccountResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * An Account is a representation of a company, individual or other entity that a user interacts with. Accounts contain identifying information about the entity, and configurations that store the features an account has access to. An account can be configured as any or all of the following configurations: Customer, Merchant and/or Recipient.
    * @throws Stripe.RateLimitError
@@ -75,12 +69,8 @@ export class AccountResource extends StripeResource {
   create(
     params?: V2.Core.AccountCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  create(options?: RequestOptions): Promise<Response<Account>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/accounts',
+  ): Promise<Response<Account>> {
+    return this._makeRequest('POST', '/v2/core/accounts', params, options, {
       requestSchema: {
         kind: 'object',
         fields: {
@@ -119,9 +109,8 @@ export class AccountResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Retrieves the details of an Account.
    * @throws Stripe.RateLimitError
@@ -130,34 +119,35 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: V2.Core.AccountRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Account>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/accounts/{id}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          identity: {
-            kind: 'object',
-            fields: {
-              individual: {
-                kind: 'object',
-                fields: {
-                  relationship: {
-                    kind: 'object',
-                    fields: {percent_ownership: {kind: 'decimal_string'}},
+  ): Promise<Response<Account>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/core/accounts/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            identity: {
+              kind: 'object',
+              fields: {
+                individual: {
+                  kind: 'object',
+                  fields: {
+                    relationship: {
+                      kind: 'object',
+                      fields: {percent_ownership: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    );
   }
-
   /**
    * Updates the details of an Account.
    * @throws Stripe.RateLimitError
@@ -166,52 +156,54 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: V2.Core.AccountUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/accounts/{id}',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          identity: {
-            kind: 'object',
-            fields: {
-              individual: {
-                kind: 'object',
-                fields: {
-                  relationship: {
-                    kind: 'object',
-                    fields: {percent_ownership: {kind: 'decimal_string'}},
+  ): Promise<Response<Account>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/accounts/${id}`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            identity: {
+              kind: 'object',
+              fields: {
+                individual: {
+                  kind: 'object',
+                  fields: {
+                    relationship: {
+                      kind: 'object',
+                      fields: {percent_ownership: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          identity: {
-            kind: 'object',
-            fields: {
-              individual: {
-                kind: 'object',
-                fields: {
-                  relationship: {
-                    kind: 'object',
-                    fields: {percent_ownership: {kind: 'decimal_string'}},
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            identity: {
+              kind: 'object',
+              fields: {
+                individual: {
+                  kind: 'object',
+                  fields: {
+                    relationship: {
+                      kind: 'object',
+                      fields: {percent_ownership: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    );
   }
-
   /**
    * Removes access to the Account and its associated resources. Closed Accounts can no longer be operated on, but limited information can still be retrieved through the API in order to be able to track their history.
    * @throws Stripe.RateLimitError
@@ -220,32 +212,34 @@ export class AccountResource extends StripeResource {
     id: string,
     params?: V2.Core.AccountCloseParams,
     options?: RequestOptions
-  ): Promise<Response<Account>>;
-  close(id: string, options?: RequestOptions): Promise<Response<Account>>;
-  close(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/accounts/{id}/close',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          identity: {
-            kind: 'object',
-            fields: {
-              individual: {
-                kind: 'object',
-                fields: {
-                  relationship: {
-                    kind: 'object',
-                    fields: {percent_ownership: {kind: 'decimal_string'}},
+  ): Promise<Response<Account>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/accounts/${id}/close`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            identity: {
+              kind: 'object',
+              fields: {
+                individual: {
+                  kind: 'object',
+                  fields: {
+                    relationship: {
+                      kind: 'object',
+                      fields: {percent_ownership: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    );
   }
 }
 export interface Account {

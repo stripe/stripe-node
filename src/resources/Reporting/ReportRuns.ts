@@ -4,7 +4,6 @@ import {StripeResource} from '../../StripeResource.js';
 import {File} from './../Files.js';
 import {PaginationParams, RangeQueryParam} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ReportRunResource extends StripeResource {
   /**
@@ -13,30 +12,31 @@ export class ReportRunResource extends StripeResource {
   list(
     params?: Reporting.ReportRunListParams,
     options?: RequestOptions
-  ): ApiListPromise<ReportRun>;
-  list(options?: RequestOptions): ApiListPromise<ReportRun>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/reporting/report_runs',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<ReportRun> {
+    return this._makeRequest(
+      'GET',
+      '/v1/reporting/report_runs',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Creates a new object and begin running the report. (Certain report types require a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
    */
   create(
     params: Reporting.ReportRunCreateParams,
     options?: RequestOptions
-  ): Promise<Response<ReportRun>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/reporting/report_runs',
-    }).call(this, ...args);
+  ): Promise<Response<ReportRun>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/reporting/report_runs',
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves the details of an existing Report Run.
    */
@@ -44,13 +44,13 @@ export class ReportRunResource extends StripeResource {
     id: string,
     params?: Reporting.ReportRunRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ReportRun>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<ReportRun>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/reporting/report_runs/{report_run}',
-    }).call(this, ...args);
+  ): Promise<Response<ReportRun>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/reporting/report_runs/${id}`,
+      params,
+      options
+    );
   }
 }
 export interface ReportRun {

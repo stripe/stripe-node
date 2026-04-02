@@ -11,7 +11,6 @@ import {PaymentIntent} from './PaymentIntents.js';
 import {CustomerSource} from './CustomerSources.js';
 import {PaginationParams, RangeQueryParam} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class SetupAttemptResource extends StripeResource {
   /**
@@ -20,13 +19,10 @@ export class SetupAttemptResource extends StripeResource {
   list(
     params: SetupAttemptListParams,
     options?: RequestOptions
-  ): ApiListPromise<SetupAttempt>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/setup_attempts',
+  ): ApiListPromise<SetupAttempt> {
+    return this._makeRequest('GET', '/v1/setup_attempts', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
 }
 export interface SetupAttempt {

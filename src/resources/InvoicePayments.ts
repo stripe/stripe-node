@@ -7,7 +7,6 @@ import {PaymentIntent} from './PaymentIntents.js';
 import {PaymentRecord} from './PaymentRecords.js';
 import {PaginationParams, RangeQueryParam} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class InvoicePaymentResource extends StripeResource {
   /**
@@ -16,16 +15,11 @@ export class InvoicePaymentResource extends StripeResource {
   list(
     params?: InvoicePaymentListParams,
     options?: RequestOptions
-  ): ApiListPromise<InvoicePayment>;
-  list(options?: RequestOptions): ApiListPromise<InvoicePayment>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/invoice_payments',
+  ): ApiListPromise<InvoicePayment> {
+    return this._makeRequest('GET', '/v1/invoice_payments', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Retrieves the invoice payment with the given ID.
    */
@@ -33,16 +27,13 @@ export class InvoicePaymentResource extends StripeResource {
     id: string,
     params?: InvoicePaymentRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<InvoicePayment>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<InvoicePayment>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/invoice_payments/{invoice_payment}',
-    }).call(this, ...args);
+  ): Promise<Response<InvoicePayment>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/invoice_payments/${id}`,
+      params,
+      options
+    );
   }
 }
 export interface InvoicePayment {

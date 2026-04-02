@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {RequestOptions, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class AccountLinkResource extends StripeResource {
   /**
@@ -11,12 +10,8 @@ export class AccountLinkResource extends StripeResource {
   create(
     params: AccountLinkCreateParams,
     options?: RequestOptions
-  ): Promise<Response<AccountLink>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/account_links'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<AccountLink>> {
+    return this._makeRequest('POST', '/v1/account_links', params, options);
   }
 }
 export interface AccountLink {

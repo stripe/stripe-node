@@ -12,7 +12,6 @@ import {
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CardResource extends StripeResource {
   /**
@@ -21,30 +20,20 @@ export class CardResource extends StripeResource {
   list(
     params?: Issuing.CardListParams,
     options?: RequestOptions
-  ): ApiListPromise<Card>;
-  list(options?: RequestOptions): ApiListPromise<Card>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/cards',
+  ): ApiListPromise<Card> {
+    return this._makeRequest('GET', '/v1/issuing/cards', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Creates an Issuing Card object.
    */
   create(
     params: Issuing.CardCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Card>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/issuing/cards'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Card>> {
+    return this._makeRequest('POST', '/v1/issuing/cards', params, options);
   }
-
   /**
    * Retrieves an Issuing Card object.
    */
@@ -52,15 +41,9 @@ export class CardResource extends StripeResource {
     id: string,
     params?: Issuing.CardRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Card>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Card>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/cards/{card}',
-    }).call(this, ...args);
+  ): Promise<Response<Card>> {
+    return this._makeRequest('GET', `/v1/issuing/cards/${id}`, params, options);
   }
-
   /**
    * Updates the specified Issuing Card object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    */
@@ -68,12 +51,13 @@ export class CardResource extends StripeResource {
     id: string,
     params?: Issuing.CardUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Card>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/issuing/cards/{card}',
-    }).call(this, ...args);
+  ): Promise<Response<Card>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/issuing/cards/${id}`,
+      params,
+      options
+    );
   }
 }
 export interface Card {

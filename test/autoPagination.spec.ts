@@ -5,7 +5,6 @@ import {expect} from 'chai';
 import {makeAutoPaginationMethods} from '../src/autoPagination.js';
 import {StripeResource} from '../src/StripeResource.js';
 import {getMockStripe} from './testUtils.js';
-import {MethodSpec} from '../src/Types.js';
 import {StripeAPIError} from '../src/Error.js';
 
 describe('auto pagination', () => {
@@ -34,11 +33,6 @@ describe('auto pagination', () => {
     const mockPaginationV1List = (pages, initialArgs) => {
       let i = 1;
       const paramsLog = [];
-      const spec = {
-        method: 'GET',
-        fullPath: '/v1/items',
-        methodType: 'list',
-      };
 
       const mockStripe = getMockStripe(
         {},
@@ -59,7 +53,10 @@ describe('auto pagination', () => {
       const paginator = makeAutoPaginationMethods(
         resource,
         initialArgs || {},
-        spec,
+        undefined,
+        'GET',
+        '/v1/items',
+        {methodType: 'list'},
         Promise.resolve({
           data: pages[0].map((id) => ({id})),
           has_more: pages.length > 1,
@@ -611,7 +608,7 @@ describe('auto pagination', () => {
           limit: 5,
           expectedIds: [-1, -2, -3, -4],
           expectedParamsLog: ['?ending_before=-2'],
-          initialArgs: [{ending_before: '0'}],
+          initialArgs: {ending_before: '0'},
         });
       });
 
@@ -621,7 +618,7 @@ describe('auto pagination', () => {
           limit: 5,
           expectedIds: [-1, -2, -3, -4, -5],
           expectedParamsLog: ['?ending_before=-2', '?ending_before=-4'],
-          initialArgs: [{ending_before: '0'}],
+          initialArgs: {ending_before: '0'},
         });
       });
 
@@ -635,7 +632,7 @@ describe('auto pagination', () => {
           limit: 5,
           expectedIds: [-1, -2, -3, -4, -5],
           expectedParamsLog: ['?ending_before=-2', '?ending_before=-4'],
-          initialArgs: [{ending_before: '0'}],
+          initialArgs: {ending_before: '0'},
         });
       });
     });
@@ -645,10 +642,6 @@ describe('auto pagination', () => {
     const mockPaginationV1Search = (pages, initialArgs) => {
       let i = 1;
       const paramsLog = [];
-      const spec = {
-        method: 'GET',
-        methodType: 'search',
-      };
 
       const addNextPage = (props) => {
         const nextPageProperties = {
@@ -681,7 +674,10 @@ describe('auto pagination', () => {
       const paginator = makeAutoPaginationMethods(
         resource,
         initialArgs || {},
-        spec,
+        undefined,
+        'GET',
+        '/v1/search',
+        {methodType: 'search'},
         Promise.resolve(
           addNextPage({
             data: pages[0].map((id) => ({id})),
@@ -750,11 +746,6 @@ describe('auto pagination', () => {
     const mockPaginationV2List = (pages, initialArgs) => {
       let i = 1;
       const paramsLog = [];
-      const spec = {
-        method: 'GET',
-        fullPath: '/v2/items',
-        methodType: 'list',
-      };
 
       const mockStripe = getMockStripe(
         {},
@@ -775,7 +766,10 @@ describe('auto pagination', () => {
       const paginator = makeAutoPaginationMethods(
         resource,
         initialArgs || {},
-        spec,
+        undefined,
+        'GET',
+        '/v2/items',
+        {methodType: 'list'},
         Promise.resolve({
           data: pages[0].ids.map((id) => ({id})),
           next_page_url: pages[0].next_page_url,
@@ -844,12 +838,6 @@ describe('auto pagination', () => {
     });
 
     it('handles firstPagePromise rejection without unhandled promise rejection', async () => {
-      const spec = {
-        method: 'GET',
-        fullPath: '/v2/items',
-        methodType: 'list',
-      };
-
       const mockStripe = getMockStripe({}, () => {});
       const resource = new StripeResource(mockStripe);
 
@@ -866,7 +854,10 @@ describe('auto pagination', () => {
       const paginator = makeAutoPaginationMethods(
         resource,
         {},
-        spec,
+        undefined,
+        'GET',
+        '/v2/items',
+        {methodType: 'list'},
         rejectingPromise
       );
 

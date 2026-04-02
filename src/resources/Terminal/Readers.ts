@@ -14,7 +14,6 @@ import {
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ReaderResource extends StripeResource {
   /**
@@ -24,18 +23,14 @@ export class ReaderResource extends StripeResource {
     id: string,
     params?: Terminal.ReaderDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<Terminal.DeletedReader>>;
-  del(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Terminal.DeletedReader>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/terminal/readers/{reader}',
-    }).call(this, ...args);
+  ): Promise<Response<Terminal.DeletedReader>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/terminal/readers/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves a Reader object.
    */
@@ -43,18 +38,14 @@ export class ReaderResource extends StripeResource {
     id: string,
     params?: Terminal.ReaderRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Reader | Terminal.DeletedReader>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Reader | Terminal.DeletedReader>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/terminal/readers/{reader}',
-    }).call(this, ...args);
+  ): Promise<Response<Reader | Terminal.DeletedReader>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/terminal/readers/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates a Reader object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    */
@@ -62,44 +53,34 @@ export class ReaderResource extends StripeResource {
     id: string,
     params?: Terminal.ReaderUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Reader | Terminal.DeletedReader>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/terminal/readers/{reader}',
-    }).call(this, ...args);
+  ): Promise<Response<Reader | Terminal.DeletedReader>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/terminal/readers/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Returns a list of Reader objects.
    */
   list(
     params?: Terminal.ReaderListParams,
     options?: RequestOptions
-  ): ApiListPromise<Reader>;
-  list(options?: RequestOptions): ApiListPromise<Reader>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/terminal/readers',
+  ): ApiListPromise<Reader> {
+    return this._makeRequest('GET', '/v1/terminal/readers', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Creates a new Reader object.
    */
   create(
     params: Terminal.ReaderCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Reader>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/terminal/readers',
-    }).call(this, ...args);
+  ): Promise<Response<Reader>> {
+    return this._makeRequest('POST', '/v1/terminal/readers', params, options);
   }
-
   /**
    * Cancels the current reader action. See [Programmatic Cancellation](https://docs.stripe.com/docs/terminal/payments/collect-card-payment?terminal-sdk-platform=server-driven#programmatic-cancellation) for more details.
    */
@@ -107,15 +88,14 @@ export class ReaderResource extends StripeResource {
     id: string,
     params?: Terminal.ReaderCancelActionParams,
     options?: RequestOptions
-  ): Promise<Response<Reader>>;
-  cancelAction(id: string, options?: RequestOptions): Promise<Response<Reader>>;
-  cancelAction(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/terminal/readers/{reader}/cancel_action',
-    }).call(this, ...args);
+  ): Promise<Response<Reader>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/terminal/readers/${id}/cancel_action`,
+      params,
+      options
+    );
   }
-
   /**
    * Initiates an [input collection flow](https://docs.stripe.com/docs/terminal/features/collect-inputs) on a Reader to display input forms and collect information from your customers.
    */
@@ -123,14 +103,14 @@ export class ReaderResource extends StripeResource {
     id: string,
     params: Terminal.ReaderCollectInputsParams,
     options?: RequestOptions
-  ): Promise<Response<Reader>>;
-  collectInputs(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/terminal/readers/{reader}/collect_inputs',
-    }).call(this, ...args);
+  ): Promise<Response<Reader>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/terminal/readers/${id}/collect_inputs`,
+      params,
+      options
+    );
   }
-
   /**
    * Initiates a payment flow on a Reader and updates the PaymentIntent with card details before manual confirmation. See [Collecting a Payment method](https://docs.stripe.com/docs/terminal/payments/collect-card-payment?terminal-sdk-platform=server-driven&process=inspect#collect-a-paymentmethod) for more details.
    */
@@ -138,14 +118,14 @@ export class ReaderResource extends StripeResource {
     id: string,
     params: Terminal.ReaderCollectPaymentMethodParams,
     options?: RequestOptions
-  ): Promise<Response<Reader>>;
-  collectPaymentMethod(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/terminal/readers/{reader}/collect_payment_method',
-    }).call(this, ...args);
+  ): Promise<Response<Reader>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/terminal/readers/${id}/collect_payment_method`,
+      params,
+      options
+    );
   }
-
   /**
    * Finalizes a payment on a Reader. See [Confirming a Payment](https://docs.stripe.com/docs/terminal/payments/collect-card-payment?terminal-sdk-platform=server-driven&process=inspect#confirm-the-paymentintent) for more details.
    */
@@ -153,14 +133,14 @@ export class ReaderResource extends StripeResource {
     id: string,
     params: Terminal.ReaderConfirmPaymentIntentParams,
     options?: RequestOptions
-  ): Promise<Response<Reader>>;
-  confirmPaymentIntent(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/terminal/readers/{reader}/confirm_payment_intent',
-    }).call(this, ...args);
+  ): Promise<Response<Reader>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/terminal/readers/${id}/confirm_payment_intent`,
+      params,
+      options
+    );
   }
-
   /**
    * Initiates a payment flow on a Reader. See [process the payment](https://docs.stripe.com/docs/terminal/payments/collect-card-payment?terminal-sdk-platform=server-driven&process=immediately#process-payment) for more details.
    */
@@ -168,14 +148,14 @@ export class ReaderResource extends StripeResource {
     id: string,
     params: Terminal.ReaderProcessPaymentIntentParams,
     options?: RequestOptions
-  ): Promise<Response<Reader>>;
-  processPaymentIntent(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/terminal/readers/{reader}/process_payment_intent',
-    }).call(this, ...args);
+  ): Promise<Response<Reader>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/terminal/readers/${id}/process_payment_intent`,
+      params,
+      options
+    );
   }
-
   /**
    * Initiates a SetupIntent flow on a Reader. See [Save directly without charging](https://docs.stripe.com/docs/terminal/features/saving-payment-details/save-directly) for more details.
    */
@@ -183,14 +163,14 @@ export class ReaderResource extends StripeResource {
     id: string,
     params: Terminal.ReaderProcessSetupIntentParams,
     options?: RequestOptions
-  ): Promise<Response<Reader>>;
-  processSetupIntent(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/terminal/readers/{reader}/process_setup_intent',
-    }).call(this, ...args);
+  ): Promise<Response<Reader>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/terminal/readers/${id}/process_setup_intent`,
+      params,
+      options
+    );
   }
-
   /**
    * Initiates an in-person refund on a Reader. See [Refund an Interac Payment](https://docs.stripe.com/docs/terminal/payments/regional?integration-country=CA#refund-an-interac-payment) for more details.
    */
@@ -198,18 +178,14 @@ export class ReaderResource extends StripeResource {
     id: string,
     params?: Terminal.ReaderRefundPaymentParams,
     options?: RequestOptions
-  ): Promise<Response<Reader>>;
-  refundPayment(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Reader>>;
-  refundPayment(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/terminal/readers/{reader}/refund_payment',
-    }).call(this, ...args);
+  ): Promise<Response<Reader>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/terminal/readers/${id}/refund_payment`,
+      params,
+      options
+    );
   }
-
   /**
    * Sets the reader display to show [cart details](https://docs.stripe.com/docs/terminal/features/display).
    */
@@ -217,12 +193,13 @@ export class ReaderResource extends StripeResource {
     id: string,
     params: Terminal.ReaderSetReaderDisplayParams,
     options?: RequestOptions
-  ): Promise<Response<Reader>>;
-  setReaderDisplay(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/terminal/readers/{reader}/set_reader_display',
-    }).call(this, ...args);
+  ): Promise<Response<Reader>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/terminal/readers/${id}/set_reader_display`,
+      params,
+      options
+    );
   }
 }
 export interface Reader {

@@ -34,7 +34,6 @@ import {
   ApiList,
   ApiSearchResultPromise,
 } from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class InvoiceResource extends StripeResource {
   /**
@@ -44,15 +43,9 @@ export class InvoiceResource extends StripeResource {
     id: string,
     params?: InvoiceDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedInvoice>>;
-  del(id: string, options?: RequestOptions): Promise<Response<DeletedInvoice>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/invoices/{invoice}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedInvoice>> {
+    return this._makeRequest('DELETE', `/v1/invoices/${id}`, params, options);
   }
-
   /**
    * Retrieves the invoice with the given ID.
    */
@@ -60,12 +53,8 @@ export class InvoiceResource extends StripeResource {
     id: string,
     params?: InvoiceRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Invoice>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Invoice>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/invoices/{invoice}',
+  ): Promise<Response<Invoice>> {
+    return this._makeRequest('GET', `/v1/invoices/${id}`, params, options, {
       responseSchema: {
         kind: 'object',
         fields: {
@@ -100,9 +89,8 @@ export class InvoiceResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Draft invoices are fully editable. Once an invoice is [finalized](https://docs.stripe.com/docs/billing/invoices/workflow#finalized),
    * monetary values, as well as collection_method, become uneditable.
@@ -115,11 +103,8 @@ export class InvoiceResource extends StripeResource {
     id: string,
     params?: InvoiceUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Invoice>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/invoices/{invoice}',
+  ): Promise<Response<Invoice>> {
+    return this._makeRequest('POST', `/v1/invoices/${id}`, params, options, {
       responseSchema: {
         kind: 'object',
         fields: {
@@ -154,21 +139,16 @@ export class InvoiceResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * You can list all invoices, or list the invoices for a specific customer. The invoices are returned sorted by creation date, with the most recently created invoices appearing first.
    */
   list(
     params?: InvoiceListParams,
     options?: RequestOptions
-  ): ApiListPromise<Invoice>;
-  list(options?: RequestOptions): ApiListPromise<Invoice>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/invoices',
+  ): ApiListPromise<Invoice> {
+    return this._makeRequest('GET', '/v1/invoices', params, options, {
       methodType: 'list',
       responseSchema: {
         kind: 'object',
@@ -212,21 +192,16 @@ export class InvoiceResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * This endpoint creates a draft invoice for a given customer. The invoice remains a draft until you [finalize the invoice, which allows you to [pay](/api/invoices/pay) or <a href="/api/invoices/send">send](https://docs.stripe.com/api/invoices/finalize) the invoice to your customers.
    */
   create(
     params?: InvoiceCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Invoice>>;
-  create(options?: RequestOptions): Promise<Response<Invoice>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/invoices',
+  ): Promise<Response<Invoice>> {
+    return this._makeRequest('POST', '/v1/invoices', params, options, {
       responseSchema: {
         kind: 'object',
         fields: {
@@ -261,9 +236,8 @@ export class InvoiceResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Search for invoices you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
    * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
@@ -273,11 +247,8 @@ export class InvoiceResource extends StripeResource {
   search(
     params: InvoiceSearchParams,
     options?: RequestOptions
-  ): ApiSearchResultPromise<Invoice>;
-  search(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/invoices/search',
+  ): ApiSearchResultPromise<Invoice> {
+    return this._makeRequest('GET', '/v1/invoices/search', params, options, {
       methodType: 'search',
       responseSchema: {
         kind: 'object',
@@ -321,9 +292,8 @@ export class InvoiceResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Adds multiple line items to an invoice. This is only possible when an invoice is still a draft.
    */
@@ -331,55 +301,58 @@ export class InvoiceResource extends StripeResource {
     id: string,
     params: InvoiceAddLinesParams,
     options?: RequestOptions
-  ): Promise<Response<Invoice>>;
-  addLines(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/invoices/{invoice}/add_lines',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                price_data: {
-                  kind: 'object',
-                  fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+  ): Promise<Response<Invoice>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/invoices/${id}/add_lines`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  price_data: {
+                    kind: 'object',
+                    fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+                  },
+                  quantity_decimal: {kind: 'decimal_string'},
                 },
-                quantity_decimal: {kind: 'decimal_string'},
               },
             },
           },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    pricing: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      pricing: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
                           },
                         },
                       },
-                    },
-                    quantity_decimal: {
-                      kind: 'nullable',
-                      inner: {kind: 'decimal_string'},
+                      quantity_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
@@ -387,10 +360,9 @@ export class InvoiceResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    );
   }
-
   /**
    * Attaches a PaymentIntent or an Out of Band Payment to the invoice, adding it to the list of payments.
    *
@@ -407,41 +379,40 @@ export class InvoiceResource extends StripeResource {
     id: string,
     params?: InvoiceAttachPaymentParams,
     options?: RequestOptions
-  ): Promise<Response<Invoice>>;
-  attachPayment(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Invoice>>;
-  attachPayment(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/invoices/{invoice}/attach_payment',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    pricing: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
+  ): Promise<Response<Invoice>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/invoices/${id}/attach_payment`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      pricing: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
                           },
                         },
                       },
-                    },
-                    quantity_decimal: {
-                      kind: 'nullable',
-                      inner: {kind: 'decimal_string'},
+                      quantity_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
@@ -449,10 +420,9 @@ export class InvoiceResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    );
   }
-
   /**
    * Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if you'd like to finalize a draft invoice manually, you can do so using this method.
    */
@@ -460,41 +430,40 @@ export class InvoiceResource extends StripeResource {
     id: string,
     params?: InvoiceFinalizeInvoiceParams,
     options?: RequestOptions
-  ): Promise<Response<Invoice>>;
-  finalizeInvoice(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Invoice>>;
-  finalizeInvoice(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/invoices/{invoice}/finalize',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    pricing: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
+  ): Promise<Response<Invoice>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/invoices/${id}/finalize`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      pricing: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
                           },
                         },
                       },
-                    },
-                    quantity_decimal: {
-                      kind: 'nullable',
-                      inner: {kind: 'decimal_string'},
+                      quantity_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
@@ -502,10 +471,9 @@ export class InvoiceResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    );
   }
-
   /**
    * Marking an invoice as uncollectible is useful for keeping track of bad debts that can be written off for accounting purposes.
    */
@@ -513,41 +481,40 @@ export class InvoiceResource extends StripeResource {
     id: string,
     params?: InvoiceMarkUncollectibleParams,
     options?: RequestOptions
-  ): Promise<Response<Invoice>>;
-  markUncollectible(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Invoice>>;
-  markUncollectible(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/invoices/{invoice}/mark_uncollectible',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    pricing: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
+  ): Promise<Response<Invoice>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/invoices/${id}/mark_uncollectible`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      pricing: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
                           },
                         },
                       },
-                    },
-                    quantity_decimal: {
-                      kind: 'nullable',
-                      inner: {kind: 'decimal_string'},
+                      quantity_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
@@ -555,10 +522,9 @@ export class InvoiceResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    );
   }
-
   /**
    * Stripe automatically creates and then attempts to collect payment on invoices for customers on subscriptions according to your [subscriptions settings](https://dashboard.stripe.com/account/billing/automatic). However, if you'd like to attempt payment on an invoice out of the normal collection schedule or for some other reason, you can do so.
    */
@@ -566,38 +532,40 @@ export class InvoiceResource extends StripeResource {
     id: string,
     params?: InvoicePayParams,
     options?: RequestOptions
-  ): Promise<Response<Invoice>>;
-  pay(id: string, options?: RequestOptions): Promise<Response<Invoice>>;
-  pay(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/invoices/{invoice}/pay',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    pricing: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
+  ): Promise<Response<Invoice>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/invoices/${id}/pay`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      pricing: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
                           },
                         },
                       },
-                    },
-                    quantity_decimal: {
-                      kind: 'nullable',
-                      inner: {kind: 'decimal_string'},
+                      quantity_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
@@ -605,10 +573,9 @@ export class InvoiceResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    );
   }
-
   /**
    * Removes multiple line items from an invoice. This is only possible when an invoice is still a draft.
    */
@@ -616,37 +583,40 @@ export class InvoiceResource extends StripeResource {
     id: string,
     params: InvoiceRemoveLinesParams,
     options?: RequestOptions
-  ): Promise<Response<Invoice>>;
-  removeLines(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/invoices/{invoice}/remove_lines',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    pricing: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
+  ): Promise<Response<Invoice>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/invoices/${id}/remove_lines`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      pricing: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
                           },
                         },
                       },
-                    },
-                    quantity_decimal: {
-                      kind: 'nullable',
-                      inner: {kind: 'decimal_string'},
+                      quantity_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
@@ -654,10 +624,9 @@ export class InvoiceResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    );
   }
-
   /**
    * Stripe will automatically send invoices to customers according to your [subscriptions settings](https://dashboard.stripe.com/account/billing/automatic). However, if you'd like to manually send an invoice to your customer out of the normal schedule, you can do so. When sending invoices that have already been paid, there will be no reference to the payment in the email.
    *
@@ -667,38 +636,40 @@ export class InvoiceResource extends StripeResource {
     id: string,
     params?: InvoiceSendInvoiceParams,
     options?: RequestOptions
-  ): Promise<Response<Invoice>>;
-  sendInvoice(id: string, options?: RequestOptions): Promise<Response<Invoice>>;
-  sendInvoice(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/invoices/{invoice}/send',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    pricing: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
+  ): Promise<Response<Invoice>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/invoices/${id}/send`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      pricing: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
                           },
                         },
                       },
-                    },
-                    quantity_decimal: {
-                      kind: 'nullable',
-                      inner: {kind: 'decimal_string'},
+                      quantity_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
@@ -706,10 +677,9 @@ export class InvoiceResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    );
   }
-
   /**
    * Updates multiple line items on an invoice. This is only possible when an invoice is still a draft.
    */
@@ -717,55 +687,58 @@ export class InvoiceResource extends StripeResource {
     id: string,
     params: InvoiceUpdateLinesParams,
     options?: RequestOptions
-  ): Promise<Response<Invoice>>;
-  updateLines(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/invoices/{invoice}/update_lines',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                price_data: {
-                  kind: 'object',
-                  fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+  ): Promise<Response<Invoice>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/invoices/${id}/update_lines`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  price_data: {
+                    kind: 'object',
+                    fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+                  },
+                  quantity_decimal: {kind: 'decimal_string'},
                 },
-                quantity_decimal: {kind: 'decimal_string'},
               },
             },
           },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    pricing: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      pricing: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
                           },
                         },
                       },
-                    },
-                    quantity_decimal: {
-                      kind: 'nullable',
-                      inner: {kind: 'decimal_string'},
+                      quantity_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
@@ -773,10 +746,9 @@ export class InvoiceResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    );
   }
-
   /**
    * Mark a finalized invoice as void. This cannot be undone. Voiding an invoice is similar to [deletion](https://docs.stripe.com/api/invoices/delete), however it only applies to finalized invoices and maintains a papertrail where the invoice can still be found.
    *
@@ -786,38 +758,40 @@ export class InvoiceResource extends StripeResource {
     id: string,
     params?: InvoiceVoidInvoiceParams,
     options?: RequestOptions
-  ): Promise<Response<Invoice>>;
-  voidInvoice(id: string, options?: RequestOptions): Promise<Response<Invoice>>;
-  voidInvoice(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/invoices/{invoice}/void',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    pricing: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
+  ): Promise<Response<Invoice>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/invoices/${id}/void`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      pricing: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
                           },
                         },
                       },
-                    },
-                    quantity_decimal: {
-                      kind: 'nullable',
-                      inner: {kind: 'decimal_string'},
+                      quantity_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
@@ -825,10 +799,9 @@ export class InvoiceResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    );
   }
-
   /**
    * At any time, you can preview the upcoming invoice for a subscription or subscription schedule. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discounts that are applicable to the invoice.
    *
@@ -843,60 +816,62 @@ export class InvoiceResource extends StripeResource {
   createPreview(
     params?: InvoiceCreatePreviewParams,
     options?: RequestOptions
-  ): Promise<Response<Invoice>>;
-  createPreview(options?: RequestOptions): Promise<Response<Invoice>>;
-  createPreview(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/invoices/create_preview',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          invoice_items: {
-            kind: 'array',
-            element: {
+  ): Promise<Response<Invoice>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/invoices/create_preview',
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            invoice_items: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  price_data: {
+                    kind: 'object',
+                    fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+                  },
+                  quantity_decimal: {kind: 'decimal_string'},
+                  unit_amount_decimal: {kind: 'decimal_string'},
+                },
+              },
+            },
+            schedule_details: {
               kind: 'object',
               fields: {
-                price_data: {
-                  kind: 'object',
-                  fields: {unit_amount_decimal: {kind: 'decimal_string'}},
-                },
-                quantity_decimal: {kind: 'decimal_string'},
-                unit_amount_decimal: {kind: 'decimal_string'},
-              },
-            },
-          },
-          schedule_details: {
-            kind: 'object',
-            fields: {
-              phases: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    add_invoice_items: {
-                      kind: 'array',
-                      element: {
-                        kind: 'object',
-                        fields: {
-                          price_data: {
-                            kind: 'object',
-                            fields: {
-                              unit_amount_decimal: {kind: 'decimal_string'},
+                phases: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      add_invoice_items: {
+                        kind: 'array',
+                        element: {
+                          kind: 'object',
+                          fields: {
+                            price_data: {
+                              kind: 'object',
+                              fields: {
+                                unit_amount_decimal: {kind: 'decimal_string'},
+                              },
                             },
                           },
                         },
                       },
-                    },
-                    items: {
-                      kind: 'array',
-                      element: {
-                        kind: 'object',
-                        fields: {
-                          price_data: {
-                            kind: 'object',
-                            fields: {
-                              unit_amount_decimal: {kind: 'decimal_string'},
+                      items: {
+                        kind: 'array',
+                        element: {
+                          kind: 'object',
+                          fields: {
+                            price_data: {
+                              kind: 'object',
+                              fields: {
+                                unit_amount_decimal: {kind: 'decimal_string'},
+                              },
                             },
                           },
                         },
@@ -906,18 +881,18 @@ export class InvoiceResource extends StripeResource {
                 },
               },
             },
-          },
-          subscription_details: {
-            kind: 'object',
-            fields: {
-              items: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    price_data: {
-                      kind: 'object',
-                      fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+            subscription_details: {
+              kind: 'object',
+              fields: {
+                items: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      price_data: {
+                        kind: 'object',
+                        fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+                      },
                     },
                   },
                 },
@@ -925,33 +900,33 @@ export class InvoiceResource extends StripeResource {
             },
           },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    pricing: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      pricing: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
                           },
                         },
                       },
-                    },
-                    quantity_decimal: {
-                      kind: 'nullable',
-                      inner: {kind: 'decimal_string'},
+                      quantity_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
@@ -959,10 +934,9 @@ export class InvoiceResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    );
   }
-
   /**
    * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
    */
@@ -970,48 +944,46 @@ export class InvoiceResource extends StripeResource {
     id: string,
     params?: InvoiceListLineItemsParams,
     options?: RequestOptions
-  ): ApiListPromise<InvoiceLineItem>;
-  listLineItems(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<InvoiceLineItem>;
-  listLineItems(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/invoices/{invoice}/lines',
-      methodType: 'list',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          data: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                pricing: {
-                  kind: 'nullable',
-                  inner: {
-                    kind: 'object',
-                    fields: {
-                      unit_amount_decimal: {
-                        kind: 'nullable',
-                        inner: {kind: 'decimal_string'},
+  ): ApiListPromise<InvoiceLineItem> {
+    return this._makeRequest(
+      'GET',
+      `/v1/invoices/${id}/lines`,
+      params,
+      options,
+      {
+        methodType: 'list',
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  pricing: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        unit_amount_decimal: {
+                          kind: 'nullable',
+                          inner: {kind: 'decimal_string'},
+                        },
                       },
                     },
                   },
-                },
-                quantity_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
+                  quantity_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    );
   }
-
   /**
    * Updates an invoice's line item. Some fields, such as tax_amounts, only live on the invoice line item,
    * so they can only be updated through this endpoint. Other fields, such as amount, live on both the invoice
@@ -1023,45 +995,46 @@ export class InvoiceResource extends StripeResource {
     id: string,
     params?: InvoiceUpdateLineItemParams,
     options?: RequestOptions
-  ): Promise<Response<InvoiceLineItem>>;
-  updateLineItem(
-    invoiceId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<InvoiceLineItem>>;
-  updateLineItem(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/invoices/{invoice}/lines/{line_item_id}',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          price_data: {
-            kind: 'object',
-            fields: {unit_amount_decimal: {kind: 'decimal_string'}},
-          },
-          quantity_decimal: {kind: 'decimal_string'},
-        },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          pricing: {
-            kind: 'nullable',
-            inner: {
+  ): Promise<Response<InvoiceLineItem>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/invoices/${invoiceId}/lines/${id}`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            price_data: {
               kind: 'object',
-              fields: {
-                unit_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
+              fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+            },
+            quantity_decimal: {kind: 'decimal_string'},
+          },
+        },
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            pricing: {
+              kind: 'nullable',
+              inner: {
+                kind: 'object',
+                fields: {
+                  unit_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
                 },
               },
             },
+            quantity_decimal: {
+              kind: 'nullable',
+              inner: {kind: 'decimal_string'},
+            },
           },
-          quantity_decimal: {kind: 'nullable', inner: {kind: 'decimal_string'}},
         },
-      },
-    }).call(this, ...args);
+      }
+    );
   }
 }
 export interface Invoice {

@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {PaginationParams, RangeQueryParam, Address} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class VerificationReportResource extends StripeResource {
   /**
@@ -12,16 +11,17 @@ export class VerificationReportResource extends StripeResource {
   list(
     params?: Identity.VerificationReportListParams,
     options?: RequestOptions
-  ): ApiListPromise<VerificationReport>;
-  list(options?: RequestOptions): ApiListPromise<VerificationReport>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/identity/verification_reports',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<VerificationReport> {
+    return this._makeRequest(
+      'GET',
+      '/v1/identity/verification_reports',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Retrieves an existing VerificationReport
    */
@@ -29,16 +29,13 @@ export class VerificationReportResource extends StripeResource {
     id: string,
     params?: Identity.VerificationReportRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<VerificationReport>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<VerificationReport>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/identity/verification_reports/{report}',
-    }).call(this, ...args);
+  ): Promise<Response<VerificationReport>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/identity/verification_reports/${id}`,
+      params,
+      options
+    );
   }
 }
 export interface VerificationReport {

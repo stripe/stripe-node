@@ -4,7 +4,6 @@ import {StripeResource} from '../../../../StripeResource.js';
 import {AccountPersonToken} from './../../../V2/Core/AccountPersonTokens.js';
 import {JapanAddressParam, MetadataParam, Decimal} from '../../../../shared.js';
 import {RequestOptions, Response} from '../../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PersonTokenResource extends StripeResource {
   /**
@@ -15,27 +14,25 @@ export class PersonTokenResource extends StripeResource {
     id: string,
     params?: V2.Core.Accounts.PersonTokenCreateParams,
     options?: RequestOptions
-  ): Promise<Response<AccountPersonToken>>;
-  create(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<AccountPersonToken>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/accounts/{account_id}/person_tokens',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          relationship: {
-            kind: 'object',
-            fields: {percent_ownership: {kind: 'decimal_string'}},
+  ): Promise<Response<AccountPersonToken>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/accounts/${id}/person_tokens`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            relationship: {
+              kind: 'object',
+              fields: {percent_ownership: {kind: 'decimal_string'}},
+            },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    );
   }
-
   /**
    * Retrieves a Person Token associated with an Account.
    * @throws Stripe.RateLimitError
@@ -45,17 +42,13 @@ export class PersonTokenResource extends StripeResource {
     id: string,
     params?: V2.Core.Accounts.PersonTokenRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<AccountPersonToken>>;
-  retrieve(
-    accountId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<AccountPersonToken>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/accounts/{account_id}/person_tokens/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<AccountPersonToken>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/core/accounts/${accountId}/person_tokens/${id}`,
+      params,
+      options
+    );
   }
 }
 export namespace V2 {

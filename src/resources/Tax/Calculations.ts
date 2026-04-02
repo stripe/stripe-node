@@ -9,7 +9,6 @@ import {
   PaginationParams,
 } from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise, ApiList} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CalculationResource extends StripeResource {
   /**
@@ -19,32 +18,23 @@ export class CalculationResource extends StripeResource {
     id: string,
     params?: Tax.CalculationRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Calculation>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Calculation>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/tax/calculations/{calculation}',
-    }).call(this, ...args);
+  ): Promise<Response<Calculation>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/tax/calculations/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Calculates tax based on the input and returns a Tax Calculation object.
    */
   create(
     params: Tax.CalculationCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Calculation>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/tax/calculations',
-    }).call(this, ...args);
+  ): Promise<Response<Calculation>> {
+    return this._makeRequest('POST', '/v1/tax/calculations', params, options);
   }
-
   /**
    * Retrieves the line items of a tax calculation as a collection, if the calculation hasn't expired.
    */
@@ -52,17 +42,16 @@ export class CalculationResource extends StripeResource {
     id: string,
     params?: Tax.CalculationListLineItemsParams,
     options?: RequestOptions
-  ): ApiListPromise<CalculationLineItem>;
-  listLineItems(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<CalculationLineItem>;
-  listLineItems(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/tax/calculations/{calculation}/line_items',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<CalculationLineItem> {
+    return this._makeRequest(
+      'GET',
+      `/v1/tax/calculations/${id}/line_items`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
 }
 export interface Calculation {

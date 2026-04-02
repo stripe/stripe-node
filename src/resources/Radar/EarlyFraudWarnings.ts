@@ -5,7 +5,6 @@ import {Charge} from './../Charges.js';
 import {PaymentIntent} from './../PaymentIntents.js';
 import {PaginationParams, RangeQueryParam} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class EarlyFraudWarningResource extends StripeResource {
   /**
@@ -14,16 +13,17 @@ export class EarlyFraudWarningResource extends StripeResource {
   list(
     params?: Radar.EarlyFraudWarningListParams,
     options?: RequestOptions
-  ): ApiListPromise<EarlyFraudWarning>;
-  list(options?: RequestOptions): ApiListPromise<EarlyFraudWarning>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/radar/early_fraud_warnings',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<EarlyFraudWarning> {
+    return this._makeRequest(
+      'GET',
+      '/v1/radar/early_fraud_warnings',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Retrieves the details of an early fraud warning that has previously been created.
    *
@@ -33,16 +33,13 @@ export class EarlyFraudWarningResource extends StripeResource {
     id: string,
     params?: Radar.EarlyFraudWarningRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<EarlyFraudWarning>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<EarlyFraudWarning>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/radar/early_fraud_warnings/{early_fraud_warning}',
-    }).call(this, ...args);
+  ): Promise<Response<EarlyFraudWarning>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/radar/early_fraud_warnings/${id}`,
+      params,
+      options
+    );
   }
 }
 export interface EarlyFraudWarning {

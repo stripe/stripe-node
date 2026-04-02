@@ -8,7 +8,6 @@ import {
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class RequestResource extends StripeResource {
   /**
@@ -17,30 +16,31 @@ export class RequestResource extends StripeResource {
   list(
     params?: Forwarding.RequestListParams,
     options?: RequestOptions
-  ): ApiListPromise<Request>;
-  list(options?: RequestOptions): ApiListPromise<Request>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/forwarding/requests',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<Request> {
+    return this._makeRequest(
+      'GET',
+      '/v1/forwarding/requests',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Creates a ForwardingRequest object.
    */
   create(
     params: Forwarding.RequestCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Request>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/forwarding/requests',
-    }).call(this, ...args);
+  ): Promise<Response<Request>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/forwarding/requests',
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves a ForwardingRequest object.
    */
@@ -48,13 +48,13 @@ export class RequestResource extends StripeResource {
     id: string,
     params?: Forwarding.RequestRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Request>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Request>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/forwarding/requests/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<Request>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/forwarding/requests/${id}`,
+      params,
+      options
+    );
   }
 }
 export interface Request {

@@ -11,7 +11,6 @@ import {
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class OrderResource extends StripeResource {
   /**
@@ -21,12 +20,8 @@ export class OrderResource extends StripeResource {
   list(
     params?: Climate.OrderListParams,
     options?: RequestOptions
-  ): ApiListPromise<Order>;
-  list(options?: RequestOptions): ApiListPromise<Order>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/climate/orders',
+  ): ApiListPromise<Order> {
+    return this._makeRequest('GET', '/v1/climate/orders', params, options, {
       methodType: 'list',
       responseSchema: {
         kind: 'object',
@@ -40,9 +35,8 @@ export class OrderResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Creates a Climate order object for a given Climate product. The order will be processed immediately
    * after creation and payment will be deducted your Stripe balance.
@@ -50,11 +44,8 @@ export class OrderResource extends StripeResource {
   create(
     params: Climate.OrderCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Order>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/climate/orders',
+  ): Promise<Response<Order>> {
+    return this._makeRequest('POST', '/v1/climate/orders', params, options, {
       requestSchema: {
         kind: 'object',
         fields: {metric_tons: {kind: 'decimal_string'}},
@@ -63,9 +54,8 @@ export class OrderResource extends StripeResource {
         kind: 'object',
         fields: {metric_tons: {kind: 'decimal_string'}},
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Retrieves the details of a Climate order object with the given ID.
    */
@@ -73,19 +63,20 @@ export class OrderResource extends StripeResource {
     id: string,
     params?: Climate.OrderRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Order>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Order>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/climate/orders/{order}',
-      responseSchema: {
-        kind: 'object',
-        fields: {metric_tons: {kind: 'decimal_string'}},
-      },
-    }).call(this, ...args);
+  ): Promise<Response<Order>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/climate/orders/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {metric_tons: {kind: 'decimal_string'}},
+        },
+      }
+    );
   }
-
   /**
    * Updates the specified order by setting the values of the parameters passed.
    */
@@ -93,18 +84,20 @@ export class OrderResource extends StripeResource {
     id: string,
     params?: Climate.OrderUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Order>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/climate/orders/{order}',
-      responseSchema: {
-        kind: 'object',
-        fields: {metric_tons: {kind: 'decimal_string'}},
-      },
-    }).call(this, ...args);
+  ): Promise<Response<Order>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/climate/orders/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {metric_tons: {kind: 'decimal_string'}},
+        },
+      }
+    );
   }
-
   /**
    * Cancels a Climate order. You can cancel an order within 24 hours of creation. Stripe refunds the
    * reservation amount_subtotal, but not the amount_fees for user-triggered cancellations. Frontier
@@ -115,17 +108,19 @@ export class OrderResource extends StripeResource {
     id: string,
     params?: Climate.OrderCancelParams,
     options?: RequestOptions
-  ): Promise<Response<Order>>;
-  cancel(id: string, options?: RequestOptions): Promise<Response<Order>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/climate/orders/{order}/cancel',
-      responseSchema: {
-        kind: 'object',
-        fields: {metric_tons: {kind: 'decimal_string'}},
-      },
-    }).call(this, ...args);
+  ): Promise<Response<Order>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/climate/orders/${id}/cancel`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {metric_tons: {kind: 'decimal_string'}},
+        },
+      }
+    );
   }
 }
 export interface Order {

@@ -8,7 +8,6 @@ import {
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class FeatureResource extends StripeResource {
   /**
@@ -17,30 +16,31 @@ export class FeatureResource extends StripeResource {
   list(
     params?: Entitlements.FeatureListParams,
     options?: RequestOptions
-  ): ApiListPromise<Feature>;
-  list(options?: RequestOptions): ApiListPromise<Feature>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/entitlements/features',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<Feature> {
+    return this._makeRequest(
+      'GET',
+      '/v1/entitlements/features',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Creates a feature
    */
   create(
     params: Entitlements.FeatureCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Feature>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/entitlements/features',
-    }).call(this, ...args);
+  ): Promise<Response<Feature>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/entitlements/features',
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves a feature
    */
@@ -48,15 +48,14 @@ export class FeatureResource extends StripeResource {
     id: string,
     params?: Entitlements.FeatureRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Feature>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Feature>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/entitlements/features/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<Feature>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/entitlements/features/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Update a feature's metadata or permanently deactivate it.
    */
@@ -64,12 +63,13 @@ export class FeatureResource extends StripeResource {
     id: string,
     params?: Entitlements.FeatureUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Feature>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/entitlements/features/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<Feature>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/entitlements/features/${id}`,
+      params,
+      options
+    );
   }
 }
 export interface Feature {

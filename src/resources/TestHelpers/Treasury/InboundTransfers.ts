@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {InboundTransfer} from './../../Treasury/InboundTransfers.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class InboundTransferResource extends StripeResource {
   /**
@@ -13,18 +12,14 @@ export class InboundTransferResource extends StripeResource {
     id: string,
     params?: TestHelpers.Treasury.InboundTransferFailParams,
     options?: RequestOptions
-  ): Promise<Response<InboundTransfer>>;
-  fail(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<InboundTransfer>>;
-  fail(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/treasury/inbound_transfers/{id}/fail',
-    }).call(this, ...args);
+  ): Promise<Response<InboundTransfer>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/treasury/inbound_transfers/${id}/fail`,
+      params,
+      options
+    );
   }
-
   /**
    * Marks the test mode InboundTransfer object as returned and links the InboundTransfer to a ReceivedDebit. The InboundTransfer must already be in the succeeded state.
    */
@@ -32,18 +27,14 @@ export class InboundTransferResource extends StripeResource {
     id: string,
     params?: TestHelpers.Treasury.InboundTransferReturnInboundTransferParams,
     options?: RequestOptions
-  ): Promise<Response<InboundTransfer>>;
-  returnInboundTransfer(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<InboundTransfer>>;
-  returnInboundTransfer(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/treasury/inbound_transfers/{id}/return',
-    }).call(this, ...args);
+  ): Promise<Response<InboundTransfer>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/treasury/inbound_transfers/${id}/return`,
+      params,
+      options
+    );
   }
-
   /**
    * Transitions a test mode created InboundTransfer to the succeeded status. The InboundTransfer must already be in the processing state.
    */
@@ -51,16 +42,13 @@ export class InboundTransferResource extends StripeResource {
     id: string,
     params?: TestHelpers.Treasury.InboundTransferSucceedParams,
     options?: RequestOptions
-  ): Promise<Response<InboundTransfer>>;
-  succeed(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<InboundTransfer>>;
-  succeed(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/treasury/inbound_transfers/{id}/succeed',
-    }).call(this, ...args);
+  ): Promise<Response<InboundTransfer>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/treasury/inbound_transfers/${id}/succeed`,
+      params,
+      options
+    );
   }
 }
 export namespace TestHelpers {

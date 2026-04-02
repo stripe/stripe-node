@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {OutboundPayment} from './../../Treasury/OutboundPayments.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class OutboundPaymentResource extends StripeResource {
   /**
@@ -13,14 +12,14 @@ export class OutboundPaymentResource extends StripeResource {
     id: string,
     params: TestHelpers.Treasury.OutboundPaymentUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundPayment>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/treasury/outbound_payments/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundPayment>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/treasury/outbound_payments/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Transitions a test mode created OutboundPayment to the failed status. The OutboundPayment must already be in the processing state.
    */
@@ -28,18 +27,14 @@ export class OutboundPaymentResource extends StripeResource {
     id: string,
     params?: TestHelpers.Treasury.OutboundPaymentFailParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundPayment>>;
-  fail(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<OutboundPayment>>;
-  fail(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/treasury/outbound_payments/{id}/fail',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundPayment>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/treasury/outbound_payments/${id}/fail`,
+      params,
+      options
+    );
   }
-
   /**
    * Transitions a test mode created OutboundPayment to the posted status. The OutboundPayment must already be in the processing state.
    */
@@ -47,18 +42,14 @@ export class OutboundPaymentResource extends StripeResource {
     id: string,
     params?: TestHelpers.Treasury.OutboundPaymentPostParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundPayment>>;
-  post(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<OutboundPayment>>;
-  post(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/treasury/outbound_payments/{id}/post',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundPayment>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/treasury/outbound_payments/${id}/post`,
+      params,
+      options
+    );
   }
-
   /**
    * Transitions a test mode created OutboundPayment to the returned status. The OutboundPayment must already be in the processing state.
    */
@@ -66,16 +57,13 @@ export class OutboundPaymentResource extends StripeResource {
     id: string,
     params?: TestHelpers.Treasury.OutboundPaymentReturnOutboundPaymentParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundPayment>>;
-  returnOutboundPayment(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<OutboundPayment>>;
-  returnOutboundPayment(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/treasury/outbound_payments/{id}/return',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundPayment>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/treasury/outbound_payments/${id}/return`,
+      params,
+      options
+    );
   }
 }
 export namespace TestHelpers {

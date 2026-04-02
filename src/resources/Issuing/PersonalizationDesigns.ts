@@ -10,7 +10,6 @@ import {
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PersonalizationDesignResource extends StripeResource {
   /**
@@ -19,30 +18,31 @@ export class PersonalizationDesignResource extends StripeResource {
   list(
     params?: Issuing.PersonalizationDesignListParams,
     options?: RequestOptions
-  ): ApiListPromise<PersonalizationDesign>;
-  list(options?: RequestOptions): ApiListPromise<PersonalizationDesign>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/personalization_designs',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<PersonalizationDesign> {
+    return this._makeRequest(
+      'GET',
+      '/v1/issuing/personalization_designs',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Creates a personalization design object.
    */
   create(
     params: Issuing.PersonalizationDesignCreateParams,
     options?: RequestOptions
-  ): Promise<Response<PersonalizationDesign>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/issuing/personalization_designs',
-    }).call(this, ...args);
+  ): Promise<Response<PersonalizationDesign>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/issuing/personalization_designs',
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves a personalization design object.
    */
@@ -50,18 +50,14 @@ export class PersonalizationDesignResource extends StripeResource {
     id: string,
     params?: Issuing.PersonalizationDesignRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<PersonalizationDesign>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PersonalizationDesign>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/personalization_designs/{personalization_design}',
-    }).call(this, ...args);
+  ): Promise<Response<PersonalizationDesign>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/issuing/personalization_designs/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates a card personalization object.
    */
@@ -69,12 +65,13 @@ export class PersonalizationDesignResource extends StripeResource {
     id: string,
     params?: Issuing.PersonalizationDesignUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<PersonalizationDesign>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/issuing/personalization_designs/{personalization_design}',
-    }).call(this, ...args);
+  ): Promise<Response<PersonalizationDesign>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/issuing/personalization_designs/${id}`,
+      params,
+      options
+    );
   }
 }
 export interface PersonalizationDesign {

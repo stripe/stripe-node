@@ -3,7 +3,6 @@
 import {StripeResource} from '../StripeResource.js';
 import {PaginationParams, Emptyable} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PaymentMethodConfigurationResource extends StripeResource {
   /**
@@ -12,33 +11,31 @@ export class PaymentMethodConfigurationResource extends StripeResource {
   list(
     params?: PaymentMethodConfigurationListParams,
     options?: RequestOptions
-  ): ApiListPromise<PaymentMethodConfiguration>;
-  list(options?: RequestOptions): ApiListPromise<PaymentMethodConfiguration>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payment_method_configurations',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<PaymentMethodConfiguration> {
+    return this._makeRequest(
+      'GET',
+      '/v1/payment_method_configurations',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Creates a payment method configuration
    */
   create(
     params?: PaymentMethodConfigurationCreateParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethodConfiguration>>;
-  create(
-    options?: RequestOptions
-  ): Promise<Response<PaymentMethodConfiguration>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payment_method_configurations',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentMethodConfiguration>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/payment_method_configurations',
+      params,
+      options
+    );
   }
-
   /**
    * Retrieve payment method configuration
    */
@@ -46,18 +43,14 @@ export class PaymentMethodConfigurationResource extends StripeResource {
     id: string,
     params?: PaymentMethodConfigurationRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethodConfiguration>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentMethodConfiguration>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payment_method_configurations/{configuration}',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentMethodConfiguration>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/payment_method_configurations/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Update payment method configuration
    */
@@ -65,12 +58,13 @@ export class PaymentMethodConfigurationResource extends StripeResource {
     id: string,
     params?: PaymentMethodConfigurationUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethodConfiguration>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payment_method_configurations/{configuration}',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentMethodConfiguration>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_method_configurations/${id}`,
+      params,
+      options
+    );
   }
 }
 export interface PaymentMethodConfiguration {

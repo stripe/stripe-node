@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {Refund} from './../Refunds.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class RefundResource extends StripeResource {
   /**
@@ -13,13 +12,13 @@ export class RefundResource extends StripeResource {
     id: string,
     params?: TestHelpers.RefundExpireParams,
     options?: RequestOptions
-  ): Promise<Response<Refund>>;
-  expire(id: string, options?: RequestOptions): Promise<Response<Refund>>;
-  expire(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/refunds/{refund}/expire',
-    }).call(this, ...args);
+  ): Promise<Response<Refund>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/refunds/${id}/expire`,
+      params,
+      options
+    );
   }
 }
 export namespace TestHelpers {

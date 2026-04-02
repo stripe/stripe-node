@@ -13,7 +13,6 @@ import {
   Emptyable,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response, ApiList} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ApplicationFeeResource extends StripeResource {
   /**
@@ -22,16 +21,11 @@ export class ApplicationFeeResource extends StripeResource {
   list(
     params?: ApplicationFeeListParams,
     options?: RequestOptions
-  ): ApiListPromise<ApplicationFee>;
-  list(options?: RequestOptions): ApiListPromise<ApplicationFee>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/application_fees',
+  ): ApiListPromise<ApplicationFee> {
+    return this._makeRequest('GET', '/v1/application_fees', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Retrieves the details of an application fee that your account has collected. The same information is returned when refunding the application fee.
    */
@@ -39,18 +33,14 @@ export class ApplicationFeeResource extends StripeResource {
     id: string,
     params?: ApplicationFeeRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ApplicationFee>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ApplicationFee>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/application_fees/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<ApplicationFee>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/application_fees/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * By default, you can see the 10 most recent refunds stored directly on the application fee object, but you can also retrieve details about a specific refund stored on the application fee.
    */
@@ -59,19 +49,14 @@ export class ApplicationFeeResource extends StripeResource {
     id: string,
     params?: ApplicationFeeRetrieveRefundParams,
     options?: RequestOptions
-  ): Promise<Response<FeeRefund>>;
-  retrieveRefund(
-    feeId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<FeeRefund>>;
-  retrieveRefund(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/application_fees/{fee}/refunds/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<FeeRefund>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/application_fees/${feeId}/refunds/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates the specified application fee refund by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    *
@@ -82,19 +67,14 @@ export class ApplicationFeeResource extends StripeResource {
     id: string,
     params?: ApplicationFeeUpdateRefundParams,
     options?: RequestOptions
-  ): Promise<Response<FeeRefund>>;
-  updateRefund(
-    feeId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<FeeRefund>>;
-  updateRefund(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/application_fees/{fee}/refunds/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<FeeRefund>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/application_fees/${feeId}/refunds/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * You can see a list of the refunds belonging to a specific application fee. Note that the 10 most recent refunds are always available by default on the application fee object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional refunds.
    */
@@ -102,16 +82,17 @@ export class ApplicationFeeResource extends StripeResource {
     id: string,
     params?: ApplicationFeeListRefundsParams,
     options?: RequestOptions
-  ): ApiListPromise<FeeRefund>;
-  listRefunds(id: string, options?: RequestOptions): ApiListPromise<FeeRefund>;
-  listRefunds(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/application_fees/{id}/refunds',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<FeeRefund> {
+    return this._makeRequest(
+      'GET',
+      `/v1/application_fees/${id}/refunds`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Refunds an application fee that has previously been collected but not yet refunded.
    * Funds will be refunded to the Stripe account from which the fee was originally collected.
@@ -127,16 +108,13 @@ export class ApplicationFeeResource extends StripeResource {
     id: string,
     params?: ApplicationFeeCreateRefundParams,
     options?: RequestOptions
-  ): Promise<Response<FeeRefund>>;
-  createRefund(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<FeeRefund>>;
-  createRefund(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/application_fees/{id}/refunds',
-    }).call(this, ...args);
+  ): Promise<Response<FeeRefund>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/application_fees/${id}/refunds`,
+      params,
+      options
+    );
   }
 }
 export interface ApplicationFee {

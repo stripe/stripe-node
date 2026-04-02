@@ -5,7 +5,6 @@ import {Meter} from './Meters.js';
 import {Customer} from './../Customers.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class AlertResource extends StripeResource {
   /**
@@ -14,30 +13,20 @@ export class AlertResource extends StripeResource {
   list(
     params?: Billing.AlertListParams,
     options?: RequestOptions
-  ): ApiListPromise<Alert>;
-  list(options?: RequestOptions): ApiListPromise<Alert>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/alerts',
+  ): ApiListPromise<Alert> {
+    return this._makeRequest('GET', '/v1/billing/alerts', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Creates a billing alert
    */
   create(
     params: Billing.AlertCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Alert>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/billing/alerts'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Alert>> {
+    return this._makeRequest('POST', '/v1/billing/alerts', params, options);
   }
-
   /**
    * Retrieves a billing alert given an ID
    */
@@ -45,15 +34,14 @@ export class AlertResource extends StripeResource {
     id: string,
     params?: Billing.AlertRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Alert>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Alert>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/alerts/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<Alert>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/billing/alerts/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Reactivates this alert, allowing it to trigger again.
    */
@@ -61,15 +49,14 @@ export class AlertResource extends StripeResource {
     id: string,
     params?: Billing.AlertActivateParams,
     options?: RequestOptions
-  ): Promise<Response<Alert>>;
-  activate(id: string, options?: RequestOptions): Promise<Response<Alert>>;
-  activate(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing/alerts/{id}/activate',
-    }).call(this, ...args);
+  ): Promise<Response<Alert>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/billing/alerts/${id}/activate`,
+      params,
+      options
+    );
   }
-
   /**
    * Archives this alert, removing it from the list view and APIs. This is non-reversible.
    */
@@ -77,15 +64,14 @@ export class AlertResource extends StripeResource {
     id: string,
     params?: Billing.AlertArchiveParams,
     options?: RequestOptions
-  ): Promise<Response<Alert>>;
-  archive(id: string, options?: RequestOptions): Promise<Response<Alert>>;
-  archive(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing/alerts/{id}/archive',
-    }).call(this, ...args);
+  ): Promise<Response<Alert>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/billing/alerts/${id}/archive`,
+      params,
+      options
+    );
   }
-
   /**
    * Deactivates this alert, preventing it from triggering.
    */
@@ -93,13 +79,13 @@ export class AlertResource extends StripeResource {
     id: string,
     params?: Billing.AlertDeactivateParams,
     options?: RequestOptions
-  ): Promise<Response<Alert>>;
-  deactivate(id: string, options?: RequestOptions): Promise<Response<Alert>>;
-  deactivate(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing/alerts/{id}/deactivate',
-    }).call(this, ...args);
+  ): Promise<Response<Alert>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/billing/alerts/${id}/deactivate`,
+      params,
+      options
+    );
   }
 }
 export interface Alert {

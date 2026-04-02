@@ -4,7 +4,6 @@ import {StripeResource} from '../../StripeResource.js';
 import {Transaction} from './Transactions.js';
 import {MetadataParam, PaginationParams, Metadata} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class DebitReversalResource extends StripeResource {
   /**
@@ -13,29 +12,31 @@ export class DebitReversalResource extends StripeResource {
   list(
     params: Treasury.DebitReversalListParams,
     options?: RequestOptions
-  ): ApiListPromise<DebitReversal>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/treasury/debit_reversals',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<DebitReversal> {
+    return this._makeRequest(
+      'GET',
+      '/v1/treasury/debit_reversals',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Reverses a ReceivedDebit and creates a DebitReversal object.
    */
   create(
     params: Treasury.DebitReversalCreateParams,
     options?: RequestOptions
-  ): Promise<Response<DebitReversal>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/treasury/debit_reversals',
-    }).call(this, ...args);
+  ): Promise<Response<DebitReversal>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/treasury/debit_reversals',
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves a DebitReversal object.
    */
@@ -43,16 +44,13 @@ export class DebitReversalResource extends StripeResource {
     id: string,
     params?: Treasury.DebitReversalRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<DebitReversal>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<DebitReversal>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/treasury/debit_reversals/{debit_reversal}',
-    }).call(this, ...args);
+  ): Promise<Response<DebitReversal>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/treasury/debit_reversals/${id}`,
+      params,
+      options
+    );
   }
 }
 export interface DebitReversal {

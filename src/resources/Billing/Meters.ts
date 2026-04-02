@@ -4,7 +4,6 @@ import {StripeResource} from '../../StripeResource.js';
 import {MeterEventSummary} from './MeterEventSummaries.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class MeterResource extends StripeResource {
   /**
@@ -13,30 +12,20 @@ export class MeterResource extends StripeResource {
   list(
     params?: Billing.MeterListParams,
     options?: RequestOptions
-  ): ApiListPromise<Meter>;
-  list(options?: RequestOptions): ApiListPromise<Meter>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/meters',
+  ): ApiListPromise<Meter> {
+    return this._makeRequest('GET', '/v1/billing/meters', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Creates a billing meter.
    */
   create(
     params: Billing.MeterCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Meter>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/billing/meters'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Meter>> {
+    return this._makeRequest('POST', '/v1/billing/meters', params, options);
   }
-
   /**
    * Retrieves a billing meter given an ID.
    */
@@ -44,15 +33,14 @@ export class MeterResource extends StripeResource {
     id: string,
     params?: Billing.MeterRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Meter>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Meter>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/meters/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<Meter>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/billing/meters/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates a billing meter.
    */
@@ -60,14 +48,14 @@ export class MeterResource extends StripeResource {
     id: string,
     params?: Billing.MeterUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Meter>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing/meters/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<Meter>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/billing/meters/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * When a meter is deactivated, no more meter events will be accepted for this meter. You can't attach a deactivated meter to a price.
    */
@@ -75,15 +63,14 @@ export class MeterResource extends StripeResource {
     id: string,
     params?: Billing.MeterDeactivateParams,
     options?: RequestOptions
-  ): Promise<Response<Meter>>;
-  deactivate(id: string, options?: RequestOptions): Promise<Response<Meter>>;
-  deactivate(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing/meters/{id}/deactivate',
-    }).call(this, ...args);
+  ): Promise<Response<Meter>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/billing/meters/${id}/deactivate`,
+      params,
+      options
+    );
   }
-
   /**
    * When a meter is reactivated, events for this meter can be accepted and you can attach the meter to a price.
    */
@@ -91,15 +78,14 @@ export class MeterResource extends StripeResource {
     id: string,
     params?: Billing.MeterReactivateParams,
     options?: RequestOptions
-  ): Promise<Response<Meter>>;
-  reactivate(id: string, options?: RequestOptions): Promise<Response<Meter>>;
-  reactivate(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing/meters/{id}/reactivate',
-    }).call(this, ...args);
+  ): Promise<Response<Meter>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/billing/meters/${id}/reactivate`,
+      params,
+      options
+    );
   }
-
   /**
    * Retrieve a list of billing meter event summaries.
    */
@@ -107,13 +93,16 @@ export class MeterResource extends StripeResource {
     id: string,
     params: Billing.MeterListEventSummariesParams,
     options?: RequestOptions
-  ): ApiListPromise<MeterEventSummary>;
-  listEventSummaries(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/meters/{id}/event_summaries',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<MeterEventSummary> {
+    return this._makeRequest(
+      'GET',
+      `/v1/billing/meters/${id}/event_summaries`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
 }
 export interface Meter {

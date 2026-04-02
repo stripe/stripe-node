@@ -11,7 +11,6 @@ import {
   Address,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class OutboundTransferResource extends StripeResource {
   /**
@@ -20,29 +19,31 @@ export class OutboundTransferResource extends StripeResource {
   list(
     params: Treasury.OutboundTransferListParams,
     options?: RequestOptions
-  ): ApiListPromise<OutboundTransfer>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/treasury/outbound_transfers',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<OutboundTransfer> {
+    return this._makeRequest(
+      'GET',
+      '/v1/treasury/outbound_transfers',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Creates an OutboundTransfer.
    */
   create(
     params: Treasury.OutboundTransferCreateParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundTransfer>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/treasury/outbound_transfers',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundTransfer>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/treasury/outbound_transfers',
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves the details of an existing OutboundTransfer by passing the unique OutboundTransfer ID from either the OutboundTransfer creation request or OutboundTransfer list.
    */
@@ -50,18 +51,14 @@ export class OutboundTransferResource extends StripeResource {
     id: string,
     params?: Treasury.OutboundTransferRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundTransfer>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<OutboundTransfer>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/treasury/outbound_transfers/{outbound_transfer}',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundTransfer>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/treasury/outbound_transfers/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * An OutboundTransfer can be canceled if the funds have not yet been paid out.
    */
@@ -69,16 +66,13 @@ export class OutboundTransferResource extends StripeResource {
     id: string,
     params?: Treasury.OutboundTransferCancelParams,
     options?: RequestOptions
-  ): Promise<Response<OutboundTransfer>>;
-  cancel(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<OutboundTransfer>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/treasury/outbound_transfers/{outbound_transfer}/cancel',
-    }).call(this, ...args);
+  ): Promise<Response<OutboundTransfer>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/treasury/outbound_transfers/${id}/cancel`,
+      params,
+      options
+    );
   }
 }
 export interface OutboundTransfer {

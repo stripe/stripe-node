@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {ReceivedCredit} from './../../Treasury/ReceivedCredits.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ReceivedCreditResource extends StripeResource {
   /**
@@ -12,12 +11,13 @@ export class ReceivedCreditResource extends StripeResource {
   create(
     params: TestHelpers.Treasury.ReceivedCreditCreateParams,
     options?: RequestOptions
-  ): Promise<Response<ReceivedCredit>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/treasury/received_credits',
-    }).call(this, ...args);
+  ): Promise<Response<ReceivedCredit>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/test_helpers/treasury/received_credits',
+      params,
+      options
+    );
   }
 }
 export namespace TestHelpers {

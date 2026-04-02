@@ -5,7 +5,6 @@ import {Event} from './Events.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
 import {DeletedObject} from './../../V2/DeletedObject.js';
-const stripeMethod = StripeResource.method;
 
 export class EventDestinationResource extends StripeResource {
   /**
@@ -14,30 +13,31 @@ export class EventDestinationResource extends StripeResource {
   list(
     params?: V2.Core.EventDestinationListParams,
     options?: RequestOptions
-  ): ApiListPromise<EventDestination>;
-  list(options?: RequestOptions): ApiListPromise<EventDestination>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/event_destinations',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<EventDestination> {
+    return this._makeRequest(
+      'GET',
+      '/v2/core/event_destinations',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Create a new event destination.
    */
   create(
     params: V2.Core.EventDestinationCreateParams,
     options?: RequestOptions
-  ): Promise<Response<EventDestination>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/event_destinations',
-    }).call(this, ...args);
+  ): Promise<Response<EventDestination>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/core/event_destinations',
+      params,
+      options
+    );
   }
-
   /**
    * Delete an event destination.
    */
@@ -45,15 +45,14 @@ export class EventDestinationResource extends StripeResource {
     id: string,
     params?: V2.Core.EventDestinationDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedObject>>;
-  del(id: string, options?: RequestOptions): Promise<Response<DeletedObject>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v2/core/event_destinations/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedObject>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v2/core/event_destinations/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves the details of an event destination.
    */
@@ -61,18 +60,14 @@ export class EventDestinationResource extends StripeResource {
     id: string,
     params?: V2.Core.EventDestinationRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<EventDestination>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<EventDestination>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/event_destinations/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<EventDestination>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/core/event_destinations/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Update the details of an event destination.
    */
@@ -80,14 +75,14 @@ export class EventDestinationResource extends StripeResource {
     id: string,
     params?: V2.Core.EventDestinationUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<EventDestination>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/event_destinations/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<EventDestination>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/event_destinations/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Disable an event destination.
    */
@@ -95,18 +90,14 @@ export class EventDestinationResource extends StripeResource {
     id: string,
     params?: V2.Core.EventDestinationDisableParams,
     options?: RequestOptions
-  ): Promise<Response<EventDestination>>;
-  disable(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<EventDestination>>;
-  disable(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/event_destinations/{id}/disable',
-    }).call(this, ...args);
+  ): Promise<Response<EventDestination>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/event_destinations/${id}/disable`,
+      params,
+      options
+    );
   }
-
   /**
    * Enable an event destination.
    */
@@ -114,18 +105,14 @@ export class EventDestinationResource extends StripeResource {
     id: string,
     params?: V2.Core.EventDestinationEnableParams,
     options?: RequestOptions
-  ): Promise<Response<EventDestination>>;
-  enable(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<EventDestination>>;
-  enable(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/event_destinations/{id}/enable',
-    }).call(this, ...args);
+  ): Promise<Response<EventDestination>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/event_destinations/${id}/enable`,
+      params,
+      options
+    );
   }
-
   /**
    * Send a `ping` event to an event destination.
    */
@@ -133,13 +120,13 @@ export class EventDestinationResource extends StripeResource {
     id: string,
     params?: V2.Core.EventDestinationPingParams,
     options?: RequestOptions
-  ): Promise<Response<Event>>;
-  ping(id: string, options?: RequestOptions): Promise<Response<Event>>;
-  ping(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/event_destinations/{id}/ping',
-    }).call(this, ...args);
+  ): Promise<Response<Event>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/event_destinations/${id}/ping`,
+      params,
+      options
+    );
   }
 }
 export interface EventDestination {

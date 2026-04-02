@@ -12,7 +12,6 @@ import {
   Address,
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class SourceResource extends StripeResource {
   /**
@@ -22,15 +21,9 @@ export class SourceResource extends StripeResource {
     id: string,
     params?: SourceRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Source>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Source>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'GET', fullPath: '/v1/sources/{source}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Source>> {
+    return this._makeRequest('GET', `/v1/sources/${id}`, params, options);
   }
-
   /**
    * Updates the specified source by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    *
@@ -40,29 +33,18 @@ export class SourceResource extends StripeResource {
     id: string,
     params?: SourceUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Source>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/sources/{source}',
-    }).call(this, ...args);
+  ): Promise<Response<Source>> {
+    return this._makeRequest('POST', `/v1/sources/${id}`, params, options);
   }
-
   /**
    * Creates a new source object.
    */
   create(
     params?: SourceCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Source>>;
-  create(options?: RequestOptions): Promise<Response<Source>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/sources'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Source>> {
+    return this._makeRequest('POST', '/v1/sources', params, options);
   }
-
   /**
    * Verify a given source.
    */
@@ -70,14 +52,14 @@ export class SourceResource extends StripeResource {
     id: string,
     params: SourceVerifyParams,
     options?: RequestOptions
-  ): Promise<Response<Source>>;
-  verify(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/sources/{source}/verify',
-    }).call(this, ...args);
+  ): Promise<Response<Source>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/sources/${id}/verify`,
+      params,
+      options
+    );
   }
-
   /**
    * List source transactions for a given source.
    */
@@ -85,17 +67,16 @@ export class SourceResource extends StripeResource {
     id: string,
     params?: SourceListSourceTransactionsParams,
     options?: RequestOptions
-  ): ApiListPromise<SourceTransaction>;
-  listSourceTransactions(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<SourceTransaction>;
-  listSourceTransactions(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/sources/{source}/source_transactions',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<SourceTransaction> {
+    return this._makeRequest(
+      'GET',
+      `/v1/sources/${id}/source_transactions`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
 }
 export interface Source {

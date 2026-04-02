@@ -3,7 +3,6 @@
 import {StripeResource} from '../StripeResource.js';
 import {PaginationParams} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ExchangeRateResource extends StripeResource {
   /**
@@ -15,16 +14,11 @@ export class ExchangeRateResource extends StripeResource {
   list(
     params?: ExchangeRateListParams,
     options?: RequestOptions
-  ): ApiListPromise<ExchangeRate>;
-  list(options?: RequestOptions): ApiListPromise<ExchangeRate>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/exchange_rates',
+  ): ApiListPromise<ExchangeRate> {
+    return this._makeRequest('GET', '/v1/exchange_rates', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * [Deprecated] The ExchangeRate APIs are deprecated. Please use the [FX Quotes API](https://docs.stripe.com/payments/currencies/localize-prices/fx-quotes-api) instead.
    *
@@ -35,16 +29,13 @@ export class ExchangeRateResource extends StripeResource {
     id: string,
     params?: ExchangeRateRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ExchangeRate>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ExchangeRate>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/exchange_rates/{rate_id}',
-    }).call(this, ...args);
+  ): Promise<Response<ExchangeRate>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/exchange_rates/${id}`,
+      params,
+      options
+    );
   }
 }
 export interface ExchangeRate {

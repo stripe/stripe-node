@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {Card} from './../../Issuing/Cards.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CardResource extends StripeResource {
   /**
@@ -13,15 +12,14 @@ export class CardResource extends StripeResource {
     id: string,
     params?: TestHelpers.Issuing.CardDeliverCardParams,
     options?: RequestOptions
-  ): Promise<Response<Card>>;
-  deliverCard(id: string, options?: RequestOptions): Promise<Response<Card>>;
-  deliverCard(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/issuing/cards/{card}/shipping/deliver',
-    }).call(this, ...args);
+  ): Promise<Response<Card>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/issuing/cards/${id}/shipping/deliver`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates the shipping status of the specified Issuing Card object to failure.
    */
@@ -29,15 +27,14 @@ export class CardResource extends StripeResource {
     id: string,
     params?: TestHelpers.Issuing.CardFailCardParams,
     options?: RequestOptions
-  ): Promise<Response<Card>>;
-  failCard(id: string, options?: RequestOptions): Promise<Response<Card>>;
-  failCard(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/issuing/cards/{card}/shipping/fail',
-    }).call(this, ...args);
+  ): Promise<Response<Card>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/issuing/cards/${id}/shipping/fail`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates the shipping status of the specified Issuing Card object to returned.
    */
@@ -45,15 +42,14 @@ export class CardResource extends StripeResource {
     id: string,
     params?: TestHelpers.Issuing.CardReturnCardParams,
     options?: RequestOptions
-  ): Promise<Response<Card>>;
-  returnCard(id: string, options?: RequestOptions): Promise<Response<Card>>;
-  returnCard(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/issuing/cards/{card}/shipping/return',
-    }).call(this, ...args);
+  ): Promise<Response<Card>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/issuing/cards/${id}/shipping/return`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates the shipping status of the specified Issuing Card object to shipped.
    */
@@ -61,15 +57,14 @@ export class CardResource extends StripeResource {
     id: string,
     params?: TestHelpers.Issuing.CardShipCardParams,
     options?: RequestOptions
-  ): Promise<Response<Card>>;
-  shipCard(id: string, options?: RequestOptions): Promise<Response<Card>>;
-  shipCard(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/issuing/cards/{card}/shipping/ship',
-    }).call(this, ...args);
+  ): Promise<Response<Card>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/issuing/cards/${id}/shipping/ship`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates the shipping status of the specified Issuing Card object to submitted. This method requires Stripe Version ‘2024-09-30.acacia' or later.
    */
@@ -77,13 +72,13 @@ export class CardResource extends StripeResource {
     id: string,
     params?: TestHelpers.Issuing.CardSubmitCardParams,
     options?: RequestOptions
-  ): Promise<Response<Card>>;
-  submitCard(id: string, options?: RequestOptions): Promise<Response<Card>>;
-  submitCard(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/issuing/cards/{card}/shipping/submit',
-    }).call(this, ...args);
+  ): Promise<Response<Card>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/issuing/cards/${id}/shipping/submit`,
+      params,
+      options
+    );
   }
 }
 export namespace TestHelpers {

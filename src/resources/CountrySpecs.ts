@@ -3,7 +3,6 @@
 import {StripeResource} from '../StripeResource.js';
 import {PaginationParams} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CountrySpecResource extends StripeResource {
   /**
@@ -12,16 +11,11 @@ export class CountrySpecResource extends StripeResource {
   list(
     params?: CountrySpecListParams,
     options?: RequestOptions
-  ): ApiListPromise<CountrySpec>;
-  list(options?: RequestOptions): ApiListPromise<CountrySpec>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/country_specs',
+  ): ApiListPromise<CountrySpec> {
+    return this._makeRequest('GET', '/v1/country_specs', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Returns a Country Spec for a given Country code.
    */
@@ -29,16 +23,8 @@ export class CountrySpecResource extends StripeResource {
     id: string,
     params?: CountrySpecRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<CountrySpec>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CountrySpec>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/country_specs/{country}',
-    }).call(this, ...args);
+  ): Promise<Response<CountrySpec>> {
+    return this._makeRequest('GET', `/v1/country_specs/${id}`, params, options);
   }
 }
 export interface CountrySpec {

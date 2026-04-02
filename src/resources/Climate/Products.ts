@@ -4,7 +4,6 @@ import {StripeResource} from '../../StripeResource.js';
 import {Supplier} from './Suppliers.js';
 import {PaginationParams, Decimal} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ProductResource extends StripeResource {
   /**
@@ -13,12 +12,8 @@ export class ProductResource extends StripeResource {
   list(
     params?: Climate.ProductListParams,
     options?: RequestOptions
-  ): ApiListPromise<Product>;
-  list(options?: RequestOptions): ApiListPromise<Product>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/climate/products',
+  ): ApiListPromise<Product> {
+    return this._makeRequest('GET', '/v1/climate/products', params, options, {
       methodType: 'list',
       responseSchema: {
         kind: 'object',
@@ -32,9 +27,8 @@ export class ProductResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Retrieves the details of a Climate product with the given ID.
    */
@@ -42,17 +36,19 @@ export class ProductResource extends StripeResource {
     id: string,
     params?: Climate.ProductRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Product>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Product>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/climate/products/{product}',
-      responseSchema: {
-        kind: 'object',
-        fields: {metric_tons_available: {kind: 'decimal_string'}},
-      },
-    }).call(this, ...args);
+  ): Promise<Response<Product>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/climate/products/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {metric_tons_available: {kind: 'decimal_string'}},
+        },
+      }
+    );
   }
 }
 export interface Product {

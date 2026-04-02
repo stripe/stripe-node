@@ -26,7 +26,6 @@ import {
   ApiList,
   ApiSearchResultPromise,
 } from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PaymentIntentResource extends StripeResource {
   /**
@@ -35,16 +34,11 @@ export class PaymentIntentResource extends StripeResource {
   list(
     params?: PaymentIntentListParams,
     options?: RequestOptions
-  ): ApiListPromise<PaymentIntent>;
-  list(options?: RequestOptions): ApiListPromise<PaymentIntent>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payment_intents',
+  ): ApiListPromise<PaymentIntent> {
+    return this._makeRequest('GET', '/v1/payment_intents', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Creates a PaymentIntent object.
    *
@@ -60,14 +54,9 @@ export class PaymentIntentResource extends StripeResource {
   create(
     params: PaymentIntentCreateParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/payment_intents'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<PaymentIntent>> {
+    return this._makeRequest('POST', '/v1/payment_intents', params, options);
   }
-
   /**
    * Retrieves the details of a PaymentIntent that has previously been created.
    *
@@ -79,18 +68,14 @@ export class PaymentIntentResource extends StripeResource {
     id: string,
     params?: PaymentIntentRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentIntent>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payment_intents/{intent}',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentIntent>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/payment_intents/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates properties on a PaymentIntent object without confirming.
    *
@@ -104,14 +89,14 @@ export class PaymentIntentResource extends StripeResource {
     id: string,
     params?: PaymentIntentUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payment_intents/{intent}',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_intents/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Search for PaymentIntents you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
    * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
@@ -121,15 +106,17 @@ export class PaymentIntentResource extends StripeResource {
   search(
     params: PaymentIntentSearchParams,
     options?: RequestOptions
-  ): ApiSearchResultPromise<PaymentIntent>;
-  search(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payment_intents/search',
-      methodType: 'search',
-    }).call(this, ...args);
+  ): ApiSearchResultPromise<PaymentIntent> {
+    return this._makeRequest(
+      'GET',
+      '/v1/payment_intents/search',
+      params,
+      options,
+      {
+        methodType: 'search',
+      }
+    );
   }
-
   /**
    * Manually reconcile the remaining amount for a customer_balance PaymentIntent.
    */
@@ -137,18 +124,14 @@ export class PaymentIntentResource extends StripeResource {
     id: string,
     params?: PaymentIntentApplyCustomerBalanceParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>>;
-  applyCustomerBalance(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentIntent>>;
-  applyCustomerBalance(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payment_intents/{intent}/apply_customer_balance',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_intents/${id}/apply_customer_balance`,
+      params,
+      options
+    );
   }
-
   /**
    * You can cancel a PaymentIntent object when it's in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action or, [in rare cases](https://docs.stripe.com/docs/payments/intents), processing.
    *
@@ -160,18 +143,14 @@ export class PaymentIntentResource extends StripeResource {
     id: string,
     params?: PaymentIntentCancelParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>>;
-  cancel(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentIntent>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payment_intents/{intent}/cancel',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_intents/${id}/cancel`,
+      params,
+      options
+    );
   }
-
   /**
    * Capture the funds of an existing uncaptured PaymentIntent when its status is requires_capture.
    *
@@ -183,18 +162,14 @@ export class PaymentIntentResource extends StripeResource {
     id: string,
     params?: PaymentIntentCaptureParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>>;
-  capture(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentIntent>>;
-  capture(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payment_intents/{intent}/capture',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_intents/${id}/capture`,
+      params,
+      options
+    );
   }
-
   /**
    * Confirm that your customer intends to pay with current or provided
    * payment method. Upon confirmation, the PaymentIntent will attempt to initiate
@@ -231,18 +206,14 @@ export class PaymentIntentResource extends StripeResource {
     id: string,
     params?: PaymentIntentConfirmParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>>;
-  confirm(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentIntent>>;
-  confirm(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payment_intents/{intent}/confirm',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_intents/${id}/confirm`,
+      params,
+      options
+    );
   }
-
   /**
    * Perform an incremental authorization on an eligible
    * [PaymentIntent](https://docs.stripe.com/docs/api/payment_intents/object). To be eligible, the
@@ -273,14 +244,14 @@ export class PaymentIntentResource extends StripeResource {
     id: string,
     params: PaymentIntentIncrementAuthorizationParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>>;
-  incrementAuthorization(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payment_intents/{intent}/increment_authorization',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_intents/${id}/increment_authorization`,
+      params,
+      options
+    );
   }
-
   /**
    * Verifies microdeposits on a PaymentIntent object.
    */
@@ -288,18 +259,14 @@ export class PaymentIntentResource extends StripeResource {
     id: string,
     params?: PaymentIntentVerifyMicrodepositsParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentIntent>>;
-  verifyMicrodeposits(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentIntent>>;
-  verifyMicrodeposits(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payment_intents/{intent}/verify_microdeposits',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_intents/${id}/verify_microdeposits`,
+      params,
+      options
+    );
   }
-
   /**
    * Lists all LineItems of a given PaymentIntent.
    */
@@ -307,17 +274,16 @@ export class PaymentIntentResource extends StripeResource {
     id: string,
     params?: PaymentIntentListAmountDetailsLineItemsParams,
     options?: RequestOptions
-  ): ApiListPromise<PaymentIntentAmountDetailsLineItem>;
-  listAmountDetailsLineItems(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<PaymentIntentAmountDetailsLineItem>;
-  listAmountDetailsLineItems(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payment_intents/{intent}/amount_details_line_items',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<PaymentIntentAmountDetailsLineItem> {
+    return this._makeRequest(
+      'GET',
+      `/v1/payment_intents/${id}/amount_details_line_items`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
 }
 export interface PaymentIntent {

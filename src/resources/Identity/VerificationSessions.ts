@@ -11,7 +11,6 @@ import {
   Address,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class VerificationSessionResource extends StripeResource {
   /**
@@ -20,16 +19,17 @@ export class VerificationSessionResource extends StripeResource {
   list(
     params?: Identity.VerificationSessionListParams,
     options?: RequestOptions
-  ): ApiListPromise<VerificationSession>;
-  list(options?: RequestOptions): ApiListPromise<VerificationSession>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/identity/verification_sessions',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<VerificationSession> {
+    return this._makeRequest(
+      'GET',
+      '/v1/identity/verification_sessions',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Creates a VerificationSession object.
    *
@@ -42,15 +42,14 @@ export class VerificationSessionResource extends StripeResource {
   create(
     params?: Identity.VerificationSessionCreateParams,
     options?: RequestOptions
-  ): Promise<Response<VerificationSession>>;
-  create(options?: RequestOptions): Promise<Response<VerificationSession>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/identity/verification_sessions',
-    }).call(this, ...args);
+  ): Promise<Response<VerificationSession>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/identity/verification_sessions',
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves the details of a VerificationSession that was previously created.
    *
@@ -61,18 +60,14 @@ export class VerificationSessionResource extends StripeResource {
     id: string,
     params?: Identity.VerificationSessionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<VerificationSession>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<VerificationSession>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/identity/verification_sessions/{session}',
-    }).call(this, ...args);
+  ): Promise<Response<VerificationSession>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/identity/verification_sessions/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates a VerificationSession object.
    *
@@ -83,14 +78,14 @@ export class VerificationSessionResource extends StripeResource {
     id: string,
     params?: Identity.VerificationSessionUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<VerificationSession>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/identity/verification_sessions/{session}',
-    }).call(this, ...args);
+  ): Promise<Response<VerificationSession>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/identity/verification_sessions/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * A VerificationSession object can be canceled when it is in requires_input [status](https://docs.stripe.com/docs/identity/how-sessions-work).
    *
@@ -100,18 +95,14 @@ export class VerificationSessionResource extends StripeResource {
     id: string,
     params?: Identity.VerificationSessionCancelParams,
     options?: RequestOptions
-  ): Promise<Response<VerificationSession>>;
-  cancel(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<VerificationSession>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/identity/verification_sessions/{session}/cancel',
-    }).call(this, ...args);
+  ): Promise<Response<VerificationSession>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/identity/verification_sessions/${id}/cancel`,
+      params,
+      options
+    );
   }
-
   /**
    * Redact a VerificationSession to remove all collected information from Stripe. This will redact
    * the VerificationSession and all objects related to it, including VerificationReports, Events,
@@ -137,16 +128,13 @@ export class VerificationSessionResource extends StripeResource {
     id: string,
     params?: Identity.VerificationSessionRedactParams,
     options?: RequestOptions
-  ): Promise<Response<VerificationSession>>;
-  redact(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<VerificationSession>>;
-  redact(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/identity/verification_sessions/{session}/redact',
-    }).call(this, ...args);
+  ): Promise<Response<VerificationSession>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/identity/verification_sessions/${id}/redact`,
+      params,
+      options
+    );
   }
 }
 export interface VerificationSession {

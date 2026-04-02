@@ -9,7 +9,6 @@ import {
   Metadata,
 } from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CouponResource extends StripeResource {
   /**
@@ -19,15 +18,9 @@ export class CouponResource extends StripeResource {
     id: string,
     params?: CouponDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedCoupon>>;
-  del(id: string, options?: RequestOptions): Promise<Response<DeletedCoupon>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/coupons/{coupon}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedCoupon>> {
+    return this._makeRequest('DELETE', `/v1/coupons/${id}`, params, options);
   }
-
   /**
    * Retrieves the coupon with the given ID.
    */
@@ -35,15 +28,9 @@ export class CouponResource extends StripeResource {
     id: string,
     params?: CouponRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Coupon>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Coupon>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'GET', fullPath: '/v1/coupons/{coupon}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Coupon>> {
+    return this._makeRequest('GET', `/v1/coupons/${id}`, params, options);
   }
-
   /**
    * Updates the metadata of a coupon. Other coupon details (currency, duration, amount_off) are, by design, not editable.
    */
@@ -51,30 +38,20 @@ export class CouponResource extends StripeResource {
     id: string,
     params?: CouponUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Coupon>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/coupons/{coupon}',
-    }).call(this, ...args);
+  ): Promise<Response<Coupon>> {
+    return this._makeRequest('POST', `/v1/coupons/${id}`, params, options);
   }
-
   /**
    * Returns a list of your coupons.
    */
   list(
     params?: CouponListParams,
     options?: RequestOptions
-  ): ApiListPromise<Coupon>;
-  list(options?: RequestOptions): ApiListPromise<Coupon>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/coupons',
+  ): ApiListPromise<Coupon> {
+    return this._makeRequest('GET', '/v1/coupons', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * You can create coupons easily via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. Coupon creation is also accessible via the API if you need to create coupons on the fly.
    *
@@ -83,13 +60,8 @@ export class CouponResource extends StripeResource {
   create(
     params?: CouponCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Coupon>>;
-  create(options?: RequestOptions): Promise<Response<Coupon>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/coupons'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Coupon>> {
+    return this._makeRequest('POST', '/v1/coupons', params, options);
   }
 }
 export interface Coupon {

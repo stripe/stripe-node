@@ -11,7 +11,6 @@ import {
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CardholderResource extends StripeResource {
   /**
@@ -20,30 +19,31 @@ export class CardholderResource extends StripeResource {
   list(
     params?: Issuing.CardholderListParams,
     options?: RequestOptions
-  ): ApiListPromise<Cardholder>;
-  list(options?: RequestOptions): ApiListPromise<Cardholder>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/cardholders',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<Cardholder> {
+    return this._makeRequest(
+      'GET',
+      '/v1/issuing/cardholders',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
-
   /**
    * Creates a new Issuing Cardholder object that can be issued cards.
    */
   create(
     params: Issuing.CardholderCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Cardholder>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/issuing/cardholders',
-    }).call(this, ...args);
+  ): Promise<Response<Cardholder>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/issuing/cardholders',
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves an Issuing Cardholder object.
    */
@@ -51,15 +51,14 @@ export class CardholderResource extends StripeResource {
     id: string,
     params?: Issuing.CardholderRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Cardholder>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Cardholder>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/cardholders/{cardholder}',
-    }).call(this, ...args);
+  ): Promise<Response<Cardholder>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/issuing/cardholders/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Updates the specified Issuing Cardholder object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    */
@@ -67,12 +66,13 @@ export class CardholderResource extends StripeResource {
     id: string,
     params?: Issuing.CardholderUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Cardholder>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/issuing/cardholders/{cardholder}',
-    }).call(this, ...args);
+  ): Promise<Response<Cardholder>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/issuing/cardholders/${id}`,
+      params,
+      options
+    );
   }
 }
 export interface Cardholder {

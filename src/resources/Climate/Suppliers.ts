@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class SupplierResource extends StripeResource {
   /**
@@ -12,16 +11,11 @@ export class SupplierResource extends StripeResource {
   list(
     params?: Climate.SupplierListParams,
     options?: RequestOptions
-  ): ApiListPromise<Supplier>;
-  list(options?: RequestOptions): ApiListPromise<Supplier>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/climate/suppliers',
+  ): ApiListPromise<Supplier> {
+    return this._makeRequest('GET', '/v1/climate/suppliers', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    });
   }
-
   /**
    * Retrieves a Climate supplier object.
    */
@@ -29,13 +23,13 @@ export class SupplierResource extends StripeResource {
     id: string,
     params?: Climate.SupplierRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Supplier>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Supplier>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/climate/suppliers/{supplier}',
-    }).call(this, ...args);
+  ): Promise<Response<Supplier>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/climate/suppliers/${id}`,
+      params,
+      options
+    );
   }
 }
 export interface Supplier {

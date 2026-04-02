@@ -9,7 +9,6 @@ import {
   Address,
 } from '../../shared.js';
 import {RequestOptions, Response, ApiListPromise, ApiList} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class TransactionResource extends StripeResource {
   /**
@@ -19,46 +18,42 @@ export class TransactionResource extends StripeResource {
     id: string,
     params?: Tax.TransactionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Transaction>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Transaction>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/tax/transactions/{transaction}',
-    }).call(this, ...args);
+  ): Promise<Response<Transaction>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/tax/transactions/${id}`,
+      params,
+      options
+    );
   }
-
   /**
    * Creates a Tax Transaction from a calculation, if that calculation hasn't expired. Calculations expire after 90 days.
    */
   createFromCalculation(
     params: Tax.TransactionCreateFromCalculationParams,
     options?: RequestOptions
-  ): Promise<Response<Transaction>>;
-  createFromCalculation(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/tax/transactions/create_from_calculation',
-    }).call(this, ...args);
+  ): Promise<Response<Transaction>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/tax/transactions/create_from_calculation',
+      params,
+      options
+    );
   }
-
   /**
    * Partially or fully reverses a previously created Transaction.
    */
   createReversal(
     params: Tax.TransactionCreateReversalParams,
     options?: RequestOptions
-  ): Promise<Response<Transaction>>;
-  createReversal(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/tax/transactions/create_reversal',
-    }).call(this, ...args);
+  ): Promise<Response<Transaction>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/tax/transactions/create_reversal',
+      params,
+      options
+    );
   }
-
   /**
    * Retrieves the line items of a committed standalone transaction as a collection.
    */
@@ -66,17 +61,16 @@ export class TransactionResource extends StripeResource {
     id: string,
     params?: Tax.TransactionListLineItemsParams,
     options?: RequestOptions
-  ): ApiListPromise<TransactionLineItem>;
-  listLineItems(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<TransactionLineItem>;
-  listLineItems(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/tax/transactions/{transaction}/line_items',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<TransactionLineItem> {
+    return this._makeRequest(
+      'GET',
+      `/v1/tax/transactions/${id}/line_items`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    );
   }
 }
 export interface Transaction {
