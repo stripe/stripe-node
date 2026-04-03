@@ -13,6 +13,7 @@ import {SettlementAllocationIntentSplit} from './SettlementAllocationIntentSplit
 
 export {OffSessionPayment} from './OffSessionPayments.js';
 export {SettlementAllocationIntent} from './SettlementAllocationIntents.js';
+export {SettlementAllocationIntentSplit} from './SettlementAllocationIntentSplits.js';
 
 export class Payments {
   offSessionPayments: OffSessionPaymentResource;

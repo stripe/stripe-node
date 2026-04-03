@@ -41,6 +41,8 @@ export {ClaimableSandbox} from './ClaimableSandboxes.js';
 export {ConnectionSession} from './ConnectionSessions.js';
 export {Event} from './Events.js';
 export {EventDestination} from './EventDestinations.js';
+export {AccountPersonToken} from './AccountPersonTokens.js';
+export {AccountPerson} from './AccountPersons.js';
 
 export class Core {
   accounts: AccountResource;

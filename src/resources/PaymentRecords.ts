@@ -2844,6 +2844,11 @@ export namespace PaymentRecordReportPaymentParams {
      * The failure code for this payment attempt. Must be one of `payment_method_customer_decline` or `payment_method_provider_unknown_outcome`.
      */
     failure_code?: Failed.FailureCode;
+
+    /**
+     * Processor information for this payment.
+     */
+    processor_details?: Failed.ProcessorDetails;
   }
 
   export interface Guaranteed {
@@ -2851,6 +2856,11 @@ export namespace PaymentRecordReportPaymentParams {
      * When the reported payment was guaranteed. Measured in seconds since the Unix epoch.
      */
     guaranteed_at: number;
+
+    /**
+     * Processor information for this payment.
+     */
+    processor_details?: Guaranteed.ProcessorDetails;
   }
 
   export type Outcome = 'failed' | 'guaranteed';
@@ -2888,6 +2898,50 @@ export namespace PaymentRecordReportPaymentParams {
     export type FailureCode =
       | 'payment_method_customer_decline'
       | 'payment_method_provider_unknown_outcome';
+
+    export interface ProcessorDetails {
+      /**
+       * Information about the custom processor used to make this payment.
+       */
+      custom?: ProcessorDetails.Custom;
+
+      /**
+       * The type of the processor details. An additional hash is included on processor_details with a name matching this value. It contains additional information specific to the processor.
+       */
+      type: 'custom';
+    }
+
+    export namespace ProcessorDetails {
+      export interface Custom {
+        /**
+         * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
+         */
+        payment_reference: string;
+      }
+    }
+  }
+
+  export namespace Guaranteed {
+    export interface ProcessorDetails {
+      /**
+       * Information about the custom processor used to make this payment.
+       */
+      custom?: ProcessorDetails.Custom;
+
+      /**
+       * The type of the processor details. An additional hash is included on processor_details with a name matching this value. It contains additional information specific to the processor.
+       */
+      type: 'custom';
+    }
+
+    export namespace ProcessorDetails {
+      export interface Custom {
+        /**
+         * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
+         */
+        payment_reference: string;
+      }
+    }
   }
 
   export namespace PaymentMethodDetails {
@@ -2992,6 +3046,11 @@ export namespace PaymentRecordReportPaymentAttemptParams {
      * The failure code for this payment attempt. Must be one of `payment_method_customer_decline` or `payment_method_provider_unknown_outcome`.
      */
     failure_code?: Failed.FailureCode;
+
+    /**
+     * Processor information for this payment.
+     */
+    processor_details?: Failed.ProcessorDetails;
   }
 
   export interface Guaranteed {
@@ -2999,6 +3058,11 @@ export namespace PaymentRecordReportPaymentAttemptParams {
      * When the reported payment was guaranteed. Measured in seconds since the Unix epoch.
      */
     guaranteed_at: number;
+
+    /**
+     * Processor information for this payment.
+     */
+    processor_details?: Guaranteed.ProcessorDetails;
   }
 
   export type Outcome = 'failed' | 'guaranteed';
@@ -3046,6 +3110,50 @@ export namespace PaymentRecordReportPaymentAttemptParams {
     export type FailureCode =
       | 'payment_method_customer_decline'
       | 'payment_method_provider_unknown_outcome';
+
+    export interface ProcessorDetails {
+      /**
+       * Information about the custom processor used to make this payment.
+       */
+      custom?: ProcessorDetails.Custom;
+
+      /**
+       * The type of the processor details. An additional hash is included on processor_details with a name matching this value. It contains additional information specific to the processor.
+       */
+      type: 'custom';
+    }
+
+    export namespace ProcessorDetails {
+      export interface Custom {
+        /**
+         * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
+         */
+        payment_reference: string;
+      }
+    }
+  }
+
+  export namespace Guaranteed {
+    export interface ProcessorDetails {
+      /**
+       * Information about the custom processor used to make this payment.
+       */
+      custom?: ProcessorDetails.Custom;
+
+      /**
+       * The type of the processor details. An additional hash is included on processor_details with a name matching this value. It contains additional information specific to the processor.
+       */
+      type: 'custom';
+    }
+
+    export namespace ProcessorDetails {
+      export interface Custom {
+        /**
+         * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
+         */
+        payment_reference: string;
+      }
+    }
   }
 
   export namespace PaymentMethodDetails {
@@ -3120,11 +3228,37 @@ export interface PaymentRecordReportPaymentAttemptFailedParams {
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
+
+  /**
+   * Processor information for this payment.
+   */
+  processor_details?: PaymentRecordReportPaymentAttemptFailedParams.ProcessorDetails;
 }
 export namespace PaymentRecordReportPaymentAttemptFailedParams {
   export type FailureCode =
     | 'payment_method_customer_decline'
     | 'payment_method_provider_unknown_outcome';
+
+  export interface ProcessorDetails {
+    /**
+     * Information about the custom processor used to make this payment.
+     */
+    custom?: ProcessorDetails.Custom;
+
+    /**
+     * The type of the processor details. An additional hash is included on processor_details with a name matching this value. It contains additional information specific to the processor.
+     */
+    type: 'custom';
+  }
+
+  export namespace ProcessorDetails {
+    export interface Custom {
+      /**
+       * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
+       */
+      payment_reference: string;
+    }
+  }
 }
 export interface PaymentRecordReportPaymentAttemptGuaranteedParams {
   /**
@@ -3141,6 +3275,33 @@ export interface PaymentRecordReportPaymentAttemptGuaranteedParams {
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
+
+  /**
+   * Processor information for this payment.
+   */
+  processor_details?: PaymentRecordReportPaymentAttemptGuaranteedParams.ProcessorDetails;
+}
+export namespace PaymentRecordReportPaymentAttemptGuaranteedParams {
+  export interface ProcessorDetails {
+    /**
+     * Information about the custom processor used to make this payment.
+     */
+    custom?: ProcessorDetails.Custom;
+
+    /**
+     * The type of the processor details. An additional hash is included on processor_details with a name matching this value. It contains additional information specific to the processor.
+     */
+    type: 'custom';
+  }
+
+  export namespace ProcessorDetails {
+    export interface Custom {
+      /**
+       * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
+       */
+      payment_reference: string;
+    }
+  }
 }
 export interface PaymentRecordReportPaymentAttemptInformationalParams {
   /**

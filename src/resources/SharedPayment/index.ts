@@ -2,8 +2,10 @@
 
 import {Stripe} from '../../stripe.core.js';
 import {GrantedToken, GrantedTokenResource} from './GrantedTokens.js';
+import {IssuedToken} from './IssuedTokens.js';
 
 export {GrantedToken} from './GrantedTokens.js';
+export {IssuedToken} from './IssuedTokens.js';
 
 export class SharedPayment {
   grantedTokens: GrantedTokenResource;
@@ -15,4 +17,5 @@ export class SharedPayment {
 
 export declare namespace SharedPayment {
   export {GrantedToken};
+  export {IssuedToken};
 }

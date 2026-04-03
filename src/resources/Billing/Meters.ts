@@ -371,12 +371,29 @@ export namespace Billing {
     expand?: Array<string>;
 
     /**
+     * List of tenant payload keys to filter on. Must be used together with tenant_operator and tenant_values. Cannot be used with tenant_filters.
+     */
+    tenant_keys?: Array<string>;
+
+    /**
+     * The operator to apply when filtering by tenant values. Must be used together with tenant_keys and tenant_values. Cannot be used with tenant_filters.
+     */
+    tenant_operator?: MeterListEventSummariesParams.TenantOperator;
+
+    /**
+     * List of value lists corresponding to each key in tenant_keys. Each element contains the values to filter on for the corresponding tenant key. Must be used together with tenant_operator and tenant_keys. Cannot be used with tenant_filters.
+     */
+    tenant_values?: Array<Array<string>>;
+
+    /**
      * Specifies what granularity to use when generating event summaries. If not specified, a single event summary would be returned for the specified time range. For hourly granularity, start and end times must align with hour boundaries (e.g., 00:00, 01:00, ..., 23:00). For daily granularity, start and end times must align with UTC day boundaries (00:00 UTC).
      */
     value_grouping_window?: MeterListEventSummariesParams.ValueGroupingWindow;
   }
 
   export namespace MeterListEventSummariesParams {
+    export type TenantOperator = 'excludes' | 'includes';
+
     export type ValueGroupingWindow = 'day' | 'hour';
   }
 }

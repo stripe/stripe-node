@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Profile} from './../Profiles.js';
+import * as SharedPayment from './../SharedPayment/index.js';
 import {MetadataParam, Address, Emptyable, Metadata} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
 
@@ -160,6 +161,11 @@ export interface RequestedSession {
   payment_method: string | null;
 
   /**
+   * The payment method options for this requested session.
+   */
+  payment_method_options: DelegatedCheckout.RequestedSession.PaymentMethodOptions | null;
+
+  /**
    * The preview of the payment method to be created when the requested session is confirmed.
    */
   payment_method_preview: DelegatedCheckout.RequestedSession.PaymentMethodPreview | null;
@@ -186,7 +192,7 @@ export interface RequestedSession {
   /**
    * The SPT used for payment.
    */
-  shared_payment_issued_token: string | null;
+  shared_payment_issued_token: string | SharedPayment.IssuedToken | null;
 
   /**
    * The status of the requested session.
@@ -351,6 +357,34 @@ export namespace DelegatedCheckout {
       order_status_url: string | null;
     }
 
+    export interface PaymentMethodOptions {
+      /**
+       * Card-specific payment method options.
+       */
+      card: PaymentMethodOptions.Card | null;
+
+      /**
+       * The computed displayable card brands.
+       */
+      displayable_card_brands: Array<
+        PaymentMethodOptions.DisplayableCardBrand
+      > | null;
+
+      /**
+       * The computed displayable payment method types.
+       */
+      displayable_payment_method_types: Array<
+        PaymentMethodOptions.DisplayablePaymentMethodType
+      > | null;
+
+      /**
+       * The payment method types excluded by the agent.
+       */
+      excluded_payment_method_types: Array<
+        PaymentMethodOptions.ExcludedPaymentMethodType
+      > | null;
+    }
+
     export interface PaymentMethodPreview {
       /**
        * The billing details of the payment method.
@@ -405,9 +439,19 @@ export namespace DelegatedCheckout {
        * The URL to the seller's terms of service.
        */
       terms_of_service_url: string | null;
+
+      /**
+       * The card brands supported by the seller.
+       */
+      card_brands: Array<SellerDetails.CardBrand> | null;
+
+      /**
+       * The payment method types supported by the seller.
+       */
+      payment_method_types: Array<SellerDetails.PaymentMethodType> | null;
     }
 
-    export type Status = 'completed' | 'expired' | 'open';
+    export type Status = 'completed' | 'expired' | 'open' | 'requires_action';
 
     export interface TotalDetails {
       /**
@@ -699,6 +743,28 @@ export namespace DelegatedCheckout {
       }
     }
 
+    export namespace PaymentMethodOptions {
+      export interface Card {
+        /**
+         * The card brands blocked by the agent.
+         */
+        brands_blocked: Array<Card.BrandsBlocked> | null;
+      }
+
+      export type DisplayableCardBrand =
+        | 'american_express'
+        | 'mastercard'
+        | 'visa';
+
+      export type DisplayablePaymentMethodType = 'affirm' | 'card' | 'klarna';
+
+      export type ExcludedPaymentMethodType = 'affirm' | 'card' | 'klarna';
+
+      export namespace Card {
+        export type BrandsBlocked = 'american_express' | 'mastercard' | 'visa';
+      }
+    }
+
     export namespace PaymentMethodPreview {
       export interface BillingDetails {
         /**
@@ -771,6 +837,10 @@ export namespace DelegatedCheckout {
 
     export namespace SellerDetails {
       export interface MarketplaceSellerDetails {}
+
+      export type CardBrand = 'american_express' | 'mastercard' | 'visa';
+
+      export type PaymentMethodType = 'affirm' | 'card' | 'klarna';
     }
 
     export namespace TotalDetails {
@@ -841,9 +911,9 @@ export namespace DelegatedCheckout {
     payment_method?: string;
 
     /**
-     * The payment method data for this requested session.
+     * The payment method options for this requested session.
      */
-    payment_method_data?: RequestedSessionCreateParams.PaymentMethodData;
+    payment_method_options?: RequestedSessionCreateParams.PaymentMethodOptions;
 
     /**
      * The setup future usage for this requested session.
@@ -959,21 +1029,18 @@ export namespace DelegatedCheckout {
       phone?: string;
     }
 
-    export interface PaymentMethodData {
+    export interface PaymentMethodOptions {
       /**
-       * The billing details for the payment method data.
+       * Card-specific payment method options.
        */
-      billing_details?: PaymentMethodData.BillingDetails;
+      card?: PaymentMethodOptions.Card;
 
       /**
-       * The card for the payment method data.
+       * The payment method types to exclude from the session.
        */
-      card?: PaymentMethodData.Card;
-
-      /**
-       * The type of the payment method data.
-       */
-      type?: 'card';
+      excluded_payment_method_types?: Array<
+        PaymentMethodOptions.ExcludedPaymentMethodType
+      >;
     }
 
     export namespace AffiliateAttribution {
@@ -1035,83 +1102,18 @@ export namespace DelegatedCheckout {
       }
     }
 
-    export namespace PaymentMethodData {
-      export interface BillingDetails {
-        /**
-         * The address for the billing details.
-         */
-        address?: BillingDetails.Address;
-
-        /**
-         * The email for the billing details.
-         */
-        email?: string;
-
-        /**
-         * The name for the billing details.
-         */
-        name?: string;
-
-        /**
-         * The phone for the billing details.
-         */
-        phone?: string;
-      }
-
+    export namespace PaymentMethodOptions {
       export interface Card {
         /**
-         * The CVC of the card.
+         * The card brands to exclude from the session.
          */
-        cvc?: string;
-
-        /**
-         * The expiration month of the card.
-         */
-        exp_month: number;
-
-        /**
-         * The expiration year of the card.
-         */
-        exp_year: number;
-
-        /**
-         * The number of the card.
-         */
-        number: string;
+        brands_blocked?: Array<Card.BrandsBlocked>;
       }
 
-      export namespace BillingDetails {
-        export interface Address {
-          /**
-           * City, district, suburb, town, or village.
-           */
-          city: string;
+      export type ExcludedPaymentMethodType = 'affirm' | 'card' | 'klarna';
 
-          /**
-           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-           */
-          country: string;
-
-          /**
-           * Address line 1, such as the street, PO Box, or company name.
-           */
-          line1?: string;
-
-          /**
-           * Address line 2, such as the apartment, suite, unit, or building.
-           */
-          line2?: string;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code: string;
-
-          /**
-           * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-           */
-          state: string;
-        }
+      export namespace Card {
+        export type BrandsBlocked = 'american_express' | 'mastercard' | 'visa';
       }
     }
   }
@@ -1152,11 +1154,9 @@ export namespace DelegatedCheckout {
     payment_method?: string;
 
     /**
-     * The payment method data for this requested session.
+     * The payment method options for this requested session.
      */
-    payment_method_data?: Emptyable<
-      RequestedSessionUpdateParams.PaymentMethodData
-    >;
+    payment_method_options?: RequestedSessionUpdateParams.PaymentMethodOptions;
 
     /**
      * The shared metadata for this requested session.
@@ -1213,21 +1213,18 @@ export namespace DelegatedCheckout {
       quantity: number;
     }
 
-    export interface PaymentMethodData {
+    export interface PaymentMethodOptions {
       /**
-       * The billing details for the payment method data.
+       * Card-specific payment method options.
        */
-      billing_details?: PaymentMethodData.BillingDetails;
+      card?: PaymentMethodOptions.Card;
 
       /**
-       * The card for the payment method data.
+       * The payment method types to exclude from the session.
        */
-      card?: PaymentMethodData.Card;
-
-      /**
-       * The type of the payment method data.
-       */
-      type?: 'card';
+      excluded_payment_method_types?: Array<
+        PaymentMethodOptions.ExcludedPaymentMethodType
+      >;
     }
 
     export namespace FulfillmentDetails {
@@ -1335,83 +1332,18 @@ export namespace DelegatedCheckout {
       }
     }
 
-    export namespace PaymentMethodData {
-      export interface BillingDetails {
-        /**
-         * The address for the billing details.
-         */
-        address?: BillingDetails.Address;
-
-        /**
-         * The email for the billing details.
-         */
-        email?: string;
-
-        /**
-         * The name for the billing details.
-         */
-        name?: string;
-
-        /**
-         * The phone for the billing details.
-         */
-        phone?: string;
-      }
-
+    export namespace PaymentMethodOptions {
       export interface Card {
         /**
-         * The CVC of the card.
+         * The card brands to exclude from the session.
          */
-        cvc?: string;
-
-        /**
-         * The expiration month of the card.
-         */
-        exp_month: number;
-
-        /**
-         * The expiration year of the card.
-         */
-        exp_year: number;
-
-        /**
-         * The number of the card.
-         */
-        number: string;
+        brands_blocked?: Array<Card.BrandsBlocked>;
       }
 
-      export namespace BillingDetails {
-        export interface Address {
-          /**
-           * City, district, suburb, town, or village.
-           */
-          city: string;
+      export type ExcludedPaymentMethodType = 'affirm' | 'card' | 'klarna';
 
-          /**
-           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-           */
-          country: string;
-
-          /**
-           * Address line 1, such as the street, PO Box, or company name.
-           */
-          line1?: string;
-
-          /**
-           * Address line 2, such as the apartment, suite, unit, or building.
-           */
-          line2?: string;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code: string;
-
-          /**
-           * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-           */
-          state: string;
-        }
+      export namespace Card {
+        export type BrandsBlocked = 'american_express' | 'mastercard' | 'visa';
       }
     }
   }
@@ -1432,11 +1364,6 @@ export namespace DelegatedCheckout {
      * The PaymentMethod to use with the requested session.
      */
     payment_method?: string;
-
-    /**
-     * The payment method data for this requested session.
-     */
-    payment_method_data?: RequestedSessionConfirmParams.PaymentMethodData;
 
     /**
      * Risk details/signals associated with the requested session
@@ -1504,23 +1431,6 @@ export namespace DelegatedCheckout {
       touchpoint: AffiliateAttribution.Touchpoint;
     }
 
-    export interface PaymentMethodData {
-      /**
-       * The billing details for the payment method data.
-       */
-      billing_details?: PaymentMethodData.BillingDetails;
-
-      /**
-       * The card for the payment method data.
-       */
-      card?: PaymentMethodData.Card;
-
-      /**
-       * The type of the payment method data.
-       */
-      type?: 'card';
-    }
-
     export interface RiskDetails {
       /**
        * The client device metadata details for this requested session.
@@ -1550,86 +1460,6 @@ export namespace DelegatedCheckout {
 
       export namespace Source {
         export type Type = 'platform' | 'url';
-      }
-    }
-
-    export namespace PaymentMethodData {
-      export interface BillingDetails {
-        /**
-         * The address for the billing details.
-         */
-        address?: BillingDetails.Address;
-
-        /**
-         * The email for the billing details.
-         */
-        email?: string;
-
-        /**
-         * The name for the billing details.
-         */
-        name?: string;
-
-        /**
-         * The phone for the billing details.
-         */
-        phone?: string;
-      }
-
-      export interface Card {
-        /**
-         * The CVC of the card.
-         */
-        cvc?: string;
-
-        /**
-         * The expiration month of the card.
-         */
-        exp_month: number;
-
-        /**
-         * The expiration year of the card.
-         */
-        exp_year: number;
-
-        /**
-         * The number of the card.
-         */
-        number: string;
-      }
-
-      export namespace BillingDetails {
-        export interface Address {
-          /**
-           * City, district, suburb, town, or village.
-           */
-          city: string;
-
-          /**
-           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-           */
-          country: string;
-
-          /**
-           * Address line 1, such as the street, PO Box, or company name.
-           */
-          line1?: string;
-
-          /**
-           * Address line 2, such as the apartment, suite, unit, or building.
-           */
-          line2?: string;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code: string;
-
-          /**
-           * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-           */
-          state: string;
-        }
       }
     }
 

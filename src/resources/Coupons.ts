@@ -232,8 +232,14 @@ export namespace Coupon {
   }
 
   export interface ServicePeriod {
+    /**
+     * Specifies coupon frequency. Either `day`, `week`, `month` or `year`.
+     */
     interval: string;
 
+    /**
+     * The number of intervals for which the coupon will be applied.
+     */
     interval_count: number;
 
     iterations: ServicePeriod.Iterations;
@@ -249,8 +255,14 @@ export namespace Coupon {
 
   export namespace ServicePeriod {
     export interface Iterations {
+      /**
+       * The number of iterations the service period will repeat for. Only used when type is `count`.
+       */
       count: number | null;
 
+      /**
+       * The type of iterations.
+       */
       type: Iterations.Type;
     }
 

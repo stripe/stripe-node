@@ -15,6 +15,7 @@ import {
   MetadataParam,
   AddressParam,
   Address,
+  ShippingAddressParam,
   PaginationParams,
   RangeQueryParam,
   Metadata,
@@ -947,6 +948,11 @@ export namespace PaymentIntent {
     order_reference: string | null;
 
     subscription?: PaymentDetails.Subscription;
+
+    /**
+     * Fleet data for this PaymentIntent.
+     */
+    fleet_data?: Array<PaymentDetails.FleetDatum>;
   }
 
   export interface PaymentMethodConfigurationDetails {
@@ -2646,6 +2652,14 @@ export namespace PaymentIntent {
       starts_at?: number;
     }
 
+    export interface FleetDatum {
+      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
+
+      station?: FleetDatum.Station;
+
+      vat?: FleetDatum.Vat;
+    }
+
     export namespace Benefit {
       export interface FrMealVoucher {
         /**
@@ -3081,6 +3095,51 @@ export namespace PaymentIntent {
            */
           phone?: string;
         }
+      }
+    }
+
+    export namespace FleetDatum {
+      export interface PrimaryFuelFields {
+        /**
+         * The fuel brand.
+         */
+        brand?: string;
+      }
+
+      export interface Station {
+        /**
+         * Additional contact information for the station.
+         */
+        additional_contact_info?: string;
+
+        /**
+         * The customer service phone number of the station.
+         */
+        customer_service_phone_number?: string;
+
+        /**
+         * The partner ID code of the station.
+         */
+        partner_id_code?: string;
+
+        /**
+         * The phone number of the station.
+         */
+        phone_number?: string;
+
+        service_location?: Address;
+
+        /**
+         * The URL of the station.
+         */
+        url?: string;
+      }
+
+      export interface Vat {
+        /**
+         * Indicates the merchant's agreement for Invoice on Behalf (IOB) VAT processing.
+         */
+        iob_indicator?: string;
       }
     }
 
@@ -5837,6 +5896,16 @@ export namespace PaymentIntentCreateParams {
      * Subscription details for this PaymentIntent
      */
     subscription?: PaymentDetails.Subscription;
+
+    /**
+     * Fleet data for this PaymentIntent.
+     */
+    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
+
+    /**
+     * Money services details for this PaymentIntent.
+     */
+    money_services?: Emptyable<PaymentDetails.MoneyServices>;
   }
 
   export interface PaymentMethodData {
@@ -6647,6 +6716,11 @@ export namespace PaymentIntentCreateParams {
            * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
            */
           commodity_code?: string;
+
+          /**
+           * Fleet data for this line item.
+           */
+          fleet_data?: Card.FleetData;
         }
 
         export interface CardPresent {
@@ -6693,6 +6767,71 @@ export namespace PaymentIntentCreateParams {
            * The Stripe account ID of the connected account that sells the item.
            */
           sold_by?: string;
+        }
+
+        export namespace Card {
+          export interface FleetData {
+            /**
+             * The type of product being purchased at this line item.
+             */
+            product_type: FleetData.ProductType;
+
+            /**
+             * The type of service received at the acceptor location.
+             */
+            service_type?: FleetData.ServiceType;
+          }
+
+          export namespace FleetData {
+            export type ProductType =
+              | 'air_conditioning_service'
+              | 'alcohol'
+              | 'aviation_fuel_premium'
+              | 'aviation_fuel_regular'
+              | 'car_care_detailing'
+              | 'compressed_natural_gas'
+              | 'deli'
+              | 'food_service'
+              | 'green_gasoline_mid_plus'
+              | 'green_gasoline_premium_super'
+              | 'green_gasoline_regular'
+              | 'grocery'
+              | 'liquid_natural_gas'
+              | 'liquid_propane_gas'
+              | 'lodging'
+              | 'marine_diesel'
+              | 'marine_fuel'
+              | 'merchandise'
+              | 'mid_plus'
+              | 'mid_plus_ethanol'
+              | 'miscellaneous_aviation_products_services'
+              | 'miscellaneous_fuel'
+              | 'miscellaneous_marine_products_services'
+              | 'miscellaneous_vehicle_products_services'
+              | 'packaged_beverage'
+              | 'premium_diesel'
+              | 'premium_super'
+              | 'premium_super_ethanol'
+              | 'preventative_maintenance'
+              | 'regular'
+              | 'regular_diesel'
+              | 'regular_ethanol'
+              | 'repairs'
+              | 'self_service_car_wash'
+              | 'shower'
+              | 'store_service'
+              | 'tobacco'
+              | 'vehicle_accessories'
+              | 'vehicle_parking'
+              | 'vehicle_parts'
+              | 'wash_out';
+
+            export type ServiceType =
+              | 'full_service'
+              | 'high_speed_diesel'
+              | 'non_fuel_only'
+              | 'self_service';
+          }
         }
 
         export namespace Paypal {
@@ -7327,6 +7466,35 @@ export namespace PaymentIntentCreateParams {
       starts_at?: number;
     }
 
+    export interface FleetDatum {
+      /**
+       * Primary fuel fields for the transaction.
+       */
+      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
+
+      /**
+       * Station and acceptor location details.
+       */
+      station?: FleetDatum.Station;
+
+      /**
+       * VAT and Invoice on Behalf (IOB) details.
+       */
+      vat?: FleetDatum.Vat;
+    }
+
+    export interface MoneyServices {
+      /**
+       * Account funding transaction details including sender and beneficiary information.
+       */
+      account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: 'account_funding';
+    }
+
     export namespace Benefit {
       export interface FrMealVoucher {
         /**
@@ -7860,6 +8028,197 @@ export namespace PaymentIntentCreateParams {
            */
           phone?: string;
         }
+      }
+    }
+
+    export namespace FleetDatum {
+      export interface PrimaryFuelFields {
+        /**
+         * The fuel brand.
+         */
+        brand?: PrimaryFuelFields.Brand;
+      }
+
+      export interface Station {
+        /**
+         * Additional contact information for the station.
+         */
+        additional_contact_info?: string;
+
+        /**
+         * The customer service phone number of the station.
+         */
+        customer_service_phone_number?: string;
+
+        /**
+         * The partner ID code of the station.
+         */
+        partner_id_code?: string;
+
+        /**
+         * The phone number of the station.
+         */
+        phone_number?: string;
+
+        /**
+         * The physical location of the station.
+         */
+        service_location?: ShippingAddressParam;
+
+        /**
+         * The URL of the station.
+         */
+        url?: string;
+      }
+
+      export interface Vat {
+        /**
+         * Indicates the merchant's agreement for Invoice on Behalf (IOB) VAT processing.
+         */
+        iob_indicator: Vat.IobIndicator;
+      }
+
+      export namespace PrimaryFuelFields {
+        export type Brand =
+          | 'aafes'
+          | 'amerada_hess'
+          | 'amoco_canada'
+          | 'amoco_petroleum_products'
+          | 'arco_products'
+          | 'asda'
+          | 'ashland_oil'
+          | 'bfl'
+          | 'bp_mobil'
+          | 'bp_oil'
+          | 'burrnah_major'
+          | 'butler_arndale'
+          | 'canadian_tire'
+          | 'canadian_turbo'
+          | 'caseys_general_store'
+          | 'cenex'
+          | 'chevron_canada'
+          | 'chevron_usa'
+          | 'circle_k_stores'
+          | 'citgo_petroleum'
+          | 'clark_brands'
+          | 'conoco_canada'
+          | 'conoco_inc'
+          | 'crown_central_petroleum'
+          | 'diamond_shamrock_inc'
+          | 'discount_tire'
+          | 'domo_gas'
+          | 'elf'
+          | 'erickson_oil'
+          | 'esso'
+          | 'esso_canada'
+          | 'exxon'
+          | 'exxonmobil'
+          | 'family_express'
+          | 'fas_gas_oil'
+          | 'federated_coop_sonic'
+          | 'fina'
+          | 'fina_inc'
+          | 'fkg_oil'
+          | 'flare'
+          | 'flying_j_inc'
+          | 'gas_america'
+          | 'gate_petroleum'
+          | 'getty_petroleum'
+          | 'giant_eagle'
+          | 'grow_mark_inc'
+          | 'gulf'
+          | 'gulf_canada'
+          | 'gulf_chevron'
+          | 'handy_way_food'
+          | 'heron'
+          | 'holiday_stores'
+          | 'home_depot'
+          | 'husky'
+          | 'hyvees'
+          | 'irving'
+          | 'irving_oil'
+          | 'j_sainsbury'
+          | 'jet_conoco'
+          | 'krogers'
+          | 'kuwait'
+          | 'kwik_trip_inc'
+          | 'lassus'
+          | 'loves_country_stores'
+          | 'mapco_express_inc'
+          | 'marathon_oil'
+          | 'martin_bailey_inc_dba_hucks'
+          | 'maxol'
+          | 'meineke'
+          | 'mfa'
+          | 'mohawk'
+          | 'mr_gas'
+          | 'murco'
+          | 'murphy_oil_canada'
+          | 'murphy_oil_usa_inc'
+          | 'nexcom'
+          | 'nordstrom_oil'
+          | 'olco'
+          | 'pdq_store'
+          | 'pennzoil_products_inc'
+          | 'petro'
+          | 'petro_canada'
+          | 'petro_t'
+          | 'phillips'
+          | 'pilot'
+          | 'pioneer'
+          | 'pure_oil'
+          | 'quaker_state'
+          | 'quarles_oil'
+          | 'quiktrip'
+          | 'racetrac_petroleum_inc'
+          | 'raceway_petroleum'
+          | 'repsol'
+          | 'rudy'
+          | 'safeway'
+          | 'seven_eleven'
+          | 'sheetz'
+          | 'shell'
+          | 'shell_canada'
+          | 'shell_oil'
+          | 'sinclair_oil'
+          | 'southland_oil'
+          | 'spar'
+          | 'speedway'
+          | 'sun_company_inc'
+          | 'suncor_sunoco_canada'
+          | 'tempo'
+          | 'tesco'
+          | 'tesoro_alaska'
+          | 'texaco'
+          | 'the_pantry_inc'
+          | 'thornton_oil'
+          | 'tosco'
+          | 'total'
+          | 'travel_centers_of_america'
+          | 'uk'
+          | 'ultramar_canada'
+          | 'unbranded_or_unassigned'
+          | 'unbranded_unassigned'
+          | 'union_76'
+          | 'united_dairy_farmer'
+          | 'united_refining_kwikfill'
+          | 'us_oil'
+          | 'usa_petroleum'
+          | 'valvoline'
+          | 'vg'
+          | 'w_morrison'
+          | 'warren_equities'
+          | 'wawa'
+          | 'western_energetix'
+          | 'wilco'
+          | 'zions';
+      }
+
+      export namespace Vat {
+        export type IobIndicator =
+          | 'issuer_to_iob'
+          | 'issuer_to_iob_and_incremental_certification'
+          | 'merchant_does_not_agree_to_iob';
       }
     }
 
@@ -8586,6 +8945,10 @@ export namespace PaymentIntentCreateParams {
           }
         }
       }
+    }
+
+    export namespace MoneyServices {
+      export interface AccountFunding {}
     }
 
     export namespace Subscription {
@@ -9568,6 +9931,11 @@ export namespace PaymentIntentCreateParams {
        * the authentication details to use for this payment.
        */
       three_d_secure?: Card.ThreeDSecure;
+
+      /**
+       * Payment details for payment method specific funding fields.
+       */
+      payment_details?: Card.PaymentDetails;
     }
 
     export interface CardPresent {
@@ -9599,6 +9967,11 @@ export namespace PaymentIntentCreateParams {
        * Network routing priority on co-branded EMV cards supporting domestic debit and international card schemes.
        */
       routing?: CardPresent.Routing;
+
+      /**
+       * Payment details for payment method specific funding transaction fields.
+       */
+      payment_details?: CardPresent.PaymentDetails;
     }
 
     export interface Cashapp {
@@ -10363,6 +10736,11 @@ export namespace PaymentIntentCreateParams {
 
     export interface StripeBalance {
       /**
+       * Additional fields for mandate creation.
+       */
+      mandate_options?: StripeBalance.MandateOptions;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -10374,11 +10752,6 @@ export namespace PaymentIntentCreateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Emptyable<StripeBalance.SetupFutureUsage>;
-
-      /**
-       * Additional fields for mandate creation.
-       */
-      mandate_options?: StripeBalance.MandateOptions;
     }
 
     export interface Swish {
@@ -10740,6 +11113,13 @@ export namespace PaymentIntentCreateParams {
         version: ThreeDSecure.Version;
       }
 
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
       export namespace Installments {
         export interface Plan {
           /**
@@ -10768,6 +11148,19 @@ export namespace PaymentIntentCreateParams {
         export type AmountType = 'fixed' | 'maximum';
 
         export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+      }
+
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          /**
+           * Payment method specific account funding transaction details.
+           */
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {}
+        }
       }
 
       export namespace ThreeDSecure {
@@ -10832,6 +11225,26 @@ export namespace PaymentIntentCreateParams {
          * Routing requested priority
          */
         requested_priority?: Routing.RequestedPriority;
+      }
+
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          /**
+           * Payment method specific account funding transaction details.
+           */
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {}
+        }
       }
 
       export namespace Routing {
@@ -12472,14 +12885,14 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace StripeBalance {
-      export type SetupFutureUsage = 'none' | 'off_session';
-
       export interface MandateOptions {
         /**
          * The ID of the Stripe Balance Debit Agreement used for this mandate.
          */
         stripe_balance_debit_agreement?: string;
       }
+
+      export type SetupFutureUsage = 'none' | 'off_session';
     }
 
     export namespace Upi {
@@ -12969,6 +13382,16 @@ export namespace PaymentIntentUpdateParams {
      * Subscription details for this PaymentIntent
      */
     subscription?: PaymentDetails.Subscription;
+
+    /**
+     * Fleet data for this PaymentIntent.
+     */
+    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
+
+    /**
+     * Money services details for this PaymentIntent.
+     */
+    money_services?: Emptyable<PaymentDetails.MoneyServices>;
   }
 
   export interface PaymentMethodData {
@@ -13749,6 +14172,11 @@ export namespace PaymentIntentUpdateParams {
            * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
            */
           commodity_code?: string;
+
+          /**
+           * Fleet data for this line item.
+           */
+          fleet_data?: Card.FleetData;
         }
 
         export interface CardPresent {
@@ -13795,6 +14223,71 @@ export namespace PaymentIntentUpdateParams {
            * The Stripe account ID of the connected account that sells the item.
            */
           sold_by?: string;
+        }
+
+        export namespace Card {
+          export interface FleetData {
+            /**
+             * The type of product being purchased at this line item.
+             */
+            product_type: FleetData.ProductType;
+
+            /**
+             * The type of service received at the acceptor location.
+             */
+            service_type?: FleetData.ServiceType;
+          }
+
+          export namespace FleetData {
+            export type ProductType =
+              | 'air_conditioning_service'
+              | 'alcohol'
+              | 'aviation_fuel_premium'
+              | 'aviation_fuel_regular'
+              | 'car_care_detailing'
+              | 'compressed_natural_gas'
+              | 'deli'
+              | 'food_service'
+              | 'green_gasoline_mid_plus'
+              | 'green_gasoline_premium_super'
+              | 'green_gasoline_regular'
+              | 'grocery'
+              | 'liquid_natural_gas'
+              | 'liquid_propane_gas'
+              | 'lodging'
+              | 'marine_diesel'
+              | 'marine_fuel'
+              | 'merchandise'
+              | 'mid_plus'
+              | 'mid_plus_ethanol'
+              | 'miscellaneous_aviation_products_services'
+              | 'miscellaneous_fuel'
+              | 'miscellaneous_marine_products_services'
+              | 'miscellaneous_vehicle_products_services'
+              | 'packaged_beverage'
+              | 'premium_diesel'
+              | 'premium_super'
+              | 'premium_super_ethanol'
+              | 'preventative_maintenance'
+              | 'regular'
+              | 'regular_diesel'
+              | 'regular_ethanol'
+              | 'repairs'
+              | 'self_service_car_wash'
+              | 'shower'
+              | 'store_service'
+              | 'tobacco'
+              | 'vehicle_accessories'
+              | 'vehicle_parking'
+              | 'vehicle_parts'
+              | 'wash_out';
+
+            export type ServiceType =
+              | 'full_service'
+              | 'high_speed_diesel'
+              | 'non_fuel_only'
+              | 'self_service';
+          }
         }
 
         export namespace Paypal {
@@ -14411,6 +14904,35 @@ export namespace PaymentIntentUpdateParams {
       starts_at?: number;
     }
 
+    export interface FleetDatum {
+      /**
+       * Primary fuel fields for the transaction.
+       */
+      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
+
+      /**
+       * Station and acceptor location details.
+       */
+      station?: FleetDatum.Station;
+
+      /**
+       * VAT and Invoice on Behalf (IOB) details.
+       */
+      vat?: FleetDatum.Vat;
+    }
+
+    export interface MoneyServices {
+      /**
+       * Account funding transaction details including sender and beneficiary information.
+       */
+      account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: 'account_funding';
+    }
+
     export namespace Benefit {
       export interface FrMealVoucher {
         /**
@@ -14944,6 +15466,197 @@ export namespace PaymentIntentUpdateParams {
            */
           phone?: string;
         }
+      }
+    }
+
+    export namespace FleetDatum {
+      export interface PrimaryFuelFields {
+        /**
+         * The fuel brand.
+         */
+        brand?: PrimaryFuelFields.Brand;
+      }
+
+      export interface Station {
+        /**
+         * Additional contact information for the station.
+         */
+        additional_contact_info?: string;
+
+        /**
+         * The customer service phone number of the station.
+         */
+        customer_service_phone_number?: string;
+
+        /**
+         * The partner ID code of the station.
+         */
+        partner_id_code?: string;
+
+        /**
+         * The phone number of the station.
+         */
+        phone_number?: string;
+
+        /**
+         * The physical location of the station.
+         */
+        service_location?: ShippingAddressParam;
+
+        /**
+         * The URL of the station.
+         */
+        url?: string;
+      }
+
+      export interface Vat {
+        /**
+         * Indicates the merchant's agreement for Invoice on Behalf (IOB) VAT processing.
+         */
+        iob_indicator: Vat.IobIndicator;
+      }
+
+      export namespace PrimaryFuelFields {
+        export type Brand =
+          | 'aafes'
+          | 'amerada_hess'
+          | 'amoco_canada'
+          | 'amoco_petroleum_products'
+          | 'arco_products'
+          | 'asda'
+          | 'ashland_oil'
+          | 'bfl'
+          | 'bp_mobil'
+          | 'bp_oil'
+          | 'burrnah_major'
+          | 'butler_arndale'
+          | 'canadian_tire'
+          | 'canadian_turbo'
+          | 'caseys_general_store'
+          | 'cenex'
+          | 'chevron_canada'
+          | 'chevron_usa'
+          | 'circle_k_stores'
+          | 'citgo_petroleum'
+          | 'clark_brands'
+          | 'conoco_canada'
+          | 'conoco_inc'
+          | 'crown_central_petroleum'
+          | 'diamond_shamrock_inc'
+          | 'discount_tire'
+          | 'domo_gas'
+          | 'elf'
+          | 'erickson_oil'
+          | 'esso'
+          | 'esso_canada'
+          | 'exxon'
+          | 'exxonmobil'
+          | 'family_express'
+          | 'fas_gas_oil'
+          | 'federated_coop_sonic'
+          | 'fina'
+          | 'fina_inc'
+          | 'fkg_oil'
+          | 'flare'
+          | 'flying_j_inc'
+          | 'gas_america'
+          | 'gate_petroleum'
+          | 'getty_petroleum'
+          | 'giant_eagle'
+          | 'grow_mark_inc'
+          | 'gulf'
+          | 'gulf_canada'
+          | 'gulf_chevron'
+          | 'handy_way_food'
+          | 'heron'
+          | 'holiday_stores'
+          | 'home_depot'
+          | 'husky'
+          | 'hyvees'
+          | 'irving'
+          | 'irving_oil'
+          | 'j_sainsbury'
+          | 'jet_conoco'
+          | 'krogers'
+          | 'kuwait'
+          | 'kwik_trip_inc'
+          | 'lassus'
+          | 'loves_country_stores'
+          | 'mapco_express_inc'
+          | 'marathon_oil'
+          | 'martin_bailey_inc_dba_hucks'
+          | 'maxol'
+          | 'meineke'
+          | 'mfa'
+          | 'mohawk'
+          | 'mr_gas'
+          | 'murco'
+          | 'murphy_oil_canada'
+          | 'murphy_oil_usa_inc'
+          | 'nexcom'
+          | 'nordstrom_oil'
+          | 'olco'
+          | 'pdq_store'
+          | 'pennzoil_products_inc'
+          | 'petro'
+          | 'petro_canada'
+          | 'petro_t'
+          | 'phillips'
+          | 'pilot'
+          | 'pioneer'
+          | 'pure_oil'
+          | 'quaker_state'
+          | 'quarles_oil'
+          | 'quiktrip'
+          | 'racetrac_petroleum_inc'
+          | 'raceway_petroleum'
+          | 'repsol'
+          | 'rudy'
+          | 'safeway'
+          | 'seven_eleven'
+          | 'sheetz'
+          | 'shell'
+          | 'shell_canada'
+          | 'shell_oil'
+          | 'sinclair_oil'
+          | 'southland_oil'
+          | 'spar'
+          | 'speedway'
+          | 'sun_company_inc'
+          | 'suncor_sunoco_canada'
+          | 'tempo'
+          | 'tesco'
+          | 'tesoro_alaska'
+          | 'texaco'
+          | 'the_pantry_inc'
+          | 'thornton_oil'
+          | 'tosco'
+          | 'total'
+          | 'travel_centers_of_america'
+          | 'uk'
+          | 'ultramar_canada'
+          | 'unbranded_or_unassigned'
+          | 'unbranded_unassigned'
+          | 'union_76'
+          | 'united_dairy_farmer'
+          | 'united_refining_kwikfill'
+          | 'us_oil'
+          | 'usa_petroleum'
+          | 'valvoline'
+          | 'vg'
+          | 'w_morrison'
+          | 'warren_equities'
+          | 'wawa'
+          | 'western_energetix'
+          | 'wilco'
+          | 'zions';
+      }
+
+      export namespace Vat {
+        export type IobIndicator =
+          | 'issuer_to_iob'
+          | 'issuer_to_iob_and_incremental_certification'
+          | 'merchant_does_not_agree_to_iob';
       }
     }
 
@@ -15670,6 +16383,10 @@ export namespace PaymentIntentUpdateParams {
           }
         }
       }
+    }
+
+    export namespace MoneyServices {
+      export interface AccountFunding {}
     }
 
     export namespace Subscription {
@@ -16652,6 +17369,11 @@ export namespace PaymentIntentUpdateParams {
        * the authentication details to use for this payment.
        */
       three_d_secure?: Card.ThreeDSecure;
+
+      /**
+       * Payment details for payment method specific funding fields.
+       */
+      payment_details?: Card.PaymentDetails;
     }
 
     export interface CardPresent {
@@ -16683,6 +17405,11 @@ export namespace PaymentIntentUpdateParams {
        * Network routing priority on co-branded EMV cards supporting domestic debit and international card schemes.
        */
       routing?: CardPresent.Routing;
+
+      /**
+       * Payment details for payment method specific funding transaction fields.
+       */
+      payment_details?: CardPresent.PaymentDetails;
     }
 
     export interface Cashapp {
@@ -17447,6 +18174,11 @@ export namespace PaymentIntentUpdateParams {
 
     export interface StripeBalance {
       /**
+       * Additional fields for mandate creation.
+       */
+      mandate_options?: StripeBalance.MandateOptions;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -17458,11 +18190,6 @@ export namespace PaymentIntentUpdateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Emptyable<StripeBalance.SetupFutureUsage>;
-
-      /**
-       * Additional fields for mandate creation.
-       */
-      mandate_options?: StripeBalance.MandateOptions;
     }
 
     export interface Swish {
@@ -17824,6 +18551,13 @@ export namespace PaymentIntentUpdateParams {
         version: ThreeDSecure.Version;
       }
 
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
       export namespace Installments {
         export interface Plan {
           /**
@@ -17852,6 +18586,19 @@ export namespace PaymentIntentUpdateParams {
         export type AmountType = 'fixed' | 'maximum';
 
         export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+      }
+
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          /**
+           * Payment method specific account funding transaction details.
+           */
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {}
+        }
       }
 
       export namespace ThreeDSecure {
@@ -17916,6 +18663,26 @@ export namespace PaymentIntentUpdateParams {
          * Routing requested priority
          */
         requested_priority?: Routing.RequestedPriority;
+      }
+
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          /**
+           * Payment method specific account funding transaction details.
+           */
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {}
+        }
       }
 
       export namespace Routing {
@@ -19556,14 +20323,14 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace StripeBalance {
-      export type SetupFutureUsage = 'none' | 'off_session';
-
       export interface MandateOptions {
         /**
          * The ID of the Stripe Balance Debit Agreement used for this mandate.
          */
         stripe_balance_debit_agreement?: string;
       }
+
+      export type SetupFutureUsage = 'none' | 'off_session';
     }
 
     export namespace Upi {
@@ -19920,6 +20687,16 @@ export namespace PaymentIntentCaptureParams {
      * Subscription details for this PaymentIntent
      */
     subscription?: PaymentDetails.Subscription;
+
+    /**
+     * Fleet data for this PaymentIntent.
+     */
+    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
+
+    /**
+     * Money services details for this PaymentIntent.
+     */
+    money_services?: Emptyable<PaymentDetails.MoneyServices>;
   }
 
   export interface TransferData {
@@ -20052,6 +20829,11 @@ export namespace PaymentIntentCaptureParams {
            * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
            */
           commodity_code?: string;
+
+          /**
+           * Fleet data for this line item.
+           */
+          fleet_data?: Card.FleetData;
         }
 
         export interface CardPresent {
@@ -20098,6 +20880,71 @@ export namespace PaymentIntentCaptureParams {
            * The Stripe account ID of the connected account that sells the item.
            */
           sold_by?: string;
+        }
+
+        export namespace Card {
+          export interface FleetData {
+            /**
+             * The type of product being purchased at this line item.
+             */
+            product_type: FleetData.ProductType;
+
+            /**
+             * The type of service received at the acceptor location.
+             */
+            service_type?: FleetData.ServiceType;
+          }
+
+          export namespace FleetData {
+            export type ProductType =
+              | 'air_conditioning_service'
+              | 'alcohol'
+              | 'aviation_fuel_premium'
+              | 'aviation_fuel_regular'
+              | 'car_care_detailing'
+              | 'compressed_natural_gas'
+              | 'deli'
+              | 'food_service'
+              | 'green_gasoline_mid_plus'
+              | 'green_gasoline_premium_super'
+              | 'green_gasoline_regular'
+              | 'grocery'
+              | 'liquid_natural_gas'
+              | 'liquid_propane_gas'
+              | 'lodging'
+              | 'marine_diesel'
+              | 'marine_fuel'
+              | 'merchandise'
+              | 'mid_plus'
+              | 'mid_plus_ethanol'
+              | 'miscellaneous_aviation_products_services'
+              | 'miscellaneous_fuel'
+              | 'miscellaneous_marine_products_services'
+              | 'miscellaneous_vehicle_products_services'
+              | 'packaged_beverage'
+              | 'premium_diesel'
+              | 'premium_super'
+              | 'premium_super_ethanol'
+              | 'preventative_maintenance'
+              | 'regular'
+              | 'regular_diesel'
+              | 'regular_ethanol'
+              | 'repairs'
+              | 'self_service_car_wash'
+              | 'shower'
+              | 'store_service'
+              | 'tobacco'
+              | 'vehicle_accessories'
+              | 'vehicle_parking'
+              | 'vehicle_parts'
+              | 'wash_out';
+
+            export type ServiceType =
+              | 'full_service'
+              | 'high_speed_diesel'
+              | 'non_fuel_only'
+              | 'self_service';
+          }
         }
 
         export namespace Paypal {
@@ -20679,6 +21526,35 @@ export namespace PaymentIntentCaptureParams {
       starts_at?: number;
     }
 
+    export interface FleetDatum {
+      /**
+       * Primary fuel fields for the transaction.
+       */
+      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
+
+      /**
+       * Station and acceptor location details.
+       */
+      station?: FleetDatum.Station;
+
+      /**
+       * VAT and Invoice on Behalf (IOB) details.
+       */
+      vat?: FleetDatum.Vat;
+    }
+
+    export interface MoneyServices {
+      /**
+       * Account funding transaction details including sender and beneficiary information.
+       */
+      account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: 'account_funding';
+    }
+
     export namespace CarRental {
       export interface Affiliate {
         /**
@@ -21203,6 +22079,197 @@ export namespace PaymentIntentCaptureParams {
            */
           phone?: string;
         }
+      }
+    }
+
+    export namespace FleetDatum {
+      export interface PrimaryFuelFields {
+        /**
+         * The fuel brand.
+         */
+        brand?: PrimaryFuelFields.Brand;
+      }
+
+      export interface Station {
+        /**
+         * Additional contact information for the station.
+         */
+        additional_contact_info?: string;
+
+        /**
+         * The customer service phone number of the station.
+         */
+        customer_service_phone_number?: string;
+
+        /**
+         * The partner ID code of the station.
+         */
+        partner_id_code?: string;
+
+        /**
+         * The phone number of the station.
+         */
+        phone_number?: string;
+
+        /**
+         * The physical location of the station.
+         */
+        service_location?: ShippingAddressParam;
+
+        /**
+         * The URL of the station.
+         */
+        url?: string;
+      }
+
+      export interface Vat {
+        /**
+         * Indicates the merchant's agreement for Invoice on Behalf (IOB) VAT processing.
+         */
+        iob_indicator: Vat.IobIndicator;
+      }
+
+      export namespace PrimaryFuelFields {
+        export type Brand =
+          | 'aafes'
+          | 'amerada_hess'
+          | 'amoco_canada'
+          | 'amoco_petroleum_products'
+          | 'arco_products'
+          | 'asda'
+          | 'ashland_oil'
+          | 'bfl'
+          | 'bp_mobil'
+          | 'bp_oil'
+          | 'burrnah_major'
+          | 'butler_arndale'
+          | 'canadian_tire'
+          | 'canadian_turbo'
+          | 'caseys_general_store'
+          | 'cenex'
+          | 'chevron_canada'
+          | 'chevron_usa'
+          | 'circle_k_stores'
+          | 'citgo_petroleum'
+          | 'clark_brands'
+          | 'conoco_canada'
+          | 'conoco_inc'
+          | 'crown_central_petroleum'
+          | 'diamond_shamrock_inc'
+          | 'discount_tire'
+          | 'domo_gas'
+          | 'elf'
+          | 'erickson_oil'
+          | 'esso'
+          | 'esso_canada'
+          | 'exxon'
+          | 'exxonmobil'
+          | 'family_express'
+          | 'fas_gas_oil'
+          | 'federated_coop_sonic'
+          | 'fina'
+          | 'fina_inc'
+          | 'fkg_oil'
+          | 'flare'
+          | 'flying_j_inc'
+          | 'gas_america'
+          | 'gate_petroleum'
+          | 'getty_petroleum'
+          | 'giant_eagle'
+          | 'grow_mark_inc'
+          | 'gulf'
+          | 'gulf_canada'
+          | 'gulf_chevron'
+          | 'handy_way_food'
+          | 'heron'
+          | 'holiday_stores'
+          | 'home_depot'
+          | 'husky'
+          | 'hyvees'
+          | 'irving'
+          | 'irving_oil'
+          | 'j_sainsbury'
+          | 'jet_conoco'
+          | 'krogers'
+          | 'kuwait'
+          | 'kwik_trip_inc'
+          | 'lassus'
+          | 'loves_country_stores'
+          | 'mapco_express_inc'
+          | 'marathon_oil'
+          | 'martin_bailey_inc_dba_hucks'
+          | 'maxol'
+          | 'meineke'
+          | 'mfa'
+          | 'mohawk'
+          | 'mr_gas'
+          | 'murco'
+          | 'murphy_oil_canada'
+          | 'murphy_oil_usa_inc'
+          | 'nexcom'
+          | 'nordstrom_oil'
+          | 'olco'
+          | 'pdq_store'
+          | 'pennzoil_products_inc'
+          | 'petro'
+          | 'petro_canada'
+          | 'petro_t'
+          | 'phillips'
+          | 'pilot'
+          | 'pioneer'
+          | 'pure_oil'
+          | 'quaker_state'
+          | 'quarles_oil'
+          | 'quiktrip'
+          | 'racetrac_petroleum_inc'
+          | 'raceway_petroleum'
+          | 'repsol'
+          | 'rudy'
+          | 'safeway'
+          | 'seven_eleven'
+          | 'sheetz'
+          | 'shell'
+          | 'shell_canada'
+          | 'shell_oil'
+          | 'sinclair_oil'
+          | 'southland_oil'
+          | 'spar'
+          | 'speedway'
+          | 'sun_company_inc'
+          | 'suncor_sunoco_canada'
+          | 'tempo'
+          | 'tesco'
+          | 'tesoro_alaska'
+          | 'texaco'
+          | 'the_pantry_inc'
+          | 'thornton_oil'
+          | 'tosco'
+          | 'total'
+          | 'travel_centers_of_america'
+          | 'uk'
+          | 'ultramar_canada'
+          | 'unbranded_or_unassigned'
+          | 'unbranded_unassigned'
+          | 'union_76'
+          | 'united_dairy_farmer'
+          | 'united_refining_kwikfill'
+          | 'us_oil'
+          | 'usa_petroleum'
+          | 'valvoline'
+          | 'vg'
+          | 'w_morrison'
+          | 'warren_equities'
+          | 'wawa'
+          | 'western_energetix'
+          | 'wilco'
+          | 'zions';
+      }
+
+      export namespace Vat {
+        export type IobIndicator =
+          | 'issuer_to_iob'
+          | 'issuer_to_iob_and_incremental_certification'
+          | 'merchant_does_not_agree_to_iob';
       }
     }
 
@@ -21931,6 +22998,10 @@ export namespace PaymentIntentCaptureParams {
       }
     }
 
+    export namespace MoneyServices {
+      export interface AccountFunding {}
+    }
+
     export namespace Subscription {
       export interface Affiliate {
         /**
@@ -22279,6 +23350,16 @@ export namespace PaymentIntentConfirmParams {
      * Subscription details for this PaymentIntent
      */
     subscription?: PaymentDetails.Subscription;
+
+    /**
+     * Fleet data for this PaymentIntent.
+     */
+    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
+
+    /**
+     * Money services details for this PaymentIntent.
+     */
+    money_services?: Emptyable<PaymentDetails.MoneyServices>;
   }
 
   export interface PaymentMethodData {
@@ -23059,6 +24140,11 @@ export namespace PaymentIntentConfirmParams {
            * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
            */
           commodity_code?: string;
+
+          /**
+           * Fleet data for this line item.
+           */
+          fleet_data?: Card.FleetData;
         }
 
         export interface CardPresent {
@@ -23105,6 +24191,71 @@ export namespace PaymentIntentConfirmParams {
            * The Stripe account ID of the connected account that sells the item.
            */
           sold_by?: string;
+        }
+
+        export namespace Card {
+          export interface FleetData {
+            /**
+             * The type of product being purchased at this line item.
+             */
+            product_type: FleetData.ProductType;
+
+            /**
+             * The type of service received at the acceptor location.
+             */
+            service_type?: FleetData.ServiceType;
+          }
+
+          export namespace FleetData {
+            export type ProductType =
+              | 'air_conditioning_service'
+              | 'alcohol'
+              | 'aviation_fuel_premium'
+              | 'aviation_fuel_regular'
+              | 'car_care_detailing'
+              | 'compressed_natural_gas'
+              | 'deli'
+              | 'food_service'
+              | 'green_gasoline_mid_plus'
+              | 'green_gasoline_premium_super'
+              | 'green_gasoline_regular'
+              | 'grocery'
+              | 'liquid_natural_gas'
+              | 'liquid_propane_gas'
+              | 'lodging'
+              | 'marine_diesel'
+              | 'marine_fuel'
+              | 'merchandise'
+              | 'mid_plus'
+              | 'mid_plus_ethanol'
+              | 'miscellaneous_aviation_products_services'
+              | 'miscellaneous_fuel'
+              | 'miscellaneous_marine_products_services'
+              | 'miscellaneous_vehicle_products_services'
+              | 'packaged_beverage'
+              | 'premium_diesel'
+              | 'premium_super'
+              | 'premium_super_ethanol'
+              | 'preventative_maintenance'
+              | 'regular'
+              | 'regular_diesel'
+              | 'regular_ethanol'
+              | 'repairs'
+              | 'self_service_car_wash'
+              | 'shower'
+              | 'store_service'
+              | 'tobacco'
+              | 'vehicle_accessories'
+              | 'vehicle_parking'
+              | 'vehicle_parts'
+              | 'wash_out';
+
+            export type ServiceType =
+              | 'full_service'
+              | 'high_speed_diesel'
+              | 'non_fuel_only'
+              | 'self_service';
+          }
         }
 
         export namespace Paypal {
@@ -23735,6 +24886,35 @@ export namespace PaymentIntentConfirmParams {
       starts_at?: number;
     }
 
+    export interface FleetDatum {
+      /**
+       * Primary fuel fields for the transaction.
+       */
+      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
+
+      /**
+       * Station and acceptor location details.
+       */
+      station?: FleetDatum.Station;
+
+      /**
+       * VAT and Invoice on Behalf (IOB) details.
+       */
+      vat?: FleetDatum.Vat;
+    }
+
+    export interface MoneyServices {
+      /**
+       * Account funding transaction details including sender and beneficiary information.
+       */
+      account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: 'account_funding';
+    }
+
     export namespace Benefit {
       export interface FrMealVoucher {
         /**
@@ -24268,6 +25448,197 @@ export namespace PaymentIntentConfirmParams {
            */
           phone?: string;
         }
+      }
+    }
+
+    export namespace FleetDatum {
+      export interface PrimaryFuelFields {
+        /**
+         * The fuel brand.
+         */
+        brand?: PrimaryFuelFields.Brand;
+      }
+
+      export interface Station {
+        /**
+         * Additional contact information for the station.
+         */
+        additional_contact_info?: string;
+
+        /**
+         * The customer service phone number of the station.
+         */
+        customer_service_phone_number?: string;
+
+        /**
+         * The partner ID code of the station.
+         */
+        partner_id_code?: string;
+
+        /**
+         * The phone number of the station.
+         */
+        phone_number?: string;
+
+        /**
+         * The physical location of the station.
+         */
+        service_location?: ShippingAddressParam;
+
+        /**
+         * The URL of the station.
+         */
+        url?: string;
+      }
+
+      export interface Vat {
+        /**
+         * Indicates the merchant's agreement for Invoice on Behalf (IOB) VAT processing.
+         */
+        iob_indicator: Vat.IobIndicator;
+      }
+
+      export namespace PrimaryFuelFields {
+        export type Brand =
+          | 'aafes'
+          | 'amerada_hess'
+          | 'amoco_canada'
+          | 'amoco_petroleum_products'
+          | 'arco_products'
+          | 'asda'
+          | 'ashland_oil'
+          | 'bfl'
+          | 'bp_mobil'
+          | 'bp_oil'
+          | 'burrnah_major'
+          | 'butler_arndale'
+          | 'canadian_tire'
+          | 'canadian_turbo'
+          | 'caseys_general_store'
+          | 'cenex'
+          | 'chevron_canada'
+          | 'chevron_usa'
+          | 'circle_k_stores'
+          | 'citgo_petroleum'
+          | 'clark_brands'
+          | 'conoco_canada'
+          | 'conoco_inc'
+          | 'crown_central_petroleum'
+          | 'diamond_shamrock_inc'
+          | 'discount_tire'
+          | 'domo_gas'
+          | 'elf'
+          | 'erickson_oil'
+          | 'esso'
+          | 'esso_canada'
+          | 'exxon'
+          | 'exxonmobil'
+          | 'family_express'
+          | 'fas_gas_oil'
+          | 'federated_coop_sonic'
+          | 'fina'
+          | 'fina_inc'
+          | 'fkg_oil'
+          | 'flare'
+          | 'flying_j_inc'
+          | 'gas_america'
+          | 'gate_petroleum'
+          | 'getty_petroleum'
+          | 'giant_eagle'
+          | 'grow_mark_inc'
+          | 'gulf'
+          | 'gulf_canada'
+          | 'gulf_chevron'
+          | 'handy_way_food'
+          | 'heron'
+          | 'holiday_stores'
+          | 'home_depot'
+          | 'husky'
+          | 'hyvees'
+          | 'irving'
+          | 'irving_oil'
+          | 'j_sainsbury'
+          | 'jet_conoco'
+          | 'krogers'
+          | 'kuwait'
+          | 'kwik_trip_inc'
+          | 'lassus'
+          | 'loves_country_stores'
+          | 'mapco_express_inc'
+          | 'marathon_oil'
+          | 'martin_bailey_inc_dba_hucks'
+          | 'maxol'
+          | 'meineke'
+          | 'mfa'
+          | 'mohawk'
+          | 'mr_gas'
+          | 'murco'
+          | 'murphy_oil_canada'
+          | 'murphy_oil_usa_inc'
+          | 'nexcom'
+          | 'nordstrom_oil'
+          | 'olco'
+          | 'pdq_store'
+          | 'pennzoil_products_inc'
+          | 'petro'
+          | 'petro_canada'
+          | 'petro_t'
+          | 'phillips'
+          | 'pilot'
+          | 'pioneer'
+          | 'pure_oil'
+          | 'quaker_state'
+          | 'quarles_oil'
+          | 'quiktrip'
+          | 'racetrac_petroleum_inc'
+          | 'raceway_petroleum'
+          | 'repsol'
+          | 'rudy'
+          | 'safeway'
+          | 'seven_eleven'
+          | 'sheetz'
+          | 'shell'
+          | 'shell_canada'
+          | 'shell_oil'
+          | 'sinclair_oil'
+          | 'southland_oil'
+          | 'spar'
+          | 'speedway'
+          | 'sun_company_inc'
+          | 'suncor_sunoco_canada'
+          | 'tempo'
+          | 'tesco'
+          | 'tesoro_alaska'
+          | 'texaco'
+          | 'the_pantry_inc'
+          | 'thornton_oil'
+          | 'tosco'
+          | 'total'
+          | 'travel_centers_of_america'
+          | 'uk'
+          | 'ultramar_canada'
+          | 'unbranded_or_unassigned'
+          | 'unbranded_unassigned'
+          | 'union_76'
+          | 'united_dairy_farmer'
+          | 'united_refining_kwikfill'
+          | 'us_oil'
+          | 'usa_petroleum'
+          | 'valvoline'
+          | 'vg'
+          | 'w_morrison'
+          | 'warren_equities'
+          | 'wawa'
+          | 'western_energetix'
+          | 'wilco'
+          | 'zions';
+      }
+
+      export namespace Vat {
+        export type IobIndicator =
+          | 'issuer_to_iob'
+          | 'issuer_to_iob_and_incremental_certification'
+          | 'merchant_does_not_agree_to_iob';
       }
     }
 
@@ -24994,6 +26365,10 @@ export namespace PaymentIntentConfirmParams {
           }
         }
       }
+    }
+
+    export namespace MoneyServices {
+      export interface AccountFunding {}
     }
 
     export namespace Subscription {
@@ -25976,6 +27351,11 @@ export namespace PaymentIntentConfirmParams {
        * the authentication details to use for this payment.
        */
       three_d_secure?: Card.ThreeDSecure;
+
+      /**
+       * Payment details for payment method specific funding fields.
+       */
+      payment_details?: Card.PaymentDetails;
     }
 
     export interface CardPresent {
@@ -26007,6 +27387,11 @@ export namespace PaymentIntentConfirmParams {
        * Network routing priority on co-branded EMV cards supporting domestic debit and international card schemes.
        */
       routing?: CardPresent.Routing;
+
+      /**
+       * Payment details for payment method specific funding transaction fields.
+       */
+      payment_details?: CardPresent.PaymentDetails;
     }
 
     export interface Cashapp {
@@ -26771,6 +28156,11 @@ export namespace PaymentIntentConfirmParams {
 
     export interface StripeBalance {
       /**
+       * Additional fields for mandate creation.
+       */
+      mandate_options?: StripeBalance.MandateOptions;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -26782,11 +28172,6 @@ export namespace PaymentIntentConfirmParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Emptyable<StripeBalance.SetupFutureUsage>;
-
-      /**
-       * Additional fields for mandate creation.
-       */
-      mandate_options?: StripeBalance.MandateOptions;
     }
 
     export interface Swish {
@@ -27148,6 +28533,13 @@ export namespace PaymentIntentConfirmParams {
         version: ThreeDSecure.Version;
       }
 
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
       export namespace Installments {
         export interface Plan {
           /**
@@ -27176,6 +28568,19 @@ export namespace PaymentIntentConfirmParams {
         export type AmountType = 'fixed' | 'maximum';
 
         export type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+      }
+
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          /**
+           * Payment method specific account funding transaction details.
+           */
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {}
+        }
       }
 
       export namespace ThreeDSecure {
@@ -27240,6 +28645,26 @@ export namespace PaymentIntentConfirmParams {
          * Routing requested priority
          */
         requested_priority?: Routing.RequestedPriority;
+      }
+
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
+      export namespace PaymentDetails {
+        export interface MoneyServices {
+          /**
+           * Payment method specific account funding transaction details.
+           */
+          account_funding?: MoneyServices.AccountFunding;
+        }
+
+        export namespace MoneyServices {
+          export interface AccountFunding {}
+        }
       }
 
       export namespace Routing {
@@ -28880,14 +30305,14 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace StripeBalance {
-      export type SetupFutureUsage = 'none' | 'off_session';
-
       export interface MandateOptions {
         /**
          * The ID of the Stripe Balance Debit Agreement used for this mandate.
          */
         stripe_balance_debit_agreement?: string;
       }
+
+      export type SetupFutureUsage = 'none' | 'off_session';
     }
 
     export namespace Upi {
@@ -29265,6 +30690,11 @@ export namespace PaymentIntentDecrementAuthorizationParams {
            * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
            */
           commodity_code?: string;
+
+          /**
+           * Fleet data for this line item.
+           */
+          fleet_data?: Card.FleetData;
         }
 
         export interface CardPresent {
@@ -29311,6 +30741,71 @@ export namespace PaymentIntentDecrementAuthorizationParams {
            * The Stripe account ID of the connected account that sells the item.
            */
           sold_by?: string;
+        }
+
+        export namespace Card {
+          export interface FleetData {
+            /**
+             * The type of product being purchased at this line item.
+             */
+            product_type: FleetData.ProductType;
+
+            /**
+             * The type of service received at the acceptor location.
+             */
+            service_type?: FleetData.ServiceType;
+          }
+
+          export namespace FleetData {
+            export type ProductType =
+              | 'air_conditioning_service'
+              | 'alcohol'
+              | 'aviation_fuel_premium'
+              | 'aviation_fuel_regular'
+              | 'car_care_detailing'
+              | 'compressed_natural_gas'
+              | 'deli'
+              | 'food_service'
+              | 'green_gasoline_mid_plus'
+              | 'green_gasoline_premium_super'
+              | 'green_gasoline_regular'
+              | 'grocery'
+              | 'liquid_natural_gas'
+              | 'liquid_propane_gas'
+              | 'lodging'
+              | 'marine_diesel'
+              | 'marine_fuel'
+              | 'merchandise'
+              | 'mid_plus'
+              | 'mid_plus_ethanol'
+              | 'miscellaneous_aviation_products_services'
+              | 'miscellaneous_fuel'
+              | 'miscellaneous_marine_products_services'
+              | 'miscellaneous_vehicle_products_services'
+              | 'packaged_beverage'
+              | 'premium_diesel'
+              | 'premium_super'
+              | 'premium_super_ethanol'
+              | 'preventative_maintenance'
+              | 'regular'
+              | 'regular_diesel'
+              | 'regular_ethanol'
+              | 'repairs'
+              | 'self_service_car_wash'
+              | 'shower'
+              | 'store_service'
+              | 'tobacco'
+              | 'vehicle_accessories'
+              | 'vehicle_parking'
+              | 'vehicle_parts'
+              | 'wash_out';
+
+            export type ServiceType =
+              | 'full_service'
+              | 'high_speed_diesel'
+              | 'non_fuel_only'
+              | 'self_service';
+          }
         }
 
         export namespace Paypal {
@@ -29601,6 +31096,11 @@ export namespace PaymentIntentIncrementAuthorizationParams {
            * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, and so on.
            */
           commodity_code?: string;
+
+          /**
+           * Fleet data for this line item.
+           */
+          fleet_data?: Card.FleetData;
         }
 
         export interface CardPresent {
@@ -29647,6 +31147,71 @@ export namespace PaymentIntentIncrementAuthorizationParams {
            * The Stripe account ID of the connected account that sells the item.
            */
           sold_by?: string;
+        }
+
+        export namespace Card {
+          export interface FleetData {
+            /**
+             * The type of product being purchased at this line item.
+             */
+            product_type: FleetData.ProductType;
+
+            /**
+             * The type of service received at the acceptor location.
+             */
+            service_type?: FleetData.ServiceType;
+          }
+
+          export namespace FleetData {
+            export type ProductType =
+              | 'air_conditioning_service'
+              | 'alcohol'
+              | 'aviation_fuel_premium'
+              | 'aviation_fuel_regular'
+              | 'car_care_detailing'
+              | 'compressed_natural_gas'
+              | 'deli'
+              | 'food_service'
+              | 'green_gasoline_mid_plus'
+              | 'green_gasoline_premium_super'
+              | 'green_gasoline_regular'
+              | 'grocery'
+              | 'liquid_natural_gas'
+              | 'liquid_propane_gas'
+              | 'lodging'
+              | 'marine_diesel'
+              | 'marine_fuel'
+              | 'merchandise'
+              | 'mid_plus'
+              | 'mid_plus_ethanol'
+              | 'miscellaneous_aviation_products_services'
+              | 'miscellaneous_fuel'
+              | 'miscellaneous_marine_products_services'
+              | 'miscellaneous_vehicle_products_services'
+              | 'packaged_beverage'
+              | 'premium_diesel'
+              | 'premium_super'
+              | 'premium_super_ethanol'
+              | 'preventative_maintenance'
+              | 'regular'
+              | 'regular_diesel'
+              | 'regular_ethanol'
+              | 'repairs'
+              | 'self_service_car_wash'
+              | 'shower'
+              | 'store_service'
+              | 'tobacco'
+              | 'vehicle_accessories'
+              | 'vehicle_parking'
+              | 'vehicle_parts'
+              | 'wash_out';
+
+            export type ServiceType =
+              | 'full_service'
+              | 'high_speed_diesel'
+              | 'non_fuel_only'
+              | 'self_service';
+          }
         }
 
         export namespace Paypal {

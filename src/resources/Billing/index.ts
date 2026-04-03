@@ -29,6 +29,9 @@ export {CreditGrant} from './CreditGrants.js';
 export {Meter} from './Meters.js';
 export {MeterEvent} from './MeterEvents.js';
 export {MeterEventAdjustment} from './MeterEventAdjustments.js';
+export {AlertRecovered} from './AlertRecovereds.js';
+export {AlertTriggered} from './AlertTriggereds.js';
+export {MeterEventSummary} from './MeterEventSummaries.js';
 
 export class Billing {
   alerts: AlertResource;
