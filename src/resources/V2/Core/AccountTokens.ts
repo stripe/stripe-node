@@ -4,7 +4,6 @@ import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {JapanAddressParam, MetadataParam, Decimal} from '../../../shared.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class AccountTokenResource extends StripeResource {
   /**
@@ -14,34 +13,35 @@ export class AccountTokenResource extends StripeResource {
   create(
     params?: V2.Core.AccountTokenCreateParams,
     options?: RequestOptions
-  ): Promise<Response<AccountToken>>;
-  create(options?: RequestOptions): Promise<Response<AccountToken>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v2/core/account_tokens',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          identity: {
-            kind: 'object',
-            fields: {
-              individual: {
-                kind: 'object',
-                fields: {
-                  relationship: {
-                    kind: 'object',
-                    fields: {percent_ownership: {kind: 'decimal_string'}},
+  ): Promise<Response<AccountToken>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/core/account_tokens',
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            identity: {
+              kind: 'object',
+              fields: {
+                individual: {
+                  kind: 'object',
+                  fields: {
+                    relationship: {
+                      kind: 'object',
+                      fields: {percent_ownership: {kind: 'decimal_string'}},
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Retrieves an Account Token.
    * @throws Stripe.RateLimitError
@@ -50,16 +50,13 @@ export class AccountTokenResource extends StripeResource {
     id: string,
     params?: V2.Core.AccountTokenRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<AccountToken>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<AccountToken>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v2/core/account_tokens/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<AccountToken>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/core/account_tokens/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface AccountToken {

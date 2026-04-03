@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {Customer, DeletedCustomer} from './../Customers.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CreditBalanceSummaryResource extends StripeResource {
   /**
@@ -12,12 +11,13 @@ export class CreditBalanceSummaryResource extends StripeResource {
   retrieve(
     params: Billing.CreditBalanceSummaryRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<CreditBalanceSummary>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/credit_balance_summary',
-    }).call(this, ...args);
+  ): Promise<Response<CreditBalanceSummary>> {
+    return this._makeRequest(
+      'GET',
+      '/v1/billing/credit_balance_summary',
+      params,
+      options
+    ) as any;
   }
 }
 export interface CreditBalanceSummary {

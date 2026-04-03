@@ -17,7 +17,9 @@ describe('Balance Resource', () => {
     });
 
     it('Sends the correct request [with specified auth]', () => {
-      stripe.balance.retrieve('aGN0bIwXnHdw5645VABjPdSn8nWY7G11');
+      stripe.balance.retrieve(undefined, {
+        apiKey: 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11',
+      });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/balance',

@@ -3,7 +3,6 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {Reader} from './../../Terminal/Readers.js';
 import {RequestOptions, Response} from '../../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ReaderResource extends StripeResource {
   /**
@@ -13,19 +12,14 @@ export class ReaderResource extends StripeResource {
     id: string,
     params?: TestHelpers.Terminal.ReaderPresentPaymentMethodParams,
     options?: RequestOptions
-  ): Promise<Response<Reader>>;
-  presentPaymentMethod(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Reader>>;
-  presentPaymentMethod(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/test_helpers/terminal/readers/{reader}/present_payment_method',
-    }).call(this, ...args);
+  ): Promise<Response<Reader>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/terminal/readers/${id}/present_payment_method`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Use this endpoint to trigger a successful input collection on a simulated reader.
    */
@@ -33,19 +27,14 @@ export class ReaderResource extends StripeResource {
     id: string,
     params?: TestHelpers.Terminal.ReaderSucceedInputCollectionParams,
     options?: RequestOptions
-  ): Promise<Response<Reader>>;
-  succeedInputCollection(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Reader>>;
-  succeedInputCollection(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/test_helpers/terminal/readers/{reader}/succeed_input_collection',
-    }).call(this, ...args);
+  ): Promise<Response<Reader>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/terminal/readers/${id}/succeed_input_collection`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Use this endpoint to complete an input collection with a timeout error on a simulated reader.
    */
@@ -53,17 +42,13 @@ export class ReaderResource extends StripeResource {
     id: string,
     params?: TestHelpers.Terminal.ReaderTimeoutInputCollectionParams,
     options?: RequestOptions
-  ): Promise<Response<Reader>>;
-  timeoutInputCollection(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Reader>>;
-  timeoutInputCollection(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath:
-        '/v1/test_helpers/terminal/readers/{reader}/timeout_input_collection',
-    }).call(this, ...args);
+  ): Promise<Response<Reader>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/terminal/readers/${id}/timeout_input_collection`,
+      params,
+      options
+    ) as any;
   }
 }
 export namespace TestHelpers {

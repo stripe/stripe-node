@@ -4361,9 +4361,12 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.core.accounts.list((err) => {
+    try {
+      await realStripe.v2.core.accounts.list();
+      expect.fail('Expected error');
+    } catch (err) {
       expect(err).to.be.instanceOf(RateLimitError);
-    });
+    }
   });
 
   it('test_temporary_session_expired_error', async function() {
@@ -4378,8 +4381,8 @@ describe('Generated tests', function() {
         },
       });
 
-    await realStripe.v2.billing.meterEventStream.create(
-      {
+    try {
+      await realStripe.v2.billing.meterEventStream.create({
         events: [
           {
             event_name: 'event_name',
@@ -4388,11 +4391,10 @@ describe('Generated tests', function() {
             },
           },
         ],
-      },
-
-      (err) => {
-        expect(err).to.be.instanceOf(TemporarySessionExpiredError);
-      }
-    );
+      });
+      expect.fail('Expected error');
+    } catch (err) {
+      expect(err).to.be.instanceOf(TemporarySessionExpiredError);
+    }
   });
 });

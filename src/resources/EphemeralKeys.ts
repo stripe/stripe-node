@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {RequestOptions, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class EphemeralKeyResource extends StripeResource {
   /**
@@ -12,32 +11,30 @@ export class EphemeralKeyResource extends StripeResource {
     id: string,
     params?: EphemeralKeyDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<EphemeralKey>>;
-  del(id: string, options?: RequestOptions): Promise<Response<EphemeralKey>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/ephemeral_keys/{key}',
-    }).call(this, ...args);
+  ): Promise<Response<EphemeralKey>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/ephemeral_keys/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   create(
     params?: EphemeralKeyCreateParams,
     options?: RequestOptions
-  ): Promise<Response<EphemeralKey>>;
-  create(options?: RequestOptions): Promise<Response<EphemeralKey>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/ephemeral_keys',
-      validator: (data, options) => {
+  ): Promise<Response<EphemeralKey>> {
+    return this._makeRequest('POST', '/v1/ephemeral_keys', params, options, {
+      validator: (
+        data: Record<string, any>,
+        options: {headers: Record<string, string | number | string[]>}
+      ) => {
         if (!options.headers || !options.headers['Stripe-Version']) {
           throw new Error(
             'Passing apiVersion in a separate options hash is required to create an ephemeral key. See https://stripe.com/docs/api/versioning?lang=node'
           );
         }
       },
-    }).call(this, ...args);
+    }) as any;
   }
 }
 export interface EphemeralKey {

@@ -4,7 +4,6 @@ import {StripeResource} from '../../StripeResource.js';
 import {ConfirmationToken} from './../ConfirmationTokens.js';
 import {MetadataParam, Emptyable, AddressParam} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ConfirmationTokenResource extends StripeResource {
   /**
@@ -13,13 +12,13 @@ export class ConfirmationTokenResource extends StripeResource {
   create(
     params?: TestHelpers.ConfirmationTokenCreateParams,
     options?: RequestOptions
-  ): Promise<Response<ConfirmationToken>>;
-  create(options?: RequestOptions): Promise<Response<ConfirmationToken>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/test_helpers/confirmation_tokens',
-    }).call(this, ...args);
+  ): Promise<Response<ConfirmationToken>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/test_helpers/confirmation_tokens',
+      params,
+      options
+    ) as any;
   }
 }
 export namespace TestHelpers {

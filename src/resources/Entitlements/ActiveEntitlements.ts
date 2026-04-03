@@ -4,7 +4,6 @@ import {StripeResource} from '../../StripeResource.js';
 import {Feature} from './Features.js';
 import {PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ActiveEntitlementResource extends StripeResource {
   /**
@@ -13,15 +12,17 @@ export class ActiveEntitlementResource extends StripeResource {
   list(
     params: Entitlements.ActiveEntitlementListParams,
     options?: RequestOptions
-  ): ApiListPromise<ActiveEntitlement>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/entitlements/active_entitlements',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<ActiveEntitlement> {
+    return this._makeRequest(
+      'GET',
+      '/v1/entitlements/active_entitlements',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Retrieve an active entitlement
    */
@@ -29,16 +30,13 @@ export class ActiveEntitlementResource extends StripeResource {
     id: string,
     params?: Entitlements.ActiveEntitlementRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<ActiveEntitlement>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ActiveEntitlement>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/entitlements/active_entitlements/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<ActiveEntitlement>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/entitlements/active_entitlements/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface ActiveEntitlement {

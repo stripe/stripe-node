@@ -29,7 +29,6 @@ import {
   ApiList,
   ApiSearchResultPromise,
 } from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ChargeResource extends StripeResource {
   /**
@@ -38,16 +37,11 @@ export class ChargeResource extends StripeResource {
   list(
     params?: ChargeListParams,
     options?: RequestOptions
-  ): ApiListPromise<Charge>;
-  list(options?: RequestOptions): ApiListPromise<Charge>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/charges',
+  ): ApiListPromise<Charge> {
+    return this._makeRequest('GET', '/v1/charges', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * This method is no longer recommended—use the [Payment Intents API](https://docs.stripe.com/docs/api/payment_intents)
    * to initiate a new payment instead. Confirmation of the PaymentIntent creates the Charge
@@ -56,15 +50,9 @@ export class ChargeResource extends StripeResource {
   create(
     params?: ChargeCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Charge>>;
-  create(options?: RequestOptions): Promise<Response<Charge>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/charges'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Charge>> {
+    return this._makeRequest('POST', '/v1/charges', params, options) as any;
   }
-
   /**
    * Retrieves the details of a charge that has previously been created. Supply the unique charge ID that was returned from your previous request, and Stripe will return the corresponding charge information. The same information is returned when creating or refunding the charge.
    */
@@ -72,15 +60,14 @@ export class ChargeResource extends StripeResource {
     id: string,
     params?: ChargeRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Charge>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Charge>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'GET', fullPath: '/v1/charges/{charge}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Charge>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/charges/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates the specified charge by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    */
@@ -88,14 +75,14 @@ export class ChargeResource extends StripeResource {
     id: string,
     params?: ChargeUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Charge>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/charges/{charge}',
-    }).call(this, ...args);
+  ): Promise<Response<Charge>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/charges/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Search for charges you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
    * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
@@ -105,15 +92,11 @@ export class ChargeResource extends StripeResource {
   search(
     params: ChargeSearchParams,
     options?: RequestOptions
-  ): ApiSearchResultPromise<Charge>;
-  search(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/charges/search',
+  ): ApiSearchResultPromise<Charge> {
+    return this._makeRequest('GET', '/v1/charges/search', params, options, {
       methodType: 'search',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Capture the payment of an existing, uncaptured charge that was created with the capture option set to false.
    *
@@ -125,13 +108,13 @@ export class ChargeResource extends StripeResource {
     id: string,
     params?: ChargeCaptureParams,
     options?: RequestOptions
-  ): Promise<Response<Charge>>;
-  capture(id: string, options?: RequestOptions): Promise<Response<Charge>>;
-  capture(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/charges/{charge}/capture',
-    }).call(this, ...args);
+  ): Promise<Response<Charge>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/charges/${id}/capture`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Charge {

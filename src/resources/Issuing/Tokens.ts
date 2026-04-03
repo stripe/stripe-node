@@ -4,7 +4,6 @@ import {StripeResource} from '../../StripeResource.js';
 import {Card} from './Cards.js';
 import {PaginationParams, RangeQueryParam} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class TokenResource extends StripeResource {
   /**
@@ -13,15 +12,11 @@ export class TokenResource extends StripeResource {
   list(
     params: Issuing.TokenListParams,
     options?: RequestOptions
-  ): ApiListPromise<Token>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/tokens',
+  ): ApiListPromise<Token> {
+    return this._makeRequest('GET', '/v1/issuing/tokens', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Retrieves an Issuing Token object.
    */
@@ -29,15 +24,14 @@ export class TokenResource extends StripeResource {
     id: string,
     params?: Issuing.TokenRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Token>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Token>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/tokens/{token}',
-    }).call(this, ...args);
+  ): Promise<Response<Token>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/issuing/tokens/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Attempts to update the specified Issuing Token object to the status specified.
    */
@@ -45,12 +39,13 @@ export class TokenResource extends StripeResource {
     id: string,
     params: Issuing.TokenUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Token>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/issuing/tokens/{token}',
-    }).call(this, ...args);
+  ): Promise<Response<Token>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/issuing/tokens/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Token {

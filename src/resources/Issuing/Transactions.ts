@@ -16,7 +16,6 @@ import {
   Decimal,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class TransactionResource extends StripeResource {
   /**
@@ -25,72 +24,74 @@ export class TransactionResource extends StripeResource {
   list(
     params?: Issuing.TransactionListParams,
     options?: RequestOptions
-  ): ApiListPromise<Transaction>;
-  list(options?: RequestOptions): ApiListPromise<Transaction>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/transactions',
-      methodType: 'list',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          data: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                purchase_details: {
-                  kind: 'nullable',
-                  inner: {
-                    kind: 'object',
-                    fields: {
-                      fleet: {
-                        kind: 'nullable',
-                        inner: {
-                          kind: 'object',
-                          fields: {
-                            reported_breakdown: {
-                              kind: 'nullable',
-                              inner: {
-                                kind: 'object',
-                                fields: {
-                                  fuel: {
-                                    kind: 'nullable',
-                                    inner: {
-                                      kind: 'object',
-                                      fields: {
-                                        gross_amount_decimal: {
-                                          kind: 'nullable',
-                                          inner: {kind: 'decimal_string'},
+  ): ApiListPromise<Transaction> {
+    return this._makeRequest(
+      'GET',
+      '/v1/issuing/transactions',
+      params,
+      options,
+      {
+        methodType: 'list',
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            data: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  purchase_details: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        fleet: {
+                          kind: 'nullable',
+                          inner: {
+                            kind: 'object',
+                            fields: {
+                              reported_breakdown: {
+                                kind: 'nullable',
+                                inner: {
+                                  kind: 'object',
+                                  fields: {
+                                    fuel: {
+                                      kind: 'nullable',
+                                      inner: {
+                                        kind: 'object',
+                                        fields: {
+                                          gross_amount_decimal: {
+                                            kind: 'nullable',
+                                            inner: {kind: 'decimal_string'},
+                                          },
                                         },
                                       },
                                     },
-                                  },
-                                  non_fuel: {
-                                    kind: 'nullable',
-                                    inner: {
-                                      kind: 'object',
-                                      fields: {
-                                        gross_amount_decimal: {
-                                          kind: 'nullable',
-                                          inner: {kind: 'decimal_string'},
+                                    non_fuel: {
+                                      kind: 'nullable',
+                                      inner: {
+                                        kind: 'object',
+                                        fields: {
+                                          gross_amount_decimal: {
+                                            kind: 'nullable',
+                                            inner: {kind: 'decimal_string'},
+                                          },
                                         },
                                       },
                                     },
-                                  },
-                                  tax: {
-                                    kind: 'nullable',
-                                    inner: {
-                                      kind: 'object',
-                                      fields: {
-                                        local_amount_decimal: {
-                                          kind: 'nullable',
-                                          inner: {kind: 'decimal_string'},
-                                        },
-                                        national_amount_decimal: {
-                                          kind: 'nullable',
-                                          inner: {kind: 'decimal_string'},
+                                    tax: {
+                                      kind: 'nullable',
+                                      inner: {
+                                        kind: 'object',
+                                        fields: {
+                                          local_amount_decimal: {
+                                            kind: 'nullable',
+                                            inner: {kind: 'decimal_string'},
+                                          },
+                                          national_amount_decimal: {
+                                            kind: 'nullable',
+                                            inner: {kind: 'decimal_string'},
+                                          },
                                         },
                                       },
                                     },
@@ -100,17 +101,17 @@ export class TransactionResource extends StripeResource {
                             },
                           },
                         },
-                      },
-                      fuel: {
-                        kind: 'nullable',
-                        inner: {
-                          kind: 'object',
-                          fields: {
-                            quantity_decimal: {
-                              kind: 'nullable',
-                              inner: {kind: 'decimal_string'},
+                        fuel: {
+                          kind: 'nullable',
+                          inner: {
+                            kind: 'object',
+                            fields: {
+                              quantity_decimal: {
+                                kind: 'nullable',
+                                inner: {kind: 'decimal_string'},
+                              },
+                              unit_cost_decimal: {kind: 'decimal_string'},
                             },
-                            unit_cost_decimal: {kind: 'decimal_string'},
                           },
                         },
                       },
@@ -121,10 +122,9 @@ export class TransactionResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Retrieves an Issuing Transaction object.
    */
@@ -132,69 +132,68 @@ export class TransactionResource extends StripeResource {
     id: string,
     params?: Issuing.TransactionRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Transaction>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Transaction>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/issuing/transactions/{transaction}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          purchase_details: {
-            kind: 'nullable',
-            inner: {
-              kind: 'object',
-              fields: {
-                fleet: {
-                  kind: 'nullable',
-                  inner: {
-                    kind: 'object',
-                    fields: {
-                      reported_breakdown: {
-                        kind: 'nullable',
-                        inner: {
-                          kind: 'object',
-                          fields: {
-                            fuel: {
-                              kind: 'nullable',
-                              inner: {
-                                kind: 'object',
-                                fields: {
-                                  gross_amount_decimal: {
-                                    kind: 'nullable',
-                                    inner: {kind: 'decimal_string'},
+  ): Promise<Response<Transaction>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/issuing/transactions/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            purchase_details: {
+              kind: 'nullable',
+              inner: {
+                kind: 'object',
+                fields: {
+                  fleet: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        reported_breakdown: {
+                          kind: 'nullable',
+                          inner: {
+                            kind: 'object',
+                            fields: {
+                              fuel: {
+                                kind: 'nullable',
+                                inner: {
+                                  kind: 'object',
+                                  fields: {
+                                    gross_amount_decimal: {
+                                      kind: 'nullable',
+                                      inner: {kind: 'decimal_string'},
+                                    },
                                   },
                                 },
                               },
-                            },
-                            non_fuel: {
-                              kind: 'nullable',
-                              inner: {
-                                kind: 'object',
-                                fields: {
-                                  gross_amount_decimal: {
-                                    kind: 'nullable',
-                                    inner: {kind: 'decimal_string'},
+                              non_fuel: {
+                                kind: 'nullable',
+                                inner: {
+                                  kind: 'object',
+                                  fields: {
+                                    gross_amount_decimal: {
+                                      kind: 'nullable',
+                                      inner: {kind: 'decimal_string'},
+                                    },
                                   },
                                 },
                               },
-                            },
-                            tax: {
-                              kind: 'nullable',
-                              inner: {
-                                kind: 'object',
-                                fields: {
-                                  local_amount_decimal: {
-                                    kind: 'nullable',
-                                    inner: {kind: 'decimal_string'},
-                                  },
-                                  national_amount_decimal: {
-                                    kind: 'nullable',
-                                    inner: {kind: 'decimal_string'},
+                              tax: {
+                                kind: 'nullable',
+                                inner: {
+                                  kind: 'object',
+                                  fields: {
+                                    local_amount_decimal: {
+                                      kind: 'nullable',
+                                      inner: {kind: 'decimal_string'},
+                                    },
+                                    national_amount_decimal: {
+                                      kind: 'nullable',
+                                      inner: {kind: 'decimal_string'},
+                                    },
                                   },
                                 },
                               },
@@ -204,17 +203,17 @@ export class TransactionResource extends StripeResource {
                       },
                     },
                   },
-                },
-                fuel: {
-                  kind: 'nullable',
-                  inner: {
-                    kind: 'object',
-                    fields: {
-                      quantity_decimal: {
-                        kind: 'nullable',
-                        inner: {kind: 'decimal_string'},
+                  fuel: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        quantity_decimal: {
+                          kind: 'nullable',
+                          inner: {kind: 'decimal_string'},
+                        },
+                        unit_cost_decimal: {kind: 'decimal_string'},
                       },
-                      unit_cost_decimal: {kind: 'decimal_string'},
                     },
                   },
                 },
@@ -222,10 +221,9 @@ export class TransactionResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Updates the specified Issuing Transaction object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    */
@@ -233,65 +231,68 @@ export class TransactionResource extends StripeResource {
     id: string,
     params?: Issuing.TransactionUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Transaction>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/issuing/transactions/{transaction}',
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          purchase_details: {
-            kind: 'nullable',
-            inner: {
-              kind: 'object',
-              fields: {
-                fleet: {
-                  kind: 'nullable',
-                  inner: {
-                    kind: 'object',
-                    fields: {
-                      reported_breakdown: {
-                        kind: 'nullable',
-                        inner: {
-                          kind: 'object',
-                          fields: {
-                            fuel: {
-                              kind: 'nullable',
-                              inner: {
-                                kind: 'object',
-                                fields: {
-                                  gross_amount_decimal: {
-                                    kind: 'nullable',
-                                    inner: {kind: 'decimal_string'},
+  ): Promise<Response<Transaction>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/issuing/transactions/${id}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            purchase_details: {
+              kind: 'nullable',
+              inner: {
+                kind: 'object',
+                fields: {
+                  fleet: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        reported_breakdown: {
+                          kind: 'nullable',
+                          inner: {
+                            kind: 'object',
+                            fields: {
+                              fuel: {
+                                kind: 'nullable',
+                                inner: {
+                                  kind: 'object',
+                                  fields: {
+                                    gross_amount_decimal: {
+                                      kind: 'nullable',
+                                      inner: {kind: 'decimal_string'},
+                                    },
                                   },
                                 },
                               },
-                            },
-                            non_fuel: {
-                              kind: 'nullable',
-                              inner: {
-                                kind: 'object',
-                                fields: {
-                                  gross_amount_decimal: {
-                                    kind: 'nullable',
-                                    inner: {kind: 'decimal_string'},
+                              non_fuel: {
+                                kind: 'nullable',
+                                inner: {
+                                  kind: 'object',
+                                  fields: {
+                                    gross_amount_decimal: {
+                                      kind: 'nullable',
+                                      inner: {kind: 'decimal_string'},
+                                    },
                                   },
                                 },
                               },
-                            },
-                            tax: {
-                              kind: 'nullable',
-                              inner: {
-                                kind: 'object',
-                                fields: {
-                                  local_amount_decimal: {
-                                    kind: 'nullable',
-                                    inner: {kind: 'decimal_string'},
-                                  },
-                                  national_amount_decimal: {
-                                    kind: 'nullable',
-                                    inner: {kind: 'decimal_string'},
+                              tax: {
+                                kind: 'nullable',
+                                inner: {
+                                  kind: 'object',
+                                  fields: {
+                                    local_amount_decimal: {
+                                      kind: 'nullable',
+                                      inner: {kind: 'decimal_string'},
+                                    },
+                                    national_amount_decimal: {
+                                      kind: 'nullable',
+                                      inner: {kind: 'decimal_string'},
+                                    },
                                   },
                                 },
                               },
@@ -301,17 +302,17 @@ export class TransactionResource extends StripeResource {
                       },
                     },
                   },
-                },
-                fuel: {
-                  kind: 'nullable',
-                  inner: {
-                    kind: 'object',
-                    fields: {
-                      quantity_decimal: {
-                        kind: 'nullable',
-                        inner: {kind: 'decimal_string'},
+                  fuel: {
+                    kind: 'nullable',
+                    inner: {
+                      kind: 'object',
+                      fields: {
+                        quantity_decimal: {
+                          kind: 'nullable',
+                          inner: {kind: 'decimal_string'},
+                        },
+                        unit_cost_decimal: {kind: 'decimal_string'},
                       },
-                      unit_cost_decimal: {kind: 'decimal_string'},
                     },
                   },
                 },
@@ -319,8 +320,8 @@ export class TransactionResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
 }
 export interface Transaction {

@@ -57,7 +57,7 @@ stripe = new Stripe('sk_test_123', {
   await stripe.customers.create(params);
 
   // Check multiple dispatch:
-  let product = await stripe.products.retrieve('prod_123', opts);
+  let product = await stripe.products.retrieve('prod_123', undefined, opts);
   product = await stripe.products.retrieve('prod_123', {expand: []}, opts);
 
   const charge: Stripe.Charge = await stripe.charges.retrieve('ch_123', {
@@ -167,26 +167,6 @@ stripe = new Stripe('sk_test_123', {
     }
   }
 })();
-
-const Foo = Stripe.StripeResource.extend({
-  foo: Stripe.StripeResource.method({
-    method: 'create',
-    path: 'foo',
-  }),
-  fooFullPath: Stripe.StripeResource.method({
-    method: 'create',
-    fullPath: '/v1/full/path',
-  }),
-  search: Stripe.StripeResource.method({
-    method: 'create',
-    fullPath: 'foo',
-    methodType: 'search',
-  }),
-  customer: Stripe.StripeResource.method<Stripe.Customer>({method: 'POST'}),
-});
-const fooClient = new Foo(stripe);
-const searchResponse: Stripe.Response<object> = fooClient.search();
-const customerResponse: Stripe.Response<Stripe.Customer> = fooClient.customer();
 
 const maxBufferedRequestMetrics: number =
   Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS;

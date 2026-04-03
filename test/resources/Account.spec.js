@@ -78,33 +78,9 @@ describe('Account Resource', () => {
 
     it('Sends the correct request with secret key', () => {
       const key = 'sk_12345678901234567890123456789012';
-      stripe.account.retrieve(null, key);
+      stripe.account.retrieve(null, undefined, {apiKey: key});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         auth: key,
-        method: 'GET',
-        url: '/v1/account',
-        data: null,
-        headers: {},
-        settings: {},
-      });
-    });
-
-    it('Sends the correct request with secret key as first object', () => {
-      const params = {apiKey: 'sk_12345678901234567890123456789012'};
-      stripe.account.retrieve(params);
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        auth: params.apiKey,
-        method: 'GET',
-        url: '/v1/account',
-        data: null,
-        headers: {},
-        settings: {},
-      });
-    });
-
-    it('Sends the correct request with a callback', () => {
-      stripe.account.retrieve((err, account) => {});
-      expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/account',
         data: null,
@@ -128,7 +104,9 @@ describe('Account Resource', () => {
       });
 
       it('Sends the correct request [with specified auth]', () => {
-        stripe.account.listCapabilities('acct_123', TEST_AUTH_KEY);
+        stripe.account.listCapabilities('acct_123', undefined, {
+          apiKey: TEST_AUTH_KEY,
+        });
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/accounts/acct_123/capabilities',
@@ -153,11 +131,9 @@ describe('Account Resource', () => {
       });
 
       it('Sends the correct request [with specified auth]', () => {
-        stripe.account.retrieveCapability(
-          'acct_123',
-          'acap_123',
-          TEST_AUTH_KEY
-        );
+        stripe.account.retrieveCapability('acct_123', 'acap_123', undefined, {
+          apiKey: TEST_AUTH_KEY,
+        });
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/accounts/acct_123/capabilities/acap_123',
@@ -190,7 +166,7 @@ describe('Account Resource', () => {
           {
             first_name: 'John',
           },
-          TEST_AUTH_KEY
+          {apiKey: TEST_AUTH_KEY}
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -225,7 +201,8 @@ describe('Account Resource', () => {
         stripe.account.retrieveExternalAccount(
           'accountIdFoo321',
           'externalAccountIdFoo456',
-          TEST_AUTH_KEY
+          undefined,
+          {apiKey: TEST_AUTH_KEY}
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -263,7 +240,7 @@ describe('Account Resource', () => {
             currency: 'usd',
             country: 'US',
           },
-          TEST_AUTH_KEY
+          {apiKey: TEST_AUTH_KEY}
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -316,7 +293,8 @@ describe('Account Resource', () => {
         stripe.account.deleteExternalAccount(
           'accountIdFoo321',
           'externalAccountIdFoo456',
-          TEST_AUTH_KEY
+          undefined,
+          {apiKey: TEST_AUTH_KEY}
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -343,7 +321,9 @@ describe('Account Resource', () => {
       });
 
       it('Sends the correct request [with specified auth]', () => {
-        stripe.account.listExternalAccounts('accountIdFoo321', TEST_AUTH_KEY);
+        stripe.account.listExternalAccounts('accountIdFoo321', undefined, {
+          apiKey: TEST_AUTH_KEY,
+        });
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/accounts/accountIdFoo321/external_accounts',
@@ -385,7 +365,9 @@ describe('Account Resource', () => {
       });
 
       it('Sends the correct request [with specified auth]', () => {
-        stripe.account.retrievePerson('acct_123', 'person_123', TEST_AUTH_KEY);
+        stripe.account.retrievePerson('acct_123', 'person_123', undefined, {
+          apiKey: TEST_AUTH_KEY,
+        });
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/accounts/acct_123/persons/person_123',
@@ -417,7 +399,7 @@ describe('Account Resource', () => {
           {
             first_name: 'John',
           },
-          TEST_AUTH_KEY
+          {apiKey: TEST_AUTH_KEY}
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -451,7 +433,7 @@ describe('Account Resource', () => {
           {
             first_name: 'John',
           },
-          TEST_AUTH_KEY
+          {apiKey: TEST_AUTH_KEY}
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -477,7 +459,9 @@ describe('Account Resource', () => {
       });
 
       it('Sends the correct request [with specified auth]', () => {
-        stripe.account.deletePerson('acct_123', 'person_123', TEST_AUTH_KEY);
+        stripe.account.deletePerson('acct_123', 'person_123', undefined, {
+          apiKey: TEST_AUTH_KEY,
+        });
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
           url: '/v1/accounts/acct_123/persons/person_123',
@@ -502,7 +486,9 @@ describe('Account Resource', () => {
       });
 
       it('Sends the correct request [with specified auth]', () => {
-        stripe.account.listPersons('acct_123', TEST_AUTH_KEY);
+        stripe.account.listPersons('acct_123', undefined, {
+          apiKey: TEST_AUTH_KEY,
+        });
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/accounts/acct_123/persons',

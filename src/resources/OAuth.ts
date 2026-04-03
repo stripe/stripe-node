@@ -2,10 +2,7 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {makeURLInterpolator, queryStringifyRequestData} from '../utils.js';
-import {RequestOptions} from '../Types.js';
-import {Response, ApiListPromise, ApiList} from '../lib.js';
-
-const stripeMethod = StripeResource.method;
+import {RequestOptions} from '../lib.js';
 
 export class OAuthResource extends StripeResource {
   basePath = makeURLInterpolator('/');
@@ -45,34 +42,23 @@ export class OAuthResource extends StripeResource {
   token(
     params: OAuthTokenParams,
     options?: RequestOptions
-  ): Promise<OAuthToken>;
-
-  token(...args: any[]): Promise<OAuthToken> {
-    return stripeMethod({
-      method: 'POST',
-      path: 'oauth/token',
+  ): Promise<OAuthToken> {
+    return this._makeRequest('POST', '/oauth/token', params, options, {
       apiBase: 'connect',
-    }).call(this, ...args);
+    });
   }
 
   deauthorize(
     params: OAuthDeauthorizeParams,
     options?: RequestOptions
-  ): Promise<OAuthDeauthorization>;
-
-  deauthorize(
-    params: OAuthDeauthorizeParams,
-    ...args: any[]
   ): Promise<OAuthDeauthorization> {
     if (!params.client_id) {
       params.client_id = this._stripe.getClientId();
     }
 
-    return stripeMethod({
-      method: 'POST',
-      path: 'oauth/deauthorize',
+    return this._makeRequest('POST', '/oauth/deauthorize', params, options, {
       apiBase: 'connect',
-    }).apply(this, [params, ...args]);
+    });
   }
 }
 

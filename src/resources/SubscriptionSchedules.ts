@@ -23,7 +23,6 @@ import {
   Metadata,
 } from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class SubscriptionScheduleResource extends StripeResource {
   /**
@@ -32,56 +31,63 @@ export class SubscriptionScheduleResource extends StripeResource {
   list(
     params?: SubscriptionScheduleListParams,
     options?: RequestOptions
-  ): ApiListPromise<SubscriptionSchedule>;
-  list(options?: RequestOptions): ApiListPromise<SubscriptionSchedule>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/subscription_schedules',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<SubscriptionSchedule> {
+    return this._makeRequest(
+      'GET',
+      '/v1/subscription_schedules',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Creates a new subscription schedule object. Each customer can have up to 500 active or scheduled subscriptions.
    */
   create(
     params?: SubscriptionScheduleCreateParams,
     options?: RequestOptions
-  ): Promise<Response<SubscriptionSchedule>>;
-  create(options?: RequestOptions): Promise<Response<SubscriptionSchedule>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/subscription_schedules',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          phases: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                add_invoice_items: {
-                  kind: 'array',
-                  element: {
-                    kind: 'object',
-                    fields: {
-                      price_data: {
-                        kind: 'object',
-                        fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+  ): Promise<Response<SubscriptionSchedule>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/subscription_schedules',
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            phases: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  add_invoice_items: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {
+                        price_data: {
+                          kind: 'object',
+                          fields: {
+                            unit_amount_decimal: {kind: 'decimal_string'},
+                          },
+                        },
                       },
                     },
                   },
-                },
-                items: {
-                  kind: 'array',
-                  element: {
-                    kind: 'object',
-                    fields: {
-                      price_data: {
-                        kind: 'object',
-                        fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+                  items: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {
+                        price_data: {
+                          kind: 'object',
+                          fields: {
+                            unit_amount_decimal: {kind: 'decimal_string'},
+                          },
+                        },
                       },
                     },
                   },
@@ -90,10 +96,9 @@ export class SubscriptionScheduleResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Retrieves the details of an existing subscription schedule. You only need to supply the unique subscription schedule identifier that was returned upon subscription schedule creation.
    */
@@ -101,18 +106,14 @@ export class SubscriptionScheduleResource extends StripeResource {
     id: string,
     params?: SubscriptionScheduleRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<SubscriptionSchedule>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<SubscriptionSchedule>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/subscription_schedules/{schedule}',
-    }).call(this, ...args);
+  ): Promise<Response<SubscriptionSchedule>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/subscription_schedules/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates an existing subscription schedule.
    */
@@ -120,39 +121,46 @@ export class SubscriptionScheduleResource extends StripeResource {
     id: string,
     params?: SubscriptionScheduleUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<SubscriptionSchedule>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/subscription_schedules/{schedule}',
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          phases: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                add_invoice_items: {
-                  kind: 'array',
-                  element: {
-                    kind: 'object',
-                    fields: {
-                      price_data: {
-                        kind: 'object',
-                        fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+  ): Promise<Response<SubscriptionSchedule>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/subscription_schedules/${id}`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            phases: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  add_invoice_items: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {
+                        price_data: {
+                          kind: 'object',
+                          fields: {
+                            unit_amount_decimal: {kind: 'decimal_string'},
+                          },
+                        },
                       },
                     },
                   },
-                },
-                items: {
-                  kind: 'array',
-                  element: {
-                    kind: 'object',
-                    fields: {
-                      price_data: {
-                        kind: 'object',
-                        fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+                  items: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {
+                        price_data: {
+                          kind: 'object',
+                          fields: {
+                            unit_amount_decimal: {kind: 'decimal_string'},
+                          },
+                        },
                       },
                     },
                   },
@@ -161,10 +169,9 @@ export class SubscriptionScheduleResource extends StripeResource {
             },
           },
         },
-      },
-    }).call(this, ...args);
+      }
+    ) as any;
   }
-
   /**
    * Cancels a subscription schedule and its associated subscription immediately (if the subscription schedule has an active subscription). A subscription schedule can only be canceled if its status is not_started or active.
    */
@@ -172,18 +179,14 @@ export class SubscriptionScheduleResource extends StripeResource {
     id: string,
     params?: SubscriptionScheduleCancelParams,
     options?: RequestOptions
-  ): Promise<Response<SubscriptionSchedule>>;
-  cancel(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<SubscriptionSchedule>>;
-  cancel(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/subscription_schedules/{schedule}/cancel',
-    }).call(this, ...args);
+  ): Promise<Response<SubscriptionSchedule>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/subscription_schedules/${id}/cancel`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Releases the subscription schedule immediately, which will stop scheduling of its phases, but leave any existing subscription in place. A schedule can only be released if its status is not_started or active. If the subscription schedule is currently associated with a subscription, releasing it will remove its subscription property and set the subscription's ID to the released_subscription property.
    */
@@ -191,16 +194,13 @@ export class SubscriptionScheduleResource extends StripeResource {
     id: string,
     params?: SubscriptionScheduleReleaseParams,
     options?: RequestOptions
-  ): Promise<Response<SubscriptionSchedule>>;
-  release(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<SubscriptionSchedule>>;
-  release(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/subscription_schedules/{schedule}/release',
-    }).call(this, ...args);
+  ): Promise<Response<SubscriptionSchedule>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/subscription_schedules/${id}/release`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface SubscriptionSchedule {
