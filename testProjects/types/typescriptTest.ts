@@ -341,6 +341,8 @@ async (): Promise<void> => {
   let f: Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification;
   // union of all V2 Events
   let g: Stripe.V2.Core.Event;
+  // V2 Ref type
+  let h: Stripe.V2.Ref<Stripe.V2.Core.Account>;
 }
 
 Stripe.Decimal.from('1.0');
