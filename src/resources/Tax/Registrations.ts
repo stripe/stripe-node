@@ -3,7 +3,6 @@
 import {StripeResource} from '../../StripeResource.js';
 import {Emptyable, PaginationParams} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class RegistrationResource extends StripeResource {
   /**
@@ -12,30 +11,25 @@ export class RegistrationResource extends StripeResource {
   list(
     params?: Tax.RegistrationListParams,
     options?: RequestOptions
-  ): ApiListPromise<Registration>;
-  list(options?: RequestOptions): ApiListPromise<Registration>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/tax/registrations',
+  ): ApiListPromise<Registration> {
+    return this._makeRequest('GET', '/v1/tax/registrations', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Creates a new Tax Registration object.
    */
   create(
     params: Tax.RegistrationCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Registration>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/tax/registrations',
-    }).call(this, ...args);
+  ): Promise<Response<Registration>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/tax/registrations',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Returns a Tax Registration object.
    */
@@ -43,18 +37,14 @@ export class RegistrationResource extends StripeResource {
     id: string,
     params?: Tax.RegistrationRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Registration>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Registration>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/tax/registrations/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<Registration>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/tax/registrations/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates an existing Tax Registration object.
    *
@@ -64,12 +54,13 @@ export class RegistrationResource extends StripeResource {
     id: string,
     params?: Tax.RegistrationUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Registration>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/tax/registrations/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<Registration>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/tax/registrations/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Registration {

@@ -1,14 +1,8 @@
-import {MethodSpec, RequestArgs, StripeResourceObject} from './Types.js';
-import {
-  callbackifyPromiseWithTimeout,
-  getDataFromArgs,
-  getAPIMode,
-} from './utils.js';
+import {RequestData, StripeResourceObject, MakeRequestSpec} from './Types.js';
+import {getAPIMode} from './utils.js';
+import {RequestOptions} from './lib.js';
 
-type PromiseCache = {
-  currentPromise: Promise<any> | undefined | null;
-};
-type IterationDoneCallback = () => void;
+type IterationDoneCallback = (err?: any, result?: any) => void;
 type IterationItemCallback<T> = (
   item: T,
   next: any
@@ -38,23 +32,37 @@ type PageResult<T> = {
   next_page?: string | null;
   next_page_url?: string | null;
 };
+
+type PromiseCache = {
+  currentPromise: Promise<any> | undefined | null;
+};
+
 class V1Iterator<T> implements AsyncIterator<T> {
   private index: number;
   private pagePromise: Promise<PageResult<T>>;
   private promiseCache: PromiseCache;
-  protected requestArgs: RequestArgs;
-  protected spec: MethodSpec;
+  protected params: RequestData;
+  protected options: RequestOptions | undefined;
+  protected method: string;
+  protected path: string;
+  protected spec: MakeRequestSpec | undefined;
   protected stripeResource: StripeResourceObject;
   constructor(
     firstPagePromise: Promise<PageResult<T>>,
-    requestArgs: RequestArgs,
-    spec: MethodSpec,
+    params: RequestData,
+    options: RequestOptions | undefined,
+    method: string,
+    path: string,
+    spec: MakeRequestSpec | undefined,
     stripeResource: StripeResourceObject
   ) {
     this.index = 0;
     this.pagePromise = firstPagePromise;
     this.promiseCache = {currentPromise: null};
-    this.requestArgs = requestArgs;
+    this.params = params;
+    this.options = options;
+    this.method = method;
+    this.path = path;
     this.spec = spec;
     this.stripeResource = stripeResource;
   }
@@ -72,7 +80,7 @@ class V1Iterator<T> implements AsyncIterator<T> {
       );
     }
 
-    const reverseIteration = isReverseIteration(this.requestArgs);
+    const reverseIteration = !!this.params.ending_before;
     if (this.index < pageResult.data.length) {
       const idx = reverseIteration
         ? pageResult.data.length - 1 - this.index
@@ -124,11 +132,19 @@ class V1Iterator<T> implements AsyncIterator<T> {
 
 class V1ListIterator<T extends {id: string}> extends V1Iterator<T> {
   getNextPage(pageResult: PageResult<T>): Promise<PageResult<T>> {
-    const reverseIteration = isReverseIteration(this.requestArgs);
+    const reverseIteration = !!this.params.ending_before;
     const lastId = getLastId(pageResult, reverseIteration);
-    return this.stripeResource._makeRequest(this.requestArgs, this.spec, {
+    const nextParams = {
+      ...this.params,
       [reverseIteration ? 'ending_before' : 'starting_after']: lastId,
-    });
+    };
+    return this.stripeResource._makeRequest(
+      this.method,
+      this.path,
+      nextParams,
+      this.options,
+      this.spec
+    );
   }
 }
 
@@ -139,9 +155,17 @@ class V1SearchIterator<T> extends V1Iterator<T> {
         'Unexpected: Stripe API response does not have a well-formed `next_page` field, but `has_more` was true.'
       );
     }
-    return this.stripeResource._makeRequest(this.requestArgs, this.spec, {
+    const nextParams = {
+      ...this.params,
       page: pageResult.next_page,
-    });
+    };
+    return this.stripeResource._makeRequest(
+      this.method,
+      this.path,
+      nextParams,
+      this.options,
+      this.spec
+    );
   }
 }
 
@@ -149,19 +173,19 @@ class V2ListIterator<T> implements AsyncIterator<T> {
   private firstPagePromise: Promise<PageResult<T>> | null;
   private currentPageIterator: Iterator<T> | null;
   private nextPageUrl: string | null;
-  private requestArgs: RequestArgs;
-  private spec: MethodSpec;
+  private options: RequestOptions | undefined;
+  private spec: MakeRequestSpec | undefined;
   private stripeResource: StripeResourceObject;
   constructor(
     firstPagePromise: Promise<PageResult<T>>,
-    requestArgs: RequestArgs,
-    spec: MethodSpec,
+    options: RequestOptions | undefined,
+    spec: MakeRequestSpec | undefined,
     stripeResource: StripeResourceObject
   ) {
     this.firstPagePromise = firstPagePromise;
     this.currentPageIterator = null;
     this.nextPageUrl = null;
-    this.requestArgs = requestArgs;
+    this.options = options;
     this.spec = spec;
     this.stripeResource = stripeResource;
   }
@@ -175,8 +199,13 @@ class V2ListIterator<T> implements AsyncIterator<T> {
   }
   private async turnPage(): Promise<Iterator<T> | null> {
     if (!this.nextPageUrl) return null;
-    this.spec.fullPath = this.nextPageUrl;
-    const page = await this.stripeResource._makeRequest([], this.spec, {});
+    const page = await this.stripeResource._makeRequest(
+      'GET',
+      this.nextPageUrl,
+      undefined,
+      this.options,
+      this.spec
+    );
     this.nextPageUrl = page.next_page_url || null;
     this.currentPageIterator = page.data[Symbol.iterator]();
     return this.currentPageIterator;
@@ -197,29 +226,46 @@ class V2ListIterator<T> implements AsyncIterator<T> {
   }
 }
 
-export const makeAutoPaginationMethods = <
-  TMethodSpec extends MethodSpec,
-  TItem extends {id: string}
->(
+export const makeAutoPaginationMethods = <TItem extends {id: string}>(
   stripeResource: StripeResourceObject,
-  requestArgs: RequestArgs,
-  spec: TMethodSpec,
+  params: RequestData,
+  options: RequestOptions | undefined,
+  method: string,
+  path: string,
+  spec: MakeRequestSpec | undefined,
   firstPagePromise: Promise<PageResult<TItem>>
 ): AutoPaginationMethods<TItem> | null => {
-  const apiMode = getAPIMode(spec.fullPath || spec.path);
-  if (apiMode !== 'v2' && spec.methodType === 'search') {
+  const apiMode = getAPIMode(path);
+  const methodType = spec?.methodType;
+  if (apiMode !== 'v2' && methodType === 'search') {
     return makeAutoPaginationMethodsFromIterator(
-      new V1SearchIterator(firstPagePromise, requestArgs, spec, stripeResource)
+      new V1SearchIterator(
+        firstPagePromise,
+        params,
+        options,
+        method,
+        path,
+        spec,
+        stripeResource
+      )
     );
   }
-  if (apiMode !== 'v2' && spec.methodType === 'list') {
+  if (apiMode !== 'v2' && methodType === 'list') {
     return makeAutoPaginationMethodsFromIterator(
-      new V1ListIterator(firstPagePromise, requestArgs, spec, stripeResource)
+      new V1ListIterator(
+        firstPagePromise,
+        params,
+        options,
+        method,
+        path,
+        spec,
+        stripeResource
+      )
     );
   }
-  if (apiMode === 'v2' && spec.methodType === 'list') {
+  if (apiMode === 'v2' && methodType === 'list') {
     return makeAutoPaginationMethodsFromIterator(
-      new V2ListIterator(firstPagePromise, requestArgs, spec, stripeResource)
+      new V2ListIterator(firstPagePromise, options, spec, stripeResource)
     );
   }
   return null;
@@ -353,7 +399,13 @@ function makeAutoPagingEach<T>(
       // @ts-ignore we might need a null check
       onItem
     );
-    return callbackifyPromiseWithTimeout(autoPagePromise, onDone);
+    if (onDone) {
+      autoPagePromise.then(
+        () => onDone(),
+        (err) => onDone(err)
+      );
+    }
+    return autoPagePromise;
   } as AutoPagingEach<T>;
 }
 
@@ -388,8 +440,13 @@ function makeAutoPagingToArray<T>(
         })
         .catch(reject);
     });
-    // @ts-ignore
-    return callbackifyPromiseWithTimeout(promise, onDone);
+    if (onDone) {
+      promise.then(
+        (items) => onDone(null, items),
+        (err) => onDone(err)
+      );
+    }
+    return promise;
   };
 }
 
@@ -425,11 +482,4 @@ function wrapAsyncIteratorWithCallback<T>(
       .then(handleIteration)
       .catch(reject);
   });
-}
-
-function isReverseIteration(requestArgs: RequestArgs): boolean {
-  const args = [].slice.call(requestArgs);
-  const dataFromArgs = getDataFromArgs(args);
-
-  return !!dataFromArgs.ending_before;
 }

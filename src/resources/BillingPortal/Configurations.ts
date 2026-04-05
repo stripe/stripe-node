@@ -9,7 +9,6 @@ import {
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ConfigurationResource extends StripeResource {
   /**
@@ -18,30 +17,31 @@ export class ConfigurationResource extends StripeResource {
   list(
     params?: BillingPortal.ConfigurationListParams,
     options?: RequestOptions
-  ): ApiListPromise<Configuration>;
-  list(options?: RequestOptions): ApiListPromise<Configuration>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing_portal/configurations',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<Configuration> {
+    return this._makeRequest(
+      'GET',
+      '/v1/billing_portal/configurations',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Creates a configuration that describes the functionality and behavior of a PortalSession
    */
   create(
     params: BillingPortal.ConfigurationCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Configuration>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing_portal/configurations',
-    }).call(this, ...args);
+  ): Promise<Response<Configuration>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/billing_portal/configurations',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves a configuration that describes the functionality of the customer portal.
    */
@@ -49,18 +49,14 @@ export class ConfigurationResource extends StripeResource {
     id: string,
     params?: BillingPortal.ConfigurationRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Configuration>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<Configuration>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing_portal/configurations/{configuration}',
-    }).call(this, ...args);
+  ): Promise<Response<Configuration>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/billing_portal/configurations/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates a configuration that describes the functionality of the customer portal.
    */
@@ -68,12 +64,13 @@ export class ConfigurationResource extends StripeResource {
     id: string,
     params?: BillingPortal.ConfigurationUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Configuration>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing_portal/configurations/{configuration}',
-    }).call(this, ...args);
+  ): Promise<Response<Configuration>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/billing_portal/configurations/${id}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Configuration {

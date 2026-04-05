@@ -10,7 +10,6 @@ import {
   Metadata,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class CreditGrantResource extends StripeResource {
   /**
@@ -19,30 +18,31 @@ export class CreditGrantResource extends StripeResource {
   list(
     params?: Billing.CreditGrantListParams,
     options?: RequestOptions
-  ): ApiListPromise<CreditGrant>;
-  list(options?: RequestOptions): ApiListPromise<CreditGrant>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/credit_grants',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<CreditGrant> {
+    return this._makeRequest(
+      'GET',
+      '/v1/billing/credit_grants',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Creates a credit grant.
    */
   create(
     params: Billing.CreditGrantCreateParams,
     options?: RequestOptions
-  ): Promise<Response<CreditGrant>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing/credit_grants',
-    }).call(this, ...args);
+  ): Promise<Response<CreditGrant>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/billing/credit_grants',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves a credit grant.
    */
@@ -50,18 +50,14 @@ export class CreditGrantResource extends StripeResource {
     id: string,
     params?: Billing.CreditGrantRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<CreditGrant>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CreditGrant>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/billing/credit_grants/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<CreditGrant>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/billing/credit_grants/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates a credit grant.
    */
@@ -69,14 +65,14 @@ export class CreditGrantResource extends StripeResource {
     id: string,
     params?: Billing.CreditGrantUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<CreditGrant>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing/credit_grants/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<CreditGrant>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/billing/credit_grants/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Expires a credit grant.
    */
@@ -84,15 +80,14 @@ export class CreditGrantResource extends StripeResource {
     id: string,
     params?: Billing.CreditGrantExpireParams,
     options?: RequestOptions
-  ): Promise<Response<CreditGrant>>;
-  expire(id: string, options?: RequestOptions): Promise<Response<CreditGrant>>;
-  expire(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing/credit_grants/{id}/expire',
-    }).call(this, ...args);
+  ): Promise<Response<CreditGrant>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/billing/credit_grants/${id}/expire`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Voids a credit grant.
    */
@@ -100,16 +95,13 @@ export class CreditGrantResource extends StripeResource {
     id: string,
     params?: Billing.CreditGrantVoidGrantParams,
     options?: RequestOptions
-  ): Promise<Response<CreditGrant>>;
-  voidGrant(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<CreditGrant>>;
-  voidGrant(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/billing/credit_grants/{id}/void',
-    }).call(this, ...args);
+  ): Promise<Response<CreditGrant>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/billing/credit_grants/${id}/void`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface CreditGrant {

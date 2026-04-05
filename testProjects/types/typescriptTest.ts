@@ -57,7 +57,7 @@ stripe = new Stripe('sk_test_123', {
   await stripe.customers.create(params);
 
   // Check multiple dispatch:
-  let product = await stripe.products.retrieve('prod_123', opts);
+  let product = await stripe.products.retrieve('prod_123', undefined, opts);
   product = await stripe.products.retrieve('prod_123', {expand: []}, opts);
 
   const charge: Stripe.Charge = await stripe.charges.retrieve('ch_123', {
@@ -168,26 +168,6 @@ stripe = new Stripe('sk_test_123', {
   }
 })();
 
-const Foo = Stripe.StripeResource.extend({
-  foo: Stripe.StripeResource.method({
-    method: 'create',
-    path: 'foo',
-  }),
-  fooFullPath: Stripe.StripeResource.method({
-    method: 'create',
-    fullPath: '/v1/full/path',
-  }),
-  search: Stripe.StripeResource.method({
-    method: 'create',
-    fullPath: 'foo',
-    methodType: 'search',
-  }),
-  customer: Stripe.StripeResource.method<Stripe.Customer>({method: 'POST'}),
-});
-const fooClient = new Foo(stripe);
-const searchResponse: Stripe.Response<object> = fooClient.search();
-const customerResponse: Stripe.Response<Stripe.Customer> = fooClient.customer();
-
 const maxBufferedRequestMetrics: number =
   Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS;
 
@@ -281,9 +261,6 @@ const instanceofCheck2 = {} instanceof Stripe.errors.StripeAPIError;
 const instanceofCheck5 = {} instanceof stripe.errors.StripeError;
 const instanceofCheck6 = {} instanceof stripe.errors.StripeAPIError;
 
-stripe.accounts.retrieve('123', {
-  host: 'my_host',
-});
 stripe.files.create({
   purpose: 'dispute_evidence',
   file: {
@@ -293,6 +270,37 @@ stripe.files.create({
   },
   file_link_data: {create: true},
 });
+
+// rawRequest
+stripe.rawRequest(
+  'GET',
+  '/path/123',
+  {},
+  {
+    // allowed base
+    apiBase: 'files',
+  }
+);
+
+stripe.rawRequest(
+  'GET',
+  '/path/123',
+  {},
+  {
+    // @ts-expect-error - unknown base
+    apiBase: 'missing',
+  }
+);
+
+stripe.rawRequest(
+  'GET',
+  '/path/123',
+  {},
+  {
+    // @ts-expect-error - unknown key
+    host: 'example.com',
+  }
+);
 
 const v1Event = {} as Stripe.AccountApplicationAuthorizedEvent;
 // v1 event context is a string
@@ -346,3 +354,21 @@ async (): Promise<void> => {
 }
 
 Stripe.Decimal.from('1.0');
+
+let event: Stripe.Event = stripe.webhooks.constructEvent(
+  'payload',
+  'signature',
+  'secret'
+);
+/**
+ * Note that this is typed to accept an array of strings
+ * so that it works seamlessly with express's types,
+ * but will throw if an array is passed in practice
+ * since express should never return this header as an array,
+ * only a string.
+ */
+event = stripe.webhooks.constructEvent(
+  'payload',
+  ['also_signature_but_does_not_work_at_runtime'],
+  'secret'
+);

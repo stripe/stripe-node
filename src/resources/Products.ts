@@ -18,7 +18,6 @@ import {
   ApiListPromise,
   ApiSearchResultPromise,
 } from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class ProductResource extends StripeResource {
   /**
@@ -28,15 +27,14 @@ export class ProductResource extends StripeResource {
     id: string,
     params?: ProductDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedProduct>>;
-  del(id: string, options?: RequestOptions): Promise<Response<DeletedProduct>>;
-  del(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'DELETE', fullPath: '/v1/products/{id}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<DeletedProduct>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/products/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the details of an existing product. Supply the unique product ID from either a product creation request or the product list, and Stripe will return the corresponding product information.
    */
@@ -44,15 +42,14 @@ export class ProductResource extends StripeResource {
     id: string,
     params?: ProductRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Product>>;
-  retrieve(id: string, options?: RequestOptions): Promise<Response<Product>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'GET', fullPath: '/v1/products/{id}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Product>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/products/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates the specific product by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
    */
@@ -60,41 +57,33 @@ export class ProductResource extends StripeResource {
     id: string,
     params?: ProductUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Product>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({method: 'POST', fullPath: '/v1/products/{id}'}).call(
-      this,
-      ...args
-    );
+  ): Promise<Response<Product>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/products/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
    */
   list(
     params?: ProductListParams,
     options?: RequestOptions
-  ): ApiListPromise<Product>;
-  list(options?: RequestOptions): ApiListPromise<Product>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/products',
+  ): ApiListPromise<Product> {
+    return this._makeRequest('GET', '/v1/products', params, options, {
       methodType: 'list',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Creates a new product object.
    */
   create(
     params: ProductCreateParams,
     options?: RequestOptions
-  ): Promise<Response<Product>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/products',
+  ): Promise<Response<Product>> {
+    return this._makeRequest('POST', '/v1/products', params, options, {
       requestSchema: {
         kind: 'object',
         fields: {
@@ -125,9 +114,8 @@ export class ProductResource extends StripeResource {
           },
         },
       },
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Search for products you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
    * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
@@ -137,15 +125,11 @@ export class ProductResource extends StripeResource {
   search(
     params: ProductSearchParams,
     options?: RequestOptions
-  ): ApiSearchResultPromise<Product>;
-  search(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/products/search',
+  ): ApiSearchResultPromise<Product> {
+    return this._makeRequest('GET', '/v1/products/search', params, options, {
       methodType: 'search',
-    }).call(this, ...args);
+    }) as any;
   }
-
   /**
    * Deletes the feature attachment to a product
    */
@@ -154,19 +138,14 @@ export class ProductResource extends StripeResource {
     id: string,
     params?: ProductDeleteFeatureParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedProductFeature>>;
-  deleteFeature(
-    productId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<DeletedProductFeature>>;
-  deleteFeature(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'DELETE',
-      fullPath: '/v1/products/{product}/features/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<DeletedProductFeature>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/products/${productId}/features/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves a product_feature, which represents a feature attachment to a product
    */
@@ -175,19 +154,14 @@ export class ProductResource extends StripeResource {
     id: string,
     params?: ProductRetrieveFeatureParams,
     options?: RequestOptions
-  ): Promise<Response<ProductFeature>>;
-  retrieveFeature(
-    productId: string,
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<ProductFeature>>;
-  retrieveFeature(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/products/{product}/features/{id}',
-    }).call(this, ...args);
+  ): Promise<Response<ProductFeature>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/products/${productId}/features/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieve a list of features for a product
    */
@@ -195,19 +169,17 @@ export class ProductResource extends StripeResource {
     id: string,
     params?: ProductListFeaturesParams,
     options?: RequestOptions
-  ): ApiListPromise<ProductFeature>;
-  listFeatures(
-    id: string,
-    options?: RequestOptions
-  ): ApiListPromise<ProductFeature>;
-  listFeatures(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/products/{product}/features',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<ProductFeature> {
+    return this._makeRequest(
+      'GET',
+      `/v1/products/${id}/features`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Creates a product_feature, which represents a feature attachment to a product
    */
@@ -215,12 +187,13 @@ export class ProductResource extends StripeResource {
     id: string,
     params: ProductCreateFeatureParams,
     options?: RequestOptions
-  ): Promise<Response<ProductFeature>>;
-  createFeature(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/products/{product}/features',
-    }).call(this, ...args);
+  ): Promise<Response<ProductFeature>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/products/${id}/features`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface Product {

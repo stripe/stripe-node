@@ -3,7 +3,6 @@
 import {StripeResource} from '../StripeResource.js';
 import {PaginationParams} from '../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../lib.js';
-const stripeMethod = StripeResource.method;
 
 export class PaymentMethodDomainResource extends StripeResource {
   /**
@@ -12,30 +11,31 @@ export class PaymentMethodDomainResource extends StripeResource {
   list(
     params?: PaymentMethodDomainListParams,
     options?: RequestOptions
-  ): ApiListPromise<PaymentMethodDomain>;
-  list(options?: RequestOptions): ApiListPromise<PaymentMethodDomain>;
-  list(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payment_method_domains',
-      methodType: 'list',
-    }).call(this, ...args);
+  ): ApiListPromise<PaymentMethodDomain> {
+    return this._makeRequest(
+      'GET',
+      '/v1/payment_method_domains',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
-
   /**
    * Creates a payment method domain.
    */
   create(
     params: PaymentMethodDomainCreateParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethodDomain>>;
-  create(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payment_method_domains',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentMethodDomain>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/payment_method_domains',
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Retrieves the details of an existing payment method domain.
    */
@@ -43,18 +43,14 @@ export class PaymentMethodDomainResource extends StripeResource {
     id: string,
     params?: PaymentMethodDomainRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethodDomain>>;
-  retrieve(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentMethodDomain>>;
-  retrieve(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: '/v1/payment_method_domains/{payment_method_domain}',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentMethodDomain>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/payment_method_domains/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Updates an existing payment method domain.
    */
@@ -62,14 +58,14 @@ export class PaymentMethodDomainResource extends StripeResource {
     id: string,
     params?: PaymentMethodDomainUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethodDomain>>;
-  update(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payment_method_domains/{payment_method_domain}',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentMethodDomain>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_method_domains/${id}`,
+      params,
+      options
+    ) as any;
   }
-
   /**
    * Some payment methods might require additional steps to register a domain. If the requirements weren't satisfied when the domain was created, the payment method will be inactive on the domain.
    * The payment method doesn't appear in Elements or Embedded Checkout for this domain until it is active.
@@ -82,16 +78,13 @@ export class PaymentMethodDomainResource extends StripeResource {
     id: string,
     params?: PaymentMethodDomainValidateParams,
     options?: RequestOptions
-  ): Promise<Response<PaymentMethodDomain>>;
-  validate(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Response<PaymentMethodDomain>>;
-  validate(...args: any[]): Promise<Response<any>> {
-    return stripeMethod({
-      method: 'POST',
-      fullPath: '/v1/payment_method_domains/{payment_method_domain}/validate',
-    }).call(this, ...args);
+  ): Promise<Response<PaymentMethodDomain>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_method_domains/${id}/validate`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface PaymentMethodDomain {
