@@ -92,6 +92,7 @@ class StripeResource implements StripeResourceObject {
       return Promise.reject(err);
     }
 
+    const requestSender = this._stripe._requestSender;
     const innerPromise = new Promise<any>((resolve, reject) => {
       function requestCallback(
         err: any,
@@ -102,7 +103,7 @@ class StripeResource implements StripeResourceObject {
         } else {
           try {
             if (spec?.responseSchema) {
-              coerceV2ResponseData(response, spec.responseSchema);
+              coerceV2ResponseData(response, spec.responseSchema, requestSender);
             }
             resolve(
               spec?.transformResponseData

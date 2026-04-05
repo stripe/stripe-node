@@ -26,6 +26,7 @@ export type BufferedFile = {
 export type V2RuntimeSchema =
   | {kind: 'int64_string'}
   | {kind: 'decimal_string'}
+  | {kind: 'refObject'}
   | {kind: 'object'; fields: Record<string, V2RuntimeSchema>}
   | {kind: 'array'; element: V2RuntimeSchema}
   | {kind: 'nullable'; inner: V2RuntimeSchema};

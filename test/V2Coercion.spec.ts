@@ -2,6 +2,7 @@
 import {expect} from 'chai';
 import {coerceV2RequestData, coerceV2ResponseData} from '../src/V2Coercion.js';
 import {V2RuntimeSchema} from '../src/Types.js';
+import * as testUtils from './testUtils.js';
 
 describe('V2Int64', () => {
   describe('coerceV2RequestData', () => {
@@ -182,6 +183,19 @@ describe('V2Int64', () => {
       });
     });
 
+    describe('refObject kind', () => {
+      const schema: V2RuntimeSchema = {kind: 'refObject'};
+
+      it('passes through the data unchanged', () => {
+        const wireRef = {type: 'v2.core.account', id: 'acct_123', url: '/v2/core/accounts/acct_123'};
+        expect(coerceV2RequestData(wireRef, schema)).to.equal(wireRef);
+      });
+
+      it('passes null through', () => {
+        expect(coerceV2RequestData(null, schema)).to.equal(null);
+      });
+    });
+
     describe('complex schema', () => {
       const schema: V2RuntimeSchema = {
         kind: 'object',
@@ -351,6 +365,59 @@ describe('V2Int64', () => {
 
       it('passes null through', () => {
         expect(coerceV2ResponseData(null, schema)).to.equal(null);
+      });
+    });
+
+    describe('refObject kind', () => {
+      const schema: V2RuntimeSchema = {kind: 'refObject'};
+
+      it('attaches a fetch() method when requestSender is provided', () => {
+        const mockStripe = testUtils.createMockClient([]);
+        const wireRef = {type: 'v2.core.account', id: 'acct_123', url: '/v2/core/accounts/acct_123'};
+        const result = coerceV2ResponseData(wireRef, schema, mockStripe._requestSender);
+        expect(result.fetch).to.be.a('function');
+        expect(result.type).to.equal('v2.core.account');
+        expect(result.id).to.equal('acct_123');
+        expect(result.url).to.equal('/v2/core/accounts/acct_123');
+      });
+
+      it('returns data unchanged when no requestSender is provided', () => {
+        const wireRef = {type: 'v2.core.account', id: 'acct_123', url: '/v2/core/accounts/acct_123'};
+        const result = coerceV2ResponseData(wireRef, schema);
+        expect(result).to.equal(wireRef);
+        expect(result.fetch).to.be.undefined;
+      });
+
+      it('passes null through', () => {
+        expect(coerceV2ResponseData(null, schema)).to.equal(null);
+      });
+
+      it('attaches fetch() on a refObject nested inside an object', () => {
+        const mockStripe = testUtils.createMockClient([]);
+        const objectSchema: V2RuntimeSchema = {
+          kind: 'object',
+          fields: {ref: {kind: 'refObject'}},
+        };
+        const data = {
+          ref: {type: 'v2.core.account', id: 'acct_123', url: '/v2/core/accounts/acct_123'},
+        };
+        coerceV2ResponseData(data, objectSchema, mockStripe._requestSender);
+        expect(data.ref.fetch).to.be.a('function');
+      });
+
+      it('attaches fetch() on refObjects nested inside an array', () => {
+        const mockStripe = testUtils.createMockClient([]);
+        const arraySchema: V2RuntimeSchema = {
+          kind: 'array',
+          element: {kind: 'refObject'},
+        };
+        const data = [
+          {type: 'v2.core.account', id: 'acct_1', url: '/v2/core/accounts/acct_1'},
+          {type: 'v2.core.account', id: 'acct_2', url: '/v2/core/accounts/acct_2'},
+        ];
+        const result = coerceV2ResponseData(data, arraySchema, mockStripe._requestSender);
+        expect(result[0].fetch).to.be.a('function');
+        expect(result[1].fetch).to.be.a('function');
       });
     });
 
