@@ -5,6 +5,12 @@ import {V2RuntimeSchema} from '../src/Types.js';
 
 
 describe('V2Int64', () => {
+  // Minimal mock Stripe instance for coerceV2ResponseData calls.
+  const mockStripe = {
+    resolveBaseAddress: () => null,
+    _requestSender: {_request: () => {}},
+  } as any;
+
   describe('coerceV2RequestData', () => {
     describe('int64_string kind', () => {
       const schema: V2RuntimeSchema = {kind: 'int64_string'};
@@ -244,33 +250,33 @@ describe('V2Int64', () => {
       const schema: V2RuntimeSchema = {kind: 'int64_string'};
 
       it('converts string to bigint', () => {
-        expect(coerceV2ResponseData('42', schema)).to.equal(42n);
+        expect(coerceV2ResponseData('42', schema, mockStripe)).to.equal(42n);
       });
 
       it('converts large string to bigint', () => {
-        expect(coerceV2ResponseData('9007199254740991', schema)).to.equal(
+        expect(coerceV2ResponseData('9007199254740991', schema, mockStripe)).to.equal(
           9007199254740991n
         );
       });
 
       it('converts zero string to bigint', () => {
-        expect(coerceV2ResponseData('0', schema)).to.equal(0n);
+        expect(coerceV2ResponseData('0', schema, mockStripe)).to.equal(0n);
       });
 
       it('converts negative string to bigint', () => {
-        expect(coerceV2ResponseData('-100', schema)).to.equal(-100n);
+        expect(coerceV2ResponseData('-100', schema, mockStripe)).to.equal(-100n);
       });
 
       it('leaves non-string values unchanged', () => {
-        expect(coerceV2ResponseData(42, schema)).to.equal(42);
+        expect(coerceV2ResponseData(42, schema, mockStripe)).to.equal(42);
       });
 
       it('passes null through', () => {
-        expect(coerceV2ResponseData(null, schema)).to.equal(null);
+        expect(coerceV2ResponseData(null, schema, mockStripe)).to.equal(null);
       });
 
       it('passes undefined through', () => {
-        expect(coerceV2ResponseData(undefined, schema)).to.equal(undefined);
+        expect(coerceV2ResponseData(undefined, schema, mockStripe)).to.equal(undefined);
       });
     });
 
@@ -284,31 +290,31 @@ describe('V2Int64', () => {
 
       it('coerces fields listed in schema', () => {
         const data = {amount: '100'};
-        const result = coerceV2ResponseData(data, schema);
+        const result = coerceV2ResponseData(data, schema, mockStripe);
         expect(result).to.deep.equal({amount: 100n});
       });
 
       it('preserves fields not in schema', () => {
         const data = {amount: '100', name: 'test'};
-        const result = coerceV2ResponseData(data, schema);
+        const result = coerceV2ResponseData(data, schema, mockStripe);
         expect(result).to.deep.equal({amount: 100n, name: 'test'});
       });
 
       it('mutates in-place', () => {
         const data = {amount: '100'};
-        const result = coerceV2ResponseData(data, schema);
+        const result = coerceV2ResponseData(data, schema, mockStripe);
         expect(result).to.equal(data);
         expect(data.amount).to.equal(100n);
       });
 
       it('skips fields absent from data', () => {
         const data = {name: 'test'};
-        const result = coerceV2ResponseData(data, schema);
+        const result = coerceV2ResponseData(data, schema, mockStripe);
         expect(result).to.deep.equal({name: 'test'});
       });
 
       it('passes null through', () => {
-        expect(coerceV2ResponseData(null, schema)).to.equal(null);
+        expect(coerceV2ResponseData(null, schema, mockStripe)).to.equal(null);
       });
     });
 
@@ -327,7 +333,7 @@ describe('V2Int64', () => {
 
       it('coerces nested fields', () => {
         const data = {transform_quantity: {divide_by: '500'}};
-        coerceV2ResponseData(data, schema);
+        coerceV2ResponseData(data, schema, mockStripe);
         expect(data).to.deep.equal({
           transform_quantity: {divide_by: 500n},
         });
@@ -342,13 +348,13 @@ describe('V2Int64', () => {
 
       it('coerces each element', () => {
         const data = ['1', '2', '3'];
-        coerceV2ResponseData(data, schema);
+        coerceV2ResponseData(data, schema, mockStripe);
         expect(data).to.deep.equal([1n, 2n, 3n]);
       });
 
       it('handles empty array', () => {
         const data: string[] = [];
-        coerceV2ResponseData(data, schema);
+        coerceV2ResponseData(data, schema, mockStripe);
         expect(data).to.deep.equal([]);
       });
     });
@@ -360,36 +366,28 @@ describe('V2Int64', () => {
       };
 
       it('coerces non-null value', () => {
-        expect(coerceV2ResponseData('42', schema)).to.equal(42n);
+        expect(coerceV2ResponseData('42', schema, mockStripe)).to.equal(42n);
       });
 
       it('passes null through', () => {
-        expect(coerceV2ResponseData(null, schema)).to.equal(null);
+        expect(coerceV2ResponseData(null, schema, mockStripe)).to.equal(null);
       });
     });
 
     describe('refObject kind', () => {
       const schema: V2RuntimeSchema = {kind: 'refObject'};
-      const mockMakeRequest = () => Promise.resolve({});
 
-      it('attaches a fetch() method when makeRequest is provided', () => {
+      it('attaches a fetch() method', () => {
         const wireRef = {type: 'v2.core.account', id: 'acct_123', url: '/v2/core/accounts/acct_123'};
-        const result = coerceV2ResponseData(wireRef, schema, mockMakeRequest);
+        const result = coerceV2ResponseData(wireRef, schema, mockStripe);
         expect(result.fetch).to.be.a('function');
         expect(result.type).to.equal('v2.core.account');
         expect(result.id).to.equal('acct_123');
         expect(result.url).to.equal('/v2/core/accounts/acct_123');
       });
 
-      it('returns data unchanged when no makeRequest is provided', () => {
-        const wireRef = {type: 'v2.core.account', id: 'acct_123', url: '/v2/core/accounts/acct_123'};
-        const result = coerceV2ResponseData(wireRef, schema);
-        expect(result).to.equal(wireRef);
-        expect(result.fetch).to.be.undefined;
-      });
-
       it('passes null through', () => {
-        expect(coerceV2ResponseData(null, schema)).to.equal(null);
+        expect(coerceV2ResponseData(null, schema, mockStripe)).to.equal(null);
       });
 
       it('attaches fetch() on a refObject nested inside an object', () => {
@@ -400,7 +398,7 @@ describe('V2Int64', () => {
         const data = {
           ref: {type: 'v2.core.account', id: 'acct_123', url: '/v2/core/accounts/acct_123'},
         };
-        coerceV2ResponseData(data, objectSchema, mockMakeRequest);
+        coerceV2ResponseData(data, objectSchema, mockStripe);
         expect(data.ref.fetch).to.be.a('function');
       });
 
@@ -413,26 +411,45 @@ describe('V2Int64', () => {
           {type: 'v2.core.account', id: 'acct_1', url: '/v2/core/accounts/acct_1'},
           {type: 'v2.core.account', id: 'acct_2', url: '/v2/core/accounts/acct_2'},
         ];
-        const result = coerceV2ResponseData(data, arraySchema, mockMakeRequest);
+        const result = coerceV2ResponseData(data, arraySchema, mockStripe);
         expect(result[0].fetch).to.be.a('function');
         expect(result[1].fetch).to.be.a('function');
       });
 
-      it('fetch() calls makeRequest with GET, url, and responseSchema', async () => {
+      it('fetch() issues GET to the ref url via makeRequest', async () => {
+        let capturedMethod, capturedPath;
+        const capturingStripe = {
+          resolveBaseAddress: () => null,
+          _requestSender: {
+            _request: (method, host, path, body, auth, opts, usage, callback) => {
+              capturedMethod = method;
+              capturedPath = path;
+              callback(null, {id: 'acct_123'});
+            },
+          },
+        } as any;
+        const wireRef = {type: 'v2.core.account', id: 'acct_123', url: '/v2/core/accounts/acct_123'};
+        const result = coerceV2ResponseData(wireRef, schema, capturingStripe);
+        await result.fetch();
+        expect(capturedMethod).to.equal('GET');
+        expect(capturedPath).to.equal('/v2/core/accounts/acct_123');
+      });
+
+      it('fetch() applies targetSchema coercion to the response', async () => {
         const targetSchema: V2RuntimeSchema = {kind: 'object', fields: {amount: {kind: 'int64_string'}}};
         const schemaWithTarget: V2RuntimeSchema = {kind: 'refObject', targetSchema};
-        let capturedArgs: any[] = [];
-        const capturingMakeRequest = (...args: any[]) => {
-          capturedArgs = args;
-          return Promise.resolve({amount: '42'});
-        };
+        const coercingStripe = {
+          resolveBaseAddress: () => null,
+          _requestSender: {
+            _request: (method, host, path, body, auth, opts, usage, callback) => {
+              callback(null, {amount: '42'});
+            },
+          },
+        } as any;
         const wireRef = {type: 'v2.core.account', id: 'acct_123', url: '/v2/core/accounts/acct_123'};
-        const result = coerceV2ResponseData(wireRef, schemaWithTarget, capturingMakeRequest);
-        await result.fetch();
-        expect(capturedArgs[0]).to.equal('GET');
-        expect(capturedArgs[1]).to.equal('/v2/core/accounts/acct_123');
-        expect(capturedArgs[4]).to.deep.include({responseSchema: targetSchema});
-        expect(capturedArgs[4].usage).to.deep.equal(['ref_fetch']);
+        const result = coerceV2ResponseData(wireRef, schemaWithTarget, coercingStripe);
+        const fetched = await result.fetch();
+        expect(fetched.amount).to.equal(42n);
       });
     });
 
@@ -468,7 +485,7 @@ describe('V2Int64', () => {
             {quantity: '20', metadata: null},
           ],
         };
-        coerceV2ResponseData(data, schema);
+        coerceV2ResponseData(data, schema, mockStripe);
         expect(data).to.deep.equal({
           items: [
             {quantity: 10n, metadata: {order_id: 12345n}},
@@ -489,7 +506,7 @@ describe('V2Int64', () => {
 
     it('response: values beyond MAX_SAFE_INTEGER are exact', () => {
       const schema: V2RuntimeSchema = {kind: 'int64_string'};
-      const result = coerceV2ResponseData('9007199254740993', schema);
+      const result = coerceV2ResponseData('9007199254740993', schema, mockStripe);
       expect(result).to.equal(9007199254740993n);
     });
 

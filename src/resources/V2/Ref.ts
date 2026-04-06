@@ -1,4 +1,6 @@
 import {V2RuntimeSchema} from '../../Types.js';
+import {makeRequest} from '../../StripeResource.js';
+import {Stripe} from '../../stripe.core.js';
 
 /**
  * A typed reference to a V2 Stripe object. Contains the identifying fields
@@ -29,38 +31,32 @@ export interface RefWireShape {
 }
 
 /**
- * A function that makes a request through the StripeResource pipeline,
- * including response coercion (int64_string → bigint, etc.) and any
- * transformResponseData callbacks.
- */
-export type MakeRequestFn = (
-  method: string,
-  path: string,
-  params: undefined,
-  options: undefined,
-  spec?: {responseSchema?: V2RuntimeSchema; usage?: Array<string>}
-) => Promise<any>;
-
-/**
  * Attaches a `fetch()` method to a raw ref wire object, returning a `Ref<T>`.
  *
- * `fetch()` calls through the provided `makeRequest` function (bound to a
- * StripeResource) so that the response goes through the same pipeline as a
- * normal service method call — including v2 type coercion and any
- * transformResponseData hooks.
+ * `fetch()` calls through `makeRequest` with the Stripe instance so the
+ * response goes through the same pipeline as a normal service method call —
+ * including v2 type coercion.
  */
 export const attachRefFetch = <T>(
   ref: RefWireShape,
-  makeRequest: MakeRequestFn,
+  stripe: Stripe,
   targetSchema?: V2RuntimeSchema
 ): Ref<T> => {
   return {
     ...ref,
     fetch(): Promise<T> {
-      return makeRequest('GET', ref.url, undefined, undefined, {
-        responseSchema: targetSchema,
-        usage: ['ref_fetch'],
-      });
+      return makeRequest(
+        stripe,
+        'GET',
+        ref.url,
+        undefined,
+        undefined,
+        {
+          responseSchema: targetSchema,
+          usage: ['ref_fetch'],
+        },
+        null
+      );
     },
   };
 };

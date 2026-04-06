@@ -1,6 +1,7 @@
 import {Decimal} from './Decimal.js';
 import {V2RuntimeSchema} from './Types.js';
-import {attachRefFetch, MakeRequestFn, RefWireShape} from './resources/V2/Ref.js';
+import {attachRefFetch, RefWireShape} from './resources/V2/Ref.js';
+import {Stripe} from './stripe.core.js';
 
 /**
  * Coerces outbound V2 request data by converting bigint (or number)
@@ -72,7 +73,7 @@ export const coerceV2RequestData = (
 export const coerceV2ResponseData = (
   data: unknown,
   schema: V2RuntimeSchema,
-  makeRequest?: MakeRequestFn
+  stripe: Stripe
 ): unknown => {
   if (data == null) {
     return data;
@@ -104,10 +105,10 @@ export const coerceV2ResponseData = (
       return data;
 
     case 'refObject':
-      if (makeRequest && typeof data === 'object' && !Array.isArray(data)) {
+      if (typeof data === 'object' && !Array.isArray(data)) {
         return attachRefFetch(
           data as RefWireShape,
-          makeRequest,
+          stripe,
           schema.targetSchema
         );
       }
@@ -123,7 +124,7 @@ export const coerceV2ResponseData = (
           obj[key] = coerceV2ResponseData(
             obj[key],
             schema.fields[key],
-            makeRequest
+            stripe
           );
         }
       }
@@ -135,12 +136,12 @@ export const coerceV2ResponseData = (
         return data;
       }
       for (let i = 0; i < data.length; i++) {
-        data[i] = coerceV2ResponseData(data[i], schema.element, makeRequest);
+        data[i] = coerceV2ResponseData(data[i], schema.element, stripe);
       }
       return data;
     }
 
     case 'nullable':
-      return coerceV2ResponseData(data, schema.inner, makeRequest);
+      return coerceV2ResponseData(data, schema.inner, stripe);
   }
 };

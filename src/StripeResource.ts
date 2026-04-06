@@ -7,6 +7,7 @@ import {
   StripeResourceObject,
   MakeRequestSpec,
   RequestData,
+  RequestDataProcessor,
   UrlInterpolator,
 } from './Types.js';
 import {HttpClientResponseInterface} from './net/HttpClient.js';
@@ -62,86 +63,19 @@ class StripeResource implements StripeResourceObject {
     options: RequestOptions | undefined,
     spec?: MakeRequestSpec
   ): Promise<any> {
-    const requestMethod = method.toUpperCase();
-    const encode = spec?.encode || ((data: RequestData): RequestData => data);
-    const data = encode(params ? {...params} : {});
-    const processed = processOptions(options);
-    const apiBase = processed.apiBase || spec?.apiBase || null;
-    const host = apiBase ? this._stripe.resolveBaseAddress(apiBase) : null;
-    const streaming = processed.streaming || !!spec?.streaming;
-    const headers = Object.assign(processed.headers, spec?.headers);
-    const usage = spec?.usage || [];
-
-    const dataInQuery = requestMethod === 'GET' || requestMethod === 'DELETE';
-    let bodyData: RequestData | null = dataInQuery ? null : data;
-    const queryData: RequestData = dataInQuery ? data : {};
-
-    try {
-      if (spec?.validator) {
-        spec.validator(data, {headers});
-      }
-
-      // Coerce int64_string/decimal_string fields in request body
-      if (spec?.requestSchema && bodyData) {
-        bodyData = coerceV2RequestData(
-          bodyData,
-          spec.requestSchema
-        ) as RequestData;
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-
-    const boundMakeRequest = this._makeRequest.bind(this);
-    const innerPromise = new Promise<any>((resolve, reject) => {
-      function requestCallback(
-        err: any,
-        response: HttpClientResponseInterface
-      ): void {
-        if (err) {
-          reject(err);
-        } else {
-          try {
-            if (spec?.responseSchema) {
-              coerceV2ResponseData(response, spec.responseSchema, boundMakeRequest);
-            }
-            resolve(
-              spec?.transformResponseData
-                ? spec.transformResponseData(response)
-                : response
-            );
-          } catch (e) {
-            reject(e);
-          }
-        }
-      }
-
-      const emptyQuery = Object.keys(queryData).length === 0;
-      const fullPath = [
-        path,
-        emptyQuery ? '' : '?',
-        queryStringifyRequestData(queryData),
-      ].join('');
-
-      this._stripe._requestSender._request(
-        requestMethod,
-        host,
-        fullPath,
-        bodyData,
-        processed.authenticator,
-        {
-          headers,
-          settings: processed.settings,
-          streaming,
-        },
-        usage,
-        requestCallback,
-        this.requestDataProcessor?.bind(this)
-      );
-    });
+    const innerPromise = makeRequest(
+      this._stripe,
+      method,
+      path,
+      params,
+      options,
+      spec,
+      this.requestDataProcessor?.bind(this)
+    );
 
     // Attach auto-pagination methods for list/search endpoints
     if (spec?.methodType) {
+      const requestMethod = method.toUpperCase();
       Object.assign(
         innerPromise,
         makeAutoPaginationMethods(
@@ -161,3 +95,95 @@ class StripeResource implements StripeResourceObject {
 }
 
 export {StripeResource};
+
+/**
+ * Standalone request function that takes a Stripe instance instead of
+ * requiring a StripeResource. Extracted from StripeResource._makeRequest
+ * so that non-resource code (e.g. Ref.fetch()) can go through the same
+ * pipeline — coercion, response transforms, requestDataProcessor — as
+ * service method calls.
+ */
+export const makeRequest = (
+  stripe: Stripe,
+  method: string,
+  path: string,
+  params: RequestData | undefined,
+  options: RequestOptions | undefined,
+  spec?: MakeRequestSpec,
+  requestDataProcessor?: RequestDataProcessor | null
+): Promise<any> => {
+  const requestMethod = method.toUpperCase();
+  const encode = spec?.encode || ((data: RequestData): RequestData => data);
+  const data = encode(params ? {...params} : {});
+  const processed = processOptions(options);
+  const apiBase = processed.apiBase || spec?.apiBase || null;
+  const host = apiBase ? stripe.resolveBaseAddress(apiBase) : null;
+  const streaming = processed.streaming || !!spec?.streaming;
+  const headers = Object.assign(processed.headers, spec?.headers);
+  const usage = spec?.usage || [];
+
+  const dataInQuery = requestMethod === 'GET' || requestMethod === 'DELETE';
+  let bodyData: RequestData | null = dataInQuery ? null : data;
+  const queryData: RequestData = dataInQuery ? data : {};
+
+  try {
+    if (spec?.validator) {
+      spec.validator(data, {headers});
+    }
+    if (spec?.requestSchema && bodyData) {
+      bodyData = coerceV2RequestData(
+        bodyData,
+        spec.requestSchema
+      ) as RequestData;
+    }
+  } catch (err) {
+    return Promise.reject(err);
+  }
+
+  return new Promise<any>((resolve, reject) => {
+    function requestCallback(
+      err: any,
+      response: HttpClientResponseInterface
+    ): void {
+      if (err) {
+        reject(err);
+      } else {
+        try {
+          if (spec?.responseSchema) {
+            coerceV2ResponseData(response, spec.responseSchema, stripe);
+          }
+          resolve(
+            spec?.transformResponseData
+              ? spec.transformResponseData(response)
+              : response
+          );
+        } catch (e) {
+          reject(e);
+        }
+      }
+    }
+
+    const emptyQuery = Object.keys(queryData).length === 0;
+    const fullPath = [
+      path,
+      emptyQuery ? '' : '?',
+      queryStringifyRequestData(queryData),
+    ].join('');
+
+    stripe._requestSender._request(
+      requestMethod,
+      host,
+      fullPath,
+      bodyData,
+      processed.authenticator,
+      {
+        headers,
+        settings: processed.settings,
+        streaming,
+      },
+      usage,
+      requestCallback,
+      requestDataProcessor ?? undefined
+    );
+  });
+};
