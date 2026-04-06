@@ -2,7 +2,7 @@
 import {expect} from 'chai';
 import {coerceV2RequestData, coerceV2ResponseData} from '../src/V2Coercion.js';
 import {V2RuntimeSchema} from '../src/Types.js';
-import * as testUtils from './testUtils.js';
+
 
 describe('V2Int64', () => {
   describe('coerceV2RequestData', () => {
@@ -370,18 +370,18 @@ describe('V2Int64', () => {
 
     describe('refObject kind', () => {
       const schema: V2RuntimeSchema = {kind: 'refObject'};
+      const mockMakeRequest = () => Promise.resolve({});
 
-      it('attaches a fetch() method when requestSender is provided', () => {
-        const mockStripe = testUtils.createMockClient([]);
+      it('attaches a fetch() method when makeRequest is provided', () => {
         const wireRef = {type: 'v2.core.account', id: 'acct_123', url: '/v2/core/accounts/acct_123'};
-        const result = coerceV2ResponseData(wireRef, schema, mockStripe._requestSender);
+        const result = coerceV2ResponseData(wireRef, schema, mockMakeRequest);
         expect(result.fetch).to.be.a('function');
         expect(result.type).to.equal('v2.core.account');
         expect(result.id).to.equal('acct_123');
         expect(result.url).to.equal('/v2/core/accounts/acct_123');
       });
 
-      it('returns data unchanged when no requestSender is provided', () => {
+      it('returns data unchanged when no makeRequest is provided', () => {
         const wireRef = {type: 'v2.core.account', id: 'acct_123', url: '/v2/core/accounts/acct_123'};
         const result = coerceV2ResponseData(wireRef, schema);
         expect(result).to.equal(wireRef);
@@ -393,7 +393,6 @@ describe('V2Int64', () => {
       });
 
       it('attaches fetch() on a refObject nested inside an object', () => {
-        const mockStripe = testUtils.createMockClient([]);
         const objectSchema: V2RuntimeSchema = {
           kind: 'object',
           fields: {ref: {kind: 'refObject'}},
@@ -401,12 +400,11 @@ describe('V2Int64', () => {
         const data = {
           ref: {type: 'v2.core.account', id: 'acct_123', url: '/v2/core/accounts/acct_123'},
         };
-        coerceV2ResponseData(data, objectSchema, mockStripe._requestSender);
+        coerceV2ResponseData(data, objectSchema, mockMakeRequest);
         expect(data.ref.fetch).to.be.a('function');
       });
 
       it('attaches fetch() on refObjects nested inside an array', () => {
-        const mockStripe = testUtils.createMockClient([]);
         const arraySchema: V2RuntimeSchema = {
           kind: 'array',
           element: {kind: 'refObject'},
@@ -415,9 +413,26 @@ describe('V2Int64', () => {
           {type: 'v2.core.account', id: 'acct_1', url: '/v2/core/accounts/acct_1'},
           {type: 'v2.core.account', id: 'acct_2', url: '/v2/core/accounts/acct_2'},
         ];
-        const result = coerceV2ResponseData(data, arraySchema, mockStripe._requestSender);
+        const result = coerceV2ResponseData(data, arraySchema, mockMakeRequest);
         expect(result[0].fetch).to.be.a('function');
         expect(result[1].fetch).to.be.a('function');
+      });
+
+      it('fetch() calls makeRequest with GET, url, and responseSchema', async () => {
+        const targetSchema: V2RuntimeSchema = {kind: 'object', fields: {amount: {kind: 'int64_string'}}};
+        const schemaWithTarget: V2RuntimeSchema = {kind: 'refObject', targetSchema};
+        let capturedArgs: any[] = [];
+        const capturingMakeRequest = (...args: any[]) => {
+          capturedArgs = args;
+          return Promise.resolve({amount: '42'});
+        };
+        const wireRef = {type: 'v2.core.account', id: 'acct_123', url: '/v2/core/accounts/acct_123'};
+        const result = coerceV2ResponseData(wireRef, schemaWithTarget, capturingMakeRequest);
+        await result.fetch();
+        expect(capturedArgs[0]).to.equal('GET');
+        expect(capturedArgs[1]).to.equal('/v2/core/accounts/acct_123');
+        expect(capturedArgs[4]).to.deep.include({responseSchema: targetSchema});
+        expect(capturedArgs[4].usage).to.deep.equal(['ref_fetch']);
       });
     });
 

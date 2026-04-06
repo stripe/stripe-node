@@ -1,7 +1,6 @@
 import {Decimal} from './Decimal.js';
 import {V2RuntimeSchema} from './Types.js';
-import {RequestSender} from './RequestSender.js';
-import {attachRefFetch, RefWireShape} from './resources/V2/Ref.js';
+import {attachRefFetch, MakeRequestFn, RefWireShape} from './resources/V2/Ref.js';
 
 /**
  * Coerces outbound V2 request data by converting bigint (or number)
@@ -73,7 +72,7 @@ export const coerceV2RequestData = (
 export const coerceV2ResponseData = (
   data: unknown,
   schema: V2RuntimeSchema,
-  requestSender?: RequestSender
+  makeRequest?: MakeRequestFn
 ): unknown => {
   if (data == null) {
     return data;
@@ -105,8 +104,12 @@ export const coerceV2ResponseData = (
       return data;
 
     case 'refObject':
-      if (requestSender && typeof data === 'object' && !Array.isArray(data)) {
-        return attachRefFetch(data as RefWireShape, requestSender);
+      if (makeRequest && typeof data === 'object' && !Array.isArray(data)) {
+        return attachRefFetch(
+          data as RefWireShape,
+          makeRequest,
+          schema.targetSchema
+        );
       }
       return data;
 
@@ -120,7 +123,7 @@ export const coerceV2ResponseData = (
           obj[key] = coerceV2ResponseData(
             obj[key],
             schema.fields[key],
-            requestSender
+            makeRequest
           );
         }
       }
@@ -132,12 +135,12 @@ export const coerceV2ResponseData = (
         return data;
       }
       for (let i = 0; i < data.length; i++) {
-        data[i] = coerceV2ResponseData(data[i], schema.element, requestSender);
+        data[i] = coerceV2ResponseData(data[i], schema.element, makeRequest);
       }
       return data;
     }
 
     case 'nullable':
-      return coerceV2ResponseData(data, schema.inner, requestSender);
+      return coerceV2ResponseData(data, schema.inner, makeRequest);
   }
 };
