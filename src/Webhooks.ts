@@ -6,15 +6,25 @@ import {
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import {Event} from './resources/Events.js';
 
-type WebhookHeader = string | Uint8Array;
+/**
+ * Value of the `stripe-signature` header from Stripe.
+ * Typically a string.
+ *
+ * Note that this is typed to accept an array of strings
+ * so that it works seamlessly with express's types,
+ * but will throw if an array is passed in practice
+ * since express should never return this header as an array,
+ * only a string.
+ */
+type WebhookHeader = string | string[] | Uint8Array;
 type WebhookParsedHeader = {
   signatures: Array<string>;
   timestamp: number;
 };
 type WebhookParsedEvent = {
   details: WebhookParsedHeader;
-  decodedPayload: WebhookHeader;
-  decodedHeader: WebhookPayload;
+  decodedPayload: string;
+  decodedHeader: string;
   suspectPayloadType: boolean;
 };
 type WebhookTestHeaderOptions = {
@@ -289,6 +299,16 @@ export function createWebhooks(
     encodedHeader: WebhookHeader,
     expectedScheme: string
   ): WebhookParsedEvent {
+    // Express's type for `Request#headers` is `string | []string`
+    // which is because the `set-cookie` header is an array,
+    // but no other headers are an array (docs: https://nodejs.org/api/http.html#http_message_headers)
+    // (Express's Request class is an extension of http.IncomingMessage, and doesn't appear to be relevantly modified: https://github.com/expressjs/express/blob/master/lib/request.js#L31)
+    if (Array.isArray(encodedHeader)) {
+      throw new Error(
+        'Unexpected: An array was passed as a header, which should not be possible for the stripe-signature header.'
+      );
+    }
+
     if (!encodedPayload) {
       throw new StripeSignatureVerificationError(
         encodedHeader,
@@ -308,16 +328,6 @@ export function createWebhooks(
       encodedPayload instanceof Uint8Array
         ? textDecoder.decode(encodedPayload)
         : encodedPayload;
-
-    // Express's type for `Request#headers` is `string | []string`
-    // which is because the `set-cookie` header is an array,
-    // but no other headers are an array (docs: https://nodejs.org/api/http.html#http_message_headers)
-    // (Express's Request class is an extension of http.IncomingMessage, and doesn't appear to be relevantly modified: https://github.com/expressjs/express/blob/master/lib/request.js#L31)
-    if (Array.isArray(encodedHeader)) {
-      throw new Error(
-        'Unexpected: An array was passed as a header, which should not be possible for the stripe-signature header.'
-      );
-    }
 
     if (encodedHeader == null || encodedHeader == '') {
       throw new StripeSignatureVerificationError(
@@ -365,8 +375,8 @@ export function createWebhooks(
   }
 
   function validateComputedSignature(
-    payload: WebhookPayload,
-    header: WebhookHeader,
+    payload: string,
+    header: string,
     details: WebhookParsedHeader,
     expectedSignature: string,
     tolerance: number,
