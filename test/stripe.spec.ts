@@ -18,6 +18,7 @@ import {
 } from './testUtils.js';
 import crypto = require('crypto');
 import {StripeContext} from '../src/StripeContext.js';
+import {FetchHttpClient} from '../src/net/FetchHttpClient.js';
 
 const stripe = getStripeMockClient();
 
@@ -1195,6 +1196,22 @@ describe('Stripe Module', function() {
       ).to.be.rejectedWith(
         Error,
         /rawRequest only supports params on POST requests. Please pass null and add your parameters to path./
+      );
+    });
+
+    it('should throw a descriptive error when an absolute URL is passed as path with FetchHttpClient', async () => {
+      const fetchStripe = Stripe(FAKE_API_KEY, {
+        httpClient: new FetchHttpClient(require('node-fetch')),
+      });
+      let caughtError: any;
+      try {
+        await fetchStripe.rawRequest('GET', 'https://example.com/v1/charges');
+      } catch (e) {
+        caughtError = e;
+      }
+      expect(caughtError).to.exist;
+      expect(caughtError.detail?.message).to.match(
+        /Only relative paths are supported/
       );
     });
   });
