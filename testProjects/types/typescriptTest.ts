@@ -355,3 +355,21 @@ async (): Promise<void> => {
 }
 
 Stripe.Decimal.from('1.0');
+
+let event: Stripe.Event = stripe.webhooks.constructEvent(
+  'payload',
+  'signature',
+  'secret'
+);
+/**
+ * Note that this is typed to accept an array of strings
+ * so that it works seamlessly with express's types,
+ * but will throw if an array is passed in practice
+ * since express should never return this header as an array,
+ * only a string.
+ */
+event = stripe.webhooks.constructEvent(
+  'payload',
+  ['also_signature_but_does_not_work_at_runtime'],
+  'secret'
+);

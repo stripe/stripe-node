@@ -1,17 +1,32 @@
 # Changelog
 
 ## 22.0.0 - 2026-04-02
-* [#2642](https://github.com/stripe/stripe-node/pull/2642) Update README.md
+This release uses the same pinned API version to `2026-03-25.dahlia` as the last major release. The breaking changes in this release are prefixed with ⚠️ below. There's also a [detailed migration guide](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v22) to simplify your upgrade process.
+
+* [#2619](https://github.com/stripe/stripe-node/pull/2619) Improved TypeScript support in the Node SDK
+  * Moved the types from the partially manually maintained and partially generated types folder to be inline with the implementation in TypeScript files.
+  * Removed top-level “stripe” ambient module. This allows import aliasing for the stripe package.
+  * ⚠️ `Stripe.StripeContext` is no longer exported as a type. Use `Stripe.StripeContextType` instead.
+  * ⚠️ `Stripe.errors.StripeError` is no longer a type. Use `typeof Stripe.errors.StripeError` or `Stripe.ErrorType` instead.
+  * ⚠️ CJS entry point no longer exports .default or .Stripe as separate properties.
+  * ⚠️ Stripe import is now a true ES6 class. Use `new Stripe()` to create a StripeClient instead of calling it:
+```javascript
+// Before
+const stripeClient = Stripe("sk_test_...");
+
+// After
+const stripeClient = new Stripe("sk_test_...");
+```
 * [#2645](https://github.com/stripe/stripe-node/pull/2645) ⚠️ Remove `stripeMethod` and standardize how function args are handled (including removing callback support)
-  
+
   - ⚠️ Refactor how incoming method arguments are parsed. Type signatures for API methods should be _much_ more accurate and reliable now
     - ⚠️ Remove support for providing callbacks to API methods. Use `async / await` instead
     - ⚠️ Remove support for passing a plain API key as a function arg. If supplied on a per-request basis, it should be in the `RequestOptions` under the `apiKey` property
     - ⚠️ Keys from `params` and `options` objects are no longer mixed. If present on a method, `RequestParams` must always come first and `RequestOptions` must always come second. To supply options without params, pass `undefined` as the first argument explicitly
     - ⚠️ Removed methods from `StripeResource`: `createFullPath`, `createResourcePathWithSymbols`, `extend`, `method` and `_joinUrlParts`. These were mostly intended for internal use and we no longer need them
-  
+
   As a result, the following call patterns are no longer supported:
-  
+
   ```ts
   stripe.customers.retrieve('cus_123', 'sk_test_123')
   stripe.customers.create({name: 'david', host: 'example.com'}, 'sk_test_123')
@@ -20,27 +35,25 @@
     // do something with customers
   })
   ```
-  
+
   If those look familiar, head over to the [migration guide](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v22) to update your code.
-* [#2643](https://github.com/stripe/stripe-node/pull/2643) ⚠️ remove support for overriding host per-request
-  
-  - ⚠️ Removed per-request host override. To use a custom host, set it in the client configuration. All requests from that client will use that host.
-  
+* [#2643](https://github.com/stripe/stripe-node/pull/2643) ⚠️ Removed per-request host override. To use a custom host, set it in the client configuration. All requests from that client will use that host.
+
   Before:
   ```ts
   import Stripe from 'stripe';
   const stripe = new Stripe('sk_test_...');
-  
+
   const customer = await stripe.customers.create({
     email: 'customer@example.com',
   }, {host: 'example.com'});
   ```
-  
+
   After:
   ```ts
   import Stripe from 'stripe';
   const stripe = new Stripe('sk_test_...', {host: 'example.com'});
-  
+
   // goes to example.com
   const customer = await stripe.customers.create({
     email: 'customer@example.com',
