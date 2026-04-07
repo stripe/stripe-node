@@ -39,6 +39,9 @@ stripe = new Stripe('sk_test_123', {
   },
 });
 
+// @ts-expect-error - unknown config properties should be rejected
+stripe = new Stripe('sk_test_123', {unknownProperty: true});
+
 (async (): Promise<void> => {
   const params: Stripe.CustomerCreateParams = {
     description: 'test',

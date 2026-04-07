@@ -1,5 +1,6 @@
 import {Agent} from 'http';
 
+import {RequestAuthenticator} from './Types.js';
 import {ApiVersion} from './apiVersion.js';
 import {HttpClient} from './net/HttpClient.js';
 import {StripeContext} from './StripeContext.js';
@@ -25,6 +26,12 @@ export interface StripeConfig {
    * @docs https://stripe.com/docs/api/versioning
    */
   apiVersion?: LatestApiVersion;
+
+  /**
+   * Provide a custom authenticator function for all requests.
+   * Cannot be used together with apiKey (the first constructor argument).
+   */
+  authenticator?: RequestAuthenticator;
 
   /**
    * Optionally indicate that you are using TypeScript.

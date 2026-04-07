@@ -32,6 +32,7 @@ import {
   ApiSearchResultPromise,
   ApiSearchResult,
   StripeStreamResponse,
+  StripeConfig,
   RequestEvent,
   ResponseEvent,
   AppInfo,
@@ -1081,7 +1082,7 @@ export class Stripe {
       platformFunctions.createSubtleCryptoProvider;
   }
 
-  constructor(key: string, config: Record<string, unknown> = {}) {
+  constructor(key: string, config: StripeConfig = {}) {
     const props = this._getPropsFromConfig(config);
 
     this._platformFunctions = Stripe._platformFunctions;
@@ -1477,7 +1478,9 @@ export class Stripe {
    * @private
    * This may be removed in the future.
    */
-  _getPropsFromConfig(config: Record<string, unknown>): UserProvidedConfig {
+  _getPropsFromConfig(
+    config: StripeConfig | Record<string, unknown>
+  ): UserProvidedConfig {
     // If config is null or undefined, just bail early with no props
     if (!config) {
       return {};
