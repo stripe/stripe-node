@@ -4,9 +4,18 @@ import {Stripe} from './stripe.core.js';
 // Initialize the Stripe class with Web platform functions
 Stripe.initialize(new WebPlatformFunctions());
 
-// Create a callable wrapper for backward compatibility
+// Callable constructor: supports both `new Stripe()` and `Stripe()` for CJS consumers.
+// typeof Stripe provides the construct signature and static members; the intersection
+// adds a call signature for backward compatibility.
+type StripeCallableConstructor = typeof Stripe & {
+  (key: string, config?: Record<string, unknown>): Stripe;
+};
+
+// @ts-expect-error: function expression lacks a construct signature, but at runtime
+// the prototype chain wiring below makes both `new StripeConstructor()` and
+// `StripeConstructor()` work correctly.
 // eslint-disable-next-line func-style
-const StripeConstructor = function(
+const StripeConstructor: StripeCallableConstructor = function(
   this: any,
   key: string,
   config?: Record<string, unknown>
