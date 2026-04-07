@@ -1,10 +1,23 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../stripe.core.js';
-import {ConfirmationTokenResource} from './ConfirmationTokens.js';
-import {CustomerResource} from './Customers.js';
-import {RefundResource} from './Refunds.js';
-import {TestClock, TestClockResource} from './TestClocks.js';
+import {
+  TestHelpers as TestHelpersNamespace0,
+  ConfirmationTokenResource,
+} from './ConfirmationTokens.js';
+import {
+  TestHelpers as TestHelpersNamespace1,
+  CustomerResource,
+} from './Customers.js';
+import {
+  TestHelpers as TestHelpersNamespace2,
+  RefundResource,
+} from './Refunds.js';
+import {
+  TestHelpers as TestHelpersNamespace3,
+  TestClock,
+  TestClockResource,
+} from './TestClocks.js';
 import {Issuing} from './Issuing/index.js';
 import {Terminal} from './Terminal/index.js';
 import {Treasury} from './Treasury/index.js';
@@ -32,6 +45,11 @@ export class TestHelpers {
 }
 
 export declare namespace TestHelpers {
+  export type TestClockDeleteParams = TestHelpersNamespace3.TestClockDeleteParams;
+  export type TestClockRetrieveParams = TestHelpersNamespace3.TestClockRetrieveParams;
+  export type TestClockListParams = TestHelpersNamespace3.TestClockListParams;
+  export type TestClockCreateParams = TestHelpersNamespace3.TestClockCreateParams;
+  export type TestClockAdvanceParams = TestHelpersNamespace3.TestClockAdvanceParams;
   export {TestClock};
   export {Issuing};
   export {Terminal};

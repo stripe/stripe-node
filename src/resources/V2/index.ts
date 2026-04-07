@@ -5,6 +5,8 @@ import {DeletedObject} from './DeletedObject.js';
 import {Billing} from './Billing/index.js';
 import {Core} from './Core/index.js';
 
+export {DeletedObject} from './DeletedObject.js';
+
 export class V2 {
   billing: Billing;
   core: Core;
