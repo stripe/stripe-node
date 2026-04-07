@@ -103,7 +103,7 @@ export interface StripeConfig {
   /**
    * An account on whose behalf you wish to make every request. See https://docs.stripe.com/context for more information.
    */
-  stripeContext?: string;
+  stripeContext?: string | StripeContext;
 }
 
 export interface RequestOptions {

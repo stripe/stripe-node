@@ -939,7 +939,7 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
 
 export class Stripe {
   static PACKAGE_VERSION = '20.4.1';
-  static API_VERSION = ApiVersion;
+  static API_VERSION: typeof ApiVersion = ApiVersion;
   static aiAgent =
     typeof process !== 'undefined' && process.env
       ? detectAIAgent(process.env)
