@@ -56,6 +56,27 @@ This release changes the pinned API version to 2026-04-01.preview and contains a
 * [#2641](https://github.com/stripe/stripe-node/pull/2641) Merge to private-preview
 * [#2636](https://github.com/stripe/stripe-node/pull/2636) Prathmesh/merge node private preview
 
+## 22.0.1 - 2026-04-08
+* [#2669](https://github.com/stripe/stripe-node/pull/2669) Add constructor based initialization for CJS based TypeScript imports
+  * Initialization of Stripe class with `new` keyword is now possible for CJS based TypeScript project. Resolves: [2660](https://github.com/stripe/stripe-node/issues/2660)
+  ```ts
+  import Stripe = require('stripe');
+  // ✅ Both statements work
+  const stripeNew: Stripe.Stripe = new Stripe('sk_test_...');
+  const stripeCalled: Stripe.Stripe = Stripe('sk_test_...');
+  ```
+* [#2664](https://github.com/stripe/stripe-node/pull/2664) Fixed nested service param exports in the Stripe namespace
+  * Resolves: [2658](https://github.com/stripe/stripe-node/issues/2658),  [2662](https://github.com/stripe/stripe-node/issues/2662)
+* [#2667](https://github.com/stripe/stripe-node/pull/2667) Add type safety to Stripe constructor config (no runtime change)
+  - Fixed some compile-time checks (no runtime changes)
+    - Fixed `Stripe` constructor config parameter to use `StripeConfig` type instead of `Record<string, unknown>`, restoring compile-time type safety.
+    - Added missing `authenticator` property to `StripeConfig`.
+    - Fixed `Stripe.API_VERSION` to retain the literal API version type.
+    - Fixed `StripeConfig.stripeContext` to accept `StripeContext` objects in addition to strings.
+* [#2663](https://github.com/stripe/stripe-node/pull/2663) Throw a more descriptive error when calling `rawRequest` with absolute urls
+* [#2652](https://github.com/stripe/stripe-node/pull/2652) Added `string[]` to `WebhookHeader` type for compatibility with express
+  * Added `string[]` to the type of `signature` param in `stripe.webhooks.construct_event` method.
+
 ## 22.0.0 - 2026-04-02
 This release uses the same pinned API version to `2026-03-25.dahlia` as the last major release. The breaking changes in this release are prefixed with ⚠️ below. There's also a [detailed migration guide](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v22) to simplify your upgrade process.
 

@@ -67,6 +67,8 @@ describe('Integration test', function() {
     await runTestProject('mjs-ts');
   });
 
+  it('should work with Bun', () => runTestProject('bun'));
+
   describe('esbuild', () => {
     it('should not change error.type when minified', async function() {
       // Node supports ES Modules starting at v12

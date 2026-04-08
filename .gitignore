@@ -11,5 +11,6 @@ testProjects/**/node_modules
 testProjects/**/dist
 testProjects/**/package-lock.json
 testProjects/**/_worker.*
+testProjects/**/bun.lock
 # zipped package artifacts
 *.tgz
