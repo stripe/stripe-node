@@ -42,6 +42,11 @@ export interface PaymentIntentAmountDetailsLineItem {
   quantity: number;
 
   /**
+   * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
+   */
+  quantity_precision?: number;
+
+  /**
    * Contains information about the tax on the item.
    */
   tax: PaymentIntentAmountDetailsLineItem.Tax | null;

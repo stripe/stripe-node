@@ -1424,6 +1424,11 @@ export namespace QuotePreviewInvoice {
       us_bank_account: PaymentMethodOptions.UsBankAccount | null;
 
       /**
+       * If paying by `bizum`, this sub-hash contains details about the Bizum payment method options to pass to the invoice's PaymentIntent.
+       */
+      bizum?: PaymentMethodOptions.Bizum | null;
+
+      /**
        * If paying by `check_scan`, this sub-hash contains details about the Check Scan payment method options to pass to the invoice's PaymentIntent.
        */
       check_scan?: PaymentMethodOptions.CheckScan | null;
@@ -1438,6 +1443,7 @@ export namespace QuotePreviewInvoice {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'bizum'
       | 'boleto'
       | 'card'
       | 'cashapp'
@@ -1547,6 +1553,8 @@ export namespace QuotePreviewInvoice {
          */
         verification_method?: UsBankAccount.VerificationMethod;
       }
+
+      export interface Bizum {}
 
       export interface CheckScan {
         check_deposit_address?: Address;

@@ -41,6 +41,7 @@ export class PayoutMethodResource extends StripeResource {
    * Archive a PayoutMethod object. Archived objects cannot be used as payout methods
    * and will not appear in the payout method list.
    * @throws Stripe.ControlledByDashboardError
+   * @throws Stripe.CannotProceedError
    * @throws Stripe.InvalidPayoutMethodError
    * @throws Stripe.ControlledByAlternateResourceError
    */

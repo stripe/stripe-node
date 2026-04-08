@@ -286,6 +286,11 @@ export interface PaymentMethod {
 
   sepa_debit?: PaymentMethod.SepaDebit;
 
+  /**
+   * ID of the shared payment granted token used in the creation of this PaymentMethod.
+   */
+  shared_payment_granted_token?: string | null;
+
   shopeepay?: PaymentMethod.Shopeepay;
 
   sofort?: PaymentMethod.Sofort;
