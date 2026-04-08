@@ -28,12 +28,12 @@ type WebhookParsedEvent = {
   suspectPayloadType: boolean;
 };
 type WebhookTestHeaderOptions = {
-  timestamp: number;
+  timestamp?: number;
   payload: string;
   secret: string;
-  scheme: string;
-  signature: string;
-  cryptoProvider: CryptoProvider;
+  scheme?: string;
+  signature?: string;
+  cryptoProvider?: CryptoProvider;
 };
 
 // export type WebhookEvent = Record<string, unknown>;
@@ -43,16 +43,16 @@ type WebhookSignatureObject = {
     encodedPayload: WebhookPayload,
     encodedHeader: WebhookHeader,
     secret: string,
-    tolerance: number,
-    cryptoProvider: CryptoProvider,
+    tolerance?: number,
+    cryptoProvider?: CryptoProvider,
     receivedAt?: number
   ) => boolean;
   verifyHeaderAsync: (
     encodedPayload: WebhookPayload,
     encodedHeader: WebhookHeader,
     secret: string,
-    tolerance: number,
-    cryptoProvider: CryptoProvider,
+    tolerance?: number,
+    cryptoProvider?: CryptoProvider,
     receivedAt?: number
   ) => Promise<boolean>;
 };
@@ -211,8 +211,8 @@ export function createWebhooks(
       encodedPayload: WebhookPayload,
       encodedHeader: WebhookHeader,
       secret: string,
-      tolerance: number,
-      cryptoProvider: CryptoProvider,
+      tolerance?: number,
+      cryptoProvider?: CryptoProvider,
       receivedAt?: number
     ): boolean {
       const {
@@ -238,7 +238,7 @@ export function createWebhooks(
         header,
         details,
         expectedSignature,
-        tolerance,
+        tolerance || 0,
         suspectPayloadType,
         secretContainsWhitespace,
         receivedAt
@@ -251,8 +251,8 @@ export function createWebhooks(
       encodedPayload: WebhookPayload,
       encodedHeader: WebhookHeader,
       secret: string,
-      tolerance: number,
-      cryptoProvider: CryptoProvider,
+      tolerance?: number,
+      cryptoProvider?: CryptoProvider,
       receivedAt?: number
     ): Promise<boolean> {
       const {
@@ -279,7 +279,7 @@ export function createWebhooks(
         header,
         details,
         expectedSignature,
-        tolerance,
+        tolerance || 0,
         suspectPayloadType,
         secretContainsWhitespace,
         receivedAt
@@ -436,11 +436,12 @@ export function createWebhooks(
 
   function parseHeader(
     header: WebhookHeader,
-    scheme: string
+    scheme?: string
   ): WebhookParsedHeader | null {
     if (typeof header !== 'string') {
       return null;
     }
+    scheme = scheme || signature.EXPECTED_SCHEME;
 
     return header.split(',').reduce<WebhookParsedHeader>(
       (accum, item) => {
@@ -478,7 +479,13 @@ export function createWebhooks(
 
   function prepareOptions(
     opts: WebhookTestHeaderOptions
-  ): WebhookTestHeaderOptions & {
+  ): Omit<
+    WebhookTestHeaderOptions,
+    'timestamp' | 'scheme' | 'cryptoProvider'
+  > & {
+    timestamp: number;
+    scheme: string;
+    cryptoProvider: CryptoProvider;
     payloadString: string;
     generateHeaderString: (signature: string) => string;
   } {
@@ -489,7 +496,8 @@ export function createWebhooks(
     }
 
     const timestamp =
-      Math.floor(opts.timestamp) || Math.floor(Date.now() / 1000);
+      (opts.timestamp && Math.floor(opts.timestamp)) ||
+      Math.floor(Date.now() / 1000);
     const scheme = opts.scheme || signature.EXPECTED_SCHEME;
     const cryptoProvider = opts.cryptoProvider || getCryptoProvider();
     const payloadString = `${timestamp}.${opts.payload}`;
