@@ -1,5 +1,6 @@
 import {NodePlatformFunctions} from './platform/NodePlatformFunctions.js';
 import {Stripe} from './stripe.core.js';
+import {StripeConfig} from './lib.js';
 
 // Initialize the Stripe class with Node platform functions
 Stripe.initialize(new NodePlatformFunctions());
@@ -18,7 +19,7 @@ type StripeCallableConstructor = typeof Stripe & {
 const StripeConstructor: StripeCallableConstructor = function(
   this: any,
   key: string,
-  config?: Record<string, unknown>
+  config?: StripeConfig
 ): Stripe {
   // Support calling without `new`
   if (!(this instanceof StripeConstructor)) {
