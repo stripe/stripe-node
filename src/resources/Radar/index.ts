@@ -2,32 +2,37 @@
 
 import {Stripe} from '../../stripe.core.js';
 import {
+  Radar as RadarNamespace0,
   AccountEvaluation,
   AccountEvaluationResource,
 } from './AccountEvaluations.js';
 import {
+  Radar as RadarNamespace1,
   CustomerEvaluation,
   CustomerEvaluationResource,
 } from './CustomerEvaluations.js';
 import {
+  Radar as RadarNamespace2,
   EarlyFraudWarning,
   EarlyFraudWarningResource,
 } from './EarlyFraudWarnings.js';
 import {
+  Radar as RadarNamespace3,
   IssuingAuthorizationEvaluation,
   IssuingAuthorizationEvaluationResource,
 } from './IssuingAuthorizationEvaluations.js';
 import {
+  Radar as RadarNamespace4,
   PaymentEvaluation,
   PaymentEvaluationResource,
 } from './PaymentEvaluations.js';
 import {
-  Radar as RadarNamespace2,
+  Radar as RadarNamespace5,
   ValueList,
   ValueListResource,
 } from './ValueLists.js';
 import {
-  Radar as RadarNamespace3,
+  Radar as RadarNamespace6,
   ValueListItem,
   ValueListItemResource,
 } from './ValueListItems.js';
@@ -63,20 +68,29 @@ export class Radar {
 }
 
 export declare namespace Radar {
+  export type AccountEvaluationRetrieveParams = RadarNamespace0.AccountEvaluationRetrieveParams;
+  export type AccountEvaluationCreateParams = RadarNamespace0.AccountEvaluationCreateParams;
+  export type AccountEvaluationUpdateParams = RadarNamespace0.AccountEvaluationUpdateParams;
   export {AccountEvaluation};
+  export type CustomerEvaluationCreateParams = RadarNamespace1.CustomerEvaluationCreateParams;
+  export type CustomerEvaluationUpdateParams = RadarNamespace1.CustomerEvaluationUpdateParams;
   export {CustomerEvaluation};
+  export type EarlyFraudWarningListParams = RadarNamespace2.EarlyFraudWarningListParams;
+  export type EarlyFraudWarningRetrieveParams = RadarNamespace2.EarlyFraudWarningRetrieveParams;
   export {EarlyFraudWarning};
+  export type IssuingAuthorizationEvaluationCreateParams = RadarNamespace3.IssuingAuthorizationEvaluationCreateParams;
   export {IssuingAuthorizationEvaluation};
+  export type PaymentEvaluationCreateParams = RadarNamespace4.PaymentEvaluationCreateParams;
   export {PaymentEvaluation};
-  export type ValueListDeleteParams = RadarNamespace2.ValueListDeleteParams;
-  export type ValueListRetrieveParams = RadarNamespace2.ValueListRetrieveParams;
-  export type ValueListUpdateParams = RadarNamespace2.ValueListUpdateParams;
-  export type ValueListListParams = RadarNamespace2.ValueListListParams;
-  export type ValueListCreateParams = RadarNamespace2.ValueListCreateParams;
+  export type ValueListDeleteParams = RadarNamespace5.ValueListDeleteParams;
+  export type ValueListRetrieveParams = RadarNamespace5.ValueListRetrieveParams;
+  export type ValueListUpdateParams = RadarNamespace5.ValueListUpdateParams;
+  export type ValueListListParams = RadarNamespace5.ValueListListParams;
+  export type ValueListCreateParams = RadarNamespace5.ValueListCreateParams;
   export {ValueList};
-  export type ValueListItemDeleteParams = RadarNamespace3.ValueListItemDeleteParams;
-  export type ValueListItemRetrieveParams = RadarNamespace3.ValueListItemRetrieveParams;
-  export type ValueListItemListParams = RadarNamespace3.ValueListItemListParams;
-  export type ValueListItemCreateParams = RadarNamespace3.ValueListItemCreateParams;
+  export type ValueListItemDeleteParams = RadarNamespace6.ValueListItemDeleteParams;
+  export type ValueListItemRetrieveParams = RadarNamespace6.ValueListItemRetrieveParams;
+  export type ValueListItemListParams = RadarNamespace6.ValueListItemListParams;
+  export type ValueListItemCreateParams = RadarNamespace6.ValueListItemCreateParams;
   export {ValueListItem};
 }

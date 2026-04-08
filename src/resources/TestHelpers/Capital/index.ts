@@ -1,7 +1,10 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../../stripe.core.js';
-import {FinancingOfferResource} from './FinancingOffers.js';
+import {
+  TestHelpers as TestHelpersNamespace0,
+  FinancingOfferResource,
+} from './FinancingOffers.js';
 
 export class Capital {
   financingOffers: FinancingOfferResource;

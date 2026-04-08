@@ -1,11 +1,27 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../stripe.core.js';
-import {ConfirmationTokenResource} from './ConfirmationTokens.js';
-import {CustomerResource} from './Customers.js';
-import {PaymentIntentResource} from './PaymentIntents.js';
-import {RefundResource} from './Refunds.js';
-import {TestClock, TestClockResource} from './TestClocks.js';
+import {
+  TestHelpers as TestHelpersNamespace0,
+  ConfirmationTokenResource,
+} from './ConfirmationTokens.js';
+import {
+  TestHelpers as TestHelpersNamespace1,
+  CustomerResource,
+} from './Customers.js';
+import {
+  TestHelpers as TestHelpersNamespace2,
+  PaymentIntentResource,
+} from './PaymentIntents.js';
+import {
+  TestHelpers as TestHelpersNamespace3,
+  RefundResource,
+} from './Refunds.js';
+import {
+  TestHelpers as TestHelpersNamespace4,
+  TestClock,
+  TestClockResource,
+} from './TestClocks.js';
 import {Capital} from './Capital/index.js';
 import {Issuing} from './Issuing/index.js';
 import {SharedPayment} from './SharedPayment/index.js';
@@ -41,11 +57,11 @@ export class TestHelpers {
 }
 
 export declare namespace TestHelpers {
-  export type TestClockDeleteParams = TestHelpersNamespace3.TestClockDeleteParams;
-  export type TestClockRetrieveParams = TestHelpersNamespace3.TestClockRetrieveParams;
-  export type TestClockListParams = TestHelpersNamespace3.TestClockListParams;
-  export type TestClockCreateParams = TestHelpersNamespace3.TestClockCreateParams;
-  export type TestClockAdvanceParams = TestHelpersNamespace3.TestClockAdvanceParams;
+  export type TestClockDeleteParams = TestHelpersNamespace4.TestClockDeleteParams;
+  export type TestClockRetrieveParams = TestHelpersNamespace4.TestClockRetrieveParams;
+  export type TestClockListParams = TestHelpersNamespace4.TestClockListParams;
+  export type TestClockCreateParams = TestHelpersNamespace4.TestClockCreateParams;
+  export type TestClockAdvanceParams = TestHelpersNamespace4.TestClockAdvanceParams;
   export {TestClock};
   export {Capital};
   export {Issuing};

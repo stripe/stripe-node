@@ -1,7 +1,11 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../stripe.core.js';
-import {TrialOffer, TrialOfferResource} from './TrialOffers.js';
+import {
+  ProductCatalog as ProductCatalogNamespace0,
+  TrialOffer,
+  TrialOfferResource,
+} from './TrialOffers.js';
 
 export {TrialOffer} from './TrialOffers.js';
 
@@ -14,5 +18,6 @@ export class ProductCatalog {
 }
 
 export declare namespace ProductCatalog {
+  export type TrialOfferCreateParams = ProductCatalogNamespace0.TrialOfferCreateParams;
   export {TrialOffer};
 }

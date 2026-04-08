@@ -1,7 +1,11 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../stripe.core.js';
-import {GrantedToken, GrantedTokenResource} from './GrantedTokens.js';
+import {
+  SharedPayment as SharedPaymentNamespace0,
+  GrantedToken,
+  GrantedTokenResource,
+} from './GrantedTokens.js';
 import {IssuedToken} from './IssuedTokens.js';
 
 export {GrantedToken} from './GrantedTokens.js';
@@ -16,6 +20,7 @@ export class SharedPayment {
 }
 
 export declare namespace SharedPayment {
+  export type GrantedTokenRetrieveParams = SharedPaymentNamespace0.GrantedTokenRetrieveParams;
   export {GrantedToken};
   export {IssuedToken};
 }
