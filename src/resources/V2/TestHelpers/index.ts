@@ -1,8 +1,14 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../../stripe.core.js';
-import {FinancialAddressResource} from './FinancialAddresses.js';
-import {MoneyManagementResource} from './MoneyManagement.js';
+import {
+  V2 as V2Namespace0,
+  FinancialAddressResource,
+} from './FinancialAddresses.js';
+import {
+  V2 as V2Namespace1,
+  MoneyManagementResource,
+} from './MoneyManagement.js';
 
 export class TestHelpers {
   financialAddresses: FinancialAddressResource;

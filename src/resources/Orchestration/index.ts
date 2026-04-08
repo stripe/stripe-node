@@ -1,7 +1,11 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../stripe.core.js';
-import {PaymentAttempt, PaymentAttemptResource} from './PaymentAttempts.js';
+import {
+  Orchestration as OrchestrationNamespace0,
+  PaymentAttempt,
+  PaymentAttemptResource,
+} from './PaymentAttempts.js';
 
 export {PaymentAttempt} from './PaymentAttempts.js';
 
@@ -14,5 +18,6 @@ export class Orchestration {
 }
 
 export declare namespace Orchestration {
+  export type PaymentAttemptRetrieveParams = OrchestrationNamespace0.PaymentAttemptRetrieveParams;
   export {PaymentAttempt};
 }

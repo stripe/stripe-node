@@ -1,19 +1,30 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../../stripe.core.js';
-import {Account, AccountResource} from './Accounts.js';
+import {V2 as V2Namespace0, Account, AccountResource} from './Accounts.js';
 import {
+  V2 as V2Namespace1,
   AccountEvaluation,
   AccountEvaluationResource,
 } from './AccountEvaluations.js';
-import {AccountLink, AccountLinkResource} from './AccountLinks.js';
-import {AccountToken, AccountTokenResource} from './AccountTokens.js';
-import {BatchJob, BatchJobResource} from './BatchJobs.js';
 import {
+  V2 as V2Namespace2,
+  AccountLink,
+  AccountLinkResource,
+} from './AccountLinks.js';
+import {
+  V2 as V2Namespace3,
+  AccountToken,
+  AccountTokenResource,
+} from './AccountTokens.js';
+import {V2 as V2Namespace4, BatchJob, BatchJobResource} from './BatchJobs.js';
+import {
+  V2 as V2Namespace5,
   ClaimableSandbox,
   ClaimableSandboxResource,
 } from './ClaimableSandboxes.js';
 import {
+  V2 as V2Namespace6,
   ConnectionSession,
   ConnectionSessionResource,
 } from './ConnectionSessions.js';
@@ -22,9 +33,11 @@ import {
   EventNotification,
   Event,
   Events,
+  V2 as V2EventsNamespace,
   EventResource,
 } from './Events.js';
 import {
+  V2 as V2Namespace8,
   EventDestination,
   EventDestinationResource,
 } from './EventDestinations.js';
@@ -71,14 +84,40 @@ export class Core {
 }
 
 export declare namespace Core {
+  export type AccountListParams = V2Namespace0.Core.AccountListParams;
+  export type AccountCreateParams = V2Namespace0.Core.AccountCreateParams;
+  export type AccountRetrieveParams = V2Namespace0.Core.AccountRetrieveParams;
+  export type AccountUpdateParams = V2Namespace0.Core.AccountUpdateParams;
+  export type AccountCloseParams = V2Namespace0.Core.AccountCloseParams;
   export {Account};
+  export type AccountEvaluationCreateParams = V2Namespace1.Core.AccountEvaluationCreateParams;
   export {AccountEvaluation};
+  export type AccountLinkCreateParams = V2Namespace2.Core.AccountLinkCreateParams;
   export {AccountLink};
+  export type AccountTokenCreateParams = V2Namespace3.Core.AccountTokenCreateParams;
+  export type AccountTokenRetrieveParams = V2Namespace3.Core.AccountTokenRetrieveParams;
   export {AccountToken};
+  export type BatchJobCreateParams = V2Namespace4.Core.BatchJobCreateParams;
+  export type BatchJobRetrieveParams = V2Namespace4.Core.BatchJobRetrieveParams;
+  export type BatchJobCancelParams = V2Namespace4.Core.BatchJobCancelParams;
   export {BatchJob};
+  export type ClaimableSandboxCreateParams = V2Namespace5.Core.ClaimableSandboxCreateParams;
+  export type ClaimableSandboxRetrieveParams = V2Namespace5.Core.ClaimableSandboxRetrieveParams;
   export {ClaimableSandbox};
+  export type ConnectionSessionCreateParams = V2Namespace6.Core.ConnectionSessionCreateParams;
+  export type ConnectionSessionRetrieveParams = V2Namespace6.Core.ConnectionSessionRetrieveParams;
   export {ConnectionSession};
+  export type EventListParams = V2EventsNamespace.Core.EventListParams;
+  export type EventRetrieveParams = V2EventsNamespace.Core.EventRetrieveParams;
   export {EventBase, Event, EventNotification, Events};
+  export type EventDestinationListParams = V2Namespace8.Core.EventDestinationListParams;
+  export type EventDestinationCreateParams = V2Namespace8.Core.EventDestinationCreateParams;
+  export type EventDestinationDeleteParams = V2Namespace8.Core.EventDestinationDeleteParams;
+  export type EventDestinationRetrieveParams = V2Namespace8.Core.EventDestinationRetrieveParams;
+  export type EventDestinationUpdateParams = V2Namespace8.Core.EventDestinationUpdateParams;
+  export type EventDestinationDisableParams = V2Namespace8.Core.EventDestinationDisableParams;
+  export type EventDestinationEnableParams = V2Namespace8.Core.EventDestinationEnableParams;
+  export type EventDestinationPingParams = V2Namespace8.Core.EventDestinationPingParams;
   export {EventDestination};
   export {AccountPersonToken};
   export {AccountPerson};

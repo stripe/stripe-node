@@ -2,6 +2,7 @@
 
 import {Stripe} from '../../stripe.core.js';
 import {
+  Sigma as SigmaNamespace0,
   ScheduledQueryRun,
   ScheduledQueryRunResource,
 } from './ScheduledQueryRuns.js';
@@ -17,5 +18,7 @@ export class Sigma {
 }
 
 export declare namespace Sigma {
+  export type ScheduledQueryRunListParams = SigmaNamespace0.ScheduledQueryRunListParams;
+  export type ScheduledQueryRunRetrieveParams = SigmaNamespace0.ScheduledQueryRunRetrieveParams;
   export {ScheduledQueryRun};
 }

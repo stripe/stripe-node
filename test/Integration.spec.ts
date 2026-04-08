@@ -46,6 +46,9 @@ describe('Integration test', function() {
 
   it('should work with CommonJS imports', () => runTestProject('cjs'));
 
+  it('should work with CommonJS TypeScript imports', () =>
+    runTestProject('cjs-ts'));
+
   it('should work with ESModule imports', async function() {
     // Node supports ES Modules starting at v12
     if (nodeVersion <= 12) {
