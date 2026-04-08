@@ -36,10 +36,19 @@ export class FinancialConnections {
 }
 
 export declare namespace FinancialConnections {
+  export type AccountListParams = FinancialConnectionsNamespace0.AccountListParams;
+  export type AccountRetrieveParams = FinancialConnectionsNamespace0.AccountRetrieveParams;
+  export type AccountDisconnectParams = FinancialConnectionsNamespace0.AccountDisconnectParams;
+  export type AccountRefreshParams = FinancialConnectionsNamespace0.AccountRefreshParams;
+  export type AccountSubscribeParams = FinancialConnectionsNamespace0.AccountSubscribeParams;
+  export type AccountUnsubscribeParams = FinancialConnectionsNamespace0.AccountUnsubscribeParams;
+  export type AccountListOwnersParams = FinancialConnectionsNamespace0.AccountListOwnersParams;
   export {Account};
   export {Authorization};
   export {Institution};
   export {Session};
+  export type TransactionListParams = FinancialConnectionsNamespace2.TransactionListParams;
+  export type TransactionRetrieveParams = FinancialConnectionsNamespace2.TransactionRetrieveParams;
   export {Transaction};
   export {AccountOwner};
   export {AccountOwnership};

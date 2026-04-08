@@ -123,9 +123,11 @@ export class FetchHttpClient extends HttpClient
   ): Promise<FetchHttpClientResponseInterface> {
     const isInsecureConnection = protocol === 'http';
 
+    if (!path.startsWith('/')) {
+      throw new Error(`Only relative paths are supported, got: "${path}"`);
+    }
     const url = new URL(
-      path,
-      `${isInsecureConnection ? 'http' : 'https'}://${host}`
+      `${isInsecureConnection ? 'http' : 'https'}://${host}${path}`
     );
     url.port = port;
 

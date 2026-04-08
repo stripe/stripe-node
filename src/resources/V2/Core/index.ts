@@ -22,9 +22,11 @@ import {
   EventNotification,
   Event,
   Events,
+  V2 as V2EventsNamespace,
   EventResource,
 } from './Events.js';
 import {
+  V2 as V2Namespace4,
   EventDestination,
   EventDestinationResource,
 } from './EventDestinations.js';
@@ -71,14 +73,29 @@ export class Core {
 }
 
 export declare namespace Core {
+  export type AccountListParams = V2Namespace0.Core.AccountListParams;
+  export type AccountCreateParams = V2Namespace0.Core.AccountCreateParams;
+  export type AccountRetrieveParams = V2Namespace0.Core.AccountRetrieveParams;
+  export type AccountUpdateParams = V2Namespace0.Core.AccountUpdateParams;
+  export type AccountCloseParams = V2Namespace0.Core.AccountCloseParams;
   export {Account};
   export {AccountEvaluation};
   export {AccountLink};
+  export type AccountTokenCreateParams = V2Namespace2.Core.AccountTokenCreateParams;
+  export type AccountTokenRetrieveParams = V2Namespace2.Core.AccountTokenRetrieveParams;
   export {AccountToken};
   export {BatchJob};
   export {ClaimableSandbox};
   export {ConnectionSession};
   export {EventBase, Event, EventNotification, Events};
+  export type EventDestinationListParams = V2Namespace4.Core.EventDestinationListParams;
+  export type EventDestinationCreateParams = V2Namespace4.Core.EventDestinationCreateParams;
+  export type EventDestinationDeleteParams = V2Namespace4.Core.EventDestinationDeleteParams;
+  export type EventDestinationRetrieveParams = V2Namespace4.Core.EventDestinationRetrieveParams;
+  export type EventDestinationUpdateParams = V2Namespace4.Core.EventDestinationUpdateParams;
+  export type EventDestinationDisableParams = V2Namespace4.Core.EventDestinationDisableParams;
+  export type EventDestinationEnableParams = V2Namespace4.Core.EventDestinationEnableParams;
+  export type EventDestinationPingParams = V2Namespace4.Core.EventDestinationPingParams;
   export {EventDestination};
   export {AccountPersonToken};
   export {AccountPerson};

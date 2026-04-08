@@ -1,7 +1,10 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../../stripe.core.js';
-import {ReaderResource} from './Readers.js';
+import {
+  TestHelpers as TestHelpersNamespace0,
+  ReaderResource,
+} from './Readers.js';
 
 export class Terminal {
   readers: ReaderResource;

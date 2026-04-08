@@ -41,6 +41,11 @@ export class TestHelpers {
 }
 
 export declare namespace TestHelpers {
+  export type TestClockDeleteParams = TestHelpersNamespace3.TestClockDeleteParams;
+  export type TestClockRetrieveParams = TestHelpersNamespace3.TestClockRetrieveParams;
+  export type TestClockListParams = TestHelpersNamespace3.TestClockListParams;
+  export type TestClockCreateParams = TestHelpersNamespace3.TestClockCreateParams;
+  export type TestClockAdvanceParams = TestHelpersNamespace3.TestClockAdvanceParams;
   export {TestClock};
   export {Capital};
   export {Issuing};
