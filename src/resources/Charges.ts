@@ -3847,7 +3847,7 @@ export namespace ChargeUpdateParams {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: 'account_funding';
+      transaction_type?: Emptyable<'account_funding'>;
     }
 
     export namespace CarRental {
@@ -5294,7 +5294,121 @@ export namespace ChargeUpdateParams {
     }
 
     export namespace MoneyServices {
-      export interface AccountFunding {}
+      export interface AccountFunding {
+        /**
+         * ID of the Account representing the beneficiary in this account funding transaction.
+         */
+        beneficiary_account?: string;
+
+        /**
+         * Inline identity details for the beneficiary of this account funding transaction.
+         */
+        beneficiary_details?: Emptyable<AccountFunding.BeneficiaryDetails>;
+
+        /**
+         * ID of the Account representing the sender in this account funding transaction.
+         */
+        sender_account?: string;
+
+        /**
+         * Inline identity details for the sender of this account funding transaction.
+         */
+        sender_details?: Emptyable<AccountFunding.SenderDetails>;
+      }
+
+      export namespace AccountFunding {
+        export interface BeneficiaryDetails {
+          /**
+           * Address.
+           */
+          address?: AddressParam;
+
+          /**
+           * Date of birth.
+           */
+          date_of_birth?: BeneficiaryDetails.DateOfBirth;
+
+          /**
+           * Email address.
+           */
+          email?: string;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Phone number.
+           */
+          phone?: string;
+        }
+
+        export interface SenderDetails {
+          /**
+           * Address.
+           */
+          address?: AddressParam;
+
+          /**
+           * Date of birth.
+           */
+          date_of_birth?: SenderDetails.DateOfBirth;
+
+          /**
+           * Email address.
+           */
+          email?: string;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Phone number.
+           */
+          phone?: string;
+        }
+
+        export namespace BeneficiaryDetails {
+          export interface DateOfBirth {
+            /**
+             * Day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * Month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * Four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
+        export namespace SenderDetails {
+          export interface DateOfBirth {
+            /**
+             * Day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * Month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * Four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+      }
     }
 
     export namespace Subscription {
@@ -6049,7 +6163,7 @@ export namespace ChargeCaptureParams {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: 'account_funding';
+      transaction_type?: Emptyable<'account_funding'>;
     }
 
     export namespace CarRental {
@@ -7496,7 +7610,121 @@ export namespace ChargeCaptureParams {
     }
 
     export namespace MoneyServices {
-      export interface AccountFunding {}
+      export interface AccountFunding {
+        /**
+         * ID of the Account representing the beneficiary in this account funding transaction.
+         */
+        beneficiary_account?: string;
+
+        /**
+         * Inline identity details for the beneficiary of this account funding transaction.
+         */
+        beneficiary_details?: Emptyable<AccountFunding.BeneficiaryDetails>;
+
+        /**
+         * ID of the Account representing the sender in this account funding transaction.
+         */
+        sender_account?: string;
+
+        /**
+         * Inline identity details for the sender of this account funding transaction.
+         */
+        sender_details?: Emptyable<AccountFunding.SenderDetails>;
+      }
+
+      export namespace AccountFunding {
+        export interface BeneficiaryDetails {
+          /**
+           * Address.
+           */
+          address?: AddressParam;
+
+          /**
+           * Date of birth.
+           */
+          date_of_birth?: BeneficiaryDetails.DateOfBirth;
+
+          /**
+           * Email address.
+           */
+          email?: string;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Phone number.
+           */
+          phone?: string;
+        }
+
+        export interface SenderDetails {
+          /**
+           * Address.
+           */
+          address?: AddressParam;
+
+          /**
+           * Date of birth.
+           */
+          date_of_birth?: SenderDetails.DateOfBirth;
+
+          /**
+           * Email address.
+           */
+          email?: string;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Phone number.
+           */
+          phone?: string;
+        }
+
+        export namespace BeneficiaryDetails {
+          export interface DateOfBirth {
+            /**
+             * Day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * Month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * Four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
+        export namespace SenderDetails {
+          export interface DateOfBirth {
+            /**
+             * Day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * Month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * Four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+      }
     }
 
     export namespace Subscription {

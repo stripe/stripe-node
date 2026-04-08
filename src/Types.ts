@@ -63,6 +63,7 @@ export type RawErrorType =
   | 'already_canceled'
   | 'already_exists'
   | 'blocked_by_stripe'
+  | 'cannot_proceed'
   | 'controlled_by_alternate_resource'
   | 'controlled_by_dashboard'
   | 'feature_not_enabled'

@@ -215,6 +215,8 @@ export namespace SharedPayment {
 
       stripe_balance?: PaymentMethodDetails.StripeBalance;
 
+      sunbit?: PaymentMethodDetails.Sunbit;
+
       swish?: PaymentMethodDetails.Swish;
 
       twint?: PaymentMethodDetails.Twint;
@@ -896,6 +898,8 @@ export namespace SharedPayment {
         account?: string | null;
       }
 
+      export interface Sunbit {}
+
       export interface Swish {}
 
       export interface Twint {}
@@ -956,6 +960,7 @@ export namespace SharedPayment {
         | 'shopeepay'
         | 'sofort'
         | 'stripe_balance'
+        | 'sunbit'
         | 'swish'
         | 'twint'
         | 'upi'

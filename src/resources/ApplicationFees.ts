@@ -224,6 +224,11 @@ export namespace ApplicationFee {
      * Type of object that created the application fee.
      */
     type: FeeSource.Type;
+
+    /**
+     * PaymentRecord ID that created this application fee.
+     */
+    payment_record?: string;
   }
 
   export interface FundingSource {

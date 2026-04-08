@@ -51,14 +51,14 @@ export interface CustomerEvaluation {
   created_at: number;
 
   /**
-   * The ID of the Stripe customer the customer evaluation is associated with.
+   * The ID of the Customer to associate with this CustomerEvaluation.
    */
   customer?: string;
 
   /**
    * The type of evaluation event.
    */
-  event_type: string;
+  event_type: Radar.CustomerEvaluation.EventType;
 
   /**
    * A list of events that have been reported on this customer evaluation.
@@ -71,12 +71,14 @@ export interface CustomerEvaluation {
   livemode: boolean;
 
   /**
-   * A hash of signal objects providing Radar's evaluation for the lifecycle event.
+   * A hash of signal objects providing Radar's evaluation of the customer.
    */
   signals: Radar.CustomerEvaluation.Signals | null;
 }
 export namespace Radar {
   export namespace CustomerEvaluation {
+    export type EventType = 'login' | 'registration';
+
     export interface Event {
       /**
        * Data about a failed login event.
@@ -131,10 +133,10 @@ export namespace Radar {
         /**
          * The risk level for this signal.
          */
-        risk_level?: string;
+        risk_level?: AccountSharing.RiskLevel;
 
         /**
-         * Score for this signal (float between 0.0-100.0).
+         * Score for this signal (between 0.0 and 100.0).
          */
         score: number;
       }
@@ -148,12 +150,32 @@ export namespace Radar {
         /**
          * The risk level for this signal.
          */
-        risk_level?: string;
+        risk_level?: MultiAccounting.RiskLevel;
 
         /**
-         * Score for this signal (float between 0.0-100.0).
+         * Score for this signal (between 0.0 and 100.0).
          */
         score: number;
+      }
+
+      export namespace AccountSharing {
+        export type RiskLevel =
+          | 'elevated'
+          | 'highest'
+          | 'low'
+          | 'normal'
+          | 'not_assessed'
+          | 'unknown';
+      }
+
+      export namespace MultiAccounting {
+        export type RiskLevel =
+          | 'elevated'
+          | 'highest'
+          | 'low'
+          | 'normal'
+          | 'not_assessed'
+          | 'unknown';
       }
     }
   }
@@ -206,7 +228,7 @@ export namespace Radar {
 
       export interface CustomerDetails {
         /**
-         * Stripe customer ID
+         * The ID of an existing Customer.
          */
         customer?: string;
 
@@ -290,7 +312,7 @@ export namespace Radar {
 
     export interface RegistrationSuccess {
       /**
-       * Stripe customer ID to attach to an entity-less registration evaluation.
+       * The ID of a Customer to attach to an entity-less registration evaluation.
        */
       customer?: string;
     }

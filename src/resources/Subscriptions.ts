@@ -2047,6 +2047,11 @@ export namespace Subscription {
       us_bank_account: PaymentMethodOptions.UsBankAccount | null;
 
       /**
+       * This sub-hash contains details about the Bizum payment method options to pass to invoices created by the subscription.
+       */
+      bizum?: PaymentMethodOptions.Bizum | null;
+
+      /**
        * This sub-hash contains details about the Check Scan payment method options to pass to invoices created by the subscription.
        */
       check_scan?: PaymentMethodOptions.CheckScan | null;
@@ -2061,6 +2066,7 @@ export namespace Subscription {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'bizum'
       | 'boleto'
       | 'card'
       | 'cashapp'
@@ -2175,6 +2181,10 @@ export namespace Subscription {
         verification_method?: UsBankAccount.VerificationMethod;
       }
 
+      export interface Bizum {
+        mandate_options?: Bizum.MandateOptions;
+      }
+
       export interface CheckScan {
         check_deposit_address?: Address;
       }
@@ -2199,6 +2209,20 @@ export namespace Subscription {
 
       export namespace Bancontact {
         export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+      }
+
+      export namespace Bizum {
+        export interface MandateOptions {
+          /**
+           * Amount to be charged for future payments. Required when `amount_type=fixed`.
+           */
+          amount?: number;
+
+          /**
+           * Indicates the mandate amount type.
+           */
+          amount_type?: 'fixed';
+        }
       }
 
       export namespace Card {
@@ -3550,6 +3574,11 @@ export namespace SubscriptionCreateParams {
       us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
 
       /**
+       * This sub-hash contains details about the Bizum payment method options to pass to the invoice's PaymentIntent.
+       */
+      bizum?: Emptyable<PaymentMethodOptions.Bizum>;
+
+      /**
        * This sub-hash contains details about the Check Scan payment method options to pass to the invoice's PaymentIntent.
        */
       check_scan?: Emptyable<PaymentMethodOptions.CheckScan>;
@@ -3564,6 +3593,7 @@ export namespace SubscriptionCreateParams {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'bizum'
       | 'boleto'
       | 'card'
       | 'cashapp'
@@ -3699,6 +3729,13 @@ export namespace SubscriptionCreateParams {
         verification_method?: UsBankAccount.VerificationMethod;
       }
 
+      export interface Bizum {
+        /**
+         * Configuration options for setting up a mandate
+         */
+        mandate_options?: Bizum.MandateOptions;
+      }
+
       export interface CheckScan {
         check_deposit_address?: AddressParam;
       }
@@ -3723,6 +3760,20 @@ export namespace SubscriptionCreateParams {
 
       export namespace Bancontact {
         export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+      }
+
+      export namespace Bizum {
+        export interface MandateOptions {
+          /**
+           * Amount to be charged for future payments. Required when `amount_type=fixed`.
+           */
+          amount: number;
+
+          /**
+           * Indicates the mandate amount type.
+           */
+          amount_type: 'fixed';
+        }
       }
 
       export namespace Card {
@@ -5035,6 +5086,11 @@ export namespace SubscriptionUpdateParams {
       us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
 
       /**
+       * This sub-hash contains details about the Bizum payment method options to pass to the invoice's PaymentIntent.
+       */
+      bizum?: Emptyable<PaymentMethodOptions.Bizum>;
+
+      /**
        * This sub-hash contains details about the Check Scan payment method options to pass to the invoice's PaymentIntent.
        */
       check_scan?: Emptyable<PaymentMethodOptions.CheckScan>;
@@ -5049,6 +5105,7 @@ export namespace SubscriptionUpdateParams {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'bizum'
       | 'boleto'
       | 'card'
       | 'cashapp'
@@ -5184,6 +5241,13 @@ export namespace SubscriptionUpdateParams {
         verification_method?: UsBankAccount.VerificationMethod;
       }
 
+      export interface Bizum {
+        /**
+         * Configuration options for setting up a mandate
+         */
+        mandate_options?: Bizum.MandateOptions;
+      }
+
       export interface CheckScan {
         check_deposit_address?: AddressParam;
       }
@@ -5208,6 +5272,20 @@ export namespace SubscriptionUpdateParams {
 
       export namespace Bancontact {
         export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+      }
+
+      export namespace Bizum {
+        export interface MandateOptions {
+          /**
+           * Amount to be charged for future payments. Required when `amount_type=fixed`.
+           */
+          amount: number;
+
+          /**
+           * Indicates the mandate amount type.
+           */
+          amount_type: 'fixed';
+        }
       }
 
       export namespace Card {

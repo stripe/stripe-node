@@ -6638,6 +6638,11 @@ export namespace PaymentIntentCreateParams {
        * A unit of measure for the line item, such as gallons, feet, meters, etc.
        */
       unit_of_measure?: string;
+
+      /**
+       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
+       */
+      quantity_precision?: number;
     }
 
     export interface Shipping {
@@ -7492,7 +7497,7 @@ export namespace PaymentIntentCreateParams {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: 'account_funding';
+      transaction_type?: Emptyable<'account_funding'>;
     }
 
     export namespace Benefit {
@@ -8948,7 +8953,121 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace MoneyServices {
-      export interface AccountFunding {}
+      export interface AccountFunding {
+        /**
+         * ID of the Account representing the beneficiary in this account funding transaction.
+         */
+        beneficiary_account?: string;
+
+        /**
+         * Inline identity details for the beneficiary of this account funding transaction.
+         */
+        beneficiary_details?: Emptyable<AccountFunding.BeneficiaryDetails>;
+
+        /**
+         * ID of the Account representing the sender in this account funding transaction.
+         */
+        sender_account?: string;
+
+        /**
+         * Inline identity details for the sender of this account funding transaction.
+         */
+        sender_details?: Emptyable<AccountFunding.SenderDetails>;
+      }
+
+      export namespace AccountFunding {
+        export interface BeneficiaryDetails {
+          /**
+           * Address.
+           */
+          address?: AddressParam;
+
+          /**
+           * Date of birth.
+           */
+          date_of_birth?: BeneficiaryDetails.DateOfBirth;
+
+          /**
+           * Email address.
+           */
+          email?: string;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Phone number.
+           */
+          phone?: string;
+        }
+
+        export interface SenderDetails {
+          /**
+           * Address.
+           */
+          address?: AddressParam;
+
+          /**
+           * Date of birth.
+           */
+          date_of_birth?: SenderDetails.DateOfBirth;
+
+          /**
+           * Email address.
+           */
+          email?: string;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Phone number.
+           */
+          phone?: string;
+        }
+
+        export namespace BeneficiaryDetails {
+          export interface DateOfBirth {
+            /**
+             * Day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * Month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * Four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
+        export namespace SenderDetails {
+          export interface DateOfBirth {
+            /**
+             * Day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * Month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * Four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+      }
     }
 
     export namespace Subscription {
@@ -11159,7 +11278,77 @@ export namespace PaymentIntentCreateParams {
         }
 
         export namespace MoneyServices {
-          export interface AccountFunding {}
+          export interface AccountFunding {
+            /**
+             * Details for a liquid asset (crypto or security) funding transaction.
+             */
+            liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
+
+            /**
+             * Details for a wallet funding transaction.
+             */
+            wallet?: AccountFunding.Wallet;
+          }
+
+          export namespace AccountFunding {
+            export interface LiquidAsset {
+              /**
+               * Details for a cryptocurrency liquid asset funding transaction.
+               */
+              crypto?: LiquidAsset.Crypto;
+
+              /**
+               * Details for a security liquid asset funding transaction.
+               */
+              security?: LiquidAsset.Security;
+            }
+
+            export interface Wallet {
+              /**
+               * Details for a staged purchase.
+               */
+              staged_purchase?: Emptyable<Wallet.StagedPurchase>;
+            }
+
+            export namespace LiquidAsset {
+              export interface Crypto {
+                /**
+                 * The cryptocurrency currency code (e.g. BTC, ETH).
+                 */
+                currency_code?: string;
+              }
+
+              export interface Security {
+                /**
+                 * The security's ticker symbol (e.g. AAPL).
+                 */
+                ticker_symbol?: string;
+              }
+            }
+
+            export namespace Wallet {
+              export interface StagedPurchase {
+                /**
+                 * The merchant where the staged wallet purchase is made.
+                 */
+                merchant?: StagedPurchase.Merchant;
+              }
+
+              export namespace StagedPurchase {
+                export interface Merchant {
+                  /**
+                   * The merchant category code of the merchant.
+                   */
+                  mcc?: string;
+
+                  /**
+                   * The merchant's name.
+                   */
+                  name?: string;
+                }
+              }
+            }
+          }
         }
       }
 
@@ -11243,7 +11432,77 @@ export namespace PaymentIntentCreateParams {
         }
 
         export namespace MoneyServices {
-          export interface AccountFunding {}
+          export interface AccountFunding {
+            /**
+             * Details for a liquid asset (crypto or security) funding transaction.
+             */
+            liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
+
+            /**
+             * Details for a wallet funding transaction.
+             */
+            wallet?: AccountFunding.Wallet;
+          }
+
+          export namespace AccountFunding {
+            export interface LiquidAsset {
+              /**
+               * Details for a cryptocurrency liquid asset funding transaction.
+               */
+              crypto?: LiquidAsset.Crypto;
+
+              /**
+               * Details for a security liquid asset funding transaction.
+               */
+              security?: LiquidAsset.Security;
+            }
+
+            export interface Wallet {
+              /**
+               * Details for a staged purchase.
+               */
+              staged_purchase?: Emptyable<Wallet.StagedPurchase>;
+            }
+
+            export namespace LiquidAsset {
+              export interface Crypto {
+                /**
+                 * The cryptocurrency currency code (e.g. BTC, ETH).
+                 */
+                currency_code?: string;
+              }
+
+              export interface Security {
+                /**
+                 * The security's ticker symbol (e.g. AAPL).
+                 */
+                ticker_symbol?: string;
+              }
+            }
+
+            export namespace Wallet {
+              export interface StagedPurchase {
+                /**
+                 * The merchant where the staged wallet purchase is made.
+                 */
+                merchant?: StagedPurchase.Merchant;
+              }
+
+              export namespace StagedPurchase {
+                export interface Merchant {
+                  /**
+                   * The merchant category code of the merchant.
+                   */
+                  mcc?: string;
+
+                  /**
+                   * The merchant's name.
+                   */
+                  name?: string;
+                }
+              }
+            }
+          }
         }
       }
 
@@ -14094,6 +14353,11 @@ export namespace PaymentIntentUpdateParams {
        * A unit of measure for the line item, such as gallons, feet, meters, etc.
        */
       unit_of_measure?: string;
+
+      /**
+       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
+       */
+      quantity_precision?: number;
     }
 
     export interface Shipping {
@@ -14930,7 +15194,7 @@ export namespace PaymentIntentUpdateParams {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: 'account_funding';
+      transaction_type?: Emptyable<'account_funding'>;
     }
 
     export namespace Benefit {
@@ -16386,7 +16650,121 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace MoneyServices {
-      export interface AccountFunding {}
+      export interface AccountFunding {
+        /**
+         * ID of the Account representing the beneficiary in this account funding transaction.
+         */
+        beneficiary_account?: string;
+
+        /**
+         * Inline identity details for the beneficiary of this account funding transaction.
+         */
+        beneficiary_details?: Emptyable<AccountFunding.BeneficiaryDetails>;
+
+        /**
+         * ID of the Account representing the sender in this account funding transaction.
+         */
+        sender_account?: string;
+
+        /**
+         * Inline identity details for the sender of this account funding transaction.
+         */
+        sender_details?: Emptyable<AccountFunding.SenderDetails>;
+      }
+
+      export namespace AccountFunding {
+        export interface BeneficiaryDetails {
+          /**
+           * Address.
+           */
+          address?: AddressParam;
+
+          /**
+           * Date of birth.
+           */
+          date_of_birth?: BeneficiaryDetails.DateOfBirth;
+
+          /**
+           * Email address.
+           */
+          email?: string;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Phone number.
+           */
+          phone?: string;
+        }
+
+        export interface SenderDetails {
+          /**
+           * Address.
+           */
+          address?: AddressParam;
+
+          /**
+           * Date of birth.
+           */
+          date_of_birth?: SenderDetails.DateOfBirth;
+
+          /**
+           * Email address.
+           */
+          email?: string;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Phone number.
+           */
+          phone?: string;
+        }
+
+        export namespace BeneficiaryDetails {
+          export interface DateOfBirth {
+            /**
+             * Day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * Month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * Four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
+        export namespace SenderDetails {
+          export interface DateOfBirth {
+            /**
+             * Day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * Month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * Four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+      }
     }
 
     export namespace Subscription {
@@ -18597,7 +18975,77 @@ export namespace PaymentIntentUpdateParams {
         }
 
         export namespace MoneyServices {
-          export interface AccountFunding {}
+          export interface AccountFunding {
+            /**
+             * Details for a liquid asset (crypto or security) funding transaction.
+             */
+            liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
+
+            /**
+             * Details for a wallet funding transaction.
+             */
+            wallet?: AccountFunding.Wallet;
+          }
+
+          export namespace AccountFunding {
+            export interface LiquidAsset {
+              /**
+               * Details for a cryptocurrency liquid asset funding transaction.
+               */
+              crypto?: LiquidAsset.Crypto;
+
+              /**
+               * Details for a security liquid asset funding transaction.
+               */
+              security?: LiquidAsset.Security;
+            }
+
+            export interface Wallet {
+              /**
+               * Details for a staged purchase.
+               */
+              staged_purchase?: Emptyable<Wallet.StagedPurchase>;
+            }
+
+            export namespace LiquidAsset {
+              export interface Crypto {
+                /**
+                 * The cryptocurrency currency code (e.g. BTC, ETH).
+                 */
+                currency_code?: string;
+              }
+
+              export interface Security {
+                /**
+                 * The security's ticker symbol (e.g. AAPL).
+                 */
+                ticker_symbol?: string;
+              }
+            }
+
+            export namespace Wallet {
+              export interface StagedPurchase {
+                /**
+                 * The merchant where the staged wallet purchase is made.
+                 */
+                merchant?: StagedPurchase.Merchant;
+              }
+
+              export namespace StagedPurchase {
+                export interface Merchant {
+                  /**
+                   * The merchant category code of the merchant.
+                   */
+                  mcc?: string;
+
+                  /**
+                   * The merchant's name.
+                   */
+                  name?: string;
+                }
+              }
+            }
+          }
         }
       }
 
@@ -18681,7 +19129,77 @@ export namespace PaymentIntentUpdateParams {
         }
 
         export namespace MoneyServices {
-          export interface AccountFunding {}
+          export interface AccountFunding {
+            /**
+             * Details for a liquid asset (crypto or security) funding transaction.
+             */
+            liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
+
+            /**
+             * Details for a wallet funding transaction.
+             */
+            wallet?: AccountFunding.Wallet;
+          }
+
+          export namespace AccountFunding {
+            export interface LiquidAsset {
+              /**
+               * Details for a cryptocurrency liquid asset funding transaction.
+               */
+              crypto?: LiquidAsset.Crypto;
+
+              /**
+               * Details for a security liquid asset funding transaction.
+               */
+              security?: LiquidAsset.Security;
+            }
+
+            export interface Wallet {
+              /**
+               * Details for a staged purchase.
+               */
+              staged_purchase?: Emptyable<Wallet.StagedPurchase>;
+            }
+
+            export namespace LiquidAsset {
+              export interface Crypto {
+                /**
+                 * The cryptocurrency currency code (e.g. BTC, ETH).
+                 */
+                currency_code?: string;
+              }
+
+              export interface Security {
+                /**
+                 * The security's ticker symbol (e.g. AAPL).
+                 */
+                ticker_symbol?: string;
+              }
+            }
+
+            export namespace Wallet {
+              export interface StagedPurchase {
+                /**
+                 * The merchant where the staged wallet purchase is made.
+                 */
+                merchant?: StagedPurchase.Merchant;
+              }
+
+              export namespace StagedPurchase {
+                export interface Merchant {
+                  /**
+                   * The merchant category code of the merchant.
+                   */
+                  mcc?: string;
+
+                  /**
+                   * The merchant's name.
+                   */
+                  name?: string;
+                }
+              }
+            }
+          }
         }
       }
 
@@ -20751,6 +21269,11 @@ export namespace PaymentIntentCaptureParams {
        * A unit of measure for the line item, such as gallons, feet, meters, etc.
        */
       unit_of_measure?: string;
+
+      /**
+       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
+       */
+      quantity_precision?: number;
     }
 
     export interface Shipping {
@@ -21552,7 +22075,7 @@ export namespace PaymentIntentCaptureParams {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: 'account_funding';
+      transaction_type?: Emptyable<'account_funding'>;
     }
 
     export namespace CarRental {
@@ -22999,7 +23522,121 @@ export namespace PaymentIntentCaptureParams {
     }
 
     export namespace MoneyServices {
-      export interface AccountFunding {}
+      export interface AccountFunding {
+        /**
+         * ID of the Account representing the beneficiary in this account funding transaction.
+         */
+        beneficiary_account?: string;
+
+        /**
+         * Inline identity details for the beneficiary of this account funding transaction.
+         */
+        beneficiary_details?: Emptyable<AccountFunding.BeneficiaryDetails>;
+
+        /**
+         * ID of the Account representing the sender in this account funding transaction.
+         */
+        sender_account?: string;
+
+        /**
+         * Inline identity details for the sender of this account funding transaction.
+         */
+        sender_details?: Emptyable<AccountFunding.SenderDetails>;
+      }
+
+      export namespace AccountFunding {
+        export interface BeneficiaryDetails {
+          /**
+           * Address.
+           */
+          address?: AddressParam;
+
+          /**
+           * Date of birth.
+           */
+          date_of_birth?: BeneficiaryDetails.DateOfBirth;
+
+          /**
+           * Email address.
+           */
+          email?: string;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Phone number.
+           */
+          phone?: string;
+        }
+
+        export interface SenderDetails {
+          /**
+           * Address.
+           */
+          address?: AddressParam;
+
+          /**
+           * Date of birth.
+           */
+          date_of_birth?: SenderDetails.DateOfBirth;
+
+          /**
+           * Email address.
+           */
+          email?: string;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Phone number.
+           */
+          phone?: string;
+        }
+
+        export namespace BeneficiaryDetails {
+          export interface DateOfBirth {
+            /**
+             * Day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * Month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * Four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
+        export namespace SenderDetails {
+          export interface DateOfBirth {
+            /**
+             * Day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * Month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * Four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+      }
     }
 
     export namespace Subscription {
@@ -24062,6 +24699,11 @@ export namespace PaymentIntentConfirmParams {
        * A unit of measure for the line item, such as gallons, feet, meters, etc.
        */
       unit_of_measure?: string;
+
+      /**
+       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
+       */
+      quantity_precision?: number;
     }
 
     export interface Shipping {
@@ -24912,7 +25554,7 @@ export namespace PaymentIntentConfirmParams {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: 'account_funding';
+      transaction_type?: Emptyable<'account_funding'>;
     }
 
     export namespace Benefit {
@@ -26368,7 +27010,121 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace MoneyServices {
-      export interface AccountFunding {}
+      export interface AccountFunding {
+        /**
+         * ID of the Account representing the beneficiary in this account funding transaction.
+         */
+        beneficiary_account?: string;
+
+        /**
+         * Inline identity details for the beneficiary of this account funding transaction.
+         */
+        beneficiary_details?: Emptyable<AccountFunding.BeneficiaryDetails>;
+
+        /**
+         * ID of the Account representing the sender in this account funding transaction.
+         */
+        sender_account?: string;
+
+        /**
+         * Inline identity details for the sender of this account funding transaction.
+         */
+        sender_details?: Emptyable<AccountFunding.SenderDetails>;
+      }
+
+      export namespace AccountFunding {
+        export interface BeneficiaryDetails {
+          /**
+           * Address.
+           */
+          address?: AddressParam;
+
+          /**
+           * Date of birth.
+           */
+          date_of_birth?: BeneficiaryDetails.DateOfBirth;
+
+          /**
+           * Email address.
+           */
+          email?: string;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Phone number.
+           */
+          phone?: string;
+        }
+
+        export interface SenderDetails {
+          /**
+           * Address.
+           */
+          address?: AddressParam;
+
+          /**
+           * Date of birth.
+           */
+          date_of_birth?: SenderDetails.DateOfBirth;
+
+          /**
+           * Email address.
+           */
+          email?: string;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Phone number.
+           */
+          phone?: string;
+        }
+
+        export namespace BeneficiaryDetails {
+          export interface DateOfBirth {
+            /**
+             * Day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * Month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * Four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
+        export namespace SenderDetails {
+          export interface DateOfBirth {
+            /**
+             * Day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * Month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * Four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+      }
     }
 
     export namespace Subscription {
@@ -28579,7 +29335,77 @@ export namespace PaymentIntentConfirmParams {
         }
 
         export namespace MoneyServices {
-          export interface AccountFunding {}
+          export interface AccountFunding {
+            /**
+             * Details for a liquid asset (crypto or security) funding transaction.
+             */
+            liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
+
+            /**
+             * Details for a wallet funding transaction.
+             */
+            wallet?: AccountFunding.Wallet;
+          }
+
+          export namespace AccountFunding {
+            export interface LiquidAsset {
+              /**
+               * Details for a cryptocurrency liquid asset funding transaction.
+               */
+              crypto?: LiquidAsset.Crypto;
+
+              /**
+               * Details for a security liquid asset funding transaction.
+               */
+              security?: LiquidAsset.Security;
+            }
+
+            export interface Wallet {
+              /**
+               * Details for a staged purchase.
+               */
+              staged_purchase?: Emptyable<Wallet.StagedPurchase>;
+            }
+
+            export namespace LiquidAsset {
+              export interface Crypto {
+                /**
+                 * The cryptocurrency currency code (e.g. BTC, ETH).
+                 */
+                currency_code?: string;
+              }
+
+              export interface Security {
+                /**
+                 * The security's ticker symbol (e.g. AAPL).
+                 */
+                ticker_symbol?: string;
+              }
+            }
+
+            export namespace Wallet {
+              export interface StagedPurchase {
+                /**
+                 * The merchant where the staged wallet purchase is made.
+                 */
+                merchant?: StagedPurchase.Merchant;
+              }
+
+              export namespace StagedPurchase {
+                export interface Merchant {
+                  /**
+                   * The merchant category code of the merchant.
+                   */
+                  mcc?: string;
+
+                  /**
+                   * The merchant's name.
+                   */
+                  name?: string;
+                }
+              }
+            }
+          }
         }
       }
 
@@ -28663,7 +29489,77 @@ export namespace PaymentIntentConfirmParams {
         }
 
         export namespace MoneyServices {
-          export interface AccountFunding {}
+          export interface AccountFunding {
+            /**
+             * Details for a liquid asset (crypto or security) funding transaction.
+             */
+            liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
+
+            /**
+             * Details for a wallet funding transaction.
+             */
+            wallet?: AccountFunding.Wallet;
+          }
+
+          export namespace AccountFunding {
+            export interface LiquidAsset {
+              /**
+               * Details for a cryptocurrency liquid asset funding transaction.
+               */
+              crypto?: LiquidAsset.Crypto;
+
+              /**
+               * Details for a security liquid asset funding transaction.
+               */
+              security?: LiquidAsset.Security;
+            }
+
+            export interface Wallet {
+              /**
+               * Details for a staged purchase.
+               */
+              staged_purchase?: Emptyable<Wallet.StagedPurchase>;
+            }
+
+            export namespace LiquidAsset {
+              export interface Crypto {
+                /**
+                 * The cryptocurrency currency code (e.g. BTC, ETH).
+                 */
+                currency_code?: string;
+              }
+
+              export interface Security {
+                /**
+                 * The security's ticker symbol (e.g. AAPL).
+                 */
+                ticker_symbol?: string;
+              }
+            }
+
+            export namespace Wallet {
+              export interface StagedPurchase {
+                /**
+                 * The merchant where the staged wallet purchase is made.
+                 */
+                merchant?: StagedPurchase.Merchant;
+              }
+
+              export namespace StagedPurchase {
+                export interface Merchant {
+                  /**
+                   * The merchant category code of the merchant.
+                   */
+                  mcc?: string;
+
+                  /**
+                   * The merchant's name.
+                   */
+                  name?: string;
+                }
+              }
+            }
+          }
         }
       }
 
@@ -30612,6 +31508,11 @@ export namespace PaymentIntentDecrementAuthorizationParams {
        * A unit of measure for the line item, such as gallons, feet, meters, etc.
        */
       unit_of_measure?: string;
+
+      /**
+       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
+       */
+      quantity_precision?: number;
     }
 
     export interface Shipping {
@@ -31018,6 +31919,11 @@ export namespace PaymentIntentIncrementAuthorizationParams {
        * A unit of measure for the line item, such as gallons, feet, meters, etc.
        */
       unit_of_measure?: string;
+
+      /**
+       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
+       */
+      quantity_precision?: number;
     }
 
     export interface Shipping {

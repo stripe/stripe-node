@@ -89,6 +89,11 @@ export namespace Radar {
        * ID for the Radar Session associated with the payment evaluation. A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
        */
       radar_session: string;
+
+      /**
+       * Direct client device attributes such as IP address and user agent. Use this as an alternative to radar_session when a Radar Session isn't available.
+       */
+      data?: ClientDeviceMetadataDetails.Data | null;
     }
 
     export interface CustomerDetails {
@@ -226,6 +231,39 @@ export namespace Radar {
        * A payment evaluation signal with evaluated_at, risk_level, and score fields.
        */
       fraudulent_payment: Signals.FraudulentPayment;
+    }
+
+    export namespace ClientDeviceMetadataDetails {
+      export interface Data {
+        /**
+         * The IP address of the client device.
+         */
+        ip: string;
+
+        /**
+         * Pasted fields from the checkout flow.
+         */
+        pasted_fields: Array<Data.PastedField> | null;
+
+        /**
+         * The referrer of the client device.
+         */
+        referrer: string | null;
+
+        /**
+         * The time on page in milliseconds.
+         */
+        time_on_page_ms: number | null;
+
+        /**
+         * The user agent of the client device.
+         */
+        user_agent: string;
+      }
+
+      export namespace Data {
+        export type PastedField = 'cvc' | 'exp' | 'number' | 'other' | 'zip';
+      }
     }
 
     export namespace Event {
@@ -693,6 +731,44 @@ export namespace Radar {
        * ID for the Radar Session to associate with the payment evaluation. A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
        */
       radar_session: string;
+
+      /**
+       * Direct client device attributes such as IP address and user agent. Use this as an alternative to radar_session when a Radar Session isn't available.
+       */
+      data?: ClientDeviceMetadataDetails.Data;
+    }
+
+    export namespace ClientDeviceMetadataDetails {
+      export interface Data {
+        /**
+         * The IP address of the client device.
+         */
+        ip: string;
+
+        /**
+         * Pasted fields from the checkout flow.
+         */
+        pasted_fields?: Array<Data.PastedField>;
+
+        /**
+         * The referrer of the client device.
+         */
+        referrer?: string;
+
+        /**
+         * The time on page in milliseconds.
+         */
+        time_on_page_ms?: number;
+
+        /**
+         * The user agent of the client device.
+         */
+        user_agent: string;
+      }
+
+      export namespace Data {
+        export type PastedField = 'cvc' | 'exp' | 'number' | 'zip';
+      }
     }
 
     export namespace PaymentDetails {

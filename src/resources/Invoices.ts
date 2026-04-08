@@ -2554,6 +2554,11 @@ export namespace Invoice {
       us_bank_account: PaymentMethodOptions.UsBankAccount | null;
 
       /**
+       * If paying by `bizum`, this sub-hash contains details about the Bizum payment method options to pass to the invoice's PaymentIntent.
+       */
+      bizum?: PaymentMethodOptions.Bizum | null;
+
+      /**
        * If paying by `check_scan`, this sub-hash contains details about the Check Scan payment method options to pass to the invoice's PaymentIntent.
        */
       check_scan?: PaymentMethodOptions.CheckScan | null;
@@ -2568,6 +2573,7 @@ export namespace Invoice {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'bizum'
       | 'boleto'
       | 'card'
       | 'cashapp'
@@ -2677,6 +2683,8 @@ export namespace Invoice {
          */
         verification_method?: UsBankAccount.VerificationMethod;
       }
+
+      export interface Bizum {}
 
       export interface CheckScan {
         check_deposit_address?: Address;
@@ -3437,6 +3445,11 @@ export namespace InvoiceCreateParams {
       us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
 
       /**
+       * If paying by `bizum`, this sub-hash contains details about the Bizum payment method options to pass to the invoice's PaymentIntent.
+       */
+      bizum?: Emptyable<PaymentMethodOptions.Bizum>;
+
+      /**
        * If paying by `check_scan`, this sub-hash contains details about the Check Scan payment method options to pass to the invoice's PaymentIntent.
        */
       check_scan?: Emptyable<PaymentMethodOptions.CheckScan>;
@@ -3451,6 +3464,7 @@ export namespace InvoiceCreateParams {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'bizum'
       | 'boleto'
       | 'card'
       | 'cashapp'
@@ -3580,6 +3594,8 @@ export namespace InvoiceCreateParams {
          */
         verification_method?: UsBankAccount.VerificationMethod;
       }
+
+      export interface Bizum {}
 
       export interface CheckScan {
         check_deposit_address?: AddressParam;
@@ -4365,6 +4381,11 @@ export namespace InvoiceUpdateParams {
       us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
 
       /**
+       * If paying by `bizum`, this sub-hash contains details about the Bizum payment method options to pass to the invoice's PaymentIntent.
+       */
+      bizum?: Emptyable<PaymentMethodOptions.Bizum>;
+
+      /**
        * If paying by `check_scan`, this sub-hash contains details about the Check Scan payment method options to pass to the invoice's PaymentIntent.
        */
       check_scan?: Emptyable<PaymentMethodOptions.CheckScan>;
@@ -4379,6 +4400,7 @@ export namespace InvoiceUpdateParams {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'bizum'
       | 'boleto'
       | 'card'
       | 'cashapp'
@@ -4508,6 +4530,8 @@ export namespace InvoiceUpdateParams {
          */
         verification_method?: UsBankAccount.VerificationMethod;
       }
+
+      export interface Bizum {}
 
       export interface CheckScan {
         check_deposit_address?: AddressParam;
