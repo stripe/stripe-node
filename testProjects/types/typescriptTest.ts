@@ -39,6 +39,9 @@ stripe = new Stripe('sk_test_123', {
   },
 });
 
+// @ts-expect-error - unknown config properties should be rejected
+stripe = new Stripe('sk_test_123', {unknownProperty: true});
+
 (async (): Promise<void> => {
   const params: Stripe.CustomerCreateParams = {
     description: 'test',
@@ -396,3 +399,6 @@ event = stripe.webhooks.constructEvent(
   ['also_signature_but_does_not_work_at_runtime'],
   'secret'
 );
+
+const checkoutSessionParam: Stripe.Checkout.SessionCreateParams = {};
+const v2EventListParams: Stripe.V2.Core.EventListParams = {};

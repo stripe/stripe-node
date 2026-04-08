@@ -18,6 +18,8 @@ export {Location} from './Locations.js';
 export {Registration} from './Registrations.js';
 export {Settings} from './Settings.js';
 export {Transaction} from './Transactions.js';
+export {CalculationLineItem} from './CalculationLineItems.js';
+export {TransactionLineItem} from './TransactionLineItems.js';
 
 export class Tax {
   associations: AssociationResource;
@@ -40,12 +42,22 @@ export class Tax {
 }
 
 export declare namespace Tax {
+  export type AssociationFindParams = TaxNamespace0.AssociationFindParams;
   export {Association};
+  export type CalculationRetrieveParams = TaxNamespace1.CalculationRetrieveParams;
+  export type CalculationCreateParams = TaxNamespace1.CalculationCreateParams;
+  export type CalculationListLineItemsParams = TaxNamespace1.CalculationListLineItemsParams;
   export {Calculation};
   export {Form};
   export {Location};
   export {Registration};
+  export type SettingsRetrieveParams = TaxNamespace3.SettingsRetrieveParams;
+  export type SettingsUpdateParams = TaxNamespace3.SettingsUpdateParams;
   export {Settings};
+  export type TransactionRetrieveParams = TaxNamespace4.TransactionRetrieveParams;
+  export type TransactionCreateFromCalculationParams = TaxNamespace4.TransactionCreateFromCalculationParams;
+  export type TransactionCreateReversalParams = TaxNamespace4.TransactionCreateReversalParams;
+  export type TransactionListLineItemsParams = TaxNamespace4.TransactionListLineItemsParams;
   export {Transaction};
   export {CalculationLineItem};
   export {TransactionLineItem};

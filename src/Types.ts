@@ -214,7 +214,7 @@ export type UserProvidedConfig = {
   host?: string;
   httpAgent?: any;
   timeout?: number;
-  port?: number;
+  port?: string | number;
   maxNetworkRetries?: number;
   httpClient?: HttpClientInterface;
   stripeAccount?: string;

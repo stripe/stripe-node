@@ -69,16 +69,37 @@ export class Issuing {
 }
 
 export declare namespace Issuing {
+  export type AuthorizationListParams = IssuingNamespace0.AuthorizationListParams;
+  export type AuthorizationRetrieveParams = IssuingNamespace0.AuthorizationRetrieveParams;
+  export type AuthorizationUpdateParams = IssuingNamespace0.AuthorizationUpdateParams;
+  export type AuthorizationApproveParams = IssuingNamespace0.AuthorizationApproveParams;
+  export type AuthorizationDeclineParams = IssuingNamespace0.AuthorizationDeclineParams;
   export {Authorization};
+  export type CardListParams = IssuingNamespace1.CardListParams;
+  export type CardCreateParams = IssuingNamespace1.CardCreateParams;
+  export type CardRetrieveParams = IssuingNamespace1.CardRetrieveParams;
+  export type CardUpdateParams = IssuingNamespace1.CardUpdateParams;
   export {Card};
+  export type CardholderListParams = IssuingNamespace2.CardholderListParams;
+  export type CardholderCreateParams = IssuingNamespace2.CardholderCreateParams;
+  export type CardholderRetrieveParams = IssuingNamespace2.CardholderRetrieveParams;
+  export type CardholderUpdateParams = IssuingNamespace2.CardholderUpdateParams;
   export {Cardholder};
   export {CreditUnderwritingRecord};
   export {Dispute};
   export {DisputeSettlementDetail};
   export {FraudLiabilityDebit};
   export {PersonalizationDesign};
+  export type PhysicalBundleListParams = IssuingNamespace5.PhysicalBundleListParams;
+  export type PhysicalBundleRetrieveParams = IssuingNamespace5.PhysicalBundleRetrieveParams;
   export {PhysicalBundle};
+  export type TokenListParams = IssuingNamespace6.TokenListParams;
+  export type TokenRetrieveParams = IssuingNamespace6.TokenRetrieveParams;
+  export type TokenUpdateParams = IssuingNamespace6.TokenUpdateParams;
   export {Token};
+  export type TransactionListParams = IssuingNamespace7.TransactionListParams;
+  export type TransactionRetrieveParams = IssuingNamespace7.TransactionRetrieveParams;
+  export type TransactionUpdateParams = IssuingNamespace7.TransactionUpdateParams;
   export {Transaction};
   export {Settlement};
 }

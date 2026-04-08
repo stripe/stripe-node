@@ -9,6 +9,8 @@ import {Core} from './Core/index.js';
 import {MoneyManagement} from './MoneyManagement/index.js';
 import {TestHelpers} from './TestHelpers/index.js';
 
+export {DeletedObject} from './DeletedObject.js';
+
 export class V2 {
   billing: Billing;
   core: Core;

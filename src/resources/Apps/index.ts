@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../stripe.core.js';
-import {Secret, SecretResource} from './Secrets.js';
+import {Apps as AppsNamespace0, Secret, SecretResource} from './Secrets.js';
 
 export {Secret} from './Secrets.js';
 
@@ -14,5 +14,9 @@ export class Apps {
 }
 
 export declare namespace Apps {
+  export type SecretListParams = AppsNamespace0.SecretListParams;
+  export type SecretCreateParams = AppsNamespace0.SecretCreateParams;
+  export type SecretFindParams = AppsNamespace0.SecretFindParams;
+  export type SecretDeleteWhereParams = AppsNamespace0.SecretDeleteWhereParams;
   export {Secret};
 }

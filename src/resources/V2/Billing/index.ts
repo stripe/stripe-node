@@ -9,10 +9,17 @@ import {
 } from './CollectionSettings.js';
 import {MeterEvent, MeterEventResource} from './MeterEvents.js';
 import {
+  V2 as V2Namespace0,
+  MeterEvent,
+  MeterEventResource,
+} from './MeterEvents.js';
+import {
+  V2 as V2Namespace1,
   MeterEventAdjustment,
   MeterEventAdjustmentResource,
 } from './MeterEventAdjustments.js';
 import {
+  V2 as V2Namespace2,
   MeterEventSession,
   MeterEventSessionResource,
 } from './MeterEventSession.js';
@@ -56,7 +63,9 @@ export declare namespace Billing {
   export {Cadence};
   export {CollectionSetting};
   export {MeterEvent};
+  export type MeterEventAdjustmentCreateParams = V2Namespace1.Billing.MeterEventAdjustmentCreateParams;
   export {MeterEventAdjustment};
+  export type MeterEventSessionCreateParams = V2Namespace2.Billing.MeterEventSessionCreateParams;
   export {MeterEventSession};
   export {Profile};
   export {BillSettingVersion};
