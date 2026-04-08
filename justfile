@@ -76,7 +76,8 @@ format-check: (prettier "--check")
 update-version version:
     echo "{{ version }}" > VERSION
     perl -pi -e 's|"version": "[.\-\d\w]+"|"version": "{{ version }}"|' package.json
-    perl -pi -e "s|Stripe.PACKAGE_VERSION = '[.\-\d\w]+'|Stripe.PACKAGE_VERSION = '{{ version }}'|" src/stripe.core.ts
+    perl -pi -e "s|static PACKAGE_VERSION = '[.\-\d\w]+'|static PACKAGE_VERSION = '{{ version }}'|" src/stripe.core.ts
+    perl -pi -e "s|static PACKAGE_VERSION = '[.\-\d\w]+'|static PACKAGE_VERSION = '{{ version }}'|" src/stripe.esm.node.ts
 
 # remove build artifacts
 clean:
