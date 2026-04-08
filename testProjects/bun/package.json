@@ -7,7 +7,10 @@
     "stripe": "file:../../"
   },
   "scripts": {
-    "runtestproject": "bun run index.ts",
+    "runtestproject": "node_modules/.bin/bun run index.ts",
     "lint": ""
+  },
+  "devDependencies": {
+    "bun": "^1.3.11"
   }
 }
