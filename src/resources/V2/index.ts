@@ -10,6 +10,8 @@ import {MoneyManagement} from './MoneyManagement/index.js';
 import {TestHelpers} from './TestHelpers/index.js';
 
 export {DeletedObject} from './DeletedObject.js';
+export {FinancialAddressCreditSimulation} from './FinancialAddressCreditSimulations.js';
+export {FinancialAddressGeneratedMicrodeposits} from './FinancialAddressGeneratedMicrodeposits.js';
 
 export class V2 {
   billing: Billing;

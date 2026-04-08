@@ -1,10 +1,18 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../../stripe.core.js';
-import {Account, AccountResource} from './Accounts.js';
-import {AccountLink, AccountLinkResource} from './AccountLinks.js';
-import {AccountToken, AccountTokenResource} from './AccountTokens.js';
-import {BatchJob, BatchJobResource} from './BatchJobs.js';
+import {V2 as V2Namespace0, Account, AccountResource} from './Accounts.js';
+import {
+  V2 as V2Namespace1,
+  AccountLink,
+  AccountLinkResource,
+} from './AccountLinks.js';
+import {
+  V2 as V2Namespace2,
+  AccountToken,
+  AccountTokenResource,
+} from './AccountTokens.js';
+import {V2 as V2Namespace3, BatchJob, BatchJobResource} from './BatchJobs.js';
 import {
   EventBase,
   EventNotification,
@@ -14,7 +22,7 @@ import {
   EventResource,
 } from './Events.js';
 import {
-  V2 as V2Namespace4,
+  V2 as V2Namespace5,
   EventDestination,
   EventDestinationResource,
 } from './EventDestinations.js';
@@ -63,16 +71,21 @@ export declare namespace Core {
   export type AccountTokenCreateParams = V2Namespace2.Core.AccountTokenCreateParams;
   export type AccountTokenRetrieveParams = V2Namespace2.Core.AccountTokenRetrieveParams;
   export {AccountToken};
+  export type BatchJobCreateParams = V2Namespace3.Core.BatchJobCreateParams;
+  export type BatchJobRetrieveParams = V2Namespace3.Core.BatchJobRetrieveParams;
+  export type BatchJobCancelParams = V2Namespace3.Core.BatchJobCancelParams;
   export {BatchJob};
+  export type EventListParams = V2EventsNamespace.Core.EventListParams;
+  export type EventRetrieveParams = V2EventsNamespace.Core.EventRetrieveParams;
   export {EventBase, Event, EventNotification, Events};
-  export type EventDestinationListParams = V2Namespace4.Core.EventDestinationListParams;
-  export type EventDestinationCreateParams = V2Namespace4.Core.EventDestinationCreateParams;
-  export type EventDestinationDeleteParams = V2Namespace4.Core.EventDestinationDeleteParams;
-  export type EventDestinationRetrieveParams = V2Namespace4.Core.EventDestinationRetrieveParams;
-  export type EventDestinationUpdateParams = V2Namespace4.Core.EventDestinationUpdateParams;
-  export type EventDestinationDisableParams = V2Namespace4.Core.EventDestinationDisableParams;
-  export type EventDestinationEnableParams = V2Namespace4.Core.EventDestinationEnableParams;
-  export type EventDestinationPingParams = V2Namespace4.Core.EventDestinationPingParams;
+  export type EventDestinationListParams = V2Namespace5.Core.EventDestinationListParams;
+  export type EventDestinationCreateParams = V2Namespace5.Core.EventDestinationCreateParams;
+  export type EventDestinationDeleteParams = V2Namespace5.Core.EventDestinationDeleteParams;
+  export type EventDestinationRetrieveParams = V2Namespace5.Core.EventDestinationRetrieveParams;
+  export type EventDestinationUpdateParams = V2Namespace5.Core.EventDestinationUpdateParams;
+  export type EventDestinationDisableParams = V2Namespace5.Core.EventDestinationDisableParams;
+  export type EventDestinationEnableParams = V2Namespace5.Core.EventDestinationEnableParams;
+  export type EventDestinationPingParams = V2Namespace5.Core.EventDestinationPingParams;
   export {EventDestination};
   export {AccountPersonToken};
   export {AccountPerson};

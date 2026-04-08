@@ -1,12 +1,33 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../stripe.core.js';
-import {Configuration, ConfigurationResource} from './Configurations.js';
-import {ConnectionToken, ConnectionTokenResource} from './ConnectionTokens.js';
-import {Location, LocationResource} from './Locations.js';
-import {OnboardingLink, OnboardingLinkResource} from './OnboardingLinks.js';
-import {Reader, ReaderResource} from './Readers.js';
 import {
+  Terminal as TerminalNamespace0,
+  Configuration,
+  ConfigurationResource,
+} from './Configurations.js';
+import {
+  Terminal as TerminalNamespace1,
+  ConnectionToken,
+  ConnectionTokenResource,
+} from './ConnectionTokens.js';
+import {
+  Terminal as TerminalNamespace2,
+  Location,
+  LocationResource,
+} from './Locations.js';
+import {
+  Terminal as TerminalNamespace3,
+  OnboardingLink,
+  OnboardingLinkResource,
+} from './OnboardingLinks.js';
+import {
+  Terminal as TerminalNamespace4,
+  Reader,
+  ReaderResource,
+} from './Readers.js';
+import {
+  Terminal as TerminalNamespace5,
   ReaderCollectedData,
   ReaderCollectedDatumResource,
 } from './ReaderCollectedData.js';
@@ -67,5 +88,6 @@ export declare namespace Terminal {
   export type ReaderRefundPaymentParams = TerminalNamespace4.ReaderRefundPaymentParams;
   export type ReaderSetReaderDisplayParams = TerminalNamespace4.ReaderSetReaderDisplayParams;
   export {Reader};
+  export type ReaderCollectedDataRetrieveParams = TerminalNamespace5.ReaderCollectedDataRetrieveParams;
   export {ReaderCollectedData};
 }
