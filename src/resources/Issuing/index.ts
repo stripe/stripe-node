@@ -1,17 +1,38 @@
 // File generated from our OpenAPI spec
 
 import {Stripe} from '../../stripe.core.js';
-import {Authorization, AuthorizationResource} from './Authorizations.js';
-import {Card, CardResource} from './Cards.js';
-import {Cardholder, CardholderResource} from './Cardholders.js';
-import {Dispute, DisputeResource} from './Disputes.js';
 import {
+  Issuing as IssuingNamespace0,
+  Authorization,
+  AuthorizationResource,
+} from './Authorizations.js';
+import {Issuing as IssuingNamespace1, Card, CardResource} from './Cards.js';
+import {
+  Issuing as IssuingNamespace2,
+  Cardholder,
+  CardholderResource,
+} from './Cardholders.js';
+import {
+  Issuing as IssuingNamespace3,
+  Dispute,
+  DisputeResource,
+} from './Disputes.js';
+import {
+  Issuing as IssuingNamespace4,
   PersonalizationDesign,
   PersonalizationDesignResource,
 } from './PersonalizationDesigns.js';
-import {PhysicalBundle, PhysicalBundleResource} from './PhysicalBundles.js';
-import {Token, TokenResource} from './Tokens.js';
-import {Transaction, TransactionResource} from './Transactions.js';
+import {
+  Issuing as IssuingNamespace5,
+  PhysicalBundle,
+  PhysicalBundleResource,
+} from './PhysicalBundles.js';
+import {Issuing as IssuingNamespace6, Token, TokenResource} from './Tokens.js';
+import {
+  Issuing as IssuingNamespace7,
+  Transaction,
+  TransactionResource,
+} from './Transactions.js';
 
 export {Authorization} from './Authorizations.js';
 export {Card} from './Cards.js';
@@ -45,12 +66,42 @@ export class Issuing {
 }
 
 export declare namespace Issuing {
+  export type AuthorizationListParams = IssuingNamespace0.AuthorizationListParams;
+  export type AuthorizationRetrieveParams = IssuingNamespace0.AuthorizationRetrieveParams;
+  export type AuthorizationUpdateParams = IssuingNamespace0.AuthorizationUpdateParams;
+  export type AuthorizationApproveParams = IssuingNamespace0.AuthorizationApproveParams;
+  export type AuthorizationDeclineParams = IssuingNamespace0.AuthorizationDeclineParams;
   export {Authorization};
+  export type CardListParams = IssuingNamespace1.CardListParams;
+  export type CardCreateParams = IssuingNamespace1.CardCreateParams;
+  export type CardRetrieveParams = IssuingNamespace1.CardRetrieveParams;
+  export type CardUpdateParams = IssuingNamespace1.CardUpdateParams;
   export {Card};
+  export type CardholderListParams = IssuingNamespace2.CardholderListParams;
+  export type CardholderCreateParams = IssuingNamespace2.CardholderCreateParams;
+  export type CardholderRetrieveParams = IssuingNamespace2.CardholderRetrieveParams;
+  export type CardholderUpdateParams = IssuingNamespace2.CardholderUpdateParams;
   export {Cardholder};
+  export type DisputeListParams = IssuingNamespace3.DisputeListParams;
+  export type DisputeCreateParams = IssuingNamespace3.DisputeCreateParams;
+  export type DisputeRetrieveParams = IssuingNamespace3.DisputeRetrieveParams;
+  export type DisputeUpdateParams = IssuingNamespace3.DisputeUpdateParams;
+  export type DisputeSubmitParams = IssuingNamespace3.DisputeSubmitParams;
   export {Dispute};
+  export type PersonalizationDesignListParams = IssuingNamespace4.PersonalizationDesignListParams;
+  export type PersonalizationDesignCreateParams = IssuingNamespace4.PersonalizationDesignCreateParams;
+  export type PersonalizationDesignRetrieveParams = IssuingNamespace4.PersonalizationDesignRetrieveParams;
+  export type PersonalizationDesignUpdateParams = IssuingNamespace4.PersonalizationDesignUpdateParams;
   export {PersonalizationDesign};
+  export type PhysicalBundleListParams = IssuingNamespace5.PhysicalBundleListParams;
+  export type PhysicalBundleRetrieveParams = IssuingNamespace5.PhysicalBundleRetrieveParams;
   export {PhysicalBundle};
+  export type TokenListParams = IssuingNamespace6.TokenListParams;
+  export type TokenRetrieveParams = IssuingNamespace6.TokenRetrieveParams;
+  export type TokenUpdateParams = IssuingNamespace6.TokenUpdateParams;
   export {Token};
+  export type TransactionListParams = IssuingNamespace7.TransactionListParams;
+  export type TransactionRetrieveParams = IssuingNamespace7.TransactionRetrieveParams;
+  export type TransactionUpdateParams = IssuingNamespace7.TransactionUpdateParams;
   export {Transaction};
 }

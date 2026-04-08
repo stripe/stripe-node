@@ -373,3 +373,6 @@ event = stripe.webhooks.constructEvent(
   ['also_signature_but_does_not_work_at_runtime'],
   'secret'
 );
+
+const checkoutSessionParam: Stripe.Checkout.SessionCreateParams = {};
+const v2EventListParams: Stripe.V2.Core.EventListParams = {};
