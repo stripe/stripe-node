@@ -57,6 +57,18 @@ export namespace BalanceSettings {
     payouts: Payments.Payouts | null;
 
     settlement_timing: Payments.SettlementTiming;
+
+    /**
+     * The default settlement currency for the account.
+     */
+    default_settlement_currency?: string | null;
+
+    /**
+     * A hash of settlement currencies and their states. Each key is an ISO 4217 currency code, and the value is one of `enabled`, `disabled`, or `restricted_by_application`.
+     */
+    settlement_currencies?: {
+      [key: string]: Payments.SettlementCurrencies;
+    } | null;
   }
 
   export namespace Payments {
@@ -95,6 +107,11 @@ export namespace BalanceSettings {
        */
       delay_days_override?: number;
     }
+
+    export type SettlementCurrencies =
+      | 'disabled'
+      | 'enabled'
+      | 'restricted_by_application';
 
     export namespace Payouts {
       export interface Schedule {
