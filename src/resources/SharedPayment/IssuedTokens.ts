@@ -38,6 +38,11 @@ export interface IssuedToken {
   livemode: boolean;
 
   /**
+   * If present, describes the action required to make this `SharedPaymentIssuedToken` usable for payments. Present when the token is in `requires_action` state.
+   */
+  next_action: SharedPayment.IssuedToken.NextAction | null;
+
+  /**
    * ID of an existing PaymentMethod.
    */
   payment_method: string | null;
@@ -70,6 +75,11 @@ export interface IssuedToken {
   } | null;
 
   /**
+   * Status of this SharedPaymentIssuedToken, one of `active`, `requires_action`, or `deactivated`.
+   */
+  status: SharedPayment.IssuedToken.Status | null;
+
+  /**
    * Usage details of the SharedPaymentIssuedToken
    */
   usage_details: SharedPayment.IssuedToken.UsageDetails | null;
@@ -86,6 +96,18 @@ export namespace SharedPayment {
       | 'expired'
       | 'resolved'
       | 'revoked';
+
+    export interface NextAction {
+      /**
+       * Specifies the type of next action required. Determines which child attribute contains action details.
+       */
+      type: 'use_stripe_sdk';
+
+      /**
+       * Contains details for handling the next action using Stripe.js, iOS, or Android SDKs. Present when `next_action.type` is `use_stripe_sdk`.
+       */
+      use_stripe_sdk: NextAction.UseStripeSdk | null;
+    }
 
     export interface RiskDetails {
       /**
@@ -110,6 +132,8 @@ export namespace SharedPayment {
        */
       network_id?: string;
     }
+
+    export type Status = 'active' | 'deactivated' | 'requires_action';
 
     export interface UsageDetails {
       /**
@@ -138,6 +162,15 @@ export namespace SharedPayment {
        * The recurring interval at which the shared payment token's amount usage restrictions reset.
        */
       recurring_interval?: UsageLimits.RecurringInterval | null;
+    }
+
+    export namespace NextAction {
+      export interface UseStripeSdk {
+        /**
+         * A base64-encoded string used by Stripe.js and the iOS and Android client SDKs to handle the next action. Its content is subject to change.
+         */
+        value: string;
+      }
     }
 
     export namespace RiskDetails {

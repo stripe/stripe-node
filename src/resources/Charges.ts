@@ -1123,6 +1123,8 @@ export namespace Charge {
        * If this Card is part of a card wallet, this contains the details of the card wallet.
        */
       wallet: Card.Wallet | null;
+
+      account_funding?: Card.AccountFunding;
     }
 
     export interface CardPresent {
@@ -2326,6 +2328,17 @@ export namespace Charge {
         type: Wallet.Type;
 
         visa_checkout?: Wallet.VisaCheckout;
+      }
+
+      export interface AccountFunding {
+        /**
+         * The transaction type of the card transaction. One of `account_funding` or `purchase`.
+         */
+        processed_transaction_type?: AccountFunding.ProcessedTransactionType;
+      }
+
+      export namespace AccountFunding {
+        export type ProcessedTransactionType = 'account_funding' | 'purchase';
       }
 
       export namespace DecrementalAuthorization {

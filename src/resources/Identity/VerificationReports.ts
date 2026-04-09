@@ -206,6 +206,11 @@ export namespace Identity {
        * Status of this `email` check.
        */
       status: Email.Status;
+
+      /**
+       * Additional email verification details
+       */
+      details?: Email.Details;
     }
 
     export interface IdNumber {
@@ -389,6 +394,23 @@ export namespace Identity {
       }
 
       export type Status = 'unverified' | 'verified';
+
+      export interface Details {
+        /**
+         * Number of days from the time when the email domain was first observed to the time of verification.
+         */
+        days_since_domain_creation?: number;
+
+        /**
+         * Number of days from the time when the email address was first observed to the time of verification.
+         */
+        days_since_ownership_started?: number;
+
+        /**
+         * Two-letter ISO 3166-1 alpha-2 country code of the email domain's country.
+         */
+        domain_country?: string;
+      }
 
       export namespace Error {
         export type Code =

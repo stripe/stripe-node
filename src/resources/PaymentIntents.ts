@@ -953,6 +953,8 @@ export namespace PaymentIntent {
      * Fleet data for this PaymentIntent.
      */
     fleet_data?: Array<PaymentDetails.FleetDatum>;
+
+    money_services?: PaymentDetails.MoneyServices;
   }
 
   export interface PaymentMethodConfigurationDetails {
@@ -2660,6 +2662,15 @@ export namespace PaymentIntent {
       vat?: FleetDatum.Vat;
     }
 
+    export interface MoneyServices {
+      account_funding?: MoneyServices.AccountFunding;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: 'account_funding';
+    }
+
     export namespace Benefit {
       export interface FrMealVoucher {
         /**
@@ -3652,6 +3663,170 @@ export namespace PaymentIntent {
              * Type of tax applied.
              */
             type?: string;
+          }
+        }
+      }
+    }
+
+    export namespace MoneyServices {
+      export interface AccountFunding {
+        /**
+         * ID of the Account representing the beneficiary in this account funding transaction.
+         */
+        beneficiary_account?: string;
+
+        beneficiary_details?: AccountFunding.BeneficiaryDetails;
+
+        /**
+         * ID of the Account representing the sender in this account funding transaction.
+         */
+        sender_account?: string;
+
+        sender_details?: AccountFunding.SenderDetails;
+      }
+
+      export namespace AccountFunding {
+        export interface BeneficiaryDetails {
+          address?: BeneficiaryDetails.Address;
+
+          date_of_birth?: BeneficiaryDetails.DateOfBirth;
+
+          /**
+           * Email address.
+           */
+          email?: string;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Phone number.
+           */
+          phone?: string;
+        }
+
+        export interface SenderDetails {
+          address?: SenderDetails.Address;
+
+          date_of_birth?: SenderDetails.DateOfBirth;
+
+          /**
+           * Email address.
+           */
+          email?: string;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Phone number.
+           */
+          phone?: string;
+        }
+
+        export namespace BeneficiaryDetails {
+          export interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+          }
+
+          export interface DateOfBirth {
+            /**
+             * Day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * Month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * Four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
+        export namespace SenderDetails {
+          export interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+          }
+
+          export interface DateOfBirth {
+            /**
+             * Day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * Month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * Four-digit year of birth.
+             */
+            year: number;
           }
         }
       }

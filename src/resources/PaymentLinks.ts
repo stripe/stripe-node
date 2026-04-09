@@ -1558,6 +1558,11 @@ export interface PaymentLinkCreateParams {
   application_fee_percent?: number;
 
   /**
+   * Configuration for automatic surcharge calculation.
+   */
+  automatic_surcharge?: PaymentLinkCreateParams.AutomaticSurcharge;
+
+  /**
    * Configuration for automatic tax collection.
    */
   automatic_tax?: PaymentLinkCreateParams.AutomaticTax;
@@ -1733,6 +1738,23 @@ export namespace PaymentLinkCreateParams {
      * The specified behavior after the purchase is complete. Either `redirect` or `hosted_confirmation`.
      */
     type: AfterCompletion.Type;
+  }
+
+  export interface AutomaticSurcharge {
+    /**
+     * Determines which amount is used as the basis for calculating the surcharge.
+     */
+    calculation_basis?: AutomaticSurcharge.CalculationBasis;
+
+    /**
+     * Set to `true` to calculate surcharge automatically using the customer's card details and location.
+     */
+    enabled: boolean;
+
+    /**
+     * Specifies whether the surcharge is considered inclusive or exclusive of taxes.
+     */
+    tax_behavior?: AutomaticSurcharge.TaxBehavior;
   }
 
   export interface AutomaticTax {
@@ -2081,6 +2103,12 @@ export namespace PaymentLinkCreateParams {
     }
 
     export type Type = 'hosted_confirmation' | 'redirect';
+  }
+
+  export namespace AutomaticSurcharge {
+    export type CalculationBasis = 'total_after_tax' | 'total_before_tax';
+
+    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
   }
 
   export namespace AutomaticTax {

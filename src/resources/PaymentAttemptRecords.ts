@@ -61,6 +61,21 @@ export class PaymentAttemptRecordResource extends StripeResource {
     ) as any;
   }
   /**
+   * Report that the specified Payment Attempt Record was authorized.
+   */
+  reportAuthorized(
+    id: string,
+    params?: PaymentAttemptRecordReportAuthorizedParams,
+    options?: RequestOptions
+  ): Promise<Response<PaymentAttemptRecord>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_attempt_records/${id}/report_authorized`,
+      params,
+      options
+    ) as any;
+  }
+  /**
    * Report that the specified Payment Attempt Record was canceled.
    */
   reportCanceled(
@@ -2741,6 +2756,49 @@ export interface PaymentAttemptRecordReportAuthenticatedParams {
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
+}
+export interface PaymentAttemptRecordReportAuthorizedParams {
+  /**
+   * When the reported payment was authorized. Measured in seconds since the Unix epoch.
+   */
+  authorized_at?: number;
+
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+
+  /**
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   */
+  metadata?: Emptyable<MetadataParam>;
+
+  /**
+   * Processor information for this payment.
+   */
+  processor_details?: PaymentAttemptRecordReportAuthorizedParams.ProcessorDetails;
+}
+export namespace PaymentAttemptRecordReportAuthorizedParams {
+  export interface ProcessorDetails {
+    /**
+     * Information about the custom processor used to make this payment.
+     */
+    custom?: ProcessorDetails.Custom;
+
+    /**
+     * The type of the processor details. An additional hash is included on processor_details with a name matching this value. It contains additional information specific to the processor.
+     */
+    type: 'custom';
+  }
+
+  export namespace ProcessorDetails {
+    export interface Custom {
+      /**
+       * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
+       */
+      payment_reference: string;
+    }
+  }
 }
 export interface PaymentAttemptRecordReportCanceledParams {
   /**

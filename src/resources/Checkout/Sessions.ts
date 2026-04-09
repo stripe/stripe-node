@@ -782,6 +782,8 @@ export interface Session {
    */
   approval_method?: Checkout.Session.ApprovalMethod | null;
 
+  automatic_surcharge?: Checkout.Session.AutomaticSurcharge;
+
   automatic_tax: Checkout.Session.AutomaticTax;
 
   /**
@@ -1069,6 +1071,8 @@ export interface Session {
    */
   success_url: string | null;
 
+  surcharge_cost?: Checkout.Session.SurchargeCost;
+
   tax_id_collection?: Checkout.Session.TaxIdCollection;
 
   /**
@@ -1109,6 +1113,33 @@ export namespace Checkout {
     }
 
     export type ApprovalMethod = 'auto' | 'manual';
+
+    export interface AutomaticSurcharge {
+      /**
+       * Determines which amount is used as the basis for calculating the surcharge.
+       */
+      calculation_basis: AutomaticSurcharge.CalculationBasis | null;
+
+      /**
+       * Indicates whether automatic surcharge is enabled for the session.
+       */
+      enabled: boolean;
+
+      /**
+       * The surcharge provider used for this session.
+       */
+      provider?: AutomaticSurcharge.Provider;
+
+      /**
+       * The status of the most recent surcharge calculation for this session.
+       */
+      status?: AutomaticSurcharge.Status;
+
+      /**
+       * Specifies whether the surcharge is considered inclusive or exclusive of taxes.
+       */
+      tax_behavior: AutomaticSurcharge.TaxBehavior | null;
+    }
 
     export interface AutomaticTax {
       /**
@@ -1698,6 +1729,23 @@ export namespace Checkout {
 
     export type SubmitType = 'auto' | 'book' | 'donate' | 'pay' | 'subscribe';
 
+    export interface SurchargeCost {
+      /**
+       * Total surcharge cost before taxes are applied.
+       */
+      amount_subtotal: number;
+
+      /**
+       * Total tax amount applied due to surcharging. If no tax was applied, defaults to 0.
+       */
+      amount_tax: number;
+
+      /**
+       * Total surcharge cost after taxes are applied.
+       */
+      amount_total: number;
+    }
+
     export interface TaxIdCollection {
       /**
        * Indicates whether tax ID collection is enabled for the session
@@ -1727,6 +1775,11 @@ export namespace Checkout {
       amount_tax: number;
 
       breakdown?: TotalDetails.Breakdown;
+
+      /**
+       * The surcharge amount that was applied to the Checkout Session.
+       */
+      amount_surcharge?: number;
     }
 
     export type UiMode = 'elements' | 'embedded_page' | 'form' | 'hosted_page';
@@ -1759,6 +1812,16 @@ export namespace Checkout {
          */
         url: string | null;
       }
+    }
+
+    export namespace AutomaticSurcharge {
+      export type CalculationBasis = 'total_after_tax' | 'total_before_tax';
+
+      export type Provider = 'interpayments' | 'yeeld';
+
+      export type Status = 'complete' | 'failed' | 'requires_input';
+
+      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
     }
 
     export namespace AutomaticTax {
@@ -4203,6 +4266,11 @@ export namespace Checkout {
     approval_method?: SessionCreateParams.ApprovalMethod;
 
     /**
+     * Settings for automatic surcharge calculation for this session.
+     */
+    automatic_surcharge?: SessionCreateParams.AutomaticSurcharge;
+
+    /**
      * Settings for automatic tax lookup for this session and resulting payments, invoices, and subscriptions.
      */
     automatic_tax?: SessionCreateParams.AutomaticTax;
@@ -4535,6 +4603,23 @@ export namespace Checkout {
     }
 
     export type ApprovalMethod = 'auto' | 'manual';
+
+    export interface AutomaticSurcharge {
+      /**
+       * Determines which amount is used as the basis for calculating the surcharge.
+       */
+      calculation_basis?: AutomaticSurcharge.CalculationBasis;
+
+      /**
+       * Set to `true` to calculate surcharge automatically using the customer's card details and location.
+       */
+      enabled: boolean;
+
+      /**
+       * Specifies whether the surcharge is considered inclusive or exclusive of taxes.
+       */
+      tax_behavior?: AutomaticSurcharge.TaxBehavior;
+    }
 
     export interface AutomaticTax {
       /**
@@ -5507,6 +5592,12 @@ export namespace Checkout {
          */
         enabled: boolean;
       }
+    }
+
+    export namespace AutomaticSurcharge {
+      export type CalculationBasis = 'total_after_tax' | 'total_before_tax';
+
+      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
     }
 
     export namespace AutomaticTax {
