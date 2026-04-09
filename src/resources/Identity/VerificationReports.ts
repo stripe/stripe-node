@@ -300,7 +300,7 @@ export namespace Identity {
       status: Selfie.Status;
     }
 
-    export type Type = 'document' | 'id_number' | 'verification_flow';
+    export type Type = 'document' | 'email' | 'id_number' | 'verification_flow';
 
     export namespace Document {
       export interface Dob {
@@ -580,6 +580,6 @@ export namespace Identity {
   }
 
   export namespace VerificationReportListParams {
-    export type Type = 'document' | 'id_number';
+    export type Type = 'document' | 'email' | 'id_number';
   }
 }

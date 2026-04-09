@@ -298,7 +298,7 @@ export namespace Identity {
       | 'requires_input'
       | 'verified';
 
-    export type Type = 'document' | 'id_number' | 'verification_flow';
+    export type Type = 'document' | 'email' | 'id_number' | 'verification_flow';
 
     export interface VerifiedOutputs {
       /**
@@ -560,7 +560,7 @@ export namespace Identity {
       person: string;
     }
 
-    export type Type = 'document' | 'id_number';
+    export type Type = 'document' | 'email' | 'id_number';
 
     export namespace Options {
       export interface Document {
@@ -647,7 +647,7 @@ export namespace Identity {
       phone?: string;
     }
 
-    export type Type = 'document' | 'id_number';
+    export type Type = 'document' | 'email' | 'id_number';
 
     export namespace Options {
       export interface Document {
