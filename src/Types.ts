@@ -87,7 +87,7 @@ export type RequestEvent = {
   idempotency_key?: string;
   method?: string;
   path?: string;
-  body?: Record<string, any>;
+  body?: RequestData;
   request_start_time: number;
   usage?: Array<string>;
 };

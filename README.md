@@ -382,7 +382,7 @@ stripeClient.off('request', onRequest);
   idempotency_key: 'abc123',                  // Only present if provided
   method: 'POST',
   path: '/v1/customers',
-  status: 402,
+  status: 200,
   request_id: 'req_Ghc9r26ts73DRf',
   body: {id: 'cus_123', object: 'customer'},  // Only present if emitEventBodies is true
   elapsed: 445,                               // Elapsed time in milliseconds

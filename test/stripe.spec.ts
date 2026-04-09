@@ -1229,7 +1229,7 @@ describe('Stripe Module', function() {
   describe('emitEventBodies', () => {
     it('should include request body in request event when enabled', (done) => {
       getTestServerStripe(
-        {emitEventBodies: true} as any,
+        {emitEventBodies: true},
         (req, res) => {
           res.writeHeader(200);
           res.write(JSON.stringify({id: 'cus_123', object: 'customer'}));
@@ -1239,21 +1239,20 @@ describe('Stripe Module', function() {
         (err, stripe, closeServer) => {
           if (err) return done(err);
 
+          let requestEventFired = false;
           stripe.on('request', (event) => {
-            try {
-              expect(event.body).to.be.an('object');
-              expect(event.body).to.have.property(
-                'description',
-                'test customer'
-              );
-            } catch (e) {
-              done(e);
-            }
+            requestEventFired = true;
+            expect(event.body).to.be.an('object');
+            expect(event.body).to.have.property(
+              'description',
+              'test customer'
+            );
           });
 
           stripe.customers
             .create({description: 'test customer'})
             .then(() => {
+              expect(requestEventFired).to.equal(true);
               closeServer();
               done();
             })
@@ -1265,7 +1264,7 @@ describe('Stripe Module', function() {
     it('should include response body in response event when enabled', (done) => {
       const responseBody = {id: 'cus_123', object: 'customer'};
       getTestServerStripe(
-        {emitEventBodies: true} as any,
+        {emitEventBodies: true},
         (req, res) => {
           res.writeHeader(200);
           res.write(JSON.stringify(responseBody));
@@ -1275,19 +1274,18 @@ describe('Stripe Module', function() {
         (err, stripe, closeServer) => {
           if (err) return done(err);
 
+          let responseEventFired = false;
           stripe.on('response', (event) => {
-            try {
-              expect(event.body).to.be.an('object');
-              expect(event.body).to.have.property('id', 'cus_123');
-              expect(event.body).to.have.property('object', 'customer');
-            } catch (e) {
-              done(e);
-            }
+            responseEventFired = true;
+            expect(event.body).to.be.an('object');
+            expect(event.body).to.have.property('id', 'cus_123');
+            expect(event.body).to.have.property('object', 'customer');
           });
 
           stripe.customers
             .create({description: 'test customer'})
             .then(() => {
+              expect(responseEventFired).to.equal(true);
               closeServer();
               done();
             })
@@ -1308,25 +1306,24 @@ describe('Stripe Module', function() {
         (err, stripe, closeServer) => {
           if (err) return done(err);
 
+          let requestEventFired = false;
+          let responseEventFired = false;
+
           stripe.on('request', (event) => {
-            try {
-              expect(event).to.not.have.property('body');
-            } catch (e) {
-              done(e);
-            }
+            requestEventFired = true;
+            expect(event).to.not.have.property('body');
           });
 
           stripe.on('response', (event) => {
-            try {
-              expect(event).to.not.have.property('body');
-            } catch (e) {
-              done(e);
-            }
+            responseEventFired = true;
+            expect(event).to.not.have.property('body');
           });
 
           stripe.customers
             .create({description: 'test customer'})
             .then(() => {
+              expect(requestEventFired).to.equal(true);
+              expect(responseEventFired).to.equal(true);
               closeServer();
               done();
             })
@@ -1337,7 +1334,7 @@ describe('Stripe Module', function() {
 
     it('should still emit response event on API errors', (done) => {
       getTestServerStripe(
-        {emitEventBodies: true} as any,
+        {emitEventBodies: true},
         (req, res) => {
           res.writeHeader(400);
           res.write(

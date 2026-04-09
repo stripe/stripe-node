@@ -166,6 +166,10 @@ export class RequestSender {
         .toJSON()
         .then(
           (jsonResponse) => {
+            if (this._stripe.getEmitEventBodiesEnabled()) {
+              responseEvent.body = jsonResponse;
+            }
+
             if (jsonResponse.error) {
               const isOAuth = typeof jsonResponse.error === 'string';
 
@@ -205,9 +209,6 @@ export class RequestSender {
         )
         .then(
           (jsonResponse) => {
-            if (this._stripe.getEmitEventBodiesEnabled()) {
-              responseEvent.body = jsonResponse;
-            }
             this._stripe._emitter.emit('response', responseEvent);
 
             this._recordRequestMetrics(requestId, responseEvent.elapsed, usage);
