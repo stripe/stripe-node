@@ -1243,10 +1243,7 @@ describe('Stripe Module', function() {
           stripe.on('request', (event) => {
             requestEventFired = true;
             expect(event.body).to.be.an('object');
-            expect(event.body).to.have.property(
-              'description',
-              'test customer'
-            );
+            expect(event.body).to.have.property('description', 'test customer');
           });
 
           stripe.customers
