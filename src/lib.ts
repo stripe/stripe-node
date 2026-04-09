@@ -90,6 +90,13 @@ export interface StripeConfig {
   telemetry?: boolean;
 
   /**
+   * Pass `emitEventBodies: true` to include request and response bodies
+   * in the `request` and `response` events emitted by the Stripe client.
+   * Bodies may contain sensitive data. Defaults to false.
+   */
+  emitEventBodies?: boolean;
+
+  /**
    * For plugin authors to identify their code.
    * @docs https://stripe.com/docs/building-plugins?lang=node#setappinfo
    */

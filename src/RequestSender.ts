@@ -161,7 +161,6 @@ export class RequestSender {
         statusCode,
         headers
       );
-      this._stripe._emitter.emit('response', responseEvent);
 
       res
         .toJSON()
@@ -206,6 +205,11 @@ export class RequestSender {
         )
         .then(
           (jsonResponse) => {
+            if (this._stripe.getEmitEventBodiesEnabled()) {
+              responseEvent.body = jsonResponse;
+            }
+            this._stripe._emitter.emit('response', responseEvent);
+
             this._recordRequestMetrics(requestId, responseEvent.elapsed, usage);
 
             // Expose raw response object.
@@ -219,7 +223,10 @@ export class RequestSender {
 
             callback(null, jsonResponse);
           },
-          (e) => callback(e, null)
+          (e) => {
+            this._stripe._emitter.emit('response', responseEvent);
+            callback(e, null);
+          }
         );
     };
   }
@@ -631,6 +638,9 @@ export class RequestSender {
             ),
             method,
             path,
+            body: this._stripe.getEmitEventBodiesEnabled()
+              ? data ?? undefined
+              : undefined,
             request_start_time: requestStartTime,
           });
 
