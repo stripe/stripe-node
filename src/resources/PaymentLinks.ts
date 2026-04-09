@@ -518,6 +518,8 @@ export interface PaymentLink {
    */
   application_fee_percent: number | null;
 
+  automatic_surcharge?: PaymentLink.AutomaticSurcharge;
+
   automatic_tax: PaymentLink.AutomaticTax;
 
   /**
@@ -653,6 +655,28 @@ export namespace PaymentLink {
      * The specified behavior after the purchase is complete.
      */
     type: AfterCompletion.Type;
+  }
+
+  export interface AutomaticSurcharge {
+    /**
+     * Determines which amount serves as the basis for calculating the surcharge.
+     */
+    calculation_basis: AutomaticSurcharge.CalculationBasis | null;
+
+    /**
+     * Indicates whether automatic surcharge is enabled for the payment link.
+     */
+    enabled: boolean;
+
+    /**
+     * The surcharge provider used for this payment link.
+     */
+    provider?: AutomaticSurcharge.Provider;
+
+    /**
+     * Specifies whether the surcharge is considered inclusive or exclusive of taxes.
+     */
+    tax_behavior: AutomaticSurcharge.TaxBehavior | null;
   }
 
   export interface AutomaticTax {
@@ -947,6 +971,14 @@ export namespace PaymentLink {
     }
 
     export type Type = 'hosted_confirmation' | 'redirect';
+  }
+
+  export namespace AutomaticSurcharge {
+    export type CalculationBasis = 'total_after_tax' | 'total_before_tax';
+
+    export type Provider = 'interpayments' | 'yeeld';
+
+    export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
   }
 
   export namespace AutomaticTax {
@@ -1742,7 +1774,7 @@ export namespace PaymentLinkCreateParams {
 
   export interface AutomaticSurcharge {
     /**
-     * Determines which amount is used as the basis for calculating the surcharge.
+     * Determines which amount serves as the basis for calculating the surcharge.
      */
     calculation_basis?: AutomaticSurcharge.CalculationBasis;
 

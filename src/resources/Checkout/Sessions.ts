@@ -1116,7 +1116,7 @@ export namespace Checkout {
 
     export interface AutomaticSurcharge {
       /**
-       * Determines which amount is used as the basis for calculating the surcharge.
+       * Determines which amount serves as the basis for calculating the surcharge.
        */
       calculation_basis: AutomaticSurcharge.CalculationBasis | null;
 
@@ -4606,7 +4606,7 @@ export namespace Checkout {
 
     export interface AutomaticSurcharge {
       /**
-       * Determines which amount is used as the basis for calculating the surcharge.
+       * Determines which amount serves as the basis for calculating the surcharge.
        */
       calculation_basis?: AutomaticSurcharge.CalculationBasis;
 
