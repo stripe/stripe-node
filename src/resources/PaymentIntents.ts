@@ -5836,11 +5836,6 @@ export interface PaymentIntentCreateParams {
   setup_future_usage?: PaymentIntentCreateParams.SetupFutureUsage;
 
   /**
-   * ID of the SharedPaymentToken used to confirm this PaymentIntent.
-   */
-  shared_payment_granted_token?: string;
-
-  /**
    * Shipping information for this PaymentIntent.
    */
   shipping?: PaymentIntentCreateParams.Shipping;
@@ -23974,11 +23969,6 @@ export interface PaymentIntentConfirmParams {
    * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
    */
   setup_future_usage?: Emptyable<PaymentIntentConfirmParams.SetupFutureUsage>;
-
-  /**
-   * ID of the SharedPaymentToken used to confirm this PaymentIntent.
-   */
-  shared_payment_granted_token?: string;
 
   /**
    * Shipping information for this PaymentIntent.
