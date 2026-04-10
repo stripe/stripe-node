@@ -478,6 +478,11 @@ export namespace Identity {
     client_reference_id?: string;
 
     /**
+     * Confirm and submit the provided details for verification.
+     */
+    confirm?: boolean;
+
+    /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
@@ -601,6 +606,11 @@ export namespace Identity {
 }
 export namespace Identity {
   export interface VerificationSessionUpdateParams {
+    /**
+     * Confirm and submit the provided details for verification.
+     */
+    confirm?: boolean;
+
     /**
      * Specifies which fields in the response should be expanded.
      */

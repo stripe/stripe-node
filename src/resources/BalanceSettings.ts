@@ -179,6 +179,13 @@ export namespace BalanceSettingsUpdateParams {
      * Settings related to the account's balance settlement timing.
      */
     settlement_timing?: Payments.SettlementTiming;
+
+    /**
+     * A hash of settlement currencies to update. Each key is an ISO 4217 currency code, and the value is either `enabled` or `disabled`.
+     */
+    settlement_currencies?: {
+      [key: string]: Payments.SettlementCurrencies;
+    };
   }
 
   export namespace Payments {
@@ -207,6 +214,8 @@ export namespace BalanceSettingsUpdateParams {
        */
       delay_days_override?: Emptyable<number>;
     }
+
+    export type SettlementCurrencies = 'disabled' | 'enabled';
 
     export namespace Payouts {
       export interface Schedule {
