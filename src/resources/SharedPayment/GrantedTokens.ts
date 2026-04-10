@@ -125,7 +125,7 @@ export namespace SharedPayment {
       /**
        * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
        */
-      billing_details?: PaymentMethodDetails.BillingDetails | null;
+      billing_details: PaymentMethodDetails.BillingDetails | null;
 
       blik?: PaymentMethodDetails.Blik;
 
