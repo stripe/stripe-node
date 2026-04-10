@@ -200,6 +200,12 @@ export class RequestSender {
             return jsonResponse;
           },
           (e: Error) => {
+            if (
+              this._stripe.getEmitEventBodiesEnabled() &&
+              (e as any).rawBody
+            ) {
+              responseEvent.body = (e as any).rawBody;
+            }
             throw new StripeAPIError({
               message: 'Invalid JSON received from the Stripe API',
               exception: e,

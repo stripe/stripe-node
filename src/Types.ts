@@ -123,7 +123,7 @@ export type ResponseEvent = {
   path?: string;
   status?: number;
   request_id?: string;
-  body?: Record<string, any>;
+  body?: Record<string, any> | string;
   elapsed: number;
   request_start_time?: number;
   request_end_time?: number;
