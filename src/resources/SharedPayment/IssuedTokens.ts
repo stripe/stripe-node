@@ -126,11 +126,6 @@ export namespace SharedPayment {
        * The unique and logical string that identifies the seller platform that this SharedToken is being created for.
        */
       network_business_profile: string;
-
-      /**
-       * The unique and logical string that identifies the seller platform that this SharedToken is being created for.
-       */
-      network_id?: string;
     }
 
     export type Status = 'active' | 'deactivated' | 'requires_action';

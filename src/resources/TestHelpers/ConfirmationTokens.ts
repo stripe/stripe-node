@@ -377,6 +377,11 @@ export namespace TestHelpers {
        * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
        */
       zip?: PaymentMethodData.Zip;
+
+      /**
+       * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
+       */
+      shared_payment_granted_token?: string;
     }
 
     export interface PaymentMethodOptions {
