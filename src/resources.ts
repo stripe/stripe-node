@@ -155,6 +155,8 @@ import {ValueListItemResource as RadarValueListItems} from './resources/Radar/Va
 import {ValueListResource as RadarValueLists} from './resources/Radar/ValueLists.js';
 import {VerificationReportResource as IdentityVerificationReports} from './resources/Identity/VerificationReports.js';
 import {VerificationSessionResource as IdentityVerificationSessions} from './resources/Identity/VerificationSessions.js';
+import {WorkflowRunResource as V2CoreWorkflowRuns} from './resources/V2/Core/WorkflowRuns.js';
+import {WorkflowResource as V2CoreWorkflows} from './resources/V2/Core/Workflows.js';
 export {AccountResource as Account} from './resources/Accounts.js';
 export {AccountResource as Accounts} from './resources/Accounts.js';
 export {AccountLinkResource as AccountLinks} from './resources/AccountLinks.js';
@@ -409,6 +411,8 @@ export const V2 = resourceNamespace('v2', {
     ConnectionSessions: V2CoreConnectionSessions,
     EventDestinations: V2CoreEventDestinations,
     Events: V2CoreEvents,
+    WorkflowRuns: V2CoreWorkflowRuns,
+    Workflows: V2CoreWorkflows,
     Vault: resourceNamespace('vault', {
       GbBankAccounts: V2CoreVaultGbBankAccounts,
       UsBankAccounts: V2CoreVaultUsBankAccounts,

@@ -6282,6 +6282,88 @@ describe('Generated tests', function() {
     expect(usBankAccount).not.to.be.null;
   });
 
+  it('test_v2_core_workflow_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/workflows?status[0]=draft',
+        response:
+          '{"data":[{"created":"1970-01-12T21:42:34.472Z","description":"description","id":"obj_123","livemode":true,"object":"v2.core.workflow","status":"draft","triggers":[{"type":"event_trigger"}]}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const workflows = await stripe.v2.core.workflows.list({
+      status: ['draft'],
+    });
+    expect(workflows).not.to.be.null;
+  });
+
+  it('test_v2_core_workflow_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/workflows/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","description":"description","id":"obj_123","livemode":true,"object":"v2.core.workflow","status":"draft","triggers":[{"type":"event_trigger"}]}',
+      },
+    ]);
+    const workflow = await stripe.v2.core.workflows.retrieve('id_123');
+    expect(workflow).not.to.be.null;
+  });
+
+  it('test_v2_core_workflow_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/core/workflows/id_123/invoke',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.workflow_run","status":"failed","status_transitions":{},"trigger":{"type":"event_trigger"},"workflow":"workflow","livemode":true}',
+      },
+    ]);
+    const workflowRun = await stripe.v2.core.workflows.invoke('id_123', {
+      input_parameters: {
+        int_key: 123,
+        string_key: 'value',
+        boolean_key: true,
+        object_key: {
+          object_int_key: 123,
+          object_string_key: 'value',
+          object_boolean_key: true,
+        },
+        array_key: [1, 2, 3],
+      },
+    });
+    expect(workflowRun).not.to.be.null;
+  });
+
+  it('test_v2_core_workflow_run_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/workflow_runs?status[0]=failed&workflow[0]=workflow',
+        response:
+          '{"data":[{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.workflow_run","status":"failed","status_transitions":{},"trigger":{"type":"event_trigger"},"workflow":"workflow","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const workflowRuns = await stripe.v2.core.workflowRuns.list({
+      status: ['failed'],
+      workflow: ['workflow'],
+    });
+    expect(workflowRuns).not.to.be.null;
+  });
+
+  it('test_v2_core_workflow_run_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/workflow_runs/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.workflow_run","status":"failed","status_transitions":{},"trigger":{"type":"event_trigger"},"workflow":"workflow","livemode":true}',
+      },
+    ]);
+    const workflowRun = await stripe.v2.core.workflowRuns.retrieve('id_123');
+    expect(workflowRun).not.to.be.null;
+  });
+
   it('test_v2_data_reporting_query_run_post', async function() {
     const stripe = testUtils.createMockClient([
       {
