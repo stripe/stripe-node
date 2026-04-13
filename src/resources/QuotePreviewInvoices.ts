@@ -1379,9 +1379,19 @@ export namespace QuotePreviewInvoice {
       bancontact: PaymentMethodOptions.Bancontact | null;
 
       /**
+       * If paying by `bizum`, this sub-hash contains details about the Bizum payment method options to pass to the invoice's PaymentIntent.
+       */
+      bizum?: PaymentMethodOptions.Bizum | null;
+
+      /**
        * If paying by `card`, this sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
        */
       card: PaymentMethodOptions.Card | null;
+
+      /**
+       * If paying by `check_scan`, this sub-hash contains details about the Check Scan payment method options to pass to the invoice's PaymentIntent.
+       */
+      check_scan?: PaymentMethodOptions.CheckScan | null;
 
       /**
        * If paying by `customer_balance`, this sub-hash contains details about the Bank transfer payment method options to pass to the invoice's PaymentIntent.
@@ -1422,16 +1432,6 @@ export namespace QuotePreviewInvoice {
        * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
        */
       us_bank_account: PaymentMethodOptions.UsBankAccount | null;
-
-      /**
-       * If paying by `bizum`, this sub-hash contains details about the Bizum payment method options to pass to the invoice's PaymentIntent.
-       */
-      bizum?: PaymentMethodOptions.Bizum | null;
-
-      /**
-       * If paying by `check_scan`, this sub-hash contains details about the Check Scan payment method options to pass to the invoice's PaymentIntent.
-       */
-      check_scan?: PaymentMethodOptions.CheckScan | null;
     }
 
     export type PaymentMethodType =
@@ -1501,6 +1501,8 @@ export namespace QuotePreviewInvoice {
         preferred_language: Bancontact.PreferredLanguage;
       }
 
+      export interface Bizum {}
+
       export interface Card {
         installments?: Card.Installments;
 
@@ -1508,6 +1510,10 @@ export namespace QuotePreviewInvoice {
          * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
          */
         request_three_d_secure: Card.RequestThreeDSecure | null;
+      }
+
+      export interface CheckScan {
+        check_deposit_address?: Address;
       }
 
       export interface CustomerBalance {
@@ -1552,12 +1558,6 @@ export namespace QuotePreviewInvoice {
          * Bank account verification method. The default value is `automatic`.
          */
         verification_method?: UsBankAccount.VerificationMethod;
-      }
-
-      export interface Bizum {}
-
-      export interface CheckScan {
-        check_deposit_address?: Address;
       }
 
       export namespace AcssDebit {

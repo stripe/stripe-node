@@ -58,19 +58,14 @@ export namespace V2 {
     export namespace IntentAction {
       export interface Apply {
         /**
-         * When the apply action will take effect. If not specified, defaults to on_reserve.
-         */
-        effective_at?: Apply.EffectiveAt;
-
-        /**
-         * Type of the apply action details.
-         */
-        type: Apply.Type;
-
-        /**
          * Details for applying a discount.
          */
         discount?: Apply.Discount;
+
+        /**
+         * When the apply action will take effect. If not specified, defaults to on_reserve.
+         */
+        effective_at?: Apply.EffectiveAt;
 
         /**
          * Details for applying a discount rule to future invoices.
@@ -81,6 +76,11 @@ export namespace V2 {
          * Details for applying a spend modifier rule. Only present if type is spend_modifier_rule.
          */
         spend_modifier_rule?: Apply.SpendModifierRule;
+
+        /**
+         * Type of the apply action details.
+         */
+        type: Apply.Type;
       }
 
       export interface Deactivate {
@@ -100,14 +100,14 @@ export namespace V2 {
         effective_at: Deactivate.EffectiveAt;
 
         /**
-         * Type of the action details.
-         */
-        type: Deactivate.Type;
-
-        /**
          * Details for deactivating a Pricing Plan Subscription.
          */
         pricing_plan_subscription_details?: Deactivate.PricingPlanSubscriptionDetails;
+
+        /**
+         * Type of the action details.
+         */
+        type: Deactivate.Type;
       }
 
       export interface Modify {
@@ -122,14 +122,14 @@ export namespace V2 {
         effective_at: Modify.EffectiveAt;
 
         /**
-         * Type of the action details.
-         */
-        type: Modify.Type;
-
-        /**
          * Details for modifying a Pricing Plan Subscription.
          */
         pricing_plan_subscription_details?: Modify.PricingPlanSubscriptionDetails;
+
+        /**
+         * Type of the action details.
+         */
+        type: Modify.Type;
       }
 
       export interface Remove {
@@ -137,11 +137,6 @@ export namespace V2 {
          * When the remove action will take effect. If not specified, defaults to on_reserve.
          */
         effective_at?: Remove.EffectiveAt;
-
-        /**
-         * Type of the remove action.
-         */
-        type: Remove.Type;
 
         /**
          * The ID of the discount rule to remove for future invoices.
@@ -152,6 +147,11 @@ export namespace V2 {
          * The ID of the spend modifier rule removed.
          */
         spend_modifier_rule?: string;
+
+        /**
+         * Type of the remove action.
+         */
+        type: Remove.Type;
       }
 
       export interface Subscribe {
@@ -166,14 +166,14 @@ export namespace V2 {
         effective_at: Subscribe.EffectiveAt;
 
         /**
-         * Type of the action details.
-         */
-        type: Subscribe.Type;
-
-        /**
          * Details for subscribing to a Pricing Plan.
          */
         pricing_plan_subscription_details?: Subscribe.PricingPlanSubscriptionDetails;
+
+        /**
+         * Type of the action details.
+         */
+        type: Subscribe.Type;
 
         /**
          * Details for subscribing to a V1 subscription.
@@ -189,23 +189,6 @@ export namespace V2 {
         | 'subscribe';
 
       export namespace Apply {
-        export interface EffectiveAt {
-          /**
-           * The timestamp at which the apply action will take effect. Only present if type is timestamp. Only allowed for discount actions.
-           */
-          timestamp?: string;
-
-          /**
-           * When the apply action will take effect.
-           */
-          type: EffectiveAt.Type;
-        }
-
-        export type Type =
-          | 'discount'
-          | 'invoice_discount_rule'
-          | 'spend_modifier_rule';
-
         export interface Discount {
           /**
            * The ID of the Coupon applied.
@@ -228,6 +211,18 @@ export namespace V2 {
           type: Discount.Type;
         }
 
+        export interface EffectiveAt {
+          /**
+           * The timestamp at which the apply action will take effect. Only present if type is timestamp. Only allowed for discount actions.
+           */
+          timestamp?: string;
+
+          /**
+           * When the apply action will take effect.
+           */
+          type: EffectiveAt.Type;
+        }
+
         export interface InvoiceDiscountRule {
           /**
            * The entity that the discount rule applies to, for example, the Billing Cadence.
@@ -240,14 +235,14 @@ export namespace V2 {
           invoice_discount_rule?: string;
 
           /**
-           * Type of the discount rule.
-           */
-          type: 'percent_off';
-
-          /**
            * Configuration for percentage off discount.
            */
           percent_off?: InvoiceDiscountRule.PercentOff;
+
+          /**
+           * Type of the discount rule.
+           */
+          type: 'percent_off';
         }
 
         export interface SpendModifierRule {
@@ -262,15 +257,20 @@ export namespace V2 {
           id: string;
 
           /**
-           * Type of the spend modifier.
-           */
-          type: 'max_billing_period_spend';
-
-          /**
            * Details for max billing period spend modifier. Only present if type is max_billing_period_spend.
            */
           max_billing_period_spend?: SpendModifierRule.MaxBillingPeriodSpend;
+
+          /**
+           * Type of the spend modifier.
+           */
+          type: 'max_billing_period_spend';
         }
+
+        export type Type =
+          | 'discount'
+          | 'invoice_discount_rule'
+          | 'spend_modifier_rule';
 
         export namespace Discount {
           export type Type = 'coupon' | 'promotion_code';
@@ -324,14 +324,14 @@ export namespace V2 {
           export namespace MaxBillingPeriodSpend {
             export interface Amount {
               /**
-               * The type of the amount.
-               */
-              type: 'custom_pricing_unit';
-
-              /**
                * The custom pricing unit amount.
                */
               custom_pricing_unit?: Amount.CustomPricingUnit;
+
+              /**
+               * The type of the amount.
+               */
+              type: 'custom_pricing_unit';
             }
 
             export interface CustomPricingUnitOverageRate {
@@ -385,10 +385,6 @@ export namespace V2 {
           type: EffectiveAt.Type;
         }
 
-        export type Type =
-          | 'pricing_plan_subscription_details'
-          | 'v1_subscription_details';
-
         export interface PricingPlanSubscriptionDetails {
           /**
            * Configurations for overriding behaviors related to the subscription.
@@ -400,6 +396,10 @@ export namespace V2 {
            */
           pricing_plan_subscription: string;
         }
+
+        export type Type =
+          | 'pricing_plan_subscription_details'
+          | 'v1_subscription_details';
 
         export namespace CancellationDetails {
           export type Feedback =
@@ -432,25 +432,25 @@ export namespace V2 {
           export namespace Overrides {
             export interface PartialPeriodBehavior {
               /**
-               * The type of behavior to override.
-               */
-              type: PartialPeriodBehavior.Type;
-
-              /**
                * Overrides the behavior for license fee components when the action takes effect during the service period.
                */
               license_fee?: PartialPeriodBehavior.LicenseFee;
+
+              /**
+               * The type of behavior to override.
+               */
+              type: PartialPeriodBehavior.Type;
             }
 
             export namespace PartialPeriodBehavior {
-              export type Type = 'license_fee' | 'recurring_credit_grant';
-
               export interface LicenseFee {
                 /**
                  * The proration behavior for the partial servicing period. Defines how we prorate the license fee when the user is deactivating. If not specified, defaults to none.
                  */
                 credit_proration_behavior: LicenseFee.CreditProrationBehavior;
               }
+
+              export type Type = 'license_fee' | 'recurring_credit_grant';
 
               export namespace LicenseFee {
                 export type CreditProrationBehavior = 'none' | 'prorated';
@@ -474,10 +474,6 @@ export namespace V2 {
            */
           type: EffectiveAt.Type;
         }
-
-        export type Type =
-          | 'pricing_plan_subscription_details'
-          | 'v1_subscription_details';
 
         export interface PricingPlanSubscriptionDetails {
           /**
@@ -508,6 +504,10 @@ export namespace V2 {
           pricing_plan_subscription: string;
         }
 
+        export type Type =
+          | 'pricing_plan_subscription_details'
+          | 'v1_subscription_details';
+
         export namespace EffectiveAt {
           export type Type =
             | 'current_billing_period_start'
@@ -518,11 +518,6 @@ export namespace V2 {
         export namespace PricingPlanSubscriptionDetails {
           export interface ComponentConfiguration {
             /**
-             * Quantity of the component to be used.
-             */
-            quantity?: number;
-
-            /**
              * Lookup key for the pricing plan component.
              */
             lookup_key?: string;
@@ -531,6 +526,11 @@ export namespace V2 {
              * ID of the pricing plan component.
              */
             pricing_plan_component?: string;
+
+            /**
+             * Quantity of the component to be used.
+             */
+            quantity?: number;
           }
 
           export interface Overrides {
@@ -543,11 +543,6 @@ export namespace V2 {
           export namespace Overrides {
             export interface PartialPeriodBehavior {
               /**
-               * The type of behavior to override.
-               */
-              type: PartialPeriodBehavior.Type;
-
-              /**
                * Overrides the behavior for license fee components when the action takes effect during the service period.
                */
               license_fee?: PartialPeriodBehavior.LicenseFee;
@@ -556,11 +551,14 @@ export namespace V2 {
                * Overrides the behavior for recurring credit grant components when the action takes effect during the service period.
                */
               recurring_credit_grant?: PartialPeriodBehavior.RecurringCreditGrant;
+
+              /**
+               * The type of behavior to override.
+               */
+              type: PartialPeriodBehavior.Type;
             }
 
             export namespace PartialPeriodBehavior {
-              export type Type = 'license_fee' | 'recurring_credit_grant';
-
               export interface LicenseFee {
                 /**
                  * The proration behavior for the partial servicing period. Defines how we prorate the license fee when the user modifies the subscription. If not specified, defaults to prorated.
@@ -579,6 +577,8 @@ export namespace V2 {
                  */
                 create_behavior: RecurringCreditGrant.CreateBehavior;
               }
+
+              export type Type = 'license_fee' | 'recurring_credit_grant';
 
               export namespace LicenseFee {
                 export type CreditProrationBehavior = 'none' | 'prorated';
@@ -624,10 +624,6 @@ export namespace V2 {
           type: EffectiveAt.Type;
         }
 
-        export type Type =
-          | 'pricing_plan_subscription_details'
-          | 'v1_subscription_details';
-
         export interface PricingPlanSubscriptionDetails {
           /**
            * Configurations for the components of the Pricing Plan.
@@ -662,6 +658,10 @@ export namespace V2 {
           pricing_plan_version: string;
         }
 
+        export type Type =
+          | 'pricing_plan_subscription_details'
+          | 'v1_subscription_details';
+
         export interface V1SubscriptionDetails {
           /**
            * The subscription's description, meant to be displayable to the customer.
@@ -690,11 +690,6 @@ export namespace V2 {
         export namespace PricingPlanSubscriptionDetails {
           export interface ComponentConfiguration {
             /**
-             * Quantity of the component to be used.
-             */
-            quantity?: number;
-
-            /**
              * Lookup key for the pricing plan component.
              */
             lookup_key?: string;
@@ -703,6 +698,11 @@ export namespace V2 {
              * ID of the pricing plan component.
              */
             pricing_plan_component?: string;
+
+            /**
+             * Quantity of the component to be used.
+             */
+            quantity?: number;
           }
 
           export interface Overrides {
@@ -715,11 +715,6 @@ export namespace V2 {
           export namespace Overrides {
             export interface PartialPeriodBehavior {
               /**
-               * The type of behavior to override.
-               */
-              type: PartialPeriodBehavior.Type;
-
-              /**
                * Overrides the behavior for license fee components when the action takes effect during the service period.
                */
               license_fee?: PartialPeriodBehavior.LicenseFee;
@@ -728,11 +723,14 @@ export namespace V2 {
                * Overrides the behavior for recurring credit grant components when the action takes effect during the service period.
                */
               recurring_credit_grant?: PartialPeriodBehavior.RecurringCreditGrant;
+
+              /**
+               * The type of behavior to override.
+               */
+              type: PartialPeriodBehavior.Type;
             }
 
             export namespace PartialPeriodBehavior {
-              export type Type = 'license_fee' | 'recurring_credit_grant';
-
               export interface LicenseFee {
                 /**
                  * The proration behavior for the partial servicing period. Defines how we prorate the license fee when the user is subscribing. If not specified, defaults to prorated.
@@ -746,6 +744,8 @@ export namespace V2 {
                  */
                 create_behavior: RecurringCreditGrant.CreateBehavior;
               }
+
+              export type Type = 'license_fee' | 'recurring_credit_grant';
 
               export namespace LicenseFee {
                 export type DebitProrationBehavior = 'none' | 'prorated';

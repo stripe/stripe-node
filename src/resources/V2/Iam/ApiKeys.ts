@@ -166,14 +166,14 @@ export namespace V2 {
     export namespace ApiKey {
       export interface ManagedBy {
         /**
-         * The type of entity.
-         */
-        type: 'application';
-
-        /**
          * An application.
          */
         application?: ManagedBy.Application;
+
+        /**
+         * The type of entity.
+         */
+        type: 'application';
       }
 
       export interface PublishableKey {

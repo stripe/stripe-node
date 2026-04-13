@@ -374,24 +374,24 @@ export namespace V2 {
     export namespace Cadence {
       export interface BillingCycle {
         /**
-         * The number of intervals (specified in the interval attribute) between cadence billings. For example, type=month and interval_count=3 bills every 3 months.
-         */
-        interval_count: number;
-
-        /**
-         * The frequency at which a cadence bills.
-         */
-        type: BillingCycle.Type;
-
-        /**
          * Specific configuration for determining billing dates when type=day.
          */
         day?: BillingCycle.Day;
 
         /**
+         * The number of intervals (specified in the interval attribute) between cadence billings. For example, type=month and interval_count=3 bills every 3 months.
+         */
+        interval_count: number;
+
+        /**
          * Specific configuration for determining billing dates when type=month.
          */
         month?: BillingCycle.Month;
+
+        /**
+         * The frequency at which a cadence bills.
+         */
+        type: BillingCycle.Type;
 
         /**
          * Specific configuration for determining billing dates when type=week.
@@ -411,14 +411,14 @@ export namespace V2 {
         id: string;
 
         /**
-         * The type of the discount.
-         */
-        type: 'percent_off';
-
-        /**
          * Details if the discount is a percentage off.
          */
         percent_off?: InvoiceDiscountRule.PercentOff;
+
+        /**
+         * The type of the discount.
+         */
+        type: 'percent_off';
       }
 
       export interface Payer {
@@ -465,8 +465,6 @@ export namespace V2 {
       export type Status = 'active' | 'canceled';
 
       export namespace BillingCycle {
-        export type Type = 'day' | 'month' | 'week' | 'year';
-
         export interface Day {
           /**
            * The time at which the billing cycle ends.
@@ -493,6 +491,8 @@ export namespace V2 {
            */
           time: Month.Time;
         }
+
+        export type Type = 'day' | 'month' | 'week' | 'year';
 
         export interface Week {
           /**
@@ -1062,6 +1062,11 @@ export namespace V2 {
     export namespace CadenceCreateParams {
       export interface BillingCycle {
         /**
+         * Specific configuration for determining billing dates when type=day.
+         */
+        day?: BillingCycle.Day;
+
+        /**
          * The number of intervals (specified in the interval attribute) between
          * cadence billings. For example, type=month and interval_count=3 bills every
          * 3 months. If this is not provided, it will default to 1.
@@ -1069,19 +1074,14 @@ export namespace V2 {
         interval_count?: number;
 
         /**
-         * The frequency at which a cadence bills.
-         */
-        type: BillingCycle.Type;
-
-        /**
-         * Specific configuration for determining billing dates when type=day.
-         */
-        day?: BillingCycle.Day;
-
-        /**
          * Specific configuration for determining billing dates when type=month.
          */
         month?: BillingCycle.Month;
+
+        /**
+         * The frequency at which a cadence bills.
+         */
+        type: BillingCycle.Type;
 
         /**
          * Specific configuration for determining billing dates when type=week.
@@ -1120,8 +1120,6 @@ export namespace V2 {
       }
 
       export namespace BillingCycle {
-        export type Type = 'day' | 'month' | 'week' | 'year';
-
         export interface Day {
           /**
            * The time at which the billing cycle ends.
@@ -1155,6 +1153,8 @@ export namespace V2 {
            */
           time?: Month.Time;
         }
+
+        export type Type = 'day' | 'month' | 'week' | 'year';
 
         export interface Week {
           /**

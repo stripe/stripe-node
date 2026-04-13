@@ -135,11 +135,6 @@ export namespace V2 {
         from_account?: string;
 
         /**
-         * Open Enum. The type of Stripe Money Movement that originated the ReceivedCredit.
-         */
-        type: BalanceTransfer.Type;
-
-        /**
          * The ID of the outbound payment object that originated the ReceivedCredit.
          */
         outbound_payment?: string;
@@ -158,6 +153,11 @@ export namespace V2 {
          * The ID of the v1 transfer object that originated the ReceivedCredit.
          */
         transfer?: string;
+
+        /**
+         * Open Enum. The type of Stripe Money Movement that originated the ReceivedCredit.
+         */
+        type: BalanceTransfer.Type;
       }
 
       export interface BankTransfer {
@@ -167,24 +167,24 @@ export namespace V2 {
         financial_address: string;
 
         /**
-         * Open Enum. Indicates the origin of source from which external funds originated from.
-         */
-        origin_type: BankTransfer.OriginType;
-
-        /**
-         * Freeform string set by originator of the external ReceivedCredit.
-         */
-        statement_descriptor?: string;
-
-        /**
          * Hash containing the transaction bank details. Present if `origin_type` field value is `gb_bank_account`.
          */
         gb_bank_account?: BankTransfer.GbBankAccount;
 
         /**
+         * Open Enum. Indicates the origin of source from which external funds originated from.
+         */
+        origin_type: BankTransfer.OriginType;
+
+        /**
          * Hash containing the transaction bank details. Present if `origin_type` field value is `sepa_bank_account`.
          */
         sepa_bank_account?: BankTransfer.SepaBankAccount;
+
+        /**
+         * Freeform string set by originator of the external ReceivedCredit.
+         */
+        statement_descriptor?: string;
 
         /**
          * Hash containing the transaction bank details. Present if `origin_type` field value is `us_bank_account`.
@@ -266,11 +266,6 @@ export namespace V2 {
       }
 
       export namespace BankTransfer {
-        export type OriginType =
-          | 'gb_bank_account'
-          | 'sepa_bank_account'
-          | 'us_bank_account';
-
         export interface GbBankAccount {
           /**
            * The bank name the transfer was received from.
@@ -297,6 +292,11 @@ export namespace V2 {
            */
           sort_code?: string;
         }
+
+        export type OriginType =
+          | 'gb_bank_account'
+          | 'sepa_bank_account'
+          | 'us_bank_account';
 
         export interface SepaBankAccount {
           /**

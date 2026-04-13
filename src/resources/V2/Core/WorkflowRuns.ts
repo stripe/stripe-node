@@ -118,11 +118,6 @@ export namespace V2 {
 
       export interface Trigger {
         /**
-         * Which type of trigger this is.
-         */
-        type: Trigger.Type;
-
-        /**
          * The Workflow Run was launched when Stripe emitted a certain event.
          */
         event_trigger?: Trigger.EventTrigger;
@@ -131,6 +126,11 @@ export namespace V2 {
          * The Workflow Run was launched through a direct call, using either the Dashboard or the Stripe API.
          */
         manual?: Trigger.Manual;
+
+        /**
+         * Which type of trigger this is.
+         */
+        type: Trigger.Type;
       }
 
       export namespace StatusDetails {
@@ -167,8 +167,6 @@ export namespace V2 {
       }
 
       export namespace Trigger {
-        export type Type = 'event_trigger' | 'manual';
-
         export interface EventTrigger {
           /**
            * The Stripe event that triggered this Run.
@@ -187,6 +185,8 @@ export namespace V2 {
            */
           input_parameters: Manual.InputParameters;
         }
+
+        export type Type = 'event_trigger' | 'manual';
 
         export namespace Manual {
           export type InputParameters = {

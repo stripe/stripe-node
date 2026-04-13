@@ -2002,9 +2002,19 @@ export namespace Subscription {
       bancontact: PaymentMethodOptions.Bancontact | null;
 
       /**
+       * This sub-hash contains details about the Bizum payment method options to pass to invoices created by the subscription.
+       */
+      bizum?: PaymentMethodOptions.Bizum | null;
+
+      /**
        * This sub-hash contains details about the Card payment method options to pass to invoices created by the subscription.
        */
       card: PaymentMethodOptions.Card | null;
+
+      /**
+       * This sub-hash contains details about the Check Scan payment method options to pass to invoices created by the subscription.
+       */
+      check_scan?: PaymentMethodOptions.CheckScan | null;
 
       /**
        * This sub-hash contains details about the Bank transfer payment method options to pass to invoices created by the subscription.
@@ -2045,16 +2055,6 @@ export namespace Subscription {
        * This sub-hash contains details about the ACH direct debit payment method options to pass to invoices created by the subscription.
        */
       us_bank_account: PaymentMethodOptions.UsBankAccount | null;
-
-      /**
-       * This sub-hash contains details about the Bizum payment method options to pass to invoices created by the subscription.
-       */
-      bizum?: PaymentMethodOptions.Bizum | null;
-
-      /**
-       * This sub-hash contains details about the Check Scan payment method options to pass to invoices created by the subscription.
-       */
-      check_scan?: PaymentMethodOptions.CheckScan | null;
     }
 
     export type PaymentMethodType =
@@ -2126,6 +2126,10 @@ export namespace Subscription {
         preferred_language: Bancontact.PreferredLanguage;
       }
 
+      export interface Bizum {
+        mandate_options?: Bizum.MandateOptions;
+      }
+
       export interface Card {
         mandate_options?: Card.MandateOptions;
 
@@ -2138,6 +2142,10 @@ export namespace Subscription {
          * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
          */
         request_three_d_secure: Card.RequestThreeDSecure | null;
+      }
+
+      export interface CheckScan {
+        check_deposit_address?: Address;
       }
 
       export interface CustomerBalance {
@@ -2179,14 +2187,6 @@ export namespace Subscription {
          * Bank account verification method. The default value is `automatic`.
          */
         verification_method?: UsBankAccount.VerificationMethod;
-      }
-
-      export interface Bizum {
-        mandate_options?: Bizum.MandateOptions;
-      }
-
-      export interface CheckScan {
-        check_deposit_address?: Address;
       }
 
       export namespace AcssDebit {
@@ -3529,9 +3529,19 @@ export namespace SubscriptionCreateParams {
       bancontact?: Emptyable<PaymentMethodOptions.Bancontact>;
 
       /**
+       * This sub-hash contains details about the Bizum payment method options to pass to the invoice's PaymentIntent.
+       */
+      bizum?: Emptyable<PaymentMethodOptions.Bizum>;
+
+      /**
        * This sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
        */
       card?: Emptyable<PaymentMethodOptions.Card>;
+
+      /**
+       * This sub-hash contains details about the Check Scan payment method options to pass to the invoice's PaymentIntent.
+       */
+      check_scan?: Emptyable<PaymentMethodOptions.CheckScan>;
 
       /**
        * This sub-hash contains details about the Bank transfer payment method options to pass to the invoice's PaymentIntent.
@@ -3572,16 +3582,6 @@ export namespace SubscriptionCreateParams {
        * This sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
        */
       us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
-
-      /**
-       * This sub-hash contains details about the Bizum payment method options to pass to the invoice's PaymentIntent.
-       */
-      bizum?: Emptyable<PaymentMethodOptions.Bizum>;
-
-      /**
-       * This sub-hash contains details about the Check Scan payment method options to pass to the invoice's PaymentIntent.
-       */
-      check_scan?: Emptyable<PaymentMethodOptions.CheckScan>;
     }
 
     export type PaymentMethodType =
@@ -3656,6 +3656,13 @@ export namespace SubscriptionCreateParams {
         preferred_language?: Bancontact.PreferredLanguage;
       }
 
+      export interface Bizum {
+        /**
+         * Configuration options for setting up a mandate
+         */
+        mandate_options?: Bizum.MandateOptions;
+      }
+
       export interface Card {
         /**
          * Configuration options for setting up an eMandate for cards issued in India.
@@ -3671,6 +3678,10 @@ export namespace SubscriptionCreateParams {
          * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
          */
         request_three_d_secure?: Card.RequestThreeDSecure;
+      }
+
+      export interface CheckScan {
+        check_deposit_address?: AddressParam;
       }
 
       export interface CustomerBalance {
@@ -3727,17 +3738,6 @@ export namespace SubscriptionCreateParams {
          * Verification method for the intent
          */
         verification_method?: UsBankAccount.VerificationMethod;
-      }
-
-      export interface Bizum {
-        /**
-         * Configuration options for setting up a mandate
-         */
-        mandate_options?: Bizum.MandateOptions;
-      }
-
-      export interface CheckScan {
-        check_deposit_address?: AddressParam;
       }
 
       export namespace AcssDebit {
@@ -5041,9 +5041,19 @@ export namespace SubscriptionUpdateParams {
       bancontact?: Emptyable<PaymentMethodOptions.Bancontact>;
 
       /**
+       * This sub-hash contains details about the Bizum payment method options to pass to the invoice's PaymentIntent.
+       */
+      bizum?: Emptyable<PaymentMethodOptions.Bizum>;
+
+      /**
        * This sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
        */
       card?: Emptyable<PaymentMethodOptions.Card>;
+
+      /**
+       * This sub-hash contains details about the Check Scan payment method options to pass to the invoice's PaymentIntent.
+       */
+      check_scan?: Emptyable<PaymentMethodOptions.CheckScan>;
 
       /**
        * This sub-hash contains details about the Bank transfer payment method options to pass to the invoice's PaymentIntent.
@@ -5084,16 +5094,6 @@ export namespace SubscriptionUpdateParams {
        * This sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
        */
       us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
-
-      /**
-       * This sub-hash contains details about the Bizum payment method options to pass to the invoice's PaymentIntent.
-       */
-      bizum?: Emptyable<PaymentMethodOptions.Bizum>;
-
-      /**
-       * This sub-hash contains details about the Check Scan payment method options to pass to the invoice's PaymentIntent.
-       */
-      check_scan?: Emptyable<PaymentMethodOptions.CheckScan>;
     }
 
     export type PaymentMethodType =
@@ -5168,6 +5168,13 @@ export namespace SubscriptionUpdateParams {
         preferred_language?: Bancontact.PreferredLanguage;
       }
 
+      export interface Bizum {
+        /**
+         * Configuration options for setting up a mandate
+         */
+        mandate_options?: Bizum.MandateOptions;
+      }
+
       export interface Card {
         /**
          * Configuration options for setting up an eMandate for cards issued in India.
@@ -5183,6 +5190,10 @@ export namespace SubscriptionUpdateParams {
          * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
          */
         request_three_d_secure?: Card.RequestThreeDSecure;
+      }
+
+      export interface CheckScan {
+        check_deposit_address?: AddressParam;
       }
 
       export interface CustomerBalance {
@@ -5239,17 +5250,6 @@ export namespace SubscriptionUpdateParams {
          * Verification method for the intent
          */
         verification_method?: UsBankAccount.VerificationMethod;
-      }
-
-      export interface Bizum {
-        /**
-         * Configuration options for setting up a mandate
-         */
-        mandate_options?: Bizum.MandateOptions;
-      }
-
-      export interface CheckScan {
-        check_deposit_address?: AddressParam;
       }
 
       export namespace AcssDebit {

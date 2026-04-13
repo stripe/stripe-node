@@ -193,6 +193,11 @@ export namespace Identity {
 
     export interface Email {
       /**
+       * Additional email verification details
+       */
+      details?: Email.Details;
+
+      /**
        * Email to be verified.
        */
       email: string | null;
@@ -206,11 +211,6 @@ export namespace Identity {
        * Status of this `email` check.
        */
       status: Email.Status;
-
-      /**
-       * Additional email verification details
-       */
-      details?: Email.Details;
     }
 
     export interface IdNumber {
@@ -381,20 +381,6 @@ export namespace Identity {
     }
 
     export namespace Email {
-      export interface Error {
-        /**
-         * A short machine-readable string giving the reason for the verification failure.
-         */
-        code: Error.Code | null;
-
-        /**
-         * A human-readable message giving the reason for the failure. These messages can be shown to your users.
-         */
-        reason: string | null;
-      }
-
-      export type Status = 'unverified' | 'verified';
-
       export interface Details {
         /**
          * Number of days from the time when the email domain was first observed to the time of verification.
@@ -411,6 +397,20 @@ export namespace Identity {
          */
         domain_country?: string;
       }
+
+      export interface Error {
+        /**
+         * A short machine-readable string giving the reason for the verification failure.
+         */
+        code: Error.Code | null;
+
+        /**
+         * A human-readable message giving the reason for the failure. These messages can be shown to your users.
+         */
+        reason: string | null;
+      }
+
+      export type Status = 'unverified' | 'verified';
 
       export namespace Error {
         export type Code =

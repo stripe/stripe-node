@@ -1544,6 +1544,8 @@ export namespace Checkout {
 
       billie?: PaymentMethodOptions.Billie;
 
+      bizum?: PaymentMethodOptions.Bizum;
+
       boleto?: PaymentMethodOptions.Boleto;
 
       card?: PaymentMethodOptions.Card;
@@ -1609,8 +1611,6 @@ export namespace Checkout {
       upi?: PaymentMethodOptions.Upi;
 
       us_bank_account?: PaymentMethodOptions.UsBankAccount;
-
-      bizum?: PaymentMethodOptions.Bizum;
     }
 
     export type PaymentStatus = 'no_payment_required' | 'paid' | 'unpaid';
@@ -1772,16 +1772,16 @@ export namespace Checkout {
       amount_shipping: number | null;
 
       /**
+       * The surcharge amount that was applied to the Checkout Session.
+       */
+      amount_surcharge?: number;
+
+      /**
        * This is the sum of all the tax amounts.
        */
       amount_tax: number;
 
       breakdown?: TotalDetails.Breakdown;
-
-      /**
-       * The surcharge amount that was applied to the Checkout Session.
-       */
-      amount_surcharge?: number;
     }
 
     export type UiMode = 'elements' | 'embedded_page' | 'form' | 'hosted_page';
@@ -2834,6 +2834,10 @@ export namespace Checkout {
         capture_method?: 'manual';
       }
 
+      export interface Bizum {
+        mandate_options?: Bizum.MandateOptions;
+      }
+
       export interface Boleto {
         /**
          * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto voucher will expire on Wednesday at 23:59 America/Sao_Paulo time.
@@ -3403,10 +3407,6 @@ export namespace Checkout {
          * Bank account verification method. The default value is `automatic`.
          */
         verification_method?: UsBankAccount.VerificationMethod;
-      }
-
-      export interface Bizum {
-        mandate_options?: Bizum.MandateOptions;
       }
 
       export namespace AcssDebit {
@@ -5147,6 +5147,11 @@ export namespace Checkout {
       billie?: PaymentMethodOptions.Billie;
 
       /**
+       * contains details about the Bizum payment method options.
+       */
+      bizum?: PaymentMethodOptions.Bizum;
+
+      /**
        * contains details about the Boleto payment method options.
        */
       boleto?: PaymentMethodOptions.Boleto;
@@ -5330,11 +5335,6 @@ export namespace Checkout {
        * contains details about the WeChat Pay payment method options.
        */
       wechat_pay?: PaymentMethodOptions.WechatPay;
-
-      /**
-       * contains details about the Bizum payment method options.
-       */
-      bizum?: PaymentMethodOptions.Bizum;
     }
 
     export type PaymentMethodType =
@@ -6401,6 +6401,13 @@ export namespace Checkout {
         capture_method?: 'manual';
       }
 
+      export interface Bizum {
+        /**
+         * Additional fields for mandate creation.
+         */
+        mandate_options?: Bizum.MandateOptions;
+      }
+
       export interface Boleto {
         /**
          * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto invoice will expire on Wednesday at 23:59 America/Sao_Paulo time.
@@ -7058,13 +7065,6 @@ export namespace Checkout {
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
         setup_future_usage?: 'none';
-      }
-
-      export interface Bizum {
-        /**
-         * Additional fields for mandate creation.
-         */
-        mandate_options?: Bizum.MandateOptions;
       }
 
       export namespace AcssDebit {

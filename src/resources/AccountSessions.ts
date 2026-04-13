@@ -65,6 +65,11 @@ export namespace AccountSession {
 
     balances: Components.Balances;
 
+    /**
+     * Configuration for the [Bills](https://docs.stripe.com/connect/supported-embedded-components/bills/) embedded component.
+     */
+    bills?: Components.Bills | null;
+
     capital_financing?: Components.CapitalFinancing | null;
 
     capital_financing_application?: Components.CapitalFinancingApplication | null;
@@ -132,11 +137,6 @@ export namespace AccountSession {
      * Configuration for the [Terminal hardware shop](https://docs.stripe.com/connect/supported-embedded-components/terminal-hardware-shop/) embedded component.
      */
     terminal_hardware_shop?: Components.TerminalHardwareShop | null;
-
-    /**
-     * Configuration for the [Bills](https://docs.stripe.com/connect/supported-embedded-components/bills/) embedded component.
-     */
-    bills?: Components.Bills | null;
   }
 
   export namespace Components {
@@ -174,6 +174,15 @@ export namespace AccountSession {
       enabled: boolean;
 
       features: Balances.Features;
+    }
+
+    export interface Bills {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: Bills.Features;
     }
 
     export interface CapitalFinancing {
@@ -399,15 +408,6 @@ export namespace AccountSession {
       enabled: boolean;
 
       features: TerminalHardwareShop.Features;
-    }
-
-    export interface Bills {
-      /**
-       * Whether the embedded component is enabled.
-       */
-      enabled: boolean;
-
-      features: Bills.Features;
     }
 
     export namespace AccountManagement {

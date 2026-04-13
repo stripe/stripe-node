@@ -976,6 +976,8 @@ export namespace Charge {
     }
 
     export interface Card {
+      account_funding?: Card.AccountFunding;
+
       /**
        * The authorized amount.
        */
@@ -1123,8 +1125,6 @@ export namespace Charge {
        * If this Card is part of a card wallet, this contains the details of the card wallet.
        */
       wallet: Card.Wallet | null;
-
-      account_funding?: Card.AccountFunding;
     }
 
     export interface CardPresent {
@@ -2163,6 +2163,13 @@ export namespace Charge {
     }
 
     export namespace Card {
+      export interface AccountFunding {
+        /**
+         * The transaction type of the card transaction. One of `account_funding` or `purchase`.
+         */
+        processed_transaction_type?: AccountFunding.ProcessedTransactionType;
+      }
+
       export interface Benefits {
         /**
          * Issuer of the benefit card utilized on this payment
@@ -2328,13 +2335,6 @@ export namespace Charge {
         type: Wallet.Type;
 
         visa_checkout?: Wallet.VisaCheckout;
-      }
-
-      export interface AccountFunding {
-        /**
-         * The transaction type of the card transaction. One of `account_funding` or `purchase`.
-         */
-        processed_transaction_type?: AccountFunding.ProcessedTransactionType;
       }
 
       export namespace AccountFunding {
@@ -3214,6 +3214,11 @@ export namespace ChargeUpdateParams {
     event_details?: PaymentDetails.EventDetails;
 
     /**
+     * Fleet data for this PaymentIntent.
+     */
+    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
+
+    /**
      * Flight reservation details for this PaymentIntent
      */
     flight?: PaymentDetails.Flight;
@@ -3234,6 +3239,11 @@ export namespace ChargeUpdateParams {
     lodging_data?: Emptyable<Array<PaymentDetails.LodgingDatum>>;
 
     /**
+     * Money services details for this PaymentIntent.
+     */
+    money_services?: Emptyable<PaymentDetails.MoneyServices>;
+
+    /**
      * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
      *
      * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
@@ -3244,16 +3254,6 @@ export namespace ChargeUpdateParams {
      * Subscription details for this PaymentIntent
      */
     subscription?: PaymentDetails.Subscription;
-
-    /**
-     * Fleet data for this PaymentIntent.
-     */
-    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
-
-    /**
-     * Money services details for this PaymentIntent.
-     */
-    money_services?: Emptyable<PaymentDetails.MoneyServices>;
   }
 
   export interface Shipping {
@@ -3529,6 +3529,23 @@ export namespace ChargeUpdateParams {
       starts_at?: number;
     }
 
+    export interface FleetDatum {
+      /**
+       * Primary fuel fields for the transaction.
+       */
+      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
+
+      /**
+       * Station and acceptor location details.
+       */
+      station?: FleetDatum.Station;
+
+      /**
+       * VAT and Invoice on Behalf (IOB) details.
+       */
+      vat?: FleetDatum.Vat;
+    }
+
     export interface Flight {
       /**
        * Affiliate details for this purchase.
@@ -3802,6 +3819,18 @@ export namespace ChargeUpdateParams {
       total: LodgingDatum.Total;
     }
 
+    export interface MoneyServices {
+      /**
+       * Account funding transaction details including sender and beneficiary information.
+       */
+      account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: Emptyable<'account_funding'>;
+    }
+
     export interface Subscription {
       /**
        * Affiliate details for this purchase.
@@ -3832,35 +3861,6 @@ export namespace ChargeUpdateParams {
        * Subscription start time. Measured in seconds since the Unix epoch.
        */
       starts_at?: number;
-    }
-
-    export interface FleetDatum {
-      /**
-       * Primary fuel fields for the transaction.
-       */
-      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
-
-      /**
-       * Station and acceptor location details.
-       */
-      station?: FleetDatum.Station;
-
-      /**
-       * VAT and Invoice on Behalf (IOB) details.
-       */
-      vat?: FleetDatum.Vat;
-    }
-
-    export interface MoneyServices {
-      /**
-       * Account funding transaction details including sender and beneficiary information.
-       */
-      account_funding?: Emptyable<MoneyServices.AccountFunding>;
-
-      /**
-       * The type of money services transaction.
-       */
-      transaction_type?: Emptyable<'account_funding'>;
     }
 
     export namespace CarRental {
@@ -5554,6 +5554,11 @@ export namespace ChargeCaptureParams {
     event_details?: PaymentDetails.EventDetails;
 
     /**
+     * Fleet data for this PaymentIntent.
+     */
+    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
+
+    /**
      * Flight reservation details for this PaymentIntent
      */
     flight?: PaymentDetails.Flight;
@@ -5574,6 +5579,11 @@ export namespace ChargeCaptureParams {
     lodging_data?: Emptyable<Array<PaymentDetails.LodgingDatum>>;
 
     /**
+     * Money services details for this PaymentIntent.
+     */
+    money_services?: Emptyable<PaymentDetails.MoneyServices>;
+
+    /**
      * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
      *
      * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
@@ -5584,16 +5594,6 @@ export namespace ChargeCaptureParams {
      * Subscription details for this PaymentIntent
      */
     subscription?: PaymentDetails.Subscription;
-
-    /**
-     * Fleet data for this PaymentIntent.
-     */
-    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
-
-    /**
-     * Money services details for this PaymentIntent.
-     */
-    money_services?: Emptyable<PaymentDetails.MoneyServices>;
   }
 
   export interface TransferData {
@@ -5843,6 +5843,23 @@ export namespace ChargeCaptureParams {
        * Event start time. Measured in seconds since the Unix epoch.
        */
       starts_at?: number;
+    }
+
+    export interface FleetDatum {
+      /**
+       * Primary fuel fields for the transaction.
+       */
+      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
+
+      /**
+       * Station and acceptor location details.
+       */
+      station?: FleetDatum.Station;
+
+      /**
+       * VAT and Invoice on Behalf (IOB) details.
+       */
+      vat?: FleetDatum.Vat;
     }
 
     export interface Flight {
@@ -6118,6 +6135,18 @@ export namespace ChargeCaptureParams {
       total: LodgingDatum.Total;
     }
 
+    export interface MoneyServices {
+      /**
+       * Account funding transaction details including sender and beneficiary information.
+       */
+      account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: Emptyable<'account_funding'>;
+    }
+
     export interface Subscription {
       /**
        * Affiliate details for this purchase.
@@ -6148,35 +6177,6 @@ export namespace ChargeCaptureParams {
        * Subscription start time. Measured in seconds since the Unix epoch.
        */
       starts_at?: number;
-    }
-
-    export interface FleetDatum {
-      /**
-       * Primary fuel fields for the transaction.
-       */
-      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
-
-      /**
-       * Station and acceptor location details.
-       */
-      station?: FleetDatum.Station;
-
-      /**
-       * VAT and Invoice on Behalf (IOB) details.
-       */
-      vat?: FleetDatum.Vat;
-    }
-
-    export interface MoneyServices {
-      /**
-       * Account funding transaction details including sender and beneficiary information.
-       */
-      account_funding?: Emptyable<MoneyServices.AccountFunding>;
-
-      /**
-       * The type of money services transaction.
-       */
-      transaction_type?: Emptyable<'account_funding'>;
     }
 
     export namespace CarRental {

@@ -130,14 +130,14 @@ export namespace V2 {
     export namespace ReceivedDebit {
       export interface BalanceTransfer {
         /**
-         * Open Enum. The type of balance transfer that originated the ReceivedDebit.
-         */
-        type: 'topup';
-
-        /**
          * The ID of the topup object that originated the ReceivedDebit.
          */
         topup?: string;
+
+        /**
+         * Open Enum. The type of balance transfer that originated the ReceivedDebit.
+         */
+        type: 'topup';
       }
 
       export interface BankTransfer {

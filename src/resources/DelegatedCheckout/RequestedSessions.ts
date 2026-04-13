@@ -411,6 +411,11 @@ export namespace DelegatedCheckout {
 
     export interface SellerDetails {
       /**
+       * The card brands supported by the seller.
+       */
+      card_brands: Array<SellerDetails.CardBrand> | null;
+
+      /**
        * The marketplace seller details.
        */
       marketplace_seller_details: SellerDetails.MarketplaceSellerDetails | null;
@@ -419,6 +424,11 @@ export namespace DelegatedCheckout {
        * The network profile of the seller.
        */
       network_profile: string | Profile;
+
+      /**
+       * The payment method types supported by the seller.
+       */
+      payment_method_types: Array<SellerDetails.PaymentMethodType> | null;
 
       /**
        * The URL to the seller's privacy notice.
@@ -439,16 +449,6 @@ export namespace DelegatedCheckout {
        * The URL to the seller's terms of service.
        */
       terms_of_service_url: string | null;
-
-      /**
-       * The card brands supported by the seller.
-       */
-      card_brands: Array<SellerDetails.CardBrand> | null;
-
-      /**
-       * The payment method types supported by the seller.
-       */
-      payment_method_types: Array<SellerDetails.PaymentMethodType> | null;
     }
 
     export type Status = 'completed' | 'expired' | 'open' | 'requires_action';
@@ -836,9 +836,9 @@ export namespace DelegatedCheckout {
     }
 
     export namespace SellerDetails {
-      export interface MarketplaceSellerDetails {}
-
       export type CardBrand = 'american_express' | 'mastercard' | 'visa';
+
+      export interface MarketplaceSellerDetails {}
 
       export type PaymentMethodType = 'affirm' | 'card' | 'klarna';
     }

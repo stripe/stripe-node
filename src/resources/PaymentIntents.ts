@@ -936,9 +936,16 @@ export namespace PaymentIntent {
 
     event_details?: PaymentDetails.EventDetails;
 
+    /**
+     * Fleet data for this PaymentIntent.
+     */
+    fleet_data?: Array<PaymentDetails.FleetDatum>;
+
     flight_data?: Array<PaymentDetails.FlightDatum>;
 
     lodging_data?: Array<PaymentDetails.LodgingDatum>;
+
+    money_services?: PaymentDetails.MoneyServices;
 
     /**
      * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
@@ -948,13 +955,6 @@ export namespace PaymentIntent {
     order_reference: string | null;
 
     subscription?: PaymentDetails.Subscription;
-
-    /**
-     * Fleet data for this PaymentIntent.
-     */
-    fleet_data?: Array<PaymentDetails.FleetDatum>;
-
-    money_services?: PaymentDetails.MoneyServices;
   }
 
   export interface PaymentMethodConfigurationDetails {
@@ -2522,6 +2522,14 @@ export namespace PaymentIntent {
       starts_at?: number;
     }
 
+    export interface FleetDatum {
+      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
+
+      station?: FleetDatum.Station;
+
+      vat?: FleetDatum.Vat;
+    }
+
     export interface FlightDatum {
       affiliate?: FlightDatum.Affiliate;
 
@@ -2628,6 +2636,15 @@ export namespace PaymentIntent {
       total?: LodgingDatum.Total;
     }
 
+    export interface MoneyServices {
+      account_funding?: MoneyServices.AccountFunding;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: 'account_funding';
+    }
+
     export interface Subscription {
       affiliate?: Subscription.Affiliate;
 
@@ -2652,23 +2669,6 @@ export namespace PaymentIntent {
        * Subscription start time. Measured in seconds since the Unix epoch.
        */
       starts_at?: number;
-    }
-
-    export interface FleetDatum {
-      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
-
-      station?: FleetDatum.Station;
-
-      vat?: FleetDatum.Vat;
-    }
-
-    export interface MoneyServices {
-      account_funding?: MoneyServices.AccountFunding;
-
-      /**
-       * The type of money services transaction.
-       */
-      transaction_type?: 'account_funding';
     }
 
     export namespace Benefit {
@@ -6036,6 +6036,11 @@ export namespace PaymentIntentCreateParams {
     event_details?: PaymentDetails.EventDetails;
 
     /**
+     * Fleet data for this PaymentIntent.
+     */
+    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
+
+    /**
      * Flight reservation details for this PaymentIntent
      */
     flight?: PaymentDetails.Flight;
@@ -6056,6 +6061,11 @@ export namespace PaymentIntentCreateParams {
     lodging_data?: Emptyable<Array<PaymentDetails.LodgingDatum>>;
 
     /**
+     * Money services details for this PaymentIntent.
+     */
+    money_services?: Emptyable<PaymentDetails.MoneyServices>;
+
+    /**
      * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
      *
      * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
@@ -6066,16 +6076,6 @@ export namespace PaymentIntentCreateParams {
      * Subscription details for this PaymentIntent
      */
     subscription?: PaymentDetails.Subscription;
-
-    /**
-     * Fleet data for this PaymentIntent.
-     */
-    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
-
-    /**
-     * Money services details for this PaymentIntent.
-     */
-    money_services?: Emptyable<PaymentDetails.MoneyServices>;
   }
 
   export interface PaymentMethodData {
@@ -6345,6 +6345,11 @@ export namespace PaymentIntentCreateParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
+     */
+    shared_payment_granted_token?: string;
+
+    /**
      * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
      */
     shopeepay?: PaymentMethodData.Shopeepay;
@@ -6393,11 +6398,6 @@ export namespace PaymentIntentCreateParams {
      * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
      */
     zip?: PaymentMethodData.Zip;
-
-    /**
-     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
-     */
-    shared_payment_granted_token?: string;
   }
 
   export interface PaymentMethodOptions {
@@ -6800,6 +6800,11 @@ export namespace PaymentIntentCreateParams {
       quantity: number;
 
       /**
+       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
+       */
+      quantity_precision?: number;
+
+      /**
        * Contains information about the tax on the item.
        */
       tax?: LineItem.Tax;
@@ -6813,11 +6818,6 @@ export namespace PaymentIntentCreateParams {
        * A unit of measure for the line item, such as gallons, feet, meters, etc.
        */
       unit_of_measure?: string;
-
-      /**
-       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
-       */
-      quantity_precision?: number;
     }
 
     export interface Shipping {
@@ -7341,6 +7341,23 @@ export namespace PaymentIntentCreateParams {
       starts_at?: number;
     }
 
+    export interface FleetDatum {
+      /**
+       * Primary fuel fields for the transaction.
+       */
+      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
+
+      /**
+       * Station and acceptor location details.
+       */
+      station?: FleetDatum.Station;
+
+      /**
+       * VAT and Invoice on Behalf (IOB) details.
+       */
+      vat?: FleetDatum.Vat;
+    }
+
     export interface Flight {
       /**
        * Affiliate details for this purchase.
@@ -7614,6 +7631,18 @@ export namespace PaymentIntentCreateParams {
       total: LodgingDatum.Total;
     }
 
+    export interface MoneyServices {
+      /**
+       * Account funding transaction details including sender and beneficiary information.
+       */
+      account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: Emptyable<'account_funding'>;
+    }
+
     export interface Subscription {
       /**
        * Affiliate details for this purchase.
@@ -7644,35 +7673,6 @@ export namespace PaymentIntentCreateParams {
        * Subscription start time. Measured in seconds since the Unix epoch.
        */
       starts_at?: number;
-    }
-
-    export interface FleetDatum {
-      /**
-       * Primary fuel fields for the transaction.
-       */
-      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
-
-      /**
-       * Station and acceptor location details.
-       */
-      station?: FleetDatum.Station;
-
-      /**
-       * VAT and Invoice on Behalf (IOB) details.
-       */
-      vat?: FleetDatum.Vat;
-    }
-
-    export interface MoneyServices {
-      /**
-       * Account funding transaction details including sender and beneficiary information.
-       */
-      account_funding?: Emptyable<MoneyServices.AccountFunding>;
-
-      /**
-       * The type of money services transaction.
-       */
-      transaction_type?: Emptyable<'account_funding'>;
     }
 
     export namespace Benefit {
@@ -10148,6 +10148,11 @@ export namespace PaymentIntentCreateParams {
       network?: Card.Network;
 
       /**
+       * Payment details for payment method specific funding fields.
+       */
+      payment_details?: Card.PaymentDetails;
+
+      /**
        * Request ability to [decrement the authorization](https://docs.stripe.com/payments/decremental-authorization) for this PaymentIntent.
        */
       request_decremental_authorization?: Card.RequestDecrementalAuthorization;
@@ -10225,11 +10230,6 @@ export namespace PaymentIntentCreateParams {
        * the authentication details to use for this payment.
        */
       three_d_secure?: Card.ThreeDSecure;
-
-      /**
-       * Payment details for payment method specific funding fields.
-       */
-      payment_details?: Card.PaymentDetails;
     }
 
     export interface CardPresent {
@@ -10241,6 +10241,11 @@ export namespace PaymentIntentCreateParams {
        * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
        */
       capture_method?: CardPresent.CaptureMethod;
+
+      /**
+       * Payment details for payment method specific funding transaction fields.
+       */
+      payment_details?: CardPresent.PaymentDetails;
 
       /**
        * Request ability to capture this payment beyond the standard [authorization validity window](https://docs.stripe.com/terminal/features/extended-authorizations#authorization-validity)
@@ -10261,11 +10266,6 @@ export namespace PaymentIntentCreateParams {
        * Network routing priority on co-branded EMV cards supporting domestic debit and international card schemes.
        */
       routing?: CardPresent.Routing;
-
-      /**
-       * Payment details for payment method specific funding transaction fields.
-       */
-      payment_details?: CardPresent.PaymentDetails;
     }
 
     export interface Cashapp {
@@ -11327,6 +11327,13 @@ export namespace PaymentIntentCreateParams {
         | 'unknown'
         | 'visa';
 
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
       export type RequestDecrementalAuthorization = 'if_available' | 'never';
 
       export type RequestExtendedAuthorization = 'if_available' | 'never';
@@ -11405,13 +11412,6 @@ export namespace PaymentIntentCreateParams {
          * The version of 3D Secure that was performed.
          */
         version: ThreeDSecure.Version;
-      }
-
-      export interface PaymentDetails {
-        /**
-         * Money services details for payment method specific funding fields.
-         */
-        money_services?: PaymentDetails.MoneyServices;
       }
 
       export namespace Installments {
@@ -11582,6 +11582,13 @@ export namespace PaymentIntentCreateParams {
     export namespace CardPresent {
       export type CaptureMethod = 'manual' | 'manual_preferred';
 
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
       export type RequestReauthorization = 'if_available' | 'never';
 
       export interface Routing {
@@ -11589,13 +11596,6 @@ export namespace PaymentIntentCreateParams {
          * Routing requested priority
          */
         requested_priority?: Routing.RequestedPriority;
-      }
-
-      export interface PaymentDetails {
-        /**
-         * Money services details for payment method specific funding fields.
-         */
-        money_services?: PaymentDetails.MoneyServices;
       }
 
       export namespace PaymentDetails {
@@ -13786,6 +13786,11 @@ export namespace PaymentIntentUpdateParams {
     event_details?: PaymentDetails.EventDetails;
 
     /**
+     * Fleet data for this PaymentIntent.
+     */
+    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
+
+    /**
      * Flight reservation details for this PaymentIntent
      */
     flight?: PaymentDetails.Flight;
@@ -13806,6 +13811,11 @@ export namespace PaymentIntentUpdateParams {
     lodging_data?: Emptyable<Array<PaymentDetails.LodgingDatum>>;
 
     /**
+     * Money services details for this PaymentIntent.
+     */
+    money_services?: Emptyable<PaymentDetails.MoneyServices>;
+
+    /**
      * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
      *
      * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
@@ -13816,16 +13826,6 @@ export namespace PaymentIntentUpdateParams {
      * Subscription details for this PaymentIntent
      */
     subscription?: PaymentDetails.Subscription;
-
-    /**
-     * Fleet data for this PaymentIntent.
-     */
-    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
-
-    /**
-     * Money services details for this PaymentIntent.
-     */
-    money_services?: Emptyable<PaymentDetails.MoneyServices>;
   }
 
   export interface PaymentMethodData {
@@ -14095,6 +14095,11 @@ export namespace PaymentIntentUpdateParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
+     */
+    shared_payment_granted_token?: string;
+
+    /**
      * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
      */
     shopeepay?: PaymentMethodData.Shopeepay;
@@ -14143,11 +14148,6 @@ export namespace PaymentIntentUpdateParams {
      * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
      */
     zip?: PaymentMethodData.Zip;
-
-    /**
-     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
-     */
-    shared_payment_granted_token?: string;
   }
 
   export interface PaymentMethodOptions {
@@ -14520,6 +14520,11 @@ export namespace PaymentIntentUpdateParams {
       quantity: number;
 
       /**
+       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
+       */
+      quantity_precision?: number;
+
+      /**
        * Contains information about the tax on the item.
        */
       tax?: LineItem.Tax;
@@ -14533,11 +14538,6 @@ export namespace PaymentIntentUpdateParams {
        * A unit of measure for the line item, such as gallons, feet, meters, etc.
        */
       unit_of_measure?: string;
-
-      /**
-       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
-       */
-      quantity_precision?: number;
     }
 
     export interface Shipping {
@@ -15043,6 +15043,23 @@ export namespace PaymentIntentUpdateParams {
       starts_at?: number;
     }
 
+    export interface FleetDatum {
+      /**
+       * Primary fuel fields for the transaction.
+       */
+      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
+
+      /**
+       * Station and acceptor location details.
+       */
+      station?: FleetDatum.Station;
+
+      /**
+       * VAT and Invoice on Behalf (IOB) details.
+       */
+      vat?: FleetDatum.Vat;
+    }
+
     export interface Flight {
       /**
        * Affiliate details for this purchase.
@@ -15316,6 +15333,18 @@ export namespace PaymentIntentUpdateParams {
       total: LodgingDatum.Total;
     }
 
+    export interface MoneyServices {
+      /**
+       * Account funding transaction details including sender and beneficiary information.
+       */
+      account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: Emptyable<'account_funding'>;
+    }
+
     export interface Subscription {
       /**
        * Affiliate details for this purchase.
@@ -15346,35 +15375,6 @@ export namespace PaymentIntentUpdateParams {
        * Subscription start time. Measured in seconds since the Unix epoch.
        */
       starts_at?: number;
-    }
-
-    export interface FleetDatum {
-      /**
-       * Primary fuel fields for the transaction.
-       */
-      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
-
-      /**
-       * Station and acceptor location details.
-       */
-      station?: FleetDatum.Station;
-
-      /**
-       * VAT and Invoice on Behalf (IOB) details.
-       */
-      vat?: FleetDatum.Vat;
-    }
-
-    export interface MoneyServices {
-      /**
-       * Account funding transaction details including sender and beneficiary information.
-       */
-      account_funding?: Emptyable<MoneyServices.AccountFunding>;
-
-      /**
-       * The type of money services transaction.
-       */
-      transaction_type?: Emptyable<'account_funding'>;
     }
 
     export namespace Benefit {
@@ -17850,6 +17850,11 @@ export namespace PaymentIntentUpdateParams {
       network?: Card.Network;
 
       /**
+       * Payment details for payment method specific funding fields.
+       */
+      payment_details?: Card.PaymentDetails;
+
+      /**
        * Request ability to [decrement the authorization](https://docs.stripe.com/payments/decremental-authorization) for this PaymentIntent.
        */
       request_decremental_authorization?: Card.RequestDecrementalAuthorization;
@@ -17927,11 +17932,6 @@ export namespace PaymentIntentUpdateParams {
        * the authentication details to use for this payment.
        */
       three_d_secure?: Card.ThreeDSecure;
-
-      /**
-       * Payment details for payment method specific funding fields.
-       */
-      payment_details?: Card.PaymentDetails;
     }
 
     export interface CardPresent {
@@ -17943,6 +17943,11 @@ export namespace PaymentIntentUpdateParams {
        * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
        */
       capture_method?: CardPresent.CaptureMethod;
+
+      /**
+       * Payment details for payment method specific funding transaction fields.
+       */
+      payment_details?: CardPresent.PaymentDetails;
 
       /**
        * Request ability to capture this payment beyond the standard [authorization validity window](https://docs.stripe.com/terminal/features/extended-authorizations#authorization-validity)
@@ -17963,11 +17968,6 @@ export namespace PaymentIntentUpdateParams {
        * Network routing priority on co-branded EMV cards supporting domestic debit and international card schemes.
        */
       routing?: CardPresent.Routing;
-
-      /**
-       * Payment details for payment method specific funding transaction fields.
-       */
-      payment_details?: CardPresent.PaymentDetails;
     }
 
     export interface Cashapp {
@@ -19029,6 +19029,13 @@ export namespace PaymentIntentUpdateParams {
         | 'unknown'
         | 'visa';
 
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
       export type RequestDecrementalAuthorization = 'if_available' | 'never';
 
       export type RequestExtendedAuthorization = 'if_available' | 'never';
@@ -19107,13 +19114,6 @@ export namespace PaymentIntentUpdateParams {
          * The version of 3D Secure that was performed.
          */
         version: ThreeDSecure.Version;
-      }
-
-      export interface PaymentDetails {
-        /**
-         * Money services details for payment method specific funding fields.
-         */
-        money_services?: PaymentDetails.MoneyServices;
       }
 
       export namespace Installments {
@@ -19284,6 +19284,13 @@ export namespace PaymentIntentUpdateParams {
     export namespace CardPresent {
       export type CaptureMethod = 'manual' | 'manual_preferred';
 
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
       export type RequestReauthorization = 'if_available' | 'never';
 
       export interface Routing {
@@ -19291,13 +19298,6 @@ export namespace PaymentIntentUpdateParams {
          * Routing requested priority
          */
         requested_priority?: Routing.RequestedPriority;
-      }
-
-      export interface PaymentDetails {
-        /**
-         * Money services details for payment method specific funding fields.
-         */
-        money_services?: PaymentDetails.MoneyServices;
       }
 
       export namespace PaymentDetails {
@@ -21355,6 +21355,11 @@ export namespace PaymentIntentCaptureParams {
     event_details?: PaymentDetails.EventDetails;
 
     /**
+     * Fleet data for this PaymentIntent.
+     */
+    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
+
+    /**
      * Flight reservation details for this PaymentIntent
      */
     flight?: PaymentDetails.Flight;
@@ -21375,6 +21380,11 @@ export namespace PaymentIntentCaptureParams {
     lodging_data?: Emptyable<Array<PaymentDetails.LodgingDatum>>;
 
     /**
+     * Money services details for this PaymentIntent.
+     */
+    money_services?: Emptyable<PaymentDetails.MoneyServices>;
+
+    /**
      * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
      *
      * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
@@ -21385,16 +21395,6 @@ export namespace PaymentIntentCaptureParams {
      * Subscription details for this PaymentIntent
      */
     subscription?: PaymentDetails.Subscription;
-
-    /**
-     * Fleet data for this PaymentIntent.
-     */
-    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
-
-    /**
-     * Money services details for this PaymentIntent.
-     */
-    money_services?: Emptyable<PaymentDetails.MoneyServices>;
   }
 
   export interface TransferData {
@@ -21436,6 +21436,11 @@ export namespace PaymentIntentCaptureParams {
       quantity: number;
 
       /**
+       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
+       */
+      quantity_precision?: number;
+
+      /**
        * Contains information about the tax on the item.
        */
       tax?: LineItem.Tax;
@@ -21449,11 +21454,6 @@ export namespace PaymentIntentCaptureParams {
        * A unit of measure for the line item, such as gallons, feet, meters, etc.
        */
       unit_of_measure?: string;
-
-      /**
-       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
-       */
-      quantity_precision?: number;
     }
 
     export interface Shipping {
@@ -21924,6 +21924,23 @@ export namespace PaymentIntentCaptureParams {
       starts_at?: number;
     }
 
+    export interface FleetDatum {
+      /**
+       * Primary fuel fields for the transaction.
+       */
+      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
+
+      /**
+       * Station and acceptor location details.
+       */
+      station?: FleetDatum.Station;
+
+      /**
+       * VAT and Invoice on Behalf (IOB) details.
+       */
+      vat?: FleetDatum.Vat;
+    }
+
     export interface Flight {
       /**
        * Affiliate details for this purchase.
@@ -22197,6 +22214,18 @@ export namespace PaymentIntentCaptureParams {
       total: LodgingDatum.Total;
     }
 
+    export interface MoneyServices {
+      /**
+       * Account funding transaction details including sender and beneficiary information.
+       */
+      account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: Emptyable<'account_funding'>;
+    }
+
     export interface Subscription {
       /**
        * Affiliate details for this purchase.
@@ -22227,35 +22256,6 @@ export namespace PaymentIntentCaptureParams {
        * Subscription start time. Measured in seconds since the Unix epoch.
        */
       starts_at?: number;
-    }
-
-    export interface FleetDatum {
-      /**
-       * Primary fuel fields for the transaction.
-       */
-      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
-
-      /**
-       * Station and acceptor location details.
-       */
-      station?: FleetDatum.Station;
-
-      /**
-       * VAT and Invoice on Behalf (IOB) details.
-       */
-      vat?: FleetDatum.Vat;
-    }
-
-    export interface MoneyServices {
-      /**
-       * Account funding transaction details including sender and beneficiary information.
-       */
-      account_funding?: Emptyable<MoneyServices.AccountFunding>;
-
-      /**
-       * The type of money services transaction.
-       */
-      transaction_type?: Emptyable<'account_funding'>;
     }
 
     export namespace CarRental {
@@ -24132,6 +24132,11 @@ export namespace PaymentIntentConfirmParams {
     event_details?: PaymentDetails.EventDetails;
 
     /**
+     * Fleet data for this PaymentIntent.
+     */
+    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
+
+    /**
      * Flight reservation details for this PaymentIntent
      */
     flight?: PaymentDetails.Flight;
@@ -24152,6 +24157,11 @@ export namespace PaymentIntentConfirmParams {
     lodging_data?: Emptyable<Array<PaymentDetails.LodgingDatum>>;
 
     /**
+     * Money services details for this PaymentIntent.
+     */
+    money_services?: Emptyable<PaymentDetails.MoneyServices>;
+
+    /**
      * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
      *
      * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
@@ -24162,16 +24172,6 @@ export namespace PaymentIntentConfirmParams {
      * Subscription details for this PaymentIntent
      */
     subscription?: PaymentDetails.Subscription;
-
-    /**
-     * Fleet data for this PaymentIntent.
-     */
-    fleet_data?: Emptyable<Array<PaymentDetails.FleetDatum>>;
-
-    /**
-     * Money services details for this PaymentIntent.
-     */
-    money_services?: Emptyable<PaymentDetails.MoneyServices>;
   }
 
   export interface PaymentMethodData {
@@ -24441,6 +24441,11 @@ export namespace PaymentIntentConfirmParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
+     */
+    shared_payment_granted_token?: string;
+
+    /**
      * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
      */
     shopeepay?: PaymentMethodData.Shopeepay;
@@ -24489,11 +24494,6 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
      */
     zip?: PaymentMethodData.Zip;
-
-    /**
-     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
-     */
-    shared_payment_granted_token?: string;
   }
 
   export interface PaymentMethodOptions {
@@ -24866,6 +24866,11 @@ export namespace PaymentIntentConfirmParams {
       quantity: number;
 
       /**
+       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
+       */
+      quantity_precision?: number;
+
+      /**
        * Contains information about the tax on the item.
        */
       tax?: LineItem.Tax;
@@ -24879,11 +24884,6 @@ export namespace PaymentIntentConfirmParams {
        * A unit of measure for the line item, such as gallons, feet, meters, etc.
        */
       unit_of_measure?: string;
-
-      /**
-       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
-       */
-      quantity_precision?: number;
     }
 
     export interface Shipping {
@@ -25403,6 +25403,23 @@ export namespace PaymentIntentConfirmParams {
       starts_at?: number;
     }
 
+    export interface FleetDatum {
+      /**
+       * Primary fuel fields for the transaction.
+       */
+      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
+
+      /**
+       * Station and acceptor location details.
+       */
+      station?: FleetDatum.Station;
+
+      /**
+       * VAT and Invoice on Behalf (IOB) details.
+       */
+      vat?: FleetDatum.Vat;
+    }
+
     export interface Flight {
       /**
        * Affiliate details for this purchase.
@@ -25676,6 +25693,18 @@ export namespace PaymentIntentConfirmParams {
       total: LodgingDatum.Total;
     }
 
+    export interface MoneyServices {
+      /**
+       * Account funding transaction details including sender and beneficiary information.
+       */
+      account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * The type of money services transaction.
+       */
+      transaction_type?: Emptyable<'account_funding'>;
+    }
+
     export interface Subscription {
       /**
        * Affiliate details for this purchase.
@@ -25706,35 +25735,6 @@ export namespace PaymentIntentConfirmParams {
        * Subscription start time. Measured in seconds since the Unix epoch.
        */
       starts_at?: number;
-    }
-
-    export interface FleetDatum {
-      /**
-       * Primary fuel fields for the transaction.
-       */
-      primary_fuel_fields?: FleetDatum.PrimaryFuelFields;
-
-      /**
-       * Station and acceptor location details.
-       */
-      station?: FleetDatum.Station;
-
-      /**
-       * VAT and Invoice on Behalf (IOB) details.
-       */
-      vat?: FleetDatum.Vat;
-    }
-
-    export interface MoneyServices {
-      /**
-       * Account funding transaction details including sender and beneficiary information.
-       */
-      account_funding?: Emptyable<MoneyServices.AccountFunding>;
-
-      /**
-       * The type of money services transaction.
-       */
-      transaction_type?: Emptyable<'account_funding'>;
     }
 
     export namespace Benefit {
@@ -28210,6 +28210,11 @@ export namespace PaymentIntentConfirmParams {
       network?: Card.Network;
 
       /**
+       * Payment details for payment method specific funding fields.
+       */
+      payment_details?: Card.PaymentDetails;
+
+      /**
        * Request ability to [decrement the authorization](https://docs.stripe.com/payments/decremental-authorization) for this PaymentIntent.
        */
       request_decremental_authorization?: Card.RequestDecrementalAuthorization;
@@ -28287,11 +28292,6 @@ export namespace PaymentIntentConfirmParams {
        * the authentication details to use for this payment.
        */
       three_d_secure?: Card.ThreeDSecure;
-
-      /**
-       * Payment details for payment method specific funding fields.
-       */
-      payment_details?: Card.PaymentDetails;
     }
 
     export interface CardPresent {
@@ -28303,6 +28303,11 @@ export namespace PaymentIntentConfirmParams {
        * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
        */
       capture_method?: CardPresent.CaptureMethod;
+
+      /**
+       * Payment details for payment method specific funding transaction fields.
+       */
+      payment_details?: CardPresent.PaymentDetails;
 
       /**
        * Request ability to capture this payment beyond the standard [authorization validity window](https://docs.stripe.com/terminal/features/extended-authorizations#authorization-validity)
@@ -28323,11 +28328,6 @@ export namespace PaymentIntentConfirmParams {
        * Network routing priority on co-branded EMV cards supporting domestic debit and international card schemes.
        */
       routing?: CardPresent.Routing;
-
-      /**
-       * Payment details for payment method specific funding transaction fields.
-       */
-      payment_details?: CardPresent.PaymentDetails;
     }
 
     export interface Cashapp {
@@ -29389,6 +29389,13 @@ export namespace PaymentIntentConfirmParams {
         | 'unknown'
         | 'visa';
 
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
       export type RequestDecrementalAuthorization = 'if_available' | 'never';
 
       export type RequestExtendedAuthorization = 'if_available' | 'never';
@@ -29467,13 +29474,6 @@ export namespace PaymentIntentConfirmParams {
          * The version of 3D Secure that was performed.
          */
         version: ThreeDSecure.Version;
-      }
-
-      export interface PaymentDetails {
-        /**
-         * Money services details for payment method specific funding fields.
-         */
-        money_services?: PaymentDetails.MoneyServices;
       }
 
       export namespace Installments {
@@ -29644,6 +29644,13 @@ export namespace PaymentIntentConfirmParams {
     export namespace CardPresent {
       export type CaptureMethod = 'manual' | 'manual_preferred';
 
+      export interface PaymentDetails {
+        /**
+         * Money services details for payment method specific funding fields.
+         */
+        money_services?: PaymentDetails.MoneyServices;
+      }
+
       export type RequestReauthorization = 'if_available' | 'never';
 
       export interface Routing {
@@ -29651,13 +29658,6 @@ export namespace PaymentIntentConfirmParams {
          * Routing requested priority
          */
         requested_priority?: Routing.RequestedPriority;
-      }
-
-      export interface PaymentDetails {
-        /**
-         * Money services details for payment method specific funding fields.
-         */
-        money_services?: PaymentDetails.MoneyServices;
       }
 
       export namespace PaymentDetails {
@@ -31675,6 +31675,11 @@ export namespace PaymentIntentDecrementAuthorizationParams {
       quantity: number;
 
       /**
+       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
+       */
+      quantity_precision?: number;
+
+      /**
        * Contains information about the tax on the item.
        */
       tax?: LineItem.Tax;
@@ -31688,11 +31693,6 @@ export namespace PaymentIntentDecrementAuthorizationParams {
        * A unit of measure for the line item, such as gallons, feet, meters, etc.
        */
       unit_of_measure?: string;
-
-      /**
-       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
-       */
-      quantity_precision?: number;
     }
 
     export interface Shipping {
@@ -32086,6 +32086,11 @@ export namespace PaymentIntentIncrementAuthorizationParams {
       quantity: number;
 
       /**
+       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
+       */
+      quantity_precision?: number;
+
+      /**
        * Contains information about the tax on the item.
        */
       tax?: LineItem.Tax;
@@ -32099,11 +32104,6 @@ export namespace PaymentIntentIncrementAuthorizationParams {
        * A unit of measure for the line item, such as gallons, feet, meters, etc.
        */
       unit_of_measure?: string;
-
-      /**
-       * The number of decimal places implied in the quantity. For example, if quantity is 10000 and quantity_precision is 2, the actual quantity is 100.00. Defaults to 0 if not provided.
-       */
-      quantity_precision?: number;
     }
 
     export interface Shipping {

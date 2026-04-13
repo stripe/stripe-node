@@ -90,11 +90,6 @@ export namespace V2 {
 
       export interface Trigger {
         /**
-         * Which type of trigger this is.
-         */
-        type: Trigger.Type;
-
-        /**
          * The Workflow can be launched when Stripe emits a certain event.
          */
         event_trigger?: Trigger.EventTrigger;
@@ -103,11 +98,14 @@ export namespace V2 {
          * The Workflow can be launched through a direct call, using either the Dashboard or the Stripe API.
          */
         manual?: Trigger.Manual;
+
+        /**
+         * Which type of trigger this is.
+         */
+        type: Trigger.Type;
       }
 
       export namespace Trigger {
-        export type Type = 'event_trigger' | 'manual';
-
         export interface EventTrigger {
           /**
            * The Stripe event type that will trigger this Workflow.
@@ -121,6 +119,8 @@ export namespace V2 {
            */
           raw_schema: string;
         }
+
+        export type Type = 'event_trigger' | 'manual';
       }
     }
   }

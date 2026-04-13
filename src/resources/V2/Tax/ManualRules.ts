@@ -284,11 +284,6 @@ export namespace V2 {
 
       export interface Product {
         /**
-         * The type of the product.
-         */
-        type: Product.Type;
-
-        /**
          * The licensed item identifier.
          */
         licensed_item?: string;
@@ -302,6 +297,11 @@ export namespace V2 {
          * The tax code for the product.
          */
         tax_code?: string;
+
+        /**
+         * The type of the product.
+         */
+        type: Product.Type;
       }
 
       export interface ScheduledTaxRate {
@@ -404,11 +404,6 @@ export namespace V2 {
 
       export interface Product {
         /**
-         * The type of the product.
-         */
-        type: Product.Type;
-
-        /**
          * The licensed item identifier.
          */
         licensed_item?: string;
@@ -422,6 +417,11 @@ export namespace V2 {
          * The tax code for the product.
          */
         tax_code?: string;
+
+        /**
+         * The type of the product.
+         */
+        type: Product.Type;
       }
 
       export namespace Product {
@@ -515,11 +515,6 @@ export namespace V2 {
 
       export interface Product {
         /**
-         * The type of the product.
-         */
-        type: Product.Type;
-
-        /**
          * The licensed item identifier.
          */
         licensed_item?: string;
@@ -533,6 +528,11 @@ export namespace V2 {
          * The tax code for the product.
          */
         tax_code?: string;
+
+        /**
+         * The type of the product.
+         */
+        type: Product.Type;
       }
 
       export namespace Product {

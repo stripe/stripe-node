@@ -1886,6 +1886,11 @@ export namespace SetupIntentCreateParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
+     */
+    shared_payment_granted_token?: string;
+
+    /**
      * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
      */
     shopeepay?: PaymentMethodData.Shopeepay;
@@ -1934,11 +1939,6 @@ export namespace SetupIntentCreateParams {
      * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
      */
     zip?: PaymentMethodData.Zip;
-
-    /**
-     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
-     */
-    shared_payment_granted_token?: string;
   }
 
   export interface PaymentMethodOptions {
@@ -3880,6 +3880,11 @@ export namespace SetupIntentUpdateParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
+     */
+    shared_payment_granted_token?: string;
+
+    /**
      * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
      */
     shopeepay?: PaymentMethodData.Shopeepay;
@@ -3928,11 +3933,6 @@ export namespace SetupIntentUpdateParams {
      * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
      */
     zip?: PaymentMethodData.Zip;
-
-    /**
-     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
-     */
-    shared_payment_granted_token?: string;
   }
 
   export interface PaymentMethodOptions {
@@ -5765,6 +5765,11 @@ export namespace SetupIntentConfirmParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
+     */
+    shared_payment_granted_token?: string;
+
+    /**
      * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
      */
     shopeepay?: PaymentMethodData.Shopeepay;
@@ -5813,11 +5818,6 @@ export namespace SetupIntentConfirmParams {
      * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
      */
     zip?: PaymentMethodData.Zip;
-
-    /**
-     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
-     */
-    shared_payment_granted_token?: string;
   }
 
   export interface PaymentMethodOptions {
