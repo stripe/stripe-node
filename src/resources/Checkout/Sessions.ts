@@ -1609,6 +1609,8 @@ export namespace Checkout {
       upi?: PaymentMethodOptions.Upi;
 
       us_bank_account?: PaymentMethodOptions.UsBankAccount;
+
+      bizum?: PaymentMethodOptions.Bizum;
     }
 
     export type PaymentStatus = 'no_payment_required' | 'paid' | 'unpaid';
@@ -3403,6 +3405,10 @@ export namespace Checkout {
         verification_method?: UsBankAccount.VerificationMethod;
       }
 
+      export interface Bizum {
+        mandate_options?: Bizum.MandateOptions;
+      }
+
       export namespace AcssDebit {
         export type Currency = 'cad' | 'usd';
 
@@ -3462,6 +3468,10 @@ export namespace Checkout {
         }
 
         export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      }
+
+      export namespace Bizum {
+        export interface MandateOptions {}
       }
 
       export namespace Boleto {
@@ -5320,6 +5330,11 @@ export namespace Checkout {
        * contains details about the WeChat Pay payment method options.
        */
       wechat_pay?: PaymentMethodOptions.WechatPay;
+
+      /**
+       * contains details about the Bizum payment method options.
+       */
+      bizum?: PaymentMethodOptions.Bizum;
     }
 
     export type PaymentMethodType =
@@ -7045,6 +7060,13 @@ export namespace Checkout {
         setup_future_usage?: 'none';
       }
 
+      export interface Bizum {
+        /**
+         * Additional fields for mandate creation.
+         */
+        mandate_options?: Bizum.MandateOptions;
+      }
+
       export namespace AcssDebit {
         export type Currency = 'cad' | 'usd';
 
@@ -7106,6 +7128,10 @@ export namespace Checkout {
         }
 
         export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      }
+
+      export namespace Bizum {
+        export interface MandateOptions {}
       }
 
       export namespace Boleto {
