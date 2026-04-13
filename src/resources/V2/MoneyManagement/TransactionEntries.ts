@@ -130,11 +130,6 @@ export namespace V2 {
 
         export interface Flow {
           /**
-           * Open Enum. Type of the flow that created the Transaction. The field matching this value will contain the ID of the flow.
-           */
-          type: Flow.Type;
-
-          /**
            * If applicable, the ID of the Adjustment that created this Transaction.
            */
           adjustment?: string;
@@ -173,6 +168,11 @@ export namespace V2 {
            * If applicable, the ID of the ReceivedDebit that created this Transaction.
            */
           received_debit?: string;
+
+          /**
+           * Open Enum. Type of the flow that created the Transaction. The field matching this value will contain the ID of the flow.
+           */
+          type: Flow.Type;
         }
 
         export namespace Flow {
