@@ -159,7 +159,7 @@ export function createWebhooks(
           : JSON.parse(payload);
       if (jsonPayload && jsonPayload.object === 'v2.core.event') {
         throw new Error(
-          'You passed an event notification to stripe.webhooks.constructEvent, which expects a webhook payload. Use stripe.parseEventNotification instead.'
+          'You passed an event notification to stripe.webhooks.constructEvent, which expects a webhook payload. Use stripe.parseEventNotificationAsync instead.'
         );
       }
       return jsonPayload;
