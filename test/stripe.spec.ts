@@ -1049,9 +1049,7 @@ describe('Stripe Module', function() {
         expect.fail('Expected an error to be thrown');
       } catch (e) {
         expect(e).to.be.instanceOf(Error);
-        expect(e.message).to.contain(
-          'stripe.webhooks.constructEventAsync'
-        );
+        expect(e.message).to.contain('stripe.webhooks.constructEventAsync');
       }
     });
 
@@ -1094,11 +1092,10 @@ describe('Stripe Module', function() {
           if (err) return done(err);
           try {
             const payload = JSON.stringify(jsonPayload);
-            const header =
-              await stripe.webhooks.generateTestHeaderStringAsync({
-                payload,
-                secret,
-              });
+            const header = await stripe.webhooks.generateTestHeaderStringAsync({
+              payload,
+              secret,
+            });
 
             const event = await stripe.parseEventNotificationAsync(
               payload,
@@ -1159,11 +1156,10 @@ describe('Stripe Module', function() {
           if (err) return done(err);
           try {
             const payload = JSON.stringify(jsonPayload);
-            const header =
-              await stripe.webhooks.generateTestHeaderStringAsync({
-                payload,
-                secret,
-              });
+            const header = await stripe.webhooks.generateTestHeaderStringAsync({
+              payload,
+              secret,
+            });
 
             const event = await stripe.parseEventNotificationAsync(
               payload,
@@ -1228,11 +1224,10 @@ describe('Stripe Module', function() {
 
           try {
             const payload = JSON.stringify(jsonPayload);
-            const header =
-              await stripe.webhooks.generateTestHeaderStringAsync({
-                payload,
-                secret,
-              });
+            const header = await stripe.webhooks.generateTestHeaderStringAsync({
+              payload,
+              secret,
+            });
 
             const event = await stripe.parseEventNotificationAsync(
               payload,
@@ -1289,11 +1284,10 @@ describe('Stripe Module', function() {
 
           try {
             const payload = JSON.stringify(jsonPayload);
-            const header =
-              await stripe.webhooks.generateTestHeaderStringAsync({
-                payload,
-                secret,
-              });
+            const header = await stripe.webhooks.generateTestHeaderStringAsync({
+              payload,
+              secret,
+            });
 
             const event = await stripe.parseEventNotificationAsync(
               payload,
