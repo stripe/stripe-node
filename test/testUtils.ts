@@ -16,6 +16,7 @@ import {
   InternalRequestOptions,
   RequestSettings,
 } from '../src/Types.js';
+import {StripeConfig} from '../src/lib.js';
 import {NodeHttpClient} from '../src/net/NodeHttpClient.js';
 import {HttpClientResponseInterface} from '../src/net/HttpClient.js';
 import {AddressInfo} from 'net';
@@ -24,7 +25,7 @@ const testingHttpAgent = new http.Agent({keepAlive: false});
 
 export const FAKE_API_KEY = 'sk_test_123';
 export const getTestServerStripe = (
-  clientOptions: RequestSettings,
+  clientOptions: StripeConfig,
   handler: (
     req: http.IncomingMessage,
     res: http.ServerResponse,

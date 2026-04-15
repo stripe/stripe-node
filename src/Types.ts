@@ -102,6 +102,7 @@ export type RequestEvent = {
   idempotency_key?: string;
   method?: string;
   path?: string;
+  body?: RequestData;
   request_start_time: number;
   usage?: Array<string>;
 };
@@ -139,6 +140,7 @@ export type ResponseEvent = {
   path?: string;
   status?: number;
   request_id?: string;
+  body?: Record<string, any> | string;
   elapsed: number;
   request_start_time?: number;
   request_end_time?: number;
@@ -221,5 +223,6 @@ export type UserProvidedConfig = {
   stripeContext?: string | StripeContext;
   typescript?: boolean;
   telemetry?: boolean;
+  emitEventBodies?: boolean;
   appInfo?: AppInfo;
 };

@@ -2,7 +2,7 @@ import {Agent} from 'http';
 
 import {RequestAuthenticator} from './Types.js';
 import {ApiVersion} from './apiVersion.js';
-import {HttpClient} from './net/HttpClient.js';
+import {HttpClientInterface} from './net/HttpClient.js';
 import {StripeContext} from './StripeContext.js';
 
 export declare class StripeResource {
@@ -59,7 +59,7 @@ export interface StripeConfig {
    * Useful for making requests in contexts other than NodeJS (eg. using
    * `fetch`).
    */
-  httpClient?: HttpClient;
+  httpClient?: HttpClientInterface;
 
   /**
    * Request timeout in milliseconds.
@@ -88,6 +88,13 @@ export interface StripeConfig {
    * Currently, the only telemetry we send is latency metrics.
    */
   telemetry?: boolean;
+
+  /**
+   * Pass `emitEventBodies: true` to include request and response bodies
+   * in the `request` and `response` events emitted by the Stripe client.
+   * Bodies may contain sensitive data. Defaults to false.
+   */
+  emitEventBodies?: boolean;
 
   /**
    * For plugin authors to identify their code.
