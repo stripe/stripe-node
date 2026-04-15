@@ -107,11 +107,6 @@ export namespace V2 {
     export namespace FinancialAddress {
       export interface Credentials {
         /**
-         * Open Enum. The type of Credentials that are provisioned for the FinancialAddress.
-         */
-        type: Credentials.Type;
-
-        /**
          * The credentials of the UK Bank Account for the FinancialAddress. This contains unique banking details such as the sort code, account number, etc. of a UK bank account.
          */
         gb_bank_account?: Credentials.GbBankAccount;
@@ -122,6 +117,11 @@ export namespace V2 {
         sepa_bank_account?: Credentials.SepaBankAccount;
 
         /**
+         * Open Enum. The type of Credentials that are provisioned for the FinancialAddress.
+         */
+        type: Credentials.Type;
+
+        /**
          * The credentials of the US Bank Account for the FinancialAddress. This contains unique banking details such as the routing number, account number, etc. of a US bank account.
          */
         us_bank_account?: Credentials.UsBankAccount;
@@ -130,11 +130,6 @@ export namespace V2 {
       export type Status = 'active' | 'archived' | 'failed' | 'pending';
 
       export namespace Credentials {
-        export type Type =
-          | 'gb_bank_account'
-          | 'sepa_bank_account'
-          | 'us_bank_account';
-
         export interface GbBankAccount {
           /**
            * The account holder name to be used during bank transference.
@@ -190,6 +185,11 @@ export namespace V2 {
            */
           last4: string;
         }
+
+        export type Type =
+          | 'gb_bank_account'
+          | 'sepa_bank_account'
+          | 'us_bank_account';
 
         export interface UsBankAccount {
           /**

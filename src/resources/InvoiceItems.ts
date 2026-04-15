@@ -426,6 +426,11 @@ export namespace InvoiceItem {
        * The subscription schedule that generated this invoice item
        */
       schedule: string;
+
+      /**
+       * The subscription associated with this schedule
+       */
+      subscription: string | null;
     }
 
     export interface SubscriptionDetails {

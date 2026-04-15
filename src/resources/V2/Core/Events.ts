@@ -113,14 +113,14 @@ export namespace V2 {
 
       export interface Reason {
         /**
-         * Event reason type.
-         */
-        type: 'request';
-
-        /**
          * Information on the API request that instigated the event.
          */
         request?: Reason.Request;
+
+        /**
+         * Event reason type.
+         */
+        type: 'request';
       }
 
       export namespace Reason {
@@ -144,11 +144,6 @@ export namespace V2 {
         export namespace Request {
           export interface Client {
             /**
-             * The type of the client.
-             */
-            type: Client.Type;
-
-            /**
              * API key that triggered the event.
              */
             api_key?: Client.ApiKey;
@@ -162,11 +157,14 @@ export namespace V2 {
              * Stripe action that triggered the event.
              */
             stripe_action?: Client.StripeAction;
+
+            /**
+             * The type of the client.
+             */
+            type: Client.Type;
           }
 
           export namespace Client {
-            export type Type = 'api_key' | 'dashboard_user' | 'stripe_action';
-
             export interface ApiKey {
               /**
                * The ID of the API key.
@@ -192,6 +190,8 @@ export namespace V2 {
             }
 
             export interface StripeAction {}
+
+            export type Type = 'api_key' | 'dashboard_user' | 'stripe_action';
           }
         }
       }

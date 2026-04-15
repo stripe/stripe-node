@@ -125,7 +125,7 @@ export namespace SharedPayment {
       /**
        * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
        */
-      billing_details?: PaymentMethodDetails.BillingDetails | null;
+      billing_details: PaymentMethodDetails.BillingDetails | null;
 
       blik?: PaymentMethodDetails.Blik;
 
@@ -1514,27 +1514,27 @@ export namespace SharedPayment {
     export namespace RiskDetails {
       export interface Insights {
         /**
-         * Bot risk insight (score: Float, recommended_action).
+         * Bot risk insight.
          */
         bot?: Insights.Bot | null;
 
         /**
-         * Card issuer decline risk insight (score: Float, recommended_action).
+         * Card issuer decline risk insight.
          */
         card_issuer_decline?: Insights.CardIssuerDecline | null;
 
         /**
-         * Card testing risk insight (score: Float, recommended_action).
+         * Card testing risk insight.
          */
         card_testing?: Insights.CardTesting | null;
 
         /**
-         * Fraudulent dispute risk insight (score: Integer, recommended_action).
+         * Fraudulent dispute risk insight.
          */
         fraudulent_dispute: Insights.FraudulentDispute | null;
 
         /**
-         * Stolen card risk insight (score: Integer, recommended_action).
+         * Stolen card risk insight.
          */
         stolen_card?: Insights.StolenCard | null;
       }
@@ -1547,7 +1547,7 @@ export namespace SharedPayment {
           recommended_action: string;
 
           /**
-           * Risk score for this insight (float).
+           * Risk score for this insight.
            */
           score: number;
         }
@@ -1559,7 +1559,7 @@ export namespace SharedPayment {
           recommended_action: string;
 
           /**
-           * Risk score for this insight (float).
+           * Risk score for this insight.
            */
           score: number;
         }
@@ -1571,7 +1571,7 @@ export namespace SharedPayment {
           recommended_action: string;
 
           /**
-           * Risk score for this insight (float).
+           * Risk score for this insight.
            */
           score: number;
         }
@@ -1583,7 +1583,7 @@ export namespace SharedPayment {
           recommended_action: string;
 
           /**
-           * Risk score for this insight (integer).
+           * Risk score for this insight.
            */
           score: number;
         }
@@ -1595,7 +1595,7 @@ export namespace SharedPayment {
           recommended_action: string;
 
           /**
-           * Risk score for this insight (integer).
+           * Risk score for this insight.
            */
           score: number;
         }

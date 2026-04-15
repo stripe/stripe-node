@@ -61,11 +61,6 @@ export namespace V2 {
     export namespace AccountLink {
       export interface UseCase {
         /**
-         * Open Enum. The type of Account Link the user is requesting.
-         */
-        type: UseCase.Type;
-
-        /**
          * Hash containing configuration options for an Account Link object that onboards a new account.
          */
         account_onboarding?: UseCase.AccountOnboarding;
@@ -84,15 +79,14 @@ export namespace V2 {
          * Hash containing configuration options for an Account Link that updates an existing recipient.
          */
         recipient_update?: UseCase.RecipientUpdate;
+
+        /**
+         * Open Enum. The type of Account Link the user is requesting.
+         */
+        type: UseCase.Type;
       }
 
       export namespace UseCase {
-        export type Type =
-          | 'account_onboarding'
-          | 'account_update'
-          | 'recipient_onboarding'
-          | 'recipient_update';
-
         export interface AccountOnboarding {
           /**
            * Specifies the requirements that Stripe collects from v2/core/accounts in the Onboarding flow.
@@ -180,6 +174,12 @@ export namespace V2 {
            */
           return_url?: string;
         }
+
+        export type Type =
+          | 'account_onboarding'
+          | 'account_update'
+          | 'recipient_onboarding'
+          | 'recipient_update';
 
         export namespace AccountOnboarding {
           export interface CollectionOptions {
@@ -293,11 +293,6 @@ export namespace V2 {
     export namespace AccountLinkCreateParams {
       export interface UseCase {
         /**
-         * Open Enum. The type of Account Link the user is requesting.
-         */
-        type: UseCase.Type;
-
-        /**
          * Hash containing configuration options for an Account Link object that onboards a new account.
          */
         account_onboarding?: UseCase.AccountOnboarding;
@@ -316,15 +311,14 @@ export namespace V2 {
          * Hash containing configuration options for an Account Link that updates an existing recipient.
          */
         recipient_update?: UseCase.RecipientUpdate;
+
+        /**
+         * Open Enum. The type of Account Link the user is requesting.
+         */
+        type: UseCase.Type;
       }
 
       export namespace UseCase {
-        export type Type =
-          | 'account_onboarding'
-          | 'account_update'
-          | 'recipient_onboarding'
-          | 'recipient_update';
-
         export interface AccountOnboarding {
           /**
            * Specifies the requirements that Stripe collects from v2/core/accounts in the Onboarding flow.
@@ -412,6 +406,12 @@ export namespace V2 {
            */
           return_url?: string;
         }
+
+        export type Type =
+          | 'account_onboarding'
+          | 'account_update'
+          | 'recipient_onboarding'
+          | 'recipient_update';
 
         export namespace AccountOnboarding {
           export interface CollectionOptions {

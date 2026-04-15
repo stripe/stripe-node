@@ -193,6 +193,11 @@ export namespace Identity {
 
     export interface Email {
       /**
+       * Additional email verification details
+       */
+      details?: Email.Details;
+
+      /**
        * Email to be verified.
        */
       email: string | null;
@@ -295,7 +300,7 @@ export namespace Identity {
       status: Selfie.Status;
     }
 
-    export type Type = 'document' | 'id_number' | 'verification_flow';
+    export type Type = 'document' | 'email' | 'id_number' | 'verification_flow';
 
     export namespace Document {
       export interface Dob {
@@ -376,6 +381,23 @@ export namespace Identity {
     }
 
     export namespace Email {
+      export interface Details {
+        /**
+         * Number of days from the time when the email domain was first observed to the time of verification.
+         */
+        days_since_domain_creation?: number;
+
+        /**
+         * Number of days from the time when the email address was first observed to the time of verification.
+         */
+        days_since_ownership_started?: number;
+
+        /**
+         * Two-letter ISO 3166-1 alpha-2 country code of the email domain's country.
+         */
+        domain_country?: string;
+      }
+
       export interface Error {
         /**
          * A short machine-readable string giving the reason for the verification failure.
@@ -558,6 +580,6 @@ export namespace Identity {
   }
 
   export namespace VerificationReportListParams {
-    export type Type = 'document' | 'id_number';
+    export type Type = 'document' | 'email' | 'id_number';
   }
 }

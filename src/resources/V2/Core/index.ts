@@ -41,6 +41,12 @@ import {
   EventDestination,
   EventDestinationResource,
 } from './EventDestinations.js';
+import {V2 as V2Namespace9, Workflow, WorkflowResource} from './Workflows.js';
+import {
+  V2 as V2Namespace10,
+  WorkflowRun,
+  WorkflowRunResource,
+} from './WorkflowRuns.js';
 import {AccountPersonToken} from './AccountPersonTokens.js';
 import {AccountPerson} from './AccountPersons.js';
 import {Vault} from './Vault/index.js';
@@ -54,6 +60,8 @@ export {ClaimableSandbox} from './ClaimableSandboxes.js';
 export {ConnectionSession} from './ConnectionSessions.js';
 export {Event} from './Events.js';
 export {EventDestination} from './EventDestinations.js';
+export {Workflow} from './Workflows.js';
+export {WorkflowRun} from './WorkflowRuns.js';
 export {AccountPersonToken} from './AccountPersonTokens.js';
 export {AccountPerson} from './AccountPersons.js';
 
@@ -67,6 +75,8 @@ export class Core {
   connectionSessions: ConnectionSessionResource;
   events: EventResource;
   eventDestinations: EventDestinationResource;
+  workflows: WorkflowResource;
+  workflowRuns: WorkflowRunResource;
   vault: Vault;
 
   constructor(private readonly stripe: Stripe) {
@@ -79,6 +89,8 @@ export class Core {
     this.connectionSessions = new ConnectionSessionResource(stripe);
     this.events = new EventResource(stripe);
     this.eventDestinations = new EventDestinationResource(stripe);
+    this.workflows = new WorkflowResource(stripe);
+    this.workflowRuns = new WorkflowRunResource(stripe);
     this.vault = new Vault(stripe);
   }
 }
@@ -119,6 +131,13 @@ export declare namespace Core {
   export type EventDestinationEnableParams = V2Namespace8.Core.EventDestinationEnableParams;
   export type EventDestinationPingParams = V2Namespace8.Core.EventDestinationPingParams;
   export {EventDestination};
+  export type WorkflowListParams = V2Namespace9.Core.WorkflowListParams;
+  export type WorkflowRetrieveParams = V2Namespace9.Core.WorkflowRetrieveParams;
+  export type WorkflowInvokeParams = V2Namespace9.Core.WorkflowInvokeParams;
+  export {Workflow};
+  export type WorkflowRunListParams = V2Namespace10.Core.WorkflowRunListParams;
+  export type WorkflowRunRetrieveParams = V2Namespace10.Core.WorkflowRunRetrieveParams;
+  export {WorkflowRun};
   export {AccountPersonToken};
   export {AccountPerson};
   export {Vault};

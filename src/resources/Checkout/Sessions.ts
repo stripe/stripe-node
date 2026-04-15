@@ -782,6 +782,8 @@ export interface Session {
    */
   approval_method?: Checkout.Session.ApprovalMethod | null;
 
+  automatic_surcharge?: Checkout.Session.AutomaticSurcharge;
+
   automatic_tax: Checkout.Session.AutomaticTax;
 
   /**
@@ -1069,6 +1071,8 @@ export interface Session {
    */
   success_url: string | null;
 
+  surcharge_cost?: Checkout.Session.SurchargeCost;
+
   tax_id_collection?: Checkout.Session.TaxIdCollection;
 
   /**
@@ -1109,6 +1113,33 @@ export namespace Checkout {
     }
 
     export type ApprovalMethod = 'auto' | 'manual';
+
+    export interface AutomaticSurcharge {
+      /**
+       * Determines which amount serves as the basis for calculating the surcharge.
+       */
+      calculation_basis: AutomaticSurcharge.CalculationBasis | null;
+
+      /**
+       * Indicates whether automatic surcharge is enabled for the session.
+       */
+      enabled: boolean;
+
+      /**
+       * The surcharge provider used for this session.
+       */
+      provider?: AutomaticSurcharge.Provider;
+
+      /**
+       * The status of the most recent surcharge calculation for this session.
+       */
+      status?: AutomaticSurcharge.Status;
+
+      /**
+       * Specifies whether the surcharge is considered inclusive or exclusive of taxes.
+       */
+      tax_behavior: AutomaticSurcharge.TaxBehavior | null;
+    }
 
     export interface AutomaticTax {
       /**
@@ -1513,6 +1544,8 @@ export namespace Checkout {
 
       billie?: PaymentMethodOptions.Billie;
 
+      bizum?: PaymentMethodOptions.Bizum;
+
       boleto?: PaymentMethodOptions.Boleto;
 
       card?: PaymentMethodOptions.Card;
@@ -1698,6 +1731,23 @@ export namespace Checkout {
 
     export type SubmitType = 'auto' | 'book' | 'donate' | 'pay' | 'subscribe';
 
+    export interface SurchargeCost {
+      /**
+       * Total surcharge cost before taxes are applied.
+       */
+      amount_subtotal: number;
+
+      /**
+       * Total tax amount applied due to surcharging. If no tax was applied, defaults to 0.
+       */
+      amount_tax: number;
+
+      /**
+       * Total surcharge cost after taxes are applied.
+       */
+      amount_total: number;
+    }
+
     export interface TaxIdCollection {
       /**
        * Indicates whether tax ID collection is enabled for the session
@@ -1720,6 +1770,11 @@ export namespace Checkout {
        * This is the sum of all the shipping amounts.
        */
       amount_shipping: number | null;
+
+      /**
+       * The surcharge amount that was applied to the Checkout Session.
+       */
+      amount_surcharge?: number;
 
       /**
        * This is the sum of all the tax amounts.
@@ -1759,6 +1814,16 @@ export namespace Checkout {
          */
         url: string | null;
       }
+    }
+
+    export namespace AutomaticSurcharge {
+      export type CalculationBasis = 'total_after_tax' | 'total_before_tax';
+
+      export type Provider = 'interpayments' | 'yeeld';
+
+      export type Status = 'complete' | 'failed' | 'requires_input';
+
+      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
     }
 
     export namespace AutomaticTax {
@@ -2769,6 +2834,10 @@ export namespace Checkout {
         capture_method?: 'manual';
       }
 
+      export interface Bizum {
+        mandate_options?: Bizum.MandateOptions;
+      }
+
       export interface Boleto {
         /**
          * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto voucher will expire on Wednesday at 23:59 America/Sao_Paulo time.
@@ -3399,6 +3468,10 @@ export namespace Checkout {
         }
 
         export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      }
+
+      export namespace Bizum {
+        export interface MandateOptions {}
       }
 
       export namespace Boleto {
@@ -4203,6 +4276,11 @@ export namespace Checkout {
     approval_method?: SessionCreateParams.ApprovalMethod;
 
     /**
+     * Settings for automatic surcharge calculation for this session.
+     */
+    automatic_surcharge?: SessionCreateParams.AutomaticSurcharge;
+
+    /**
      * Settings for automatic tax lookup for this session and resulting payments, invoices, and subscriptions.
      */
     automatic_tax?: SessionCreateParams.AutomaticTax;
@@ -4535,6 +4613,23 @@ export namespace Checkout {
     }
 
     export type ApprovalMethod = 'auto' | 'manual';
+
+    export interface AutomaticSurcharge {
+      /**
+       * Determines which amount serves as the basis for calculating the surcharge.
+       */
+      calculation_basis?: AutomaticSurcharge.CalculationBasis;
+
+      /**
+       * Set to `true` to calculate surcharge automatically using the customer's card details and location.
+       */
+      enabled: boolean;
+
+      /**
+       * Specifies whether the surcharge is considered inclusive or exclusive of taxes.
+       */
+      tax_behavior?: AutomaticSurcharge.TaxBehavior;
+    }
 
     export interface AutomaticTax {
       /**
@@ -5052,6 +5147,11 @@ export namespace Checkout {
       billie?: PaymentMethodOptions.Billie;
 
       /**
+       * contains details about the Bizum payment method options.
+       */
+      bizum?: PaymentMethodOptions.Bizum;
+
+      /**
        * contains details about the Boleto payment method options.
        */
       boleto?: PaymentMethodOptions.Boleto;
@@ -5507,6 +5607,12 @@ export namespace Checkout {
          */
         enabled: boolean;
       }
+    }
+
+    export namespace AutomaticSurcharge {
+      export type CalculationBasis = 'total_after_tax' | 'total_before_tax';
+
+      export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
     }
 
     export namespace AutomaticTax {
@@ -6295,6 +6401,13 @@ export namespace Checkout {
         capture_method?: 'manual';
       }
 
+      export interface Bizum {
+        /**
+         * Additional fields for mandate creation.
+         */
+        mandate_options?: Bizum.MandateOptions;
+      }
+
       export interface Boleto {
         /**
          * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto invoice will expire on Wednesday at 23:59 America/Sao_Paulo time.
@@ -7015,6 +7128,10 @@ export namespace Checkout {
         }
 
         export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      }
+
+      export namespace Bizum {
+        export interface MandateOptions {}
       }
 
       export namespace Boleto {

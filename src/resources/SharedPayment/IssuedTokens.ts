@@ -38,6 +38,11 @@ export interface IssuedToken {
   livemode: boolean;
 
   /**
+   * If present, describes the action required to make this `SharedPaymentIssuedToken` usable for payments. Present when the token is in `requires_action` state.
+   */
+  next_action: SharedPayment.IssuedToken.NextAction | null;
+
+  /**
    * ID of an existing PaymentMethod.
    */
   payment_method: string | null;
@@ -70,6 +75,11 @@ export interface IssuedToken {
   } | null;
 
   /**
+   * Status of this SharedPaymentIssuedToken, one of `active`, `requires_action`, or `deactivated`.
+   */
+  status: SharedPayment.IssuedToken.Status | null;
+
+  /**
    * Usage details of the SharedPaymentIssuedToken
    */
   usage_details: SharedPayment.IssuedToken.UsageDetails | null;
@@ -86,6 +96,18 @@ export namespace SharedPayment {
       | 'expired'
       | 'resolved'
       | 'revoked';
+
+    export interface NextAction {
+      /**
+       * Specifies the type of next action required. Determines which child attribute contains action details.
+       */
+      type: 'use_stripe_sdk';
+
+      /**
+       * Contains details for handling the next action using Stripe.js, iOS, or Android SDKs. Present when `next_action.type` is `use_stripe_sdk`.
+       */
+      use_stripe_sdk: NextAction.UseStripeSdk | null;
+    }
 
     export interface RiskDetails {
       /**
@@ -104,12 +126,9 @@ export namespace SharedPayment {
        * The unique and logical string that identifies the seller platform that this SharedToken is being created for.
        */
       network_business_profile: string;
-
-      /**
-       * The unique and logical string that identifies the seller platform that this SharedToken is being created for.
-       */
-      network_id?: string;
     }
+
+    export type Status = 'active' | 'deactivated' | 'requires_action';
 
     export interface UsageDetails {
       /**
@@ -140,30 +159,39 @@ export namespace SharedPayment {
       recurring_interval?: UsageLimits.RecurringInterval | null;
     }
 
+    export namespace NextAction {
+      export interface UseStripeSdk {
+        /**
+         * A base64-encoded string used by Stripe.js and the iOS and Android client SDKs to handle the next action. Its content is subject to change.
+         */
+        value: string;
+      }
+    }
+
     export namespace RiskDetails {
       export interface Insights {
         /**
-         * Bot risk insight (score: Float, recommended_action).
+         * Bot risk insight.
          */
         bot?: Insights.Bot | null;
 
         /**
-         * Card issuer decline risk insight (score: Float, recommended_action).
+         * Card issuer decline risk insight.
          */
         card_issuer_decline?: Insights.CardIssuerDecline | null;
 
         /**
-         * Card testing risk insight (score: Float, recommended_action).
+         * Card testing risk insight.
          */
         card_testing?: Insights.CardTesting | null;
 
         /**
-         * Fraudulent dispute risk insight (score: Integer, recommended_action).
+         * Fraudulent dispute risk insight.
          */
         fraudulent_dispute: Insights.FraudulentDispute | null;
 
         /**
-         * Stolen card risk insight (score: Integer, recommended_action).
+         * Stolen card risk insight.
          */
         stolen_card?: Insights.StolenCard | null;
       }
@@ -176,7 +204,7 @@ export namespace SharedPayment {
           recommended_action: string;
 
           /**
-           * Risk score for this insight (float).
+           * Risk score for this insight.
            */
           score: number;
         }
@@ -188,7 +216,7 @@ export namespace SharedPayment {
           recommended_action: string;
 
           /**
-           * Risk score for this insight (float).
+           * Risk score for this insight.
            */
           score: number;
         }
@@ -200,7 +228,7 @@ export namespace SharedPayment {
           recommended_action: string;
 
           /**
-           * Risk score for this insight (float).
+           * Risk score for this insight.
            */
           score: number;
         }
@@ -212,7 +240,7 @@ export namespace SharedPayment {
           recommended_action: string;
 
           /**
-           * Risk score for this insight (integer).
+           * Risk score for this insight.
            */
           score: number;
         }
@@ -224,7 +252,7 @@ export namespace SharedPayment {
           recommended_action: string;
 
           /**
-           * Risk score for this insight (integer).
+           * Risk score for this insight.
            */
           score: number;
         }

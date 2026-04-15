@@ -52,9 +52,21 @@ export namespace BalanceSettings {
     debit_negative_balances: boolean | null;
 
     /**
+     * The default settlement currency for the account.
+     */
+    default_settlement_currency?: string | null;
+
+    /**
      * Settings specific to the account's payouts.
      */
     payouts: Payments.Payouts | null;
+
+    /**
+     * A hash of settlement currencies and their states. Each key is an ISO 4217 currency code, and the value is one of `enabled`, `disabled`, or `restricted_by_application`.
+     */
+    settlement_currencies?: {
+      [key: string]: Payments.SettlementCurrencies;
+    } | null;
 
     settlement_timing: Payments.SettlementTiming;
   }
@@ -83,6 +95,11 @@ export namespace BalanceSettings {
        */
       status: Payouts.Status;
     }
+
+    export type SettlementCurrencies =
+      | 'disabled'
+      | 'enabled'
+      | 'restricted_by_application';
 
     export interface SettlementTiming {
       /**
@@ -159,6 +176,13 @@ export namespace BalanceSettingsUpdateParams {
     payouts?: Payments.Payouts;
 
     /**
+     * A hash of settlement currencies to update. Each key is an ISO 4217 currency code, and the value is either `enabled` or `disabled`.
+     */
+    settlement_currencies?: {
+      [key: string]: Payments.SettlementCurrencies;
+    };
+
+    /**
      * Settings related to the account's balance settlement timing.
      */
     settlement_timing?: Payments.SettlementTiming;
@@ -183,6 +207,8 @@ export namespace BalanceSettingsUpdateParams {
        */
       statement_descriptor?: string;
     }
+
+    export type SettlementCurrencies = 'disabled' | 'enabled';
 
     export interface SettlementTiming {
       /**

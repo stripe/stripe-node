@@ -65,6 +65,11 @@ export namespace AccountSession {
 
     balances: Components.Balances;
 
+    /**
+     * Configuration for the [Bills](https://docs.stripe.com/connect/supported-embedded-components/bills/) embedded component.
+     */
+    bills?: Components.Bills | null;
+
     capital_financing?: Components.CapitalFinancing | null;
 
     capital_financing_application?: Components.CapitalFinancingApplication | null;
@@ -169,6 +174,15 @@ export namespace AccountSession {
       enabled: boolean;
 
       features: Balances.Features;
+    }
+
+    export interface Bills {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: Bills.Features;
     }
 
     export interface CapitalFinancing {
@@ -455,6 +469,10 @@ export namespace AccountSession {
          */
         standard_payouts: boolean;
       }
+    }
+
+    export namespace Bills {
+      export interface Features {}
     }
 
     export namespace CapitalFinancing {

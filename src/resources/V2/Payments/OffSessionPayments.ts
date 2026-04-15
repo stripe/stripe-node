@@ -450,14 +450,14 @@ export namespace V2 {
         billing_details?: PaymentMethodData.BillingDetails;
 
         /**
-         * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
-         */
-        type: 'card';
-
-        /**
          * Contains card details that can be used to create a card PaymentMethod for PCI compliant users.
          */
         card?: PaymentMethodData.Card;
+
+        /**
+         * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
+         */
+        type: 'card';
       }
 
       export interface PaymentMethodOptions {

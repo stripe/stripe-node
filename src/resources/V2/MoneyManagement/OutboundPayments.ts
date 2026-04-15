@@ -200,11 +200,6 @@ export namespace V2 {
     export namespace OutboundPayment {
       export interface DeliveryOptions {
         /**
-         * Open Enum. Speed of the payout.
-         */
-        speed?: DeliveryOptions.Speed;
-
-        /**
          * Open Enum. Method for bank account.
          */
         bank_account?: DeliveryOptions.BankAccount;
@@ -213,6 +208,11 @@ export namespace V2 {
          * Delivery options for paper check.
          */
         paper_check?: DeliveryOptions.PaperCheck;
+
+        /**
+         * Open Enum. Speed of the payout.
+         */
+        speed?: DeliveryOptions.Speed;
       }
 
       export interface From {
@@ -320,8 +320,6 @@ export namespace V2 {
       }
 
       export namespace DeliveryOptions {
-        export type Speed = 'instant' | 'next_business_day' | 'standard';
-
         export type BankAccount = 'automatic' | 'local' | 'wire';
 
         export interface PaperCheck {
@@ -340,6 +338,8 @@ export namespace V2 {
            */
           signature: string;
         }
+
+        export type Speed = 'instant' | 'next_business_day' | 'standard';
 
         export namespace PaperCheck {
           export type ShippingSpeed = 'priority' | 'standard';
@@ -574,11 +574,6 @@ export namespace V2 {
 
       export interface DeliveryOptions {
         /**
-         * Open Enum. Speed of the payout.
-         */
-        speed?: DeliveryOptions.Speed;
-
-        /**
          * Open Enum. Method for bank account.
          */
         bank_account?: DeliveryOptions.BankAccount;
@@ -587,6 +582,11 @@ export namespace V2 {
          * Delivery options for paper check.
          */
         paper_check?: DeliveryOptions.PaperCheck;
+
+        /**
+         * Open Enum. Speed of the payout.
+         */
+        speed?: DeliveryOptions.Speed;
       }
 
       export interface RecipientNotification {
@@ -598,8 +598,6 @@ export namespace V2 {
       }
 
       export namespace DeliveryOptions {
-        export type Speed = 'instant' | 'next_business_day' | 'standard';
-
         export type BankAccount = 'automatic' | 'local' | 'wire';
 
         export interface PaperCheck {
@@ -618,6 +616,8 @@ export namespace V2 {
            */
           signature: string;
         }
+
+        export type Speed = 'instant' | 'next_business_day' | 'standard';
 
         export namespace PaperCheck {
           export type ShippingSpeed = 'priority' | 'standard';

@@ -133,15 +133,15 @@ export namespace V2 {
 
       export interface Result {
         /**
-         * The type of the `ReportRun` or `QueryRun` result.
-         */
-        type: 'file';
-
-        /**
          * Contains metadata about the file produced by the `ReportRun` or `QueryRun`, including
          * its content type, size, and a URL to download its contents.
          */
         file?: Result.File;
+
+        /**
+         * The type of the `ReportRun` or `QueryRun` result.
+         */
+        type: 'file';
       }
 
       export interface ResultOptions {

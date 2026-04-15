@@ -841,11 +841,6 @@ export namespace V2 {
           export namespace CreditGrantDetails {
             export interface Amount {
               /**
-               * The type of the credit grant amount. We currently support `monetary` and `custom_pricing_unit` billing credits.
-               */
-              type: Amount.Type;
-
-              /**
                * The custom pricing unit amount of the credit grant. Required if `type` is `custom_pricing_unit`.
                */
               custom_pricing_unit?: Amount.CustomPricingUnit;
@@ -854,6 +849,11 @@ export namespace V2 {
                * The monetary amount of the credit grant. Required if `type` is `monetary`.
                */
               monetary?: V2Amount;
+
+              /**
+               * The type of the credit grant amount. We currently support `monetary` and `custom_pricing_unit` billing credits.
+               */
+              type: Amount.Type;
             }
 
             export interface ApplicabilityConfig {
@@ -871,8 +871,6 @@ export namespace V2 {
             }
 
             export namespace Amount {
-              export type Type = 'custom_pricing_unit' | 'monetary';
-
               export interface CustomPricingUnit {
                 /**
                  * The Custom Pricing Unit object.
@@ -889,6 +887,8 @@ export namespace V2 {
                  */
                 value: Decimal;
               }
+
+              export type Type = 'custom_pricing_unit' | 'monetary';
             }
 
             export namespace ApplicabilityConfig {
@@ -909,11 +909,6 @@ export namespace V2 {
           export namespace CreditGrantPerTenantDetails {
             export interface Amount {
               /**
-               * The type of the credit grant amount. We currently support `monetary` and `custom_pricing_unit` billing credits.
-               */
-              type: Amount.Type;
-
-              /**
                * The custom pricing unit amount of the credit grant. Required if `type` is `custom_pricing_unit`.
                */
               custom_pricing_unit?: Amount.CustomPricingUnit;
@@ -922,6 +917,11 @@ export namespace V2 {
                * The monetary amount of the credit grant. Required if `type` is `monetary`.
                */
               monetary?: V2Amount;
+
+              /**
+               * The type of the credit grant amount. We currently support `monetary` and `custom_pricing_unit` billing credits.
+               */
+              type: Amount.Type;
             }
 
             export interface ApplicabilityConfig {
@@ -939,8 +939,6 @@ export namespace V2 {
             }
 
             export namespace Amount {
-              export type Type = 'custom_pricing_unit' | 'monetary';
-
               export interface CustomPricingUnit {
                 /**
                  * The Custom Pricing Unit object.
@@ -957,6 +955,8 @@ export namespace V2 {
                  */
                 value: Decimal;
               }
+
+              export type Type = 'custom_pricing_unit' | 'monetary';
             }
 
             export namespace ApplicabilityConfig {

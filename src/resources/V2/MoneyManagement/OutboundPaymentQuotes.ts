@@ -93,14 +93,14 @@ export namespace V2 {
     export namespace OutboundPaymentQuote {
       export interface DeliveryOptions {
         /**
-         * Open Enum. Speed of the payout.
-         */
-        speed?: DeliveryOptions.Speed;
-
-        /**
          * Open Enum. Method for bank account.
          */
         bank_account?: DeliveryOptions.BankAccount;
+
+        /**
+         * Open Enum. Speed of the payout.
+         */
+        speed?: DeliveryOptions.Speed;
       }
 
       export interface EstimatedFee {
@@ -174,9 +174,9 @@ export namespace V2 {
       }
 
       export namespace DeliveryOptions {
-        export type Speed = 'instant' | 'next_business_day' | 'standard';
-
         export type BankAccount = 'automatic' | 'local' | 'wire';
+
+        export type Speed = 'instant' | 'next_business_day' | 'standard';
       }
 
       export namespace EstimatedFee {
@@ -267,20 +267,20 @@ export namespace V2 {
 
       export interface DeliveryOptions {
         /**
-         * Open Enum. Speed of the payout.
-         */
-        speed?: DeliveryOptions.Speed;
-
-        /**
          * Open Enum. Method for bank account.
          */
         bank_account?: DeliveryOptions.BankAccount;
+
+        /**
+         * Open Enum. Speed of the payout.
+         */
+        speed?: DeliveryOptions.Speed;
       }
 
       export namespace DeliveryOptions {
-        export type Speed = 'instant' | 'next_business_day' | 'standard';
-
         export type BankAccount = 'automatic' | 'local' | 'wire';
+
+        export type Speed = 'instant' | 'next_business_day' | 'standard';
       }
     }
   }
