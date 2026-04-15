@@ -115,6 +115,11 @@ export interface PricingPlan {
   display_name: string;
 
   /**
+   * The ID of the latest version of the PricingPlan.
+   */
+  latest_version: string;
+
+  /**
    * The ID of the live version of the PricingPlan.
    */
   live_version?: string;
