@@ -1066,6 +1066,7 @@ const ALLOWED_CONFIG_PROPERTIES = [
   'port',
   'protocol',
   'telemetry',
+  'emitEventBodies',
   'appInfo',
   'stripeAccount',
   'stripeContext',
@@ -1123,6 +1124,7 @@ export class Stripe {
   _prevRequestMetrics: any;
   _emitter: any;
   _enableTelemetry: boolean;
+  _emitEventBodies: boolean;
   _requestSender: RequestSender;
   _platformFunctions: PlatformFunctions;
   _authenticator: RequestAuthenticator | null = null;
@@ -1301,6 +1303,7 @@ export class Stripe {
 
     this._prevRequestMetrics = [];
     this._enableTelemetry = props.telemetry !== false;
+    this._emitEventBodies = props.emitEventBodies === true;
 
     this._requestSender = Stripe._requestSenderFactory(this as any);
 
@@ -1625,6 +1628,10 @@ export class Stripe {
     return this._enableTelemetry;
   }
 
+  getEmitEventBodiesEnabled(): boolean {
+    return this._emitEventBodies;
+  }
+
   /**
    * @private
    * This may be removed in the future.
@@ -1739,6 +1746,85 @@ export class Stripe {
     if (eventNotification && eventNotification.object === 'event') {
       throw new Error(
         'You passed a webhook payload to stripe.parseEventNotification, which expects an event notification. Use stripe.webhooks.constructEvent instead.'
+      );
+    }
+
+    // Parse string context into StripeContext object if present
+    if (eventNotification.context) {
+      eventNotification.context = StripeContext.parse(
+        eventNotification.context
+      );
+    }
+
+    eventNotification.fetchEvent = (): Promise<unknown> => {
+      return this._requestSender._rawRequest(
+        'GET',
+        `/v2/core/events/${eventNotification.id}`,
+        undefined,
+        {
+          stripeContext: eventNotification.context,
+          headers: {
+            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
+          },
+        },
+        ['fetch_event']
+      );
+    };
+
+    eventNotification.fetchRelatedObject = (): Promise<unknown> => {
+      if (!eventNotification.related_object) {
+        return Promise.resolve(null);
+      }
+
+      return this._requestSender._rawRequest(
+        'GET',
+        eventNotification.related_object.url,
+        undefined,
+        {
+          stripeContext: eventNotification.context,
+          headers: {
+            'Stripe-Request-Trigger': `event=${eventNotification.id}`,
+          },
+        },
+        ['fetch_related_object']
+      );
+    };
+
+    return eventNotification;
+  }
+
+  async parseEventNotificationAsync(
+    payload: string | Uint8Array,
+    header: string | Uint8Array,
+    secret: string,
+    tolerance?: number,
+    cryptoProvider?: CryptoProvider,
+    receivedAt?: number
+    // this return type is ignored?? picks up types from `types/index.d.ts` instead
+  ): Promise<V2.Core.EventNotification> {
+    // Verify the signature using the internal signature helper directly,
+    // bypassing constructEvent's v2 payload check (since v2 payloads are
+    // expected here).
+    if (!this.webhooks.signature) {
+      throw new Error('ERR: missing signature helper, unable to verify');
+    }
+    await this.webhooks.signature.verifyHeaderAsync(
+      payload,
+      header,
+      secret,
+      tolerance || this.webhooks.DEFAULT_TOLERANCE,
+      cryptoProvider || this._platformFunctions.createDefaultCryptoProvider(),
+      receivedAt
+    );
+
+    const eventNotification =
+      payload instanceof Uint8Array
+        ? JSON.parse(new TextDecoder('utf8').decode(payload))
+        : JSON.parse(payload as string);
+
+    if (eventNotification && eventNotification.object === 'event') {
+      throw new Error(
+        'You passed a webhook payload to stripe.parseEventNotificationAsync, which expects an event notification. Use stripe.webhooks.constructEventAsync instead.'
       );
     }
 

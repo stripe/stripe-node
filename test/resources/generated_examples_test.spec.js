@@ -4556,7 +4556,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/billing/license_fees?lookup_keys[0]=lookup_keys',
         response:
-          '{"data":[{"object":"v2.billing.license_fee","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","licensed_item":{"object":"v2.billing.licensed_item","created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","livemode":true},"live_version":"live_version","livemode":true,"service_cycle":{"interval":"month","interval_count":797691627},"tax_behavior":"exclusive","tiers":[{}]}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"object":"v2.billing.license_fee","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","licensed_item":{"object":"v2.billing.licensed_item","created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","livemode":true},"live_version":"live_version","livemode":true,"service_cycle":{"interval":"month","interval_count":797691627},"service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive","tiers":[{}]}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const licenseFees = await stripe.v2.billing.licenseFees.list({
@@ -4571,7 +4571,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/license_fees',
         response:
-          '{"object":"v2.billing.license_fee","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","licensed_item":{"object":"v2.billing.licensed_item","created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","livemode":true},"live_version":"live_version","livemode":true,"service_cycle":{"interval":"month","interval_count":797691627},"tax_behavior":"exclusive","tiers":[{}]}',
+          '{"object":"v2.billing.license_fee","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","licensed_item":{"object":"v2.billing.licensed_item","created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","livemode":true},"live_version":"live_version","livemode":true,"service_cycle":{"interval":"month","interval_count":797691627},"service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive","tiers":[{}]}',
       },
     ]);
     const licenseFee = await stripe.v2.billing.licenseFees.create({
@@ -4591,7 +4591,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/billing/license_fees/id_123',
         response:
-          '{"object":"v2.billing.license_fee","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","licensed_item":{"object":"v2.billing.licensed_item","created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","livemode":true},"live_version":"live_version","livemode":true,"service_cycle":{"interval":"month","interval_count":797691627},"tax_behavior":"exclusive","tiers":[{}]}',
+          '{"object":"v2.billing.license_fee","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","licensed_item":{"object":"v2.billing.licensed_item","created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","livemode":true},"live_version":"live_version","livemode":true,"service_cycle":{"interval":"month","interval_count":797691627},"service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive","tiers":[{}]}',
       },
     ]);
     const licenseFee = await stripe.v2.billing.licenseFees.retrieve('id_123');
@@ -4604,7 +4604,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/license_fees/id_123',
         response:
-          '{"object":"v2.billing.license_fee","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","licensed_item":{"object":"v2.billing.licensed_item","created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","livemode":true},"live_version":"live_version","livemode":true,"service_cycle":{"interval":"month","interval_count":797691627},"tax_behavior":"exclusive","tiers":[{}]}',
+          '{"object":"v2.billing.license_fee","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","licensed_item":{"object":"v2.billing.licensed_item","created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","livemode":true},"live_version":"live_version","livemode":true,"service_cycle":{"interval":"month","interval_count":797691627},"service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive","tiers":[{}]}',
       },
     ]);
     const licenseFee = await stripe.v2.billing.licenseFees.update('id_123');
@@ -4888,7 +4888,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/billing/pricing_plans',
         response:
-          '{"data":[{"object":"v2.billing.pricing_plan","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","livemode":true,"tax_behavior":"exclusive"}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"object":"v2.billing.pricing_plan","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","livemode":true,"tax_behavior":"exclusive"}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const pricingPlans = await stripe.v2.billing.pricingPlans.list();
@@ -4901,7 +4901,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/pricing_plans',
         response:
-          '{"object":"v2.billing.pricing_plan","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","livemode":true,"tax_behavior":"exclusive"}',
+          '{"object":"v2.billing.pricing_plan","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","livemode":true,"tax_behavior":"exclusive"}',
       },
     ]);
     const pricingPlan = await stripe.v2.billing.pricingPlans.create({
@@ -4918,7 +4918,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/billing/pricing_plans/id_123',
         response:
-          '{"object":"v2.billing.pricing_plan","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","livemode":true,"tax_behavior":"exclusive"}',
+          '{"object":"v2.billing.pricing_plan","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","livemode":true,"tax_behavior":"exclusive"}',
       },
     ]);
     const pricingPlan = await stripe.v2.billing.pricingPlans.retrieve('id_123');
@@ -4931,7 +4931,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/pricing_plans/id_123',
         response:
-          '{"object":"v2.billing.pricing_plan","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","livemode":true,"tax_behavior":"exclusive"}',
+          '{"object":"v2.billing.pricing_plan","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","livemode":true,"tax_behavior":"exclusive"}',
       },
     ]);
     const pricingPlan = await stripe.v2.billing.pricingPlans.update('id_123');
@@ -5169,7 +5169,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/billing/rate_cards',
         response:
-          '{"data":[{"object":"v2.billing.rate_card","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","live_version":"live_version","livemode":true,"service_cycle":{"interval":"month","interval_count":797691627},"tax_behavior":"exclusive"}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"object":"v2.billing.rate_card","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","live_version":"live_version","livemode":true,"service_cycle":{"interval":"month","interval_count":797691627},"service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive"}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const rateCards = await stripe.v2.billing.rateCards.list();
@@ -5182,7 +5182,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/rate_cards',
         response:
-          '{"object":"v2.billing.rate_card","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","live_version":"live_version","livemode":true,"service_cycle":{"interval":"month","interval_count":797691627},"tax_behavior":"exclusive"}',
+          '{"object":"v2.billing.rate_card","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","live_version":"live_version","livemode":true,"service_cycle":{"interval":"month","interval_count":797691627},"service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive"}',
       },
     ]);
     const rateCard = await stripe.v2.billing.rateCards.create({
@@ -5201,7 +5201,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/billing/rate_cards/id_123',
         response:
-          '{"object":"v2.billing.rate_card","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","live_version":"live_version","livemode":true,"service_cycle":{"interval":"month","interval_count":797691627},"tax_behavior":"exclusive"}',
+          '{"object":"v2.billing.rate_card","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","live_version":"live_version","livemode":true,"service_cycle":{"interval":"month","interval_count":797691627},"service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive"}',
       },
     ]);
     const rateCard = await stripe.v2.billing.rateCards.retrieve('id_123');
@@ -5214,7 +5214,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/rate_cards/id_123',
         response:
-          '{"object":"v2.billing.rate_card","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","live_version":"live_version","livemode":true,"service_cycle":{"interval":"month","interval_count":797691627},"tax_behavior":"exclusive"}',
+          '{"object":"v2.billing.rate_card","active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","live_version":"live_version","livemode":true,"service_cycle":{"interval":"month","interval_count":797691627},"service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive"}',
       },
     ]);
     const rateCard = await stripe.v2.billing.rateCards.update('id_123');
