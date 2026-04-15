@@ -368,6 +368,7 @@ stripeClient.off('request', onRequest);
   idempotency_key: 'abc123',         // Only present if provided
   method: 'POST',
   path: '/v1/customers',
+  body: {name: 'test'},              // Only present if emitEventBodies is true
   request_start_time: 1565125303932  // Unix timestamp in milliseconds
 }
 ```
@@ -377,15 +378,16 @@ stripeClient.off('request', onRequest);
 ```js
 {
   api_version: 'latest',
-  account: 'acct_TEST',              // Only present if provided
-  idempotency_key: 'abc123',         // Only present if provided
+  account: 'acct_TEST',                       // Only present if provided
+  idempotency_key: 'abc123',                  // Only present if provided
   method: 'POST',
   path: '/v1/customers',
-  status: 402,
+  status: 200,
   request_id: 'req_Ghc9r26ts73DRf',
-  elapsed: 445,                      // Elapsed time in milliseconds
-  request_start_time: 1565125303932, // Unix timestamp in milliseconds
-  request_end_time: 1565125304377    // Unix timestamp in milliseconds
+  body: {id: 'cus_123', object: 'customer'},  // Only present if emitEventBodies is true
+  elapsed: 445,                               // Elapsed time in milliseconds
+  request_start_time: 1565125303932,          // Unix timestamp in milliseconds
+  request_end_time: 1565125304377             // Unix timestamp in milliseconds
 }
 ```
 

@@ -927,6 +927,7 @@ const ALLOWED_CONFIG_PROPERTIES = [
   'port',
   'protocol',
   'telemetry',
+  'emitEventBodies',
   'appInfo',
   'stripeAccount',
   'stripeContext',
@@ -983,6 +984,7 @@ export class Stripe {
   _prevRequestMetrics: any;
   _emitter: any;
   _enableTelemetry: boolean;
+  _emitEventBodies: boolean;
   _requestSender: RequestSender;
   _platformFunctions: PlatformFunctions;
   _authenticator: RequestAuthenticator | null = null;
@@ -1147,6 +1149,7 @@ export class Stripe {
 
     this._prevRequestMetrics = [];
     this._enableTelemetry = props.telemetry !== false;
+    this._emitEventBodies = props.emitEventBodies === true;
 
     this._requestSender = Stripe._requestSenderFactory(this as any);
 
@@ -1455,6 +1458,10 @@ export class Stripe {
 
   getTelemetryEnabled(): boolean {
     return this._enableTelemetry;
+  }
+
+  getEmitEventBodiesEnabled(): boolean {
+    return this._emitEventBodies;
   }
 
   /**

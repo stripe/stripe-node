@@ -108,6 +108,16 @@ describe('Stripe Module', function() {
 
       expect(newStripe.getTelemetryEnabled()).to.equal(false);
     });
+
+    it('should disable emitEventBodies by default', () => {
+      const newStripe = Stripe(FAKE_API_KEY);
+      expect(newStripe.getEmitEventBodiesEnabled()).to.equal(false);
+    });
+
+    it('should enable emitEventBodies when set to true', () => {
+      const newStripe = Stripe(FAKE_API_KEY, {emitEventBodies: true});
+      expect(newStripe.getEmitEventBodiesEnabled()).to.equal(true);
+    });
   });
 
   describe('setApiKey', () => {
@@ -1531,6 +1541,150 @@ describe('Stripe Module', function() {
       expect(caughtError).to.exist;
       expect(caughtError.detail?.message).to.match(
         /Only relative paths are supported/
+      );
+    });
+  });
+
+  describe('emitEventBodies', () => {
+    it('should include request body in request event when enabled', (done) => {
+      getTestServerStripe(
+        {emitEventBodies: true},
+        (req, res) => {
+          res.writeHeader(200);
+          res.write(JSON.stringify({id: 'cus_123', object: 'customer'}));
+          res.end();
+          return {};
+        },
+        (err, stripe, closeServer) => {
+          if (err) return done(err);
+
+          let requestEventFired = false;
+          stripe.on('request', (event) => {
+            requestEventFired = true;
+            expect(event.body).to.be.an('object');
+            expect(event.body).to.have.property('description', 'test customer');
+          });
+
+          stripe.customers
+            .create({description: 'test customer'})
+            .then(() => {
+              expect(requestEventFired).to.equal(true);
+              closeServer();
+              done();
+            })
+            .catch(done);
+        }
+      );
+    });
+
+    it('should include response body in response event when enabled', (done) => {
+      const responseBody = {id: 'cus_123', object: 'customer'};
+      getTestServerStripe(
+        {emitEventBodies: true},
+        (req, res) => {
+          res.writeHeader(200);
+          res.write(JSON.stringify(responseBody));
+          res.end();
+          return {};
+        },
+        (err, stripe, closeServer) => {
+          if (err) return done(err);
+
+          let responseEventFired = false;
+          stripe.on('response', (event) => {
+            responseEventFired = true;
+            expect(event.body).to.be.an('object');
+            expect(event.body).to.have.property('id', 'cus_123');
+            expect(event.body).to.have.property('object', 'customer');
+          });
+
+          stripe.customers
+            .create({description: 'test customer'})
+            .then(() => {
+              expect(responseEventFired).to.equal(true);
+              closeServer();
+              done();
+            })
+            .catch(done);
+        }
+      );
+    });
+
+    it('should not include body fields when disabled (default)', (done) => {
+      getTestServerStripe(
+        {},
+        (req, res) => {
+          res.writeHeader(200);
+          res.write(JSON.stringify({id: 'cus_123', object: 'customer'}));
+          res.end();
+          return {};
+        },
+        (err, stripe, closeServer) => {
+          if (err) return done(err);
+
+          let requestEventFired = false;
+          let responseEventFired = false;
+
+          stripe.on('request', (event) => {
+            requestEventFired = true;
+            expect(event).to.not.have.property('body');
+          });
+
+          stripe.on('response', (event) => {
+            responseEventFired = true;
+            expect(event).to.not.have.property('body');
+          });
+
+          stripe.customers
+            .create({description: 'test customer'})
+            .then(() => {
+              expect(requestEventFired).to.equal(true);
+              expect(responseEventFired).to.equal(true);
+              closeServer();
+              done();
+            })
+            .catch(done);
+        }
+      );
+    });
+
+    it('should still emit response event on API errors', (done) => {
+      getTestServerStripe(
+        {emitEventBodies: true},
+        (req, res) => {
+          res.writeHeader(400);
+          res.write(
+            JSON.stringify({
+              error: {type: 'invalid_request_error', message: 'Bad request'},
+            })
+          );
+          res.end();
+          return {};
+        },
+        (err, stripe, closeServer) => {
+          if (err) return done(err);
+
+          let responseEventFired = false;
+          stripe.on('response', (event) => {
+            responseEventFired = true;
+            expect(event.status).to.equal(400);
+          });
+
+          stripe.customers.create({description: 'test'}).then(
+            () => {
+              done(new Error('Expected error'));
+            },
+            () => {
+              try {
+                expect(responseEventFired).to.equal(true);
+                closeServer();
+                done();
+              } catch (e) {
+                done(e);
+              }
+            }
+          );
+        }
       );
     });
   });
