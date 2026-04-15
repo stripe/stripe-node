@@ -161,12 +161,15 @@ export class RequestSender {
         statusCode,
         headers
       );
-      this._stripe._emitter.emit('response', responseEvent);
 
       res
         .toJSON()
         .then(
           (jsonResponse) => {
+            if (this._stripe.getEmitEventBodiesEnabled()) {
+              responseEvent.body = jsonResponse;
+            }
+
             if (jsonResponse.error) {
               const isOAuth = typeof jsonResponse.error === 'string';
 
@@ -197,6 +200,12 @@ export class RequestSender {
             return jsonResponse;
           },
           (e: Error) => {
+            if (
+              this._stripe.getEmitEventBodiesEnabled() &&
+              (e as any).rawBody
+            ) {
+              responseEvent.body = (e as any).rawBody;
+            }
             throw new StripeAPIError({
               message: 'Invalid JSON received from the Stripe API',
               exception: e,
@@ -206,6 +215,8 @@ export class RequestSender {
         )
         .then(
           (jsonResponse) => {
+            this._stripe._emitter.emit('response', responseEvent);
+
             this._recordRequestMetrics(requestId, responseEvent.elapsed, usage);
 
             // Expose raw response object.
@@ -219,7 +230,10 @@ export class RequestSender {
 
             callback(null, jsonResponse);
           },
-          (e) => callback(e, null)
+          (e) => {
+            this._stripe._emitter.emit('response', responseEvent);
+            callback(e, null);
+          }
         );
     };
   }
@@ -631,6 +645,9 @@ export class RequestSender {
             ),
             method,
             path,
+            body: this._stripe.getEmitEventBodiesEnabled()
+              ? data ?? undefined
+              : undefined,
             request_start_time: requestStartTime,
           });
 
