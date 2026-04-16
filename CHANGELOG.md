@@ -1,5 +1,8 @@
 # Changelog
 
+## 22.1.0-beta.3 - 2026-04-16
+Please review the [changelog for 22.0.2](https://github.com/stripe/stripe-node/blob/master/CHANGELOG.md#2202---2026-04-16) for more information about changes in this release.
+
 ## 22.1.0-beta.2 - 2026-04-08
 Please review the [changelog for 22.0.1](https://github.com/stripe/stripe-node/blob/master/CHANGELOG.md#2201---2026-04-08) for more information about changes in this release.
 
