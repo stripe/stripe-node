@@ -1,5 +1,17 @@
 # Changelog
 
+## 22.0.2 - 2026-04-16
+* [#2685](https://github.com/stripe/stripe-node/pull/2685) Adds `parseEventNotificationAsync` to match existing sync function
+* [#2681](https://github.com/stripe/stripe-node/pull/2681) Add emitEventBodies config to include bodies in request/response events
+  - Added `emitEventBodies` config option to include request and response bodies in `request`/`response` events.
+  - Changed `httpClient` config type from `HttpClient` class to `HttpClientInterface` interface.
+* [#2670](https://github.com/stripe/stripe-node/pull/2670) tolerance, receivedAt, timestamp are now optional in Webhook.ts
+* [#2677](https://github.com/stripe/stripe-node/pull/2677) Fixed named export for Bun
+  ```ts
+  // ✅ Fixed
+  import { Stripe } from 'stripe';
+  ```
+
 ## 22.0.1 - 2026-04-08
 * [#2669](https://github.com/stripe/stripe-node/pull/2669) Add constructor based initialization for CJS based TypeScript imports
   * Initialization of Stripe class with `new` keyword is now possible for CJS based TypeScript project. Resolves: [2660](https://github.com/stripe/stripe-node/issues/2660)
