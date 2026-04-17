@@ -99,6 +99,11 @@ export namespace Radar {
       login_failed?: Event.LoginFailed;
 
       /**
+       * Data about a succeeded login event.
+       */
+      login_succeeded?: Event.LoginSucceeded;
+
+      /**
        * Time at which the event occurred. Measured in seconds since the Unix epoch.
        */
       occurred_at: number;
@@ -107,6 +112,11 @@ export namespace Radar {
        * Data about a failed registration event.
        */
       registration_failed?: Event.RegistrationFailed;
+
+      /**
+       * Data about a succeeded registration event.
+       */
+      registration_succeeded?: Event.RegistrationSucceeded;
 
       /**
        * The type of event that occurred.
@@ -128,11 +138,25 @@ export namespace Radar {
         reason: string;
       }
 
+      export interface LoginSucceeded {
+        /**
+         * The qualification for a login success.
+         */
+        qualification: string | null;
+      }
+
       export interface RegistrationFailed {
         /**
          * The reason why this registration failed.
          */
         reason: string;
+      }
+
+      export interface RegistrationSucceeded {
+        /**
+         * The qualification for a registration success.
+         */
+        qualification: string | null;
       }
     }
 
@@ -270,9 +294,19 @@ export namespace Radar {
     login_failed?: AccountEvaluationUpdateParams.LoginFailed;
 
     /**
+     * Event payload for login_succeeded.
+     */
+    login_succeeded?: AccountEvaluationUpdateParams.LoginSucceeded;
+
+    /**
      * Event payload for registration_failed.
      */
     registration_failed?: AccountEvaluationUpdateParams.RegistrationFailed;
+
+    /**
+     * Event payload for registration_succeeded.
+     */
+    registration_succeeded?: AccountEvaluationUpdateParams.RegistrationSucceeded;
   }
 
   export namespace AccountEvaluationUpdateParams {
@@ -289,11 +323,25 @@ export namespace Radar {
       reason: LoginFailed.Reason;
     }
 
+    export interface LoginSucceeded {
+      /**
+       * An optional qualification for a login success.
+       */
+      qualification?: 'suspected_account_sharing';
+    }
+
     export interface RegistrationFailed {
       /**
        * The reason why this registration failed.
        */
       reason: RegistrationFailed.Reason;
+    }
+
+    export interface RegistrationSucceeded {
+      /**
+       * An optional qualification for a registration success.
+       */
+      qualification?: 'suspected_multi_accounting';
     }
 
     export namespace LoginFailed {
