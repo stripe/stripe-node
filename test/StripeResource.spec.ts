@@ -148,6 +148,38 @@ describe('StripeResource', () => {
       });
     });
 
+    describe('stack traces', () => {
+      it('appends the user call site to the error stack', (callback) => {
+        const handleRequest = (_req, res) => {
+          res.writeHead(400, {'Content-Type': 'application/json'});
+          res.end(
+            '{"error": {"type": "invalid_request_error", "message": "No such customer"}}'
+          );
+        };
+
+        getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
+          if (err) {
+            return callback(err);
+          }
+
+          const resource = new StripeResource(stripe);
+
+          return resource
+            ._makeRequest('GET', '/v1/customers/cus_bad', undefined, undefined)
+            .then(() => {
+              closeServer();
+              return callback(new Error('Expected error'));
+            })
+            .catch((err) => {
+              closeServer();
+              expect(err.stack).to.include('Originating from:');
+              expect(err.stack).to.include('StripeResource.spec.ts');
+              return callback();
+            });
+        });
+      });
+    });
+
     describe('usage', () => {
       it('is passed to the request sender', () => {
         const resource = new StripeResource(stripe);

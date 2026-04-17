@@ -880,6 +880,63 @@ describe('auto pagination', () => {
       ).to.have.length(0);
     });
   });
+  describe('stack traces', () => {
+    // Builds a paginator whose first page succeeds but whose second page
+    // request fails with an error that has only fake SDK-internal frames,
+    // simulating an error constructed deep inside RequestSender internals.
+    const mockPaginationWithPageTwoError = () => {
+      const mockStripe = getMockStripe(
+        {},
+        (_1, _2, _3, _4, _5, _6, _7, callback) => {
+          const err = new Error('No such customer');
+          err.stack =
+            'Error: No such customer\n' +
+            '    at generateV1Error (RequestSender.js:10)\n' +
+            '    at _jsonResponseHandler (RequestSender.js:197)';
+          callback(err, null);
+        }
+      );
+      const resource = new StripeResource(mockStripe);
+      return makeAutoPaginationMethods(
+        resource,
+        {},
+        undefined,
+        'GET',
+        '/v1/items',
+        {methodType: 'list'},
+        Promise.resolve({
+          data: [{id: 'item_1'}, {id: 'item_2'}],
+          has_more: true,
+        })
+      );
+    };
+
+    it('autoPagingEach appends the call site to the error stack', () => {
+      const paginator = mockPaginationWithPageTwoError();
+      return paginator
+        .autoPagingEach(() => {})
+        .then(() => {
+          throw new Error('Expected error');
+        })
+        .catch((err) => {
+          expect(err.stack).to.include('Originating from:');
+          expect(err.stack).to.include('autoPagination.spec.ts');
+        });
+    });
+
+    it('autoPagingToArray appends the call site to the error stack', () => {
+      const paginator = mockPaginationWithPageTwoError();
+      return paginator
+        .autoPagingToArray({limit: 100})
+        .then(() => {
+          throw new Error('Expected error');
+        })
+        .catch((err) => {
+          expect(err.stack).to.include('Originating from:');
+          expect(err.stack).to.include('autoPagination.spec.ts');
+        });
+    });
+  });
 });
 
 export {};
