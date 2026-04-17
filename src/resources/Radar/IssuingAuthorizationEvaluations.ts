@@ -110,7 +110,7 @@ export namespace Radar {
       entry_mode_raw_code: string | null;
 
       /**
-       * The timestamp of the authorization initiated in seconds.
+       * The time the authorization was initiated, as a Unix timestamp in seconds.
        */
       initiated_at: number;
 
@@ -147,7 +147,7 @@ export namespace Radar {
       card_type: CardDetails.CardType;
 
       /**
-       * The timestamp when the card was created.
+       * The timestamp when the card was created, as a Unix timestamp in seconds.
        */
       created_at: number;
 
@@ -433,7 +433,7 @@ export namespace Radar {
       entry_mode_raw_code?: string;
 
       /**
-       * The timestamp of the authorization initiated in seconds.
+       * The time the authorization was initiated, as a Unix timestamp in seconds. Must not be in the future.
        */
       initiated_at: number;
 
@@ -470,7 +470,7 @@ export namespace Radar {
       card_type: CardDetails.CardType;
 
       /**
-       * The timestamp when the card was created.
+       * The timestamp when the card was created, as a Unix timestamp in seconds.
        */
       created_at: number;
 
