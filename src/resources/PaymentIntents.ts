@@ -9,6 +9,7 @@ import {Account} from './Accounts.js';
 import {PaymentMethod} from './PaymentMethods.js';
 import {Review} from './Reviews.js';
 import {CustomerSource, DeletedCustomerSource} from './CustomerSources.js';
+import {Profile} from './Profiles.js';
 import {SetupIntent} from './SetupIntents.js';
 import {
   Emptyable,
@@ -371,6 +372,11 @@ export interface PaymentIntent {
   object: 'payment_intent';
 
   /**
+   * Details about the agent that initiated the creation of this PaymentIntent.
+   */
+  agent_details?: PaymentIntent.AgentDetails | null;
+
+  /**
    * Allocated Funds configuration for this PaymentIntent.
    */
   allocated_funds?: PaymentIntent.AllocatedFunds | null;
@@ -582,11 +588,6 @@ export interface PaymentIntent {
   setup_future_usage: PaymentIntent.SetupFutureUsage | null;
 
   /**
-   * ID of the shared payment token granted to be used in this PaymentIntent
-   */
-  shared_payment_granted_token?: string | null;
-
-  /**
    * Shipping information for this PaymentIntent.
    */
   shipping: PaymentIntent.Shipping | null;
@@ -624,6 +625,18 @@ export interface PaymentIntent {
   transfer_group: string | null;
 }
 export namespace PaymentIntent {
+  export interface AgentDetails {
+    /**
+     * The name of the agent that initiated the payment.
+     */
+    name: string;
+
+    /**
+     * The Stripe profile associated with the agent that initiated the payment.
+     */
+    network_business_profile: string | Profile;
+  }
+
   export interface AllocatedFunds {
     /**
      * Allocated Funds configuration for this PaymentIntent.
@@ -6343,11 +6356,6 @@ export namespace PaymentIntentCreateParams {
      * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
      */
     sepa_debit?: PaymentMethodData.SepaDebit;
-
-    /**
-     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
-     */
-    shared_payment_granted_token?: string;
 
     /**
      * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
@@ -14093,11 +14101,6 @@ export namespace PaymentIntentUpdateParams {
      * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
      */
     sepa_debit?: PaymentMethodData.SepaDebit;
-
-    /**
-     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
-     */
-    shared_payment_granted_token?: string;
 
     /**
      * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
@@ -24439,11 +24442,6 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
      */
     sepa_debit?: PaymentMethodData.SepaDebit;
-
-    /**
-     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
-     */
-    shared_payment_granted_token?: string;
 
     /**
      * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.

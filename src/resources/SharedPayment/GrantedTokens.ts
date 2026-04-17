@@ -2,6 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {Charge} from './../Charges.js';
+import {PaymentMethod} from './../PaymentMethods.js';
 import {SetupAttempt} from './../SetupAttempts.js';
 import {Address} from '../../shared.js';
 import {RequestOptions, Response} from '../../lib.js';
@@ -1437,6 +1438,11 @@ export namespace SharedPayment {
            * The ID of the Charge that generated this PaymentMethod, if any.
            */
           charge: string | Charge | null;
+
+          /**
+           * The ID of the PaymentMethod that generated this PaymentMethod, if any.
+           */
+          payment_method?: string | PaymentMethod | null;
 
           /**
            * The ID of the SetupAttempt that generated this PaymentMethod, if any.

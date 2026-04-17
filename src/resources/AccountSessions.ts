@@ -472,7 +472,17 @@ export namespace AccountSession {
     }
 
     export namespace Bills {
-      export interface Features {}
+      export interface Features {
+        /**
+         * Whether to enable the bill management feature that grants access to bill creation and payment.
+         */
+        bill_management: boolean;
+
+        /**
+         * Whether to enable the send money feature that grants access to bill creation and payment.
+         */
+        send_money: boolean;
+      }
     }
 
     export namespace CapitalFinancing {

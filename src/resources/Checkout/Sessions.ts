@@ -8,6 +8,7 @@ import {Customer, DeletedCustomer} from './../Customers.js';
 import {Invoice} from './../Invoices.js';
 import {PaymentIntent} from './../PaymentIntents.js';
 import {PaymentLink} from './../PaymentLinks.js';
+import {PaymentRecord} from './../PaymentRecords.js';
 import {SetupIntent} from './../SetupIntents.js';
 import {Account} from './../Accounts.js';
 import {TaxId, DeletedTaxId} from './../TaxIds.js';
@@ -853,6 +854,12 @@ export interface Session {
    */
   custom_fields: Array<Checkout.Session.CustomField>;
 
+  /**
+   * A list of the types of [custom payment methods](https://docs.stripe.com/payments/payment-methods/custom-payment-methods) (e.g. cpmt_123) this Checkout
+   * Session is allowed to accept.
+   */
+  custom_payment_method_types?: Array<string>;
+
   custom_text: Checkout.Session.CustomText;
 
   /**
@@ -990,6 +997,11 @@ export interface Session {
    * Session is allowed to accept.
    */
   payment_method_types: Array<string>;
+
+  /**
+   * The [Payment Record](https://docs.stripe.com/api/payment-record) for this Checkout Session.
+   */
+  payment_record?: string | PaymentRecord | null;
 
   /**
    * The payment status of the Checkout Session, one of `paid`, `unpaid`, or `no_payment_required`.
@@ -4323,6 +4335,15 @@ export namespace Checkout {
      * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `custom`.
      */
     custom_fields?: Array<SessionCreateParams.CustomField>;
+
+    /**
+     * A list of custom payment methods (e.g., `cpmt_123`) this Checkout Session can accept.
+     *
+     * You can add custom payment methods to your account through the dashboard under Settings > Custom Payment Methods.
+     *
+     * Read more about custom payment methods in checkout in our [custom payment method types guide](https://docs.stripe.com/payments/payment-methods/custom-payment-methods).
+     */
+    custom_payment_method_types?: Array<string>;
 
     /**
      * Display additional text for your customers using custom text. You can't set this parameter if `ui_mode` is `custom`.

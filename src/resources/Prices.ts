@@ -759,6 +759,11 @@ export interface PriceCreateParams {
   expand?: Array<string>;
 
   /**
+   * A custom identifier for this price, such as a SKU number or product code, that can be used to reference records from external systems.
+   */
+  external_reference?: string;
+
+  /**
    * A lookup key used to retrieve prices dynamically from a static string. This may be up to 200 characters.
    */
   lookup_key?: string;
@@ -1089,6 +1094,11 @@ export interface PriceUpdateParams {
    * Specifies which fields in the response should be expanded.
    */
   expand?: Array<string>;
+
+  /**
+   * A custom identifier for this price, such as a SKU number or product code, that can be used to reference records from external systems.
+   */
+  external_reference?: Emptyable<string>;
 
   /**
    * A lookup key used to retrieve prices dynamically from a static string. This may be up to 200 characters.

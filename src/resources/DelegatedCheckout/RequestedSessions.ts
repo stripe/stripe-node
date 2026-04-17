@@ -1366,6 +1366,11 @@ export namespace DelegatedCheckout {
     payment_method?: string;
 
     /**
+     * The URL to redirect your customer back to after they authenticate or complete a payment action. Required for redirect-based payment methods such as Affirm or Klarna.
+     */
+    return_url?: string;
+
+    /**
      * Risk details/signals associated with the requested session
      */
     risk_details?: RequestedSessionConfirmParams.RiskDetails;
