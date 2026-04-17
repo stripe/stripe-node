@@ -103,9 +103,7 @@ class StripeResource implements StripeResourceObject {
         response: HttpClientResponseInterface
       ): void {
         if (err) {
-          if (callSiteStack) {
-            attachCallSiteToError(err, callSiteStack);
-          }
+          attachCallSiteToError(err, callSiteStack);
           reject(err);
         } else {
           try {

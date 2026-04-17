@@ -497,8 +497,11 @@ const CALL_SITE_MARKER = '\nOriginating from:';
  * So, we call this with a manually sourced error right before we do async HTTP operations, capturing the stack trace
  * NOTE: Modifies the `err` arg.
  */
-export function attachCallSiteToError(err: Error, callSiteStack: string): void {
-  if (!err || !err.stack) {
+export function attachCallSiteToError(
+  err: Error,
+  callSiteStack: string | undefined
+): void {
+  if (!err || !err.stack || !callSiteStack) {
     return;
   }
   const callerFrames = callSiteStack.substring(callSiteStack.indexOf('\n') + 1);

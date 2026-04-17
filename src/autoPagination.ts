@@ -405,9 +405,7 @@ function makeAutoPagingEach<T>(
       // @ts-ignore we might need a null check
       onItem
     ).catch((err) => {
-      if (callSiteStack) {
-        attachCallSiteToError(err, callSiteStack);
-      }
+      attachCallSiteToError(err, callSiteStack);
       throw err;
     });
     if (onDone) {
@@ -451,9 +449,7 @@ function makeAutoPagingToArray<T>(
           resolve(items);
         })
         .catch((err) => {
-          if (callSiteStack) {
-            attachCallSiteToError(err, callSiteStack);
-          }
+          attachCallSiteToError(err, callSiteStack);
           reject(err);
         });
     });
