@@ -489,3 +489,23 @@ export function parseHeadersForFetch(
     return [key, parseHttpHeaderAsString(value)];
   });
 }
+
+const CALL_SITE_MARKER = '\nOriginating from:';
+
+/**
+ * We do some async indirection in our HTTP calling code that means stack traces aren't correct traced back to their actual origin in userland
+ * So, we call this with a manually sourced error right before we do async HTTP operations, capturing the stack trace
+ * NOTE: Modifies the `err` arg.
+ */
+export function attachCallSiteToError(err: Error, callSiteStack: string): void {
+  if (!err || !err.stack) {
+    return;
+  }
+  const callerFrames = callSiteStack.substring(callSiteStack.indexOf('\n') + 1);
+  const existingMarkerIdx = err.stack.indexOf(CALL_SITE_MARKER);
+  const baseStack =
+    existingMarkerIdx >= 0
+      ? err.stack.substring(0, existingMarkerIdx)
+      : err.stack;
+  err.stack = `${baseStack}${CALL_SITE_MARKER}\n${callerFrames}`;
+}

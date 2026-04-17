@@ -1,5 +1,5 @@
 import {RequestData, StripeResourceObject, MakeRequestSpec} from './Types.js';
-import {getAPIMode} from './utils.js';
+import {attachCallSiteToError, getAPIMode} from './utils.js';
 import {RequestOptions} from './lib.js';
 
 type IterationDoneCallback = (err?: any, result?: any) => void;
@@ -387,6 +387,12 @@ function makeAutoPagingEach<T>(
   asyncIteratorNext: () => Promise<IteratorResult<T>>
 ): AutoPagingEach<T> {
   return function autoPagingEach(/* onItem?, onDone? */): Promise<void> {
+    // Capture the caller's stack before the async boundary. For paginated
+    // requests, _makeRequest is called from autopagination internals, so the
+    // stack it captures only contains SDK frames. We replace that here with
+    // the true user call site.
+    const callSiteStack = new Error().stack;
+
     const args = [].slice.call(arguments);
     const onItem = getItemCallback(args);
     const onDone = getDoneCallback(args);
@@ -398,7 +404,12 @@ function makeAutoPagingEach<T>(
       asyncIteratorNext,
       // @ts-ignore we might need a null check
       onItem
-    );
+    ).catch((err) => {
+      if (callSiteStack) {
+        attachCallSiteToError(err, callSiteStack);
+      }
+      throw err;
+    });
     if (onDone) {
       autoPagePromise.then(
         () => onDone(),
@@ -416,6 +427,7 @@ function makeAutoPagingToArray<T>(
     opts,
     onDone: IterationDoneCallback
   ): Promise<Array<any>> {
+    const callSiteStack = new Error().stack;
     const limit = opts && opts.limit;
     if (!limit) {
       throw Error(
@@ -438,7 +450,12 @@ function makeAutoPagingToArray<T>(
         .then(() => {
           resolve(items);
         })
-        .catch(reject);
+        .catch((err) => {
+          if (callSiteStack) {
+            attachCallSiteToError(err, callSiteStack);
+          }
+          reject(err);
+        });
     });
     if (onDone) {
       promise.then(

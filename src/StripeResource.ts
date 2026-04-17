@@ -1,4 +1,5 @@
 import {
+  attachCallSiteToError,
   makeURLInterpolator,
   processOptions,
   queryStringifyRequestData,
@@ -92,12 +93,19 @@ class StripeResource implements StripeResourceObject {
       return Promise.reject(err);
     }
 
+    // Capture the caller's stack trace before the async boundary so errors can
+    // include the user's call site, not just SDK internals.
+    const callSiteStack = new Error().stack;
+
     const innerPromise = new Promise<any>((resolve, reject) => {
       function requestCallback(
         err: any,
         response: HttpClientResponseInterface
       ): void {
         if (err) {
+          if (callSiteStack) {
+            attachCallSiteToError(err, callSiteStack);
+          }
           reject(err);
         } else {
           try {
