@@ -256,6 +256,8 @@ export interface PaymentMethod {
 
   sofort?: PaymentMethod.Sofort;
 
+  sunbit?: PaymentMethod.Sunbit;
+
   swish?: PaymentMethod.Swish;
 
   twint?: PaymentMethod.Twint;
@@ -896,6 +898,8 @@ export namespace PaymentMethod {
     country: string | null;
   }
 
+  export interface Sunbit {}
+
   export interface Swish {}
 
   export interface Twint {}
@@ -949,6 +953,7 @@ export namespace PaymentMethod {
     | 'satispay'
     | 'sepa_debit'
     | 'sofort'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -2018,6 +2023,11 @@ export interface PaymentMethodCreateParams {
   sofort?: PaymentMethodCreateParams.Sofort;
 
   /**
+   * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+   */
+  sunbit?: PaymentMethodCreateParams.Sunbit;
+
+  /**
    * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
    */
   swish?: PaymentMethodCreateParams.Swish;
@@ -2345,6 +2355,8 @@ export namespace PaymentMethodCreateParams {
     country: Sofort.Country;
   }
 
+  export interface Sunbit {}
+
   export interface Swish {}
 
   export interface Twint {}
@@ -2396,6 +2408,7 @@ export namespace PaymentMethodCreateParams {
     | 'satispay'
     | 'sepa_debit'
     | 'sofort'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -2842,6 +2855,7 @@ export namespace PaymentMethodListParams {
     | 'satispay'
     | 'sepa_debit'
     | 'sofort'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'

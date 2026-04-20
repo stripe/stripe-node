@@ -82,7 +82,17 @@ export namespace Mandate {
     type: CustomerAcceptance.Type;
   }
 
-  export interface MultiUse {}
+  export interface MultiUse {
+    /**
+     * The amount of the payment on a multi use mandate.
+     */
+    amount?: number;
+
+    /**
+     * The currency of the payment on a multi use mandate.
+     */
+    currency?: string;
+  }
 
   export interface PaymentMethodDetails {
     acss_debit?: PaymentMethodDetails.AcssDebit;
@@ -112,6 +122,8 @@ export namespace Mandate {
     paypal?: PaymentMethodDetails.Paypal;
 
     payto?: PaymentMethodDetails.Payto;
+
+    pix?: PaymentMethodDetails.Pix;
 
     revolut_pay?: PaymentMethodDetails.RevolutPay;
 
@@ -290,6 +302,38 @@ export namespace Mandate {
       start_date: string | null;
     }
 
+    export interface Pix {
+      /**
+       * Determines if the amount includes the IOF tax.
+       */
+      amount_includes_iof?: Pix.AmountIncludesIof;
+
+      /**
+       * Type of amount.
+       */
+      amount_type?: Pix.AmountType;
+
+      /**
+       * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`.
+       */
+      end_date?: string;
+
+      /**
+       * Schedule at which the future payments will be charged.
+       */
+      payment_schedule?: Pix.PaymentSchedule;
+
+      /**
+       * Subscription name displayed to buyers in their bank app.
+       */
+      reference?: string;
+
+      /**
+       * Start date of the mandate, in `YYYY-MM-DD`.
+       */
+      start_date?: string;
+    }
+
     export interface RevolutPay {}
 
     export interface SepaDebit {
@@ -381,6 +425,19 @@ export namespace Mandate {
         | 'salary'
         | 'tax'
         | 'utility';
+    }
+
+    export namespace Pix {
+      export type AmountIncludesIof = 'always' | 'never';
+
+      export type AmountType = 'fixed' | 'maximum';
+
+      export type PaymentSchedule =
+        | 'halfyearly'
+        | 'monthly'
+        | 'quarterly'
+        | 'weekly'
+        | 'yearly';
     }
 
     export namespace Upi {

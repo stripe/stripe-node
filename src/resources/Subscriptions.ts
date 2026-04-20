@@ -932,7 +932,7 @@ export class SubscriptionResource extends StripeResource {
     ) as any;
   }
   /**
-   * Initiates resumption of a paused subscription, optionally resetting the billing cycle anchor and creating prorations. If no resumption invoice is generated, the subscription becomes active immediately. If a resumption invoice is generated, the subscription remains paused until the invoice is paid or marked uncollectible. If the invoice is not paid by the expiration date, it is voided and the subscription remains paused.
+   * Initiates resumption of a paused subscription, optionally resetting the billing cycle anchor and creating prorations. If no resumption invoice is generated, the subscription becomes active immediately. If a resumption invoice is generated, the subscription remains paused until the invoice is paid or marked uncollectible. If the invoice isn't paid by the expiration date, it is voided and the subscription remains paused. You can only resume subscriptions with collection_method set to charge_automatically. send_invoice subscriptions are not supported.
    */
   resume(
     id: string,
@@ -1186,6 +1186,11 @@ export interface Subscription {
   livemode: boolean;
 
   /**
+   * Settings for Managed Payments for this Subscription and resulting [Invoices](https://docs.stripe.com/api/invoices/object) and [PaymentIntents](https://docs.stripe.com/api/payment_intents/object).
+   */
+  managed_payments: Subscription.ManagedPayments | null;
+
+  /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata;
@@ -1377,6 +1382,13 @@ export namespace Subscription {
     account_tax_ids: Array<string | TaxId | DeletedTaxId> | null;
 
     issuer: InvoiceSettings.Issuer;
+  }
+
+  export interface ManagedPayments {
+    /**
+     * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
+     */
+    enabled: boolean;
   }
 
   export interface PauseCollection {
@@ -1589,9 +1601,19 @@ export namespace Subscription {
       payto: PaymentMethodOptions.Payto | null;
 
       /**
+       * This sub-hash contains details about the Pix payment method options to pass to invoices created by the subscription.
+       */
+      pix: PaymentMethodOptions.Pix | null;
+
+      /**
        * This sub-hash contains details about the SEPA Direct Debit payment method options to pass to invoices created by the subscription.
        */
       sepa_debit: PaymentMethodOptions.SepaDebit | null;
+
+      /**
+       * This sub-hash contains details about the UPI payment method options to pass to invoices created by the subscription.
+       */
+      upi: PaymentMethodOptions.Upi | null;
 
       /**
        * This sub-hash contains details about the ACH direct debit payment method options to pass to invoices created by the subscription.
@@ -1634,12 +1656,14 @@ export namespace Subscription {
       | 'paynow'
       | 'paypal'
       | 'payto'
+      | 'pix'
       | 'promptpay'
       | 'revolut_pay'
       | 'sepa_credit_transfer'
       | 'sepa_debit'
       | 'sofort'
       | 'swish'
+      | 'upi'
       | 'us_bank_account'
       | 'wechat_pay';
 
@@ -1691,7 +1715,20 @@ export namespace Subscription {
         mandate_options?: Payto.MandateOptions;
       }
 
+      export interface Pix {
+        /**
+         * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+         */
+        expires_after_seconds?: number;
+
+        mandate_options?: Pix.MandateOptions;
+      }
+
       export interface SepaDebit {}
+
+      export interface Upi {
+        mandate_options?: Upi.MandateOptions;
+      }
 
       export interface UsBankAccount {
         financial_connections?: UsBankAccount.FinancialConnections;
@@ -1821,6 +1858,69 @@ export namespace Subscription {
             | 'salary'
             | 'tax'
             | 'utility';
+        }
+      }
+
+      export namespace Pix {
+        export interface MandateOptions {
+          /**
+           * Amount to be charged for future payments.
+           */
+          amount: number | null;
+
+          /**
+           * Determines if the amount includes the IOF tax.
+           */
+          amount_includes_iof: MandateOptions.AmountIncludesIof | null;
+
+          /**
+           * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`.
+           */
+          end_date: string | null;
+
+          /**
+           * Schedule at which the future payments will be charged.
+           */
+          payment_schedule: MandateOptions.PaymentSchedule | null;
+        }
+
+        export namespace MandateOptions {
+          export type AmountIncludesIof = 'always' | 'never';
+
+          export type PaymentSchedule =
+            | 'halfyearly'
+            | 'monthly'
+            | 'quarterly'
+            | 'weekly'
+            | 'yearly';
+        }
+      }
+
+      export namespace Upi {
+        export interface MandateOptions {
+          /**
+           * Amount to be charged for future payments.
+           */
+          amount: number | null;
+
+          /**
+           * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+           */
+          amount_type: MandateOptions.AmountType | null;
+
+          /**
+           * A description of the mandate or subscription that is meant to be displayed to the customer.
+           */
+          description: string | null;
+
+          /**
+           * End date of the mandate or subscription.
+           */
+          end_date: number | null;
+        }
+
+        export namespace MandateOptions {
+          export type AmountType = 'fixed' | 'maximum';
         }
       }
 
@@ -2566,9 +2666,19 @@ export namespace SubscriptionCreateParams {
       payto?: Emptyable<PaymentMethodOptions.Payto>;
 
       /**
+       * This sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
+       */
+      pix?: Emptyable<PaymentMethodOptions.Pix>;
+
+      /**
        * This sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
        */
       sepa_debit?: Emptyable<PaymentMethodOptions.SepaDebit>;
+
+      /**
+       * This sub-hash contains details about the UPI payment method options to pass to the invoice's PaymentIntent.
+       */
+      upi?: Emptyable<PaymentMethodOptions.Upi>;
 
       /**
        * This sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
@@ -2611,12 +2721,14 @@ export namespace SubscriptionCreateParams {
       | 'paynow'
       | 'paypal'
       | 'payto'
+      | 'pix'
       | 'promptpay'
       | 'revolut_pay'
       | 'sepa_credit_transfer'
       | 'sepa_debit'
       | 'sofort'
       | 'swish'
+      | 'upi'
       | 'us_bank_account'
       | 'wechat_pay';
 
@@ -2680,7 +2792,26 @@ export namespace SubscriptionCreateParams {
         mandate_options?: Payto.MandateOptions;
       }
 
+      export interface Pix {
+        /**
+         * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+         */
+        expires_after_seconds?: number;
+
+        /**
+         * Configuration options for setting up a mandate
+         */
+        mandate_options?: Pix.MandateOptions;
+      }
+
       export interface SepaDebit {}
+
+      export interface Upi {
+        /**
+         * Configuration options for setting up an eMandate
+         */
+        mandate_options?: Upi.MandateOptions;
+      }
 
       export interface UsBankAccount {
         /**
@@ -2805,6 +2936,69 @@ export namespace SubscriptionCreateParams {
             | 'salary'
             | 'tax'
             | 'utility';
+        }
+      }
+
+      export namespace Pix {
+        export interface MandateOptions {
+          /**
+           * Amount to be charged for future payments. If not provided, defaults to 40000.
+           */
+          amount?: number;
+
+          /**
+           * Determines if the amount includes the IOF tax. Defaults to `never`.
+           */
+          amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+          /**
+           * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled.
+           */
+          end_date?: string;
+
+          /**
+           * Schedule at which the future payments will be charged. Defaults to the subscription servicing interval.
+           */
+          payment_schedule?: MandateOptions.PaymentSchedule;
+        }
+
+        export namespace MandateOptions {
+          export type AmountIncludesIof = 'always' | 'never';
+
+          export type PaymentSchedule =
+            | 'halfyearly'
+            | 'monthly'
+            | 'quarterly'
+            | 'weekly'
+            | 'yearly';
+        }
+      }
+
+      export namespace Upi {
+        export interface MandateOptions {
+          /**
+           * Amount to be charged for future payments.
+           */
+          amount?: number;
+
+          /**
+           * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+           */
+          amount_type?: MandateOptions.AmountType;
+
+          /**
+           * A description of the mandate or subscription that is meant to be displayed to the customer.
+           */
+          description?: string;
+
+          /**
+           * End date of the mandate or subscription.
+           */
+          end_date?: number;
+        }
+
+        export namespace MandateOptions {
+          export type AmountType = 'fixed' | 'maximum';
         }
       }
 
@@ -3538,9 +3732,19 @@ export namespace SubscriptionUpdateParams {
       payto?: Emptyable<PaymentMethodOptions.Payto>;
 
       /**
+       * This sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
+       */
+      pix?: Emptyable<PaymentMethodOptions.Pix>;
+
+      /**
        * This sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
        */
       sepa_debit?: Emptyable<PaymentMethodOptions.SepaDebit>;
+
+      /**
+       * This sub-hash contains details about the UPI payment method options to pass to the invoice's PaymentIntent.
+       */
+      upi?: Emptyable<PaymentMethodOptions.Upi>;
 
       /**
        * This sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
@@ -3583,12 +3787,14 @@ export namespace SubscriptionUpdateParams {
       | 'paynow'
       | 'paypal'
       | 'payto'
+      | 'pix'
       | 'promptpay'
       | 'revolut_pay'
       | 'sepa_credit_transfer'
       | 'sepa_debit'
       | 'sofort'
       | 'swish'
+      | 'upi'
       | 'us_bank_account'
       | 'wechat_pay';
 
@@ -3652,7 +3858,26 @@ export namespace SubscriptionUpdateParams {
         mandate_options?: Payto.MandateOptions;
       }
 
+      export interface Pix {
+        /**
+         * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+         */
+        expires_after_seconds?: number;
+
+        /**
+         * Configuration options for setting up a mandate
+         */
+        mandate_options?: Pix.MandateOptions;
+      }
+
       export interface SepaDebit {}
+
+      export interface Upi {
+        /**
+         * Configuration options for setting up an eMandate
+         */
+        mandate_options?: Upi.MandateOptions;
+      }
 
       export interface UsBankAccount {
         /**
@@ -3777,6 +4002,69 @@ export namespace SubscriptionUpdateParams {
             | 'salary'
             | 'tax'
             | 'utility';
+        }
+      }
+
+      export namespace Pix {
+        export interface MandateOptions {
+          /**
+           * Amount to be charged for future payments. If not provided, defaults to 40000.
+           */
+          amount?: number;
+
+          /**
+           * Determines if the amount includes the IOF tax. Defaults to `never`.
+           */
+          amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+          /**
+           * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled.
+           */
+          end_date?: string;
+
+          /**
+           * Schedule at which the future payments will be charged. Defaults to the subscription servicing interval.
+           */
+          payment_schedule?: MandateOptions.PaymentSchedule;
+        }
+
+        export namespace MandateOptions {
+          export type AmountIncludesIof = 'always' | 'never';
+
+          export type PaymentSchedule =
+            | 'halfyearly'
+            | 'monthly'
+            | 'quarterly'
+            | 'weekly'
+            | 'yearly';
+        }
+      }
+
+      export namespace Upi {
+        export interface MandateOptions {
+          /**
+           * Amount to be charged for future payments.
+           */
+          amount?: number;
+
+          /**
+           * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+           */
+          amount_type?: MandateOptions.AmountType;
+
+          /**
+           * A description of the mandate or subscription that is meant to be displayed to the customer.
+           */
+          description?: string;
+
+          /**
+           * End date of the mandate or subscription.
+           */
+          end_date?: number;
+        }
+
+        export namespace MandateOptions {
+          export type AmountType = 'fixed' | 'maximum';
         }
       }
 

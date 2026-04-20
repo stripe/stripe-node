@@ -1323,12 +1323,12 @@ export interface Invoice {
   payments?: ApiList<InvoicePayment>;
 
   /**
-   * End of the usage period during which invoice items were added to this invoice. This looks back one period for a subscription invoice. Use the [line item period](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-period) to get the service period for each price.
+   * The latest timestamp at which invoice items can be associated with this invoice. Use the [line item period](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-period) to get the service period for each price.
    */
   period_end: number;
 
   /**
-   * Start of the usage period during which invoice items were added to this invoice. This looks back one period for a subscription invoice. Use the [line item period](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-period) to get the service period for each price.
+   * The earliest timestamp at which invoice items can be associated with this invoice. Use the [line item period](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-period) to get the service period for each price.
    */
   period_start: number;
 
@@ -1535,7 +1535,7 @@ export namespace Invoice {
 
   export interface CustomerTaxId {
     /**
-     * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, or `unknown`
+     * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, or `unknown`
      */
     type: CustomerTaxId.Type;
 
@@ -1965,8 +1965,10 @@ export namespace Invoice {
       | 'et_tin'
       | 'eu_oss_vat'
       | 'eu_vat'
+      | 'fo_vat'
       | 'gb_vat'
       | 'ge_vat'
+      | 'gi_tin'
       | 'gn_nif'
       | 'hk_br'
       | 'hr_oib'
@@ -1975,6 +1977,7 @@ export namespace Invoice {
       | 'il_vat'
       | 'in_gst'
       | 'is_vat'
+      | 'it_cf'
       | 'jp_cn'
       | 'jp_rn'
       | 'jp_trn'
@@ -2005,6 +2008,7 @@ export namespace Invoice {
       | 'pe_ruc'
       | 'ph_tin'
       | 'pl_nip'
+      | 'py_ruc'
       | 'ro_tin'
       | 'rs_pib'
       | 'ru_inn'
@@ -2049,11 +2053,13 @@ export namespace Invoice {
       | 'account_number_invalid'
       | 'account_token_required_for_v2_account'
       | 'acss_debit_session_incomplete'
+      | 'action_blocked'
       | 'alipay_upgrade_required'
       | 'amount_too_large'
       | 'amount_too_small'
       | 'api_key_expired'
       | 'application_fees_not_allowed'
+      | 'approval_required'
       | 'authentication_required'
       | 'balance_insufficient'
       | 'balance_invalid_parameter'
@@ -2297,9 +2303,19 @@ export namespace Invoice {
       payto: PaymentMethodOptions.Payto | null;
 
       /**
+       * If paying by `pix`, this sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
+       */
+      pix: PaymentMethodOptions.Pix | null;
+
+      /**
        * If paying by `sepa_debit`, this sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
        */
       sepa_debit: PaymentMethodOptions.SepaDebit | null;
+
+      /**
+       * If paying by `upi`, this sub-hash contains details about the UPI payment method options to pass to the invoice's PaymentIntent.
+       */
+      upi: PaymentMethodOptions.Upi | null;
 
       /**
        * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
@@ -2342,12 +2358,14 @@ export namespace Invoice {
       | 'paynow'
       | 'paypal'
       | 'payto'
+      | 'pix'
       | 'promptpay'
       | 'revolut_pay'
       | 'sepa_credit_transfer'
       | 'sepa_debit'
       | 'sofort'
       | 'swish'
+      | 'upi'
       | 'us_bank_account'
       | 'wechat_pay';
 
@@ -2392,7 +2410,23 @@ export namespace Invoice {
         mandate_options?: Payto.MandateOptions;
       }
 
+      export interface Pix {
+        /**
+         * Determines if the amount includes the IOF tax.
+         */
+        amount_includes_iof: Pix.AmountIncludesIof | null;
+
+        /**
+         * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+         */
+        expires_after_seconds?: number;
+      }
+
       export interface SepaDebit {}
+
+      export interface Upi {
+        mandate_options?: Upi.MandateOptions;
+      }
 
       export interface UsBankAccount {
         financial_connections?: UsBankAccount.FinancialConnections;
@@ -2493,6 +2527,38 @@ export namespace Invoice {
             | 'salary'
             | 'tax'
             | 'utility';
+        }
+      }
+
+      export namespace Pix {
+        export type AmountIncludesIof = 'always' | 'never';
+      }
+
+      export namespace Upi {
+        export interface MandateOptions {
+          /**
+           * Amount to be charged for future payments.
+           */
+          amount: number | null;
+
+          /**
+           * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+           */
+          amount_type: MandateOptions.AmountType | null;
+
+          /**
+           * A description of the mandate or subscription that is meant to be displayed to the customer.
+           */
+          description: string | null;
+
+          /**
+           * End date of the mandate or subscription.
+           */
+          end_date: number | null;
+        }
+
+        export namespace MandateOptions {
+          export type AmountType = 'fixed' | 'maximum';
         }
       }
 
@@ -2623,7 +2689,7 @@ export namespace Invoice {
       /**
        * ID of the tax rate
        */
-      tax_rate: string;
+      tax_rate: string | TaxRate;
     }
 
     export type TaxabilityReason =
@@ -3016,9 +3082,19 @@ export namespace InvoiceCreateParams {
       payto?: Emptyable<PaymentMethodOptions.Payto>;
 
       /**
+       * If paying by `pix`, this sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
+       */
+      pix?: Emptyable<PaymentMethodOptions.Pix>;
+
+      /**
        * If paying by `sepa_debit`, this sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
        */
       sepa_debit?: Emptyable<PaymentMethodOptions.SepaDebit>;
+
+      /**
+       * If paying by `upi`, this sub-hash contains details about the UPI payment method options to pass to the invoice's PaymentIntent.
+       */
+      upi?: Emptyable<PaymentMethodOptions.Upi>;
 
       /**
        * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
@@ -3061,12 +3137,14 @@ export namespace InvoiceCreateParams {
       | 'paynow'
       | 'paypal'
       | 'payto'
+      | 'pix'
       | 'promptpay'
       | 'revolut_pay'
       | 'sepa_credit_transfer'
       | 'sepa_debit'
       | 'sofort'
       | 'swish'
+      | 'upi'
       | 'us_bank_account'
       | 'wechat_pay';
 
@@ -3125,7 +3203,26 @@ export namespace InvoiceCreateParams {
         mandate_options?: Payto.MandateOptions;
       }
 
+      export interface Pix {
+        /**
+         * Determines if the amount includes the IOF tax. Defaults to `never`.
+         */
+        amount_includes_iof?: Pix.AmountIncludesIof;
+
+        /**
+         * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+         */
+        expires_after_seconds?: number;
+      }
+
       export interface SepaDebit {}
+
+      export interface Upi {
+        /**
+         * Configuration options for setting up an eMandate
+         */
+        mandate_options?: Upi.MandateOptions;
+      }
 
       export interface UsBankAccount {
         /**
@@ -3251,6 +3348,38 @@ export namespace InvoiceCreateParams {
             | 'salary'
             | 'tax'
             | 'utility';
+        }
+      }
+
+      export namespace Pix {
+        export type AmountIncludesIof = 'always' | 'never';
+      }
+
+      export namespace Upi {
+        export interface MandateOptions {
+          /**
+           * Amount to be charged for future payments.
+           */
+          amount?: number;
+
+          /**
+           * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+           */
+          amount_type?: MandateOptions.AmountType;
+
+          /**
+           * A description of the mandate or subscription that is meant to be displayed to the customer.
+           */
+          description?: string;
+
+          /**
+           * End date of the mandate or subscription.
+           */
+          end_date?: number;
+        }
+
+        export namespace MandateOptions {
+          export type AmountType = 'fixed' | 'maximum';
         }
       }
 
@@ -3777,9 +3906,19 @@ export namespace InvoiceUpdateParams {
       payto?: Emptyable<PaymentMethodOptions.Payto>;
 
       /**
+       * If paying by `pix`, this sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
+       */
+      pix?: Emptyable<PaymentMethodOptions.Pix>;
+
+      /**
        * If paying by `sepa_debit`, this sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
        */
       sepa_debit?: Emptyable<PaymentMethodOptions.SepaDebit>;
+
+      /**
+       * If paying by `upi`, this sub-hash contains details about the UPI payment method options to pass to the invoice's PaymentIntent.
+       */
+      upi?: Emptyable<PaymentMethodOptions.Upi>;
 
       /**
        * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
@@ -3822,12 +3961,14 @@ export namespace InvoiceUpdateParams {
       | 'paynow'
       | 'paypal'
       | 'payto'
+      | 'pix'
       | 'promptpay'
       | 'revolut_pay'
       | 'sepa_credit_transfer'
       | 'sepa_debit'
       | 'sofort'
       | 'swish'
+      | 'upi'
       | 'us_bank_account'
       | 'wechat_pay';
 
@@ -3886,7 +4027,26 @@ export namespace InvoiceUpdateParams {
         mandate_options?: Payto.MandateOptions;
       }
 
+      export interface Pix {
+        /**
+         * Determines if the amount includes the IOF tax. Defaults to `never`.
+         */
+        amount_includes_iof?: Pix.AmountIncludesIof;
+
+        /**
+         * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+         */
+        expires_after_seconds?: number;
+      }
+
       export interface SepaDebit {}
+
+      export interface Upi {
+        /**
+         * Configuration options for setting up an eMandate
+         */
+        mandate_options?: Upi.MandateOptions;
+      }
 
       export interface UsBankAccount {
         /**
@@ -4012,6 +4172,38 @@ export namespace InvoiceUpdateParams {
             | 'salary'
             | 'tax'
             | 'utility';
+        }
+      }
+
+      export namespace Pix {
+        export type AmountIncludesIof = 'always' | 'never';
+      }
+
+      export namespace Upi {
+        export interface MandateOptions {
+          /**
+           * Amount to be charged for future payments.
+           */
+          amount?: number;
+
+          /**
+           * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+           */
+          amount_type?: MandateOptions.AmountType;
+
+          /**
+           * A description of the mandate or subscription that is meant to be displayed to the customer.
+           */
+          description?: string;
+
+          /**
+           * End date of the mandate or subscription.
+           */
+          end_date?: number;
+        }
+
+        export namespace MandateOptions {
+          export type AmountType = 'fixed' | 'maximum';
         }
       }
 
@@ -4938,7 +5130,7 @@ export namespace InvoiceCreatePreviewParams {
 
     export interface TaxId {
       /**
-       * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
+       * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`, `bh_vat`, `bj_ifu`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cm_niu`, `cn_tin`, `co_nit`, `cr_tin`, `cv_nif`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `et_tin`, `eu_oss_vat`, `eu_vat`, `fo_vat`, `gb_vat`, `ge_vat`, `gi_tin`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `it_cf`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kg_tin`, `kh_tin`, `kr_brn`, `kz_bin`, `la_tin`, `li_uid`, `li_vat`, `lk_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `pl_nip`, `py_ruc`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`
        */
       type: TaxId.Type;
 
@@ -4995,8 +5187,10 @@ export namespace InvoiceCreatePreviewParams {
         | 'et_tin'
         | 'eu_oss_vat'
         | 'eu_vat'
+        | 'fo_vat'
         | 'gb_vat'
         | 'ge_vat'
+        | 'gi_tin'
         | 'gn_nif'
         | 'hk_br'
         | 'hr_oib'
@@ -5005,6 +5199,7 @@ export namespace InvoiceCreatePreviewParams {
         | 'il_vat'
         | 'in_gst'
         | 'is_vat'
+        | 'it_cf'
         | 'jp_cn'
         | 'jp_rn'
         | 'jp_trn'
@@ -5035,6 +5230,7 @@ export namespace InvoiceCreatePreviewParams {
         | 'pe_ruc'
         | 'ph_tin'
         | 'pl_nip'
+        | 'py_ruc'
         | 'ro_tin'
         | 'rs_pib'
         | 'ru_inn'

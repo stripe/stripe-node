@@ -57,6 +57,8 @@ export namespace AccountSession {
 
     account_onboarding: Components.AccountOnboarding;
 
+    balance_report: Components.BalanceReport;
+
     balances: Components.Balances;
 
     disputes_list: Components.DisputesList;
@@ -82,6 +84,8 @@ export namespace AccountSession {
     payments: Components.Payments;
 
     payout_details: Components.PayoutDetails;
+
+    payout_reconciliation_report: Components.PayoutReconciliationReport;
 
     payouts: Components.Payouts;
 
@@ -109,6 +113,15 @@ export namespace AccountSession {
       enabled: boolean;
 
       features: AccountOnboarding.Features;
+    }
+
+    export interface BalanceReport {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: BalanceReport.Features;
     }
 
     export interface Balances {
@@ -228,6 +241,15 @@ export namespace AccountSession {
       features: PayoutDetails.Features;
     }
 
+    export interface PayoutReconciliationReport {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: PayoutReconciliationReport.Features;
+    }
+
     export interface Payouts {
       /**
        * Whether the embedded component is enabled.
@@ -290,6 +312,10 @@ export namespace AccountSession {
          */
         external_account_collection: boolean;
       }
+    }
+
+    export namespace BalanceReport {
+      export interface Features {}
     }
 
     export namespace Balances {
@@ -539,6 +565,10 @@ export namespace AccountSession {
       export interface Features {}
     }
 
+    export namespace PayoutReconciliationReport {
+      export interface Features {}
+    }
+
     export namespace Payouts {
       export interface Features {
         /**
@@ -610,6 +640,11 @@ export namespace AccountSessionCreateParams {
     account_onboarding?: Components.AccountOnboarding;
 
     /**
+     * Configuration for the [balance report](https://docs.stripe.com/connect/supported-embedded-components/financial-reports#balance-report) embedded component.
+     */
+    balance_report?: Components.BalanceReport;
+
+    /**
      * Configuration for the [balances](https://docs.stripe.com/connect/supported-embedded-components/balances/) embedded component.
      */
     balances?: Components.Balances;
@@ -675,6 +710,11 @@ export namespace AccountSessionCreateParams {
     payout_details?: Components.PayoutDetails;
 
     /**
+     * Configuration for the [payout reconciliation report](https://docs.stripe.com/connect/supported-embedded-components/financial-reports#payout-reconciliation-report) embedded component.
+     */
+    payout_reconciliation_report?: Components.PayoutReconciliationReport;
+
+    /**
      * Configuration for the [payouts](https://docs.stripe.com/connect/supported-embedded-components/payouts/) embedded component.
      */
     payouts?: Components.Payouts;
@@ -718,6 +758,18 @@ export namespace AccountSessionCreateParams {
        * The list of features enabled in the embedded component.
        */
       features?: AccountOnboarding.Features;
+    }
+
+    export interface BalanceReport {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * An empty list, because this embedded component has no features.
+       */
+      features?: BalanceReport.Features;
     }
 
     export interface Balances {
@@ -876,6 +928,18 @@ export namespace AccountSessionCreateParams {
       features?: PayoutDetails.Features;
     }
 
+    export interface PayoutReconciliationReport {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * An empty list, because this embedded component has no features.
+       */
+      features?: PayoutReconciliationReport.Features;
+    }
+
     export interface Payouts {
       /**
        * Whether the embedded component is enabled.
@@ -950,6 +1014,10 @@ export namespace AccountSessionCreateParams {
          */
         external_account_collection?: boolean;
       }
+    }
+
+    export namespace BalanceReport {
+      export interface Features {}
     }
 
     export namespace Balances {
@@ -1196,6 +1264,10 @@ export namespace AccountSessionCreateParams {
     }
 
     export namespace PayoutDetails {
+      export interface Features {}
+    }
+
+    export namespace PayoutReconciliationReport {
       export interface Features {}
     }
 

@@ -113,14 +113,14 @@ export namespace V2 {
 
       export interface Reason {
         /**
-         * Event reason type.
-         */
-        type: 'request';
-
-        /**
          * Information on the API request that instigated the event.
          */
         request?: Reason.Request;
+
+        /**
+         * Event reason type.
+         */
+        type: 'request';
       }
 
       export namespace Reason {
