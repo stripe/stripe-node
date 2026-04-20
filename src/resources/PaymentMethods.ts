@@ -270,11 +270,18 @@ export interface PaymentMethod {
 
   sepa_debit?: PaymentMethod.SepaDebit;
 
+  /**
+   * ID of the shared payment granted token used in the creation of this PaymentMethod.
+   */
+  shared_payment_granted_token?: string | null;
+
   shopeepay?: PaymentMethod.Shopeepay;
 
   sofort?: PaymentMethod.Sofort;
 
   stripe_balance?: PaymentMethod.StripeBalance;
+
+  sunbit?: PaymentMethod.Sunbit;
 
   swish?: PaymentMethod.Swish;
 
@@ -961,6 +968,8 @@ export namespace PaymentMethod {
     account?: string | null;
   }
 
+  export interface Sunbit {}
+
   export interface Swish {}
 
   export interface Twint {}
@@ -1021,6 +1030,7 @@ export namespace PaymentMethod {
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -2153,6 +2163,11 @@ export interface PaymentMethodCreateParams {
   stripe_balance?: PaymentMethodCreateParams.StripeBalance;
 
   /**
+   * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+   */
+  sunbit?: PaymentMethodCreateParams.Sunbit;
+
+  /**
    * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
    */
   swish?: PaymentMethodCreateParams.Swish;
@@ -2509,6 +2524,8 @@ export namespace PaymentMethodCreateParams {
     account?: string;
   }
 
+  export interface Sunbit {}
+
   export interface Swish {}
 
   export interface Twint {}
@@ -2567,6 +2584,7 @@ export namespace PaymentMethodCreateParams {
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -3043,6 +3061,7 @@ export namespace PaymentMethodListParams {
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'

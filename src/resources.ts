@@ -47,11 +47,14 @@ import {FinancingTransactionResource as CapitalFinancingTransactions} from './re
 import {FormResource as TaxForms} from './resources/Tax/Forms.js';
 import {FraudLiabilityDebitResource as IssuingFraudLiabilityDebits} from './resources/Issuing/FraudLiabilityDebits.js';
 import {GbBankAccountResource as V2CoreVaultGbBankAccounts} from './resources/V2/Core/Vault/GbBankAccounts.js';
+import {GrantedTokenResource as SharedPaymentGrantedTokens} from './resources/SharedPayment/GrantedTokens.js';
+import {GrantedTokenResource as TestHelpersSharedPaymentGrantedTokens} from './resources/TestHelpers/SharedPayment/GrantedTokens.js';
 import {HoldResource as ReserveHolds} from './resources/Reserve/Holds.js';
 import {InboundTransferResource as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransferResource as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {InboundTransferResource as V2MoneyManagementInboundTransfers} from './resources/V2/MoneyManagement/InboundTransfers.js';
 import {InstitutionResource as FinancialConnectionsInstitutions} from './resources/FinancialConnections/Institutions.js';
+import {IssuedTokenResource as SharedPaymentIssuedTokens} from './resources/SharedPayment/IssuedTokens.js';
 import {LocationResource as TaxLocations} from './resources/Tax/Locations.js';
 import {LocationResource as TerminalLocations} from './resources/Terminal/Locations.js';
 import {MeterEventAdjustmentResource as BillingMeterEventAdjustments} from './resources/Billing/MeterEventAdjustments.js';
@@ -265,6 +268,10 @@ export const Reserve = resourceNamespace('reserve', {
   Plans: ReservePlans,
   Releases: ReserveReleases,
 });
+export const SharedPayment = resourceNamespace('sharedPayment', {
+  GrantedTokens: SharedPaymentGrantedTokens,
+  IssuedTokens: SharedPaymentIssuedTokens,
+});
 export const Sigma = resourceNamespace('sigma', {
   ScheduledQueryRuns: SigmaScheduledQueryRuns,
 });
@@ -295,6 +302,9 @@ export const TestHelpers = resourceNamespace('testHelpers', {
     Cards: TestHelpersIssuingCards,
     PersonalizationDesigns: TestHelpersIssuingPersonalizationDesigns,
     Transactions: TestHelpersIssuingTransactions,
+  }),
+  SharedPayment: resourceNamespace('sharedPayment', {
+    GrantedTokens: TestHelpersSharedPaymentGrantedTokens,
   }),
   Terminal: resourceNamespace('terminal', {
     Readers: TestHelpersTerminalReaders,

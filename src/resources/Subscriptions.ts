@@ -934,7 +934,7 @@ export class SubscriptionResource extends StripeResource {
     ) as any;
   }
   /**
-   * Initiates resumption of a paused subscription, optionally resetting the billing cycle anchor and creating prorations. If no resumption invoice is generated, the subscription becomes active immediately. If a resumption invoice is generated, the subscription remains paused until the invoice is paid or marked uncollectible. If the invoice is not paid by the expiration date, it is voided and the subscription remains paused.
+   * Initiates resumption of a paused subscription, optionally resetting the billing cycle anchor and creating prorations. If no resumption invoice is generated, the subscription becomes active immediately. If a resumption invoice is generated, the subscription remains paused until the invoice is paid or marked uncollectible. If the invoice isn't paid by the expiration date, it is voided and the subscription remains paused. You can only resume subscriptions with collection_method set to charge_automatically. send_invoice subscriptions are not supported.
    */
   resume(
     id: string,
@@ -1240,7 +1240,7 @@ export interface Subscription {
   /**
    * Settings for Managed Payments for this Subscription and resulting [Invoices](https://docs.stripe.com/api/invoices/object) and [PaymentIntents](https://docs.stripe.com/api/payment_intents/object).
    */
-  managed_payments?: Subscription.ManagedPayments | null;
+  managed_payments: Subscription.ManagedPayments | null;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -1769,6 +1769,11 @@ export namespace Subscription {
       bancontact: PaymentMethodOptions.Bancontact | null;
 
       /**
+       * This sub-hash contains details about the Blik payment method options to pass to invoices created by the subscription.
+       */
+      blik?: PaymentMethodOptions.Blik | null;
+
+      /**
        * This sub-hash contains details about the Card payment method options to pass to invoices created by the subscription.
        */
       card: PaymentMethodOptions.Card | null;
@@ -1796,7 +1801,7 @@ export namespace Subscription {
       /**
        * This sub-hash contains details about the Pix payment method options to pass to invoices created by the subscription.
        */
-      pix?: PaymentMethodOptions.Pix | null;
+      pix: PaymentMethodOptions.Pix | null;
 
       /**
        * This sub-hash contains details about the SEPA Direct Debit payment method options to pass to invoices created by the subscription.
@@ -1806,7 +1811,7 @@ export namespace Subscription {
       /**
        * This sub-hash contains details about the UPI payment method options to pass to invoices created by the subscription.
        */
-      upi?: PaymentMethodOptions.Upi | null;
+      upi: PaymentMethodOptions.Upi | null;
 
       /**
        * This sub-hash contains details about the ACH direct debit payment method options to pass to invoices created by the subscription.
@@ -1823,6 +1828,7 @@ export namespace Subscription {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'blik'
       | 'boleto'
       | 'card'
       | 'cashapp'
@@ -1879,6 +1885,10 @@ export namespace Subscription {
          * Preferred language of the Bancontact authorization page that the customer is redirected to.
          */
         preferred_language: Bancontact.PreferredLanguage;
+      }
+
+      export interface Blik {
+        mandate_options?: Blik.MandateOptions;
       }
 
       export interface Card {
@@ -1956,6 +1966,15 @@ export namespace Subscription {
 
       export namespace Bancontact {
         export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+      }
+
+      export namespace Blik {
+        export interface MandateOptions {
+          /**
+           * Date when the mandate expires and no further payments will be charged. If not provided, the mandate will be set to be indefinite.
+           */
+          expires_after: number | null;
+        }
       }
 
       export namespace Card {
@@ -3123,6 +3142,11 @@ export namespace SubscriptionCreateParams {
       bancontact?: Emptyable<PaymentMethodOptions.Bancontact>;
 
       /**
+       * This sub-hash contains details about the Blik payment method options to pass to the invoice's PaymentIntent.
+       */
+      blik?: Emptyable<PaymentMethodOptions.Blik>;
+
+      /**
        * This sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
        */
       card?: Emptyable<PaymentMethodOptions.Card>;
@@ -3177,6 +3201,7 @@ export namespace SubscriptionCreateParams {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'blik'
       | 'boleto'
       | 'card'
       | 'cashapp'
@@ -3236,6 +3261,13 @@ export namespace SubscriptionCreateParams {
          * Preferred language of the Bancontact authorization page that the customer is redirected to.
          */
         preferred_language?: Bancontact.PreferredLanguage;
+      }
+
+      export interface Blik {
+        /**
+         * Configuration options for setting up a mandate
+         */
+        mandate_options?: Blik.MandateOptions;
       }
 
       export interface Card {
@@ -3331,6 +3363,15 @@ export namespace SubscriptionCreateParams {
 
       export namespace Bancontact {
         export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+      }
+
+      export namespace Blik {
+        export interface MandateOptions {
+          /**
+           * Date when the mandate expires and no further payments will be charged. If not provided, the mandate will be set to be indefinite.
+           */
+          expires_after?: number;
+        }
       }
 
       export namespace Card {
@@ -3443,7 +3484,7 @@ export namespace SubscriptionCreateParams {
           end_date?: string;
 
           /**
-           * Schedule at which the future payments will be charged. Defaults to `monthly`.
+           * Schedule at which the future payments will be charged. Defaults to the subscription servicing interval.
            */
           payment_schedule?: MandateOptions.PaymentSchedule;
         }
@@ -4459,6 +4500,11 @@ export namespace SubscriptionUpdateParams {
       bancontact?: Emptyable<PaymentMethodOptions.Bancontact>;
 
       /**
+       * This sub-hash contains details about the Blik payment method options to pass to the invoice's PaymentIntent.
+       */
+      blik?: Emptyable<PaymentMethodOptions.Blik>;
+
+      /**
        * This sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
        */
       card?: Emptyable<PaymentMethodOptions.Card>;
@@ -4513,6 +4559,7 @@ export namespace SubscriptionUpdateParams {
       | 'au_becs_debit'
       | 'bacs_debit'
       | 'bancontact'
+      | 'blik'
       | 'boleto'
       | 'card'
       | 'cashapp'
@@ -4572,6 +4619,13 @@ export namespace SubscriptionUpdateParams {
          * Preferred language of the Bancontact authorization page that the customer is redirected to.
          */
         preferred_language?: Bancontact.PreferredLanguage;
+      }
+
+      export interface Blik {
+        /**
+         * Configuration options for setting up a mandate
+         */
+        mandate_options?: Blik.MandateOptions;
       }
 
       export interface Card {
@@ -4667,6 +4721,15 @@ export namespace SubscriptionUpdateParams {
 
       export namespace Bancontact {
         export type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+      }
+
+      export namespace Blik {
+        export interface MandateOptions {
+          /**
+           * Date when the mandate expires and no further payments will be charged. If not provided, the mandate will be set to be indefinite.
+           */
+          expires_after?: number;
+        }
       }
 
       export namespace Card {
@@ -4779,7 +4842,7 @@ export namespace SubscriptionUpdateParams {
           end_date?: string;
 
           /**
-           * Schedule at which the future payments will be charged. Defaults to `monthly`.
+           * Schedule at which the future payments will be charged. Defaults to the subscription servicing interval.
            */
           payment_schedule?: MandateOptions.PaymentSchedule;
         }

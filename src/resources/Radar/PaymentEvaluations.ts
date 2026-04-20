@@ -73,7 +73,7 @@ export interface PaymentEvaluation {
   payment_details?: Radar.PaymentEvaluation.PaymentDetails;
 
   /**
-   * Recommended action based on the score of the fraudulent_payment signal. Possible values are `block` and `continue`.
+   * Recommended action based on the score of the `fraudulent_payment` signal. Possible values are `block` and `continue`.
    */
   recommended_action: Radar.PaymentEvaluation.RecommendedAction;
 
@@ -88,7 +88,7 @@ export namespace Radar {
       /**
        * ID for the Radar Session associated with the payment evaluation. A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
        */
-      radar_session: string;
+      radar_session: string | null;
     }
 
     export interface CustomerDetails {
@@ -584,13 +584,19 @@ export namespace Radar {
         risk_level: FraudulentPayment.RiskLevel;
 
         /**
-         * Score for this insight. Possible values for evaluated payments are -1 and any value between 0 and 100. The value is returned with two decimal places. A score of -1 indicates a test integration and higher scores indicate a higher likelihood of the signal being true.
+         * Score for this signal. Possible values for evaluated payments are between 0 and 100. The value is returned with two decimal places and higher scores indicate a higher likelihood of the signal being true. A score of -1 is returned when a model evaluation was not performed, such as requests from incomplete integrations.
          */
         score: number;
       }
 
       export namespace FraudulentPayment {
-        export type RiskLevel = 'elevated' | 'highest' | 'normal';
+        export type RiskLevel =
+          | 'elevated'
+          | 'highest'
+          | 'low'
+          | 'normal'
+          | 'not_assessed'
+          | 'unknown';
       }
     }
   }

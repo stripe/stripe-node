@@ -19,6 +19,7 @@ import {
   TestClockResource,
 } from './TestClocks.js';
 import {Issuing} from './Issuing/index.js';
+import {SharedPayment} from './SharedPayment/index.js';
 import {Terminal} from './Terminal/index.js';
 import {Treasury} from './Treasury/index.js';
 
@@ -30,6 +31,7 @@ export class TestHelpers {
   refunds: RefundResource;
   testClocks: TestClockResource;
   issuing: Issuing;
+  sharedPayment: SharedPayment;
   terminal: Terminal;
   treasury: Treasury;
 
@@ -39,6 +41,7 @@ export class TestHelpers {
     this.refunds = new RefundResource(stripe);
     this.testClocks = new TestClockResource(stripe);
     this.issuing = new Issuing(stripe);
+    this.sharedPayment = new SharedPayment(stripe);
     this.terminal = new Terminal(stripe);
     this.treasury = new Treasury(stripe);
   }
@@ -52,6 +55,7 @@ export declare namespace TestHelpers {
   export type TestClockAdvanceParams = TestHelpersNamespace3.TestClockAdvanceParams;
   export {TestClock};
   export {Issuing};
+  export {SharedPayment};
   export {Terminal};
   export {Treasury};
 }

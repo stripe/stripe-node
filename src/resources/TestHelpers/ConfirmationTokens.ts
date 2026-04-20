@@ -329,6 +329,11 @@ export namespace TestHelpers {
       sepa_debit?: PaymentMethodData.SepaDebit;
 
       /**
+       * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
+       */
+      shared_payment_granted_token?: string;
+
+      /**
        * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
        */
       shopeepay?: PaymentMethodData.Shopeepay;
@@ -342,6 +347,11 @@ export namespace TestHelpers {
        * This hash contains details about the Stripe balance payment method.
        */
       stripe_balance?: PaymentMethodData.StripeBalance;
+
+      /**
+       * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+       */
+      sunbit?: PaymentMethodData.Sunbit;
 
       /**
        * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -688,6 +698,8 @@ export namespace TestHelpers {
         account?: string;
       }
 
+      export interface Sunbit {}
+
       export interface Swish {}
 
       export interface Twint {}
@@ -744,6 +756,7 @@ export namespace TestHelpers {
         | 'shopeepay'
         | 'sofort'
         | 'stripe_balance'
+        | 'sunbit'
         | 'swish'
         | 'twint'
         | 'upi'

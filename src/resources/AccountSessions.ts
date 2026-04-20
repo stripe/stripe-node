@@ -58,6 +58,8 @@ export namespace AccountSession {
 
     account_onboarding: Components.AccountOnboarding;
 
+    balance_report: Components.BalanceReport;
+
     balances: Components.Balances;
 
     capital_financing?: Components.CapitalFinancing | null;
@@ -90,6 +92,8 @@ export namespace AccountSession {
 
     payout_details: Components.PayoutDetails;
 
+    payout_reconciliation_report: Components.PayoutReconciliationReport;
+
     payouts: Components.Payouts;
 
     payouts_list: Components.PayoutsList;
@@ -116,6 +120,15 @@ export namespace AccountSession {
       enabled: boolean;
 
       features: AccountOnboarding.Features;
+    }
+
+    export interface BalanceReport {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: BalanceReport.Features;
     }
 
     export interface Balances {
@@ -262,6 +275,15 @@ export namespace AccountSession {
       features: PayoutDetails.Features;
     }
 
+    export interface PayoutReconciliationReport {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: PayoutReconciliationReport.Features;
+    }
+
     export interface Payouts {
       /**
        * Whether the embedded component is enabled.
@@ -324,6 +346,10 @@ export namespace AccountSession {
          */
         external_account_collection: boolean;
       }
+    }
+
+    export namespace BalanceReport {
+      export interface Features {}
     }
 
     export namespace Balances {
@@ -585,6 +611,10 @@ export namespace AccountSession {
       export interface Features {}
     }
 
+    export namespace PayoutReconciliationReport {
+      export interface Features {}
+    }
+
     export namespace Payouts {
       export interface Features {
         /**
@@ -664,6 +694,11 @@ export namespace AccountSessionCreateParams {
      * Configuration for the [app viewport](https://docs.stripe.com/connect/supported-embedded-components/app-viewport/) embedded component.
      */
     app_viewport?: Components.AppViewport;
+
+    /**
+     * Configuration for the [balance report](https://docs.stripe.com/connect/supported-embedded-components/financial-reports#balance-report) embedded component.
+     */
+    balance_report?: Components.BalanceReport;
 
     /**
      * Configuration for the [balances](https://docs.stripe.com/connect/supported-embedded-components/balances/) embedded component.
@@ -761,6 +796,11 @@ export namespace AccountSessionCreateParams {
     payout_details?: Components.PayoutDetails;
 
     /**
+     * Configuration for the [payout reconciliation report](https://docs.stripe.com/connect/supported-embedded-components/financial-reports#payout-reconciliation-report) embedded component.
+     */
+    payout_reconciliation_report?: Components.PayoutReconciliationReport;
+
+    /**
      * Configuration for the [payouts](https://docs.stripe.com/connect/supported-embedded-components/payouts/) embedded component.
      */
     payouts?: Components.Payouts;
@@ -848,6 +888,18 @@ export namespace AccountSessionCreateParams {
        * The list of features enabled in the embedded component.
        */
       features?: AppViewport.Features;
+    }
+
+    export interface BalanceReport {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * An empty list, because this embedded component has no features.
+       */
+      features?: BalanceReport.Features;
     }
 
     export interface Balances {
@@ -1078,6 +1130,18 @@ export namespace AccountSessionCreateParams {
       features?: PayoutDetails.Features;
     }
 
+    export interface PayoutReconciliationReport {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      /**
+       * An empty list, because this embedded component has no features.
+       */
+      features?: PayoutReconciliationReport.Features;
+    }
+
     export interface Payouts {
       /**
        * Whether the embedded component is enabled.
@@ -1215,6 +1279,10 @@ export namespace AccountSessionCreateParams {
          */
         allowed_apps?: Emptyable<Array<string>>;
       }
+    }
+
+    export namespace BalanceReport {
+      export interface Features {}
     }
 
     export namespace Balances {
@@ -1485,6 +1553,10 @@ export namespace AccountSessionCreateParams {
     }
 
     export namespace PayoutDetails {
+      export interface Features {}
+    }
+
+    export namespace PayoutReconciliationReport {
       export interface Features {}
     }
 
