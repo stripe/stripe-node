@@ -349,6 +349,11 @@ export namespace Terminal {
       failure_message: string | null;
 
       /**
+       * Represents a reader action to print content
+       */
+      print_content?: Action.PrintContent;
+
+      /**
        * Represents a reader action to process a payment intent
        */
       process_payment_intent?: Action.ProcessPaymentIntent;
@@ -448,6 +453,18 @@ export namespace Terminal {
          * Most recent PaymentIntent processed by the reader.
          */
         payment_intent: string | PaymentIntent;
+      }
+
+      export interface PrintContent {
+        /**
+         * Metadata of an uploaded file
+         */
+        image?: PrintContent.Image;
+
+        /**
+         * The type of content to print. Currently supports `image`.
+         */
+        type: 'image';
       }
 
       export interface ProcessPaymentIntent {
@@ -554,6 +571,7 @@ export namespace Terminal {
         | 'collect_inputs'
         | 'collect_payment_method'
         | 'confirm_payment_intent'
+        | 'print_content'
         | 'process_payment_intent'
         | 'process_setup_intent'
         | 'refund_payment'
@@ -787,6 +805,30 @@ export namespace Terminal {
            * If the customer doesn't abandon authenticating the payment, they're redirected to this URL after completion.
            */
           return_url?: string;
+        }
+      }
+
+      export namespace PrintContent {
+        export interface Image {
+          /**
+           * Creation time of the object (in seconds since the Unix epoch).
+           */
+          created_at: number;
+
+          /**
+           * The original name of the uploaded file (e.g. `receipt.png`).
+           */
+          filename: string;
+
+          /**
+           * The size (in bytes) of the uploaded file.
+           */
+          size: number;
+
+          /**
+           * The format of the uploaded file.
+           */
+          type: string;
         }
       }
 
