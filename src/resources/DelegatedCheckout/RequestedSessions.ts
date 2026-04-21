@@ -520,7 +520,7 @@ export namespace DelegatedCheckout {
         /**
          * The type of the fulfillment option.
          */
-        type: string;
+        type: FulfillmentOption.Type;
       }
 
       export interface SelectedFulfillmentOption {
@@ -537,7 +537,7 @@ export namespace DelegatedCheckout {
         /**
          * The type of the selected fulfillment option.
          */
-        type: string;
+        type: SelectedFulfillmentOption.Type;
       }
 
       export interface SelectedFulfillmentOptionOverride {
@@ -559,7 +559,7 @@ export namespace DelegatedCheckout {
         /**
          * The type of the selected fulfillment option.
          */
-        type: string;
+        type: SelectedFulfillmentOptionOverride.Type;
       }
 
       export namespace FulfillmentOption {
@@ -576,6 +576,8 @@ export namespace DelegatedCheckout {
            */
           shipping_options: Array<Shipping.ShippingOption> | null;
         }
+
+        export type Type = 'digital' | 'shipping';
 
         export namespace Digital {
           export interface DigitalOption {
@@ -660,6 +662,8 @@ export namespace DelegatedCheckout {
            */
           shipping_option: string | null;
         }
+
+        export type Type = 'digital' | 'shipping';
       }
 
       export namespace SelectedFulfillmentOptionOverride {
@@ -676,6 +680,8 @@ export namespace DelegatedCheckout {
            */
           shipping_option: string | null;
         }
+
+        export type Type = 'digital' | 'shipping';
       }
     }
 
@@ -1274,7 +1280,7 @@ export namespace DelegatedCheckout {
         /**
          * The type of fulfillment option.
          */
-        type: string;
+        type: SelectedFulfillmentOption.Type;
       }
 
       export interface SelectedFulfillmentOptionOverride {
@@ -1296,7 +1302,7 @@ export namespace DelegatedCheckout {
         /**
          * The type of fulfillment option.
          */
-        type: string;
+        type: SelectedFulfillmentOptionOverride.Type;
       }
 
       export namespace SelectedFulfillmentOption {
@@ -1313,6 +1319,8 @@ export namespace DelegatedCheckout {
            */
           shipping_option: string;
         }
+
+        export type Type = 'digital' | 'shipping';
       }
 
       export namespace SelectedFulfillmentOptionOverride {
@@ -1329,6 +1337,8 @@ export namespace DelegatedCheckout {
            */
           shipping_option: string;
         }
+
+        export type Type = 'digital' | 'shipping';
       }
     }
 
