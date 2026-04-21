@@ -1852,7 +1852,7 @@ export namespace PaymentAttemptRecord {
         /**
          * The number of installments.
          */
-        count: number | null;
+        count: number;
       }
     }
 

@@ -1952,7 +1952,7 @@ export namespace PaymentRecord {
         /**
          * The number of installments.
          */
-        count: number | null;
+        count: number;
       }
     }
 
