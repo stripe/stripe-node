@@ -3,7 +3,6 @@
 import {Discount, DeletedDiscount} from './Discounts.js';
 import {Subscription} from './Subscriptions.js';
 import {Price} from './Prices.js';
-import {TaxRate} from './TaxRates.js';
 import * as Billing from './Billing/index.js';
 import {Metadata, Decimal} from '../shared.js';
 import {RequestOptions} from '../lib.js';
@@ -339,7 +338,7 @@ export namespace InvoiceLineItem {
       /**
        * ID of the tax rate
        */
-      tax_rate: string | TaxRate;
+      tax_rate: string;
     }
 
     export type TaxabilityReason =

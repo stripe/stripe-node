@@ -166,7 +166,7 @@ export namespace CreditNoteLineItem {
       /**
        * ID of the tax rate
        */
-      tax_rate: string | TaxRate;
+      tax_rate: string;
     }
 
     export type TaxabilityReason =
