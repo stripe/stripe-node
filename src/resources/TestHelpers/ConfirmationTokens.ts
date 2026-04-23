@@ -309,6 +309,11 @@ export namespace TestHelpers {
       sofort?: PaymentMethodData.Sofort;
 
       /**
+       * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+       */
+      sunbit?: PaymentMethodData.Sunbit;
+
+      /**
        * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
        */
       swish?: PaymentMethodData.Swish;
@@ -624,6 +629,8 @@ export namespace TestHelpers {
         country: Sofort.Country;
       }
 
+      export interface Sunbit {}
+
       export interface Swish {}
 
       export interface Twint {}
@@ -673,6 +680,7 @@ export namespace TestHelpers {
         | 'satispay'
         | 'sepa_debit'
         | 'sofort'
+        | 'sunbit'
         | 'swish'
         | 'twint'
         | 'upi'

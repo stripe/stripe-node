@@ -421,6 +421,11 @@ export interface PaymentIntent {
   livemode: boolean;
 
   /**
+   * Settings for Managed Payments.
+   */
+  managed_payments: PaymentIntent.ManagedPayments | null;
+
+  /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Learn more about [storing information in metadata](https://docs.stripe.com/payments/payment-intents/creating-payment-intents#storing-information-in-metadata).
    */
   metadata: Metadata;
@@ -619,6 +624,7 @@ export namespace PaymentIntent {
     | 'satispay'
     | 'sepa_debit'
     | 'sofort'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -743,6 +749,13 @@ export namespace PaymentIntent {
     type: LastPaymentError.Type;
   }
 
+  export interface ManagedPayments {
+    /**
+     * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
+     */
+    enabled: boolean;
+  }
+
   export interface NextAction {
     alipay_handle_redirect?: NextAction.AlipayHandleRedirect;
 
@@ -753,6 +766,8 @@ export namespace PaymentIntent {
     cashapp_handle_redirect_or_display_qr_code?: NextAction.CashappHandleRedirectOrDisplayQrCode;
 
     display_bank_transfer_instructions?: NextAction.DisplayBankTransferInstructions;
+
+    klarna_display_qr_code?: NextAction.KlarnaDisplayQrCode;
 
     konbini_display_details?: NextAction.KonbiniDisplayDetails;
 
@@ -1079,11 +1094,13 @@ export namespace PaymentIntent {
       | 'account_number_invalid'
       | 'account_token_required_for_v2_account'
       | 'acss_debit_session_incomplete'
+      | 'action_blocked'
       | 'alipay_upgrade_required'
       | 'amount_too_large'
       | 'amount_too_small'
       | 'api_key_expired'
       | 'application_fees_not_allowed'
+      | 'approval_required'
       | 'authentication_required'
       | 'balance_insufficient'
       | 'balance_invalid_parameter'
@@ -1368,6 +1385,28 @@ export namespace PaymentIntent {
        * Type of bank transfer
        */
       type: DisplayBankTransferInstructions.Type;
+    }
+
+    export interface KlarnaDisplayQrCode {
+      /**
+       * The data being used to generate QR code
+       */
+      data: string;
+
+      /**
+       * The timestamp at which the QR code expires.
+       */
+      expires_at: number | null;
+
+      /**
+       * The image_url_png string used to render QR code
+       */
+      image_url_png: string;
+
+      /**
+       * The image_url_svg string used to render QR code
+       */
+      image_url_svg: string;
     }
 
     export interface KonbiniDisplayDetails {
@@ -2729,6 +2768,8 @@ export namespace PaymentIntent {
        */
       expires_at: number | null;
 
+      mandate_options?: Pix.MandateOptions;
+
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
@@ -2738,7 +2779,7 @@ export namespace PaymentIntent {
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Pix.SetupFutureUsage;
     }
 
     export interface Promptpay {
@@ -3314,6 +3355,63 @@ export namespace PaymentIntent {
 
     export namespace Pix {
       export type AmountIncludesIof = 'always' | 'never';
+
+      export interface MandateOptions {
+        /**
+         * Amount to be charged for future payments.
+         */
+        amount?: number;
+
+        /**
+         * Determines if the amount includes the IOF tax.
+         */
+        amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+        /**
+         * Type of amount.
+         */
+        amount_type?: MandateOptions.AmountType;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
+         */
+        currency?: string;
+
+        /**
+         * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`.
+         */
+        end_date?: string;
+
+        /**
+         * Schedule at which the future payments will be charged.
+         */
+        payment_schedule?: MandateOptions.PaymentSchedule;
+
+        /**
+         * Subscription name displayed to buyers in their bank app.
+         */
+        reference?: string;
+
+        /**
+         * Start date of the mandate, in `YYYY-MM-DD`.
+         */
+        start_date?: string;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session';
+
+      export namespace MandateOptions {
+        export type AmountIncludesIof = 'always' | 'never';
+
+        export type AmountType = 'fixed' | 'maximum';
+
+        export type PaymentSchedule =
+          | 'halfyearly'
+          | 'monthly'
+          | 'quarterly'
+          | 'weekly'
+          | 'yearly';
+      }
     }
 
     export namespace RevolutPay {
@@ -3745,6 +3843,7 @@ export namespace PaymentIntentCreateParams {
     | 'satispay'
     | 'sepa_debit'
     | 'sofort'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -4029,6 +4128,11 @@ export namespace PaymentIntentCreateParams {
      * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
      */
     sofort?: PaymentMethodData.Sofort;
+
+    /**
+     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     */
+    sunbit?: PaymentMethodData.Sunbit;
 
     /**
      * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -4877,6 +4981,8 @@ export namespace PaymentIntentCreateParams {
       country: Sofort.Country;
     }
 
+    export interface Sunbit {}
+
     export interface Swish {}
 
     export interface Twint {}
@@ -4926,6 +5032,7 @@ export namespace PaymentIntentCreateParams {
       | 'satispay'
       | 'sepa_debit'
       | 'sofort'
+      | 'sunbit'
       | 'swish'
       | 'twint'
       | 'upi'
@@ -6051,6 +6158,11 @@ export namespace PaymentIntentCreateParams {
       expires_at?: number;
 
       /**
+       * Additional fields for mandate creation. Only applicable when `setup_future_usage=off_session`.
+       */
+      mandate_options?: Pix.MandateOptions;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -6058,10 +6170,8 @@ export namespace PaymentIntentCreateParams {
        * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
-       *
-       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Pix.SetupFutureUsage;
     }
 
     export interface Promptpay {
@@ -6898,6 +7008,63 @@ export namespace PaymentIntentCreateParams {
 
     export namespace Pix {
       export type AmountIncludesIof = 'always' | 'never';
+
+      export interface MandateOptions {
+        /**
+         * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
+         */
+        amount?: number;
+
+        /**
+         * Determines if the amount includes the IOF tax. Defaults to `never`.
+         */
+        amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+        /**
+         * Type of amount. Defaults to `maximum`.
+         */
+        amount_type?: MandateOptions.AmountType;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Only `brl` is supported currently.
+         */
+        currency?: string;
+
+        /**
+         * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+         */
+        end_date?: string;
+
+        /**
+         * Schedule at which the future payments will be charged. Defaults to `monthly`.
+         */
+        payment_schedule?: MandateOptions.PaymentSchedule;
+
+        /**
+         * Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
+         */
+        reference?: string;
+
+        /**
+         * Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future. Defaults to 3 days after the current date.
+         */
+        start_date?: string;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session';
+
+      export namespace MandateOptions {
+        export type AmountIncludesIof = 'always' | 'never';
+
+        export type AmountType = 'fixed' | 'maximum';
+
+        export type PaymentSchedule =
+          | 'halfyearly'
+          | 'monthly'
+          | 'quarterly'
+          | 'weekly'
+          | 'yearly';
+      }
     }
 
     export namespace RevolutPay {
@@ -7279,6 +7446,7 @@ export namespace PaymentIntentUpdateParams {
     | 'satispay'
     | 'sepa_debit'
     | 'sofort'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -7554,6 +7722,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
      */
     sofort?: PaymentMethodData.Sofort;
+
+    /**
+     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     */
+    sunbit?: PaymentMethodData.Sunbit;
 
     /**
      * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -8335,6 +8508,8 @@ export namespace PaymentIntentUpdateParams {
       country: Sofort.Country;
     }
 
+    export interface Sunbit {}
+
     export interface Swish {}
 
     export interface Twint {}
@@ -8384,6 +8559,7 @@ export namespace PaymentIntentUpdateParams {
       | 'satispay'
       | 'sepa_debit'
       | 'sofort'
+      | 'sunbit'
       | 'swish'
       | 'twint'
       | 'upi'
@@ -9509,6 +9685,11 @@ export namespace PaymentIntentUpdateParams {
       expires_at?: number;
 
       /**
+       * Additional fields for mandate creation. Only applicable when `setup_future_usage=off_session`.
+       */
+      mandate_options?: Pix.MandateOptions;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -9516,10 +9697,8 @@ export namespace PaymentIntentUpdateParams {
        * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
-       *
-       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Pix.SetupFutureUsage;
     }
 
     export interface Promptpay {
@@ -10356,6 +10535,63 @@ export namespace PaymentIntentUpdateParams {
 
     export namespace Pix {
       export type AmountIncludesIof = 'always' | 'never';
+
+      export interface MandateOptions {
+        /**
+         * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
+         */
+        amount?: number;
+
+        /**
+         * Determines if the amount includes the IOF tax. Defaults to `never`.
+         */
+        amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+        /**
+         * Type of amount. Defaults to `maximum`.
+         */
+        amount_type?: MandateOptions.AmountType;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Only `brl` is supported currently.
+         */
+        currency?: string;
+
+        /**
+         * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+         */
+        end_date?: string;
+
+        /**
+         * Schedule at which the future payments will be charged. Defaults to `monthly`.
+         */
+        payment_schedule?: MandateOptions.PaymentSchedule;
+
+        /**
+         * Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
+         */
+        reference?: string;
+
+        /**
+         * Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future. Defaults to 3 days after the current date.
+         */
+        start_date?: string;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session';
+
+      export namespace MandateOptions {
+        export type AmountIncludesIof = 'always' | 'never';
+
+        export type AmountType = 'fixed' | 'maximum';
+
+        export type PaymentSchedule =
+          | 'halfyearly'
+          | 'monthly'
+          | 'quarterly'
+          | 'weekly'
+          | 'yearly';
+      }
     }
 
     export namespace RevolutPay {
@@ -10873,6 +11109,11 @@ export interface PaymentIntentConfirmParams {
   amount_details?: Emptyable<PaymentIntentConfirmParams.AmountDetails>;
 
   /**
+   * Amount to confirm on the PaymentIntent. Defaults to `amount` if not provided.
+   */
+  amount_to_confirm?: number;
+
+  /**
    * Controls when the funds will be captured from the customer's account.
    */
   capture_method?: PaymentIntentConfirmParams.CaptureMethod;
@@ -11067,6 +11308,7 @@ export namespace PaymentIntentConfirmParams {
     | 'satispay'
     | 'sepa_debit'
     | 'sofort'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -11351,6 +11593,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
      */
     sofort?: PaymentMethodData.Sofort;
+
+    /**
+     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     */
+    sunbit?: PaymentMethodData.Sunbit;
 
     /**
      * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -12174,6 +12421,8 @@ export namespace PaymentIntentConfirmParams {
       country: Sofort.Country;
     }
 
+    export interface Sunbit {}
+
     export interface Swish {}
 
     export interface Twint {}
@@ -12223,6 +12472,7 @@ export namespace PaymentIntentConfirmParams {
       | 'satispay'
       | 'sepa_debit'
       | 'sofort'
+      | 'sunbit'
       | 'swish'
       | 'twint'
       | 'upi'
@@ -13348,6 +13598,11 @@ export namespace PaymentIntentConfirmParams {
       expires_at?: number;
 
       /**
+       * Additional fields for mandate creation. Only applicable when `setup_future_usage=off_session`.
+       */
+      mandate_options?: Pix.MandateOptions;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -13355,10 +13610,8 @@ export namespace PaymentIntentConfirmParams {
        * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
-       *
-       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Pix.SetupFutureUsage;
     }
 
     export interface Promptpay {
@@ -14195,6 +14448,63 @@ export namespace PaymentIntentConfirmParams {
 
     export namespace Pix {
       export type AmountIncludesIof = 'always' | 'never';
+
+      export interface MandateOptions {
+        /**
+         * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
+         */
+        amount?: number;
+
+        /**
+         * Determines if the amount includes the IOF tax. Defaults to `never`.
+         */
+        amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+        /**
+         * Type of amount. Defaults to `maximum`.
+         */
+        amount_type?: MandateOptions.AmountType;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Only `brl` is supported currently.
+         */
+        currency?: string;
+
+        /**
+         * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+         */
+        end_date?: string;
+
+        /**
+         * Schedule at which the future payments will be charged. Defaults to `monthly`.
+         */
+        payment_schedule?: MandateOptions.PaymentSchedule;
+
+        /**
+         * Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
+         */
+        reference?: string;
+
+        /**
+         * Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future. Defaults to 3 days after the current date.
+         */
+        start_date?: string;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session';
+
+      export namespace MandateOptions {
+        export type AmountIncludesIof = 'always' | 'never';
+
+        export type AmountType = 'fixed' | 'maximum';
+
+        export type PaymentSchedule =
+          | 'halfyearly'
+          | 'monthly'
+          | 'quarterly'
+          | 'weekly'
+          | 'yearly';
+      }
     }
 
     export namespace RevolutPay {

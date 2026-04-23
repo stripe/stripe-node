@@ -818,6 +818,11 @@ export interface Session {
   locale: Checkout.Session.Locale | null;
 
   /**
+   * Settings for Managed Payments for this Checkout Session and resulting [PaymentIntents](https://docs.stripe.com/api/payment_intents/object), [Invoices](https://docs.stripe.com/api/invoices/object), and [Subscriptions](https://docs.stripe.com/api/subscriptions/object).
+   */
+  managed_payments: Checkout.Session.ManagedPayments | null;
+
+  /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata | null;
@@ -1277,6 +1282,13 @@ export namespace Checkout {
       | 'zh-HK'
       | 'zh-TW';
 
+    export interface ManagedPayments {
+      /**
+       * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
+       */
+      enabled: boolean;
+    }
+
     export type Mode = 'payment' | 'setup' | 'subscription';
 
     export interface NameCollection {
@@ -1669,7 +1681,7 @@ export namespace Checkout {
 
       export interface TaxId {
         /**
-         * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, or `unknown`
+         * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, or `unknown`
          */
         type: TaxId.Type;
 
@@ -1726,8 +1738,10 @@ export namespace Checkout {
           | 'et_tin'
           | 'eu_oss_vat'
           | 'eu_vat'
+          | 'fo_vat'
           | 'gb_vat'
           | 'ge_vat'
+          | 'gi_tin'
           | 'gn_nif'
           | 'hk_br'
           | 'hr_oib'
@@ -1736,6 +1750,7 @@ export namespace Checkout {
           | 'il_vat'
           | 'in_gst'
           | 'is_vat'
+          | 'it_cf'
           | 'jp_cn'
           | 'jp_rn'
           | 'jp_trn'
@@ -1766,6 +1781,7 @@ export namespace Checkout {
           | 'pe_ruc'
           | 'ph_tin'
           | 'pl_nip'
+          | 'py_ruc'
           | 'ro_tin'
           | 'rs_pib'
           | 'ru_inn'
@@ -2629,6 +2645,8 @@ export namespace Checkout {
          */
         expires_after_seconds: number | null;
 
+        mandate_options?: Pix.MandateOptions;
+
         /**
          * Indicates that you intend to make future payments with this PaymentIntent's payment method.
          *
@@ -2638,7 +2656,7 @@ export namespace Checkout {
          *
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
-        setup_future_usage?: 'none';
+        setup_future_usage?: Pix.SetupFutureUsage;
       }
 
       export interface RevolutPay {
@@ -3008,6 +3026,63 @@ export namespace Checkout {
 
       export namespace Pix {
         export type AmountIncludesIof = 'always' | 'never';
+
+        export interface MandateOptions {
+          /**
+           * Amount to be charged for future payments.
+           */
+          amount?: number;
+
+          /**
+           * Determines if the amount includes the IOF tax.
+           */
+          amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+          /**
+           * Type of amount.
+           */
+          amount_type?: MandateOptions.AmountType;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
+           */
+          currency?: string;
+
+          /**
+           * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`.
+           */
+          end_date?: string;
+
+          /**
+           * Schedule at which the future payments will be charged.
+           */
+          payment_schedule?: MandateOptions.PaymentSchedule;
+
+          /**
+           * Subscription name displayed to buyers in their bank app.
+           */
+          reference?: string;
+
+          /**
+           * Start date of the mandate, in `YYYY-MM-DD`.
+           */
+          start_date?: string;
+        }
+
+        export type SetupFutureUsage = 'none' | 'off_session';
+
+        export namespace MandateOptions {
+          export type AmountIncludesIof = 'always' | 'never';
+
+          export type AmountType = 'fixed' | 'maximum';
+
+          export type PaymentSchedule =
+            | 'halfyearly'
+            | 'monthly'
+            | 'quarterly'
+            | 'weekly'
+            | 'yearly';
+        }
       }
 
       export namespace RevolutPay {
@@ -3651,6 +3726,11 @@ export namespace Checkout {
     locale?: SessionCreateParams.Locale;
 
     /**
+     * Settings for Managed Payments for this Checkout Session and resulting [PaymentIntents](https://docs.stripe.com/api/payment_intents/object), [Invoices](https://docs.stripe.com/api/invoices/object), and [Subscriptions](https://docs.stripe.com/api/subscriptions/object).
+     */
+    managed_payments?: SessionCreateParams.ManagedPayments;
+
+    /**
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: MetadataParam;
@@ -4047,6 +4127,7 @@ export namespace Checkout {
       | 'satispay'
       | 'sepa_debit'
       | 'sofort'
+      | 'sunbit'
       | 'swish'
       | 'twint'
       | 'upi'
@@ -4145,6 +4226,13 @@ export namespace Checkout {
       | 'zh'
       | 'zh-HK'
       | 'zh-TW';
+
+    export interface ManagedPayments {
+      /**
+       * Set to `true` to enable [Managed Payments](https://docs.stripe.com/payments/managed-payments), Stripe's merchant of record solution, for this session.
+       */
+      enabled?: boolean;
+    }
 
     export type Mode = 'payment' | 'setup' | 'subscription';
 
@@ -4557,6 +4645,7 @@ export namespace Checkout {
       | 'satispay'
       | 'sepa_debit'
       | 'sofort'
+      | 'sunbit'
       | 'swish'
       | 'twint'
       | 'upi'
@@ -5922,6 +6011,11 @@ export namespace Checkout {
         expires_after_seconds?: number;
 
         /**
+         * Additional fields for mandate creation.
+         */
+        mandate_options?: Pix.MandateOptions;
+
+        /**
          * Indicates that you intend to make future payments with this PaymentIntent's payment method.
          *
          * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -5930,7 +6024,7 @@ export namespace Checkout {
          *
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
-        setup_future_usage?: 'none';
+        setup_future_usage?: Pix.SetupFutureUsage;
       }
 
       export interface RevolutPay {
@@ -6397,6 +6491,63 @@ export namespace Checkout {
 
       export namespace Pix {
         export type AmountIncludesIof = 'always' | 'never';
+
+        export interface MandateOptions {
+          /**
+           * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
+           */
+          amount?: number;
+
+          /**
+           * Determines if the amount includes the IOF tax. Defaults to `never`.
+           */
+          amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+          /**
+           * Type of amount. Defaults to `maximum`.
+           */
+          amount_type?: MandateOptions.AmountType;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Only `brl` is supported currently.
+           */
+          currency?: string;
+
+          /**
+           * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+           */
+          end_date?: string;
+
+          /**
+           * Schedule at which the future payments will be charged. Defaults to `monthly`.
+           */
+          payment_schedule?: MandateOptions.PaymentSchedule;
+
+          /**
+           * Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
+           */
+          reference?: string;
+
+          /**
+           * Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future. Defaults to 3 days after the current date.
+           */
+          start_date?: string;
+        }
+
+        export type SetupFutureUsage = 'none' | 'off_session';
+
+        export namespace MandateOptions {
+          export type AmountIncludesIof = 'always' | 'never';
+
+          export type AmountType = 'fixed' | 'maximum';
+
+          export type PaymentSchedule =
+            | 'halfyearly'
+            | 'monthly'
+            | 'quarterly'
+            | 'weekly'
+            | 'yearly';
+        }
       }
 
       export namespace RevolutPay {

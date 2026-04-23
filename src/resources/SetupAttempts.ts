@@ -147,6 +147,8 @@ export namespace SetupAttempt {
 
     payto?: PaymentMethodDetails.Payto;
 
+    pix?: PaymentMethodDetails.Pix;
+
     revolut_pay?: PaymentMethodDetails.RevolutPay;
 
     sepa_debit?: PaymentMethodDetails.SepaDebit;
@@ -390,6 +392,11 @@ export namespace SetupAttempt {
       last4: string | null;
 
       /**
+       * True if this payment was marked as MOTO and out of scope for SCA.
+       */
+      moto?: boolean;
+
+      /**
        * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
        */
       network: string | null;
@@ -472,6 +479,8 @@ export namespace SetupAttempt {
     export interface Paypal {}
 
     export interface Payto {}
+
+    export interface Pix {}
 
     export interface RevolutPay {}
 
@@ -709,11 +718,13 @@ export namespace SetupAttempt {
       | 'account_number_invalid'
       | 'account_token_required_for_v2_account'
       | 'acss_debit_session_incomplete'
+      | 'action_blocked'
       | 'alipay_upgrade_required'
       | 'amount_too_large'
       | 'amount_too_small'
       | 'api_key_expired'
       | 'application_fees_not_allowed'
+      | 'approval_required'
       | 'authentication_required'
       | 'balance_insufficient'
       | 'balance_invalid_parameter'

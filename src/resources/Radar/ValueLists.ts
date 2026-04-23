@@ -114,7 +114,7 @@ export interface ValueList {
   deleted?: void;
 
   /**
-   * The type of items in the value list. One of `card_fingerprint`, `card_bin`, `crypto_fingerprint`, `email`, `ip_address`, `country`, `string`, `case_sensitive_string`, `customer_id`, `sepa_debit_fingerprint`, or `us_bank_account_fingerprint`.
+   * The type of items in the value list. One of `card_fingerprint`, `card_bin`, `crypto_fingerprint`, `email`, `ip_address`, `country`, `string`, `case_sensitive_string`, `customer_id`, `account`, `sepa_debit_fingerprint`, or `us_bank_account_fingerprint`.
    */
   item_type: Radar.ValueList.ItemType;
 
@@ -158,6 +158,7 @@ export namespace Radar {
 
   export namespace ValueList {
     export type ItemType =
+      | 'account'
       | 'card_bin'
       | 'card_fingerprint'
       | 'case_sensitive_string'
@@ -189,7 +190,7 @@ export namespace Radar {
     expand?: Array<string>;
 
     /**
-     * Type of the items in the value list. One of `card_fingerprint`, `card_bin`, `crypto_fingerprint`, `email`, `ip_address`, `country`, `string`, `case_sensitive_string`, `customer_id`, `sepa_debit_fingerprint`, or `us_bank_account_fingerprint`. Use `string` if the item type is unknown or mixed.
+     * Type of the items in the value list. One of `card_fingerprint`, `card_bin`, `crypto_fingerprint`, `email`, `ip_address`, `country`, `string`, `case_sensitive_string`, `customer_id`, `account`, `sepa_debit_fingerprint`, or `us_bank_account_fingerprint`. Use `string` if the item type is unknown or mixed.
      */
     item_type?: ValueListCreateParams.ItemType;
 
@@ -201,6 +202,7 @@ export namespace Radar {
 
   export namespace ValueListCreateParams {
     export type ItemType =
+      | 'account'
       | 'card_bin'
       | 'card_fingerprint'
       | 'case_sensitive_string'

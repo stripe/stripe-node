@@ -221,6 +221,8 @@ export namespace ConfirmationToken {
 
     sofort?: PaymentMethodPreview.Sofort;
 
+    sunbit?: PaymentMethodPreview.Sunbit;
+
     swish?: PaymentMethodPreview.Swish;
 
     twint?: PaymentMethodPreview.Twint;
@@ -926,6 +928,8 @@ export namespace ConfirmationToken {
       country: string | null;
     }
 
+    export interface Sunbit {}
+
     export interface Swish {}
 
     export interface Twint {}
@@ -979,6 +983,7 @@ export namespace ConfirmationToken {
       | 'satispay'
       | 'sepa_debit'
       | 'sofort'
+      | 'sunbit'
       | 'swish'
       | 'twint'
       | 'upi'
