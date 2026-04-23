@@ -136,14 +136,14 @@ export namespace V2 {
     export namespace OutboundSetupIntent {
       export interface NextAction {
         /**
-         * The type of next action.
-         */
-        type: 'confirmation_of_payee';
-
-        /**
          * Confirmation of Payee details.
          */
         confirmation_of_payee?: NextAction.ConfirmationOfPayee;
+
+        /**
+         * The type of next action.
+         */
+        type: 'confirmation_of_payee';
       }
 
       export type Status =
@@ -202,11 +202,6 @@ export namespace V2 {
     export namespace OutboundSetupIntentCreateParams {
       export interface PayoutMethodData {
         /**
-         * Closed Enum. The type of payout method to be created.
-         */
-        type: PayoutMethodData.Type;
-
-        /**
          * The type specific details of the bank account payout method.
          */
         bank_account?: PayoutMethodData.BankAccount;
@@ -215,13 +210,16 @@ export namespace V2 {
          * The type specific details of the card payout method.
          */
         card?: PayoutMethodData.Card;
+
+        /**
+         * Closed Enum. The type of payout method to be created.
+         */
+        type: PayoutMethodData.Type;
       }
 
       export type UsageIntent = 'payment' | 'transfer';
 
       export namespace PayoutMethodData {
-        export type Type = 'bank_account' | 'card' | 'crypto_wallet';
-
         export interface BankAccount {
           /**
            * The account number or IBAN of the bank account.
@@ -281,6 +279,8 @@ export namespace V2 {
           number: string;
         }
 
+        export type Type = 'bank_account' | 'card' | 'crypto_wallet';
+
         export namespace BankAccount {
           export type BankAccountType = 'checking' | 'savings';
         }
@@ -311,11 +311,6 @@ export namespace V2 {
     export namespace OutboundSetupIntentUpdateParams {
       export interface PayoutMethodData {
         /**
-         * Closed Enum. The type of payout method to be created/updated.
-         */
-        type: PayoutMethodData.Type;
-
-        /**
          * The type specific details of the bank account payout method.
          */
         bank_account?: PayoutMethodData.BankAccount;
@@ -324,11 +319,14 @@ export namespace V2 {
          * The type specific details of the card payout method.
          */
         card?: PayoutMethodData.Card;
+
+        /**
+         * Closed Enum. The type of payout method to be created/updated.
+         */
+        type: PayoutMethodData.Type;
       }
 
       export namespace PayoutMethodData {
-        export type Type = 'bank_account' | 'card' | 'crypto_wallet';
-
         export interface BankAccount {
           /**
            * The account number or IBAN of the bank account.
@@ -387,6 +385,8 @@ export namespace V2 {
            */
           number?: string;
         }
+
+        export type Type = 'bank_account' | 'card' | 'crypto_wallet';
 
         export namespace BankAccount {
           export type BankAccountType = 'checking' | 'savings';

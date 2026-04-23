@@ -692,6 +692,7 @@ import {ProductCatalog} from './resources/ProductCatalog/index.js';
 import {Radar} from './resources/Radar/index.js';
 import {Reporting} from './resources/Reporting/index.js';
 import {Reserve} from './resources/Reserve/index.js';
+import {SharedPayment} from './resources/SharedPayment/index.js';
 import {Sigma} from './resources/Sigma/index.js';
 import {Tax} from './resources/Tax/index.js';
 import {Terminal} from './resources/Terminal/index.js';
@@ -1177,6 +1178,7 @@ export class Stripe {
   radar: Radar;
   reporting: Reporting;
   reserve: Reserve;
+  sharedPayment: SharedPayment;
   sigma: Sigma;
   tax: Tax;
   terminal: Terminal;
@@ -1351,6 +1353,7 @@ export class Stripe {
     this.radar = new Radar(this);
     this.reporting = new Reporting(this);
     this.reserve = new Reserve(this);
+    this.sharedPayment = new SharedPayment(this);
     this.sigma = new Sigma(this);
     this.tax = new Tax(this);
     this.terminal = new Terminal(this);
@@ -2465,6 +2468,7 @@ export declare namespace Stripe {
   export {Radar};
   export {Reporting};
   export {Reserve};
+  export {SharedPayment};
   export {Sigma};
   export {Tax};
   export {Terminal};

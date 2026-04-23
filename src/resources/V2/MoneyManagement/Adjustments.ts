@@ -89,11 +89,6 @@ export namespace V2 {
     export namespace Adjustment {
       export interface AdjustedFlow {
         /**
-         * Closed Enum. If applicable, the type of flow linked to this Adjustment. The field matching this value will contain the ID of the flow.
-         */
-        type: AdjustedFlow.Type;
-
-        /**
          * If applicable, the ID of the Adjustment linked to this Adjustment.
          */
         adjustment?: string;
@@ -122,6 +117,11 @@ export namespace V2 {
          * If applicable, the ID of the ReceivedDebit linked to this Adjustment.
          */
         received_debit?: string;
+
+        /**
+         * Closed Enum. If applicable, the type of flow linked to this Adjustment. The field matching this value will contain the ID of the flow.
+         */
+        type: AdjustedFlow.Type;
       }
 
       export namespace AdjustedFlow {

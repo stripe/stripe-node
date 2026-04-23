@@ -133,31 +133,6 @@ export namespace V2 {
 
       export interface TransferHistory {
         /**
-         * Creation time of the HistoryEntry in RFC 3339 format and UTC.
-         */
-        created: string;
-
-        /**
-         * Effective at time of the HistoryEntry in RFC 3339 format and UTC.
-         */
-        effective_at: string;
-
-        /**
-         * A unique ID for the HistoryEntry.
-         */
-        id: string;
-
-        /**
-         * Open Enum. The Level of the HistoryEntry.
-         */
-        level: TransferHistory.Level;
-
-        /**
-         * Open Enum. The type of the HistoryEntry.
-         */
-        type: TransferHistory.Type;
-
-        /**
          * The history entry for a failed InboundTransfer.
          */
         bank_debit_failed?: TransferHistory.BankDebitFailed;
@@ -181,6 +156,31 @@ export namespace V2 {
          * The history entry for a succeeded InboundTransfer.
          */
         bank_debit_succeeded?: TransferHistory.BankDebitSucceeded;
+
+        /**
+         * Creation time of the HistoryEntry in RFC 3339 format and UTC.
+         */
+        created: string;
+
+        /**
+         * Effective at time of the HistoryEntry in RFC 3339 format and UTC.
+         */
+        effective_at: string;
+
+        /**
+         * A unique ID for the HistoryEntry.
+         */
+        id: string;
+
+        /**
+         * Open Enum. The Level of the HistoryEntry.
+         */
+        level: TransferHistory.Level;
+
+        /**
+         * Open Enum. The type of the HistoryEntry.
+         */
+        type: TransferHistory.Type;
       }
 
       export namespace From {
@@ -198,15 +198,6 @@ export namespace V2 {
       }
 
       export namespace TransferHistory {
-        export type Level = 'canonical' | 'debug';
-
-        export type Type =
-          | 'bank_debit_failed'
-          | 'bank_debit_processing'
-          | 'bank_debit_queued'
-          | 'bank_debit_returned'
-          | 'bank_debit_succeeded';
-
         export interface BankDebitFailed {
           /**
            * Open Enum. The return reason for the failed InboundTransfer.
@@ -232,6 +223,15 @@ export namespace V2 {
         export type BankDebitSucceeded = {
           [key: string]: unknown;
         };
+
+        export type Level = 'canonical' | 'debug';
+
+        export type Type =
+          | 'bank_debit_failed'
+          | 'bank_debit_processing'
+          | 'bank_debit_queued'
+          | 'bank_debit_returned'
+          | 'bank_debit_succeeded';
 
         export namespace BankDebitFailed {
           export type FailureReason =

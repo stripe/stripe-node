@@ -574,6 +574,8 @@ export namespace Charge {
 
     stripe_balance?: PaymentMethodDetails.StripeBalance;
 
+    sunbit?: PaymentMethodDetails.Sunbit;
+
     swish?: PaymentMethodDetails.Swish;
 
     twint?: PaymentMethodDetails.Twint;
@@ -787,12 +789,12 @@ export namespace Charge {
 
     export interface Affirm {
       /**
-       * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
+       * ID of the location that this reader is assigned to.
        */
       location?: string;
 
       /**
-       * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
+       * ID of the reader this transaction was made on.
        */
       reader?: string;
 
@@ -1530,6 +1532,11 @@ export namespace Charge {
 
     export interface Klarna {
       /**
+       * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
+       */
+      location?: string;
+
+      /**
        * The payer details for this transaction.
        */
       payer_details: Klarna.PayerDetails | null;
@@ -1545,6 +1552,11 @@ export namespace Charge {
        * Can be one of `de-AT`, `en-AT`, `nl-BE`, `fr-BE`, `en-BE`, `de-DE`, `en-DE`, `da-DK`, `en-DK`, `es-ES`, `en-ES`, `fi-FI`, `sv-FI`, `en-FI`, `en-GB`, `en-IE`, `it-IT`, `en-IT`, `nl-NL`, `en-NL`, `nb-NO`, `en-NO`, `sv-SE`, `en-SE`, `en-US`, `es-US`, `fr-FR`, `en-FR`, `cs-CZ`, `en-CZ`, `ro-RO`, `en-RO`, `el-GR`, `en-GR`, `en-AU`, `en-NZ`, `en-CA`, `fr-CA`, `pl-PL`, `en-PL`, `pt-PT`, `en-PT`, `de-CH`, `fr-CH`, `it-CH`, or `en-CH`
        */
       preferred_locale: string | null;
+
+      /**
+       * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
+       */
+      reader?: string;
     }
 
     export interface Konbini {
@@ -1963,6 +1975,13 @@ export namespace Charge {
        * The connected account ID whose Stripe balance to use as the source of payment
        */
       account?: string | null;
+    }
+
+    export interface Sunbit {
+      /**
+       * The Sunbit transaction ID associated with this payment.
+       */
+      transaction_id: string | null;
     }
 
     export interface Swish {
@@ -2530,7 +2549,12 @@ export namespace Charge {
         | 'solana'
         | 'tempo';
 
-      export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
+      export type TokenCurrency =
+        | 'phantom_cash'
+        | 'usdc'
+        | 'usdg'
+        | 'usdp'
+        | 'usdt';
     }
 
     export namespace Eps {

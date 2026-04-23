@@ -136,14 +136,14 @@ export namespace ExternalAccountCreateParams {
 
     exp_year: number;
 
-    name?: string;
-
-    number: string;
-
     /**
      * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata?: MetadataParam;
+
+    name?: string;
+
+    number: string;
   }
 
   export interface BankAccount {

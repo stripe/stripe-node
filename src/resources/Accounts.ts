@@ -621,6 +621,11 @@ export namespace Account {
     amazon_pay_payments?: Capabilities.AmazonPayPayments;
 
     /**
+     * The status of the `app_distribution` capability of the account, or whether the platform can distribute apps to other accounts.
+     */
+    app_distribution?: Capabilities.AppDistribution;
+
+    /**
      * The status of the BECS Direct Debit (AU) payments capability of the account, or whether the account can directly process BECS Direct Debit (AU) charges.
      */
     au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
@@ -904,6 +909,11 @@ export namespace Account {
      * The status of the stripe_balance payments capability of the account, or whether the account can directly process stripe_balance charges.
      */
     stripe_balance_payments?: Capabilities.StripeBalancePayments;
+
+    /**
+     * The status of the Sunbit capability of the account, or whether the account can directly process Sunbit payments.
+     */
+    sunbit_payments?: Capabilities.SunbitPayments;
 
     /**
      * The status of the Swish capability of the account, or whether the account can directly process Swish payments.
@@ -1309,6 +1319,8 @@ export namespace Account {
 
     export type AmazonPayPayments = 'active' | 'inactive' | 'pending';
 
+    export type AppDistribution = 'active' | 'inactive' | 'pending';
+
     export type AuBecsDebitPayments = 'active' | 'inactive' | 'pending';
 
     export type AutomaticIndirectTax = 'active' | 'inactive' | 'pending';
@@ -1425,6 +1437,8 @@ export namespace Account {
     export type SofortPayments = 'active' | 'inactive' | 'pending';
 
     export type StripeBalancePayments = 'active' | 'inactive' | 'pending';
+
+    export type SunbitPayments = 'active' | 'inactive' | 'pending';
 
     export type SwishPayments = 'active' | 'inactive' | 'pending';
 
@@ -2491,7 +2505,7 @@ export interface AccountCreateParams {
   tos_acceptance?: AccountCreateParams.TosAcceptance;
 
   /**
-   * The type of Stripe account to create. May be one of `custom`, `express` or `standard`.
+   * The `type` parameter is deprecated. Use [`controller`](https://docs.stripe.com/api/accounts/create#create_account-controller) instead to configure dashboard access, fee payer, loss liability, and requirement collection.
    */
   type?: AccountCreateParams.Type;
 }
@@ -2596,6 +2610,11 @@ export namespace AccountCreateParams {
      * The amazon_pay_payments capability.
      */
     amazon_pay_payments?: Capabilities.AmazonPayPayments;
+
+    /**
+     * The app_distribution capability.
+     */
+    app_distribution?: Capabilities.AppDistribution;
 
     /**
      * The au_becs_debit_payments capability.
@@ -2881,6 +2900,11 @@ export namespace AccountCreateParams {
      * The stripe_balance_payments capability.
      */
     stripe_balance_payments?: Capabilities.StripeBalancePayments;
+
+    /**
+     * The sunbit_payments capability.
+     */
+    sunbit_payments?: Capabilities.SunbitPayments;
 
     /**
      * The swish_payments capability.
@@ -3482,6 +3506,13 @@ export namespace AccountCreateParams {
       requested?: boolean;
     }
 
+    export interface AppDistribution {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface AuBecsDebitPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -3875,6 +3906,13 @@ export namespace AccountCreateParams {
     }
 
     export interface StripeBalancePayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface SunbitPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -4905,6 +4943,11 @@ export namespace AccountUpdateParams {
     amazon_pay_payments?: Capabilities.AmazonPayPayments;
 
     /**
+     * The app_distribution capability.
+     */
+    app_distribution?: Capabilities.AppDistribution;
+
+    /**
      * The au_becs_debit_payments capability.
      */
     au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
@@ -5190,6 +5233,11 @@ export namespace AccountUpdateParams {
     stripe_balance_payments?: Capabilities.StripeBalancePayments;
 
     /**
+     * The sunbit_payments capability.
+     */
+    sunbit_payments?: Capabilities.SunbitPayments;
+
+    /**
      * The swish_payments capability.
      */
     swish_payments?: Capabilities.SwishPayments;
@@ -5469,20 +5517,20 @@ export namespace AccountUpdateParams {
 
     cvc?: string;
 
+    default_for_currency?: boolean;
+
     exp_month: number;
 
     exp_year: number;
-
-    name?: string;
-
-    number: string;
 
     /**
      * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata?: MetadataParam;
 
-    default_for_currency?: boolean;
+    name?: string;
+
+    number: string;
   }
 
   export interface CardToken {
@@ -5790,6 +5838,13 @@ export namespace AccountUpdateParams {
     }
 
     export interface AmazonPayPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface AppDistribution {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -6189,6 +6244,13 @@ export namespace AccountUpdateParams {
     }
 
     export interface StripeBalancePayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface SunbitPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -7016,14 +7078,14 @@ export namespace AccountCreateExternalAccountParams {
 
     exp_year: number;
 
-    name?: string;
-
-    number: string;
-
     /**
      * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata?: MetadataParam;
+
+    name?: string;
+
+    number: string;
   }
 
   export interface BankAccount {

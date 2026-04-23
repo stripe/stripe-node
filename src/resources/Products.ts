@@ -278,6 +278,11 @@ export interface Product {
   tax_code?: string | TaxCode | null;
 
   /**
+   * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+   */
+  tax_details?: Product.TaxDetails | null;
+
+  /**
    * The type of the product. The product is either of type `good`, which is eligible for use with Orders and SKUs, or `service`, which is eligible for use with Subscriptions and Plans.
    */
   type: Product.Type;
@@ -341,6 +346,18 @@ export namespace Product {
      * Width, in inches.
      */
     width: number;
+  }
+
+  export interface TaxDetails {
+    /**
+     * The performance location.
+     */
+    performance_location: string | null;
+
+    /**
+     * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+     */
+    tax_code: string | null;
   }
 
   export type Type = 'good' | 'service';
