@@ -388,12 +388,19 @@ export class InsufficientFundsError extends StripeError {
   }
 }
 export class InvalidPaymentMethodError extends StripeError {
-  invalid_param: any /* TODO: support nested types in errors */;
+  invalid_param: InvalidPaymentMethodError.InvalidParam;
   constructor(rawStripeError: StripeRawError) {
     super(rawStripeError, 'InvalidPaymentMethodError');
     // @ts-ignore
     this.invalid_param = this.raw.invalid_param;
   }
+}
+export namespace InvalidPaymentMethodError {
+  export type InvalidParam =
+    | 'account_number'
+    | 'currency'
+    | 'fedwire_routing_number'
+    | 'routing_number';
 }
 export class InvalidPayoutMethodError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
