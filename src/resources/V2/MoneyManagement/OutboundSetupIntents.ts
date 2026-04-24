@@ -282,7 +282,11 @@ export namespace V2 {
         export type Type = 'bank_account' | 'card' | 'crypto_wallet';
 
         export namespace BankAccount {
-          export type BankAccountType = 'checking' | 'savings';
+          export type BankAccountType =
+            | 'checking'
+            | 'futsu'
+            | 'savings'
+            | 'toza';
         }
       }
     }
@@ -389,7 +393,11 @@ export namespace V2 {
         export type Type = 'bank_account' | 'card' | 'crypto_wallet';
 
         export namespace BankAccount {
-          export type BankAccountType = 'checking' | 'savings';
+          export type BankAccountType =
+            | 'checking'
+            | 'futsu'
+            | 'savings'
+            | 'toza';
         }
       }
     }

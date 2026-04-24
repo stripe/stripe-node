@@ -73,6 +73,8 @@ export const generateV2Error = (
       return new AlreadyExistsError(rawStripeError);
     case 'blocked_by_stripe':
       return new BlockedByStripeError(rawStripeError);
+    case 'cannot_proceed':
+      return new CannotProceedError(rawStripeError);
     case 'controlled_by_alternate_resource':
       return new ControlledByAlternateResourceError(rawStripeError);
     case 'controlled_by_dashboard':
@@ -360,6 +362,14 @@ export class AlreadyExistsError extends StripeError {
 export class BlockedByStripeError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'BlockedByStripeError');
+  }
+}
+export class CannotProceedError extends StripeError {
+  reason: string;
+  constructor(rawStripeError: StripeRawError) {
+    super(rawStripeError, 'CannotProceedError');
+    // @ts-ignore
+    this.reason = this.raw.reason;
   }
 }
 export class ControlledByAlternateResourceError extends StripeError {

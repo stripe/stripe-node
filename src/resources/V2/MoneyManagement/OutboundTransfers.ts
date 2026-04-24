@@ -283,6 +283,7 @@ export namespace V2 {
 
         export namespace Failed {
           export type Reason =
+            | 'payout_method_amount_limit_exceeded'
             | 'payout_method_declined'
             | 'payout_method_does_not_exist'
             | 'payout_method_expired'

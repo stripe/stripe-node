@@ -334,7 +334,7 @@ export namespace V2 {
 
       export interface Payer {
         /**
-         * The ID of the Billing Profile object which determines how a bill will be paid.
+         * The ID of the Billing Profile object which determines how a bill is paid.
          */
         billing_profile: string;
 
@@ -387,7 +387,7 @@ export namespace V2 {
           /**
            * The day to anchor the billing on for a type="month" billing cycle from 1-31.
            * If this number is greater than the number of days in the month being billed,
-           * this will anchor to the last day of the month.
+           * this anchors to the last day of the month.
            */
           day_of_month: number;
 
@@ -422,12 +422,12 @@ export namespace V2 {
           /**
            * The day to anchor the billing on for a type="month" billing cycle from 1-31.
            * If this number is greater than the number of days in the month being billed,
-           * this will anchor to the last day of the month.
+           * this anchors to the last day of the month.
            */
           day_of_month: number;
 
           /**
-           * The month to bill on from 1-12. If not provided, this will default to the month the cadence was created.
+           * The month to bill on from 1-12. If not provided, this defaults to the month the cadence was created.
            */
           month_of_year: number;
 
@@ -576,9 +576,9 @@ export namespace V2 {
 
         export interface Collection {
           /**
-           * Either automatic, or send_invoice. When charging automatically, Stripe will attempt to pay this
-           * bill at the end of the period using the payment method attached to the payer profile. When sending an invoice,
-           * Stripe will email your payer profile an invoice with payment instructions.
+           * Either automatic, or send_invoice. When charging automatically, Stripe attempts to pay this
+           * bill at the end of the period using the payment method attached to the billing profile. When sending an invoice,
+           * Stripe emails your billing profile an invoice with payment instructions.
            * Defaults to automatic.
            */
           collection_method: Collection.CollectionMethod;
@@ -609,7 +609,7 @@ export namespace V2 {
 
           export interface Invoice {
             /**
-             * The amount of time until the invoice will be overdue for payment.
+             * The amount of time until the invoice is overdue for payment.
              */
             time_until_due?: Invoice.TimeUntilDue;
           }
@@ -617,7 +617,7 @@ export namespace V2 {
           export namespace Calculation {
             export interface Tax {
               /**
-               * Determines if tax will be calculated automatically based on a PTC or manually based on rules defined by the merchant. Defaults to "manual".
+               * Determines if tax is calculated automatically based on a PTC or manually based on rules defined by the business. Defaults to "manual".
                */
               type: Tax.Type;
             }
@@ -636,7 +636,7 @@ export namespace V2 {
 
               /**
                * The number of interval units. For example, if interval=day and interval_count=30,
-               * the invoice will be due in 30 days.
+               * the invoice is due in 30 days.
                */
               interval_count: number;
             }
@@ -760,13 +760,9 @@ export namespace V2 {
               funding_type?: 'bank_transfer';
             }
 
-            export type Konbini = {
-              [key: string]: unknown;
-            };
+            export interface Konbini {}
 
-            export type SepaDebit = {
-              [key: string]: unknown;
-            };
+            export interface SepaDebit {}
 
             export interface UsBankAccount {
               /**
@@ -956,7 +952,7 @@ export namespace V2 {
         /**
          * The number of intervals (specified in the interval attribute) between
          * cadence billings. For example, type=month and interval_count=3 bills every
-         * 3 months. If this is not provided, it will default to 1.
+         * 3 months. If not provided, this defaults to 1.
          */
         interval_count?: number;
 
@@ -983,7 +979,7 @@ export namespace V2 {
 
       export interface Payer {
         /**
-         * The ID of the Billing Profile object which determines how a bill will be paid.
+         * The ID of the Billing Profile object which determines how a bill is paid.
          */
         billing_profile: string;
       }
@@ -1008,7 +1004,7 @@ export namespace V2 {
         export interface Day {
           /**
            * The time at which the billing cycle ends.
-           * This field is optional, and if not provided, it will default to
+           * This field is optional, and if not provided, it defaults to
            * the time at which the cadence was created in UTC timezone.
            */
           time?: Day.Time;
@@ -1018,22 +1014,22 @@ export namespace V2 {
           /**
            * The day to anchor the billing on for a type="month" billing cycle from
            * 1-31. If this number is greater than the number of days in the month being
-           * billed, this will anchor to the last day of the month. If not provided,
-           * this will default to the day the cadence was created.
+           * billed, this anchors to the last day of the month. If not provided,
+           * this defaults to the day the cadence was created.
            */
           day_of_month: number;
 
           /**
            * The month to anchor the billing on for a type="month" billing cycle from
-           * 1-12. If not provided, this will default to the month the cadence was created.
+           * 1-12. If not provided, this defaults to the month the cadence was created.
            * This setting can only be used for monthly billing cycles with `interval_count` of 2, 3, 4 or 6.
-           * All occurrences will be calculated from month provided.
+           * All occurrences are calculated from the month provided.
            */
           month_of_year?: number;
 
           /**
            * The time at which the billing cycle ends.
-           * This field is optional, and if not provided, it will default to
+           * This field is optional, and if not provided, it defaults to
            * the time at which the cadence was created in UTC timezone.
            */
           time?: Month.Time;
@@ -1045,14 +1041,14 @@ export namespace V2 {
           /**
            * The day of the week to bill the type=week billing cycle on.
            * Numbered from 1-7 for Monday to Sunday respectively, based on the ISO-8601
-           * week day numbering. If not provided, this will default to the day the
+           * week day numbering. If not provided, this defaults to the day the
            * cadence was created.
            */
           day_of_week: number;
 
           /**
            * The time at which the billing cycle ends.
-           * This field is optional, and if not provided, it will default to
+           * This field is optional, and if not provided, it defaults to
            * the time at which the cadence was created in UTC timezone.
            */
           time?: Week.Time;
@@ -1062,20 +1058,20 @@ export namespace V2 {
           /**
            * The day to anchor the billing on for a type="month" billing cycle from
            * 1-31. If this number is greater than the number of days in the month being
-           * billed, this will anchor to the last day of the month. If not provided,
-           * this will default to the day the cadence was created.
+           * billed, this anchors to the last day of the month. If not provided,
+           * this defaults to the day the cadence was created.
            */
           day_of_month?: number;
 
           /**
-           * The month to bill on from 1-12. If not provided, this will default to the
+           * The month to bill on from 1-12. If not provided, this defaults to the
            * month the cadence was created.
            */
           month_of_year?: number;
 
           /**
            * The time at which the billing cycle ends.
-           * This field is optional, and if not provided, it will default to
+           * This field is optional, and if not provided, it defaults to
            * the time at which the cadence was created in UTC timezone.
            */
           time?: Year.Time;
@@ -1183,7 +1179,7 @@ export namespace V2 {
 
           /**
            * An optional field to specify the version of the Settings to use.
-           * If not provided, this will always default to the live version any time the settings are used.
+           * If not provided, this defaults to the live version any time the settings are used.
            */
           version?: string;
         }
@@ -1196,7 +1192,7 @@ export namespace V2 {
 
           /**
            * An optional field to specify the version of the Settings to use.
-           * If not provided, this will always default to the live version any time the settings are used.
+           * If not provided, this defaults to the live version any time the settings are used.
            */
           version?: string;
         }
@@ -1241,7 +1237,7 @@ export namespace V2 {
     export namespace CadenceUpdateParams {
       export interface Payer {
         /**
-         * The ID of the Billing Profile object which determines how a bill will be paid.
+         * The ID of the Billing Profile object which determines how a bill is paid.
          */
         billing_profile?: string;
       }
@@ -1267,8 +1263,8 @@ export namespace V2 {
 
           /**
            * An optional field to specify the version of Settings to use.
-           * If not provided, this will always default to the `live_version` specified on the setting, any time the settings are used.
-           * Using a specific version here will prevent the settings from updating, and is discouraged for cadences.
+           * If not provided, this defaults to the `live_version` specified on the setting, any time the settings are used.
+           * Using a specific version here prevents the settings from updating, and is discouraged for cadences.
            * To clear a pinned version, set the version to null.
            */
           version?: string;
@@ -1282,8 +1278,8 @@ export namespace V2 {
 
           /**
            * An optional field to specify the version of Settings to use.
-           * If not provided, this will always default to the `live_version` specified on the setting, any time the settings are used.
-           * Using a specific version here will prevent the settings from updating, and is discouraged for cadences.
+           * If not provided, this defaults to the `live_version` specified on the setting, any time the settings are used.
+           * Using a specific version here prevents the settings from updating, and is discouraged for cadences.
            * To clear a pinned version, set the version to null.
            */
           version?: string;

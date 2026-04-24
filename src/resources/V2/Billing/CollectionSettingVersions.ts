@@ -13,9 +13,9 @@ export interface CollectionSettingVersion {
   object: 'v2.billing.collection_setting_version';
 
   /**
-   * Either automatic, or send_invoice. When charging automatically, Stripe will attempt to pay this
-   * bill at the end of the period using the payment method attached to the payer profile. When sending an invoice,
-   * Stripe will email your payer profile an invoice with payment instructions.
+   * Either automatic, or send_invoice. When charging automatically, Stripe attempts to pay this
+   * bill at the end of the period using the payment method attached to the billing profile. When sending an invoice,
+   * Stripe emails your billing profile an invoice with payment instructions.
    * Defaults to automatic.
    */
   collection_method?: V2.Billing.CollectionSettingVersion.CollectionMethod;
@@ -160,13 +160,9 @@ export namespace V2 {
           funding_type?: 'bank_transfer';
         }
 
-        export type Konbini = {
-          [key: string]: unknown;
-        };
+        export interface Konbini {}
 
-        export type SepaDebit = {
-          [key: string]: unknown;
-        };
+        export interface SepaDebit {}
 
         export interface UsBankAccount {
           /**

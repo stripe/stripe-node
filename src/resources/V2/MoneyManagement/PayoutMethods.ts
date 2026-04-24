@@ -41,6 +41,7 @@ export class PayoutMethodResource extends StripeResource {
    * Archive a PayoutMethod object. Archived objects cannot be used as payout methods
    * and will not appear in the payout method list.
    * @throws Stripe.ControlledByDashboardError
+   * @throws Stripe.CannotProceedError
    * @throws Stripe.InvalidPayoutMethodError
    * @throws Stripe.ControlledByAlternateResourceError
    */
@@ -269,7 +270,7 @@ export namespace V2 {
       }
 
       export namespace BankAccount {
-        export type BankAccountType = 'checking' | 'savings';
+        export type BankAccountType = 'checking' | 'futsu' | 'savings' | 'toza';
       }
 
       export namespace UsageStatus {

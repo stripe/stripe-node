@@ -205,13 +205,9 @@ export namespace V2 {
           failure_reason: BankDebitFailed.FailureReason;
         }
 
-        export type BankDebitProcessing = {
-          [key: string]: unknown;
-        };
+        export interface BankDebitProcessing {}
 
-        export type BankDebitQueued = {
-          [key: string]: unknown;
-        };
+        export interface BankDebitQueued {}
 
         export interface BankDebitReturned {
           /**
@@ -220,9 +216,7 @@ export namespace V2 {
           return_reason: BankDebitReturned.ReturnReason;
         }
 
-        export type BankDebitSucceeded = {
-          [key: string]: unknown;
-        };
+        export interface BankDebitSucceeded {}
 
         export type Level = 'canonical' | 'debug';
 
