@@ -60,6 +60,7 @@ export const generateOAuthError = (
   }
 };
 
+// eslint-disable-next-line complexity
 export const generateV2Error = (
   rawStripeError: StripeRawError
 ): StripeError => {
