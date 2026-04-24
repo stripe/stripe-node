@@ -112,6 +112,11 @@ export interface Dispute {
   created: number;
 
   /**
+   * Array of onchain crypto transactions linked to this resource.
+   */
+  crypto_transactions?: Array<Issuing.Dispute.CryptoTransaction> | null;
+
+  /**
    * The currency the `transaction` was made in.
    */
   currency: string;
@@ -150,6 +155,23 @@ export interface Dispute {
 }
 export namespace Issuing {
   export namespace Dispute {
+    export interface CryptoTransaction {
+      /**
+       * The confirmed crypto transaction details when `type` is `crypto_transaction_confirmed`; otherwise null.
+       */
+      crypto_transaction_confirmed: CryptoTransaction.CryptoTransactionConfirmed | null;
+
+      /**
+       * The failed crypto transaction details when `type` is `crypto_transaction_failed`; otherwise null.
+       */
+      crypto_transaction_failed: CryptoTransaction.CryptoTransactionFailed | null;
+
+      /**
+       * The crypto transaction variant for this array entry.
+       */
+      type: string;
+    }
+
     export interface Evidence {
       canceled?: Evidence.Canceled;
 
@@ -212,6 +234,155 @@ export namespace Issuing {
        * The Treasury [ReceivedDebit](https://docs.stripe.com/api/treasury/received_debits) that is being disputed.
        */
       received_debit: string;
+    }
+
+    export namespace CryptoTransaction {
+      export interface CryptoTransactionConfirmed {
+        /**
+         * The crypto amount for the confirmed transaction.
+         */
+        amount: string;
+
+        /**
+         * The upcharged MCC amount, if one was applied.
+         */
+        amount_mcc_upcharged: string | null;
+
+        /**
+         * The blockchain network for the confirmed transaction.
+         */
+        chain: string;
+
+        /**
+         * When the transaction was confirmed onchain.
+         */
+        confirmed_at: number;
+
+        /**
+         * The currency of the crypto transaction amount.
+         */
+        currency: string;
+
+        /**
+         * Fees associated with the transaction.
+         */
+        fees: Array<CryptoTransactionConfirmed.Fee>;
+
+        /**
+         * The source wallet address for the transaction.
+         */
+        from_address: string;
+
+        /**
+         * Memo metadata attached to the transaction, if present.
+         */
+        memo: string | null;
+
+        /**
+         * The destination wallet address for the transaction.
+         */
+        to_address: string;
+
+        /**
+         * The blockchain transaction hash.
+         */
+        transaction_hash: string;
+      }
+
+      export interface CryptoTransactionFailed {
+        /**
+         * The crypto amount for the failed transaction.
+         */
+        amount: string;
+
+        /**
+         * The upcharged MCC amount, if one was applied.
+         */
+        amount_mcc_upcharged: string | null;
+
+        /**
+         * The blockchain network for the failed transaction.
+         */
+        chain: string;
+
+        /**
+         * The currency of the crypto transaction amount.
+         */
+        currency: string;
+
+        /**
+         * When the transaction failed.
+         */
+        failed_at: number;
+
+        /**
+         * The reason the transaction failed.
+         */
+        failure_reason: string;
+
+        /**
+         * Fees associated with the transaction.
+         */
+        fees: Array<CryptoTransactionFailed.Fee>;
+
+        /**
+         * The source wallet address for the attempted transaction.
+         */
+        from_address: string;
+
+        /**
+         * Memo metadata attached to the transaction, if present.
+         */
+        memo: string | null;
+
+        /**
+         * The destination wallet address for the attempted transaction when one exists.
+         */
+        to_address: string | null;
+
+        /**
+         * The blockchain transaction hash when one exists.
+         */
+        transaction_hash: string | null;
+      }
+
+      export namespace CryptoTransactionConfirmed {
+        export interface Fee {
+          /**
+           * The fee amount.
+           */
+          amount: string;
+
+          /**
+           * The fee currency.
+           */
+          currency: string;
+
+          /**
+           * The fee type.
+           */
+          type: string;
+        }
+      }
+
+      export namespace CryptoTransactionFailed {
+        export interface Fee {
+          /**
+           * The fee amount.
+           */
+          amount: string;
+
+          /**
+           * The fee currency.
+           */
+          currency: string;
+
+          /**
+           * The fee type.
+           */
+          type: string;
+        }
+      }
     }
 
     export namespace Evidence {

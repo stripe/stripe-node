@@ -1928,6 +1928,11 @@ export namespace OrderCreateParams {
       id: string;
 
       /**
+       * Other identifiers for this product.
+       */
+      identifiers?: ProductData.Identifiers;
+
+      /**
        * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
        */
       images?: Emptyable<Array<string>>;
@@ -1968,6 +1973,43 @@ export namespace OrderCreateParams {
     }
 
     export namespace ProductData {
+      export interface Identifiers {
+        /**
+         * European Article Number (EAN) consisting of 8 or 13 digits and optional dashes. You may optionally provide a leading 0 for a total of 14 digits. The final digit is a validated check digit.
+         */
+        ean?: Emptyable<string>;
+
+        /**
+         * Global Trade Item Number (GTIN) consisting of 8, 12, 13, or 14 digits and optional dashes. The final digit is a validated check digit.
+         */
+        gtin?: Emptyable<string>;
+
+        /**
+         * International Standard Book Number (ISBN) consisting of 10 or 13 digits and optional dashes. The final digit is a validated check digit. For ISBN-10, the final digit may be a `X`.
+         */
+        isbn?: Emptyable<string>;
+
+        /**
+         * Japanese Article Number (JAN) consisting of 13 digits and optional dashes. The first two digits must either be `45` or `49`. The final digit is a validated check digit.
+         */
+        jan?: Emptyable<string>;
+
+        /**
+         * Manufacturer Part Number (MPN). May include up to 70 alphanumeric characters and dashes.
+         */
+        mpn?: Emptyable<string>;
+
+        /**
+         * National Stock Number (NSN) consisting of 13 digits and optional dashes. The seventh character may also be alphanumeric.
+         */
+        nsn?: Emptyable<string>;
+
+        /**
+         * Universal Product Code (UPC) consisting of 12 digits and optional dashes. The final digit is a validated check digit.
+         */
+        upc?: Emptyable<string>;
+      }
+
       export interface PackageDimensions {
         /**
          * Height, in inches. Maximum precision is 2 decimal places.
@@ -4615,6 +4657,11 @@ export namespace OrderUpdateParams {
       id: string;
 
       /**
+       * Other identifiers for this product.
+       */
+      identifiers?: ProductData.Identifiers;
+
+      /**
        * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
        */
       images?: Emptyable<Array<string>>;
@@ -4655,6 +4702,43 @@ export namespace OrderUpdateParams {
     }
 
     export namespace ProductData {
+      export interface Identifiers {
+        /**
+         * European Article Number (EAN) consisting of 8 or 13 digits and optional dashes. You may optionally provide a leading 0 for a total of 14 digits. The final digit is a validated check digit.
+         */
+        ean?: Emptyable<string>;
+
+        /**
+         * Global Trade Item Number (GTIN) consisting of 8, 12, 13, or 14 digits and optional dashes. The final digit is a validated check digit.
+         */
+        gtin?: Emptyable<string>;
+
+        /**
+         * International Standard Book Number (ISBN) consisting of 10 or 13 digits and optional dashes. The final digit is a validated check digit. For ISBN-10, the final digit may be a `X`.
+         */
+        isbn?: Emptyable<string>;
+
+        /**
+         * Japanese Article Number (JAN) consisting of 13 digits and optional dashes. The first two digits must either be `45` or `49`. The final digit is a validated check digit.
+         */
+        jan?: Emptyable<string>;
+
+        /**
+         * Manufacturer Part Number (MPN). May include up to 70 alphanumeric characters and dashes.
+         */
+        mpn?: Emptyable<string>;
+
+        /**
+         * National Stock Number (NSN) consisting of 13 digits and optional dashes. The seventh character may also be alphanumeric.
+         */
+        nsn?: Emptyable<string>;
+
+        /**
+         * Universal Product Code (UPC) consisting of 12 digits and optional dashes. The final digit is a validated check digit.
+         */
+        upc?: Emptyable<string>;
+      }
+
       export interface PackageDimensions {
         /**
          * Height, in inches. Maximum precision is 2 decimal places.
