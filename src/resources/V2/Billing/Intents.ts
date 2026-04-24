@@ -258,7 +258,7 @@ export namespace V2 {
         drafted_at?: string;
 
         /**
-         * Time at which the Billing Intent will expire.
+         * Time at which the Billing Intent expires.
          */
         expires_at: string;
 
@@ -303,7 +303,7 @@ export namespace V2 {
 
         export interface Payer {
           /**
-           * The ID of the Billing Profile object which determines how a bill will be paid.
+           * The ID of the Billing Profile object which determines how a bill is paid.
            */
           billing_profile?: string;
 
@@ -337,7 +337,7 @@ export namespace V2 {
             /**
              * The day to anchor the billing on for a type="month" billing cycle from 1-31.
              * If this number is greater than the number of days in the month being billed,
-             * this will anchor to the last day of the month.
+             * this anchors to the last day of the month.
              */
             day_of_month: number;
 
@@ -372,12 +372,12 @@ export namespace V2 {
             /**
              * The day to anchor the billing on for a type="month" billing cycle from 1-31.
              * If this number is greater than the number of days in the month being billed,
-             * this will anchor to the last day of the month.
+             * this anchors to the last day of the month.
              */
             day_of_month: number;
 
             /**
-             * The month to bill on from 1-12. If not provided, this will default to the month the cadence was created.
+             * The month to bill on from 1-12. If not provided, this defaults to the month the cadence was created.
              */
             month_of_year: number;
 
@@ -489,7 +489,7 @@ export namespace V2 {
 
             /**
              * The default payment method to use when billing this profile.
-             * If none is provided, the customer `default_payment_method` will be used.
+             * If none is provided, the customer `default_payment_method` is used.
              */
             default_payment_method?: string;
           }
@@ -606,7 +606,7 @@ export namespace V2 {
           discount?: Apply.Discount;
 
           /**
-           * When the apply action will take effect. If not specified, defaults to on_reserve.
+           * When the apply action takes effect. If not specified, defaults to on_reserve.
            */
           effective_at?: Apply.EffectiveAt;
 
@@ -633,12 +633,12 @@ export namespace V2 {
           cancellation_details?: Deactivate.CancellationDetails;
 
           /**
-           * When the invoice will be collected. If not specified, the default behavior is on_effective_at.
+           * When the invoice is collected. If not specified, the default behavior is on_effective_at.
            */
           collect_at?: Deactivate.CollectAt;
 
           /**
-           * When the deactivate action will take effect. If not specified, the default behavior is on_reserve.
+           * When the deactivate action takes effect. If not specified, the default behavior is on_reserve.
            */
           effective_at?: Deactivate.EffectiveAt;
 
@@ -655,12 +655,12 @@ export namespace V2 {
 
         export interface Modify {
           /**
-           * When the invoice will be collected. If not specified, the default behavior is next_billing_date.
+           * When the invoice is collected. If not specified, the default behavior is next_billing_date.
            */
           collect_at?: Modify.CollectAt;
 
           /**
-           * When the modify action will take effect. If not specified, the default behavior is on_reserve.
+           * When the modify action takes effect. If not specified, the default behavior is on_reserve.
            */
           effective_at?: Modify.EffectiveAt;
 
@@ -677,7 +677,7 @@ export namespace V2 {
 
         export interface Remove {
           /**
-           * When the remove action will take effect. If not specified, defaults to on_reserve.
+           * When the remove action takes effect. If not specified, defaults to on_reserve.
            */
           effective_at?: Remove.EffectiveAt;
 
@@ -699,12 +699,12 @@ export namespace V2 {
 
         export interface Subscribe {
           /**
-           * When the invoice will be collected. If not specified, defaults to on_effective_at.
+           * When the invoice is collected. If not specified, defaults to on_effective_at.
            */
           collect_at?: Subscribe.CollectAt;
 
           /**
-           * When the subscribe action will take effect. If not specified, the default behavior is on_reserve.
+           * When the subscribe action takes effect. If not specified, the default behavior is on_reserve.
            */
           effective_at?: Subscribe.EffectiveAt;
 
@@ -751,12 +751,12 @@ export namespace V2 {
 
           export interface EffectiveAt {
             /**
-             * The timestamp at which the apply action will take effect. Only present if type is timestamp. Only allowed for discount actions.
+             * The timestamp at which the apply action takes effect. Only present if type is timestamp. Only allowed for discount actions.
              */
             timestamp?: string;
 
             /**
-             * When the apply action will take effect.
+             * When the apply action takes effect.
              */
             type: EffectiveAt.Type;
           }
@@ -821,7 +821,7 @@ export namespace V2 {
               maximum_applications: PercentOff.MaximumApplications;
 
               /**
-               * Percent that will be taken off of the amount. For example, percent_off of 50.0 will make $100 amount $50 instead.
+               * Percent that is taken off the amount. For example, a percent_off of 50.0 reduces a 100 USD amount to 50 USD.
                */
               percent_off: Decimal;
             }
@@ -903,12 +903,12 @@ export namespace V2 {
 
           export interface EffectiveAt {
             /**
-             * The timestamp at which the deactivate action will take effect. Only present if type is timestamp.
+             * The timestamp at which the deactivate action takes effect. Only present if type is timestamp.
              */
             timestamp?: string;
 
             /**
-             * When the deactivate action will take effect.
+             * When the deactivate action takes effect.
              */
             type: EffectiveAt.Type;
           }
@@ -993,12 +993,12 @@ export namespace V2 {
 
           export interface EffectiveAt {
             /**
-             * The timestamp at which the modify action will take effect. Only present if type is timestamp.
+             * The timestamp at which the modify action takes effect. Only present if type is timestamp.
              */
             timestamp?: string;
 
             /**
-             * When the modify action will take effect.
+             * When the modify action takes effect.
              */
             type: EffectiveAt.Type;
           }
@@ -1125,7 +1125,7 @@ export namespace V2 {
         export namespace Remove {
           export interface EffectiveAt {
             /**
-             * When the remove action will take effect.
+             * When the remove action takes effect.
              */
             type: EffectiveAt.Type;
           }
@@ -1142,12 +1142,12 @@ export namespace V2 {
 
           export interface EffectiveAt {
             /**
-             * The timestamp at which the subscribe action will take effect. Only present if type is timestamp.
+             * The timestamp at which the subscribe action takes effect. Only present if type is timestamp.
              */
             timestamp?: string;
 
             /**
-             * When the subscribe action will take effect.
+             * When the subscribe action takes effect.
              */
             type: EffectiveAt.Type;
           }
@@ -1312,7 +1312,7 @@ export namespace V2 {
           /**
            * The number of intervals (specified in the interval attribute) between
            * cadence billings. For example, type=month and interval_count=3 bills every
-           * 3 months. If this is not provided, it will default to 1.
+           * 3 months. If not provided, this defaults to 1.
            */
           interval_count?: number;
 
@@ -1339,7 +1339,7 @@ export namespace V2 {
 
         export interface Payer {
           /**
-           * The ID of the Billing Profile object which determines how a bill will be paid.
+           * The ID of the Billing Profile object which determines how a bill is paid.
            */
           billing_profile?: string;
 
@@ -1369,7 +1369,7 @@ export namespace V2 {
           export interface Day {
             /**
              * The time at which the billing cycle ends.
-             * This field is optional, and if not provided, it will default to
+             * This field is optional, and if not provided, it defaults to
              * the time at which the cadence was created in UTC timezone.
              */
             time?: Day.Time;
@@ -1379,22 +1379,22 @@ export namespace V2 {
             /**
              * The day to anchor the billing on for a type="month" billing cycle from
              * 1-31. If this number is greater than the number of days in the month being
-             * billed, this will anchor to the last day of the month. If not provided,
-             * this will default to the day the cadence was created.
+             * billed, this anchors to the last day of the month. If not provided,
+             * this defaults to the day the cadence was created.
              */
             day_of_month: number;
 
             /**
              * The month to anchor the billing on for a type="month" billing cycle from
-             * 1-12. If not provided, this will default to the month the cadence was created.
+             * 1-12. If not provided, this defaults to the month the cadence was created.
              * This setting can only be used for monthly billing cycles with `interval_count` of 2, 3, 4 or 6.
-             * All occurrences will be calculated from month provided.
+             * All occurrences are calculated from the month provided.
              */
             month_of_year?: number;
 
             /**
              * The time at which the billing cycle ends.
-             * This field is optional, and if not provided, it will default to
+             * This field is optional, and if not provided, it defaults to
              * the time at which the cadence was created in UTC timezone.
              */
             time?: Month.Time;
@@ -1406,14 +1406,14 @@ export namespace V2 {
             /**
              * The day of the week to bill the type=week billing cycle on.
              * Numbered from 1-7 for Monday to Sunday respectively, based on the ISO-8601
-             * week day numbering. If not provided, this will default to the day the
+             * week day numbering. If not provided, this defaults to the day the
              * cadence was created.
              */
             day_of_week: number;
 
             /**
              * The time at which the billing cycle ends.
-             * This field is optional, and if not provided, it will default to
+             * This field is optional, and if not provided, it defaults to
              * the time at which the cadence was created in UTC timezone.
              */
             time?: Week.Time;
@@ -1423,20 +1423,20 @@ export namespace V2 {
             /**
              * The day to anchor the billing on for a type="month" billing cycle from
              * 1-31. If this number is greater than the number of days in the month being
-             * billed, this will anchor to the last day of the month. If not provided,
-             * this will default to the day the cadence was created.
+             * billed, this anchors to the last day of the month. If not provided,
+             * this defaults to the day the cadence was created.
              */
             day_of_month?: number;
 
             /**
-             * The month to bill on from 1-12. If not provided, this will default to the
+             * The month to bill on from 1-12. If not provided, this defaults to the
              * month the cadence was created.
              */
             month_of_year?: number;
 
             /**
              * The time at which the billing cycle ends.
-             * This field is optional, and if not provided, it will default to
+             * This field is optional, and if not provided, it defaults to
              * the time at which the cadence was created in UTC timezone.
              */
             time?: Year.Time;
@@ -1545,7 +1545,7 @@ export namespace V2 {
             /**
              * The default payment method to use when billing this profile.
              * If left blank, the `PaymentMethod` from the `PaymentIntent` provided
-             * on commit will be used to create the profile.
+             * on commit is used to create the profile.
              */
             default_payment_method?: string;
           }
@@ -1560,7 +1560,7 @@ export namespace V2 {
 
             /**
              * An optional field to specify the version of the Settings to use.
-             * If not provided, this will always default to the live version any time the settings are used.
+             * If not provided, this defaults to the live version any time the settings are used.
              */
             version?: string;
           }
@@ -1573,7 +1573,7 @@ export namespace V2 {
 
             /**
              * An optional field to specify the version of the Settings to use.
-             * If not provided, this will always default to the live version any time the settings are used.
+             * If not provided, this defaults to the live version any time the settings are used.
              */
             version?: string;
           }

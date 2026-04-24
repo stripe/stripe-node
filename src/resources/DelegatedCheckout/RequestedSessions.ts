@@ -111,6 +111,11 @@ export interface RequestedSession {
   amount_total: number | null;
 
   /**
+   * The buyer consent options for this requested session, including marketing preferences.
+   */
+  buyer_consents: DelegatedCheckout.RequestedSession.BuyerConsents | null;
+
+  /**
    * Time at which the object was created. Measured in seconds since the Unix epoch.
    */
   created_at: number;
@@ -265,6 +270,13 @@ export namespace DelegatedCheckout {
        * Whether this is the first or last touchpoint.
        */
       touchpoint: AffiliateAttribution.Touchpoint;
+    }
+
+    export interface BuyerConsents {
+      /**
+       * The marketing consent options.
+       */
+      marketing: BuyerConsents.Marketing | null;
     }
 
     export interface FulfillmentDetails {
@@ -505,6 +517,38 @@ export namespace DelegatedCheckout {
       }
     }
 
+    export namespace BuyerConsents {
+      export interface Marketing {
+        /**
+         * The available marketing consent options.
+         */
+        options: Array<Marketing.Option> | null;
+      }
+
+      export namespace Marketing {
+        export interface Option {
+          /**
+           * The marketing channel type.
+           */
+          channel: Option.Channel;
+
+          /**
+           * The description of the marketing consent option.
+           */
+          description: string;
+
+          /**
+           * The privacy policy URL for this marketing channel.
+           */
+          privacy_policy_url: string;
+        }
+
+        export namespace Option {
+          export type Channel = 'email' | 'sms';
+        }
+      }
+    }
+
     export namespace FulfillmentDetails {
       export interface FulfillmentOption {
         /**
@@ -520,7 +564,7 @@ export namespace DelegatedCheckout {
         /**
          * The type of the fulfillment option.
          */
-        type: string;
+        type: FulfillmentOption.Type;
       }
 
       export interface SelectedFulfillmentOption {
@@ -537,7 +581,7 @@ export namespace DelegatedCheckout {
         /**
          * The type of the selected fulfillment option.
          */
-        type: string;
+        type: SelectedFulfillmentOption.Type;
       }
 
       export interface SelectedFulfillmentOptionOverride {
@@ -559,7 +603,7 @@ export namespace DelegatedCheckout {
         /**
          * The type of the selected fulfillment option.
          */
-        type: string;
+        type: SelectedFulfillmentOptionOverride.Type;
       }
 
       export namespace FulfillmentOption {
@@ -576,6 +620,8 @@ export namespace DelegatedCheckout {
            */
           shipping_options: Array<Shipping.ShippingOption> | null;
         }
+
+        export type Type = 'digital' | 'shipping';
 
         export namespace Digital {
           export interface DigitalOption {
@@ -660,6 +706,8 @@ export namespace DelegatedCheckout {
            */
           shipping_option: string | null;
         }
+
+        export type Type = 'digital' | 'shipping';
       }
 
       export namespace SelectedFulfillmentOptionOverride {
@@ -676,6 +724,8 @@ export namespace DelegatedCheckout {
            */
           shipping_option: string | null;
         }
+
+        export type Type = 'digital' | 'shipping';
       }
     }
 
@@ -1274,7 +1324,7 @@ export namespace DelegatedCheckout {
         /**
          * The type of fulfillment option.
          */
-        type: string;
+        type: SelectedFulfillmentOption.Type;
       }
 
       export interface SelectedFulfillmentOptionOverride {
@@ -1296,7 +1346,7 @@ export namespace DelegatedCheckout {
         /**
          * The type of fulfillment option.
          */
-        type: string;
+        type: SelectedFulfillmentOptionOverride.Type;
       }
 
       export namespace SelectedFulfillmentOption {
@@ -1313,6 +1363,8 @@ export namespace DelegatedCheckout {
            */
           shipping_option: string;
         }
+
+        export type Type = 'digital' | 'shipping';
       }
 
       export namespace SelectedFulfillmentOptionOverride {
@@ -1329,6 +1381,8 @@ export namespace DelegatedCheckout {
            */
           shipping_option: string;
         }
+
+        export type Type = 'digital' | 'shipping';
       }
     }
 
@@ -1364,6 +1418,11 @@ export namespace DelegatedCheckout {
      * The PaymentMethod to use with the requested session.
      */
     payment_method?: string;
+
+    /**
+     * The URL to redirect your customer back to after they authenticate or complete a payment action. Required for redirect-based payment methods such as Affirm or Klarna.
+     */
+    return_url?: string;
 
     /**
      * Risk details/signals associated with the requested session

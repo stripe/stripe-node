@@ -635,7 +635,7 @@ export namespace V2 {
         /**
          * The HTTP method to use when calling the endpoint.
          */
-        http_method: 'post';
+        http_method: Endpoint.HttpMethod;
 
         /**
          * The path of the endpoint to run this batch job against.
@@ -653,6 +653,8 @@ export namespace V2 {
       }
 
       export namespace Endpoint {
+        export type HttpMethod = 'delete' | 'post';
+
         export type Path =
           | '/v1/accounts/:account'
           | '/v1/credit_notes'

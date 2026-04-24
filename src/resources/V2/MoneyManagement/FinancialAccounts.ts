@@ -139,6 +139,11 @@ export interface FinancialAccount {
   metadata?: Metadata;
 
   /**
+   * If this is a `multiprocessor_settlement` FinancialAccount, this hash includes details specific to `multiprocessor_settlement` FinancialAccounts.
+   */
+  multiprocessor_settlement?: V2.MoneyManagement.FinancialAccount.MultiprocessorSettlement;
+
+  /**
    * If this is a `other` FinancialAccount, this hash indicates what the actual type is. Upgrade your API version to see it reflected in `type`.
    */
   other?: V2.MoneyManagement.FinancialAccount.Other;
@@ -214,6 +219,13 @@ export namespace V2 {
         type: 'multiprocessor_settlement';
       }
 
+      export interface MultiprocessorSettlement {
+        /**
+         * Settlement currencies enabled for this FinancialAccount.
+         */
+        settlement_currencies: Array<string>;
+      }
+
       export interface Other {
         /**
          * The type of the FinancialAccount, represented as a string. Upgrade your API version to see the type reflected in `financial_account.type`.
@@ -265,7 +277,12 @@ export namespace V2 {
         holds_currencies: Array<string>;
       }
 
-      export type Type = 'accrued_fees' | 'other' | 'payments' | 'storage';
+      export type Type =
+        | 'accrued_fees'
+        | 'multiprocessor_settlement'
+        | 'other'
+        | 'payments'
+        | 'storage';
 
       export namespace AccruedFees {
         export type Direction = 'payable' | 'receivable';
@@ -451,6 +468,22 @@ export namespace V2 {
        * Metadata associated with the FinancialAccount.
        */
       metadata?: MetadataParam;
+
+      /**
+       * Parameters for updating storage-specific fields on the FinancialAccount.
+       */
+      storage?: FinancialAccountUpdateParams.Storage;
+    }
+
+    export namespace FinancialAccountUpdateParams {
+      export interface Storage {
+        /**
+         * The currencies that this storage FinancialAccount can hold a balance in. Three-letter ISO currency code, in lowercase.
+         * Adding currencies requires the corresponding holds_currencies storer capabilities to be enabled.
+         * Removing currencies is not supported as of March 2026.
+         */
+        holds_currencies?: Array<string>;
+      }
     }
   }
 }
@@ -481,7 +514,11 @@ export namespace V2 {
     export namespace FinancialAccountListParams {
       export type Status = 'closed' | 'open' | 'pending';
 
-      export type Type = 'accrued_fees' | 'payments' | 'storage';
+      export type Type =
+        | 'accrued_fees'
+        | 'multiprocessor_settlement'
+        | 'payments'
+        | 'storage';
     }
   }
 }

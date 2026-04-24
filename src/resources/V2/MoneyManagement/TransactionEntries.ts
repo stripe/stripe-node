@@ -165,7 +165,6 @@ export namespace V2 {
           | 'received_debit_reversal'
           | 'refund'
           | 'refund_failure'
-          | 'return'
           | 'risk_reserved_funds'
           | 'stripe_balance_payment_debit'
           | 'stripe_balance_payment_debit_reversal'

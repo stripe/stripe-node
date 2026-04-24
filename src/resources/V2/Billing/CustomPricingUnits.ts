@@ -89,7 +89,7 @@ export interface CustomPricingUnit {
   created: string;
 
   /**
-   * Description that customers will see in the invoice line item.
+   * Description that customers see in the invoice line item.
    * Maximum length of 10 characters.
    */
   display_name: string;
@@ -114,7 +114,7 @@ export namespace V2 {
   export namespace Billing {
     export interface CustomPricingUnitCreateParams {
       /**
-       * Description that customers will see in the invoice line item.
+       * Description that customers see in the invoice line item.
        * Maximum length of 10 characters.
        */
       display_name: string;
@@ -147,7 +147,7 @@ export namespace V2 {
       active?: boolean;
 
       /**
-       * Description that customers will see in the invoice line item.
+       * Description that customers see in the invoice line item.
        */
       display_name?: string;
 

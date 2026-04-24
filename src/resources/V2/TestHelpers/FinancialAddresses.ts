@@ -62,6 +62,7 @@ export namespace V2 {
     export namespace FinancialAddressCreditParams {
       export type Network =
         | 'ach'
+        | 'acss'
         | 'fps'
         | 'rtp'
         | 'sepa_credit_transfer'

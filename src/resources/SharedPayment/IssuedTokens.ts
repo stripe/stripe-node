@@ -18,11 +18,6 @@ export interface IssuedToken {
   created: number;
 
   /**
-   * ID of an existing Customer.
-   */
-  customer: string | null;
-
-  /**
    * Time at which this SharedPaymentIssuedToken was deactivated.
    */
   deactivated_at: number | null;
@@ -45,7 +40,7 @@ export interface IssuedToken {
   /**
    * ID of an existing PaymentMethod.
    */
-  payment_method: string | null;
+  payment_method: string;
 
   /**
    * If the customer does not exit their browser while authenticating, they will be redirected to this specified URL after completion.

@@ -60,6 +60,7 @@ export const generateOAuthError = (
   }
 };
 
+// eslint-disable-next-line complexity
 export const generateV2Error = (
   rawStripeError: StripeRawError
 ): StripeError => {
@@ -83,6 +84,8 @@ export const generateV2Error = (
       return new FeatureNotEnabledError(rawStripeError);
     case 'financial_account_not_open':
       return new FinancialAccountNotOpenError(rawStripeError);
+    case 'fx_quote_expired':
+      return new FxQuoteExpiredError(rawStripeError);
     case 'insufficient_funds':
       return new InsufficientFundsError(rawStripeError);
     case 'invalid_payment_method':
@@ -392,18 +395,30 @@ export class FinancialAccountNotOpenError extends StripeError {
     super(rawStripeError, 'FinancialAccountNotOpenError');
   }
 }
+export class FxQuoteExpiredError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'FxQuoteExpiredError');
+  }
+}
 export class InsufficientFundsError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'InsufficientFundsError');
   }
 }
 export class InvalidPaymentMethodError extends StripeError {
-  invalid_param: any /* TODO: support nested types in errors */;
+  invalid_param: InvalidPaymentMethodError.InvalidParam;
   constructor(rawStripeError: StripeRawError) {
     super(rawStripeError, 'InvalidPaymentMethodError');
     // @ts-ignore
     this.invalid_param = this.raw.invalid_param;
   }
+}
+export namespace InvalidPaymentMethodError {
+  export type InvalidParam =
+    | 'account_number'
+    | 'currency'
+    | 'fedwire_routing_number'
+    | 'routing_number';
 }
 export class InvalidPayoutMethodError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {

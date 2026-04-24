@@ -50,7 +50,7 @@ export class RateResource extends StripeResource {
     ) as any;
   }
   /**
-   * Set the Rate for a Metered Item on the latest version of a Rate Card object. This will create a new Rate Card version
+   * Set the Rate for a Metered Item on the latest version of a Rate Card object. This creates a new Rate Card version
    * if the Metered Item already has a rate on the Rate Card.
    */
   create(
@@ -100,7 +100,7 @@ export class RateResource extends StripeResource {
     ) as any;
   }
   /**
-   * Remove an existing Rate from a Rate Card. This will create a new Rate Card Version without that Rate.
+   * Remove an existing Rate from a Rate Card. This creates a new Rate Card Version without that Rate.
    */
   del(
     rateCardId: string,
@@ -170,9 +170,9 @@ export namespace V2 {
         metadata?: MetadataParam;
 
         /**
-         * Defines whether the tiered price should be graduated or volume-based. In volume-based tiering, the maximum
+         * Defines whether the tiered price is graduated or volume-based. In volume-based tiering, the maximum
          * quantity within a period determines the per-unit price. In graduated tiering, the pricing changes as the quantity
-         * grows into new tiers. One of `unit_amount`, `tiers`, or `custom_pricing_unit_amount` is required.
+         * grows into new tiers. Can only be set if `tiers` is set.
          */
         tiering_mode?: RateCreateParams.TieringMode;
 
@@ -221,7 +221,7 @@ export namespace V2 {
           unit_amount?: string;
 
           /**
-           * Up to and including this quantity will be contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
+           * Up to and including this quantity is contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
            * be set.
            */
           up_to_decimal?: Decimal;

@@ -617,7 +617,7 @@ export namespace V2 {
           service_cycle: LicenseFeeDetails.ServiceCycle;
 
           /**
-           * Defines whether the tiering price should be graduated or volume-based.
+           * Defines whether the tiering price is graduated or volume-based.
            */
           tiering_mode?: LicenseFeeDetails.TieringMode;
 
@@ -637,7 +637,7 @@ export namespace V2 {
           unit_amount?: string;
 
           /**
-           * The unit label from the licensed item, used for display purposes (e.g. "seat", "environment").
+           * The unit label from the licensed item, used for display purposes (for example, "seat", "environment").
            */
           unit_label?: string;
         }
@@ -714,8 +714,8 @@ export namespace V2 {
             interval: ServiceCycle.Interval;
 
             /**
-             * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"` in
-             * order to specify quarterly service.
+             * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"`
+             * to specify quarterly service.
              */
             interval_count: number;
           }
@@ -735,7 +735,7 @@ export namespace V2 {
             unit_amount?: string;
 
             /**
-             * Up to and including this quantity will be contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
+             * Up to and including this quantity is contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
              * be set.
              */
             up_to_decimal?: Decimal;
@@ -775,8 +775,8 @@ export namespace V2 {
             interval: ServiceCycle.Interval;
 
             /**
-             * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"` in
-             * order to specify quarterly service.
+             * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"`
+             * to specify quarterly service.
              */
             interval_count: number;
           }
@@ -830,8 +830,8 @@ export namespace V2 {
             interval: ServiceCycle.Interval;
 
             /**
-             * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"` in
-             * order to specify quarterly service.
+             * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"`
+             * to specify quarterly service.
              */
             interval_count: number;
           }
@@ -899,7 +899,7 @@ export namespace V2 {
                 billable_items?: Array<string>;
 
                 /**
-                 * The price type that credit grants can apply to. We currently only support the `metered` price type. This will apply to metered prices and rate cards. Cannot be used in combination with `billable_items`.
+                 * The price type that credit grants can apply to. Stripe supports the `metered` price type, which applies to metered prices and rate cards. Cannot be used in combination with `billable_items`.
                  */
                 price_type?: 'metered';
               }
@@ -967,7 +967,7 @@ export namespace V2 {
                 billable_items?: Array<string>;
 
                 /**
-                 * The price type that credit grants can apply to. We currently only support the `metered` price type. This will apply to metered prices and rate cards. Cannot be used in combination with `billable_items`.
+                 * The price type that credit grants can apply to. Stripe supports the `metered` price type, which applies to metered prices and rate cards. Cannot be used in combination with `billable_items`.
                  */
                 price_type?: 'metered';
               }
@@ -1002,7 +1002,7 @@ export namespace V2 {
   export namespace Billing {
     export interface PricingPlanSubscriptionUpdateParams {
       /**
-       * When set to true, the `servicing_status_transition.will_cancel_at` field will be cleared.
+       * When set to true, the `servicing_status_transition.will_cancel_at` field is cleared.
        */
       clear_cancel_at?: boolean;
 

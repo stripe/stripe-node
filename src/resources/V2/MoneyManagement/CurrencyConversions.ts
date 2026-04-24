@@ -24,6 +24,7 @@ export class CurrencyConversionResource extends StripeResource {
   }
   /**
    * Create a CurrencyConversion.
+   * @throws Stripe.FxQuoteExpiredError
    * @throws Stripe.FeatureNotEnabledError
    */
   create(
@@ -77,7 +78,7 @@ export interface CurrencyConversion {
   /**
    * The FinancialAccount the CurrencyConversion was performed on.
    */
-  financial_account: string;
+  financial_account?: string;
 
   /**
    * The from block containing what was debited.
@@ -117,11 +118,6 @@ export namespace V2 {
   export namespace MoneyManagement {
     export interface CurrencyConversionCreateParams {
       /**
-       * The FinancialAccount id to create the CurrencyConversion on.
-       */
-      financial_account: string;
-
-      /**
        * From amount object indicating the from currency or optional amount.
        */
       from: CurrencyConversionCreateParams.From;
@@ -130,6 +126,16 @@ export namespace V2 {
        * To amount object indicating the to currency or optional amount.
        */
       to: CurrencyConversionCreateParams.To;
+
+      /**
+       * The FinancialAccount id to create the CurrencyConversion on.
+       */
+      financial_account?: string;
+
+      /**
+       * The FX quote to use for the conversion.
+       */
+      fx_quote?: string;
     }
 
     export namespace CurrencyConversionCreateParams {

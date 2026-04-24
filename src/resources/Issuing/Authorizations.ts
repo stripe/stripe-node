@@ -985,6 +985,11 @@ export interface Authorization {
   created: number;
 
   /**
+   * Array of onchain crypto transactions linked to this resource.
+   */
+  crypto_transactions?: Array<Issuing.Authorization.CryptoTransaction> | null;
+
+  /**
    * The currency of the cardholder. This currency can be different from the currency presented at authorization and the `merchant_currency` field on this authorization. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
    */
   currency: string;
@@ -1096,6 +1101,23 @@ export namespace Issuing {
       | 'online'
       | 'swipe';
 
+    export interface CryptoTransaction {
+      /**
+       * The confirmed crypto transaction details when `type` is `crypto_transaction_confirmed`; otherwise null.
+       */
+      crypto_transaction_confirmed: CryptoTransaction.CryptoTransactionConfirmed | null;
+
+      /**
+       * The failed crypto transaction details when `type` is `crypto_transaction_failed`; otherwise null.
+       */
+      crypto_transaction_failed: CryptoTransaction.CryptoTransactionFailed | null;
+
+      /**
+       * The crypto transaction variant for this array entry.
+       */
+      type: string;
+    }
+
     export interface Fleet {
       /**
        * Answers to prompts presented to the cardholder at the point of sale. Prompted fields vary depending on the configuration of your physical fleet cards. Typical points of sale support only numeric entry.
@@ -1194,6 +1216,11 @@ export namespace Issuing {
       network_id: string;
 
       /**
+       * The identifier of the payment facilitator (PayFac) that processed this authorization, as assigned by the card network. Null when the transaction was not processed through a PayFac.
+       */
+      payment_facilitator_id?: string | null;
+
+      /**
        * Postal code where the seller is located
        */
       postal_code: string | null;
@@ -1202,6 +1229,11 @@ export namespace Issuing {
        * State where the seller is located
        */
       state: string | null;
+
+      /**
+       * The identifier of the sub-merchant involved in this authorization, as assigned by the payment facilitator. Null when the transaction was not processed through a PayFac or when no sub-merchant ID was provided.
+       */
+      sub_merchant_id?: string | null;
 
       /**
        * The seller's tax identification number. Currently populated for French merchants only.
@@ -1408,6 +1440,155 @@ export namespace Issuing {
        * 3D Secure details.
        */
       three_d_secure: VerificationData.ThreeDSecure | null;
+    }
+
+    export namespace CryptoTransaction {
+      export interface CryptoTransactionConfirmed {
+        /**
+         * The crypto amount for the confirmed transaction.
+         */
+        amount: string;
+
+        /**
+         * The upcharged MCC amount, if one was applied.
+         */
+        amount_mcc_upcharged: string | null;
+
+        /**
+         * The blockchain network for the confirmed transaction.
+         */
+        chain: string;
+
+        /**
+         * When the transaction was confirmed onchain.
+         */
+        confirmed_at: number;
+
+        /**
+         * The currency of the crypto transaction amount.
+         */
+        currency: string;
+
+        /**
+         * Fees associated with the transaction.
+         */
+        fees: Array<CryptoTransactionConfirmed.Fee>;
+
+        /**
+         * The source wallet address for the transaction.
+         */
+        from_address: string;
+
+        /**
+         * Memo metadata attached to the transaction, if present.
+         */
+        memo: string | null;
+
+        /**
+         * The destination wallet address for the transaction.
+         */
+        to_address: string;
+
+        /**
+         * The blockchain transaction hash.
+         */
+        transaction_hash: string;
+      }
+
+      export interface CryptoTransactionFailed {
+        /**
+         * The crypto amount for the failed transaction.
+         */
+        amount: string;
+
+        /**
+         * The upcharged MCC amount, if one was applied.
+         */
+        amount_mcc_upcharged: string | null;
+
+        /**
+         * The blockchain network for the failed transaction.
+         */
+        chain: string;
+
+        /**
+         * The currency of the crypto transaction amount.
+         */
+        currency: string;
+
+        /**
+         * When the transaction failed.
+         */
+        failed_at: number;
+
+        /**
+         * The reason the transaction failed.
+         */
+        failure_reason: string;
+
+        /**
+         * Fees associated with the transaction.
+         */
+        fees: Array<CryptoTransactionFailed.Fee>;
+
+        /**
+         * The source wallet address for the attempted transaction.
+         */
+        from_address: string;
+
+        /**
+         * Memo metadata attached to the transaction, if present.
+         */
+        memo: string | null;
+
+        /**
+         * The destination wallet address for the attempted transaction when one exists.
+         */
+        to_address: string | null;
+
+        /**
+         * The blockchain transaction hash when one exists.
+         */
+        transaction_hash: string | null;
+      }
+
+      export namespace CryptoTransactionConfirmed {
+        export interface Fee {
+          /**
+           * The fee amount.
+           */
+          amount: string;
+
+          /**
+           * The fee currency.
+           */
+          currency: string;
+
+          /**
+           * The fee type.
+           */
+          type: string;
+        }
+      }
+
+      export namespace CryptoTransactionFailed {
+        export interface Fee {
+          /**
+           * The fee amount.
+           */
+          amount: string;
+
+          /**
+           * The fee currency.
+           */
+          currency: string;
+
+          /**
+           * The fee type.
+           */
+          type: string;
+        }
+      }
     }
 
     export namespace Fleet {

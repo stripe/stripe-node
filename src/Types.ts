@@ -68,6 +68,7 @@ export type RawErrorType =
   | 'controlled_by_dashboard'
   | 'feature_not_enabled'
   | 'financial_account_not_open'
+  | 'fx_quote_expired'
   | 'insufficient_funds'
   | 'invalid_payment_method'
   | 'invalid_payout_method'

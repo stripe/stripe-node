@@ -18,7 +18,7 @@ export interface PricingPlanVersion {
   created: string;
 
   /**
-   * The timestamp when this version became inactive. Null if it's the latest version.
+   * The timestamp when this version became inactive. null if it's the latest version.
    */
   end_date?: string;
 

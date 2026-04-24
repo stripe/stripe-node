@@ -162,6 +162,11 @@ export namespace V2 {
 
       export interface BankTransfer {
         /**
+         * Hash containing the transaction bank details. Present if `origin_type` field value is `ca_bank_account`.
+         */
+        ca_bank_account?: BankTransfer.CaBankAccount;
+
+        /**
          * Financial Address on which funds for ReceivedCredit were received.
          */
         financial_address: string;
@@ -266,6 +271,29 @@ export namespace V2 {
       }
 
       export namespace BankTransfer {
+        export interface CaBankAccount {
+          /**
+           * The account holder name of the bank account the transfer was received from.
+           */
+          account_holder_name?: string;
+
+          /**
+           * The bank name the transfer was received from.
+           */
+          bank_name?: string;
+
+          /**
+           * The last 4 digits of the account number that originated the transfer.
+           * Depending on the bank, this may instead be the last 4 digits of the return account number.
+           */
+          last4?: string;
+
+          /**
+           * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
+           */
+          network: 'acss';
+        }
+
         export interface GbBankAccount {
           /**
            * The bank name the transfer was received from.
@@ -294,6 +322,7 @@ export namespace V2 {
         }
 
         export type OriginType =
+          | 'ca_bank_account'
           | 'gb_bank_account'
           | 'sepa_bank_account'
           | 'us_bank_account';

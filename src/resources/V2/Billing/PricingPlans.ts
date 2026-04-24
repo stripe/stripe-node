@@ -104,8 +104,7 @@ export interface PricingPlan {
   currency: string;
 
   /**
-   * A description for pricing plan subscription.
-   * Maximum length of 500 characters.
+   * A description of the pricing plan. Maximum length of 500 characters.
    */
   description?: string;
 
@@ -140,7 +139,7 @@ export interface PricingPlan {
   metadata?: Metadata;
 
   /**
-   * The Stripe Tax tax behavior - whether the PricingPlan is inclusive or exclusive of tax.
+   * The tax behavior for Stripe Tax — whether the pricing plan price includes or excludes tax.
    */
   tax_behavior: V2.Billing.PricingPlan.TaxBehavior;
 }
@@ -165,12 +164,12 @@ export namespace V2 {
       display_name: string;
 
       /**
-       * The Stripe Tax tax behavior - whether the PricingPlan is inclusive or exclusive of tax.
+       * The tax behavior for Stripe Tax — whether the pricing plan price includes or excludes tax.
        */
       tax_behavior: PricingPlanCreateParams.TaxBehavior;
 
       /**
-       * Description of pricing plan subscription.
+       * Description of the pricing plan. Maximum length of 500 characters.
        */
       description?: string;
 
@@ -204,7 +203,7 @@ export namespace V2 {
       active?: boolean;
 
       /**
-       * Description of pricing plan subscription.
+       * Description of the pricing plan. Maximum length of 500 characters.
        */
       description?: string;
 
