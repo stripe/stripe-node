@@ -73,6 +73,8 @@ export const generateV2Error = (
       return new AlreadyExistsError(rawStripeError);
     case 'blocked_by_stripe':
       return new BlockedByStripeError(rawStripeError);
+    case 'cannot_proceed':
+      return new CannotProceedError(rawStripeError);
     case 'controlled_by_alternate_resource':
       return new ControlledByAlternateResourceError(rawStripeError);
     case 'controlled_by_dashboard':
@@ -362,6 +364,14 @@ export class BlockedByStripeError extends StripeError {
     super(rawStripeError, 'BlockedByStripeError');
   }
 }
+export class CannotProceedError extends StripeError {
+  reason: string;
+  constructor(rawStripeError: StripeRawError) {
+    super(rawStripeError, 'CannotProceedError');
+    // @ts-ignore
+    this.reason = this.raw.reason;
+  }
+}
 export class ControlledByAlternateResourceError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'ControlledByAlternateResourceError');
@@ -388,12 +398,19 @@ export class InsufficientFundsError extends StripeError {
   }
 }
 export class InvalidPaymentMethodError extends StripeError {
-  invalid_param: any /* TODO: support nested types in errors */;
+  invalid_param: InvalidPaymentMethodError.InvalidParam;
   constructor(rawStripeError: StripeRawError) {
     super(rawStripeError, 'InvalidPaymentMethodError');
     // @ts-ignore
     this.invalid_param = this.raw.invalid_param;
   }
+}
+export namespace InvalidPaymentMethodError {
+  export type InvalidParam =
+    | 'account_number'
+    | 'currency'
+    | 'fedwire_routing_number'
+    | 'routing_number';
 }
 export class InvalidPayoutMethodError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {

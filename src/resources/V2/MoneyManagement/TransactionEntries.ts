@@ -121,12 +121,17 @@ export namespace V2 {
           | 'adjustment'
           | 'currency_conversion'
           | 'inbound_transfer'
+          | 'inbound_transfer_reversal'
           | 'outbound_payment'
+          | 'outbound_payment_reversal'
           | 'outbound_transfer'
+          | 'outbound_transfer_reversal'
           | 'received_credit'
+          | 'received_credit_reversal'
           | 'received_debit'
-          | 'return'
-          | 'stripe_fee';
+          | 'received_debit_reversal'
+          | 'stripe_fee'
+          | 'stripe_fee_tax';
 
         export interface Flow {
           /**

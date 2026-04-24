@@ -171,10 +171,18 @@ export namespace V2 {
 }
 import {Core} from './index.js';
 import {Billing as V1Billing} from './../../Billing/index.js';
+import {Commerce} from './../Commerce/index.js';
+import {Data} from './../Data/index.js';
+import {Extend} from './../Extend/index.js';
 import {MoneyManagement} from './../MoneyManagement/index.js';
+import {OrchestratedCommerce} from './../OrchestratedCommerce/index.js';
 export type Event =
   | V1BillingMeterErrorReportTriggeredEvent
   | V1BillingMeterNoMeterFoundEvent
+  | V2CommerceProductCatalogImportsFailedEvent
+  | V2CommerceProductCatalogImportsProcessingEvent
+  | V2CommerceProductCatalogImportsSucceededEvent
+  | V2CommerceProductCatalogImportsSucceededWithErrorsEvent
   | V2CoreAccountClosedEvent
   | V2CoreAccountCreatedEvent
   | V2CoreAccountUpdatedEvent
@@ -206,6 +214,13 @@ export type Event =
   | V2CoreBatchJobValidationFailedEvent
   | V2CoreEventDestinationPingEvent
   | V2CoreHealthEventGenerationFailureResolvedEvent
+  | V2DataReportingQueryRunCreatedEvent
+  | V2DataReportingQueryRunFailedEvent
+  | V2DataReportingQueryRunSucceededEvent
+  | V2DataReportingQueryRunUpdatedEvent
+  | V2ExtendWorkflowRunFailedEvent
+  | V2ExtendWorkflowRunStartedEvent
+  | V2ExtendWorkflowRunSucceededEvent
   | V2MoneyManagementAdjustmentCreatedEvent
   | V2MoneyManagementFinancialAccountCreatedEvent
   | V2MoneyManagementFinancialAccountUpdatedEvent
@@ -241,11 +256,19 @@ export type Event =
   | V2MoneyManagementReceivedDebitSucceededEvent
   | V2MoneyManagementReceivedDebitUpdatedEvent
   | V2MoneyManagementTransactionCreatedEvent
-  | V2MoneyManagementTransactionUpdatedEvent;
+  | V2MoneyManagementTransactionUpdatedEvent
+  | V2OrchestratedCommerceAgreementConfirmedEvent
+  | V2OrchestratedCommerceAgreementCreatedEvent
+  | V2OrchestratedCommerceAgreementPartiallyConfirmedEvent
+  | V2OrchestratedCommerceAgreementTerminatedEvent;
 
 export type EventNotification =
   | V1BillingMeterErrorReportTriggeredEventNotification
   | V1BillingMeterNoMeterFoundEventNotification
+  | V2CommerceProductCatalogImportsFailedEventNotification
+  | V2CommerceProductCatalogImportsProcessingEventNotification
+  | V2CommerceProductCatalogImportsSucceededEventNotification
+  | V2CommerceProductCatalogImportsSucceededWithErrorsEventNotification
   | V2CoreAccountClosedEventNotification
   | V2CoreAccountCreatedEventNotification
   | V2CoreAccountUpdatedEventNotification
@@ -277,6 +300,13 @@ export type EventNotification =
   | V2CoreBatchJobValidationFailedEventNotification
   | V2CoreEventDestinationPingEventNotification
   | V2CoreHealthEventGenerationFailureResolvedEventNotification
+  | V2DataReportingQueryRunCreatedEventNotification
+  | V2DataReportingQueryRunFailedEventNotification
+  | V2DataReportingQueryRunSucceededEventNotification
+  | V2DataReportingQueryRunUpdatedEventNotification
+  | V2ExtendWorkflowRunFailedEventNotification
+  | V2ExtendWorkflowRunStartedEventNotification
+  | V2ExtendWorkflowRunSucceededEventNotification
   | V2MoneyManagementAdjustmentCreatedEventNotification
   | V2MoneyManagementFinancialAccountCreatedEventNotification
   | V2MoneyManagementFinancialAccountUpdatedEventNotification
@@ -312,7 +342,11 @@ export type EventNotification =
   | V2MoneyManagementReceivedDebitSucceededEventNotification
   | V2MoneyManagementReceivedDebitUpdatedEventNotification
   | V2MoneyManagementTransactionCreatedEventNotification
-  | V2MoneyManagementTransactionUpdatedEventNotification;
+  | V2MoneyManagementTransactionUpdatedEventNotification
+  | V2OrchestratedCommerceAgreementConfirmedEventNotification
+  | V2OrchestratedCommerceAgreementCreatedEventNotification
+  | V2OrchestratedCommerceAgreementPartiallyConfirmedEventNotification
+  | V2OrchestratedCommerceAgreementTerminatedEventNotification;
 
 import {StripeContext} from '../../../StripeContext.js';
 
@@ -437,6 +471,7 @@ export namespace V1BillingMeterErrorReportTriggeredEvent {
           | 'meter_event_dimension_count_too_high'
           | 'meter_event_invalid_value'
           | 'meter_event_no_customer_defined'
+          | 'meter_event_value_too_many_digits'
           | 'missing_dimension_payload_keys'
           | 'no_meter'
           | 'timestamp_in_future'
@@ -542,6 +577,7 @@ export namespace V1BillingMeterNoMeterFoundEvent {
           | 'meter_event_dimension_count_too_high'
           | 'meter_event_invalid_value'
           | 'meter_event_no_customer_defined'
+          | 'meter_event_value_too_many_digits'
           | 'missing_dimension_payload_keys'
           | 'no_meter'
           | 'timestamp_in_future'
@@ -570,6 +606,91 @@ export namespace V1BillingMeterNoMeterFoundEvent {
       }
     }
   }
+}
+
+/**
+ * Occurs when a product catalog import cannot be processed or if processing fails unexpectedly.
+ */
+export interface V2CommerceProductCatalogImportsFailedEvent extends EventBase {
+  type: 'v2.commerce.product_catalog.imports.failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Commerce.ProductCatalogImport>;
+}
+export interface V2CommerceProductCatalogImportsFailedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.commerce.product_catalog.imports.failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Commerce.ProductCatalogImport>;
+  fetchEvent(): Promise<V2CommerceProductCatalogImportsFailedEvent>;
+}
+
+/**
+ * Occurs when a product catalog import file has been uploaded and has started processing.
+ */
+export interface V2CommerceProductCatalogImportsProcessingEvent
+  extends EventBase {
+  type: 'v2.commerce.product_catalog.imports.processing';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Commerce.ProductCatalogImport>;
+}
+export interface V2CommerceProductCatalogImportsProcessingEventNotification
+  extends EventNotificationBase {
+  type: 'v2.commerce.product_catalog.imports.processing';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Commerce.ProductCatalogImport>;
+  fetchEvent(): Promise<V2CommerceProductCatalogImportsProcessingEvent>;
+}
+
+/**
+ * Occurs when a product catalog file has been uploaded successfully and passed validation.
+ */
+export interface V2CommerceProductCatalogImportsSucceededEvent
+  extends EventBase {
+  type: 'v2.commerce.product_catalog.imports.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Commerce.ProductCatalogImport>;
+}
+export interface V2CommerceProductCatalogImportsSucceededEventNotification
+  extends EventNotificationBase {
+  type: 'v2.commerce.product_catalog.imports.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Commerce.ProductCatalogImport>;
+  fetchEvent(): Promise<V2CommerceProductCatalogImportsSucceededEvent>;
+}
+
+/**
+ * Occurs when a product catalog file has been successfully processed but some rows failed validation.
+ */
+export interface V2CommerceProductCatalogImportsSucceededWithErrorsEvent
+  extends EventBase {
+  type: 'v2.commerce.product_catalog.imports.succeeded_with_errors';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Commerce.ProductCatalogImport>;
+}
+export interface V2CommerceProductCatalogImportsSucceededWithErrorsEventNotification
+  extends EventNotificationBase {
+  type: 'v2.commerce.product_catalog.imports.succeeded_with_errors';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Commerce.ProductCatalogImport>;
+  fetchEvent(): Promise<
+    V2CommerceProductCatalogImportsSucceededWithErrorsEvent
+  >;
 }
 
 /**
@@ -1456,6 +1577,171 @@ export namespace V2CoreHealthEventGenerationFailureResolvedEvent {
 }
 
 /**
+ * Occurs when a QueryRun is created.
+ */
+export interface V2DataReportingQueryRunCreatedEvent extends EventBase {
+  type: 'v2.data.reporting.query_run.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Data.Reporting.QueryRun>;
+}
+export interface V2DataReportingQueryRunCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.data.reporting.query_run.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Data.Reporting.QueryRun>;
+  fetchEvent(): Promise<V2DataReportingQueryRunCreatedEvent>;
+}
+
+/**
+ * Occurs when a QueryRun has failed to complete.
+ */
+export interface V2DataReportingQueryRunFailedEvent extends EventBase {
+  type: 'v2.data.reporting.query_run.failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Data.Reporting.QueryRun>;
+}
+export interface V2DataReportingQueryRunFailedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.data.reporting.query_run.failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Data.Reporting.QueryRun>;
+  fetchEvent(): Promise<V2DataReportingQueryRunFailedEvent>;
+}
+
+/**
+ * Occurs when a QueryRun has successfully completed.
+ */
+export interface V2DataReportingQueryRunSucceededEvent extends EventBase {
+  type: 'v2.data.reporting.query_run.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Data.Reporting.QueryRun>;
+}
+export interface V2DataReportingQueryRunSucceededEventNotification
+  extends EventNotificationBase {
+  type: 'v2.data.reporting.query_run.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Data.Reporting.QueryRun>;
+  fetchEvent(): Promise<V2DataReportingQueryRunSucceededEvent>;
+}
+
+/**
+ * Occurs when a QueryRun is updated.
+ */
+export interface V2DataReportingQueryRunUpdatedEvent extends EventBase {
+  type: 'v2.data.reporting.query_run.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Data.Reporting.QueryRun>;
+}
+export interface V2DataReportingQueryRunUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.data.reporting.query_run.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Data.Reporting.QueryRun>;
+  fetchEvent(): Promise<V2DataReportingQueryRunUpdatedEvent>;
+}
+
+/**
+ * Occurs when a Workflow Run fails.
+ */
+export interface V2ExtendWorkflowRunFailedEvent extends EventBase {
+  type: 'v2.extend.workflow_run.failed';
+  // Retrieves data specific to this event.
+  data: V2ExtendWorkflowRunFailedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Extend.WorkflowRun>;
+}
+export interface V2ExtendWorkflowRunFailedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.extend.workflow_run.failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Extend.WorkflowRun>;
+  fetchEvent(): Promise<V2ExtendWorkflowRunFailedEvent>;
+}
+
+export namespace V2ExtendWorkflowRunFailedEvent {
+  export interface Data {
+    /**
+     * A Stripe dashboard URL with more information about the Workflow Run failure.
+     */
+    dashboard_url: string;
+
+    /**
+     * Details about the Workflow Run's transition into the FAILED state.
+     */
+    failure_details: Data.FailureDetails;
+  }
+
+  export namespace Data {
+    export interface FailureDetails {
+      /**
+       * Optional details about the failure result.
+       */
+      error_message?: string;
+    }
+  }
+}
+
+/**
+ * Occurs when a Workflow Run starts.
+ */
+export interface V2ExtendWorkflowRunStartedEvent extends EventBase {
+  type: 'v2.extend.workflow_run.started';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Extend.WorkflowRun>;
+}
+export interface V2ExtendWorkflowRunStartedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.extend.workflow_run.started';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Extend.WorkflowRun>;
+  fetchEvent(): Promise<V2ExtendWorkflowRunStartedEvent>;
+}
+
+/**
+ * Occurs when a Workflow Run succeeds.
+ */
+export interface V2ExtendWorkflowRunSucceededEvent extends EventBase {
+  type: 'v2.extend.workflow_run.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Extend.WorkflowRun>;
+}
+export interface V2ExtendWorkflowRunSucceededEventNotification
+  extends EventNotificationBase {
+  type: 'v2.extend.workflow_run.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Extend.WorkflowRun>;
+  fetchEvent(): Promise<V2ExtendWorkflowRunSucceededEvent>;
+}
+
+/**
  * Occurs when an Adjustment is created.
  */
 export interface V2MoneyManagementAdjustmentCreatedEvent extends EventBase {
@@ -2210,6 +2496,11 @@ export interface V2MoneyManagementTransactionCreatedEventNotification
 export namespace V2MoneyManagementTransactionCreatedEvent {
   export interface Data {
     /**
+     * Id of the v1 Treasury Transaction corresponding to this Transaction.
+     */
+    treasury_transaction?: string;
+
+    /**
      * Id of the v1 Transaction corresponding to this Transaction.
      */
     v1_id?: string;
@@ -2236,11 +2527,290 @@ export interface V2MoneyManagementTransactionUpdatedEventNotification
   fetchEvent(): Promise<V2MoneyManagementTransactionUpdatedEvent>;
 }
 
+/**
+ * Occurs when an Agreement is confirmed by one party.
+ */
+export interface V2OrchestratedCommerceAgreementConfirmedEvent
+  extends EventBase {
+  type: 'v2.orchestrated_commerce.agreement.confirmed';
+  // Retrieves data specific to this event.
+  data: V2OrchestratedCommerceAgreementConfirmedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<OrchestratedCommerce.Agreement>;
+}
+export interface V2OrchestratedCommerceAgreementConfirmedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.orchestrated_commerce.agreement.confirmed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<OrchestratedCommerce.Agreement>;
+  fetchEvent(): Promise<V2OrchestratedCommerceAgreementConfirmedEvent>;
+}
+
+export namespace V2OrchestratedCommerceAgreementConfirmedEvent {
+  export interface Data {
+    /**
+     * The time at which the orchestrator confirmed the agreement.
+     */
+    orchestrator_confirmed_at: string;
+
+    /**
+     * Details about the orchestrator.
+     */
+    orchestrator_details: Data.OrchestratorDetails;
+
+    /**
+     * The time at which the seller confirmed the agreement.
+     */
+    seller_confirmed_at: string;
+
+    /**
+     * Details about the seller.
+     */
+    seller_details: Data.SellerDetails;
+  }
+
+  export namespace Data {
+    export interface OrchestratorDetails {
+      /**
+       * The name of the orchestrator. This can be the name of the agent or the name of the business.
+       */
+      name: string;
+
+      /**
+       * The Network ID of the orchestrator.
+       */
+      network_business_profile: string;
+    }
+
+    export interface SellerDetails {
+      /**
+       * The Network ID of the seller.
+       */
+      network_business_profile: string;
+    }
+  }
+}
+
+/**
+ * Occurs when an Agreement is created.
+ */
+export interface V2OrchestratedCommerceAgreementCreatedEvent extends EventBase {
+  type: 'v2.orchestrated_commerce.agreement.created';
+  // Retrieves data specific to this event.
+  data: V2OrchestratedCommerceAgreementCreatedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<OrchestratedCommerce.Agreement>;
+}
+export interface V2OrchestratedCommerceAgreementCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.orchestrated_commerce.agreement.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<OrchestratedCommerce.Agreement>;
+  fetchEvent(): Promise<V2OrchestratedCommerceAgreementCreatedEvent>;
+}
+
+export namespace V2OrchestratedCommerceAgreementCreatedEvent {
+  export interface Data {
+    /**
+     * The time at which the agreement was created.
+     */
+    created: string;
+
+    /**
+     * The party that initiated the agreement.
+     */
+    initiated_by: Data.InitiatedBy;
+
+    /**
+     * Details about the orchestrator.
+     */
+    orchestrator_details: Data.OrchestratorDetails;
+
+    /**
+     * Details about the seller.
+     */
+    seller_details: Data.SellerDetails;
+  }
+
+  export namespace Data {
+    export type InitiatedBy = 'orchestrator' | 'seller';
+
+    export interface OrchestratorDetails {
+      /**
+       * The name of the orchestrator. This can be the name of the agent or the name of the business.
+       */
+      name: string;
+
+      /**
+       * The Network ID of the orchestrator.
+       */
+      network_business_profile: string;
+    }
+
+    export interface SellerDetails {
+      /**
+       * The Network ID of the seller.
+       */
+      network_business_profile: string;
+    }
+  }
+}
+
+/**
+ * Occurs when an Agreement is partially confirmed (confirmed by one party but not both).
+ */
+export interface V2OrchestratedCommerceAgreementPartiallyConfirmedEvent
+  extends EventBase {
+  type: 'v2.orchestrated_commerce.agreement.partially_confirmed';
+  // Retrieves data specific to this event.
+  data: V2OrchestratedCommerceAgreementPartiallyConfirmedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<OrchestratedCommerce.Agreement>;
+}
+export interface V2OrchestratedCommerceAgreementPartiallyConfirmedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.orchestrated_commerce.agreement.partially_confirmed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<OrchestratedCommerce.Agreement>;
+  fetchEvent(): Promise<V2OrchestratedCommerceAgreementPartiallyConfirmedEvent>;
+}
+
+export namespace V2OrchestratedCommerceAgreementPartiallyConfirmedEvent {
+  export interface Data {
+    /**
+     * The time at which the orchestrator confirmed the agreement.
+     */
+    orchestrator_confirmed_at: string;
+
+    /**
+     * Details about the orchestrator.
+     */
+    orchestrator_details: Data.OrchestratorDetails;
+
+    /**
+     * The time at which the seller confirmed the agreement.
+     */
+    seller_confirmed_at: string;
+
+    /**
+     * Details about the seller.
+     */
+    seller_details: Data.SellerDetails;
+  }
+
+  export namespace Data {
+    export interface OrchestratorDetails {
+      /**
+       * The name of the orchestrator. This can be the name of the agent or the name of the business.
+       */
+      name: string;
+
+      /**
+       * The Network ID of the orchestrator.
+       */
+      network_business_profile: string;
+    }
+
+    export interface SellerDetails {
+      /**
+       * The Network ID of the seller.
+       */
+      network_business_profile: string;
+    }
+  }
+}
+
+/**
+ * Occurs when an Agreement is terminated.
+ */
+export interface V2OrchestratedCommerceAgreementTerminatedEvent
+  extends EventBase {
+  type: 'v2.orchestrated_commerce.agreement.terminated';
+  // Retrieves data specific to this event.
+  data: V2OrchestratedCommerceAgreementTerminatedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<OrchestratedCommerce.Agreement>;
+}
+export interface V2OrchestratedCommerceAgreementTerminatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.orchestrated_commerce.agreement.terminated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<OrchestratedCommerce.Agreement>;
+  fetchEvent(): Promise<V2OrchestratedCommerceAgreementTerminatedEvent>;
+}
+
+export namespace V2OrchestratedCommerceAgreementTerminatedEvent {
+  export interface Data {
+    /**
+     * Details about the orchestrator.
+     */
+    orchestrator_details: Data.OrchestratorDetails;
+
+    /**
+     * Details about the seller.
+     */
+    seller_details: Data.SellerDetails;
+
+    /**
+     * The time at which the agreement was terminated.
+     */
+    terminated_at: string;
+
+    /**
+     * The party that terminated the agreement.
+     */
+    terminated_by: Data.TerminatedBy;
+  }
+
+  export namespace Data {
+    export interface OrchestratorDetails {
+      /**
+       * The name of the orchestrator. This can be the name of the agent or the name of the business.
+       */
+      name: string;
+
+      /**
+       * The Network ID of the orchestrator.
+       */
+      network_business_profile: string;
+    }
+
+    export interface SellerDetails {
+      /**
+       * The Network ID of the seller.
+       */
+      network_business_profile: string;
+    }
+
+    export type TerminatedBy = 'orchestrator' | 'seller';
+  }
+}
+
 export declare namespace Events {
   export {
     UnknownEventNotification,
     V1BillingMeterErrorReportTriggeredEvent,
     V1BillingMeterNoMeterFoundEvent,
+    V2CommerceProductCatalogImportsFailedEvent,
+    V2CommerceProductCatalogImportsProcessingEvent,
+    V2CommerceProductCatalogImportsSucceededEvent,
+    V2CommerceProductCatalogImportsSucceededWithErrorsEvent,
     V2CoreAccountClosedEvent,
     V2CoreAccountCreatedEvent,
     V2CoreAccountUpdatedEvent,
@@ -2272,6 +2842,13 @@ export declare namespace Events {
     V2CoreBatchJobValidationFailedEvent,
     V2CoreEventDestinationPingEvent,
     V2CoreHealthEventGenerationFailureResolvedEvent,
+    V2DataReportingQueryRunCreatedEvent,
+    V2DataReportingQueryRunFailedEvent,
+    V2DataReportingQueryRunSucceededEvent,
+    V2DataReportingQueryRunUpdatedEvent,
+    V2ExtendWorkflowRunFailedEvent,
+    V2ExtendWorkflowRunStartedEvent,
+    V2ExtendWorkflowRunSucceededEvent,
     V2MoneyManagementAdjustmentCreatedEvent,
     V2MoneyManagementFinancialAccountCreatedEvent,
     V2MoneyManagementFinancialAccountUpdatedEvent,
@@ -2308,8 +2885,16 @@ export declare namespace Events {
     V2MoneyManagementReceivedDebitUpdatedEvent,
     V2MoneyManagementTransactionCreatedEvent,
     V2MoneyManagementTransactionUpdatedEvent,
+    V2OrchestratedCommerceAgreementConfirmedEvent,
+    V2OrchestratedCommerceAgreementCreatedEvent,
+    V2OrchestratedCommerceAgreementPartiallyConfirmedEvent,
+    V2OrchestratedCommerceAgreementTerminatedEvent,
     V1BillingMeterErrorReportTriggeredEventNotification,
     V1BillingMeterNoMeterFoundEventNotification,
+    V2CommerceProductCatalogImportsFailedEventNotification,
+    V2CommerceProductCatalogImportsProcessingEventNotification,
+    V2CommerceProductCatalogImportsSucceededEventNotification,
+    V2CommerceProductCatalogImportsSucceededWithErrorsEventNotification,
     V2CoreAccountClosedEventNotification,
     V2CoreAccountCreatedEventNotification,
     V2CoreAccountUpdatedEventNotification,
@@ -2341,6 +2926,13 @@ export declare namespace Events {
     V2CoreBatchJobValidationFailedEventNotification,
     V2CoreEventDestinationPingEventNotification,
     V2CoreHealthEventGenerationFailureResolvedEventNotification,
+    V2DataReportingQueryRunCreatedEventNotification,
+    V2DataReportingQueryRunFailedEventNotification,
+    V2DataReportingQueryRunSucceededEventNotification,
+    V2DataReportingQueryRunUpdatedEventNotification,
+    V2ExtendWorkflowRunFailedEventNotification,
+    V2ExtendWorkflowRunStartedEventNotification,
+    V2ExtendWorkflowRunSucceededEventNotification,
     V2MoneyManagementAdjustmentCreatedEventNotification,
     V2MoneyManagementFinancialAccountCreatedEventNotification,
     V2MoneyManagementFinancialAccountUpdatedEventNotification,
@@ -2377,5 +2969,9 @@ export declare namespace Events {
     V2MoneyManagementReceivedDebitUpdatedEventNotification,
     V2MoneyManagementTransactionCreatedEventNotification,
     V2MoneyManagementTransactionUpdatedEventNotification,
+    V2OrchestratedCommerceAgreementConfirmedEventNotification,
+    V2OrchestratedCommerceAgreementCreatedEventNotification,
+    V2OrchestratedCommerceAgreementPartiallyConfirmedEventNotification,
+    V2OrchestratedCommerceAgreementTerminatedEventNotification,
   };
 }

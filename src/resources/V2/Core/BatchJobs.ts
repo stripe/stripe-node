@@ -247,7 +247,7 @@ export class BatchJobResource extends StripeResource {
 }
 export interface BatchJob {
   /**
-   * Unique identifier for the BatchJob.
+   * Unique identifier for the `batch_job`.
    */
   id: string;
 
@@ -257,7 +257,7 @@ export interface BatchJob {
   object: 'v2.core.batch_job';
 
   /**
-   * Timestamp at which BatchJob was created.
+   * Timestamp at which the `batch_job` was created.
    */
   created: string;
 
@@ -267,27 +267,27 @@ export interface BatchJob {
   livemode: boolean;
 
   /**
-   * The maximum rps defined for the `BatchJob`.
+   * The maximum requests per second defined for the `batch_job`.
    */
   maximum_rps: number;
 
   /**
-   * The metadata of the `BatchJob` object.
+   * The metadata of the `batch_job`.
    */
   metadata: Metadata;
 
   /**
-   * If the validation will be run previous to the execution of the `BatchJob`.
+   * Whether validation runs before executing the `batch_job`.
    */
   skip_validation: boolean;
 
   /**
-   * The current status of the `BatchJob`.
+   * The current status of the `batch_job`.
    */
   status: V2.Core.BatchJob.Status;
 
   /**
-   * Additional details about the current state of the `BatchJob`.
+   * Additional details about the current state of the `batch_job`.
    */
   status_details?: V2.Core.BatchJob.StatusDetails;
 }
@@ -308,42 +308,42 @@ export namespace V2 {
 
       export interface StatusDetails {
         /**
-         * Additional details for the `BATCH_FAILED` status of the `BatchJob`.
+         * Additional details for the `BATCH_FAILED` status of the `batch_job`.
          */
         batch_failed?: StatusDetails.BatchFailed;
 
         /**
-         * Additional details for the `CANCELED` status of the `BatchJob`.
+         * Additional details for the `CANCELED` status of the `batch_job`.
          */
         canceled?: StatusDetails.Canceled;
 
         /**
-         * Additional details for the `COMPLETE` status of the `BatchJob`.
+         * Additional details for the `COMPLETE` status of the `batch_job`.
          */
         complete?: StatusDetails.Complete;
 
         /**
-         * Additional details for the `IN_PROGRESS` status of the `BatchJob`.
+         * Additional details for the `IN_PROGRESS` status of the `batch_job`.
          */
         in_progress?: StatusDetails.InProgress;
 
         /**
-         * Additional details for the `READY_FOR_UPLOAD` status of the `BatchJob`.
+         * Additional details for the `READY_FOR_UPLOAD` status of the `batch_job`.
          */
         ready_for_upload?: StatusDetails.ReadyForUpload;
 
         /**
-         * Additional details for the `TIMEOUT` status of the `BatchJob`.
+         * Additional details for the `TIMEOUT` status of the `batch_job`.
          */
         timeout?: StatusDetails.Timeout;
 
         /**
-         * Additional details for the `VALIDATING` status of the `BatchJob`.
+         * Additional details for the `VALIDATING` status of the `batch_job`.
          */
         validating?: StatusDetails.Validating;
 
         /**
-         * Additional details for the `VALIDATION_FAILED` status of the `BatchJob`.
+         * Additional details for the `VALIDATION_FAILED` status of the `batch_job`.
          */
         validation_failed?: StatusDetails.ValidationFailed;
       }
@@ -351,7 +351,7 @@ export namespace V2 {
       export namespace StatusDetails {
         export interface BatchFailed {
           /**
-           * Details about the `BatchJob` failure.
+           * Details about the `batch_job` failure.
            */
           error: string;
         }
@@ -363,7 +363,7 @@ export namespace V2 {
           failure_count: bigint;
 
           /**
-           * The output file details. If BatchJob is cancelled it's provided only if there is already output at this point.
+           * The output file details. If the `batch_job` is canceled, this is provided only if there is already output at this point.
            */
           output_file: Canceled.OutputFile;
 
@@ -380,7 +380,7 @@ export namespace V2 {
           failure_count: bigint;
 
           /**
-           * The output file details. If BatchJob is cancelled it's provided only if there is already output at this point.
+           * The output file details. If the `batch_job` is canceled, this is provided only if there is already output at this point.
            */
           output_file: Complete.OutputFile;
 
@@ -416,7 +416,7 @@ export namespace V2 {
           failure_count: bigint;
 
           /**
-           * The output file details. If BatchJob is cancelled it's provided only if there is already output at this point.
+           * The output file details. If the `batch_job` is canceled, this is provided only if there is already output at this point.
            */
           output_file: Timeout.OutputFile;
 
@@ -441,7 +441,7 @@ export namespace V2 {
           failure_count: bigint;
 
           /**
-           * The output file details. If BatchJob is cancelled it's provided only if there is already output at this point.
+           * The output file details. If the `batch_job` is canceled, this is provided only if there is already output at this point.
            */
           output_file: ValidationFailed.OutputFile;
 
@@ -609,7 +609,7 @@ export namespace V2 {
       endpoint: BatchJobCreateParams.Endpoint;
 
       /**
-       * The metadata of the `BatchJob` object.
+       * The metadata of the `batch_job`.
        */
       metadata: MetadataParam;
 
@@ -635,7 +635,7 @@ export namespace V2 {
         /**
          * The HTTP method to use when calling the endpoint.
          */
-        http_method: 'post';
+        http_method: Endpoint.HttpMethod;
 
         /**
          * The path of the endpoint to run this batch job against.
@@ -653,6 +653,8 @@ export namespace V2 {
       }
 
       export namespace Endpoint {
+        export type HttpMethod = 'delete' | 'post';
+
         export type Path =
           | '/v1/accounts/:account'
           | '/v1/credit_notes'

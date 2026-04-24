@@ -49,7 +49,7 @@ export namespace V2 {
 
       export interface Invoice {
         /**
-         * The amount of time until the invoice will be overdue for payment.
+         * The amount of time until the invoice is overdue for payment.
          */
         time_until_due?: Invoice.TimeUntilDue;
       }
@@ -57,7 +57,7 @@ export namespace V2 {
       export namespace Calculation {
         export interface Tax {
           /**
-           * Determines if tax will be calculated automatically based on a PTC or manually based on rules defined by the merchant. Defaults to "manual".
+           * Determines if tax is calculated automatically based on a PTC or manually based on rules defined by the business. Defaults to "manual".
            */
           type: Tax.Type;
         }
@@ -76,7 +76,7 @@ export namespace V2 {
 
           /**
            * The number of interval units. For example, if interval=day and interval_count=30,
-           * the invoice will be due in 30 days.
+           * the invoice is due in 30 days.
            */
           interval_count: number;
         }

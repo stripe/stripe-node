@@ -20,6 +20,10 @@ const KNOWN_EVENT_TYPES = new Set([
   // event-types: The beginning of the section generated from our OpenAPI spec
   'v1.billing.meter.error_report_triggered',
   'v1.billing.meter.no_meter_found',
+  'v2.commerce.product_catalog.imports.failed',
+  'v2.commerce.product_catalog.imports.processing',
+  'v2.commerce.product_catalog.imports.succeeded',
+  'v2.commerce.product_catalog.imports.succeeded_with_errors',
   'v2.core.account.closed',
   'v2.core.account.created',
   'v2.core.account.updated',
@@ -51,6 +55,13 @@ const KNOWN_EVENT_TYPES = new Set([
   'v2.core.batch_job.validation_failed',
   'v2.core.event_destination.ping',
   'v2.core.health.event_generation_failure.resolved',
+  'v2.data.reporting.query_run.created',
+  'v2.data.reporting.query_run.failed',
+  'v2.data.reporting.query_run.succeeded',
+  'v2.data.reporting.query_run.updated',
+  'v2.extend.workflow_run.failed',
+  'v2.extend.workflow_run.started',
+  'v2.extend.workflow_run.succeeded',
   'v2.money_management.adjustment.created',
   'v2.money_management.financial_account.created',
   'v2.money_management.financial_account.updated',
@@ -87,6 +98,10 @@ const KNOWN_EVENT_TYPES = new Set([
   'v2.money_management.received_debit.updated',
   'v2.money_management.transaction.created',
   'v2.money_management.transaction.updated',
+  'v2.orchestrated_commerce.agreement.confirmed',
+  'v2.orchestrated_commerce.agreement.created',
+  'v2.orchestrated_commerce.agreement.partially_confirmed',
+  'v2.orchestrated_commerce.agreement.terminated',
   // event-types: The end of the section generated from our OpenAPI spec
 ]);
 
