@@ -83,6 +83,8 @@ export const generateV2Error = (
       return new FeatureNotEnabledError(rawStripeError);
     case 'financial_account_not_open':
       return new FinancialAccountNotOpenError(rawStripeError);
+    case 'fx_quote_expired':
+      return new FxQuoteExpiredError(rawStripeError);
     case 'insufficient_funds':
       return new InsufficientFundsError(rawStripeError);
     case 'invalid_payment_method':
@@ -390,6 +392,11 @@ export class FeatureNotEnabledError extends StripeError {
 export class FinancialAccountNotOpenError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'FinancialAccountNotOpenError');
+  }
+}
+export class FxQuoteExpiredError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'FxQuoteExpiredError');
   }
 }
 export class InsufficientFundsError extends StripeError {

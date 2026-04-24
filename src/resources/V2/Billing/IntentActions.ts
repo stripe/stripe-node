@@ -63,7 +63,7 @@ export namespace V2 {
         discount?: Apply.Discount;
 
         /**
-         * When the apply action will take effect. If not specified, defaults to on_reserve.
+         * When the apply action takes effect. If not specified, defaults to on_reserve.
          */
         effective_at?: Apply.EffectiveAt;
 
@@ -95,7 +95,7 @@ export namespace V2 {
         collect_at: Deactivate.CollectAt;
 
         /**
-         * When the deactivate action will take effect. If not specified, the default behavior is on_reserve.
+         * When the deactivate action takes effect. If not specified, the default behavior is on_reserve.
          */
         effective_at: Deactivate.EffectiveAt;
 
@@ -117,7 +117,7 @@ export namespace V2 {
         collect_at: Modify.CollectAt;
 
         /**
-         * When the modify action will take effect. If not specified, the default behavior is on_reserve.
+         * When the modify action takes effect. If not specified, the default behavior is on_reserve.
          */
         effective_at: Modify.EffectiveAt;
 
@@ -134,7 +134,7 @@ export namespace V2 {
 
       export interface Remove {
         /**
-         * When the remove action will take effect. If not specified, defaults to on_reserve.
+         * When the remove action takes effect. If not specified, defaults to on_reserve.
          */
         effective_at?: Remove.EffectiveAt;
 
@@ -161,7 +161,7 @@ export namespace V2 {
         collect_at: Subscribe.CollectAt;
 
         /**
-         * When the subscribe action will take effect. If not specified, the default behavior is on_reserve.
+         * When the subscribe action takes effect. If not specified, the default behavior is on_reserve.
          */
         effective_at: Subscribe.EffectiveAt;
 
@@ -213,12 +213,12 @@ export namespace V2 {
 
         export interface EffectiveAt {
           /**
-           * The timestamp at which the apply action will take effect. Only present if type is timestamp. Only allowed for discount actions.
+           * The timestamp at which the apply action takes effect. Only present if type is timestamp. Only allowed for discount actions.
            */
           timestamp?: string;
 
           /**
-           * When the apply action will take effect.
+           * When the apply action takes effect.
            */
           type: EffectiveAt.Type;
         }
@@ -293,7 +293,7 @@ export namespace V2 {
             maximum_applications: PercentOff.MaximumApplications;
 
             /**
-             * Percent that will be taken off of the amount. For example, percent_off of 50.0 will make $100 amount $50 instead.
+             * Percent that is taken off the amount. For example, a percent_off of 50.0 reduces a 100 USD amount to 50 USD.
              */
             percent_off: Decimal;
           }
@@ -375,12 +375,12 @@ export namespace V2 {
 
         export interface EffectiveAt {
           /**
-           * The timestamp at which the deactivate action will take effect. Only present if type is timestamp.
+           * The timestamp at which the deactivate action takes effect. Only present if type is timestamp.
            */
           timestamp?: string;
 
           /**
-           * When the deactivate action will take effect.
+           * When the deactivate action takes effect.
            */
           type: EffectiveAt.Type;
         }
@@ -465,12 +465,12 @@ export namespace V2 {
 
         export interface EffectiveAt {
           /**
-           * The timestamp at which the modify action will take effect. Only present if type is timestamp.
+           * The timestamp at which the modify action takes effect. Only present if type is timestamp.
            */
           timestamp?: string;
 
           /**
-           * When the modify action will take effect.
+           * When the modify action takes effect.
            */
           type: EffectiveAt.Type;
         }
@@ -597,7 +597,7 @@ export namespace V2 {
       export namespace Remove {
         export interface EffectiveAt {
           /**
-           * When the remove action will take effect.
+           * When the remove action takes effect.
            */
           type: EffectiveAt.Type;
         }
@@ -614,12 +614,12 @@ export namespace V2 {
 
         export interface EffectiveAt {
           /**
-           * The timestamp at which the subscribe action will take effect. Only present if type is timestamp.
+           * The timestamp at which the subscribe action takes effect. Only present if type is timestamp.
            */
           timestamp?: string;
 
           /**
-           * When the subscribe action will take effect.
+           * When the subscribe action takes effect.
            */
           type: EffectiveAt.Type;
         }

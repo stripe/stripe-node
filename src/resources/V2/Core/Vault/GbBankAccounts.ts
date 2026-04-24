@@ -183,7 +183,7 @@ export namespace V2 {
           type: AlternativeReference.Type;
         }
 
-        export type BankAccountType = 'checking' | 'savings';
+        export type BankAccountType = 'checking' | 'futsu' | 'savings' | 'toza';
 
         export interface ConfirmationOfPayee {
           /**
@@ -317,7 +317,7 @@ export namespace V2 {
       }
 
       export namespace GbBankAccountCreateParams {
-        export type BankAccountType = 'checking' | 'savings';
+        export type BankAccountType = 'checking' | 'futsu' | 'savings' | 'toza';
 
         export interface ConfirmationOfPayee {
           /**

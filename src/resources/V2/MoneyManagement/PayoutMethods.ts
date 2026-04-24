@@ -299,7 +299,7 @@ export namespace V2 {
       }
 
       export namespace BankAccount {
-        export type BankAccountType = 'checking' | 'savings';
+        export type BankAccountType = 'checking' | 'futsu' | 'savings' | 'toza';
       }
 
       export namespace CryptoWallet {
@@ -311,7 +311,8 @@ export namespace V2 {
           | 'optimism'
           | 'polygon'
           | 'solana'
-          | 'stellar';
+          | 'stellar'
+          | 'tempo';
       }
 
       export namespace UsageStatus {

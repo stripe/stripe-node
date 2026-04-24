@@ -110,8 +110,8 @@ export interface BillSetting {
   invoice_rendering_template?: string;
 
   /**
-   * The latest version of the current settings object. This will be
-   * Updated every time an attribute of the settings is updated.
+   * The latest version of the current settings object. This is
+   * updated every time an attribute of the settings is updated.
    */
   latest_version: string;
 
@@ -144,7 +144,7 @@ export namespace V2 {
 
       export interface Invoice {
         /**
-         * The amount of time until the invoice will be overdue for payment.
+         * The amount of time until the invoice is overdue for payment.
          */
         time_until_due?: Invoice.TimeUntilDue;
       }
@@ -152,7 +152,7 @@ export namespace V2 {
       export namespace Calculation {
         export interface Tax {
           /**
-           * Determines if tax will be calculated automatically based on a PTC or manually based on rules defined by the merchant. Defaults to "manual".
+           * Determines if tax is calculated automatically based on a PTC or manually based on rules defined by the business. Defaults to "manual".
            */
           type: Tax.Type;
         }
@@ -171,7 +171,7 @@ export namespace V2 {
 
           /**
            * The number of interval units. For example, if interval=day and interval_count=30,
-           * the invoice will be due in 30 days.
+           * the invoice is due in 30 days.
            */
           interval_count: number;
         }
@@ -224,7 +224,7 @@ export namespace V2 {
 
       export interface Invoice {
         /**
-         * The amount of time until the invoice will be overdue for payment.
+         * The amount of time until the invoice is overdue for payment.
          */
         time_until_due?: Invoice.TimeUntilDue;
       }
@@ -232,7 +232,7 @@ export namespace V2 {
       export namespace Calculation {
         export interface Tax {
           /**
-           * Determines if tax will be calculated automatically based on a PTC or manually based on rules defined by the merchant. Defaults to "manual".
+           * Determines if tax is calculated automatically based on a PTC or manually based on rules defined by the business. Defaults to "manual".
            */
           type: Tax.Type;
         }
@@ -251,7 +251,7 @@ export namespace V2 {
 
           /**
            * The number of interval units. For example, if interval=day and interval_count=30,
-           * the invoice will be due in 30 days.
+           * the invoice is due in 30 days.
            */
           interval_count: number;
         }
@@ -294,7 +294,7 @@ export namespace V2 {
       invoice_rendering_template?: string;
 
       /**
-       * Optionally change the live version of the BillSetting. Providing `live_version = "latest"` will set the
+       * Optionally change the live version of the BillSetting. Providing `live_version = "latest"` sets the
        * BillSetting' `live_version` to its latest version.
        */
       live_version?: string;
@@ -316,7 +316,7 @@ export namespace V2 {
 
       export interface Invoice {
         /**
-         * The amount of time until the invoice will be overdue for payment.
+         * The amount of time until the invoice is overdue for payment.
          */
         time_until_due?: Invoice.TimeUntilDue;
       }
@@ -324,7 +324,7 @@ export namespace V2 {
       export namespace Calculation {
         export interface Tax {
           /**
-           * Determines if tax will be calculated automatically based on a PTC or manually based on rules defined by the merchant. Defaults to "manual".
+           * Determines if tax is calculated automatically based on a PTC or manually based on rules defined by the business. Defaults to "manual".
            */
           type: Tax.Type;
         }
@@ -343,7 +343,7 @@ export namespace V2 {
 
           /**
            * The number of interval units. For example, if interval=day and interval_count=30,
-           * the invoice will be due in 30 days.
+           * the invoice is due in 30 days.
            */
           interval_count: number;
         }

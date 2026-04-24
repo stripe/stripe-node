@@ -84,7 +84,7 @@ export interface OneTimeItem {
   created: string;
 
   /**
-   * Description that customers will see in the invoice line item.
+   * Description that customers see in the invoice line item.
    * Maximum length of 250 characters.
    */
   display_name: string;
@@ -133,7 +133,7 @@ export namespace V2 {
   export namespace Billing {
     export interface OneTimeItemCreateParams {
       /**
-       * Description that customers will see in the invoice line item.
+       * Description that customers see in the invoice line item.
        * Maximum length of 250 characters.
        */
       display_name: string;
@@ -182,7 +182,7 @@ export namespace V2 {
   export namespace Billing {
     export interface OneTimeItemUpdateParams {
       /**
-       * Description that customers will see in the invoice line item.
+       * Description that customers see in the invoice line item.
        * Maximum length of 250 characters.
        */
       display_name?: string;

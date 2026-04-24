@@ -157,7 +157,7 @@ export interface RateCard {
   latest_version: string;
 
   /**
-   * The ID of the Rate Card Version that will be used by all subscriptions when no specific version is specified.
+   * The ID of the Rate Card Version used by all subscriptions when no specific version is specified.
    */
   live_version: string;
 
@@ -177,29 +177,29 @@ export interface RateCard {
   metadata?: Metadata;
 
   /**
-   * The service cycle configuration for this Rate Card. For example, a monthly Rate Card with a rate of $1 for the
-   * first 10 "workloads" and $2 thereafter means "$1 per workload up to 10 workloads during a month of service."
+   * The service cycle configuration for this Rate Card. For example, a monthly Rate Card with a rate of 1 USD for the
+   * first 10 "workloads" and 2 USD thereafter means "1 USD per workload up to 10 workloads during a month of service."
    * This is similar to but distinct from billing interval; the service interval deals with the rate at which the
    * customer accumulates fees, while the billing interval in Cadence deals with the rate the customer is billed.
    */
   service_cycle: V2.Billing.RateCard.ServiceCycle;
 
   /**
-   * The interval for assessing service. For example, a monthly Rate Card with a rate of $1 for the first 10 "workloads"
-   * and $2 thereafter means "$1 per workload up to 10 workloads during a month of service." This is similar to but
+   * The interval for assessing service. For example, a monthly Rate Card with a rate of 1 USD for the first 10 "workloads"
+   * and 2 USD thereafter means "1 USD per workload up to 10 workloads during a month of service." This is similar to but
    * distinct from billing interval; the service interval deals with the rate at which the customer accumulates fees,
    * while the billing interval in Cadence deals with the rate the customer is billed.
    */
   service_interval: V2.Billing.RateCard.ServiceInterval;
 
   /**
-   * The length of the interval for assessing service. For example, set this to 3 and `service_interval` to `"month"` in
-   * order to specify quarterly service.
+   * The length of the interval for assessing service. For example, set this to 3 and `service_interval` to `"month"`
+   * to specify quarterly service.
    */
   service_interval_count: number;
 
   /**
-   * The Stripe Tax tax behavior - whether the rates are inclusive or exclusive of tax.
+   * The tax behavior for Stripe Tax — whether the rate card price includes or excludes tax.
    */
   tax_behavior: V2.Billing.RateCard.TaxBehavior;
 }
@@ -213,8 +213,8 @@ export namespace V2 {
         interval: ServiceCycle.Interval;
 
         /**
-         * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"` in
-         * order to specify quarterly service.
+         * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"`
+         * to specify quarterly service.
          */
         interval_count: number;
       }
@@ -245,21 +245,21 @@ export namespace V2 {
       display_name: string;
 
       /**
-       * The interval for assessing service. For example, a monthly RateCard with a rate of $1 for the first 10 "workloads"
-       * and $2 thereafter means "$1 per workload up to 10 workloads during a month of service." This is similar to but
+       * The interval for assessing service. For example, a monthly RateCard with a rate of 1 USD for the first 10 "workloads"
+       * and 2 USD thereafter means "1 USD per workload up to 10 workloads during a month of service." This is similar to but
        * distinct from billing interval; the service interval deals with the rate at which the customer accumulates fees,
        * while the billing interval in Cadence deals with the rate the customer is billed.
        */
       service_interval: RateCardCreateParams.ServiceInterval;
 
       /**
-       * The length of the interval for assessing service. For example, set this to 3 and `service_interval` to `"month"` in
-       * order to specify quarterly service.
+       * The length of the interval for assessing service. For example, set this to 3 and `service_interval` to `"month"`
+       * to specify quarterly service.
        */
       service_interval_count: number;
 
       /**
-       * The Stripe Tax tax behavior - whether the rates are inclusive or exclusive of tax.
+       * The tax behavior for Stripe Tax — whether the rate card price includes or excludes tax.
        */
       tax_behavior: RateCardCreateParams.TaxBehavior;
 
@@ -302,7 +302,7 @@ export namespace V2 {
       display_name?: string;
 
       /**
-       * Changes the version that new RateCard activations will use. Providing `live_version = "latest"` will set the
+       * Changes the version that new RateCard activations use. Providing `live_version = "latest"` sets the
        * RateCard's `live_version` to its latest version.
        */
       live_version?: string;
@@ -372,7 +372,7 @@ export namespace V2 {
         metered_item_data?: RatesToCreate.MeteredItemData;
 
         /**
-         * Defines whether the tiered price should be graduated or volume-based. In volume-based tiering, the maximum
+         * Defines whether the tiered price is graduated or volume-based. In volume-based tiering, the maximum
          * quantity within a period determines the per-unit price. In graduated tiering, the pricing changes as the quantity
          * grows into new tiers. Can only be set if `tiers` is set.
          */
@@ -405,7 +405,7 @@ export namespace V2 {
       export namespace RatesToCreate {
         export interface MeteredItemData {
           /**
-           * Description that customers will see in the invoice line item.
+           * Description that customers see in the invoice line item.
            * Maximum length of 250 characters.
            */
           display_name: string;
@@ -453,7 +453,7 @@ export namespace V2 {
           unit_amount?: string;
 
           /**
-           * Up to and including this quantity will be contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
+           * Up to and including this quantity is contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
            * be set.
            */
           up_to_decimal?: Decimal;

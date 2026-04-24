@@ -130,6 +130,11 @@ export interface OffSessionPayment {
   amount_capturable?: V2Amount;
 
   /**
+   * Provides industry-specific information about the amount.
+   */
+  amount_details?: V2.Payments.OffSessionPayment.AmountDetails;
+
+  /**
    * The “presentment amount” to be collected from the customer.
    */
   amount_requested: V2Amount;
@@ -159,6 +164,11 @@ export interface OffSessionPayment {
    * ID of the Customer to which this OffSessionPayment belongs.
    */
   customer: string;
+
+  /**
+   * An arbitrary string attached to the object. Often useful for displaying to users.
+   */
+  description?: string;
 
   /**
    * The reason why the OffSessionPayment failed.
@@ -192,6 +202,11 @@ export interface OffSessionPayment {
    * The account (if any) for which the funds of the OffSessionPayment are intended.
    */
   on_behalf_of?: string;
+
+  /**
+   * Provides industry-specific information about the payment.
+   */
+  payment_details?: V2.Payments.OffSessionPayment.PaymentDetails;
 
   /**
    * ID of the payment method used in this OffSessionPayment.
@@ -247,6 +262,34 @@ export interface OffSessionPayment {
 export namespace V2 {
   export namespace Payments {
     export namespace OffSessionPayment {
+      export interface AmountDetails {
+        /**
+         * The amount the total transaction was discounted for.
+         */
+        discount_amount?: number;
+
+        /**
+         * Contains information about the error that occurred when validating the current amount details.
+         * This field populates when the amount details has a validation error that wasn't enforced because the [enforce_arithmetic_validation](https://docs.corp.stripe.com/api/payment_intents/create#create_payment_intent-amount_details-enforce_arithmetic_validation) parameter was set to `false`.
+         */
+        error?: AmountDetails.Error;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         */
+        line_items: Array<AmountDetails.LineItem>;
+
+        /**
+         * Contains information about the shipping portion of the amount.
+         */
+        shipping?: AmountDetails.Shipping;
+
+        /**
+         * Contains information about the tax portion of the amount.
+         */
+        tax?: AmountDetails.Tax;
+      }
+
       export type Cadence = 'recurring' | 'unscheduled';
 
       export interface Capture {
@@ -267,6 +310,19 @@ export namespace V2 {
         | 'no_valid_payment_method'
         | 'rejected_by_partner'
         | 'retries_exhausted';
+
+      export interface PaymentDetails {
+        /**
+         * A unique value to identify the customer. This field is applicable only for card payments. For card payments, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
+         */
+        customer_reference?: string;
+
+        /**
+         * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
+         * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
+         */
+        order_reference?: string;
+      }
 
       export interface PaymentsOrchestration {
         /**
@@ -326,6 +382,96 @@ export namespace V2 {
         destination: string;
       }
 
+      export namespace AmountDetails {
+        export interface Error {
+          /**
+           * The code of the error that occurred when validating the current amount details.
+           */
+          code?: Error.Code;
+
+          /**
+           * A message providing more details about the error.
+           */
+          message?: string;
+        }
+
+        export interface LineItem {
+          /**
+           * The amount an item was discounted for. Positive integer.
+           */
+          discount_amount?: number;
+
+          /**
+           * Unique identifier of the product. At most 12 characters long.
+           */
+          product_code?: string;
+
+          /**
+           * Name of the product. At most 100 characters long.
+           */
+          product_name: string;
+
+          /**
+           * Number of items of the product. Positive integer.
+           */
+          quantity: number;
+
+          /**
+           * Contains information about the tax on the item.
+           */
+          tax?: LineItem.Tax;
+
+          /**
+           * Cost of the product. Non-negative integer.
+           */
+          unit_cost: number;
+
+          /**
+           * Unit of measure for the product. At most 12 characters long.
+           */
+          unit_of_measure?: string;
+        }
+
+        export interface Shipping {
+          /**
+           * Portion of the amount that is for shipping.
+           */
+          amount?: number;
+
+          /**
+           * The postal code that represents the shipping source.
+           */
+          from_postal_code?: string;
+
+          /**
+           * The postal code that represents the shipping destination.
+           */
+          to_postal_code?: string;
+        }
+
+        export interface Tax {
+          /**
+           * Total portion of the amount that is for tax.
+           */
+          total_tax_amount?: number;
+        }
+
+        export namespace Error {
+          export type Code =
+            | 'amount_details_amount_mismatch'
+            | 'amount_details_amount_greater_than_tax_shipping_discount';
+        }
+
+        export namespace LineItem {
+          export interface Tax {
+            /**
+             * Total portion of the amount that is for tax.
+             */
+            total_tax_amount?: number;
+          }
+        }
+      }
+
       export namespace Capture {
         export type CaptureMethod = 'automatic' | 'manual';
       }
@@ -367,6 +513,11 @@ export namespace V2 {
       metadata: MetadataParam;
 
       /**
+       * Provides industry-specific information about the amount.
+       */
+      amount_details?: OffSessionPaymentCreateParams.AmountDetails;
+
+      /**
        * The amount of the application fee (if any) that will be requested to be applied to the
        * payment and transferred to the application owner's Stripe account.
        */
@@ -378,9 +529,19 @@ export namespace V2 {
       capture?: OffSessionPaymentCreateParams.Capture;
 
       /**
+       * An arbitrary string attached to the object. Often useful for displaying to users.
+       */
+      description?: string;
+
+      /**
        * The account (if any) for which the funds of the OffSessionPayment are intended.
        */
       on_behalf_of?: string;
+
+      /**
+       * Provides industry-specific information about the payment.
+       */
+      payment_details?: OffSessionPaymentCreateParams.PaymentDetails;
 
       /**
        * ID of the payment method used in this OffSessionPayment.
@@ -436,11 +597,53 @@ export namespace V2 {
     export namespace OffSessionPaymentCreateParams {
       export type Cadence = 'recurring' | 'unscheduled';
 
+      export interface AmountDetails {
+        /**
+         * The amount the total transaction was discounted for.
+         */
+        discount_amount?: number;
+
+        /**
+         * Set to `false` to return arithmetic validation errors in the response without failing the request. Use this when you want the operation to proceed regardless of arithmetic errors in the line item data.
+         * Omit or set to `true` to immediately return a 400 error when arithmetic validation fails. Use this for strict validation that prevents processing with line item data that has arithmetic inconsistencies.
+         * For card payments, Stripe doesn't send line item data to card networks if there's an arithmetic validation error.
+         */
+        enforce_arithmetic_validation?: boolean;
+
+        /**
+         * A list of line items, each containing information about a product in the OffSessionPayment. There is a maximum of 10 line items.
+         */
+        line_items?: Array<AmountDetails.LineItem>;
+
+        /**
+         * Contains information about the shipping portion of the amount.
+         */
+        shipping?: AmountDetails.Shipping;
+
+        /**
+         * Contains information about the tax portion of the amount.
+         */
+        tax?: AmountDetails.Tax;
+      }
+
       export interface Capture {
         /**
          * The method to use to capture the payment.
          */
         capture_method: Capture.CaptureMethod;
+      }
+
+      export interface PaymentDetails {
+        /**
+         * A unique value to identify the customer. This field is applicable only for card payments. For card payments, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
+         */
+        customer_reference?: string;
+
+        /**
+         * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
+         * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
+         */
+        order_reference?: string;
       }
 
       export interface PaymentMethodData {
@@ -505,6 +708,79 @@ export namespace V2 {
         destination: string;
       }
 
+      export namespace AmountDetails {
+        export interface LineItem {
+          /**
+           * The amount an item was discounted for. Positive integer.
+           */
+          discount_amount?: number;
+
+          /**
+           * Unique identifier of the product. At most 12 characters long.
+           */
+          product_code?: string;
+
+          /**
+           * Name of the product. At most 100 characters long.
+           */
+          product_name: string;
+
+          /**
+           * Number of items of the product. Positive integer.
+           */
+          quantity: number;
+
+          /**
+           * Contains information about the tax on the item.
+           */
+          tax?: LineItem.Tax;
+
+          /**
+           * Cost of the product. Positive integer.
+           */
+          unit_cost: number;
+
+          /**
+           * A unit of measure for the line item, such as gallons, feet, meters, etc.
+           * The maximum length is 12 characters.
+           */
+          unit_of_measure?: string;
+        }
+
+        export interface Shipping {
+          /**
+           * Portion of the amount that is for shipping.
+           */
+          amount?: number;
+
+          /**
+           * The postal code that represents the shipping source.
+           */
+          from_postal_code?: string;
+
+          /**
+           * The postal code that represents the shipping destination.
+           */
+          to_postal_code?: string;
+        }
+
+        export interface Tax {
+          /**
+           * Total portion of the amount that is for tax.
+           */
+          total_tax_amount: number;
+        }
+
+        export namespace LineItem {
+          export interface Tax {
+            /**
+             * Total portion of the amount that is for tax.
+             */
+            total_tax_amount: number;
+          }
+        }
+      }
+
       export namespace Capture {
         export type CaptureMethod = 'automatic' | 'manual';
       }
@@ -558,6 +834,11 @@ export namespace V2 {
       export namespace PaymentMethodOptions {
         export interface Card {
           /**
+           * The merchant category code for this transaction. Used in interchange and authorization to improve auth rates.
+           */
+          mcc?: string;
+
+          /**
            * If you are making a Credential On File transaction with a previously saved card, you should pass the Network Transaction ID
            * from a prior initial authorization on Stripe (from a successful SetupIntent or a PaymentIntent with `setup_future_usage` set),
            * or one that you have obtained from another payment processor. This is a token from the network which uniquely identifies the transaction.
@@ -565,7 +846,7 @@ export namespace V2 {
            * Note that you should pass in a Network Transaction ID if you have one, regardless of whether this is a
            * Customer-Initiated Transaction (CIT) or a Merchant-Initiated Transaction (MIT).
            */
-          network_transaction_id: string;
+          network_transaction_id?: string;
         }
       }
 
@@ -607,6 +888,11 @@ export namespace V2 {
       metadata: MetadataParam;
 
       /**
+       * Provides industry-specific information about the amount.
+       */
+      amount_details?: OffSessionPaymentCaptureParams.AmountDetails;
+
+      /**
        * The amount to capture.
        */
       amount_to_capture?: number;
@@ -615,6 +901,11 @@ export namespace V2 {
        * The amount of the application fee for this capture.
        */
       application_fee_amount?: V2Amount;
+
+      /**
+       * Provides industry-specific information about the payment.
+       */
+      payment_details?: OffSessionPaymentCaptureParams.PaymentDetails;
 
       /**
        * Text that appears on the customer's statement as the statement descriptor for a
@@ -638,6 +929,48 @@ export namespace V2 {
     }
 
     export namespace OffSessionPaymentCaptureParams {
+      export interface AmountDetails {
+        /**
+         * The amount the total transaction was discounted for.
+         */
+        discount_amount?: number;
+
+        /**
+         * Set to `false` to return arithmetic validation errors in the response without failing the request. Use this when you want the operation to proceed regardless of arithmetic errors in the line item data.
+         * Omit or set to `true` to immediately return a 400 error when arithmetic validation fails. Use this for strict validation that prevents processing with line item data that has arithmetic inconsistencies.
+         * For card payments, Stripe doesn't send line item data to card networks if there's an arithmetic validation error.
+         */
+        enforce_arithmetic_validation?: boolean;
+
+        /**
+         * A list of line items, each containing information about a product in the OffSessionPayment. There is a maximum of 10 line items.
+         */
+        line_items?: Array<AmountDetails.LineItem>;
+
+        /**
+         * Contains information about the shipping portion of the amount.
+         */
+        shipping?: AmountDetails.Shipping;
+
+        /**
+         * Contains information about the tax portion of the amount.
+         */
+        tax?: AmountDetails.Tax;
+      }
+
+      export interface PaymentDetails {
+        /**
+         * A unique value to identify the customer. This field is applicable only for card payments. For card payments, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
+         */
+        customer_reference?: string;
+
+        /**
+         * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
+         * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
+         */
+        order_reference?: string;
+      }
+
       export interface TransferData {
         /**
          * The amount transferred to the destination account. This transfer will occur
@@ -649,6 +982,79 @@ export namespace V2 {
          * currency unit (e.g., 100 cents to charge $1.00).
          */
         amount?: number;
+      }
+
+      export namespace AmountDetails {
+        export interface LineItem {
+          /**
+           * The amount an item was discounted for. Positive integer.
+           */
+          discount_amount?: number;
+
+          /**
+           * Unique identifier of the product. At most 12 characters long.
+           */
+          product_code?: string;
+
+          /**
+           * Name of the product. At most 100 characters long.
+           */
+          product_name: string;
+
+          /**
+           * Number of items of the product. Positive integer.
+           */
+          quantity: number;
+
+          /**
+           * Contains information about the tax on the item.
+           */
+          tax?: LineItem.Tax;
+
+          /**
+           * Cost of the product. Positive integer.
+           */
+          unit_cost: number;
+
+          /**
+           * A unit of measure for the line item, such as gallons, feet, meters, etc.
+           * The maximum length is 12 characters.
+           */
+          unit_of_measure?: string;
+        }
+
+        export interface Shipping {
+          /**
+           * Portion of the amount that is for shipping.
+           */
+          amount?: number;
+
+          /**
+           * The postal code that represents the shipping source.
+           */
+          from_postal_code?: string;
+
+          /**
+           * The postal code that represents the shipping destination.
+           */
+          to_postal_code?: string;
+        }
+
+        export interface Tax {
+          /**
+           * Total portion of the amount that is for tax.
+           */
+          total_tax_amount: number;
+        }
+
+        export namespace LineItem {
+          export interface Tax {
+            /**
+             * Total portion of the amount that is for tax.
+             */
+            total_tax_amount: number;
+          }
+        }
       }
     }
   }

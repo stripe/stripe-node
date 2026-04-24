@@ -8,9 +8,12 @@ import {AccountTokenResource as V2CoreAccountTokens} from './resources/V2/Core/A
 import {AccountResource as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
 import {AccountResource as V2CoreAccounts} from './resources/V2/Core/Accounts.js';
 import {ActiveEntitlementResource as EntitlementsActiveEntitlements} from './resources/Entitlements/ActiveEntitlements.js';
+import {ActivityLogResource as V2IamActivityLogs} from './resources/V2/Iam/ActivityLogs.js';
 import {AdjustmentResource as V2MoneyManagementAdjustments} from './resources/V2/MoneyManagement/Adjustments.js';
+import {AgreementResource as V2OrchestratedCommerceAgreements} from './resources/V2/OrchestratedCommerce/Agreements.js';
 import {AlertResource as BillingAlerts} from './resources/Billing/Alerts.js';
 import {ApiKeyResource as V2IamApiKeys} from './resources/V2/Iam/ApiKeys.js';
+import {ApprovalRequestResource as V2CoreApprovalRequests} from './resources/V2/Core/ApprovalRequests.js';
 import {AssociationResource as TaxAssociations} from './resources/Tax/Associations.js';
 import {AuthorizationResource as FinancialConnectionsAuthorizations} from './resources/FinancialConnections/Authorizations.js';
 import {AuthorizationResource as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
@@ -18,6 +21,7 @@ import {AuthorizationResource as TestHelpersIssuingAuthorizations} from './resou
 import {BatchJobResource as V2CoreBatchJobs} from './resources/V2/Core/BatchJobs.js';
 import {BillSettingResource as V2BillingBillSettings} from './resources/V2/Billing/BillSettings.js';
 import {BlocklistEntryResource as IdentityBlocklistEntries} from './resources/Identity/BlocklistEntries.js';
+import {BusinessProfileResource as V2NetworkBusinessProfiles} from './resources/V2/Network/BusinessProfiles.js';
 import {CadenceResource as V2BillingCadences} from './resources/V2/Billing/Cadences.js';
 import {CalculationResource as TaxCalculations} from './resources/Tax/Calculations.js';
 import {CardholderResource as IssuingCardholders} from './resources/Issuing/Cardholders.js';
@@ -60,6 +64,7 @@ import {GbBankAccountResource as V2CoreVaultGbBankAccounts} from './resources/V2
 import {GrantedTokenResource as SharedPaymentGrantedTokens} from './resources/SharedPayment/GrantedTokens.js';
 import {GrantedTokenResource as TestHelpersSharedPaymentGrantedTokens} from './resources/TestHelpers/SharedPayment/GrantedTokens.js';
 import {HoldResource as ReserveHolds} from './resources/Reserve/Holds.js';
+import {ImportResource as V2CommerceProductCatalogImports} from './resources/V2/Commerce/ProductCatalog/Imports.js';
 import {InboundTransferResource as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransferResource as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {InboundTransferResource as V2MoneyManagementInboundTransfers} from './resources/V2/MoneyManagement/InboundTransfers.js';
@@ -155,8 +160,8 @@ import {ValueListItemResource as RadarValueListItems} from './resources/Radar/Va
 import {ValueListResource as RadarValueLists} from './resources/Radar/ValueLists.js';
 import {VerificationReportResource as IdentityVerificationReports} from './resources/Identity/VerificationReports.js';
 import {VerificationSessionResource as IdentityVerificationSessions} from './resources/Identity/VerificationSessions.js';
-import {WorkflowRunResource as V2CoreWorkflowRuns} from './resources/V2/Core/WorkflowRuns.js';
-import {WorkflowResource as V2CoreWorkflows} from './resources/V2/Core/Workflows.js';
+import {WorkflowRunResource as V2ExtendWorkflowRuns} from './resources/V2/Extend/WorkflowRuns.js';
+import {WorkflowResource as V2ExtendWorkflows} from './resources/V2/Extend/Workflows.js';
 export {AccountResource as Account} from './resources/Accounts.js';
 export {AccountResource as Accounts} from './resources/Accounts.js';
 export {AccountLinkResource as AccountLinks} from './resources/AccountLinks.js';
@@ -401,18 +406,22 @@ export const V2 = resourceNamespace('v2', {
     RateCards: V2BillingRateCards,
     ServiceActions: V2BillingServiceActions,
   }),
+  Commerce: resourceNamespace('commerce', {
+    ProductCatalog: resourceNamespace('productCatalog', {
+      Imports: V2CommerceProductCatalogImports,
+    }),
+  }),
   Core: resourceNamespace('core', {
     AccountEvaluations: V2CoreAccountEvaluations,
     AccountLinks: V2CoreAccountLinks,
     AccountTokens: V2CoreAccountTokens,
     Accounts: V2CoreAccounts,
+    ApprovalRequests: V2CoreApprovalRequests,
     BatchJobs: V2CoreBatchJobs,
     ClaimableSandboxes: V2CoreClaimableSandboxes,
     ConnectionSessions: V2CoreConnectionSessions,
     EventDestinations: V2CoreEventDestinations,
     Events: V2CoreEvents,
-    WorkflowRuns: V2CoreWorkflowRuns,
-    Workflows: V2CoreWorkflows,
     Vault: resourceNamespace('vault', {
       GbBankAccounts: V2CoreVaultGbBankAccounts,
       UsBankAccounts: V2CoreVaultUsBankAccounts,
@@ -423,7 +432,14 @@ export const V2 = resourceNamespace('v2', {
       QueryRuns: V2DataReportingQueryRuns,
     }),
   }),
-  Iam: resourceNamespace('iam', {ApiKeys: V2IamApiKeys}),
+  Extend: resourceNamespace('extend', {
+    WorkflowRuns: V2ExtendWorkflowRuns,
+    Workflows: V2ExtendWorkflows,
+  }),
+  Iam: resourceNamespace('iam', {
+    ActivityLogs: V2IamActivityLogs,
+    ApiKeys: V2IamApiKeys,
+  }),
   MoneyManagement: resourceNamespace('moneyManagement', {
     Adjustments: V2MoneyManagementAdjustments,
     CurrencyConversions: V2MoneyManagementCurrencyConversions,
@@ -441,6 +457,12 @@ export const V2 = resourceNamespace('v2', {
     RecipientVerifications: V2MoneyManagementRecipientVerifications,
     TransactionEntries: V2MoneyManagementTransactionEntries,
     Transactions: V2MoneyManagementTransactions,
+  }),
+  Network: resourceNamespace('network', {
+    BusinessProfiles: V2NetworkBusinessProfiles,
+  }),
+  OrchestratedCommerce: resourceNamespace('orchestratedCommerce', {
+    Agreements: V2OrchestratedCommerceAgreements,
   }),
   Payments: resourceNamespace('payments', {
     OffSessionPayments: V2PaymentsOffSessionPayments,

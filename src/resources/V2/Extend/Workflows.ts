@@ -9,10 +9,10 @@ export class WorkflowResource extends StripeResource {
    * List all Workflows.
    */
   list(
-    params: V2.Core.WorkflowListParams,
+    params?: V2.Extend.WorkflowListParams,
     options?: RequestOptions
   ): ApiListPromise<Workflow> {
-    return this._makeRequest('GET', '/v2/core/workflows', params, options, {
+    return this._makeRequest('GET', '/v2/extend/workflows', params, options, {
       methodType: 'list',
     }) as any;
   }
@@ -21,27 +21,28 @@ export class WorkflowResource extends StripeResource {
    */
   retrieve(
     id: string,
-    params?: V2.Core.WorkflowRetrieveParams,
+    params?: V2.Extend.WorkflowRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Workflow>> {
     return this._makeRequest(
       'GET',
-      `/v2/core/workflows/${id}`,
+      `/v2/extend/workflows/${id}`,
       params,
       options
     ) as any;
   }
   /**
    * Invokes an on-demand Workflow with parameters, to launch a new Workflow Run.
+   * @throws Stripe.CannotProceedError
    */
   invoke(
     id: string,
-    params: V2.Core.WorkflowInvokeParams,
+    params: V2.Extend.WorkflowInvokeParams,
     options?: RequestOptions
   ): Promise<Response<WorkflowRun>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/workflows/${id}/invoke`,
+      `/v2/extend/workflows/${id}/invoke`,
       params,
       options
     ) as any;
@@ -56,17 +57,12 @@ export interface Workflow {
   /**
    * String representing the object's type. Objects of the same type share the same value of the object field.
    */
-  object: 'v2.core.workflow';
+  object: 'v2.extend.workflow';
 
   /**
    * When the Workflow was created.
    */
   created: string;
-
-  /**
-   * Workflow description.
-   */
-  description: string;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -76,15 +72,20 @@ export interface Workflow {
   /**
    * Whether this Workflow is active, inactive, or in some other state. Only active Workflows may be invoked.
    */
-  status: V2.Core.Workflow.Status;
+  status: V2.Extend.Workflow.Status;
+
+  /**
+   * Workflow title.
+   */
+  title: string;
 
   /**
    * Under what conditions will this Workflow launch.
    */
-  triggers: Array<V2.Core.Workflow.Trigger>;
+  triggers: Array<V2.Extend.Workflow.Trigger>;
 }
 export namespace V2 {
-  export namespace Core {
+  export namespace Extend {
     export namespace Workflow {
       export type Status = 'active' | 'archived' | 'draft' | 'inactive';
 
@@ -108,17 +109,17 @@ export namespace V2 {
       export namespace Trigger {
         export interface EventTrigger {
           /**
+           * Specifies which accounts' events will trigger this Workflow.
+           */
+          events_from: Array<string>;
+
+          /**
            * The Stripe event type that will trigger this Workflow.
            */
           type: string;
         }
 
-        export interface Manual {
-          /**
-           * An unprocessed version of the trigger's input parameter schema.
-           */
-          raw_schema: string;
-        }
+        export interface Manual {}
 
         export type Type = 'event_trigger' | 'manual';
       }
@@ -126,23 +127,23 @@ export namespace V2 {
   }
 }
 export namespace V2 {
-  export namespace Core {
+  export namespace Extend {
     export interface WorkflowRetrieveParams {}
   }
 }
 export namespace V2 {
-  export namespace Core {
+  export namespace Extend {
     export interface WorkflowListParams {
-      /**
-       * When retrieving Workflows, include only those with the specified status values.
-       * If not specified, all Workflows in active and inactive status are returned.
-       */
-      status: Array<WorkflowListParams.Status>;
-
       /**
        * Restrict page size to no more than this number.
        */
       limit?: number;
+
+      /**
+       * When retrieving Workflows, include only those with the specified status values.
+       * If not specified, all Workflows in active and inactive status are returned.
+       */
+      status?: Array<WorkflowListParams.Status>;
     }
 
     export namespace WorkflowListParams {
@@ -151,7 +152,7 @@ export namespace V2 {
   }
 }
 export namespace V2 {
-  export namespace Core {
+  export namespace Extend {
     export interface WorkflowInvokeParams {
       /**
        * Parameters used to invoke the Workflow Run.

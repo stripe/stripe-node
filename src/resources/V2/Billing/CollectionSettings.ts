@@ -213,9 +213,9 @@ export interface CollectionSetting {
   object: 'v2.billing.collection_setting';
 
   /**
-   * Either automatic, or send_invoice. When charging automatically, Stripe will attempt to pay this
-   * bill at the end of the period using the payment method attached to the payer profile. When sending an invoice,
-   * Stripe will email your payer profile an invoice with payment instructions.
+   * Either automatic, or send_invoice. When charging automatically, Stripe attempts to pay this
+   * bill at the end of the period using the payment method attached to the billing profile. When sending an invoice,
+   * Stripe emails your billing profile an invoice with payment instructions.
    * Defaults to automatic.
    */
   collection_method?: V2.Billing.CollectionSetting.CollectionMethod;
@@ -236,8 +236,8 @@ export interface CollectionSetting {
   email_delivery?: V2.Billing.CollectionSetting.EmailDelivery;
 
   /**
-   * The latest version of the current settings object. This will be
-   * Updated every time an attribute of the settings is updated.
+   * The latest version of the current settings object. This is
+   * updated every time an attribute of the settings is updated.
    */
   latest_version: string;
 
@@ -532,9 +532,9 @@ export namespace V2 {
   export namespace Billing {
     export interface CollectionSettingCreateParams {
       /**
-       * Either automatic, or send_invoice. When charging automatically, Stripe will attempt to pay this
-       * bill at the end of the period using the payment method attached to the payer profile. When sending an invoice,
-       * Stripe will email your payer profile an invoice with payment instructions.
+       * Either automatic, or send_invoice. When charging automatically, Stripe attempts to pay this
+       * bill at the end of the period using the payment method attached to the billing profile. When sending an invoice,
+       * Stripe emails your billing profile an invoice with payment instructions.
        * Defaults to automatic.
        */
       collection_method?: CollectionSettingCreateParams.CollectionMethod;
@@ -834,9 +834,9 @@ export namespace V2 {
   export namespace Billing {
     export interface CollectionSettingUpdateParams {
       /**
-       * Either automatic, or send_invoice. When charging automatically, Stripe will attempt to pay this
-       * bill at the end of the period using the payment method attached to the payer profile. When sending an invoice,
-       * Stripe will email your payer profile an invoice with payment instructions.
+       * Either automatic, or send_invoice. When charging automatically, Stripe attempts to pay this
+       * bill at the end of the period using the payment method attached to the billing profile. When sending an invoice,
+       * Stripe emails your billing profile an invoice with payment instructions.
        */
       collection_method?: CollectionSettingUpdateParams.CollectionMethod;
 
@@ -854,7 +854,7 @@ export namespace V2 {
 
       /**
        * Optionally change the live version of the CollectionSetting. Billing Cadences and other objects that refer to this
-       * CollectionSetting will use this version when no overrides are set. Providing `live_version = "latest"` will set the
+       * CollectionSetting uses this version when no overrides are set. Providing `live_version = "latest"` sets the
        * CollectionSetting's `live_version` to its latest version.
        */
       live_version?: string;

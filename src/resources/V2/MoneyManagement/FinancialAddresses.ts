@@ -107,6 +107,11 @@ export namespace V2 {
     export namespace FinancialAddress {
       export interface Credentials {
         /**
+         * The credentials of the Canadian Bank Account for the FinancialAddress. This contains unique banking details such as the account number, institution number, etc. of a Canadian bank account.
+         */
+        ca_bank_account?: Credentials.CaBankAccount;
+
+        /**
          * The credentials of the UK Bank Account for the FinancialAddress. This contains unique banking details such as the sort code, account number, etc. of a UK bank account.
          */
         gb_bank_account?: Credentials.GbBankAccount;
@@ -130,6 +135,39 @@ export namespace V2 {
       export type Status = 'active' | 'archived' | 'failed' | 'pending';
 
       export namespace Credentials {
+        export interface CaBankAccount {
+          /**
+           * The account holder name to be used during bank transfers.
+           */
+          account_holder_name: string;
+
+          /**
+           * The account number of the Canadian Bank Account.
+           */
+          account_number?: string;
+
+          /**
+           * The name of the Bank.
+           */
+          bank_name: string;
+
+          /**
+           * The institution number of the Canadian Bank Account.
+           */
+          institution_number: string;
+
+          /**
+           * The last four digits of the Canadian Bank Account number. This will always be returned.
+           * To view the full account number when retrieving or listing FinancialAddresses, use the `include` request parameter.
+           */
+          last4: string;
+
+          /**
+           * The transit number of the Canadian Bank Account.
+           */
+          transit_number: string;
+        }
+
         export interface GbBankAccount {
           /**
            * The account holder name to be used during bank transference.
@@ -187,6 +225,7 @@ export namespace V2 {
         }
 
         export type Type =
+          | 'ca_bank_account'
           | 'gb_bank_account'
           | 'sepa_bank_account'
           | 'us_bank_account';
@@ -253,6 +292,7 @@ export namespace V2 {
 
     export namespace FinancialAddressCreateParams {
       export type Type =
+        | 'ca_bank_account'
         | 'gb_bank_account'
         | 'sepa_bank_account'
         | 'us_bank_account';
@@ -277,6 +317,7 @@ export namespace V2 {
 
     export namespace FinancialAddressRetrieveParams {
       export type Include =
+        | 'credentials.ca_bank_account.account_number'
         | 'credentials.gb_bank_account.account_number'
         | 'credentials.sepa_bank_account.iban'
         | 'credentials.us_bank_account.account_number';
@@ -304,6 +345,7 @@ export namespace V2 {
 
     export namespace FinancialAddressListParams {
       export type Include =
+        | 'credentials.ca_bank_account.account_number'
         | 'credentials.gb_bank_account.account_number'
         | 'credentials.sepa_bank_account.iban'
         | 'credentials.us_bank_account.account_number';

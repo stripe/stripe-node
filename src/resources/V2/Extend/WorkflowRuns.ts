@@ -8,24 +8,30 @@ export class WorkflowRunResource extends StripeResource {
    * List all Workflow Runs.
    */
   list(
-    params: V2.Core.WorkflowRunListParams,
+    params?: V2.Extend.WorkflowRunListParams,
     options?: RequestOptions
   ): ApiListPromise<WorkflowRun> {
-    return this._makeRequest('GET', '/v2/core/workflow_runs', params, options, {
-      methodType: 'list',
-    }) as any;
+    return this._makeRequest(
+      'GET',
+      '/v2/extend/workflow_runs',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
   /**
    * Retrieves the details of a Workflow Run by ID.
    */
   retrieve(
     id: string,
-    params?: V2.Core.WorkflowRunRetrieveParams,
+    params?: V2.Extend.WorkflowRunRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<WorkflowRun>> {
     return this._makeRequest(
       'GET',
-      `/v2/core/workflow_runs/${id}`,
+      `/v2/extend/workflow_runs/${id}`,
       params,
       options
     ) as any;
@@ -40,7 +46,7 @@ export interface WorkflowRun {
   /**
    * String representing the object's type. Objects of the same type share the same value of the object field.
    */
-  object: 'v2.core.workflow_run';
+  object: 'v2.extend.workflow_run';
 
   /**
    * When the Workflow Run was created.
@@ -55,22 +61,22 @@ export interface WorkflowRun {
   /**
    * The current Workflow Run execution status.
    */
-  status: V2.Core.WorkflowRun.Status;
+  status: V2.Extend.WorkflowRun.Status;
 
   /**
    * Details about the Workflow Run's status transitions.
    */
-  status_details?: V2.Core.WorkflowRun.StatusDetails;
+  status_details?: V2.Extend.WorkflowRun.StatusDetails;
 
   /**
    * Summary information about the Workflow Run's status transitions.
    */
-  status_transitions: V2.Core.WorkflowRun.StatusTransitions;
+  status_transitions: V2.Extend.WorkflowRun.StatusTransitions;
 
   /**
    * A record of the trigger that launched this Workflow Run.
    */
-  trigger: V2.Core.WorkflowRun.Trigger;
+  trigger: V2.Extend.WorkflowRun.Trigger;
 
   /**
    * The Workflow this Run belongs to.
@@ -78,7 +84,7 @@ export interface WorkflowRun {
   workflow: string;
 }
 export namespace V2 {
-  export namespace Core {
+  export namespace Extend {
     export namespace WorkflowRun {
       export type Status = 'failed' | 'started' | 'succeeded';
 
@@ -136,16 +142,6 @@ export namespace V2 {
       export namespace StatusDetails {
         export interface Failed {
           /**
-           * If this Workflow Run failed during the processing of an action step, the step identifier.
-           */
-          action?: string;
-
-          /**
-           * Category of the failure result.
-           */
-          error_code: string;
-
-          /**
            * Optional details about the failure result.
            */
           error_message?: string;
@@ -153,21 +149,16 @@ export namespace V2 {
 
         export interface Started {}
 
-        export interface Succeeded {
-          /**
-           * Category of the success result.
-           */
-          status_code: string;
-
-          /**
-           * Optional details about the success result.
-           */
-          status_message?: string;
-        }
+        export interface Succeeded {}
       }
 
       export namespace Trigger {
         export interface EventTrigger {
+          /**
+           * The account that generated the triggering event.
+           */
+          context: string;
+
           /**
            * The Stripe event that triggered this Run.
            */
@@ -198,27 +189,27 @@ export namespace V2 {
   }
 }
 export namespace V2 {
-  export namespace Core {
+  export namespace Extend {
     export interface WorkflowRunRetrieveParams {}
   }
 }
 export namespace V2 {
-  export namespace Core {
+  export namespace Extend {
     export interface WorkflowRunListParams {
-      /**
-       * When retrieving Workflow Runs, include only those with the specified status values. If not specified, all Runs are returned.
-       */
-      status: Array<WorkflowRunListParams.Status>;
-
-      /**
-       * When retrieving Workflow Runs, include only those associated with the Workflows specified. If not specified, all Runs are returned.
-       */
-      workflow: Array<string>;
-
       /**
        * Restrict page size to no more than this number.
        */
       limit?: number;
+
+      /**
+       * When retrieving Workflow Runs, include only those with the specified status values. If not specified, all Runs are returned.
+       */
+      status?: Array<WorkflowRunListParams.Status>;
+
+      /**
+       * When retrieving Workflow Runs, include only those associated with the Workflows specified. If not specified, all Runs are returned.
+       */
+      workflow?: Array<string>;
     }
 
     export namespace WorkflowRunListParams {

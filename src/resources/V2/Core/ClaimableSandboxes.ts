@@ -36,6 +36,22 @@ export class ClaimableSandboxResource extends StripeResource {
       options
     ) as any;
   }
+  /**
+   * Renew the claimable sandbox onboarding link. This will invalidate any existing onboarding links.
+   * The endpoint only works on a claimable sandbox with status `unclaimed` or `claimed`.
+   */
+  renewOnboardingLink(
+    id: string,
+    params?: V2.Core.ClaimableSandboxRenewOnboardingLinkParams,
+    options?: RequestOptions
+  ): Promise<Response<ClaimableSandbox>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/claimable_sandboxes/${id}/renew_onboarding_link`,
+      params,
+      options
+    ) as any;
+  }
 }
 export interface ClaimableSandbox {
   /**
@@ -49,10 +65,9 @@ export interface ClaimableSandbox {
   object: 'v2.core.claimable_sandbox';
 
   /**
-   * URL for user to claim sandbox into their existing Stripe account.
-   * The value will be null if the sandbox status is `claimed` or `expired`.
+   * The app channel that will be used when pre-installing your app on the claimable sandbox.
    */
-  claim_url?: string;
+  app_channel: V2.Core.ClaimableSandbox.AppChannel;
 
   /**
    * The timestamp the sandbox was claimed. The value will be null if the sandbox status is not `claimed`.
@@ -75,6 +90,17 @@ export interface ClaimableSandbox {
   livemode: boolean;
 
   /**
+   * Details about the onboarding link.
+   */
+  onboarding_link_details: V2.Core.ClaimableSandbox.OnboardingLinkDetails;
+
+  /**
+   * Details about the livemode owner account of the sandbox.
+   * This will be null until the sandbox is claimed.
+   */
+  owner_details?: V2.Core.ClaimableSandbox.OwnerDetails;
+
+  /**
    * Values prefilled during the creation of the sandbox. When a user claims the sandbox, they will be able to update these values.
    */
   prefill: V2.Core.ClaimableSandbox.Prefill;
@@ -85,13 +111,47 @@ export interface ClaimableSandbox {
   sandbox_details: V2.Core.ClaimableSandbox.SandboxDetails;
 
   /**
-   * Status of the sandbox. One of `unclaimed`, `expired`, `claimed`.
+   * Status of the sandbox.
    */
   status: V2.Core.ClaimableSandbox.Status;
 }
 export namespace V2 {
   export namespace Core {
     export namespace ClaimableSandbox {
+      export type AppChannel = 'public' | 'testing';
+
+      export interface OnboardingLinkDetails {
+        /**
+         * The timestamp the onboarding link expires.
+         */
+        expires_at: string;
+
+        /**
+         * The URL the user will be redirected to if the onboarding link is expired or invalid.
+         * The URL specified should attempt to generate a new onboarding link,
+         * and re-direct the user to this new onboarding link so that they can proceed with the onboarding flow.
+         */
+        refresh_url: string;
+
+        /**
+         * URL that will redirect the user to either claim or onboard the claimable sandbox depending on its status.
+         */
+        url: string;
+      }
+
+      export interface OwnerDetails {
+        /**
+         * The ID of the livemode Stripe account that owns the sandbox.
+         * This field is only set when owner_details.app_install_status is `installed`.
+         */
+        account?: string;
+
+        /**
+         * Indicates whether the platform app is installed on the sandbox's livemode owner account.
+         */
+        app_install_status: OwnerDetails.AppInstallStatus;
+      }
+
       export interface Prefill {
         /**
          * Country in which the account holder resides, or in which the business is legally established.
@@ -121,15 +181,16 @@ export namespace V2 {
          * Keys that can be used to set up an integration for this sandbox and operate on the account. This will be present only in the create response, and will be null in subsequent retrieve responses.
          */
         api_keys?: SandboxDetails.ApiKeys;
-
-        /**
-         * The livemode sandbox Stripe account ID. This field is only set if the user activates their sandbox
-         * and chooses to install your platform's Stripe App in their live account.
-         */
-        owner_account?: string;
       }
 
-      export type Status = 'claimed' | 'expired' | 'unclaimed';
+      export type Status = 'claimed' | 'expired' | 'live' | 'unclaimed';
+
+      export namespace OwnerDetails {
+        export type AppInstallStatus =
+          | 'installed'
+          | 'pending_install'
+          | 'pending_onboarding';
+      }
 
       export namespace SandboxDetails {
         export interface ApiKeys {
@@ -162,12 +223,32 @@ export namespace V2 {
       enable_mcp_access: boolean;
 
       /**
+       * Details about the onboarding link.
+       */
+      onboarding_link_details: ClaimableSandboxCreateParams.OnboardingLinkDetails;
+
+      /**
        * Values that are prefilled when a user claims the sandbox. When a user claims the sandbox, they will be able to update these values.
        */
       prefill: ClaimableSandboxCreateParams.Prefill;
+
+      /**
+       * The app channel that will be used when pre-installing your app on the claimable sandbox.
+       * This field defaults to `public` if omitted.
+       */
+      app_channel?: ClaimableSandboxCreateParams.AppChannel;
     }
 
     export namespace ClaimableSandboxCreateParams {
+      export interface OnboardingLinkDetails {
+        /**
+         * The URL the user will be redirected to if the onboarding link is expired or invalid.
+         * The URL specified should attempt to generate a new onboarding link,
+         * and re-direct the user to this new onboarding link so that they can proceed with the onboarding flow.
+         */
+        refresh_url: string;
+      }
+
       export interface Prefill {
         /**
          * Country in which the account holder resides, or in which the business is legally established.
@@ -186,11 +267,35 @@ export namespace V2 {
          */
         name?: string;
       }
+
+      export type AppChannel = 'public' | 'testing';
     }
   }
 }
 export namespace V2 {
   export namespace Core {
     export interface ClaimableSandboxRetrieveParams {}
+  }
+}
+export namespace V2 {
+  export namespace Core {
+    export interface ClaimableSandboxRenewOnboardingLinkParams {
+      /**
+       * Details about the onboarding link.
+       * If omitted, the existing onboarding link details will be reused.
+       */
+      onboarding_link_details?: ClaimableSandboxRenewOnboardingLinkParams.OnboardingLinkDetails;
+    }
+
+    export namespace ClaimableSandboxRenewOnboardingLinkParams {
+      export interface OnboardingLinkDetails {
+        /**
+         * The URL the user will be redirected to if the onboarding link is expired or invalid.
+         * The URL specified should attempt to generate a new onboarding link,
+         * and re-direct the user to this new onboarding link so that they can proceed with the onboarding flow.
+         */
+        refresh_url: string;
+      }
+    }
   }
 }
