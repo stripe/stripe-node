@@ -1162,7 +1162,7 @@ export class SubscriptionResource extends StripeResource {
     ) as any;
   }
   /**
-   * Initiates resumption of a paused subscription, optionally resetting the billing cycle anchor and creating prorations. If no resumption invoice is generated, the subscription becomes active immediately. If a resumption invoice is generated, the subscription remains paused until the invoice is paid or marked uncollectible. If the invoice is not paid by the expiration date, it is voided and the subscription remains paused.
+   * Initiates resumption of a paused subscription, optionally resetting the billing cycle anchor and creating prorations. If a resumption invoice is generated, it must be paid or marked uncollectible before the subscription will be unpaused. If payment succeeds the subscription will become active, and if payment fails the subscription will be past_due. The resumption invoice will void automatically if not paid by the expiration date.
    */
   resume(
     id: string,
@@ -1473,7 +1473,7 @@ export interface Subscription {
   /**
    * Settings for Managed Payments for this Subscription and resulting [Invoices](https://docs.stripe.com/api/invoices/object) and [PaymentIntents](https://docs.stripe.com/api/payment_intents/object).
    */
-  managed_payments?: Subscription.ManagedPayments | null;
+  managed_payments: Subscription.ManagedPayments | null;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -2007,6 +2007,11 @@ export namespace Subscription {
       bizum?: PaymentMethodOptions.Bizum | null;
 
       /**
+       * This sub-hash contains details about the Blik payment method options to pass to invoices created by the subscription.
+       */
+      blik?: PaymentMethodOptions.Blik | null;
+
+      /**
        * This sub-hash contains details about the Card payment method options to pass to invoices created by the subscription.
        */
       card: PaymentMethodOptions.Card | null;
@@ -2039,7 +2044,7 @@ export namespace Subscription {
       /**
        * This sub-hash contains details about the Pix payment method options to pass to invoices created by the subscription.
        */
-      pix?: PaymentMethodOptions.Pix | null;
+      pix: PaymentMethodOptions.Pix | null;
 
       /**
        * This sub-hash contains details about the SEPA Direct Debit payment method options to pass to invoices created by the subscription.
@@ -2049,7 +2054,7 @@ export namespace Subscription {
       /**
        * This sub-hash contains details about the UPI payment method options to pass to invoices created by the subscription.
        */
-      upi?: PaymentMethodOptions.Upi | null;
+      upi: PaymentMethodOptions.Upi | null;
 
       /**
        * This sub-hash contains details about the ACH direct debit payment method options to pass to invoices created by the subscription.
@@ -2067,6 +2072,7 @@ export namespace Subscription {
       | 'bacs_debit'
       | 'bancontact'
       | 'bizum'
+      | 'blik'
       | 'boleto'
       | 'card'
       | 'cashapp'
@@ -2129,6 +2135,10 @@ export namespace Subscription {
 
       export interface Bizum {
         mandate_options?: Bizum.MandateOptions;
+      }
+
+      export interface Blik {
+        mandate_options?: Blik.MandateOptions;
       }
 
       export interface Card {
@@ -2223,6 +2233,15 @@ export namespace Subscription {
            * Indicates the mandate amount type.
            */
           amount_type?: 'fixed';
+        }
+      }
+
+      export namespace Blik {
+        export interface MandateOptions {
+          /**
+           * Date when the mandate expires and no further payments will be charged. If not provided, the mandate will be set to be indefinite.
+           */
+          expires_after: number | null;
         }
       }
 
@@ -3535,6 +3554,11 @@ export namespace SubscriptionCreateParams {
       bizum?: Emptyable<PaymentMethodOptions.Bizum>;
 
       /**
+       * This sub-hash contains details about the Blik payment method options to pass to the invoice's PaymentIntent.
+       */
+      blik?: Emptyable<PaymentMethodOptions.Blik>;
+
+      /**
        * This sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
        */
       card?: Emptyable<PaymentMethodOptions.Card>;
@@ -3595,6 +3619,7 @@ export namespace SubscriptionCreateParams {
       | 'bacs_debit'
       | 'bancontact'
       | 'bizum'
+      | 'blik'
       | 'boleto'
       | 'card'
       | 'cashapp'
@@ -3663,6 +3688,13 @@ export namespace SubscriptionCreateParams {
          * Configuration options for setting up a mandate
          */
         mandate_options?: Bizum.MandateOptions;
+      }
+
+      export interface Blik {
+        /**
+         * Configuration options for setting up a mandate
+         */
+        mandate_options?: Blik.MandateOptions;
       }
 
       export interface Card {
@@ -3778,6 +3810,15 @@ export namespace SubscriptionCreateParams {
         }
       }
 
+      export namespace Blik {
+        export interface MandateOptions {
+          /**
+           * Date when the mandate expires and no further payments will be charged. If not provided, the mandate will be set to be indefinite.
+           */
+          expires_after?: number;
+        }
+      }
+
       export namespace Card {
         export interface MandateOptions {
           /**
@@ -3888,7 +3929,7 @@ export namespace SubscriptionCreateParams {
           end_date?: string;
 
           /**
-           * Schedule at which the future payments will be charged. Defaults to `monthly`.
+           * Schedule at which the future payments will be charged. Defaults to the subscription servicing interval.
            */
           payment_schedule?: MandateOptions.PaymentSchedule;
         }
@@ -5048,6 +5089,11 @@ export namespace SubscriptionUpdateParams {
       bizum?: Emptyable<PaymentMethodOptions.Bizum>;
 
       /**
+       * This sub-hash contains details about the Blik payment method options to pass to the invoice's PaymentIntent.
+       */
+      blik?: Emptyable<PaymentMethodOptions.Blik>;
+
+      /**
        * This sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
        */
       card?: Emptyable<PaymentMethodOptions.Card>;
@@ -5108,6 +5154,7 @@ export namespace SubscriptionUpdateParams {
       | 'bacs_debit'
       | 'bancontact'
       | 'bizum'
+      | 'blik'
       | 'boleto'
       | 'card'
       | 'cashapp'
@@ -5176,6 +5223,13 @@ export namespace SubscriptionUpdateParams {
          * Configuration options for setting up a mandate
          */
         mandate_options?: Bizum.MandateOptions;
+      }
+
+      export interface Blik {
+        /**
+         * Configuration options for setting up a mandate
+         */
+        mandate_options?: Blik.MandateOptions;
       }
 
       export interface Card {
@@ -5291,6 +5345,15 @@ export namespace SubscriptionUpdateParams {
         }
       }
 
+      export namespace Blik {
+        export interface MandateOptions {
+          /**
+           * Date when the mandate expires and no further payments will be charged. If not provided, the mandate will be set to be indefinite.
+           */
+          expires_after?: number;
+        }
+      }
+
       export namespace Card {
         export interface MandateOptions {
           /**
@@ -5401,7 +5464,7 @@ export namespace SubscriptionUpdateParams {
           end_date?: string;
 
           /**
-           * Schedule at which the future payments will be charged. Defaults to `monthly`.
+           * Schedule at which the future payments will be charged. Defaults to the subscription servicing interval.
            */
           payment_schedule?: MandateOptions.PaymentSchedule;
         }

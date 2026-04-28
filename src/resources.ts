@@ -70,6 +70,7 @@ import {InboundTransferResource as TreasuryInboundTransfers} from './resources/T
 import {InboundTransferResource as V2MoneyManagementInboundTransfers} from './resources/V2/MoneyManagement/InboundTransfers.js';
 import {InstitutionResource as FinancialConnectionsInstitutions} from './resources/FinancialConnections/Institutions.js';
 import {IntentResource as V2BillingIntents} from './resources/V2/Billing/Intents.js';
+import {IssuedTokenResource as SharedPaymentIssuedTokens} from './resources/SharedPayment/IssuedTokens.js';
 import {IssuingAuthorizationEvaluationResource as RadarIssuingAuthorizationEvaluations} from './resources/Radar/IssuingAuthorizationEvaluations.js';
 import {LicenseFeeResource as V2BillingLicenseFees} from './resources/V2/Billing/LicenseFees.js';
 import {LicensedItemResource as V2BillingLicensedItems} from './resources/V2/Billing/LicensedItems.js';
@@ -322,6 +323,7 @@ export const Reserve = resourceNamespace('reserve', {
 });
 export const SharedPayment = resourceNamespace('sharedPayment', {
   GrantedTokens: SharedPaymentGrantedTokens,
+  IssuedTokens: SharedPaymentIssuedTokens,
 });
 export const Sigma = resourceNamespace('sigma', {
   ScheduledQueryRuns: SigmaScheduledQueryRuns,

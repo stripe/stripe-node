@@ -3,7 +3,7 @@
 import {StripeResource} from '../../StripeResource.js';
 import {RedactionJobValidationError} from './RedactionJobValidationErrors.js';
 import {PaginationParams} from '../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
+import {RequestOptions, ApiListPromise, Response, ApiList} from '../../lib.js';
 
 export class RedactionJobResource extends StripeResource {
   /**
@@ -178,6 +178,11 @@ export interface RedactionJob {
    * Validation behavior determines how a job validates objects for redaction eligibility. Default is `error`.
    */
   validation_behavior: Privacy.RedactionJob.ValidationBehavior | null;
+
+  /**
+   * The first 10 validation errors for the current validation attempt. Use the validation errors list endpoint to paginate through the full list.
+   */
+  validation_errors?: ApiList<RedactionJobValidationError>;
 }
 export namespace Privacy {
   export namespace RedactionJob {

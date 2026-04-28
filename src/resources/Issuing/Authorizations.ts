@@ -975,6 +975,11 @@ export interface Authorization {
   card: Card;
 
   /**
+   * Whether the card was present at the point of sale for the authorization.
+   */
+  card_presence: Issuing.Authorization.CardPresence | null;
+
+  /**
    * The cardholder to whom this authorization belongs.
    */
   cardholder: string | Cardholder | null;
@@ -1100,6 +1105,8 @@ export namespace Issuing {
       | 'keyed_in'
       | 'online'
       | 'swipe';
+
+    export type CardPresence = 'not_present' | 'present';
 
     export interface CryptoTransaction {
       /**

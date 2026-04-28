@@ -572,7 +572,7 @@ export interface PaymentLink {
   /**
    * Settings for Managed Payments for this Payment Link and resulting [CheckoutSessions](https://docs.stripe.com/api/checkout/sessions/object), [PaymentIntents](https://docs.stripe.com/api/payment_intents/object), [Invoices](https://docs.stripe.com/api/invoices/object), and [Subscriptions](https://docs.stripe.com/api/subscriptions/object).
    */
-  managed_payments?: PaymentLink.ManagedPayments | null;
+  managed_payments: PaymentLink.ManagedPayments | null;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -871,6 +871,7 @@ export namespace PaymentLink {
     | 'sepa_debit'
     | 'shopeepay'
     | 'sofort'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -2027,6 +2028,7 @@ export namespace PaymentLinkCreateParams {
     | 'sepa_debit'
     | 'shopeepay'
     | 'sofort'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -3218,6 +3220,7 @@ export namespace PaymentLinkUpdateParams {
     | 'sepa_debit'
     | 'shopeepay'
     | 'sofort'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'

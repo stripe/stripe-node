@@ -216,6 +216,8 @@ export interface PaymentMethodConfiguration {
 
   sofort?: PaymentMethodConfiguration.Sofort;
 
+  sunbit?: PaymentMethodConfiguration.Sunbit;
+
   swish?: PaymentMethodConfiguration.Swish;
 
   twint?: PaymentMethodConfiguration.Twint;
@@ -713,6 +715,15 @@ export namespace PaymentMethodConfiguration {
     available: boolean;
 
     display_preference: Sofort.DisplayPreference;
+  }
+
+  export interface Sunbit {
+    /**
+     * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+     */
+    available: boolean;
+
+    display_preference: Sunbit.DisplayPreference;
   }
 
   export interface Swish {
@@ -2119,6 +2130,31 @@ export namespace PaymentMethodConfiguration {
     }
   }
 
+  export namespace Sunbit {
+    export interface DisplayPreference {
+      /**
+       * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+       */
+      overridable: boolean | null;
+
+      /**
+       * The account's display preference.
+       */
+      preference: DisplayPreference.Preference;
+
+      /**
+       * The effective display preference value.
+       */
+      value: DisplayPreference.Value;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on';
+
+      export type Value = 'off' | 'on';
+    }
+  }
+
   export namespace Swish {
     export interface DisplayPreference {
       /**
@@ -2566,6 +2602,11 @@ export interface PaymentMethodConfigurationCreateParams {
   sofort?: PaymentMethodConfigurationCreateParams.Sofort;
 
   /**
+   * Sunbit is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method where customers choose to pay in 3, 6, or 12 installments. Customers are redirected from your website or app, authorize the payment with Sunbit, then return to your website or app. You get [immediate notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of whether the payment succeeded or failed.
+   */
+  sunbit?: PaymentMethodConfigurationCreateParams.Sunbit;
+
+  /**
    * Swish is a [real-time](https://docs.stripe.com/payments/real-time) payment method popular in Sweden. It allows customers to [authenticate and approve](https://docs.stripe.com/payments/payment-methods#customer-actions) payments using the Swish mobile app and the Swedish BankID mobile app. Check this [page](https://docs.stripe.com/payments/swish) for more details.
    */
   swish?: PaymentMethodConfigurationCreateParams.Swish;
@@ -2986,6 +3027,13 @@ export namespace PaymentMethodConfigurationCreateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: Sofort.DisplayPreference;
+  }
+
+  export interface Sunbit {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Sunbit.DisplayPreference;
   }
 
   export interface Swish {
@@ -3758,6 +3806,19 @@ export namespace PaymentMethodConfigurationCreateParams {
     }
   }
 
+  export namespace Sunbit {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on';
+    }
+  }
+
   export namespace Swish {
     export interface DisplayPreference {
       /**
@@ -4137,6 +4198,11 @@ export interface PaymentMethodConfigurationUpdateParams {
    * Stripe users in Europe and the United States can use the [Payment Intents API](https://stripe.com/docs/payments/payment-intents)—a single integration path for creating payments using any supported method—to accept [Sofort](https://www.sofort.com/) payments from customers. Check this [page](https://docs.stripe.com/payments/sofort) for more details.
    */
   sofort?: PaymentMethodConfigurationUpdateParams.Sofort;
+
+  /**
+   * Sunbit is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method where customers choose to pay in 3, 6, or 12 installments. Customers are redirected from your website or app, authorize the payment with Sunbit, then return to your website or app. You get [immediate notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of whether the payment succeeded or failed.
+   */
+  sunbit?: PaymentMethodConfigurationUpdateParams.Sunbit;
 
   /**
    * Swish is a [real-time](https://docs.stripe.com/payments/real-time) payment method popular in Sweden. It allows customers to [authenticate and approve](https://docs.stripe.com/payments/payment-methods#customer-actions) payments using the Swish mobile app and the Swedish BankID mobile app. Check this [page](https://docs.stripe.com/payments/swish) for more details.
@@ -4561,6 +4627,13 @@ export namespace PaymentMethodConfigurationUpdateParams {
     display_preference?: Sofort.DisplayPreference;
   }
 
+  export interface Sunbit {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Sunbit.DisplayPreference;
+  }
+
   export interface Swish {
     /**
      * Whether or not the payment method should be displayed.
@@ -5319,6 +5392,19 @@ export namespace PaymentMethodConfigurationUpdateParams {
   }
 
   export namespace Sofort {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on';
+    }
+  }
+
+  export namespace Sunbit {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.
