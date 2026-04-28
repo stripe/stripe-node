@@ -6422,6 +6422,31 @@ describe('Generated tests', function() {
     expect(usBankAccount).not.to.be.null;
   });
 
+  it('test_v2_data_analytics_metric_query_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/data/analytics/metric_query',
+        response:
+          '{"object":"v2.data.analytics.metric_query_result","created":"1970-01-12T21:42:34.472Z","data":[{"dimensions":{"key":"dimensions"},"id":"obj_123","results":[{"metric":"metric","name":"name","value":"111972721"}],"timestamp":"1970-01-01T15:18:46.294Z"}],"id":"obj_123","livemode":true,"refreshed_at":"1970-01-01T11:25:45.896Z"}',
+      },
+    ]);
+    const metricQueryResult = await stripe.v2.data.analytics.metricQueries.create(
+      {
+        ends_at: '1970-01-19T14:12:09.638Z',
+        granularity: 'week',
+        metrics: [
+          {
+            id: 'obj_123',
+            name: 'name',
+          },
+        ],
+        starts_at: '1970-01-25T15:13:01.215Z',
+      }
+    );
+    expect(metricQueryResult).not.to.be.null;
+  });
+
   it('test_v2_data_reporting_query_run_post', async function() {
     const stripe = testUtils.createMockClient([
       {
@@ -6808,7 +6833,7 @@ describe('Generated tests', function() {
     const financialAddress = await stripe.v2.moneyManagement.financialAddresses.create(
       {
         financial_account: 'financial_account',
-        type: 'sepa_bank_account',
+        type: 'ca_bank_account',
       }
     );
     expect(financialAddress).not.to.be.null;
@@ -7491,9 +7516,6 @@ describe('Generated tests', function() {
         },
         cadence: 'unscheduled',
         customer: 'customer',
-        metadata: {
-          key: 'metadata',
-        },
       }
     );
     expect(offSessionPayment).not.to.be.null;
@@ -7539,12 +7561,7 @@ describe('Generated tests', function() {
       },
     ]);
     const offSessionPayment = await stripe.v2.payments.offSessionPayments.capture(
-      'id_123',
-      {
-        metadata: {
-          key: 'metadata',
-        },
-      }
+      'id_123'
     );
     expect(offSessionPayment).not.to.be.null;
   });
@@ -8111,7 +8128,7 @@ describe('Generated tests', function() {
     try {
       await realStripe.v2.moneyManagement.financialAddresses.create({
         financial_account: 'financial_account',
-        type: 'sepa_bank_account',
+        type: 'ca_bank_account',
       });
       expect.fail('Expected error');
     } catch (err) {

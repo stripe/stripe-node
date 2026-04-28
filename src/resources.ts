@@ -86,6 +86,7 @@ import {MeterEventResource as V2BillingMeterEvents} from './resources/V2/Billing
 import {MeterUsageResource as BillingAnalyticsMeterUsage} from './resources/Billing/Analytics/MeterUsage.js';
 import {MeteredItemResource as V2BillingMeteredItems} from './resources/V2/Billing/MeteredItems.js';
 import {MeterResource as BillingMeters} from './resources/Billing/Meters.js';
+import {MetricQueryResource as V2DataAnalyticsMetricQuery} from './resources/V2/Data/Analytics/MetricQuery.js';
 import {MoneyManagementResource as V2TestHelpersMoneyManagement} from './resources/V2/TestHelpers/MoneyManagement.js';
 import {OffSessionPaymentResource as V2PaymentsOffSessionPayments} from './resources/V2/Payments/OffSessionPayments.js';
 import {OnboardingLinkResource as TerminalOnboardingLinks} from './resources/Terminal/OnboardingLinks.js';
@@ -430,6 +431,9 @@ export const V2 = resourceNamespace('v2', {
     }),
   }),
   Data: resourceNamespace('data', {
+    Analytics: resourceNamespace('analytics', {
+      MetricQuery: V2DataAnalyticsMetricQuery,
+    }),
     Reporting: resourceNamespace('reporting', {
       QueryRuns: V2DataReportingQueryRuns,
     }),

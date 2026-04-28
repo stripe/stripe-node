@@ -112,9 +112,19 @@ export namespace V2 {
         ca_bank_account?: Credentials.CaBankAccount;
 
         /**
+         * The credentials of the crypto wallet for the Financial Address. This contains unique details such as the blockchain network, wallet address, and memo of a crypto wallet.
+         */
+        crypto_wallet?: Credentials.CryptoWallet;
+
+        /**
          * The credentials of the UK Bank Account for the FinancialAddress. This contains unique banking details such as the sort code, account number, etc. of a UK bank account.
          */
         gb_bank_account?: Credentials.GbBankAccount;
+
+        /**
+         * The credentials of the Mexican Bank Account for the FinancialAddress. This contains unique banking details such as the CLABE and account holder name of a Mexican bank account.
+         */
+        mx_bank_account?: Credentials.MxBankAccount;
 
         /**
          * The credentials of the SEPA Bank Account for the FinancialAddress. This contains unique banking details such as the IBAN, BIC, etc. of a SEPA bank account.
@@ -168,6 +178,23 @@ export namespace V2 {
           transit_number: string;
         }
 
+        export interface CryptoWallet {
+          /**
+           * The blockchain address of the crypto wallet.
+           */
+          address: string;
+
+          /**
+           * Required if the network supports memos (e.g. Stellar).
+           */
+          memo?: string;
+
+          /**
+           * The blockchain network of the crypto wallet.
+           */
+          network: CryptoWallet.Network;
+        }
+
         export interface GbBankAccount {
           /**
            * The account holder name to be used during bank transference.
@@ -189,6 +216,18 @@ export namespace V2 {
            * The sort code of the UK Bank Account.
            */
           sort_code: string;
+        }
+
+        export interface MxBankAccount {
+          /**
+           * The account holder name to be used during bank transfers.
+           */
+          account_holder_name: string;
+
+          /**
+           * The CLABE (Clave Bancaria Estandarizada) of the Mexican Bank Account.
+           */
+          clabe: string;
         }
 
         export interface SepaBankAccount {
@@ -226,7 +265,9 @@ export namespace V2 {
 
         export type Type =
           | 'ca_bank_account'
+          | 'crypto_wallet'
           | 'gb_bank_account'
+          | 'mx_bank_account'
           | 'sepa_bank_account'
           | 'us_bank_account';
 
@@ -267,6 +308,19 @@ export namespace V2 {
            */
           swift_code?: string;
         }
+
+        export namespace CryptoWallet {
+          export type Network =
+            | 'arbitrum'
+            | 'avalanche_c_chain'
+            | 'base'
+            | 'ethereum'
+            | 'optimism'
+            | 'polygon'
+            | 'solana'
+            | 'stellar'
+            | 'tempo';
+        }
       }
     }
   }
@@ -285,23 +339,55 @@ export namespace V2 {
       type: FinancialAddressCreateParams.Type;
 
       /**
+       * Properties needed to create a FinancialAddress for an FA with USDC currency.
+       */
+      crypto_properties?: FinancialAddressCreateParams.CryptoProperties;
+
+      /**
        * Optional SEPA Bank account options, used to configure the type of SEPA Bank account to create, such as the originating country.
        */
       sepa_bank_account?: FinancialAddressCreateParams.SepaBankAccount;
+
+      /**
+       * Open Enum. The currency the FinancialAddress settles into the FinancialAccount. Currently, only the `usd`, `gbp` and `usdc` values are supported.
+       */
+      settlement_currency?: string;
     }
 
     export namespace FinancialAddressCreateParams {
       export type Type =
         | 'ca_bank_account'
+        | 'crypto_wallet'
         | 'gb_bank_account'
+        | 'mx_bank_account'
         | 'sepa_bank_account'
         | 'us_bank_account';
+
+      export interface CryptoProperties {
+        /**
+         * The blockchain network of the crypto wallet.
+         */
+        network: CryptoProperties.Network;
+      }
 
       export interface SepaBankAccount {
         /**
          * The originating country of the SEPA Bank account.
          */
         country: string;
+      }
+
+      export namespace CryptoProperties {
+        export type Network =
+          | 'arbitrum'
+          | 'avalanche_c_chain'
+          | 'base'
+          | 'ethereum'
+          | 'optimism'
+          | 'polygon'
+          | 'solana'
+          | 'stellar'
+          | 'tempo';
       }
     }
   }

@@ -76,6 +76,11 @@ export interface ReceivedCredit {
   created: string;
 
   /**
+   * This object stores details about the originating crypto transaction that resulted in the ReceivedCredit. Present if `type` field value is `crypto_wallet_transfer`.
+   */
+  crypto_wallet_transfer?: V2.MoneyManagement.ReceivedCredit.CryptoWalletTransfer;
+
+  /**
    * Freeform string set by originator of the ReceivedCredit.
    */
   description?: string;
@@ -167,6 +172,11 @@ export namespace V2 {
         ca_bank_account?: BankTransfer.CaBankAccount;
 
         /**
+         * Hash containing the transaction bank details. Present if `origin_type` field value is `eu_bank_account`.
+         */
+        eu_bank_account?: BankTransfer.EuBankAccount;
+
+        /**
          * Financial Address on which funds for ReceivedCredit were received.
          */
         financial_address: string;
@@ -175,6 +185,11 @@ export namespace V2 {
          * Hash containing the transaction bank details. Present if `origin_type` field value is `gb_bank_account`.
          */
         gb_bank_account?: BankTransfer.GbBankAccount;
+
+        /**
+         * Hash containing the transaction bank details. Present if  `origin_type` field value is `mx_bank_account`.
+         */
+        mx_bank_account?: BankTransfer.MxBankAccount;
 
         /**
          * Open Enum. Indicates the origin of source from which external funds originated from.
@@ -212,6 +227,28 @@ export namespace V2 {
          * Hash containing information about the Refund that triggered this credit.
          */
         refund?: CardSpend.Refund;
+      }
+
+      export interface CryptoWalletTransfer {
+        /**
+         * Hash containing the transaction crypto wallet details.
+         */
+        crypto_wallet: CryptoWalletTransfer.CryptoWallet;
+
+        /**
+         * Financial Address on which funds for ReceivedCredit were received.
+         */
+        financial_address: string;
+
+        /**
+         * Open Enum. Indicates the origin of source from which external funds originated from.
+         */
+        origin_type: CryptoWalletTransfer.OriginType;
+
+        /**
+         * Freeform string set by originator of the external ReceivedCredit.
+         */
+        statement_descriptor?: string;
       }
 
       export type Status = 'failed' | 'pending' | 'returned' | 'succeeded';
@@ -259,6 +296,7 @@ export namespace V2 {
         | 'balance_transfer'
         | 'bank_transfer'
         | 'card_spend'
+        | 'crypto_wallet_transfer'
         | 'external_credit'
         | 'stripe_balance_payment';
 
@@ -294,6 +332,33 @@ export namespace V2 {
           network: 'acss';
         }
 
+        export interface EuBankAccount {
+          /**
+           * The account holder name of the bank account the transfer was received from.
+           */
+          account_holder_name?: string;
+
+          /**
+           * The bank name the transfer was received from.
+           */
+          bank_name?: string;
+
+          /**
+           * The bic of the account that originated the transfer.
+           */
+          bic?: string;
+
+          /**
+           * The last 4 digits of the account number that originated the transfer.
+           */
+          last4?: string;
+
+          /**
+           * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
+           */
+          network: 'sepa';
+        }
+
         export interface GbBankAccount {
           /**
            * The bank name the transfer was received from.
@@ -321,9 +386,34 @@ export namespace V2 {
           sort_code?: string;
         }
 
+        export interface MxBankAccount {
+          /**
+           * The account holder name of the bank account the transfer was received from.
+           */
+          account_holder_name?: string;
+
+          /**
+           * The bank name the transfer was received from.
+           */
+          bank_name?: string;
+
+          /**
+           * The last 4 digits of the account number that originated the transfer.
+           */
+          last4?: string;
+
+          /**
+           * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
+           */
+          network: 'spei';
+        }
+
         export type OriginType =
           | 'ca_bank_account'
+          | 'crypto_wallet'
+          | 'eu_bank_account'
           | 'gb_bank_account'
+          | 'mx_bank_account'
           | 'sepa_bank_account'
           | 'us_bank_account';
 
@@ -399,6 +489,47 @@ export namespace V2 {
            * The reference to the v1 issuing transaction ID.
            */
           issuing_transaction_v1: string;
+        }
+      }
+
+      export namespace CryptoWalletTransfer {
+        export interface CryptoWallet {
+          /**
+           * The address of the wallet the crypto was received from.
+           */
+          address: string;
+
+          /**
+           * A memo also for identifying the recipient for memo-based blockchains (e.g., Stellar),.
+           */
+          memo: string;
+
+          /**
+           * The network the crypto was received from.
+           */
+          network: CryptoWallet.Network;
+        }
+
+        export type OriginType =
+          | 'ca_bank_account'
+          | 'crypto_wallet'
+          | 'eu_bank_account'
+          | 'gb_bank_account'
+          | 'mx_bank_account'
+          | 'sepa_bank_account'
+          | 'us_bank_account';
+
+        export namespace CryptoWallet {
+          export type Network =
+            | 'arbitrum'
+            | 'avalanche_c_chain'
+            | 'base'
+            | 'ethereum'
+            | 'optimism'
+            | 'polygon'
+            | 'solana'
+            | 'stellar'
+            | 'tempo';
         }
       }
 

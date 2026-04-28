@@ -5,7 +5,7 @@ import {RequestOptions, Response} from '../../../lib.js';
 
 export class BusinessProfileResource extends StripeResource {
   /**
-   * Retrieve the Stripe profile associated with the requesting merchant and livemode.
+   * Retrieve the Stripe business profile associated with the requesting merchant and livemode.
    */
   me(
     params?: V2.Network.BusinessProfileMeParams,
@@ -19,7 +19,7 @@ export class BusinessProfileResource extends StripeResource {
     ) as any;
   }
   /**
-   * Retrieve a Stripe profile by its Network ID.
+   * Retrieve a Stripe business profile by its Network ID.
    */
   retrieve(
     id: string,
@@ -56,7 +56,7 @@ export interface BusinessProfile {
   description?: string;
 
   /**
-   * The display name of the Stripe profile.
+   * The display name of the Stripe business profile.
    */
   display_name: string;
 
@@ -71,7 +71,7 @@ export interface BusinessProfile {
   url?: string;
 
   /**
-   * The username of the Stripe profile.
+   * The username of the Stripe business profile.
    */
   username: string;
 }
