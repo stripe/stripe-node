@@ -63,7 +63,7 @@ export class AccountResource extends StripeResource {
     }) as any;
   }
   /**
-   * An Account is a representation of a company, individual or other entity that a user interacts with. Accounts contain identifying information about the entity, and configurations that store the features an account has access to. An account can be configured as any or all of the following configurations: Customer, Merchant and/or Recipient.
+   * Create an Account that represents a company, individual, or other entity that your business interacts with. Accounts contain identifying information about the entity, and configurations that store the features an account has access to. An account can be configured as any or all of the following configurations: Customer, Merchant and/or Recipient.
    * @throws Stripe.RateLimitError
    */
   create(
@@ -269,7 +269,7 @@ export interface Account {
   configuration?: V2.Core.Account.Configuration;
 
   /**
-   * The default contact email address for the Account. Required when configuring the account as a merchant or recipient.
+   * The primary contact email address for the Account.
    */
   contact_email?: string;
 
@@ -340,7 +340,7 @@ export namespace V2 {
         card_creator?: Configuration.CardCreator;
 
         /**
-         * The Customer Configuration allows the Account to be used in inbound payment flows.
+         * The Customer Configuration allows the Account to be used in inbound payment flows (i.e. customer-facing payment and billing flows).
          */
         customer?: Configuration.Customer;
 
@@ -423,7 +423,7 @@ export namespace V2 {
         country?: string;
 
         /**
-         * The entity type.
+         * The entity type represented by the Account. Ensure this field is accurate before adding configurations that rely on identity information, as it determines which identity fields apply and how the Account is validated.
          */
         entity_type?: Identity.EntityType;
 
@@ -1388,7 +1388,7 @@ export namespace V2 {
 
           export interface Billing {
             /**
-             * ID of a PaymentMethod attached to the customer account to use as the default for invoices and subscriptions.
+             * The ID of a `PaymentMethod` attached to this Account's `customer` configuration, used as the default payment method for invoices and subscriptions.
              */
             default_payment_method?: string;
 
@@ -6421,7 +6421,7 @@ export namespace V2 {
           documents?: Individual.Documents;
 
           /**
-           * The individual's email address.
+           * The individual's email address. You can only set this field when the Account is configured as a `merchant` or `recipient`. Use `contact_email` as the primary contact email for this Account.
            */
           email?: string;
 
@@ -9266,7 +9266,7 @@ export namespace V2 {
       configuration?: AccountCreateParams.Configuration;
 
       /**
-       * The default contact email address for the Account. Required when configuring the account as a merchant or recipient.
+       * The primary contact email address for the Account.
        */
       contact_email?: string;
 
@@ -9314,7 +9314,7 @@ export namespace V2 {
         card_creator?: Configuration.CardCreator;
 
         /**
-         * The Customer Configuration allows the Account to be used in inbound payment flows.
+         * The Customer Configuration allows the Account to be used in inbound payment flows (i.e. customer-facing payment and billing flows).
          */
         customer?: Configuration.Customer;
 
@@ -9380,7 +9380,7 @@ export namespace V2 {
         country?: string;
 
         /**
-         * The entity type.
+         * The entity type represented by the Account. Ensure this field is accurate before adding configurations that rely on identity information, as it determines which identity fields apply and how the Account is validated.
          */
         entity_type?: Identity.EntityType;
 
@@ -11370,7 +11370,7 @@ export namespace V2 {
           documents?: Individual.Documents;
 
           /**
-           * The individual's email address.
+           * The individual's email address. You can only set this field when the Account is configured as a `merchant` or `recipient`. Use `contact_email` as the primary contact email for this Account.
            */
           email?: string;
 
@@ -13695,7 +13695,7 @@ export namespace V2 {
       configuration?: AccountUpdateParams.Configuration;
 
       /**
-       * The default contact email address for the Account. Required when configuring the account as a merchant or recipient.
+       * The primary contact email address for the Account.
        */
       contact_email?: string;
 
@@ -13809,7 +13809,7 @@ export namespace V2 {
         country?: string;
 
         /**
-         * The entity type.
+         * The entity type represented by the Account. Ensure this field is accurate before adding configurations that rely on identity information, as it determines which identity fields apply and how the Account is validated.
          */
         entity_type?: Identity.EntityType;
 
@@ -14276,7 +14276,7 @@ export namespace V2 {
 
           export interface Billing {
             /**
-             * ID of a PaymentMethod attached to the customer account to use as the default for invoices and subscriptions.
+             * The ID of a `PaymentMethod` attached to this Account's `customer` configuration, used as the default payment method for invoices and subscriptions.
              */
             default_payment_method?: string;
 
@@ -15802,7 +15802,7 @@ export namespace V2 {
           documents?: Individual.Documents;
 
           /**
-           * The individual's email address.
+           * The individual's email address. You can only set this field when the Account is configured as a `merchant` or `recipient`. Use `contact_email` as the primary contact email for this Account.
            */
           email?: string;
 

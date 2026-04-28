@@ -520,12 +520,29 @@ export namespace DelegatedCheckout {
     export namespace BuyerConsents {
       export interface Marketing {
         /**
+         * The buyer's marketing consent choices.
+         */
+        consents: Array<Marketing.Consent> | null;
+
+        /**
          * The available marketing consent options.
          */
         options: Array<Marketing.Option> | null;
       }
 
       export namespace Marketing {
+        export interface Consent {
+          /**
+           * The marketing consent channel.
+           */
+          channel: Consent.Channel;
+
+          /**
+           * The consent status. 'granted' means the buyer opted in, 'none' means they did not.
+           */
+          status: Consent.Status;
+        }
+
         export interface Option {
           /**
            * The marketing channel type.
@@ -541,6 +558,12 @@ export namespace DelegatedCheckout {
            * The privacy policy URL for this marketing channel.
            */
           privacy_policy_url: string;
+        }
+
+        export namespace Consent {
+          export type Channel = 'email' | 'sms';
+
+          export type Status = 'granted' | 'none';
         }
 
         export namespace Option {
@@ -1410,6 +1433,11 @@ export namespace DelegatedCheckout {
     affiliate_attribution?: RequestedSessionConfirmParams.AffiliateAttribution;
 
     /**
+     * The buyer's consent choices for marketing communications.
+     */
+    buyer_consents?: RequestedSessionConfirmParams.BuyerConsents;
+
+    /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
@@ -1490,6 +1518,13 @@ export namespace DelegatedCheckout {
       touchpoint: AffiliateAttribution.Touchpoint;
     }
 
+    export interface BuyerConsents {
+      /**
+       * The marketing consent data for the buyer.
+       */
+      marketing?: BuyerConsents.Marketing;
+    }
+
     export interface RiskDetails {
       /**
        * The client device metadata details for this requested session.
@@ -1519,6 +1554,35 @@ export namespace DelegatedCheckout {
 
       export namespace Source {
         export type Type = 'platform' | 'url';
+      }
+    }
+
+    export namespace BuyerConsents {
+      export interface Marketing {
+        /**
+         * The list of marketing consent entries.
+         */
+        consents?: Array<Marketing.Consent>;
+      }
+
+      export namespace Marketing {
+        export interface Consent {
+          /**
+           * The marketing consent channel.
+           */
+          channel: Consent.Channel;
+
+          /**
+           * The consent status. Use 'granted' to indicate the buyer has opted in.
+           */
+          status: Consent.Status;
+        }
+
+        export namespace Consent {
+          export type Channel = 'email' | 'sms';
+
+          export type Status = 'granted' | 'none';
+        }
       }
     }
 

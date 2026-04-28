@@ -470,6 +470,11 @@ export namespace TestHelpers {
         network_id?: string;
 
         /**
+         * The identifier of the payment facilitator (PayFac) that processed this authorization, as assigned by the card network.
+         */
+        payment_facilitator_id?: string;
+
+        /**
          * Postal code where the seller is located
          */
         postal_code?: string;
@@ -478,6 +483,11 @@ export namespace TestHelpers {
          * State where the seller is located
          */
         state?: string;
+
+        /**
+         * The identifier of the sub-merchant involved in this authorization, as assigned by the payment facilitator.
+         */
+        sub_merchant_id?: string;
 
         /**
          * An ID assigned by the seller to the location of the sale.
@@ -1121,6 +1131,11 @@ export namespace TestHelpers {
         network_id?: string;
 
         /**
+         * The identifier of the payment facilitator (PayFac) that processed this authorization, as assigned by the card network.
+         */
+        payment_facilitator_id?: string;
+
+        /**
          * Postal code where the seller is located
          */
         postal_code?: string;
@@ -1129,6 +1144,11 @@ export namespace TestHelpers {
          * State where the seller is located
          */
         state?: string;
+
+        /**
+         * The identifier of the sub-merchant involved in this authorization, as assigned by the payment facilitator.
+         */
+        sub_merchant_id?: string;
 
         /**
          * An ID assigned by the seller to the location of the sale.

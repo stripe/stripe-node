@@ -72,7 +72,7 @@ export class OffSessionPaymentResource extends StripeResource {
    */
   capture(
     id: string,
-    params: V2.Payments.OffSessionPaymentCaptureParams,
+    params?: V2.Payments.OffSessionPaymentCaptureParams,
     options?: RequestOptions
   ): Promise<Response<OffSessionPayment>> {
     return this._makeRequest(
@@ -505,14 +505,6 @@ export namespace V2 {
       customer: string;
 
       /**
-       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can
-       * attach to an object. This can be useful for storing additional information about
-       * the object in a structured format. Learn more about
-       * [storing information in metadata](https://docs.stripe.com/payments/payment-intents#storing-information-in-metadata).
-       */
-      metadata: MetadataParam;
-
-      /**
        * Provides industry-specific information about the amount.
        */
       amount_details?: OffSessionPaymentCreateParams.AmountDetails;
@@ -532,6 +524,14 @@ export namespace V2 {
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */
       description?: string;
+
+      /**
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can
+       * attach to an object. This can be useful for storing additional information about
+       * the object in a structured format. Learn more about
+       * [storing information in metadata](https://docs.stripe.com/payments/payment-intents#storing-information-in-metadata).
+       */
+      metadata?: MetadataParam;
 
       /**
        * The account (if any) for which the funds of the OffSessionPayment are intended.
@@ -880,14 +880,6 @@ export namespace V2 {
   export namespace Payments {
     export interface OffSessionPaymentCaptureParams {
       /**
-       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can
-       * attach to an object. This can be useful for storing additional information about
-       * the object in a structured format. Learn more about
-       * [storing information in metadata](https://docs.stripe.com/payments/payment-intents#storing-information-in-metadata).
-       */
-      metadata: MetadataParam;
-
-      /**
        * Provides industry-specific information about the amount.
        */
       amount_details?: OffSessionPaymentCaptureParams.AmountDetails;
@@ -901,6 +893,14 @@ export namespace V2 {
        * The amount of the application fee for this capture.
        */
       application_fee_amount?: V2Amount;
+
+      /**
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can
+       * attach to an object. This can be useful for storing additional information about
+       * the object in a structured format. Learn more about
+       * [storing information in metadata](https://docs.stripe.com/payments/payment-intents#storing-information-in-metadata).
+       */
+      metadata?: MetadataParam;
 
       /**
        * Provides industry-specific information about the payment.

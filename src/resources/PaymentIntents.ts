@@ -509,7 +509,7 @@ export interface PaymentIntent {
   /**
    * Settings for Managed Payments.
    */
-  managed_payments?: PaymentIntent.ManagedPayments | null;
+  managed_payments: PaymentIntent.ManagedPayments | null;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Learn more about [storing information in metadata](https://docs.stripe.com/payments/payment-intents/creating-payment-intents#storing-information-in-metadata).
@@ -752,6 +752,7 @@ export namespace PaymentIntent {
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -895,6 +896,8 @@ export namespace PaymentIntent {
     crypto_display_details?: NextAction.CryptoDisplayDetails;
 
     display_bank_transfer_instructions?: NextAction.DisplayBankTransferInstructions;
+
+    klarna_display_qr_code?: NextAction.KlarnaDisplayQrCode;
 
     konbini_display_details?: NextAction.KonbiniDisplayDetails;
 
@@ -1204,12 +1207,12 @@ export namespace PaymentIntent {
       amount: number | null;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       from_postal_code: string | null;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       to_postal_code: string | null;
     }
@@ -1307,11 +1310,13 @@ export namespace PaymentIntent {
       | 'account_number_invalid'
       | 'account_token_required_for_v2_account'
       | 'acss_debit_session_incomplete'
+      | 'action_blocked'
       | 'alipay_upgrade_required'
       | 'amount_too_large'
       | 'amount_too_small'
       | 'api_key_expired'
       | 'application_fees_not_allowed'
+      | 'approval_required'
       | 'authentication_required'
       | 'balance_insufficient'
       | 'balance_invalid_parameter'
@@ -1605,6 +1610,28 @@ export namespace PaymentIntent {
        * Type of bank transfer
        */
       type: DisplayBankTransferInstructions.Type;
+    }
+
+    export interface KlarnaDisplayQrCode {
+      /**
+       * The data being used to generate QR code
+       */
+      data: string;
+
+      /**
+       * The timestamp at which the QR code expires.
+       */
+      expires_at: number | null;
+
+      /**
+       * The image_url_png string used to render QR code
+       */
+      image_url_png: string;
+
+      /**
+       * The image_url_svg string used to render QR code
+       */
+      image_url_svg: string;
     }
 
     export interface KonbiniDisplayDetails {
@@ -5997,6 +6024,7 @@ export namespace PaymentIntentCreateParams {
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -6358,6 +6386,11 @@ export namespace PaymentIntentCreateParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
+     */
+    shared_payment_granted_token?: string;
+
+    /**
      * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
      */
     shopeepay?: PaymentMethodData.Shopeepay;
@@ -6371,6 +6404,11 @@ export namespace PaymentIntentCreateParams {
      * This hash contains details about the Stripe balance payment method.
      */
     stripe_balance?: PaymentMethodData.StripeBalance;
+
+    /**
+     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     */
+    sunbit?: PaymentMethodData.Sunbit;
 
     /**
      * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -6835,12 +6873,12 @@ export namespace PaymentIntentCreateParams {
       amount?: Emptyable<number>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       from_postal_code?: Emptyable<string>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       to_postal_code?: Emptyable<string>;
     }
@@ -9562,6 +9600,8 @@ export namespace PaymentIntentCreateParams {
       account?: string;
     }
 
+    export interface Sunbit {}
+
     export interface Swish {}
 
     export interface Twint {}
@@ -9618,6 +9658,7 @@ export namespace PaymentIntentCreateParams {
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
+      | 'sunbit'
       | 'swish'
       | 'twint'
       | 'upi'
@@ -10894,8 +10935,6 @@ export namespace PaymentIntentCreateParams {
        * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
-       *
-       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Pix.SetupFutureUsage;
     }
@@ -13744,6 +13783,7 @@ export namespace PaymentIntentUpdateParams {
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -14103,6 +14143,11 @@ export namespace PaymentIntentUpdateParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
+     */
+    shared_payment_granted_token?: string;
+
+    /**
      * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
      */
     shopeepay?: PaymentMethodData.Shopeepay;
@@ -14116,6 +14161,11 @@ export namespace PaymentIntentUpdateParams {
      * This hash contains details about the Stripe balance payment method.
      */
     stripe_balance?: PaymentMethodData.StripeBalance;
+
+    /**
+     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     */
+    sunbit?: PaymentMethodData.Sunbit;
 
     /**
      * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -14550,12 +14600,12 @@ export namespace PaymentIntentUpdateParams {
       amount?: Emptyable<number>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       from_postal_code?: Emptyable<string>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       to_postal_code?: Emptyable<string>;
     }
@@ -17259,6 +17309,8 @@ export namespace PaymentIntentUpdateParams {
       account?: string;
     }
 
+    export interface Sunbit {}
+
     export interface Swish {}
 
     export interface Twint {}
@@ -17315,6 +17367,7 @@ export namespace PaymentIntentUpdateParams {
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
+      | 'sunbit'
       | 'swish'
       | 'twint'
       | 'upi'
@@ -18591,8 +18644,6 @@ export namespace PaymentIntentUpdateParams {
        * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
-       *
-       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Pix.SetupFutureUsage;
     }
@@ -21466,12 +21517,12 @@ export namespace PaymentIntentCaptureParams {
       amount?: Emptyable<number>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       from_postal_code?: Emptyable<string>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       to_postal_code?: Emptyable<string>;
     }
@@ -23860,6 +23911,11 @@ export interface PaymentIntentConfirmParams {
   amount_details?: Emptyable<PaymentIntentConfirmParams.AmountDetails>;
 
   /**
+   * Amount to confirm on the PaymentIntent. Defaults to `amount` if not provided.
+   */
+  amount_to_confirm?: number;
+
+  /**
    * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://docs.stripe.com/payments/connected-accounts).
    */
   application_fee_amount?: Emptyable<number>;
@@ -24083,6 +24139,7 @@ export namespace PaymentIntentConfirmParams {
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -24444,6 +24501,11 @@ export namespace PaymentIntentConfirmParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
+     */
+    shared_payment_granted_token?: string;
+
+    /**
      * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
      */
     shopeepay?: PaymentMethodData.Shopeepay;
@@ -24457,6 +24519,11 @@ export namespace PaymentIntentConfirmParams {
      * This hash contains details about the Stripe balance payment method.
      */
     stripe_balance?: PaymentMethodData.StripeBalance;
+
+    /**
+     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     */
+    sunbit?: PaymentMethodData.Sunbit;
 
     /**
      * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -24891,12 +24958,12 @@ export namespace PaymentIntentConfirmParams {
       amount?: Emptyable<number>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       from_postal_code?: Emptyable<string>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       to_postal_code?: Emptyable<string>;
     }
@@ -27614,6 +27681,8 @@ export namespace PaymentIntentConfirmParams {
       account?: string;
     }
 
+    export interface Sunbit {}
+
     export interface Swish {}
 
     export interface Twint {}
@@ -27670,6 +27739,7 @@ export namespace PaymentIntentConfirmParams {
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
+      | 'sunbit'
       | 'swish'
       | 'twint'
       | 'upi'
@@ -28946,8 +29016,6 @@ export namespace PaymentIntentConfirmParams {
        * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
-       *
-       * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Pix.SetupFutureUsage;
     }
@@ -31700,12 +31768,12 @@ export namespace PaymentIntentDecrementAuthorizationParams {
       amount?: Emptyable<number>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       from_postal_code?: Emptyable<string>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       to_postal_code?: Emptyable<string>;
     }
@@ -32111,12 +32179,12 @@ export namespace PaymentIntentIncrementAuthorizationParams {
       amount?: Emptyable<number>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       from_postal_code?: Emptyable<string>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       to_postal_code?: Emptyable<string>;
     }

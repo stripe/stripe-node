@@ -369,6 +369,7 @@ export namespace SetupIntent {
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -588,11 +589,13 @@ export namespace SetupIntent {
       | 'account_number_invalid'
       | 'account_token_required_for_v2_account'
       | 'acss_debit_session_incomplete'
+      | 'action_blocked'
       | 'alipay_upgrade_required'
       | 'amount_too_large'
       | 'amount_too_small'
       | 'api_key_expired'
       | 'application_fees_not_allowed'
+      | 'approval_required'
       | 'authentication_required'
       | 'balance_insufficient'
       | 'balance_invalid_parameter'
@@ -798,27 +801,27 @@ export namespace SetupIntent {
       /**
        * The raw data string used to generate QR code, it should be used together with QR code library.
        */
-      data?: string;
+      data: string;
 
       /**
        * The date (unix timestamp) when the PIX expires.
        */
-      expires_at?: number;
+      expires_at: number;
 
       /**
        * The URL to the hosted pix instructions page, which allows customers to view the pix QR code.
        */
-      hosted_instructions_url?: string;
+      hosted_instructions_url: string;
 
       /**
        * The image_url_png string used to render png QR code
        */
-      image_url_png?: string;
+      image_url_png: string;
 
       /**
        * The image_url_svg string used to render svg QR code
        */
-      image_url_svg?: string;
+      image_url_svg: string;
     }
 
     export interface RedirectToUrl {
@@ -1603,6 +1606,7 @@ export namespace SetupIntentCreateParams {
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -1886,6 +1890,11 @@ export namespace SetupIntentCreateParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
+     */
+    shared_payment_granted_token?: string;
+
+    /**
      * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
      */
     shopeepay?: PaymentMethodData.Shopeepay;
@@ -1899,6 +1908,11 @@ export namespace SetupIntentCreateParams {
      * This hash contains details about the Stripe balance payment method.
      */
     stripe_balance?: PaymentMethodData.StripeBalance;
+
+    /**
+     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     */
+    sunbit?: PaymentMethodData.Sunbit;
 
     /**
      * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -2358,6 +2372,8 @@ export namespace SetupIntentCreateParams {
       account?: string;
     }
 
+    export interface Sunbit {}
+
     export interface Swish {}
 
     export interface Twint {}
@@ -2414,6 +2430,7 @@ export namespace SetupIntentCreateParams {
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
+      | 'sunbit'
       | 'swish'
       | 'twint'
       | 'upi'
@@ -3599,6 +3616,7 @@ export namespace SetupIntentUpdateParams {
     | 'shopeepay'
     | 'sofort'
     | 'stripe_balance'
+    | 'sunbit'
     | 'swish'
     | 'twint'
     | 'upi'
@@ -3875,6 +3893,11 @@ export namespace SetupIntentUpdateParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
+     */
+    shared_payment_granted_token?: string;
+
+    /**
      * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
      */
     shopeepay?: PaymentMethodData.Shopeepay;
@@ -3888,6 +3911,11 @@ export namespace SetupIntentUpdateParams {
      * This hash contains details about the Stripe balance payment method.
      */
     stripe_balance?: PaymentMethodData.StripeBalance;
+
+    /**
+     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     */
+    sunbit?: PaymentMethodData.Sunbit;
 
     /**
      * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -4287,6 +4315,8 @@ export namespace SetupIntentUpdateParams {
       account?: string;
     }
 
+    export interface Sunbit {}
+
     export interface Swish {}
 
     export interface Twint {}
@@ -4343,6 +4373,7 @@ export namespace SetupIntentUpdateParams {
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
+      | 'sunbit'
       | 'swish'
       | 'twint'
       | 'upi'
@@ -5755,6 +5786,11 @@ export namespace SetupIntentConfirmParams {
     sepa_debit?: PaymentMethodData.SepaDebit;
 
     /**
+     * ID of the SharedPaymentGrantedToken used to confirm this PaymentIntent.
+     */
+    shared_payment_granted_token?: string;
+
+    /**
      * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
      */
     shopeepay?: PaymentMethodData.Shopeepay;
@@ -5768,6 +5804,11 @@ export namespace SetupIntentConfirmParams {
      * This hash contains details about the Stripe balance payment method.
      */
     stripe_balance?: PaymentMethodData.StripeBalance;
+
+    /**
+     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     */
+    sunbit?: PaymentMethodData.Sunbit;
 
     /**
      * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -6209,6 +6250,8 @@ export namespace SetupIntentConfirmParams {
       account?: string;
     }
 
+    export interface Sunbit {}
+
     export interface Swish {}
 
     export interface Twint {}
@@ -6265,6 +6308,7 @@ export namespace SetupIntentConfirmParams {
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
+      | 'sunbit'
       | 'swish'
       | 'twint'
       | 'upi'

@@ -215,6 +215,13 @@ export namespace Issuing {
 
     export interface SpendingControls {
       /**
+       * Array of card presence statuses from which authorizations will be allowed. Possible options are `present`, `not_present`. All other statuses will be blocked. Cannot be set with `blocked_card_presences`. Provide an empty value to unset this control.
+       */
+      allowed_card_presences: Array<
+        SpendingControls.AllowedCardPresence
+      > | null;
+
+      /**
        * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
        */
       allowed_categories: Array<SpendingControls.AllowedCategory> | null;
@@ -223,6 +230,13 @@ export namespace Issuing {
        * Array of strings containing representing countries from which authorizations will be allowed. Authorizations from merchants in all other countries will be declined. Country codes should be ISO 3166 alpha-2 country codes (e.g. `US`). Cannot be set with `blocked_merchant_countries`. Provide an empty value to unset this control.
        */
       allowed_merchant_countries: Array<string> | null;
+
+      /**
+       * Array of card presence statuses from which authorizations will be declined. Possible options are `present`, `not_present`. Cannot be set with `allowed_card_presences`. Provide an empty value to unset this control.
+       */
+      blocked_card_presences: Array<
+        SpendingControls.BlockedCardPresence
+      > | null;
 
       /**
        * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
@@ -335,6 +349,8 @@ export namespace Issuing {
     }
 
     export namespace SpendingControls {
+      export type AllowedCardPresence = 'not_present' | 'present';
+
       export type AllowedCategory =
         | 'ac_refrigeration_repair'
         | 'accounting_bookkeeping_services'
@@ -631,6 +647,8 @@ export namespace Issuing {
         | 'womens_accessory_and_specialty_shops'
         | 'womens_ready_to_wear_stores'
         | 'wrecking_and_salvage_yards';
+
+      export type BlockedCardPresence = 'not_present' | 'present';
 
       export type BlockedCategory =
         | 'ac_refrigeration_repair'
@@ -1374,6 +1392,11 @@ export namespace Issuing {
 
     export interface SpendingControls {
       /**
+       * Array of card presence statuses from which authorizations will be allowed. Possible options are `present`, `not_present`. All other statuses will be blocked. Cannot be set with `blocked_card_presences`. Provide an empty value to unset this control.
+       */
+      allowed_card_presences?: Array<SpendingControls.AllowedCardPresence>;
+
+      /**
        * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
        */
       allowed_categories?: Array<SpendingControls.AllowedCategory>;
@@ -1382,6 +1405,11 @@ export namespace Issuing {
        * Array of strings containing representing countries from which authorizations will be allowed. Authorizations from merchants in all other countries will be declined. Country codes should be ISO 3166 alpha-2 country codes (e.g. `US`). Cannot be set with `blocked_merchant_countries`. Provide an empty value to unset this control.
        */
       allowed_merchant_countries?: Array<string>;
+
+      /**
+       * Array of card presence statuses from which authorizations will be declined. Possible options are `present`, `not_present`. Cannot be set with `allowed_card_presences`. Provide an empty value to unset this control.
+       */
+      blocked_card_presences?: Array<SpendingControls.BlockedCardPresence>;
 
       /**
        * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
@@ -1509,6 +1537,8 @@ export namespace Issuing {
     }
 
     export namespace SpendingControls {
+      export type AllowedCardPresence = 'not_present' | 'present';
+
       export type AllowedCategory =
         | 'ac_refrigeration_repair'
         | 'accounting_bookkeeping_services'
@@ -1805,6 +1835,8 @@ export namespace Issuing {
         | 'womens_accessory_and_specialty_shops'
         | 'womens_ready_to_wear_stores'
         | 'wrecking_and_salvage_yards';
+
+      export type BlockedCardPresence = 'not_present' | 'present';
 
       export type BlockedCategory =
         | 'ac_refrigeration_repair'
@@ -2545,6 +2577,11 @@ export namespace Issuing {
 
     export interface SpendingControls {
       /**
+       * Array of card presence statuses from which authorizations will be allowed. Possible options are `present`, `not_present`. All other statuses will be blocked. Cannot be set with `blocked_card_presences`. Provide an empty value to unset this control.
+       */
+      allowed_card_presences?: Array<SpendingControls.AllowedCardPresence>;
+
+      /**
        * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
        */
       allowed_categories?: Array<SpendingControls.AllowedCategory>;
@@ -2553,6 +2590,11 @@ export namespace Issuing {
        * Array of strings containing representing countries from which authorizations will be allowed. Authorizations from merchants in all other countries will be declined. Country codes should be ISO 3166 alpha-2 country codes (e.g. `US`). Cannot be set with `blocked_merchant_countries`. Provide an empty value to unset this control.
        */
       allowed_merchant_countries?: Array<string>;
+
+      /**
+       * Array of card presence statuses from which authorizations will be declined. Possible options are `present`, `not_present`. Cannot be set with `allowed_card_presences`. Provide an empty value to unset this control.
+       */
+      blocked_card_presences?: Array<SpendingControls.BlockedCardPresence>;
 
       /**
        * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
@@ -2678,6 +2720,8 @@ export namespace Issuing {
     }
 
     export namespace SpendingControls {
+      export type AllowedCardPresence = 'not_present' | 'present';
+
       export type AllowedCategory =
         | 'ac_refrigeration_repair'
         | 'accounting_bookkeeping_services'
@@ -2974,6 +3018,8 @@ export namespace Issuing {
         | 'womens_accessory_and_specialty_shops'
         | 'womens_ready_to_wear_stores'
         | 'wrecking_and_salvage_yards';
+
+      export type BlockedCardPresence = 'not_present' | 'present';
 
       export type BlockedCategory =
         | 'ac_refrigeration_repair'

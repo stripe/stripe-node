@@ -70,6 +70,7 @@ import {InboundTransferResource as TreasuryInboundTransfers} from './resources/T
 import {InboundTransferResource as V2MoneyManagementInboundTransfers} from './resources/V2/MoneyManagement/InboundTransfers.js';
 import {InstitutionResource as FinancialConnectionsInstitutions} from './resources/FinancialConnections/Institutions.js';
 import {IntentResource as V2BillingIntents} from './resources/V2/Billing/Intents.js';
+import {IssuedTokenResource as SharedPaymentIssuedTokens} from './resources/SharedPayment/IssuedTokens.js';
 import {IssuingAuthorizationEvaluationResource as RadarIssuingAuthorizationEvaluations} from './resources/Radar/IssuingAuthorizationEvaluations.js';
 import {LicenseFeeResource as V2BillingLicenseFees} from './resources/V2/Billing/LicenseFees.js';
 import {LicensedItemResource as V2BillingLicensedItems} from './resources/V2/Billing/LicensedItems.js';
@@ -85,6 +86,7 @@ import {MeterEventResource as V2BillingMeterEvents} from './resources/V2/Billing
 import {MeterUsageResource as BillingAnalyticsMeterUsage} from './resources/Billing/Analytics/MeterUsage.js';
 import {MeteredItemResource as V2BillingMeteredItems} from './resources/V2/Billing/MeteredItems.js';
 import {MeterResource as BillingMeters} from './resources/Billing/Meters.js';
+import {MetricQueryResource as V2DataAnalyticsMetricQuery} from './resources/V2/Data/Analytics/MetricQuery.js';
 import {MoneyManagementResource as V2TestHelpersMoneyManagement} from './resources/V2/TestHelpers/MoneyManagement.js';
 import {OffSessionPaymentResource as V2PaymentsOffSessionPayments} from './resources/V2/Payments/OffSessionPayments.js';
 import {OnboardingLinkResource as TerminalOnboardingLinks} from './resources/Terminal/OnboardingLinks.js';
@@ -322,6 +324,7 @@ export const Reserve = resourceNamespace('reserve', {
 });
 export const SharedPayment = resourceNamespace('sharedPayment', {
   GrantedTokens: SharedPaymentGrantedTokens,
+  IssuedTokens: SharedPaymentIssuedTokens,
 });
 export const Sigma = resourceNamespace('sigma', {
   ScheduledQueryRuns: SigmaScheduledQueryRuns,
@@ -428,6 +431,9 @@ export const V2 = resourceNamespace('v2', {
     }),
   }),
   Data: resourceNamespace('data', {
+    Analytics: resourceNamespace('analytics', {
+      MetricQuery: V2DataAnalyticsMetricQuery,
+    }),
     Reporting: resourceNamespace('reporting', {
       QueryRuns: V2DataReportingQueryRuns,
     }),

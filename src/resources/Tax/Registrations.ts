@@ -3321,9 +3321,34 @@ export namespace Tax {
 
       export interface Us {
         /**
+         * Options for the admission tax registration.
+         */
+        admissions_tax?: Us.AdmissionsTax;
+
+        /**
+         * Options for the attendance tax registration.
+         */
+        attendance_tax?: Us.AttendanceTax;
+
+        /**
+         * Options for the entertainment tax registration.
+         */
+        entertainment_tax?: Us.EntertainmentTax;
+
+        /**
+         * Options for the gross receipts tax registration.
+         */
+        gross_receipts_tax?: Us.GrossReceiptsTax;
+
+        /**
          * Options for the home rule tax registration.
          */
         home_rule_tax?: Us.HomeRuleTax;
+
+        /**
+         * Options for the hospitality tax registration.
+         */
+        hospitality_tax?: Us.HospitalityTax;
 
         /**
          * Options for the local amusement tax registration.
@@ -3336,6 +3361,16 @@ export namespace Tax {
         local_lease_tax?: Us.LocalLeaseTax;
 
         /**
+         * Options for the luxury tax registration.
+         */
+        luxury_tax?: Us.LuxuryTax;
+
+        /**
+         * Options for the resort tax registration.
+         */
+        resort_tax?: Us.ResortTax;
+
+        /**
          * Two-letter US state code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
          */
         state: string;
@@ -3344,6 +3379,11 @@ export namespace Tax {
          * Options for the state sales tax registration.
          */
         state_sales_tax?: Us.StateSalesTax;
+
+        /**
+         * Options for the tourism tax registration.
+         */
+        tourism_tax?: Us.TourismTax;
 
         /**
          * Type of registration to be created in the US.
@@ -4257,6 +4297,34 @@ export namespace Tax {
       }
 
       export namespace Us {
+        export interface AdmissionsTax {
+          /**
+           * A jurisdiction code representing the [local jurisdiction](https://docs.stripe.com/tax/registering?type=admissions_tax#registration-types).
+           */
+          jurisdiction: string;
+        }
+
+        export interface AttendanceTax {
+          /**
+           * A jurisdiction code representing the [local jurisdiction](https://docs.stripe.com/tax/registering?type=attendance_tax#registration-types).
+           */
+          jurisdiction: string;
+        }
+
+        export interface EntertainmentTax {
+          /**
+           * A jurisdiction code representing the [local jurisdiction](https://docs.stripe.com/tax/registering?type=entertainment_tax#registration-types).
+           */
+          jurisdiction: string;
+        }
+
+        export interface GrossReceiptsTax {
+          /**
+           * A jurisdiction code representing the [local jurisdiction](https://docs.stripe.com/tax/registering?type=gross_receipts_tax#registration-types).
+           */
+          jurisdiction: string;
+        }
+
         export interface HomeRuleTax {
           /**
            * A jurisdiction code representing the [local jurisdiction](https://docs.stripe.com/tax/registering?type=home_rule_tax#registration-types).
@@ -4264,9 +4332,16 @@ export namespace Tax {
           jurisdiction: string;
         }
 
+        export interface HospitalityTax {
+          /**
+           * A jurisdiction code representing the [local jurisdiction](https://docs.stripe.com/tax/registering?type=hospitality_tax#registration-types).
+           */
+          jurisdiction: string;
+        }
+
         export interface LocalAmusementTax {
           /**
-           * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction. Supported FIPS codes are: `02154` (Arlington Heights), `05248` (Bensenville), `06613` (Bloomington), `10906` (Campton Hills), `14000` (Chicago), `21696` (East Dundee), `24582` (Evanston), `45421` (Lynwood), `48892` (Midlothian), `64343` (River Grove), `64421` (Riverside), `65806` (Roselle), and `68081` (Schiller Park).
+           * A jurisdiction code representing the [local jurisdiction](https://docs.stripe.com/tax/registering?type=amusement_tax#registration-types).
            */
           jurisdiction: string;
         }
@@ -4278,11 +4353,32 @@ export namespace Tax {
           jurisdiction: string;
         }
 
+        export interface LuxuryTax {
+          /**
+           * A jurisdiction code representing the [local jurisdiction](https://docs.stripe.com/tax/registering?type=luxury_tax#registration-types).
+           */
+          jurisdiction: string;
+        }
+
+        export interface ResortTax {
+          /**
+           * A jurisdiction code representing the [local jurisdiction](https://docs.stripe.com/tax/registering?type=resort_tax#registration-types).
+           */
+          jurisdiction: string;
+        }
+
         export interface StateSalesTax {
           /**
            * Elections for the state sales tax registration.
            */
           elections: Array<StateSalesTax.Election>;
+        }
+
+        export interface TourismTax {
+          /**
+           * A jurisdiction code representing the [local jurisdiction](https://docs.stripe.com/tax/registering?type=tourism_tax#registration-types).
+           */
+          jurisdiction: string;
         }
 
         export type Type =

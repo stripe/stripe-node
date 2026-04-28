@@ -498,7 +498,7 @@ export namespace Identity {
     options?: VerificationSessionCreateParams.Options;
 
     /**
-     * Details provided about the user being verified. These details may be shown to the user.
+     * Details provided about the user being verified. These details might be shown to the user.
      */
     provided_details?: VerificationSessionCreateParams.ProvidedDetails;
 
@@ -513,7 +513,7 @@ export namespace Identity {
     related_customer_account?: string;
 
     /**
-     * Tokens referencing a Person resource and it's associated account.
+     * Tokens referencing a Person resource and its associated account.
      */
     related_person?: VerificationSessionCreateParams.RelatedPerson;
 

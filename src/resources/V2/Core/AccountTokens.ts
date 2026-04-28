@@ -94,7 +94,7 @@ export namespace V2 {
   export namespace Core {
     export interface AccountTokenCreateParams {
       /**
-       * The default contact email address for the Account. Required when configuring the account as a merchant or recipient.
+       * The primary contact email address for the Account.
        */
       contact_email?: string;
 
@@ -265,7 +265,7 @@ export namespace V2 {
           documents?: Individual.Documents;
 
           /**
-           * The individual's email address.
+           * The individual's email address. You can only set this field when the Account is configured as a `merchant` or `recipient`. Use `contact_email` as the primary contact email for this Account.
            */
           email?: string;
 

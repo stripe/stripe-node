@@ -236,6 +236,8 @@ export namespace ConfirmationToken {
 
     stripe_balance?: PaymentMethodPreview.StripeBalance;
 
+    sunbit?: PaymentMethodPreview.Sunbit;
+
     swish?: PaymentMethodPreview.Swish;
 
     twint?: PaymentMethodPreview.Twint;
@@ -988,6 +990,8 @@ export namespace ConfirmationToken {
       account?: string | null;
     }
 
+    export interface Sunbit {}
+
     export interface Swish {}
 
     export interface Twint {}
@@ -1048,6 +1052,7 @@ export namespace ConfirmationToken {
       | 'shopeepay'
       | 'sofort'
       | 'stripe_balance'
+      | 'sunbit'
       | 'swish'
       | 'twint'
       | 'upi'

@@ -570,6 +570,8 @@ export type Event =
   | V2CoreAccountSignalsFraudulentWebsiteReadyEvent
   | V2CoreApprovalRequestApprovedEvent
   | V2CoreApprovalRequestCanceledEvent
+  | V2CoreApprovalRequestCreatedEvent
+  | V2CoreApprovalRequestExpiredEvent
   | V2CoreApprovalRequestFailedEvent
   | V2CoreApprovalRequestRejectedEvent
   | V2CoreApprovalRequestSucceededEvent
@@ -615,6 +617,7 @@ export type Event =
   | V2DataReportingQueryRunFailedEvent
   | V2DataReportingQueryRunSucceededEvent
   | V2DataReportingQueryRunUpdatedEvent
+  | V2ExtendExtensionRunFailedEvent
   | V2ExtendWorkflowRunFailedEvent
   | V2ExtendWorkflowRunStartedEvent
   | V2ExtendWorkflowRunSucceededEvent
@@ -969,6 +972,8 @@ export type EventNotification =
   | V2CoreAccountSignalsFraudulentWebsiteReadyEventNotification
   | V2CoreApprovalRequestApprovedEventNotification
   | V2CoreApprovalRequestCanceledEventNotification
+  | V2CoreApprovalRequestCreatedEventNotification
+  | V2CoreApprovalRequestExpiredEventNotification
   | V2CoreApprovalRequestFailedEventNotification
   | V2CoreApprovalRequestRejectedEventNotification
   | V2CoreApprovalRequestSucceededEventNotification
@@ -1014,6 +1019,7 @@ export type EventNotification =
   | V2DataReportingQueryRunFailedEventNotification
   | V2DataReportingQueryRunSucceededEventNotification
   | V2DataReportingQueryRunUpdatedEventNotification
+  | V2ExtendExtensionRunFailedEventNotification
   | V2ExtendWorkflowRunFailedEventNotification
   | V2ExtendWorkflowRunStartedEventNotification
   | V2ExtendWorkflowRunSucceededEventNotification
@@ -7151,6 +7157,46 @@ export interface V2CoreApprovalRequestCanceledEventNotification
 }
 
 /**
+ * Occurs when an approval request is created.
+ */
+export interface V2CoreApprovalRequestCreatedEvent extends EventBase {
+  type: 'v2.core.approval_request.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+}
+export interface V2CoreApprovalRequestCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.approval_request.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+  fetchEvent(): Promise<V2CoreApprovalRequestCreatedEvent>;
+}
+
+/**
+ * Occurs when an approval request expires without being acted upon.
+ */
+export interface V2CoreApprovalRequestExpiredEvent extends EventBase {
+  type: 'v2.core.approval_request.expired';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+}
+export interface V2CoreApprovalRequestExpiredEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.approval_request.expired';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.ApprovalRequest>;
+  fetchEvent(): Promise<V2CoreApprovalRequestExpiredEvent>;
+}
+
+/**
  * Occurs when the action associated with an approval request fails during execution.
  */
 export interface V2CoreApprovalRequestFailedEvent extends EventBase {
@@ -9585,6 +9631,75 @@ export interface V2DataReportingQueryRunUpdatedEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Data.Reporting.QueryRun>;
   fetchEvent(): Promise<V2DataReportingQueryRunUpdatedEvent>;
+}
+
+/**
+ * Occurs when an extension run fails.
+ */
+export interface V2ExtendExtensionRunFailedEvent extends EventBase {
+  type: 'v2.extend.extension_run.failed';
+  // Retrieves data specific to this event.
+  data: V2ExtendExtensionRunFailedEvent.Data;
+}
+export interface V2ExtendExtensionRunFailedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.extend.extension_run.failed';
+  fetchEvent(): Promise<V2ExtendExtensionRunFailedEvent>;
+}
+
+export namespace V2ExtendExtensionRunFailedEvent {
+  export interface Data {
+    /**
+     * Details about the error that occurred.
+     */
+    error: Data.Error;
+
+    /**
+     * Details about the extension that failed.
+     */
+    extension: Data.Extension;
+
+    /**
+     * The ID of the extension run that failed.
+     */
+    extension_run_id: string;
+  }
+
+  export namespace Data {
+    export interface Error {
+      /**
+       * URL to the extension run in Workbench for deeper debugging.
+       */
+      debug_url: string;
+
+      /**
+       * Detailed error message.
+       */
+      message: string;
+    }
+
+    export interface Extension {
+      /**
+       * The extension's unique identifier.
+       */
+      id: string;
+
+      /**
+       * The extension method called where the failure occurred.
+       */
+      method: string;
+
+      /**
+       * Human-readable name of the extension.
+       */
+      name: string;
+
+      /**
+       * Version of the extension that failed.
+       */
+      version: string;
+    }
+  }
 }
 
 /**
@@ -12040,6 +12155,8 @@ export declare namespace Events {
     V2CoreAccountSignalsFraudulentWebsiteReadyEvent,
     V2CoreApprovalRequestApprovedEvent,
     V2CoreApprovalRequestCanceledEvent,
+    V2CoreApprovalRequestCreatedEvent,
+    V2CoreApprovalRequestExpiredEvent,
     V2CoreApprovalRequestFailedEvent,
     V2CoreApprovalRequestRejectedEvent,
     V2CoreApprovalRequestSucceededEvent,
@@ -12085,6 +12202,7 @@ export declare namespace Events {
     V2DataReportingQueryRunFailedEvent,
     V2DataReportingQueryRunSucceededEvent,
     V2DataReportingQueryRunUpdatedEvent,
+    V2ExtendExtensionRunFailedEvent,
     V2ExtendWorkflowRunFailedEvent,
     V2ExtendWorkflowRunStartedEvent,
     V2ExtendWorkflowRunSucceededEvent,
@@ -12437,6 +12555,8 @@ export declare namespace Events {
     V2CoreAccountSignalsFraudulentWebsiteReadyEventNotification,
     V2CoreApprovalRequestApprovedEventNotification,
     V2CoreApprovalRequestCanceledEventNotification,
+    V2CoreApprovalRequestCreatedEventNotification,
+    V2CoreApprovalRequestExpiredEventNotification,
     V2CoreApprovalRequestFailedEventNotification,
     V2CoreApprovalRequestRejectedEventNotification,
     V2CoreApprovalRequestSucceededEventNotification,
@@ -12482,6 +12602,7 @@ export declare namespace Events {
     V2DataReportingQueryRunFailedEventNotification,
     V2DataReportingQueryRunSucceededEventNotification,
     V2DataReportingQueryRunUpdatedEventNotification,
+    V2ExtendExtensionRunFailedEventNotification,
     V2ExtendWorkflowRunFailedEventNotification,
     V2ExtendWorkflowRunStartedEventNotification,
     V2ExtendWorkflowRunSucceededEventNotification,

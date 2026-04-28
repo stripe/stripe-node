@@ -1,6 +1,54 @@
 // File generated from our OpenAPI spec
 
-import {RequestOptions} from '../../lib.js';
+import {StripeResource} from '../../StripeResource.js';
+import {RequestOptions, Response} from '../../lib.js';
+
+export class IssuedTokenResource extends StripeResource {
+  /**
+   * Retrieves an existing SharedPaymentIssuedToken object
+   */
+  retrieve(
+    id: string,
+    params?: SharedPayment.IssuedTokenRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<IssuedToken>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/shared_payment/issued_tokens/${id}`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Creates a new SharedPaymentIssuedToken object
+   */
+  create(
+    params: SharedPayment.IssuedTokenCreateParams,
+    options?: RequestOptions
+  ): Promise<Response<IssuedToken>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/shared_payment/issued_tokens',
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Revokes a SharedPaymentIssuedToken
+   */
+  revoke(
+    id: string,
+    params?: SharedPayment.IssuedTokenRevokeParams,
+    options?: RequestOptions
+  ): Promise<Response<IssuedToken>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/shared_payment/issued_tokens/${id}/revoke`,
+      params,
+      options
+    ) as any;
+  }
+}
 export interface IssuedToken {
   /**
    * Unique identifier for the object.
@@ -271,5 +319,101 @@ export namespace SharedPayment {
     export namespace UsageLimits {
       export type RecurringInterval = 'month' | 'week' | 'year';
     }
+  }
+}
+export namespace SharedPayment {
+  export interface IssuedTokenCreateParams {
+    /**
+     * The PaymentMethod that is going to be shared by the SharedPaymentIssuedToken.
+     */
+    payment_method: string;
+
+    /**
+     * Seller details of the SharedPaymentIssuedToken, including network_id and external_id.
+     */
+    seller_details: IssuedTokenCreateParams.SellerDetails;
+
+    /**
+     * Limits on how this SharedPaymentToken can be used.
+     */
+    usage_limits: IssuedTokenCreateParams.UsageLimits;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * If the customer does not exit their browser while authenticating, they will be redirected to this specified URL after completion.
+     */
+    return_url?: string;
+
+    /**
+     * Indicates that you intend to save the PaymentMethod of this SharedPaymentToken to a customer later.
+     */
+    setup_future_usage?: 'on_session';
+
+    /**
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to the SharedPaymentIssuedToken. The values here are visible by default with the party that you share this SharedPaymentIssuedToken with.
+     */
+    shared_metadata?: {
+      [key: string]: string;
+    };
+  }
+
+  export namespace IssuedTokenCreateParams {
+    export interface SellerDetails {
+      /**
+       * A unique id within a network that identifies a logical seller, usually this would be the unique merchant id.
+       */
+      external_id?: string;
+
+      /**
+       * A string that identifies the network that this SharedToken is being created for.
+       */
+      network_business_profile?: string;
+    }
+
+    export interface UsageLimits {
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+
+      /**
+       * Time at which this SharedPaymentToken expires and can no longer be used to confirm a PaymentIntent.
+       */
+      expires_at?: number;
+
+      /**
+       * Max amount that can be captured using this SharedPaymentToken
+       */
+      max_amount: number;
+
+      /**
+       * The recurring interval at which the shared payment token's amount usage restrictions reset.
+       */
+      recurring_interval?: UsageLimits.RecurringInterval;
+    }
+
+    export namespace UsageLimits {
+      export type RecurringInterval = 'month' | 'week' | 'year';
+    }
+  }
+}
+export namespace SharedPayment {
+  export interface IssuedTokenRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+}
+export namespace SharedPayment {
+  export interface IssuedTokenRevokeParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
   }
 }
