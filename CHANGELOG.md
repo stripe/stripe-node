@@ -1,5 +1,11 @@
 # Changelog
 
+## 22.2.0-alpha.3 - 2026-04-28
+* [#2696](https://github.com/stripe/stripe-node/pull/2696) Update generated code for private-preview
+  * Add support for `debit_card` on `V2.Core.Account.configuration.card_creator.capabilities.consumer.lead`, `V2.Core.Account.identity.attestations.terms_of_service.card_creator.consumer.lead`, `V2.Core.AccountCreateParams.configuration.card_creator.capabilities.consumer.lead`, `V2.Core.AccountCreateParams.identity.attestations.terms_of_service.card_creator.consumer.lead`, `V2.Core.AccountUpdateParams.configuration.card_creator.capabilities.consumer.lead`, and `V2.Core.AccountUpdateParams.identity.attestations.terms_of_service.card_creator.consumer.lead`
+  * ⚠️ Add support for new value `consumer.lead.debit_card` on enums `V2.Core.Account.future_requirements.entries[].impact.restricts_capabilities[].capability` and `V2.Core.Account.requirements.entries[].impact.restricts_capabilities[].capability`
+  * ⚠️ Add support for new value `consumer.lead.debit_card` on enum `EventsV2CoreAccountIncludingConfigurationCardCreatorCapabilityStatusUpdatedEvent.updated_capability`
+
 ## 22.2.0-alpha.2 - 2026-04-28
 * [#2695](https://github.com/stripe/stripe-node/pull/2695) Update generated code for private-preview
   * Add support for new resource `V2.Data.Analytics.MetricQueryResult`
