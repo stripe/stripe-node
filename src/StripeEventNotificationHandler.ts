@@ -1,3 +1,5 @@
+// File copied from our code generator; changes here will be overwritten.
+
 import {Stripe} from './stripe.core.js';
 import * as Events from './resources/V2/Core/Events.js';
 
