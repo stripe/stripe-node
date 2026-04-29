@@ -1205,6 +1205,11 @@ export namespace V2 {
 
               export interface Lead {
                 /**
+                 * Can create consumer issuing debit cards with Lead as BIN sponsor.
+                 */
+                debit_card?: Lead.DebitCard;
+
+                /**
                  * Can create consumer issuing prepaid cards with Lead as BIN sponsor.
                  */
                 prepaid_card?: Lead.PrepaidCard;
@@ -1311,6 +1316,18 @@ export namespace V2 {
               }
 
               export namespace Lead {
+                export interface DebitCard {
+                  /**
+                   * The status of the Capability.
+                   */
+                  status: DebitCard.Status;
+
+                  /**
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
+                   */
+                  status_details: Array<DebitCard.StatusDetail>;
+                }
+
                 export interface PrepaidCard {
                   /**
                    * The status of the Capability.
@@ -1321,6 +1338,42 @@ export namespace V2 {
                    * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<PrepaidCard.StatusDetail>;
+                }
+
+                export namespace DebitCard {
+                  export type Status =
+                    | 'active'
+                    | 'pending'
+                    | 'restricted'
+                    | 'unsupported';
+
+                  export interface StatusDetail {
+                    /**
+                     * Machine-readable code explaining the reason for the Capability to be in its current status.
+                     */
+                    code: StatusDetail.Code;
+
+                    /**
+                     * Machine-readable code explaining how to make the Capability active.
+                     */
+                    resolution: StatusDetail.Resolution;
+                  }
+
+                  export namespace StatusDetail {
+                    export type Code =
+                      | 'determining_status'
+                      | 'requirements_past_due'
+                      | 'requirements_pending_verification'
+                      | 'restricted_other'
+                      | 'unsupported_business'
+                      | 'unsupported_country'
+                      | 'unsupported_entity_type';
+
+                    export type Resolution =
+                      | 'contact_stripe'
+                      | 'no_resolution'
+                      | 'provide_info';
+                  }
                 }
 
                 export namespace PrepaidCard {
@@ -6170,6 +6223,7 @@ export namespace V2 {
                 | 'consumer.celtic.revolving_credit_card'
                 | 'consumer.cross_river_bank.prepaid_card'
                 | 'consumer.holds_currencies.usd'
+                | 'consumer.lead.debit_card'
                 | 'consumer.lead.prepaid_card'
                 | 'crypto_wallets'
                 | 'eps_payments'
@@ -7466,6 +7520,11 @@ export namespace V2 {
                   apple_pay?: Lead.ApplePay;
 
                   /**
+                   * Terms of service acceptances for consumer issuing debit cards with Lead as BIN sponsor.
+                   */
+                  debit_card?: Lead.DebitCard;
+
+                  /**
                    * Terms of service acceptances for commercial issuing revolving credit cards with Lead as BIN sponsor.
                    */
                   prepaid_card?: Lead.PrepaidCard;
@@ -7690,6 +7749,23 @@ export namespace V2 {
                     user_agent?: string;
                   }
 
+                  export interface DebitCard {
+                    /**
+                     * Bank terms of service acceptance for consumer issuing debit cards with Lead as BIN sponsor.
+                     */
+                    bank_terms?: DebitCard.BankTerms;
+
+                    /**
+                     * Financial disclosures terms of service acceptance for consumer issuing debit cards with Lead as BIN sponsor.
+                     */
+                    financing_disclosures?: DebitCard.FinancingDisclosures;
+
+                    /**
+                     * Platform terms of service acceptance for consumer issuing debit cards with Lead as BIN sponsor.
+                     */
+                    platform?: DebitCard.Platform;
+                  }
+
                   export interface PrepaidCard {
                     /**
                      * Bank terms of service acceptance for consumer issuing prepaid cards with Lead as BIN sponsor.
@@ -7705,6 +7781,74 @@ export namespace V2 {
                      * Platform terms of service acceptance for consumer issuing prepaid cards with Lead as BIN sponsor.
                      */
                     platform?: PrepaidCard.Platform;
+                  }
+
+                  export namespace DebitCard {
+                    export interface BankTerms {
+                      /**
+                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                       */
+                      date?: string;
+
+                      /**
+                       * The IP address from which the Account's representative accepted the terms of service.
+                       */
+                      ip?: string;
+
+                      /**
+                       * The URL to the service agreement the Account's representative accepted.
+                       */
+                      url?: string;
+
+                      /**
+                       * The user agent of the browser from which the Account's representative accepted the terms of service.
+                       */
+                      user_agent?: string;
+                    }
+
+                    export interface FinancingDisclosures {
+                      /**
+                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                       */
+                      date?: string;
+
+                      /**
+                       * The IP address from which the Account's representative accepted the terms of service.
+                       */
+                      ip?: string;
+
+                      /**
+                       * The URL to the service agreement the Account's representative accepted.
+                       */
+                      url?: string;
+
+                      /**
+                       * The user agent of the browser from which the Account's representative accepted the terms of service.
+                       */
+                      user_agent?: string;
+                    }
+
+                    export interface Platform {
+                      /**
+                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                       */
+                      date?: string;
+
+                      /**
+                       * The IP address from which the Account's representative accepted the terms of service.
+                       */
+                      ip?: string;
+
+                      /**
+                       * The URL to the service agreement the Account's representative accepted.
+                       */
+                      url?: string;
+
+                      /**
+                       * The user agent of the browser from which the Account's representative accepted the terms of service.
+                       */
+                      user_agent?: string;
+                    }
                   }
 
                   export namespace PrepaidCard {
@@ -9142,6 +9286,7 @@ export namespace V2 {
                 | 'consumer.celtic.revolving_credit_card'
                 | 'consumer.cross_river_bank.prepaid_card'
                 | 'consumer.holds_currencies.usd'
+                | 'consumer.lead.debit_card'
                 | 'consumer.lead.prepaid_card'
                 | 'crypto_wallets'
                 | 'eps_payments'
@@ -9757,6 +9902,11 @@ export namespace V2 {
 
               export interface Lead {
                 /**
+                 * Can create consumer issuing debit cards with Lead as BIN sponsor.
+                 */
+                debit_card?: Lead.DebitCard;
+
+                /**
                  * Can create consumer issuing prepaid cards with Lead as BIN sponsor.
                  */
                 prepaid_card?: Lead.PrepaidCard;
@@ -9781,6 +9931,13 @@ export namespace V2 {
               }
 
               export namespace Lead {
+                export interface DebitCard {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
                 export interface PrepaidCard {
                   /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -12333,6 +12490,11 @@ export namespace V2 {
 
                 export interface Lead {
                   /**
+                   * Terms of service acceptances for consumer issuing debit cards with Lead as BIN sponsor.
+                   */
+                  debit_card?: Lead.DebitCard;
+
+                  /**
                    * Terms of service acceptances for consumer issuing prepaid cards with Lead as BIN sponsor.
                    */
                   prepaid_card?: Lead.PrepaidCard;
@@ -12500,6 +12662,23 @@ export namespace V2 {
                 }
 
                 export namespace Lead {
+                  export interface DebitCard {
+                    /**
+                     * Bank terms of service acceptance for consumer issuing debit cards with Lead as BIN sponsor.
+                     */
+                    bank_terms?: DebitCard.BankTerms;
+
+                    /**
+                     * Financial disclosures terms of service acceptance for consumer issuing debit cards with Lead as BIN sponsor.
+                     */
+                    financing_disclosures?: DebitCard.FinancingDisclosures;
+
+                    /**
+                     * Platform terms of service acceptance for consumer issuing debit cards with Lead as BIN sponsor.
+                     */
+                    platform?: DebitCard.Platform;
+                  }
+
                   export interface PrepaidCard {
                     /**
                      * Bank terms of service acceptance for consumer issuing prepaid cards with Lead as BIN sponsor.
@@ -12515,6 +12694,59 @@ export namespace V2 {
                      * Platform terms of service acceptance for consumer issuing prepaid cards with Lead as BIN sponsor.
                      */
                     platform?: PrepaidCard.Platform;
+                  }
+
+                  export namespace DebitCard {
+                    export interface BankTerms {
+                      /**
+                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                       */
+                      date: string;
+
+                      /**
+                       * The IP address from which the Account's representative accepted the terms of service.
+                       */
+                      ip: string;
+
+                      /**
+                       * The user agent of the browser from which the Account's representative accepted the terms of service.
+                       */
+                      user_agent?: string;
+                    }
+
+                    export interface FinancingDisclosures {
+                      /**
+                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                       */
+                      date: string;
+
+                      /**
+                       * The IP address from which the Account's representative accepted the terms of service.
+                       */
+                      ip: string;
+
+                      /**
+                       * The user agent of the browser from which the Account's representative accepted the terms of service.
+                       */
+                      user_agent?: string;
+                    }
+
+                    export interface Platform {
+                      /**
+                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                       */
+                      date: string;
+
+                      /**
+                       * The IP address from which the Account's representative accepted the terms of service.
+                       */
+                      ip: string;
+
+                      /**
+                       * The user agent of the browser from which the Account's representative accepted the terms of service.
+                       */
+                      user_agent?: string;
+                    }
                   }
 
                   export namespace PrepaidCard {
@@ -14216,6 +14448,11 @@ export namespace V2 {
 
               export interface Lead {
                 /**
+                 * Can create consumer issuing debit cards with Lead as BIN sponsor.
+                 */
+                debit_card?: Lead.DebitCard;
+
+                /**
                  * Can create consumer issuing prepaid cards with Lead as BIN sponsor.
                  */
                 prepaid_card?: Lead.PrepaidCard;
@@ -14240,6 +14477,13 @@ export namespace V2 {
               }
 
               export namespace Lead {
+                export interface DebitCard {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
                 export interface PrepaidCard {
                   /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -16748,6 +16992,11 @@ export namespace V2 {
                   apple_pay?: Lead.ApplePay;
 
                   /**
+                   * Terms of service acceptances for consumer issuing debit cards with Lead as BIN sponsor.
+                   */
+                  debit_card?: Lead.DebitCard;
+
+                  /**
                    * Terms of service acceptances for consumer issuing prepaid cards with Lead as BIN sponsor.
                    */
                   prepaid_card?: Lead.PrepaidCard;
@@ -16932,6 +17181,23 @@ export namespace V2 {
                     user_agent?: string;
                   }
 
+                  export interface DebitCard {
+                    /**
+                     * Bank terms of service acceptance for consumer issuing debit cards with Lead as BIN sponsor.
+                     */
+                    bank_terms?: DebitCard.BankTerms;
+
+                    /**
+                     * Financial disclosures terms of service acceptance for consumer issuing debit cards with Lead as BIN sponsor.
+                     */
+                    financing_disclosures?: DebitCard.FinancingDisclosures;
+
+                    /**
+                     * Platform terms of service acceptance for consumer issuing debit cards with Lead as BIN sponsor.
+                     */
+                    platform?: DebitCard.Platform;
+                  }
+
                   export interface PrepaidCard {
                     /**
                      * Bank terms of service acceptance for consumer issuing prepaid cards with Lead as BIN sponsor.
@@ -16947,6 +17213,59 @@ export namespace V2 {
                      * Platform terms of service acceptance for consumer issuing prepaid cards with Lead as BIN sponsor.
                      */
                     platform?: PrepaidCard.Platform;
+                  }
+
+                  export namespace DebitCard {
+                    export interface BankTerms {
+                      /**
+                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                       */
+                      date?: string;
+
+                      /**
+                       * The IP address from which the Account's representative accepted the terms of service.
+                       */
+                      ip?: string;
+
+                      /**
+                       * The user agent of the browser from which the Account's representative accepted the terms of service.
+                       */
+                      user_agent?: string;
+                    }
+
+                    export interface FinancingDisclosures {
+                      /**
+                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                       */
+                      date?: string;
+
+                      /**
+                       * The IP address from which the Account's representative accepted the terms of service.
+                       */
+                      ip?: string;
+
+                      /**
+                       * The user agent of the browser from which the Account's representative accepted the terms of service.
+                       */
+                      user_agent?: string;
+                    }
+
+                    export interface Platform {
+                      /**
+                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                       */
+                      date?: string;
+
+                      /**
+                       * The IP address from which the Account's representative accepted the terms of service.
+                       */
+                      ip?: string;
+
+                      /**
+                       * The user agent of the browser from which the Account's representative accepted the terms of service.
+                       */
+                      user_agent?: string;
+                    }
                   }
 
                   export namespace PrepaidCard {
