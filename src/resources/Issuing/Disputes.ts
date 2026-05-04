@@ -139,6 +139,11 @@ export interface Dispute {
   metadata: Metadata;
 
   /**
+   * Incoming information from the card network for this dispute. Includes the acquiring merchant's initial response, pre-arbitration submission, and pre-arbitration response to the dispute.
+   */
+  network_lifecycle?: Issuing.Dispute.NetworkLifecycle | null;
+
+  /**
    * Current status of the dispute.
    */
   status: Issuing.Dispute.Status;
@@ -216,6 +221,23 @@ export namespace Issuing {
       | 'transaction_electronically_read'
       | 'transaction_qualifies_for_visa_easy_payment_service'
       | 'transaction_unattended';
+
+    export interface NetworkLifecycle {
+      /**
+       * Information related to the acquiring merchant's initial response to this dispute.
+       */
+      dispute_response: NetworkLifecycle.DisputeResponse | null;
+
+      /**
+       * Information related to the acquiring merchant's pre-arbitration response for this dispute.
+       */
+      pre_arbitration_response: NetworkLifecycle.PreArbitrationResponse | null;
+
+      /**
+       * Information related to the acquiring merchant's pre-arbitration submission for this dispute.
+       */
+      pre_arbitration_submission: NetworkLifecycle.PreArbitrationSubmission | null;
+    }
 
     export type Status =
       | 'expired'
@@ -628,6 +650,44 @@ export namespace Issuing {
 
       export namespace Other {
         export type ProductType = 'merchandise' | 'service';
+      }
+    }
+
+    export namespace NetworkLifecycle {
+      export interface DisputeResponse {
+        /**
+         * Error message if processing the acquiring merchant's initial dispute response failed.
+         */
+        error: string | null;
+
+        /**
+         * Array of [File](https://docs.stripe.com/api/files) ids containing evidence the acquiring merchant provided in support of their initial dispute response.
+         */
+        merchant_evidence_files: Array<string> | null;
+      }
+
+      export interface PreArbitrationResponse {
+        /**
+         * Error message if processing the acquiring merchant's pre-arbitration response failed.
+         */
+        error: string | null;
+
+        /**
+         * Array of [File](https://docs.stripe.com/api/files) ids containing evidence the acquiring merchant provided with their pre-arbitration response.
+         */
+        merchant_evidence_files: Array<string> | null;
+      }
+
+      export interface PreArbitrationSubmission {
+        /**
+         * Error message if processing the acquiring merchant's pre-arbitration submission failed.
+         */
+        error: string | null;
+
+        /**
+         * Array of [File](https://docs.stripe.com/api/files) ids containing evidence the acquiring merchant provided with their pre-arbitration submission.
+         */
+        merchant_evidence_files: Array<string> | null;
       }
     }
   }

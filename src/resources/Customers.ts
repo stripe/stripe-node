@@ -2166,6 +2166,7 @@ export namespace CustomerListPaymentMethodsParams {
     | 'customer_balance'
     | 'eps'
     | 'fpx'
+    | 'gift_card'
     | 'giropay'
     | 'gopay'
     | 'grabpay'

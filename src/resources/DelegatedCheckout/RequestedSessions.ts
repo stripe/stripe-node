@@ -1443,6 +1443,11 @@ export namespace DelegatedCheckout {
     expand?: Array<string>;
 
     /**
+     * The metadata for this requested session.
+     */
+    metadata?: Emptyable<MetadataParam>;
+
+    /**
      * The PaymentMethod to use with the requested session.
      */
     payment_method?: string;

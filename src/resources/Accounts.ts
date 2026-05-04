@@ -3610,6 +3610,11 @@ export namespace AccountCreateParams {
 
     export interface CardPayments {
       /**
+       * Protections to apply to this capability.
+       */
+      protections?: CardPayments.Protections;
+
+      /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
       requested?: boolean;
@@ -4040,6 +4045,24 @@ export namespace AccountCreateParams {
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
       requested?: boolean;
+    }
+
+    export namespace CardPayments {
+      export interface Protections {
+        /**
+         * Protection for connected accounts migrating from another PSP.
+         */
+        psp_migration: Protections.PspMigration;
+      }
+
+      export namespace Protections {
+        export interface PspMigration {
+          /**
+           * Passing true requests the protection.
+           */
+          requested: boolean;
+        }
+      }
     }
   }
 
@@ -5982,6 +6005,11 @@ export namespace AccountUpdateParams {
 
     export interface CardPayments {
       /**
+       * Protections to apply to this capability.
+       */
+      protections?: CardPayments.Protections;
+
+      /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
       requested?: boolean;
@@ -6412,6 +6440,24 @@ export namespace AccountUpdateParams {
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
       requested?: boolean;
+    }
+
+    export namespace CardPayments {
+      export interface Protections {
+        /**
+         * Protection for connected accounts migrating from another PSP.
+         */
+        psp_migration: Protections.PspMigration;
+      }
+
+      export namespace Protections {
+        export interface PspMigration {
+          /**
+           * Passing true requests the protection.
+           */
+          requested: boolean;
+        }
+      }
     }
   }
 

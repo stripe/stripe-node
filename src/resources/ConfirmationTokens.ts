@@ -166,6 +166,8 @@ export namespace ConfirmationToken {
 
     fpx?: PaymentMethodPreview.Fpx;
 
+    gift_card?: PaymentMethodPreview.GiftCard;
+
     giropay?: PaymentMethodPreview.Giropay;
 
     gopay?: PaymentMethodPreview.Gopay;
@@ -675,6 +677,38 @@ export namespace ConfirmationToken {
       bank: Fpx.Bank;
     }
 
+    export interface GiftCard {
+      /**
+       * The brand of the gift card.
+       */
+      brand: GiftCard.Brand;
+
+      /**
+       * The expiration month of the gift card.
+       */
+      exp_month: number | null;
+
+      /**
+       * The expiration year of the gift card.
+       */
+      exp_year: number | null;
+
+      /**
+       * Uniquely identifies the gift card.
+       */
+      fingerprint?: string;
+
+      /**
+       * The first six digits of the gift card number.
+       */
+      first6: string;
+
+      /**
+       * The last four digits of the gift card number.
+       */
+      last4: string | null;
+    }
+
     export interface Giropay {}
 
     export interface Gopay {}
@@ -1017,6 +1051,7 @@ export namespace ConfirmationToken {
       | 'customer_balance'
       | 'eps'
       | 'fpx'
+      | 'gift_card'
       | 'giropay'
       | 'gopay'
       | 'grabpay'
@@ -1650,6 +1685,10 @@ export namespace ConfirmationToken {
         | 'rhb'
         | 'standard_chartered'
         | 'uob';
+    }
+
+    export namespace GiftCard {
+      export type Brand = 'fiserv_valuelink' | 'givex' | 'svs';
     }
 
     export namespace IdBankTransfer {

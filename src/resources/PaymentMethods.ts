@@ -202,6 +202,8 @@ export interface PaymentMethod {
 
   fpx?: PaymentMethod.Fpx;
 
+  gift_card?: PaymentMethod.GiftCard;
+
   giropay?: PaymentMethod.Giropay;
 
   gopay?: PaymentMethod.Gopay;
@@ -674,6 +676,38 @@ export namespace PaymentMethod {
     bank: Fpx.Bank;
   }
 
+  export interface GiftCard {
+    /**
+     * The brand of the gift card.
+     */
+    brand: GiftCard.Brand;
+
+    /**
+     * The expiration month of the gift card.
+     */
+    exp_month: number | null;
+
+    /**
+     * The expiration year of the gift card.
+     */
+    exp_year: number | null;
+
+    /**
+     * Uniquely identifies the gift card.
+     */
+    fingerprint?: string;
+
+    /**
+     * The first six digits of the gift card number.
+     */
+    first6: string;
+
+    /**
+     * The last four digits of the gift card number.
+     */
+    last4: string | null;
+  }
+
   export interface Giropay {}
 
   export interface Gopay {}
@@ -1023,6 +1057,7 @@ export namespace PaymentMethod {
     | 'customer_balance'
     | 'eps'
     | 'fpx'
+    | 'gift_card'
     | 'giropay'
     | 'gopay'
     | 'grabpay'
@@ -1668,6 +1703,10 @@ export namespace PaymentMethod {
       | 'uob';
   }
 
+  export namespace GiftCard {
+    export type Brand = 'fiserv_valuelink' | 'givex' | 'svs';
+  }
+
   export namespace IdBankTransfer {
     export type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
   }
@@ -2037,6 +2076,11 @@ export interface PaymentMethodCreateParams {
    * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
    */
   fpx?: PaymentMethodCreateParams.Fpx;
+
+  /**
+   * If this is a `gift_card` PaymentMethod, this hash contains details about the gift card payment method.
+   */
+  gift_card?: PaymentMethodCreateParams.GiftCard;
 
   /**
    * If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
@@ -2426,6 +2470,13 @@ export namespace PaymentMethodCreateParams {
     bank: Fpx.Bank;
   }
 
+  export interface GiftCard {
+    /**
+     * The gift card ID to redeem
+     */
+    gift_card: string;
+  }
+
   export interface Giropay {}
 
   export interface Gopay {}
@@ -2616,6 +2667,7 @@ export namespace PaymentMethodCreateParams {
     | 'customer_balance'
     | 'eps'
     | 'fpx'
+    | 'gift_card'
     | 'giropay'
     | 'gopay'
     | 'grabpay'
@@ -3110,6 +3162,7 @@ export namespace PaymentMethodListParams {
     | 'customer_balance'
     | 'eps'
     | 'fpx'
+    | 'gift_card'
     | 'giropay'
     | 'gopay'
     | 'grabpay'
