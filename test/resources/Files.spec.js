@@ -63,7 +63,7 @@ describe('Files Resource', () => {
         .then(() => {
           const lastData = stripe.REQUESTS[stripe.REQUESTS.length - 1];
           expect(lastData).to.be.an.instanceOf(Uint8Array);
-          const asString = new TextDecoder().decode(lastData);
+          const asString = Buffer.from(lastData).toString();
           expect(asString).to.contain('Content-Disposition: form-data');
           expect(asString).to.contain('name="file"');
           expect(asString).to.contain('name="purpose"');
