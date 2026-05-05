@@ -354,7 +354,15 @@ async (): Promise<void> => {
   let g: Stripe.V2.Core.Event;
 }
 
-Stripe.Decimal.from('1.0');
+// Test that the Decimal type is exported
+{
+  function takesDecimal(decimal: Stripe.Decimal) {
+    return decimal;
+  }
+
+  const testDecimal = Stripe.Decimal.from('1.0');
+  takesDecimal(testDecimal);
+}
 
 let event: Stripe.Event = stripe.webhooks.constructEvent(
   'payload',
