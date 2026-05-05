@@ -25,6 +25,11 @@ import {
   validateInteger,
 } from './utils.js';
 import {
+  StripeEventNotificationHandler,
+  UnhandledNotificationDetails,
+  FallbackCallback,
+} from './StripeEventNotificationHandler.js';
+import {
   Response,
   RequestOptions,
   RawRequestOptions,
@@ -1871,6 +1876,17 @@ export class Stripe {
 
     return eventNotification;
   }
+
+  notificationHandler(
+    webhookSecret: string,
+    fallbackCallback: FallbackCallback
+  ): StripeEventNotificationHandler {
+    return new StripeEventNotificationHandler(
+      this,
+      webhookSecret,
+      fallbackCallback
+    );
+  }
 }
 
 // For backward compatibility, export createStripe as a factory function
@@ -2867,6 +2883,10 @@ export declare namespace Stripe {
   export {StripeRawError};
   export import ErrorType = _Error;
   export import Events = V2.Core.Events;
+  export {
+    StripeEventNotificationHandler as EventNotificationHandler,
+    UnhandledNotificationDetails,
+  };
 }
 
 Stripe.initialize(new NodePlatformFunctions());
