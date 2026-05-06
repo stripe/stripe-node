@@ -399,7 +399,11 @@ import {
 } from './resources/PaymentLinks.js';
 import {
   PaymentLocation,
+  DeletedPaymentLocation,
   PaymentLocationCreateParams,
+  PaymentLocationRetrieveParams,
+  PaymentLocationUpdateParams,
+  PaymentLocationDeleteParams,
   PaymentLocationResource,
 } from './resources/PaymentLocations.js';
 import {
@@ -2228,7 +2232,11 @@ export declare namespace Stripe {
   };
   export {
     PaymentLocation,
+    DeletedPaymentLocation,
     PaymentLocationCreateParams,
+    PaymentLocationRetrieveParams,
+    PaymentLocationUpdateParams,
+    PaymentLocationDeleteParams,
     PaymentLocationResource,
   };
   export {

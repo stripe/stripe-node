@@ -6,6 +6,51 @@ import {RequestOptions, Response} from '../lib.js';
 
 export class PaymentLocationResource extends StripeResource {
   /**
+   * Delete a Payment Location.
+   */
+  del(
+    id: string,
+    params?: PaymentLocationDeleteParams,
+    options?: RequestOptions
+  ): Promise<Response<DeletedPaymentLocation>> {
+    return this._makeRequest(
+      'DELETE',
+      `/v1/payment_locations/${id}`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Retrieve a Payment Location.
+   */
+  retrieve(
+    id: string,
+    params?: PaymentLocationRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<PaymentLocation>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/payment_locations/${id}`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Update a Payment Location.
+   */
+  update(
+    id: string,
+    params?: PaymentLocationUpdateParams,
+    options?: RequestOptions
+  ): Promise<Response<PaymentLocation>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_locations/${id}`,
+      params,
+      options
+    ) as any;
+  }
+  /**
    * Create a Payment Location.
    */
   create(
@@ -44,6 +89,11 @@ export interface PaymentLocation {
   capability_settings: PaymentLocation.CapabilitySettings | null;
 
   /**
+   * Always true for a deleted object
+   */
+  deleted?: void;
+
+  /**
    * The display name of the location.
    */
   display_name: string;
@@ -52,6 +102,22 @@ export interface PaymentLocation {
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
    */
   livemode: boolean;
+}
+export interface DeletedPaymentLocation {
+  /**
+   * Unique identifier for the object.
+   */
+  id: string;
+
+  /**
+   * String representing the object's type. Objects of the same type share the same value.
+   */
+  object: 'payment_location';
+
+  /**
+   * Always true for a deleted object
+   */
+  deleted: true;
 }
 export namespace PaymentLocation {
   export interface BusinessRegistration {
@@ -158,3 +224,71 @@ export namespace PaymentLocationCreateParams {
     siret?: string;
   }
 }
+export interface PaymentLocationRetrieveParams {
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}
+export interface PaymentLocationUpdateParams {
+  /**
+   * The full address of the location.
+   */
+  address?: PaymentLocationUpdateParams.Address;
+
+  /**
+   * Identification numbers associated with the location.
+   */
+  business_registration?: PaymentLocationUpdateParams.BusinessRegistration;
+
+  /**
+   * A name for the location.
+   */
+  display_name?: string;
+
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}
+export namespace PaymentLocationUpdateParams {
+  export interface Address {
+    /**
+     * City, district, suburb, town, or village.
+     */
+    city?: string;
+
+    /**
+     * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+     */
+    country: string;
+
+    /**
+     * Address line 1, such as the street, PO Box, or company name.
+     */
+    line1?: string;
+
+    /**
+     * Address line 2, such as the apartment, suite, unit, or building.
+     */
+    line2?: string;
+
+    /**
+     * ZIP or postal code.
+     */
+    postal_code?: string;
+
+    /**
+     * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+     */
+    state?: string;
+  }
+
+  export interface BusinessRegistration {
+    /**
+     * 14-digit SIRET (Système d'identification du répertoire des établissements) number for the location.
+     */
+    siret?: string;
+  }
+}
+export interface PaymentLocationDeleteParams {}
