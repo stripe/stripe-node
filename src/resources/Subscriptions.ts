@@ -1548,6 +1548,11 @@ export interface Subscription {
   status: Subscription.Status;
 
   /**
+   * Describes changes to the subscription's status.
+   */
+  status_details?: Subscription.StatusDetails;
+
+  /**
    * ID of the test clock this subscription belongs to.
    */
   test_clock: string | TestHelpers.TestClock | null;
@@ -1826,6 +1831,13 @@ export namespace Subscription {
     | 'paused'
     | 'trialing'
     | 'unpaid';
+
+  export interface StatusDetails {
+    /**
+     * Indicates when and why the subscription transitioned to the paused status.
+     */
+    paused: StatusDetails.Paused;
+  }
 
   export interface TransferData {
     /**
@@ -2467,6 +2479,41 @@ export namespace Subscription {
 
   export namespace Prebilling {
     export type UpdateBehavior = 'prebill' | 'reset';
+  }
+
+  export namespace StatusDetails {
+    export interface Paused {
+      /**
+       * Information on the `type=subscription` pause.
+       */
+      subscription: Paused.Subscription;
+
+      /**
+       * Unix timestamp in seconds of when the subscription status transitioned to `paused`.
+       */
+      transitioned_at: number;
+
+      /**
+       * The type of pause.
+       */
+      type: 'subscription';
+    }
+
+    export namespace Paused {
+      export interface Subscription {
+        /**
+         * The reason that the subscription was paused.
+         */
+        type: Subscription.Type;
+      }
+
+      export namespace Subscription {
+        export type Type =
+          | 'pause_requested'
+          | 'system'
+          | 'trial_end_without_payment_method';
+      }
+    }
   }
 
   export namespace TrialSettings {

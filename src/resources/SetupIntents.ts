@@ -336,6 +336,7 @@ export namespace SetupIntent {
     | 'customer_balance'
     | 'eps'
     | 'fpx'
+    | 'gift_card'
     | 'giropay'
     | 'gopay'
     | 'grabpay'
@@ -1573,6 +1574,7 @@ export namespace SetupIntentCreateParams {
     | 'customer_balance'
     | 'eps'
     | 'fpx'
+    | 'gift_card'
     | 'giropay'
     | 'gopay'
     | 'grabpay'
@@ -1718,6 +1720,11 @@ export namespace SetupIntentCreateParams {
      * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
      */
     fpx?: PaymentMethodData.Fpx;
+
+    /**
+     * If this is a `gift_card` PaymentMethod, this hash contains details about the gift card payment method.
+     */
+    gift_card?: PaymentMethodData.GiftCard;
 
     /**
      * If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
@@ -2208,6 +2215,13 @@ export namespace SetupIntentCreateParams {
       bank: Fpx.Bank;
     }
 
+    export interface GiftCard {
+      /**
+       * The gift card ID to redeem
+       */
+      gift_card: string;
+    }
+
     export interface Giropay {}
 
     export interface Gopay {}
@@ -2396,6 +2410,7 @@ export namespace SetupIntentCreateParams {
       | 'customer_balance'
       | 'eps'
       | 'fpx'
+      | 'gift_card'
       | 'giropay'
       | 'gopay'
       | 'grabpay'
@@ -3583,6 +3598,7 @@ export namespace SetupIntentUpdateParams {
     | 'customer_balance'
     | 'eps'
     | 'fpx'
+    | 'gift_card'
     | 'giropay'
     | 'gopay'
     | 'grabpay'
@@ -3721,6 +3737,11 @@ export namespace SetupIntentUpdateParams {
      * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
      */
     fpx?: PaymentMethodData.Fpx;
+
+    /**
+     * If this is a `gift_card` PaymentMethod, this hash contains details about the gift card payment method.
+     */
+    gift_card?: PaymentMethodData.GiftCard;
 
     /**
      * If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
@@ -4151,6 +4172,13 @@ export namespace SetupIntentUpdateParams {
       bank: Fpx.Bank;
     }
 
+    export interface GiftCard {
+      /**
+       * The gift card ID to redeem
+       */
+      gift_card: string;
+    }
+
     export interface Giropay {}
 
     export interface Gopay {}
@@ -4339,6 +4367,7 @@ export namespace SetupIntentUpdateParams {
       | 'customer_balance'
       | 'eps'
       | 'fpx'
+      | 'gift_card'
       | 'giropay'
       | 'gopay'
       | 'grabpay'
@@ -5616,6 +5645,11 @@ export namespace SetupIntentConfirmParams {
     fpx?: PaymentMethodData.Fpx;
 
     /**
+     * If this is a `gift_card` PaymentMethod, this hash contains details about the gift card payment method.
+     */
+    gift_card?: PaymentMethodData.GiftCard;
+
+    /**
      * If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
      */
     giropay?: PaymentMethodData.Giropay;
@@ -6086,6 +6120,13 @@ export namespace SetupIntentConfirmParams {
       bank: Fpx.Bank;
     }
 
+    export interface GiftCard {
+      /**
+       * The gift card ID to redeem
+       */
+      gift_card: string;
+    }
+
     export interface Giropay {}
 
     export interface Gopay {}
@@ -6274,6 +6315,7 @@ export namespace SetupIntentConfirmParams {
       | 'customer_balance'
       | 'eps'
       | 'fpx'
+      | 'gift_card'
       | 'giropay'
       | 'gopay'
       | 'grabpay'

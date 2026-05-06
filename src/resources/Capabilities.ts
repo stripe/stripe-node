@@ -20,6 +20,8 @@ export interface Capability {
 
   future_requirements?: Capability.FutureRequirements;
 
+  protections?: Capability.Protections;
+
   /**
    * Whether the capability has been requested.
    */
@@ -78,6 +80,10 @@ export namespace Capability {
      * Fields that are being reviewed, or might become required depending on the results of a review. If the review fails, these fields can move to `eventually_due`, `currently_due`, `past_due` or `alternatives`. Fields might appear in `eventually_due`, `currently_due`, `past_due` or `alternatives` and in `pending_verification` if one verification fails but another is still pending.
      */
     pending_verification: Array<string>;
+  }
+
+  export interface Protections {
+    psp_migration?: Protections.PspMigration;
   }
 
   export interface Requirements {
@@ -266,6 +272,29 @@ export namespace Capability {
         | 'verification_requires_additional_memorandum_of_associations'
         | 'verification_requires_additional_proof_of_registration'
         | 'verification_supportability';
+    }
+  }
+
+  export namespace Protections {
+    export interface PspMigration {
+      /**
+       * Time at which the protection expires. Measured in seconds since the Unix epoch.
+       */
+      expires_at: number;
+
+      /**
+       * Time at which the protection was requested. Measured in seconds since the Unix epoch.
+       */
+      requested_at: number;
+
+      /**
+       * The status of the capability protection.
+       */
+      status: PspMigration.Status;
+    }
+
+    export namespace PspMigration {
+      export type Status = 'active' | 'disrupted' | 'expired' | 'inactive';
     }
   }
 

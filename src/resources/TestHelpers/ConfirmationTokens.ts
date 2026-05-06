@@ -159,6 +159,11 @@ export namespace TestHelpers {
       fpx?: PaymentMethodData.Fpx;
 
       /**
+       * If this is a `gift_card` PaymentMethod, this hash contains details about the gift card payment method.
+       */
+      gift_card?: PaymentMethodData.GiftCard;
+
+      /**
        * If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
        */
       giropay?: PaymentMethodData.Giropay;
@@ -534,6 +539,13 @@ export namespace TestHelpers {
         bank: Fpx.Bank;
       }
 
+      export interface GiftCard {
+        /**
+         * The gift card ID to redeem
+         */
+        gift_card: string;
+      }
+
       export interface Giropay {}
 
       export interface Gopay {}
@@ -722,6 +734,7 @@ export namespace TestHelpers {
         | 'customer_balance'
         | 'eps'
         | 'fpx'
+        | 'gift_card'
         | 'giropay'
         | 'gopay'
         | 'grabpay'

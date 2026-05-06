@@ -403,6 +403,15 @@ import {
   PaymentLinkResource,
 } from './resources/PaymentLinks.js';
 import {
+  PaymentLocation,
+  DeletedPaymentLocation,
+  PaymentLocationCreateParams,
+  PaymentLocationRetrieveParams,
+  PaymentLocationUpdateParams,
+  PaymentLocationDeleteParams,
+  PaymentLocationResource,
+} from './resources/PaymentLocations.js';
+import {
   PaymentMethod,
   PaymentMethodCreateParams,
   PaymentMethodRetrieveParams,
@@ -1172,6 +1181,7 @@ export class Stripe {
   paymentAttemptRecords: PaymentAttemptRecordResource;
   paymentIntents: PaymentIntentResource;
   paymentLinks: PaymentLinkResource;
+  paymentLocations: PaymentLocationResource;
   paymentMethodConfigurations: PaymentMethodConfigurationResource;
   paymentMethodDomains: PaymentMethodDomainResource;
   paymentMethods: PaymentMethodResource;
@@ -1349,6 +1359,7 @@ export class Stripe {
     this.paymentAttemptRecords = new PaymentAttemptRecordResource(this);
     this.paymentIntents = new PaymentIntentResource(this);
     this.paymentLinks = new PaymentLinkResource(this);
+    this.paymentLocations = new PaymentLocationResource(this);
     this.paymentMethodConfigurations = new PaymentMethodConfigurationResource(
       this
     );
@@ -2234,6 +2245,15 @@ export declare namespace Stripe {
     PaymentLinkListParams,
     PaymentLinkListLineItemsParams,
     PaymentLinkResource,
+  };
+  export {
+    PaymentLocation,
+    DeletedPaymentLocation,
+    PaymentLocationCreateParams,
+    PaymentLocationRetrieveParams,
+    PaymentLocationUpdateParams,
+    PaymentLocationDeleteParams,
+    PaymentLocationResource,
   };
   export {
     PaymentMethod,
