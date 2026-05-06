@@ -18,6 +18,7 @@ import {
 } from '../lib.js';
 
 export class FileResource extends StripeResource {
+  requestDataProcessor = multipartRequestDataProcessor;
   /**
    * Returns a list of the files that your account has access to. Stripe sorts and returns the files by their creation dates, placing the most recently created files at the top.
    */
