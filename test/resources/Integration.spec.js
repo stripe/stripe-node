@@ -51,9 +51,7 @@ describe('Files Resource', () => {
       const file = await stripe.files.create({
         purpose: 'dispute_evidence',
         file: {
-          data: fs.readFileSync(
-            path.join(__dirname, 'data/minimal.pdf')
-          ),
+          data: fs.readFileSync(path.join(__dirname, 'data/minimal.pdf')),
           name: 'minimal.pdf',
           type: 'application/pdf',
         },
@@ -66,9 +64,7 @@ describe('Files Resource', () => {
       const file = await stripe.files.create({
         purpose: 'dispute_evidence',
         file: {
-          data: fs.createReadStream(
-            path.join(__dirname, 'data/minimal.pdf')
-          ),
+          data: fs.createReadStream(path.join(__dirname, 'data/minimal.pdf')),
           name: 'minimal.pdf',
           type: 'application/pdf',
         },
