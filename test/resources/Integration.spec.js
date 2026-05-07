@@ -4,6 +4,8 @@
 
 const stripe = require('../testUtils.js').getStripeMockClient();
 const expect = require('chai').expect;
+const fs = require('fs');
+const path = require('path');
 
 describe('Customers Resource', () => {
   describe('retrieve', () => {
@@ -39,6 +41,40 @@ describe('Charges Resource', () => {
           cnt += 1;
         });
       expect(cnt).to.equal(1);
+    });
+  });
+});
+
+describe('Files Resource', () => {
+  describe('create', () => {
+    it('Uploads a file with a Buffer', async () => {
+      const file = await stripe.files.create({
+        purpose: 'dispute_evidence',
+        file: {
+          data: fs.readFileSync(
+            path.join(__dirname, 'data/minimal.pdf')
+          ),
+          name: 'minimal.pdf',
+          type: 'application/pdf',
+        },
+      });
+      expect(file).to.not.be.null;
+      expect(file.object).to.equal('file');
+    });
+
+    it('Uploads a file with a ReadStream', async () => {
+      const file = await stripe.files.create({
+        purpose: 'dispute_evidence',
+        file: {
+          data: fs.createReadStream(
+            path.join(__dirname, 'data/minimal.pdf')
+          ),
+          name: 'minimal.pdf',
+          type: 'application/pdf',
+        },
+      });
+      expect(file).to.not.be.null;
+      expect(file.object).to.equal('file');
     });
   });
 });
