@@ -1,5 +1,8 @@
 # Changelog
 
+## 22.2.0-beta.3 - 2026-05-07
+* [#2706](https://github.com/stripe/stripe-node/pull/2706) Merge bug fixes from https://github.com/stripe/stripe-node/releases/tag/v22.1.1 to Public Preview
+
 ## 22.2.0-beta.2 - 2026-04-24
 * [#2693](https://github.com/stripe/stripe-node/pull/2693) Update generated code for beta
   * Add support for new resources `V2.Commerce.ProductCatalogImport`, `V2.Data.Reporting.QueryRun`, `V2.Extend.WorkflowRun`, `V2.Extend.Workflow`, `V2.Iam.ActivityLog`, `V2.Network.BusinessProfile`, and `V2.OrchestratedCommerce.Agreement`
