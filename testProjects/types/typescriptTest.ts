@@ -382,6 +382,7 @@ event = stripe.webhooks.constructEvent(
   'secret'
 );
 
+const v2AccountCreateParamConfiguration: Stripe.V2.Core.AccountCreateParams.Configuration = {};
 const checkoutSessionParam: Stripe.Checkout.SessionCreateParams = {};
 const v2EventListParams: Stripe.V2.Core.EventListParams = {};
 const v2AccountCreateParams: Stripe.V2.Core.AccountCreateParams = {};
