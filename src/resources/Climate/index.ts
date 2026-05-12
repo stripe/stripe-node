@@ -30,16 +30,16 @@ export class Climate {
 }
 
 export declare namespace Climate {
-  export type OrderListParams = ClimateNamespace0.OrderListParams;
-  export type OrderCreateParams = ClimateNamespace0.OrderCreateParams;
-  export type OrderRetrieveParams = ClimateNamespace0.OrderRetrieveParams;
-  export type OrderUpdateParams = ClimateNamespace0.OrderUpdateParams;
-  export type OrderCancelParams = ClimateNamespace0.OrderCancelParams;
+  export import OrderListParams = ClimateNamespace0.OrderListParams;
+  export import OrderCreateParams = ClimateNamespace0.OrderCreateParams;
+  export import OrderRetrieveParams = ClimateNamespace0.OrderRetrieveParams;
+  export import OrderUpdateParams = ClimateNamespace0.OrderUpdateParams;
+  export import OrderCancelParams = ClimateNamespace0.OrderCancelParams;
   export {Order};
-  export type ProductListParams = ClimateNamespace1.ProductListParams;
-  export type ProductRetrieveParams = ClimateNamespace1.ProductRetrieveParams;
+  export import ProductListParams = ClimateNamespace1.ProductListParams;
+  export import ProductRetrieveParams = ClimateNamespace1.ProductRetrieveParams;
   export {Product};
-  export type SupplierListParams = ClimateNamespace2.SupplierListParams;
-  export type SupplierRetrieveParams = ClimateNamespace2.SupplierRetrieveParams;
+  export import SupplierListParams = ClimateNamespace2.SupplierListParams;
+  export import SupplierRetrieveParams = ClimateNamespace2.SupplierRetrieveParams;
   export {Supplier};
 }

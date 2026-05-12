@@ -26,11 +26,11 @@ export class Reporting {
 }
 
 export declare namespace Reporting {
-  export type ReportRunListParams = ReportingNamespace0.ReportRunListParams;
-  export type ReportRunCreateParams = ReportingNamespace0.ReportRunCreateParams;
-  export type ReportRunRetrieveParams = ReportingNamespace0.ReportRunRetrieveParams;
+  export import ReportRunListParams = ReportingNamespace0.ReportRunListParams;
+  export import ReportRunCreateParams = ReportingNamespace0.ReportRunCreateParams;
+  export import ReportRunRetrieveParams = ReportingNamespace0.ReportRunRetrieveParams;
   export {ReportRun};
-  export type ReportTypeListParams = ReportingNamespace1.ReportTypeListParams;
-  export type ReportTypeRetrieveParams = ReportingNamespace1.ReportTypeRetrieveParams;
+  export import ReportTypeListParams = ReportingNamespace1.ReportTypeListParams;
+  export import ReportTypeRetrieveParams = ReportingNamespace1.ReportTypeRetrieveParams;
   export {ReportType};
 }

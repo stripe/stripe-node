@@ -45,11 +45,11 @@ export class TestHelpers {
 }
 
 export declare namespace TestHelpers {
-  export type TestClockDeleteParams = TestHelpersNamespace3.TestClockDeleteParams;
-  export type TestClockRetrieveParams = TestHelpersNamespace3.TestClockRetrieveParams;
-  export type TestClockListParams = TestHelpersNamespace3.TestClockListParams;
-  export type TestClockCreateParams = TestHelpersNamespace3.TestClockCreateParams;
-  export type TestClockAdvanceParams = TestHelpersNamespace3.TestClockAdvanceParams;
+  export import TestClockDeleteParams = TestHelpersNamespace3.TestClockDeleteParams;
+  export import TestClockRetrieveParams = TestHelpersNamespace3.TestClockRetrieveParams;
+  export import TestClockListParams = TestHelpersNamespace3.TestClockListParams;
+  export import TestClockCreateParams = TestHelpersNamespace3.TestClockCreateParams;
+  export import TestClockAdvanceParams = TestHelpersNamespace3.TestClockAdvanceParams;
   export {TestClock};
   export {Issuing};
   export {Terminal};

@@ -42,20 +42,20 @@ export class Radar {
 }
 
 export declare namespace Radar {
-  export type EarlyFraudWarningListParams = RadarNamespace0.EarlyFraudWarningListParams;
-  export type EarlyFraudWarningRetrieveParams = RadarNamespace0.EarlyFraudWarningRetrieveParams;
+  export import EarlyFraudWarningListParams = RadarNamespace0.EarlyFraudWarningListParams;
+  export import EarlyFraudWarningRetrieveParams = RadarNamespace0.EarlyFraudWarningRetrieveParams;
   export {EarlyFraudWarning};
-  export type PaymentEvaluationCreateParams = RadarNamespace1.PaymentEvaluationCreateParams;
+  export import PaymentEvaluationCreateParams = RadarNamespace1.PaymentEvaluationCreateParams;
   export {PaymentEvaluation};
-  export type ValueListDeleteParams = RadarNamespace2.ValueListDeleteParams;
-  export type ValueListRetrieveParams = RadarNamespace2.ValueListRetrieveParams;
-  export type ValueListUpdateParams = RadarNamespace2.ValueListUpdateParams;
-  export type ValueListListParams = RadarNamespace2.ValueListListParams;
-  export type ValueListCreateParams = RadarNamespace2.ValueListCreateParams;
+  export import ValueListDeleteParams = RadarNamespace2.ValueListDeleteParams;
+  export import ValueListRetrieveParams = RadarNamespace2.ValueListRetrieveParams;
+  export import ValueListUpdateParams = RadarNamespace2.ValueListUpdateParams;
+  export import ValueListListParams = RadarNamespace2.ValueListListParams;
+  export import ValueListCreateParams = RadarNamespace2.ValueListCreateParams;
   export {ValueList};
-  export type ValueListItemDeleteParams = RadarNamespace3.ValueListItemDeleteParams;
-  export type ValueListItemRetrieveParams = RadarNamespace3.ValueListItemRetrieveParams;
-  export type ValueListItemListParams = RadarNamespace3.ValueListItemListParams;
-  export type ValueListItemCreateParams = RadarNamespace3.ValueListItemCreateParams;
+  export import ValueListItemDeleteParams = RadarNamespace3.ValueListItemDeleteParams;
+  export import ValueListItemRetrieveParams = RadarNamespace3.ValueListItemRetrieveParams;
+  export import ValueListItemListParams = RadarNamespace3.ValueListItemListParams;
+  export import ValueListItemCreateParams = RadarNamespace3.ValueListItemCreateParams;
   export {ValueListItem};
 }
