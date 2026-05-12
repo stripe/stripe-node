@@ -26,14 +26,14 @@ export class Identity {
 }
 
 export declare namespace Identity {
-  export type VerificationReportListParams = IdentityNamespace0.VerificationReportListParams;
-  export type VerificationReportRetrieveParams = IdentityNamespace0.VerificationReportRetrieveParams;
+  export import VerificationReportListParams = IdentityNamespace0.VerificationReportListParams;
+  export import VerificationReportRetrieveParams = IdentityNamespace0.VerificationReportRetrieveParams;
   export {VerificationReport};
-  export type VerificationSessionListParams = IdentityNamespace1.VerificationSessionListParams;
-  export type VerificationSessionCreateParams = IdentityNamespace1.VerificationSessionCreateParams;
-  export type VerificationSessionRetrieveParams = IdentityNamespace1.VerificationSessionRetrieveParams;
-  export type VerificationSessionUpdateParams = IdentityNamespace1.VerificationSessionUpdateParams;
-  export type VerificationSessionCancelParams = IdentityNamespace1.VerificationSessionCancelParams;
-  export type VerificationSessionRedactParams = IdentityNamespace1.VerificationSessionRedactParams;
+  export import VerificationSessionListParams = IdentityNamespace1.VerificationSessionListParams;
+  export import VerificationSessionCreateParams = IdentityNamespace1.VerificationSessionCreateParams;
+  export import VerificationSessionRetrieveParams = IdentityNamespace1.VerificationSessionRetrieveParams;
+  export import VerificationSessionUpdateParams = IdentityNamespace1.VerificationSessionUpdateParams;
+  export import VerificationSessionCancelParams = IdentityNamespace1.VerificationSessionCancelParams;
+  export import VerificationSessionRedactParams = IdentityNamespace1.VerificationSessionRedactParams;
   export {VerificationSession};
 }

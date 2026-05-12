@@ -14,9 +14,9 @@ export class Apps {
 }
 
 export declare namespace Apps {
-  export type SecretListParams = AppsNamespace0.SecretListParams;
-  export type SecretCreateParams = AppsNamespace0.SecretCreateParams;
-  export type SecretFindParams = AppsNamespace0.SecretFindParams;
-  export type SecretDeleteWhereParams = AppsNamespace0.SecretDeleteWhereParams;
+  export import SecretListParams = AppsNamespace0.SecretListParams;
+  export import SecretCreateParams = AppsNamespace0.SecretCreateParams;
+  export import SecretFindParams = AppsNamespace0.SecretFindParams;
+  export import SecretDeleteWhereParams = AppsNamespace0.SecretDeleteWhereParams;
   export {Secret};
 }

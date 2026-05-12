@@ -53,28 +53,28 @@ export class Core {
 }
 
 export declare namespace Core {
-  export type AccountListParams = V2Namespace0.Core.AccountListParams;
-  export type AccountCreateParams = V2Namespace0.Core.AccountCreateParams;
-  export type AccountRetrieveParams = V2Namespace0.Core.AccountRetrieveParams;
-  export type AccountUpdateParams = V2Namespace0.Core.AccountUpdateParams;
-  export type AccountCloseParams = V2Namespace0.Core.AccountCloseParams;
+  export import AccountListParams = V2Namespace0.Core.AccountListParams;
+  export import AccountCreateParams = V2Namespace0.Core.AccountCreateParams;
+  export import AccountRetrieveParams = V2Namespace0.Core.AccountRetrieveParams;
+  export import AccountUpdateParams = V2Namespace0.Core.AccountUpdateParams;
+  export import AccountCloseParams = V2Namespace0.Core.AccountCloseParams;
   export {Account};
-  export type AccountLinkCreateParams = V2Namespace1.Core.AccountLinkCreateParams;
+  export import AccountLinkCreateParams = V2Namespace1.Core.AccountLinkCreateParams;
   export {AccountLink};
-  export type AccountTokenCreateParams = V2Namespace2.Core.AccountTokenCreateParams;
-  export type AccountTokenRetrieveParams = V2Namespace2.Core.AccountTokenRetrieveParams;
+  export import AccountTokenCreateParams = V2Namespace2.Core.AccountTokenCreateParams;
+  export import AccountTokenRetrieveParams = V2Namespace2.Core.AccountTokenRetrieveParams;
   export {AccountToken};
-  export type EventListParams = V2EventsNamespace.Core.EventListParams;
-  export type EventRetrieveParams = V2EventsNamespace.Core.EventRetrieveParams;
+  export import EventListParams = V2EventsNamespace.Core.EventListParams;
+  export import EventRetrieveParams = V2EventsNamespace.Core.EventRetrieveParams;
   export {EventBase, Event, EventNotification, Events};
-  export type EventDestinationListParams = V2Namespace4.Core.EventDestinationListParams;
-  export type EventDestinationCreateParams = V2Namespace4.Core.EventDestinationCreateParams;
-  export type EventDestinationDeleteParams = V2Namespace4.Core.EventDestinationDeleteParams;
-  export type EventDestinationRetrieveParams = V2Namespace4.Core.EventDestinationRetrieveParams;
-  export type EventDestinationUpdateParams = V2Namespace4.Core.EventDestinationUpdateParams;
-  export type EventDestinationDisableParams = V2Namespace4.Core.EventDestinationDisableParams;
-  export type EventDestinationEnableParams = V2Namespace4.Core.EventDestinationEnableParams;
-  export type EventDestinationPingParams = V2Namespace4.Core.EventDestinationPingParams;
+  export import EventDestinationListParams = V2Namespace4.Core.EventDestinationListParams;
+  export import EventDestinationCreateParams = V2Namespace4.Core.EventDestinationCreateParams;
+  export import EventDestinationDeleteParams = V2Namespace4.Core.EventDestinationDeleteParams;
+  export import EventDestinationRetrieveParams = V2Namespace4.Core.EventDestinationRetrieveParams;
+  export import EventDestinationUpdateParams = V2Namespace4.Core.EventDestinationUpdateParams;
+  export import EventDestinationDisableParams = V2Namespace4.Core.EventDestinationDisableParams;
+  export import EventDestinationEnableParams = V2Namespace4.Core.EventDestinationEnableParams;
+  export import EventDestinationPingParams = V2Namespace4.Core.EventDestinationPingParams;
   export {EventDestination};
   export {AccountPersonToken};
   export {AccountPerson};
