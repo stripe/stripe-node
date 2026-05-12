@@ -384,3 +384,14 @@ event = stripe.webhooks.constructEvent(
 
 const checkoutSessionParam: Stripe.Checkout.SessionCreateParams = {};
 const v2EventListParams: Stripe.V2.Core.EventListParams = {};
+const v2AccountCreateParams: Stripe.V2.Core.AccountCreateParams = {};
+const oAuthToken: Stripe.OAuthToken = {};
+const oAuthResource: Stripe.OAuthResource = stripe.oauth;
+
+const oAuthTokenParams: Stripe.OAuthTokenParams = {
+  grant_type: 'authorization_code',
+};
+const oAuthAuthorizeUrlOptions: Stripe.OAuthAuthorizeUrlOptions = {};
+const oAuthAuthorizeUrlParams: Stripe.OAuthAuthorizeUrlParams = {};
+const oAuthDeauthorization: Stripe.OAuthDeauthorization = {stripe_user_id: ''};
+const oAuthDeauthorizeParams: Stripe.OAuthDeauthorizeParams = {};

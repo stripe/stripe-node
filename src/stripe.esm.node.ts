@@ -898,6 +898,14 @@ import {
 } from './resources/Events.js';
 // V1EventImports: The end of the section generated from our OpenAPI spec
 import {OAuthResource} from './resources.js';
+import {
+  OAuthToken,
+  OAuthTokenParams,
+  OAuthAuthorizeUrlOptions,
+  OAuthAuthorizeUrlParams,
+  OAuthDeauthorization,
+  OAuthDeauthorizeParams,
+} from './resources/OAuth.js';
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -2551,6 +2559,16 @@ export declare namespace Stripe {
     RangeQueryParam,
     PaginationParams,
     Emptyable,
+  };
+
+  export {
+    OAuthResource,
+    OAuthToken,
+    OAuthTokenParams,
+    OAuthAuthorizeUrlOptions,
+    OAuthAuthorizeUrlParams,
+    OAuthDeauthorization,
+    OAuthDeauthorizeParams,
   };
 
   export type Decimal = import('./shared.js').Decimal;
