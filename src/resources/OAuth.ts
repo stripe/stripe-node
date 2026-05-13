@@ -62,7 +62,7 @@ export class OAuthResource extends StripeResource {
   }
 }
 
-interface OAuthToken {
+export interface OAuthToken {
   /**
    * The access token you can use to make requests on behalf of this Stripe account. Use it as you would any Stripe secret API key.
    * This key does not expire, but may be revoked by the user at any time (you'll get a account.application.deauthorized webhook event when this happens).
@@ -101,7 +101,7 @@ interface OAuthToken {
   stripe_publishable_key?: string;
 }
 
-interface OAuthDeauthorization {
+export interface OAuthDeauthorization {
   /**
    * The unique id of the account you have revoked access to, as a string.
    * This is the same as the stripe_user_id you passed in.
@@ -110,7 +110,7 @@ interface OAuthDeauthorization {
   stripe_user_id: string;
 }
 
-interface OAuthAuthorizeUrlParams {
+export interface OAuthAuthorizeUrlParams {
   /**
    * The unique identifier provided to your application, found in your application settings.
    */
@@ -166,7 +166,7 @@ interface OAuthAuthorizeUrlParams {
   stripe_user?: OAuthAuthorizeUrlParams.StripeUser;
 }
 
-namespace OAuthAuthorizeUrlParams {
+export namespace OAuthAuthorizeUrlParams {
   export interface StripeUser {
     /**
      * Recommended
@@ -339,11 +339,11 @@ namespace OAuthAuthorizeUrlParams {
   }
 }
 
-interface OAuthAuthorizeUrlOptions {
+export interface OAuthAuthorizeUrlOptions {
   express?: boolean;
 }
 
-interface OAuthDeauthorizeParams {
+export interface OAuthDeauthorizeParams {
   /**
    * The client_id of the application that you'd like to disconnect the account from.
    * The account must be connected to this application.
@@ -356,7 +356,7 @@ interface OAuthDeauthorizeParams {
   stripe_user_id?: string;
 }
 
-interface OAuthTokenParams {
+export interface OAuthTokenParams {
   /**
    * `'authorization_code'` when turning an authorization code into an access token, or `'refresh_token'` when using a refresh token to get a new access token.
    */

@@ -58,11 +58,11 @@ export class Tax {
 }
 
 export declare namespace Tax {
-  export type AssociationFindParams = TaxNamespace0.AssociationFindParams;
+  export import AssociationFindParams = TaxNamespace0.AssociationFindParams;
   export {Association};
-  export type CalculationRetrieveParams = TaxNamespace1.CalculationRetrieveParams;
-  export type CalculationCreateParams = TaxNamespace1.CalculationCreateParams;
-  export type CalculationListLineItemsParams = TaxNamespace1.CalculationListLineItemsParams;
+  export import CalculationRetrieveParams = TaxNamespace1.CalculationRetrieveParams;
+  export import CalculationCreateParams = TaxNamespace1.CalculationCreateParams;
+  export import CalculationListLineItemsParams = TaxNamespace1.CalculationListLineItemsParams;
   export {Calculation};
   export type FormListParams = TaxNamespace2.FormListParams;
   export type FormRetrieveParams = TaxNamespace2.FormRetrieveParams;

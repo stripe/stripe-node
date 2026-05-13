@@ -60,16 +60,16 @@ export class Core {
 }
 
 export declare namespace Core {
-  export type AccountListParams = V2Namespace0.Core.AccountListParams;
-  export type AccountCreateParams = V2Namespace0.Core.AccountCreateParams;
-  export type AccountRetrieveParams = V2Namespace0.Core.AccountRetrieveParams;
-  export type AccountUpdateParams = V2Namespace0.Core.AccountUpdateParams;
-  export type AccountCloseParams = V2Namespace0.Core.AccountCloseParams;
+  export import AccountListParams = V2Namespace0.Core.AccountListParams;
+  export import AccountCreateParams = V2Namespace0.Core.AccountCreateParams;
+  export import AccountRetrieveParams = V2Namespace0.Core.AccountRetrieveParams;
+  export import AccountUpdateParams = V2Namespace0.Core.AccountUpdateParams;
+  export import AccountCloseParams = V2Namespace0.Core.AccountCloseParams;
   export {Account};
-  export type AccountLinkCreateParams = V2Namespace1.Core.AccountLinkCreateParams;
+  export import AccountLinkCreateParams = V2Namespace1.Core.AccountLinkCreateParams;
   export {AccountLink};
-  export type AccountTokenCreateParams = V2Namespace2.Core.AccountTokenCreateParams;
-  export type AccountTokenRetrieveParams = V2Namespace2.Core.AccountTokenRetrieveParams;
+  export import AccountTokenCreateParams = V2Namespace2.Core.AccountTokenCreateParams;
+  export import AccountTokenRetrieveParams = V2Namespace2.Core.AccountTokenRetrieveParams;
   export {AccountToken};
   export type BatchJobCreateParams = V2Namespace3.Core.BatchJobCreateParams;
   export type BatchJobRetrieveParams = V2Namespace3.Core.BatchJobRetrieveParams;

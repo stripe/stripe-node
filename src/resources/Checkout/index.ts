@@ -18,11 +18,11 @@ export class Checkout {
 }
 
 export declare namespace Checkout {
-  export type SessionListParams = CheckoutNamespace0.SessionListParams;
-  export type SessionCreateParams = CheckoutNamespace0.SessionCreateParams;
-  export type SessionRetrieveParams = CheckoutNamespace0.SessionRetrieveParams;
-  export type SessionUpdateParams = CheckoutNamespace0.SessionUpdateParams;
-  export type SessionExpireParams = CheckoutNamespace0.SessionExpireParams;
-  export type SessionListLineItemsParams = CheckoutNamespace0.SessionListLineItemsParams;
+  export import SessionListParams = CheckoutNamespace0.SessionListParams;
+  export import SessionCreateParams = CheckoutNamespace0.SessionCreateParams;
+  export import SessionRetrieveParams = CheckoutNamespace0.SessionRetrieveParams;
+  export import SessionUpdateParams = CheckoutNamespace0.SessionUpdateParams;
+  export import SessionExpireParams = CheckoutNamespace0.SessionExpireParams;
+  export import SessionListLineItemsParams = CheckoutNamespace0.SessionListLineItemsParams;
   export {Session};
 }

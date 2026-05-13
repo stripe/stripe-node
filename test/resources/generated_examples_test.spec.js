@@ -1074,6 +1074,30 @@ describe('Generated tests', function() {
     expect(fileLink).not.to.be.null;
   });
 
+  it('test_files_get', async function() {
+    const files = await stripe.files.list({
+      limit: 3,
+    });
+    expect(files).not.to.be.null;
+  });
+
+  it('test_files_get_2', async function() {
+    const file = await stripe.files.retrieve('file_xxxxxxxxxxxxx');
+    expect(file).not.to.be.null;
+  });
+
+  it('test_files_post', async function() {
+    const file = await stripe.files.create({
+      purpose: 'account_requirement',
+      file: {
+        data: Buffer.from('file contents'),
+        name: 'file.txt',
+        type: 'application/octet-stream',
+      },
+    });
+    expect(file).not.to.be.null;
+  });
+
   it('test_financial_connections_accounts_disconnect_post', async function() {
     const account = await stripe.financialConnections.accounts.disconnect(
       'fca_xyz'
