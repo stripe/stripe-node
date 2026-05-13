@@ -19,7 +19,6 @@ import * as resources from './resources.js';
 import {
   createApiKeyAuthenticator,
   detectAIAgent,
-  determineProcessUserAgentProperties,
   pascalToCamelCase,
   validateInteger,
 } from './utils.js';
@@ -948,17 +947,12 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
 export class Stripe {
   static PACKAGE_VERSION = '22.1.1';
   static API_VERSION: typeof ApiVersion = ApiVersion;
-  static aiAgent =
-    typeof process !== 'undefined' && process.env
-      ? detectAIAgent(process.env)
-      : '';
-  static AI_AGENT = Stripe.aiAgent;
-  static USER_AGENT = {
+  static aiAgent = '';
+  static AI_AGENT = '';
+  static USER_AGENT: Record<string, string | boolean | null> = {
     bindings_version: Stripe.PACKAGE_VERSION,
     lang: 'node',
     typescript: false,
-    ...determineProcessUserAgentProperties(),
-    ...(Stripe.aiAgent ? {ai_agent: Stripe.aiAgent} : {}),
   };
   static StripeResource = StripeResource;
   static resources = resources;
@@ -1090,6 +1084,19 @@ export class Stripe {
       platformFunctions.createNodeCryptoProvider;
     Stripe.createSubtleCryptoProvider =
       platformFunctions.createSubtleCryptoProvider;
+
+    const env = platformFunctions.getEnv();
+    const runtimeVersion = platformFunctions.getRuntimeVersion();
+
+    Stripe.aiAgent = env ? detectAIAgent(env) : '';
+    Stripe.AI_AGENT = Stripe.aiAgent;
+    Stripe.USER_AGENT = {
+      bindings_version: Stripe.PACKAGE_VERSION,
+      lang: 'node',
+      typescript: false,
+      ...(runtimeVersion ? {lang_version: runtimeVersion} : {}),
+      ...(Stripe.aiAgent ? {ai_agent: Stripe.aiAgent} : {}),
+    };
   }
 
   constructor(key: string, config: StripeConfig = {}) {

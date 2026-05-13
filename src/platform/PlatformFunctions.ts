@@ -32,6 +32,30 @@ export class PlatformFunctions {
   }
 
   /**
+   * Emits a warning. Node.js uses process.emitWarning; other runtimes
+   * fall back to console.warn.
+   */
+  emitWarning(warning: string): void {
+    /* eslint-disable no-console */
+    console.warn(`Stripe: ${warning}`);
+    /* eslint-enable no-console */
+  }
+
+  /**
+   * Returns environment variables, or null if unavailable.
+   */
+  getEnv(): Record<string, string | undefined> | null {
+    return null;
+  }
+
+  /**
+   * Returns the runtime version string, or null if unavailable.
+   */
+  getRuntimeVersion(): string | null {
+    return null;
+  }
+
+  /**
    * Generates a v4 UUID. See https://stackoverflow.com/a/2117523
    */
   uuid4(): string {
