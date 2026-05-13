@@ -315,7 +315,8 @@ export interface AppInfo {
 }
 
 export interface FileData {
-  data: string | Buffer | Uint8Array;
+  // Buffer (Node.js) is accepted here because it extends Uint8Array.
+  data: string | Uint8Array;
   name?: string;
   type?: string;
 }
