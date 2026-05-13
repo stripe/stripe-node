@@ -26,11 +26,11 @@ export class BillingPortal {
 }
 
 export declare namespace BillingPortal {
-  export type ConfigurationListParams = BillingPortalNamespace0.ConfigurationListParams;
-  export type ConfigurationCreateParams = BillingPortalNamespace0.ConfigurationCreateParams;
-  export type ConfigurationRetrieveParams = BillingPortalNamespace0.ConfigurationRetrieveParams;
-  export type ConfigurationUpdateParams = BillingPortalNamespace0.ConfigurationUpdateParams;
+  export import ConfigurationListParams = BillingPortalNamespace0.ConfigurationListParams;
+  export import ConfigurationCreateParams = BillingPortalNamespace0.ConfigurationCreateParams;
+  export import ConfigurationRetrieveParams = BillingPortalNamespace0.ConfigurationRetrieveParams;
+  export import ConfigurationUpdateParams = BillingPortalNamespace0.ConfigurationUpdateParams;
   export {Configuration};
-  export type SessionCreateParams = BillingPortalNamespace1.SessionCreateParams;
+  export import SessionCreateParams = BillingPortalNamespace1.SessionCreateParams;
   export {Session};
 }

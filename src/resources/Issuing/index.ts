@@ -102,21 +102,21 @@ export class Issuing {
 }
 
 export declare namespace Issuing {
-  export type AuthorizationListParams = IssuingNamespace0.AuthorizationListParams;
-  export type AuthorizationRetrieveParams = IssuingNamespace0.AuthorizationRetrieveParams;
-  export type AuthorizationUpdateParams = IssuingNamespace0.AuthorizationUpdateParams;
-  export type AuthorizationApproveParams = IssuingNamespace0.AuthorizationApproveParams;
-  export type AuthorizationDeclineParams = IssuingNamespace0.AuthorizationDeclineParams;
+  export import AuthorizationListParams = IssuingNamespace0.AuthorizationListParams;
+  export import AuthorizationRetrieveParams = IssuingNamespace0.AuthorizationRetrieveParams;
+  export import AuthorizationUpdateParams = IssuingNamespace0.AuthorizationUpdateParams;
+  export import AuthorizationApproveParams = IssuingNamespace0.AuthorizationApproveParams;
+  export import AuthorizationDeclineParams = IssuingNamespace0.AuthorizationDeclineParams;
   export {Authorization};
-  export type CardListParams = IssuingNamespace1.CardListParams;
-  export type CardCreateParams = IssuingNamespace1.CardCreateParams;
-  export type CardRetrieveParams = IssuingNamespace1.CardRetrieveParams;
-  export type CardUpdateParams = IssuingNamespace1.CardUpdateParams;
+  export import CardListParams = IssuingNamespace1.CardListParams;
+  export import CardCreateParams = IssuingNamespace1.CardCreateParams;
+  export import CardRetrieveParams = IssuingNamespace1.CardRetrieveParams;
+  export import CardUpdateParams = IssuingNamespace1.CardUpdateParams;
   export {Card};
-  export type CardholderListParams = IssuingNamespace2.CardholderListParams;
-  export type CardholderCreateParams = IssuingNamespace2.CardholderCreateParams;
-  export type CardholderRetrieveParams = IssuingNamespace2.CardholderRetrieveParams;
-  export type CardholderUpdateParams = IssuingNamespace2.CardholderUpdateParams;
+  export import CardholderListParams = IssuingNamespace2.CardholderListParams;
+  export import CardholderCreateParams = IssuingNamespace2.CardholderCreateParams;
+  export import CardholderRetrieveParams = IssuingNamespace2.CardholderRetrieveParams;
+  export import CardholderUpdateParams = IssuingNamespace2.CardholderUpdateParams;
   export {Cardholder};
   export type CreditUnderwritingRecordListParams = IssuingNamespace3.CreditUnderwritingRecordListParams;
   export type CreditUnderwritingRecordRetrieveParams = IssuingNamespace3.CreditUnderwritingRecordRetrieveParams;

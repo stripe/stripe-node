@@ -234,6 +234,14 @@ This release changes the pinned API version to 2026-04-22.private.
   * Add support for error type `FxQuoteExpiredError`
   * Add support for error codes `invalid_workflow_input_parameters` and `workflow_not_invokable` on `CannotProceedError`
 
+## 22.1.1 - 2026-05-06
+* [#2703](https://github.com/stripe/stripe-node/pull/2703) Export Decimal type from Stripe namespace
+  
+  - Added `Stripe.Decimal` as a usable type in the `Stripe` namespace, enabling type annotations like `function takesDecimal(d: Stripe.Decimal)`.
+* [#2704](https://github.com/stripe/stripe-node/pull/2704) Fix file upload regression: restore multipart request data processor
+  
+  - Fixed file uploads failing with `StripeInvalidRequestError` on the `/v1/files` endpoint since v22.
+
 ## 22.1.0 - 2026-04-23
 This release changes the pinned API version to 2026-04-22.dahlia.
 
