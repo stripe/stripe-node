@@ -580,7 +580,7 @@ export class RequestSender {
       headers: RequestHeaders,
       requestRetries: number,
       retryAfter: number | null
-    ): NodeJS.Timeout => {
+    ): ReturnType<typeof setTimeout> => {
       return setTimeout(
         requestFn,
         this._getSleepTimeInMS(requestRetries, retryAfter),
