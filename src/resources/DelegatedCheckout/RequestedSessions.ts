@@ -1332,7 +1332,7 @@ export namespace DelegatedCheckout {
 export namespace DelegatedCheckout {
   export interface RequestedSessionUpdateParams {
     /**
-     * The discount codes to apply to this requested session.
+     * The discount codes to apply to this requested session. Pass an empty value to remove all applied discounts.
      */
     discounts?: RequestedSessionUpdateParams.Discounts;
 
@@ -1377,9 +1377,9 @@ export namespace DelegatedCheckout {
   export namespace RequestedSessionUpdateParams {
     export interface Discounts {
       /**
-       * Array of discount codes to apply.
+       * Array of discount codes to apply. Pass an empty value to remove all applied discounts.
        */
-      codes: Array<string>;
+      codes: Emptyable<Array<string>>;
 
       /**
        * Whether to enforce strict eligibility for discount codes. Defaults to true. When false, invalid codes are returned in the discounts.invalid array instead of raising an error.
