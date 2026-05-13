@@ -1,5 +1,9 @@
+// TODO(DEVSDK-3114): Remove http import from shared base class in next major version.
+// eslint-disable-next-line wintertc-compat
 import * as http from 'http';
 import {CryptoProvider} from '../crypto/CryptoProvider.js';
+// TODO(DEVSDK-3113): Remove EventEmitter from shared base class in next major version.
+// eslint-disable-next-line wintertc-compat
 import {EventEmitter} from 'events';
 import {FetchHttpClient} from '../net/FetchHttpClient.js';
 import {
