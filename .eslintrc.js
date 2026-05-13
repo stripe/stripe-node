@@ -288,5 +288,20 @@ module.exports = {
         '@typescript-eslint/explicit-function-return-type': 'off',
       },
     },
+    {
+      files: ['src/**/*.ts'],
+      rules: {
+        'wintertc-compat': 'error',
+      },
+    },
+    {
+      files: [
+        'src/**/Node*.ts',
+        'src/stripe.*.node.ts',
+      ],
+      rules: {
+        'wintertc-compat': 'off',
+      },
+    },
   ],
 };
