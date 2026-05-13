@@ -92,11 +92,11 @@ export class Core {
 }
 
 export declare namespace Core {
-  export type AccountListParams = V2Namespace0.Core.AccountListParams;
-  export type AccountCreateParams = V2Namespace0.Core.AccountCreateParams;
-  export type AccountRetrieveParams = V2Namespace0.Core.AccountRetrieveParams;
-  export type AccountUpdateParams = V2Namespace0.Core.AccountUpdateParams;
-  export type AccountCloseParams = V2Namespace0.Core.AccountCloseParams;
+  export import AccountListParams = V2Namespace0.Core.AccountListParams;
+  export import AccountCreateParams = V2Namespace0.Core.AccountCreateParams;
+  export import AccountRetrieveParams = V2Namespace0.Core.AccountRetrieveParams;
+  export import AccountUpdateParams = V2Namespace0.Core.AccountUpdateParams;
+  export import AccountCloseParams = V2Namespace0.Core.AccountCloseParams;
   export {Account};
   export type AccountEvaluationCreateParams = V2Namespace1.Core.AccountEvaluationCreateParams;
   export {AccountEvaluation};

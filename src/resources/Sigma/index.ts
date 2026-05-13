@@ -18,7 +18,7 @@ export class Sigma {
 }
 
 export declare namespace Sigma {
-  export type ScheduledQueryRunListParams = SigmaNamespace0.ScheduledQueryRunListParams;
-  export type ScheduledQueryRunRetrieveParams = SigmaNamespace0.ScheduledQueryRunRetrieveParams;
+  export import ScheduledQueryRunListParams = SigmaNamespace0.ScheduledQueryRunListParams;
+  export import ScheduledQueryRunRetrieveParams = SigmaNamespace0.ScheduledQueryRunRetrieveParams;
   export {ScheduledQueryRun};
 }
