@@ -1,4 +1,4 @@
-// TODO(DEVSDK-3114): Remove http.Agent from shared types in next major version.
+// DEVSDK-3114: Remove http.Agent from shared types in next major version.
 // eslint-disable-next-line wintertc-compat
 import {Agent} from 'http';
 
@@ -281,7 +281,7 @@ export interface ApiSearchResultPromise<T>
   autoPagingToArray(opts: {limit: number}): Promise<Array<T>>;
 }
 
-// TODO(DEVSDK-3112): Replace with WHATWG ReadableStream in next major version.
+// DEVSDK-3112: Replace with WHATWG ReadableStream in next major version.
 // eslint-disable-next-line wintertc-compat
 export type StripeStreamResponse = NodeJS.ReadableStream;
 

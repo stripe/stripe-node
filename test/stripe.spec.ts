@@ -322,12 +322,12 @@ describe('Stripe Module', function() {
 
   describe('initialize() populates statics from platform functions', () => {
     const origAIAgent = StripeCore.aiAgent;
-    const origAI_AGENT = StripeCore.AI_AGENT;
+    const origAiAgentStatic = StripeCore.AI_AGENT;
     const origUserAgent = StripeCore.USER_AGENT;
 
     afterEach(() => {
       StripeCore.aiAgent = origAIAgent;
-      StripeCore.AI_AGENT = origAI_AGENT;
+      StripeCore.AI_AGENT = origAiAgentStatic;
       StripeCore.USER_AGENT = origUserAgent;
       StripeCore.initialize(new NodePlatformFunctions());
     });
