@@ -1,3 +1,5 @@
+// File copied from our code generator; changes here will be overwritten.
+
 import {Stripe} from './stripe.core.js';
 import * as Events from './resources/V2/Core/Events.js';
 
@@ -5,7 +7,7 @@ export interface UnhandledNotificationDetails {
   isKnownEventType: boolean;
 }
 
-type FallbackCallback = (
+export type FallbackCallback = (
   event: Events.UnknownEventNotification,
   client: Stripe,
   details: UnhandledNotificationDetails

@@ -20,7 +20,7 @@ export class Analytics {
 }
 
 export declare namespace Analytics {
-  export type MeterUsageRetrieveParams = BillingNamespace0.Analytics.MeterUsageRetrieveParams;
+  export import MeterUsageRetrieveParams = BillingNamespace0.Analytics.MeterUsageRetrieveParams;
   export {MeterUsage};
   export {MeterUsageRow};
 }

@@ -14,7 +14,7 @@ export class Reporting {
 }
 
 export declare namespace Reporting {
-  export type QueryRunCreateParams = V2Namespace0.Data.Reporting.QueryRunCreateParams;
-  export type QueryRunRetrieveParams = V2Namespace0.Data.Reporting.QueryRunRetrieveParams;
+  export import QueryRunCreateParams = V2Namespace0.Data.Reporting.QueryRunCreateParams;
+  export import QueryRunRetrieveParams = V2Namespace0.Data.Reporting.QueryRunRetrieveParams;
   export {QueryRun};
 }
