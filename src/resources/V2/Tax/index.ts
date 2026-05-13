@@ -18,10 +18,10 @@ export class Tax {
 }
 
 export declare namespace Tax {
-  export type ManualRuleListParams = V2Namespace0.Tax.ManualRuleListParams;
-  export type ManualRuleCreateParams = V2Namespace0.Tax.ManualRuleCreateParams;
-  export type ManualRuleRetrieveParams = V2Namespace0.Tax.ManualRuleRetrieveParams;
-  export type ManualRuleUpdateParams = V2Namespace0.Tax.ManualRuleUpdateParams;
-  export type ManualRuleDeactivateParams = V2Namespace0.Tax.ManualRuleDeactivateParams;
+  export import ManualRuleListParams = V2Namespace0.Tax.ManualRuleListParams;
+  export import ManualRuleCreateParams = V2Namespace0.Tax.ManualRuleCreateParams;
+  export import ManualRuleRetrieveParams = V2Namespace0.Tax.ManualRuleRetrieveParams;
+  export import ManualRuleUpdateParams = V2Namespace0.Tax.ManualRuleUpdateParams;
+  export import ManualRuleDeactivateParams = V2Namespace0.Tax.ManualRuleDeactivateParams;
   export {ManualRule};
 }

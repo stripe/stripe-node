@@ -354,6 +354,8 @@ const KNOWN_EVENT_TYPES = new Set([
   'v2.money_management.adjustment.created',
   'v2.money_management.financial_account.created',
   'v2.money_management.financial_account.updated',
+  'v2.money_management.financial_account_statement.created',
+  'v2.money_management.financial_account_statement.restated',
   'v2.money_management.financial_address.activated',
   'v2.money_management.financial_address.failed',
   'v2.money_management.inbound_transfer.available',

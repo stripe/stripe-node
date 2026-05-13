@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {Address} from '../shared.js';
-import {RequestOptions, Response} from '../lib.js';
+import {AddressParam, Address} from '../shared.js';
+import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 
 export class PaymentLocationResource extends StripeResource {
   /**
@@ -49,6 +49,17 @@ export class PaymentLocationResource extends StripeResource {
       params,
       options
     ) as any;
+  }
+  /**
+   * List all Payment Locations.
+   */
+  list(
+    params?: PaymentLocationListParams,
+    options?: RequestOptions
+  ): ApiListPromise<PaymentLocation> {
+    return this._makeRequest('GET', '/v1/payment_locations', params, options, {
+      methodType: 'list',
+    }) as any;
   }
   /**
    * Create a Payment Location.
@@ -167,7 +178,7 @@ export interface PaymentLocationCreateParams {
   /**
    * The full address of the location.
    */
-  address: PaymentLocationCreateParams.Address;
+  address: AddressParam;
 
   /**
    * A name for the location.
@@ -185,38 +196,6 @@ export interface PaymentLocationCreateParams {
   expand?: Array<string>;
 }
 export namespace PaymentLocationCreateParams {
-  export interface Address {
-    /**
-     * City, district, suburb, town, or village.
-     */
-    city?: string;
-
-    /**
-     * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-     */
-    country: string;
-
-    /**
-     * Address line 1, such as the street, PO Box, or company name.
-     */
-    line1?: string;
-
-    /**
-     * Address line 2, such as the apartment, suite, unit, or building.
-     */
-    line2?: string;
-
-    /**
-     * ZIP or postal code.
-     */
-    postal_code?: string;
-
-    /**
-     * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-     */
-    state?: string;
-  }
-
   export interface BusinessRegistration {
     /**
      * 14-digit SIRET (Système d'identification du répertoire des établissements) number for the location.
@@ -234,7 +213,7 @@ export interface PaymentLocationUpdateParams {
   /**
    * The full address of the location.
    */
-  address?: PaymentLocationUpdateParams.Address;
+  address?: AddressParam;
 
   /**
    * Identification numbers associated with the location.
@@ -250,45 +229,24 @@ export interface PaymentLocationUpdateParams {
    * Specifies which fields in the response should be expanded.
    */
   expand?: Array<string>;
+
+  /**
+   * Pass true when updating location fields that will trigger onboarding review for any of the location's active location capabilities. If this parameter is not set to true, updates that would trigger onboarding review will fail. Only applicable for locations with active location capabilities.
+   */
+  onboarding_data_update_acknowledged?: boolean;
 }
 export namespace PaymentLocationUpdateParams {
-  export interface Address {
-    /**
-     * City, district, suburb, town, or village.
-     */
-    city?: string;
-
-    /**
-     * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-     */
-    country: string;
-
-    /**
-     * Address line 1, such as the street, PO Box, or company name.
-     */
-    line1?: string;
-
-    /**
-     * Address line 2, such as the apartment, suite, unit, or building.
-     */
-    line2?: string;
-
-    /**
-     * ZIP or postal code.
-     */
-    postal_code?: string;
-
-    /**
-     * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-     */
-    state?: string;
-  }
-
   export interface BusinessRegistration {
     /**
      * 14-digit SIRET (Système d'identification du répertoire des établissements) number for the location.
      */
     siret?: string;
   }
+}
+export interface PaymentLocationListParams {
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
 }
 export interface PaymentLocationDeleteParams {}

@@ -30,20 +30,20 @@ export class Payments {
 }
 
 export declare namespace Payments {
-  export type OffSessionPaymentListParams = V2Namespace0.Payments.OffSessionPaymentListParams;
-  export type OffSessionPaymentCreateParams = V2Namespace0.Payments.OffSessionPaymentCreateParams;
-  export type OffSessionPaymentRetrieveParams = V2Namespace0.Payments.OffSessionPaymentRetrieveParams;
-  export type OffSessionPaymentCancelParams = V2Namespace0.Payments.OffSessionPaymentCancelParams;
-  export type OffSessionPaymentCaptureParams = V2Namespace0.Payments.OffSessionPaymentCaptureParams;
-  export type OffSessionPaymentPauseParams = V2Namespace0.Payments.OffSessionPaymentPauseParams;
-  export type OffSessionPaymentResumeParams = V2Namespace0.Payments.OffSessionPaymentResumeParams;
+  export import OffSessionPaymentListParams = V2Namespace0.Payments.OffSessionPaymentListParams;
+  export import OffSessionPaymentCreateParams = V2Namespace0.Payments.OffSessionPaymentCreateParams;
+  export import OffSessionPaymentRetrieveParams = V2Namespace0.Payments.OffSessionPaymentRetrieveParams;
+  export import OffSessionPaymentCancelParams = V2Namespace0.Payments.OffSessionPaymentCancelParams;
+  export import OffSessionPaymentCaptureParams = V2Namespace0.Payments.OffSessionPaymentCaptureParams;
+  export import OffSessionPaymentPauseParams = V2Namespace0.Payments.OffSessionPaymentPauseParams;
+  export import OffSessionPaymentResumeParams = V2Namespace0.Payments.OffSessionPaymentResumeParams;
   export {OffSessionPayment};
-  export type SettlementAllocationIntentListParams = V2Namespace1.Payments.SettlementAllocationIntentListParams;
-  export type SettlementAllocationIntentCreateParams = V2Namespace1.Payments.SettlementAllocationIntentCreateParams;
-  export type SettlementAllocationIntentRetrieveParams = V2Namespace1.Payments.SettlementAllocationIntentRetrieveParams;
-  export type SettlementAllocationIntentUpdateParams = V2Namespace1.Payments.SettlementAllocationIntentUpdateParams;
-  export type SettlementAllocationIntentCancelParams = V2Namespace1.Payments.SettlementAllocationIntentCancelParams;
-  export type SettlementAllocationIntentSubmitParams = V2Namespace1.Payments.SettlementAllocationIntentSubmitParams;
+  export import SettlementAllocationIntentListParams = V2Namespace1.Payments.SettlementAllocationIntentListParams;
+  export import SettlementAllocationIntentCreateParams = V2Namespace1.Payments.SettlementAllocationIntentCreateParams;
+  export import SettlementAllocationIntentRetrieveParams = V2Namespace1.Payments.SettlementAllocationIntentRetrieveParams;
+  export import SettlementAllocationIntentUpdateParams = V2Namespace1.Payments.SettlementAllocationIntentUpdateParams;
+  export import SettlementAllocationIntentCancelParams = V2Namespace1.Payments.SettlementAllocationIntentCancelParams;
+  export import SettlementAllocationIntentSubmitParams = V2Namespace1.Payments.SettlementAllocationIntentSubmitParams;
   export {SettlementAllocationIntent};
   export {SettlementAllocationIntentSplit};
 }

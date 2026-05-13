@@ -409,6 +409,7 @@ import {
   PaymentLocationCreateParams,
   PaymentLocationRetrieveParams,
   PaymentLocationUpdateParams,
+  PaymentLocationListParams,
   PaymentLocationDeleteParams,
   PaymentLocationResource,
 } from './resources/PaymentLocations.js';
@@ -2260,6 +2261,7 @@ export declare namespace Stripe {
     PaymentLocationCreateParams,
     PaymentLocationRetrieveParams,
     PaymentLocationUpdateParams,
+    PaymentLocationListParams,
     PaymentLocationDeleteParams,
     PaymentLocationResource,
   };

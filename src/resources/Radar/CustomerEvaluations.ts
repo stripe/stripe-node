@@ -23,7 +23,7 @@ export class CustomerEvaluationResource extends StripeResource {
    */
   update(
     id: string,
-    params: Radar.CustomerEvaluationUpdateParams,
+    params?: Radar.CustomerEvaluationUpdateParams,
     options?: RequestOptions
   ): Promise<Response<CustomerEvaluation>> {
     return this._makeRequest(
@@ -74,6 +74,11 @@ export interface CustomerEvaluation {
    * A hash of signal objects providing Radar's evaluation of the customer.
    */
   signals: Radar.CustomerEvaluation.Signals | null;
+
+  /**
+   * The outcome status reported for this evaluation: allowed, restricted, or blocked.
+   */
+  status?: string;
 }
 export namespace Radar {
   export namespace CustomerEvaluation {
@@ -264,9 +269,9 @@ export namespace Radar {
 export namespace Radar {
   export interface CustomerEvaluationUpdateParams {
     /**
-     * The type of event to report.
+     * The ID of a Customer to attach to an entity-less registration evaluation.
      */
-    type: CustomerEvaluationUpdateParams.Type;
+    customer?: string;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -274,28 +279,32 @@ export namespace Radar {
     expand?: Array<string>;
 
     /**
-     * Event payload for login_failed.
+     * Data for a failed login event.
      */
     login_failed?: CustomerEvaluationUpdateParams.LoginFailed;
 
     /**
-     * Event payload for registration_failed.
+     * Data for a failed registration event.
      */
     registration_failed?: CustomerEvaluationUpdateParams.RegistrationFailed;
 
     /**
-     * Event payload for registration_success.
+     * Data for a successful registration event.
      */
     registration_success?: CustomerEvaluationUpdateParams.RegistrationSuccess;
+
+    /**
+     * The outcome status of the evaluation: allowed, restricted, or blocked.
+     */
+    status?: CustomerEvaluationUpdateParams.Status;
+
+    /**
+     * The type of event to report on the customer evaluation.
+     */
+    type?: CustomerEvaluationUpdateParams.Type;
   }
 
   export namespace CustomerEvaluationUpdateParams {
-    export type Type =
-      | 'login_failed'
-      | 'login_success'
-      | 'registration_failed'
-      | 'registration_success';
-
     export interface LoginFailed {
       /**
        * The reason why this login failed.
@@ -316,6 +325,14 @@ export namespace Radar {
        */
       customer?: string;
     }
+
+    export type Status = 'allowed' | 'blocked' | 'restricted';
+
+    export type Type =
+      | 'login_failed'
+      | 'login_success'
+      | 'registration_failed'
+      | 'registration_success';
 
     export namespace LoginFailed {
       export type Reason = 'other' | 'suspected_account_sharing';

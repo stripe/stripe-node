@@ -4,8 +4,15 @@ import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
-
+import {StatementResource} from './FinancialAccounts/Statements.js';
+import {Stripe} from '../../../stripe.core.js';
 export class FinancialAccountResource extends StripeResource {
+  statements: StatementResource;
+
+  constructor(private readonly stripe: Stripe) {
+    super(stripe);
+    this.statements = new StatementResource(stripe);
+  }
   /**
    * Lists FinancialAccounts in this compartment.
    */

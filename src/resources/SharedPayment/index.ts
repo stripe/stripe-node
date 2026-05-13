@@ -26,10 +26,10 @@ export class SharedPayment {
 }
 
 export declare namespace SharedPayment {
-  export type GrantedTokenRetrieveParams = SharedPaymentNamespace0.GrantedTokenRetrieveParams;
+  export import GrantedTokenRetrieveParams = SharedPaymentNamespace0.GrantedTokenRetrieveParams;
   export {GrantedToken};
-  export type IssuedTokenRetrieveParams = SharedPaymentNamespace1.IssuedTokenRetrieveParams;
-  export type IssuedTokenCreateParams = SharedPaymentNamespace1.IssuedTokenCreateParams;
-  export type IssuedTokenRevokeParams = SharedPaymentNamespace1.IssuedTokenRevokeParams;
+  export import IssuedTokenRetrieveParams = SharedPaymentNamespace1.IssuedTokenRetrieveParams;
+  export import IssuedTokenCreateParams = SharedPaymentNamespace1.IssuedTokenCreateParams;
+  export import IssuedTokenRevokeParams = SharedPaymentNamespace1.IssuedTokenRevokeParams;
   export {IssuedToken};
 }

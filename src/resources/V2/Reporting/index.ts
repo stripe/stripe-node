@@ -22,9 +22,9 @@ export class Reporting {
 }
 
 export declare namespace Reporting {
-  export type ReportRetrieveParams = V2Namespace0.Reporting.ReportRetrieveParams;
+  export import ReportRetrieveParams = V2Namespace0.Reporting.ReportRetrieveParams;
   export {Report};
-  export type ReportRunCreateParams = V2Namespace1.Reporting.ReportRunCreateParams;
-  export type ReportRunRetrieveParams = V2Namespace1.Reporting.ReportRunRetrieveParams;
+  export import ReportRunCreateParams = V2Namespace1.Reporting.ReportRunCreateParams;
+  export import ReportRunRetrieveParams = V2Namespace1.Reporting.ReportRunRetrieveParams;
   export {ReportRun};
 }

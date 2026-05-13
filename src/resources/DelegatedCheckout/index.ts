@@ -18,10 +18,10 @@ export class DelegatedCheckout {
 }
 
 export declare namespace DelegatedCheckout {
-  export type RequestedSessionRetrieveParams = DelegatedCheckoutNamespace0.RequestedSessionRetrieveParams;
-  export type RequestedSessionUpdateParams = DelegatedCheckoutNamespace0.RequestedSessionUpdateParams;
-  export type RequestedSessionCreateParams = DelegatedCheckoutNamespace0.RequestedSessionCreateParams;
-  export type RequestedSessionConfirmParams = DelegatedCheckoutNamespace0.RequestedSessionConfirmParams;
-  export type RequestedSessionExpireParams = DelegatedCheckoutNamespace0.RequestedSessionExpireParams;
+  export import RequestedSessionRetrieveParams = DelegatedCheckoutNamespace0.RequestedSessionRetrieveParams;
+  export import RequestedSessionUpdateParams = DelegatedCheckoutNamespace0.RequestedSessionUpdateParams;
+  export import RequestedSessionCreateParams = DelegatedCheckoutNamespace0.RequestedSessionCreateParams;
+  export import RequestedSessionConfirmParams = DelegatedCheckoutNamespace0.RequestedSessionConfirmParams;
+  export import RequestedSessionExpireParams = DelegatedCheckoutNamespace0.RequestedSessionExpireParams;
   export {RequestedSession};
 }

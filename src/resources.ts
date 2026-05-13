@@ -43,13 +43,17 @@ import {CurrencyConversionResource as V2MoneyManagementCurrencyConversions} from
 import {CustomPricingUnitResource as V2BillingCustomPricingUnits} from './resources/V2/Billing/CustomPricingUnits.js';
 import {CustomerEvaluationResource as RadarCustomerEvaluations} from './resources/Radar/CustomerEvaluations.js';
 import {CustomerResource as TestHelpersCustomers} from './resources/TestHelpers/Customers.js';
+import {DebitDisputeResource as V2MoneyManagementDebitDisputes} from './resources/V2/MoneyManagement/DebitDisputes.js';
 import {DebitReversalResource as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
 import {DisputeSettlementDetailResource as IssuingDisputeSettlementDetails} from './resources/Issuing/DisputeSettlementDetails.js';
 import {DisputeResource as IssuingDisputes} from './resources/Issuing/Disputes.js';
+import {DisputeResource as TestHelpersIssuingDisputes} from './resources/TestHelpers/Issuing/Disputes.js';
 import {EarlyFraudWarningResource as RadarEarlyFraudWarnings} from './resources/Radar/EarlyFraudWarnings.js';
 import {EventDestinationResource as V2CoreEventDestinations} from './resources/V2/Core/EventDestinations.js';
 import {EventResource as V2CoreEvents} from './resources/V2/Core/Events.js';
 import {FeatureResource as EntitlementsFeatures} from './resources/Entitlements/Features.js';
+import {FeeBatchResource as V2CoreFeeBatches} from './resources/V2/Core/FeeBatches.js';
+import {FeeEntryResource as V2CoreFeeEntries} from './resources/V2/Core/FeeEntries.js';
 import {FinancialAccountResource as TreasuryFinancialAccounts} from './resources/Treasury/FinancialAccounts.js';
 import {FinancialAccountResource as V2MoneyManagementFinancialAccounts} from './resources/V2/MoneyManagement/FinancialAccounts.js';
 import {FinancialAddressResource as V2MoneyManagementFinancialAddresses} from './resources/V2/MoneyManagement/FinancialAddresses.js';
@@ -359,6 +363,7 @@ export const TestHelpers = resourceNamespace('testHelpers', {
   Issuing: resourceNamespace('issuing', {
     Authorizations: TestHelpersIssuingAuthorizations,
     Cards: TestHelpersIssuingCards,
+    Disputes: TestHelpersIssuingDisputes,
     PersonalizationDesigns: TestHelpersIssuingPersonalizationDesigns,
     Transactions: TestHelpersIssuingTransactions,
   }),
@@ -426,6 +431,8 @@ export const V2 = resourceNamespace('v2', {
     ConnectionSessions: V2CoreConnectionSessions,
     EventDestinations: V2CoreEventDestinations,
     Events: V2CoreEvents,
+    FeeBatches: V2CoreFeeBatches,
+    FeeEntries: V2CoreFeeEntries,
     Vault: resourceNamespace('vault', {
       GbBankAccounts: V2CoreVaultGbBankAccounts,
       UsBankAccounts: V2CoreVaultUsBankAccounts,
@@ -450,6 +457,7 @@ export const V2 = resourceNamespace('v2', {
   MoneyManagement: resourceNamespace('moneyManagement', {
     Adjustments: V2MoneyManagementAdjustments,
     CurrencyConversions: V2MoneyManagementCurrencyConversions,
+    DebitDisputes: V2MoneyManagementDebitDisputes,
     FinancialAccounts: V2MoneyManagementFinancialAccounts,
     FinancialAddresses: V2MoneyManagementFinancialAddresses,
     InboundTransfers: V2MoneyManagementInboundTransfers,

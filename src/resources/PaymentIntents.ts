@@ -6094,6 +6094,11 @@ export namespace PaymentIntentCreateParams {
     flight_data?: Emptyable<Array<PaymentDetails.FlightDatum>>;
 
     /**
+     * The ID of the Payment Location for this PaymentIntent.
+     */
+    location?: string;
+
+    /**
      * Lodging reservation details for this PaymentIntent
      */
     lodging?: PaymentDetails.Lodging;
@@ -13863,6 +13868,11 @@ export namespace PaymentIntentUpdateParams {
      * Flight data for this PaymentIntent.
      */
     flight_data?: Emptyable<Array<PaymentDetails.FlightDatum>>;
+
+    /**
+     * The ID of the Payment Location for this PaymentIntent.
+     */
+    location?: string;
 
     /**
      * Lodging reservation details for this PaymentIntent
@@ -24235,6 +24245,11 @@ export namespace PaymentIntentConfirmParams {
      * Flight data for this PaymentIntent.
      */
     flight_data?: Emptyable<Array<PaymentDetails.FlightDatum>>;
+
+    /**
+     * The ID of the Payment Location for this PaymentIntent.
+     */
+    location?: string;
 
     /**
      * Lodging reservation details for this PaymentIntent

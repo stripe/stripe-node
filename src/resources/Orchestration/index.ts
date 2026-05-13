@@ -18,6 +18,6 @@ export class Orchestration {
 }
 
 export declare namespace Orchestration {
-  export type PaymentAttemptRetrieveParams = OrchestrationNamespace0.PaymentAttemptRetrieveParams;
+  export import PaymentAttemptRetrieveParams = OrchestrationNamespace0.PaymentAttemptRetrieveParams;
   export {PaymentAttempt};
 }

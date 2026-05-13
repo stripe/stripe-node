@@ -81,6 +81,11 @@ export interface ReceivedDebit {
   description?: string;
 
   /**
+   * The dispute details.
+   */
+  dispute_details?: V2.MoneyManagement.ReceivedDebit.DisputeDetails;
+
+  /**
    * The amount and currency of the original/external debit request.
    */
   external_amount?: V2Amount;
@@ -182,6 +187,18 @@ export namespace V2 {
          * The reference to the card object that resulted in the debit.
          */
         card_v1_id: string;
+      }
+
+      export interface DisputeDetails {
+        /**
+         * The ID of the debit dispute, if one has been created.
+         */
+        debit_dispute?: string;
+
+        /**
+         * The time at which the dispute window closes.
+         */
+        dispute_window_closes_at?: string;
       }
 
       export type Status =
