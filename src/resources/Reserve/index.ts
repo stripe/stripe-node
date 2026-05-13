@@ -26,12 +26,12 @@ export class Reserve {
 }
 
 export declare namespace Reserve {
-  export type HoldListParams = ReserveNamespace0.HoldListParams;
-  export type HoldRetrieveParams = ReserveNamespace0.HoldRetrieveParams;
+  export import HoldListParams = ReserveNamespace0.HoldListParams;
+  export import HoldRetrieveParams = ReserveNamespace0.HoldRetrieveParams;
   export {Hold};
-  export type PlanRetrieveParams = ReserveNamespace1.PlanRetrieveParams;
+  export import PlanRetrieveParams = ReserveNamespace1.PlanRetrieveParams;
   export {Plan};
-  export type ReleaseListParams = ReserveNamespace2.ReleaseListParams;
-  export type ReleaseRetrieveParams = ReserveNamespace2.ReleaseRetrieveParams;
+  export import ReleaseListParams = ReserveNamespace2.ReleaseListParams;
+  export import ReleaseRetrieveParams = ReserveNamespace2.ReleaseRetrieveParams;
   export {Release};
 }

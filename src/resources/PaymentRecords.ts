@@ -2935,6 +2935,11 @@ export namespace PaymentRecordReportPaymentParams {
     guaranteed_at: number;
 
     /**
+     * Payment evaluations associated with this reported payment.
+     */
+    payment_evaluations?: Array<string>;
+
+    /**
      * Processor information for this payment.
      */
     processor_details?: Guaranteed.ProcessorDetails;
@@ -3135,6 +3140,11 @@ export namespace PaymentRecordReportPaymentAttemptParams {
      * When the reported payment was guaranteed. Measured in seconds since the Unix epoch.
      */
     guaranteed_at: number;
+
+    /**
+     * Payment evaluations associated with this reported payment.
+     */
+    payment_evaluations?: Array<string>;
 
     /**
      * Processor information for this payment.
@@ -3352,6 +3362,11 @@ export interface PaymentRecordReportPaymentAttemptGuaranteedParams {
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
+
+  /**
+   * Payment evaluations associated with this reported payment.
+   */
+  payment_evaluations?: Array<string>;
 
   /**
    * Processor information for this payment.

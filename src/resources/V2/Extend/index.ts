@@ -22,11 +22,11 @@ export class Extend {
 }
 
 export declare namespace Extend {
-  export type WorkflowListParams = V2Namespace0.Extend.WorkflowListParams;
-  export type WorkflowRetrieveParams = V2Namespace0.Extend.WorkflowRetrieveParams;
-  export type WorkflowInvokeParams = V2Namespace0.Extend.WorkflowInvokeParams;
+  export import WorkflowListParams = V2Namespace0.Extend.WorkflowListParams;
+  export import WorkflowRetrieveParams = V2Namespace0.Extend.WorkflowRetrieveParams;
+  export import WorkflowInvokeParams = V2Namespace0.Extend.WorkflowInvokeParams;
   export {Workflow};
-  export type WorkflowRunListParams = V2Namespace1.Extend.WorkflowRunListParams;
-  export type WorkflowRunRetrieveParams = V2Namespace1.Extend.WorkflowRunRetrieveParams;
+  export import WorkflowRunListParams = V2Namespace1.Extend.WorkflowRunListParams;
+  export import WorkflowRunRetrieveParams = V2Namespace1.Extend.WorkflowRunRetrieveParams;
   export {WorkflowRun};
 }

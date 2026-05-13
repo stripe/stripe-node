@@ -22,13 +22,13 @@ export class Iam {
 }
 
 export declare namespace Iam {
-  export type ActivityLogListParams = V2Namespace0.Iam.ActivityLogListParams;
+  export import ActivityLogListParams = V2Namespace0.Iam.ActivityLogListParams;
   export {ActivityLog};
-  export type ApiKeyListParams = V2Namespace1.Iam.ApiKeyListParams;
-  export type ApiKeyCreateParams = V2Namespace1.Iam.ApiKeyCreateParams;
-  export type ApiKeyRetrieveParams = V2Namespace1.Iam.ApiKeyRetrieveParams;
-  export type ApiKeyUpdateParams = V2Namespace1.Iam.ApiKeyUpdateParams;
-  export type ApiKeyExpireParams = V2Namespace1.Iam.ApiKeyExpireParams;
-  export type ApiKeyRotateParams = V2Namespace1.Iam.ApiKeyRotateParams;
+  export import ApiKeyListParams = V2Namespace1.Iam.ApiKeyListParams;
+  export import ApiKeyCreateParams = V2Namespace1.Iam.ApiKeyCreateParams;
+  export import ApiKeyRetrieveParams = V2Namespace1.Iam.ApiKeyRetrieveParams;
+  export import ApiKeyUpdateParams = V2Namespace1.Iam.ApiKeyUpdateParams;
+  export import ApiKeyExpireParams = V2Namespace1.Iam.ApiKeyExpireParams;
+  export import ApiKeyRotateParams = V2Namespace1.Iam.ApiKeyRotateParams;
   export {ApiKey};
 }

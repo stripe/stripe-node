@@ -2034,6 +2034,11 @@ export namespace SetupIntentCreateParams {
      * Benefit details for this SetupIntent
      */
     benefit?: SetupDetails.Benefit;
+
+    /**
+     * The ID of the Payment Location for this SetupIntent.
+     */
+    location?: string;
   }
 
   export interface SingleUse {
@@ -4051,6 +4056,11 @@ export namespace SetupIntentUpdateParams {
      * Benefit details for this SetupIntent
      */
     benefit?: SetupDetails.Benefit;
+
+    /**
+     * The ID of the Payment Location for this SetupIntent.
+     */
+    location?: string;
   }
 
   export namespace PaymentMethodData {
@@ -5957,6 +5967,11 @@ export namespace SetupIntentConfirmParams {
      * Benefit details for this SetupIntent
      */
     benefit?: SetupDetails.Benefit;
+
+    /**
+     * The ID of the Payment Location for this SetupIntent.
+     */
+    location?: string;
   }
 
   export namespace MandateData {

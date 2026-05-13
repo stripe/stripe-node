@@ -18,10 +18,10 @@ export class OrchestratedCommerce {
 }
 
 export declare namespace OrchestratedCommerce {
-  export type AgreementListParams = V2Namespace0.OrchestratedCommerce.AgreementListParams;
-  export type AgreementCreateParams = V2Namespace0.OrchestratedCommerce.AgreementCreateParams;
-  export type AgreementRetrieveParams = V2Namespace0.OrchestratedCommerce.AgreementRetrieveParams;
-  export type AgreementConfirmParams = V2Namespace0.OrchestratedCommerce.AgreementConfirmParams;
-  export type AgreementTerminateParams = V2Namespace0.OrchestratedCommerce.AgreementTerminateParams;
+  export import AgreementListParams = V2Namespace0.OrchestratedCommerce.AgreementListParams;
+  export import AgreementCreateParams = V2Namespace0.OrchestratedCommerce.AgreementCreateParams;
+  export import AgreementRetrieveParams = V2Namespace0.OrchestratedCommerce.AgreementRetrieveParams;
+  export import AgreementConfirmParams = V2Namespace0.OrchestratedCommerce.AgreementConfirmParams;
+  export import AgreementTerminateParams = V2Namespace0.OrchestratedCommerce.AgreementTerminateParams;
   export {Agreement};
 }

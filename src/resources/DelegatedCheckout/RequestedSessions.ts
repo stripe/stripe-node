@@ -131,6 +131,11 @@ export interface RequestedSession {
   customer: string | null;
 
   /**
+   * The discounts applied to and rejected from this requested session.
+   */
+  discounts?: DelegatedCheckout.RequestedSession.Discounts | null;
+
+  /**
    * Time at which the requested session expires. Measured in seconds since the Unix epoch.
    */
   expires_at: number;
@@ -279,6 +284,18 @@ export namespace DelegatedCheckout {
       marketing: BuyerConsents.Marketing | null;
     }
 
+    export interface Discounts {
+      /**
+       * The list of successfully applied discounts.
+       */
+      applied: Array<Discounts.Applied> | null;
+
+      /**
+       * The list of discount codes that could not be applied.
+       */
+      invalid: Array<Discounts.Invalid> | null;
+    }
+
     export interface FulfillmentDetails {
       /**
        * The fulfillment address.
@@ -323,6 +340,11 @@ export namespace DelegatedCheckout {
        * The total discount for this line item. If no discount were applied, defaults to 0.
        */
       amount_discount: number;
+
+      /**
+       * The sale amount for this line item.
+       */
+      amount_sale?: number;
 
       /**
        * The total before any discounts or taxes are applied.
@@ -472,6 +494,11 @@ export namespace DelegatedCheckout {
       amount_cart_discount: number | null;
 
       /**
+       * The total discount amount from discount codes across the session.
+       */
+      amount_discount?: number | null;
+
+      /**
        * The amount fulfillment of the total details.
        */
       amount_fulfillment: number | null;
@@ -482,6 +509,11 @@ export namespace DelegatedCheckout {
       amount_items_discount: number | null;
 
       /**
+       * The total sale amount across the session.
+       */
+      amount_sale?: number | null;
+
+      /**
        * The amount tax of the total details.
        */
       amount_tax: number | null;
@@ -490,6 +522,11 @@ export namespace DelegatedCheckout {
        * The applicable fees of the total details.
        */
       applicable_fees: Array<TotalDetails.ApplicableFee> | null;
+
+      /**
+       * The breakdown of discounts applied to the session.
+       */
+      breakdown?: TotalDetails.Breakdown | null;
     }
 
     export namespace AffiliateAttribution {
@@ -569,6 +606,61 @@ export namespace DelegatedCheckout {
         export namespace Option {
           export type Channel = 'email' | 'sms';
         }
+      }
+    }
+
+    export namespace Discounts {
+      export interface Applied {
+        /**
+         * The amount off provided by this discount.
+         */
+        amount_off: number | null;
+
+        /**
+         * The discount code.
+         */
+        code: string;
+
+        /**
+         * The currency of the discount amount.
+         */
+        currency: string | null;
+
+        /**
+         * The unique key of the applied discount.
+         */
+        key: string;
+
+        /**
+         * The display name of the discount.
+         */
+        name: string;
+
+        /**
+         * The percentage off provided by this discount.
+         */
+        percent_off: number | null;
+
+        /**
+         * The type of discount.
+         */
+        type: Applied.Type;
+      }
+
+      export interface Invalid {
+        /**
+         * The discount code that was invalid.
+         */
+        code: string;
+
+        /**
+         * The reason the discount code is invalid.
+         */
+        reason: string;
+      }
+
+      export namespace Applied {
+        export type Type = 'cart' | 'fulfillment';
       }
     }
 
@@ -933,6 +1025,27 @@ export namespace DelegatedCheckout {
          */
         display_name: string;
       }
+
+      export interface Breakdown {
+        /**
+         * The breakdown of discounts applied to the session.
+         */
+        discounts: Array<Breakdown.Discount> | null;
+      }
+
+      export namespace Breakdown {
+        export interface Discount {
+          /**
+           * The amount this discount contributed to the total discount.
+           */
+          amount: number;
+
+          /**
+           * The key of the applied discount.
+           */
+          key: string;
+        }
+      }
     }
   }
 }
@@ -962,6 +1075,11 @@ export namespace DelegatedCheckout {
      * The customer for this requested session.
      */
     customer?: string;
+
+    /**
+     * The discount codes to apply to this requested session.
+     */
+    discounts?: RequestedSessionCreateParams.Discounts;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -1078,6 +1196,18 @@ export namespace DelegatedCheckout {
        * Whether this is the first or last touchpoint.
        */
       touchpoint: AffiliateAttribution.Touchpoint;
+    }
+
+    export interface Discounts {
+      /**
+       * Array of discount codes to apply.
+       */
+      codes: Array<string>;
+
+      /**
+       * Whether to enforce strict eligibility for discount codes. Defaults to true. When false, invalid codes are returned in the discounts.invalid array instead of raising an error.
+       */
+      enforce_strict_eligibility?: boolean;
     }
 
     export interface FulfillmentDetails {
@@ -1202,6 +1332,11 @@ export namespace DelegatedCheckout {
 export namespace DelegatedCheckout {
   export interface RequestedSessionUpdateParams {
     /**
+     * The discount codes to apply to this requested session.
+     */
+    discounts?: RequestedSessionUpdateParams.Discounts;
+
+    /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
@@ -1240,6 +1375,18 @@ export namespace DelegatedCheckout {
   }
 
   export namespace RequestedSessionUpdateParams {
+    export interface Discounts {
+      /**
+       * Array of discount codes to apply.
+       */
+      codes: Array<string>;
+
+      /**
+       * Whether to enforce strict eligibility for discount codes. Defaults to true. When false, invalid codes are returned in the discounts.invalid array instead of raising an error.
+       */
+      enforce_strict_eligibility?: boolean;
+    }
+
     export interface FulfillmentDetails {
       /**
        * The customer's address.

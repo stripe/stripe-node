@@ -1527,9 +1527,7 @@ export namespace QuotePreviewInvoice {
         request_three_d_secure: Card.RequestThreeDSecure | null;
       }
 
-      export interface CheckScan {
-        check_deposit_address?: Address;
-      }
+      export interface CheckScan {}
 
       export interface CustomerBalance {
         bank_transfer?: CustomerBalance.BankTransfer;

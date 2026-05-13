@@ -636,6 +636,8 @@ export type Event =
   | V2MoneyManagementAdjustmentCreatedEvent
   | V2MoneyManagementFinancialAccountCreatedEvent
   | V2MoneyManagementFinancialAccountUpdatedEvent
+  | V2MoneyManagementFinancialAccountStatementCreatedEvent
+  | V2MoneyManagementFinancialAccountStatementRestatedEvent
   | V2MoneyManagementFinancialAddressActivatedEvent
   | V2MoneyManagementFinancialAddressFailedEvent
   | V2MoneyManagementInboundTransferAvailableEvent
@@ -1038,6 +1040,8 @@ export type EventNotification =
   | V2MoneyManagementAdjustmentCreatedEventNotification
   | V2MoneyManagementFinancialAccountCreatedEventNotification
   | V2MoneyManagementFinancialAccountUpdatedEventNotification
+  | V2MoneyManagementFinancialAccountStatementCreatedEventNotification
+  | V2MoneyManagementFinancialAccountStatementRestatedEventNotification
   | V2MoneyManagementFinancialAddressActivatedEventNotification
   | V2MoneyManagementFinancialAddressFailedEventNotification
   | V2MoneyManagementInboundTransferAvailableEventNotification
@@ -10132,6 +10136,81 @@ export interface V2MoneyManagementFinancialAccountUpdatedEventNotification
 }
 
 /**
+ * Occurs when a Financial Account Statement is created and ready for download.
+ */
+export interface V2MoneyManagementFinancialAccountStatementCreatedEvent
+  extends EventBase {
+  type: 'v2.money_management.financial_account_statement.created';
+  // Retrieves data specific to this event.
+  data: V2MoneyManagementFinancialAccountStatementCreatedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FinancialAccountStatement>;
+}
+export interface V2MoneyManagementFinancialAccountStatementCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.financial_account_statement.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FinancialAccountStatement>;
+  fetchEvent(): Promise<V2MoneyManagementFinancialAccountStatementCreatedEvent>;
+}
+
+export namespace V2MoneyManagementFinancialAccountStatementCreatedEvent {
+  export interface Data {
+    /**
+     * The ID of the Financial Account this statement belongs to.
+     */
+    financial_account: string;
+  }
+}
+
+/**
+ * Occurs when a Financial Account Statement has been restated.
+ * A restatement occurs when a new statement is generated for a period
+ * that already had an existing statement. The related object references
+ * the original statement that was restated. The new replacement statement
+ * will also fire a FinancialAccountStatementCreated event.
+ */
+export interface V2MoneyManagementFinancialAccountStatementRestatedEvent
+  extends EventBase {
+  type: 'v2.money_management.financial_account_statement.restated';
+  // Retrieves data specific to this event.
+  data: V2MoneyManagementFinancialAccountStatementRestatedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FinancialAccountStatement>;
+}
+export interface V2MoneyManagementFinancialAccountStatementRestatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.financial_account_statement.restated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.FinancialAccountStatement>;
+  fetchEvent(): Promise<
+    V2MoneyManagementFinancialAccountStatementRestatedEvent
+  >;
+}
+
+export namespace V2MoneyManagementFinancialAccountStatementRestatedEvent {
+  export interface Data {
+    /**
+     * The ID of the Financial Account this statement belongs to.
+     */
+    financial_account: string;
+
+    /**
+     * The ID of the new statement that replaces the original.
+     */
+    restatement_id: string;
+  }
+}
+
+/**
  * Occurs when a FinancialAddress is activated and is ready to receive funds.
  */
 export interface V2MoneyManagementFinancialAddressActivatedEvent
@@ -11178,6 +11257,8 @@ export namespace V2OrchestratedCommerceAgreementTerminatedEvent {
 export interface V2PaymentsOffSessionPaymentAttemptFailedEvent
   extends EventBase {
   type: 'v2.payments.off_session_payment.attempt_failed';
+  // Retrieves data specific to this event.
+  data: V2PaymentsOffSessionPaymentAttemptFailedEvent.Data;
   // Object containing the reference to API resource relevant to the event.
   related_object: V2.Core.Events.RelatedObject;
   // Retrieves the object associated with the event.
@@ -11191,6 +11272,15 @@ export interface V2PaymentsOffSessionPaymentAttemptFailedEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
   fetchEvent(): Promise<V2PaymentsOffSessionPaymentAttemptFailedEvent>;
+}
+
+export namespace V2PaymentsOffSessionPaymentAttemptFailedEvent {
+  export interface Data {
+    /**
+     * The ID of the payment attempt record associated with this failed attempt.
+     */
+    payment_attempt_record: string;
+  }
 }
 
 /**
@@ -11309,6 +11399,8 @@ export interface V2PaymentsOffSessionPaymentCreatedEventNotification
  */
 export interface V2PaymentsOffSessionPaymentFailedEvent extends EventBase {
   type: 'v2.payments.off_session_payment.failed';
+  // Retrieves data specific to this event.
+  data: V2PaymentsOffSessionPaymentFailedEvent.Data;
   // Object containing the reference to API resource relevant to the event.
   related_object: V2.Core.Events.RelatedObject;
   // Retrieves the object associated with the event.
@@ -11322,6 +11414,15 @@ export interface V2PaymentsOffSessionPaymentFailedEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
   fetchEvent(): Promise<V2PaymentsOffSessionPaymentFailedEvent>;
+}
+
+export namespace V2PaymentsOffSessionPaymentFailedEvent {
+  export interface Data {
+    /**
+     * The ID of the payment attempt record associated with this terminal failure. Equal to the `latest_payment_attempt_record` on the Off-Session Payment object.
+     */
+    payment_attempt_record: string;
+  }
 }
 
 /**
@@ -12222,6 +12323,8 @@ export declare namespace Events {
     V2MoneyManagementAdjustmentCreatedEvent,
     V2MoneyManagementFinancialAccountCreatedEvent,
     V2MoneyManagementFinancialAccountUpdatedEvent,
+    V2MoneyManagementFinancialAccountStatementCreatedEvent,
+    V2MoneyManagementFinancialAccountStatementRestatedEvent,
     V2MoneyManagementFinancialAddressActivatedEvent,
     V2MoneyManagementFinancialAddressFailedEvent,
     V2MoneyManagementInboundTransferAvailableEvent,
@@ -12622,6 +12725,8 @@ export declare namespace Events {
     V2MoneyManagementAdjustmentCreatedEventNotification,
     V2MoneyManagementFinancialAccountCreatedEventNotification,
     V2MoneyManagementFinancialAccountUpdatedEventNotification,
+    V2MoneyManagementFinancialAccountStatementCreatedEventNotification,
+    V2MoneyManagementFinancialAccountStatementRestatedEventNotification,
     V2MoneyManagementFinancialAddressActivatedEventNotification,
     V2MoneyManagementFinancialAddressFailedEventNotification,
     V2MoneyManagementInboundTransferAvailableEventNotification,

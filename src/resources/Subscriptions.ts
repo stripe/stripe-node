@@ -20,11 +20,9 @@ import {
   Emptyable,
   MetadataParam,
   Decimal,
-  AddressParam,
   PaginationParams,
   RangeQueryParam,
   Metadata,
-  Address,
 } from '../shared.js';
 import {
   RequestOptions,
@@ -2167,9 +2165,7 @@ export namespace Subscription {
         request_three_d_secure: Card.RequestThreeDSecure | null;
       }
 
-      export interface CheckScan {
-        check_deposit_address?: Address;
-      }
+      export interface CheckScan {}
 
       export interface CustomerBalance {
         bank_transfer?: CustomerBalance.BankTransfer;
@@ -3761,9 +3757,7 @@ export namespace SubscriptionCreateParams {
         request_three_d_secure?: Card.RequestThreeDSecure;
       }
 
-      export interface CheckScan {
-        check_deposit_address?: AddressParam;
-      }
+      export interface CheckScan {}
 
       export interface CustomerBalance {
         /**
@@ -5296,9 +5290,7 @@ export namespace SubscriptionUpdateParams {
         request_three_d_secure?: Card.RequestThreeDSecure;
       }
 
-      export interface CheckScan {
-        check_deposit_address?: AddressParam;
-      }
+      export interface CheckScan {}
 
       export interface CustomerBalance {
         /**
@@ -5895,6 +5887,11 @@ export interface SubscriptionResumeParams {
   expand?: Array<string>;
 
   /**
+   * Controls whether Stripe attempts payment on the resumption invoice in the resume request, and how payment on that invoice affects the subscription's status. The default is `resume_on_payment_attempt`.
+   */
+  payment_behavior?: SubscriptionResumeParams.PaymentBehavior;
+
+  /**
    * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) resulting from the `billing_cycle_anchor` being `unchanged`. When the `billing_cycle_anchor` is set to `now` (default value), no prorations are generated. If no value is passed, the default is `create_prorations`.
    */
   proration_behavior?: SubscriptionResumeParams.ProrationBehavior;
@@ -5906,6 +5903,10 @@ export interface SubscriptionResumeParams {
 }
 export namespace SubscriptionResumeParams {
   export type BillingCycleAnchor = 'now' | 'unchanged';
+
+  export type PaymentBehavior =
+    | 'resume_on_payment_attempt'
+    | 'resume_on_payment_success';
 
   export type ProrationBehavior =
     | 'always_invoice'

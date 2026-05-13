@@ -2962,6 +2962,11 @@ export interface PaymentAttemptRecordReportGuaranteedParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
+   * Payment evaluations associated with this reported payment.
+   */
+  payment_evaluations?: Array<string>;
+
+  /**
    * Processor information for this payment.
    */
   processor_details?: PaymentAttemptRecordReportGuaranteedParams.ProcessorDetails;
