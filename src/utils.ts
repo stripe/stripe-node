@@ -311,7 +311,6 @@ export function pascalToCamelCase(name: string): string {
   }
 }
 
-
 export function isObject(obj: unknown): boolean {
   const type = typeof obj;
   return (type === 'function' || type === 'object') && !!obj;
@@ -365,7 +364,6 @@ export function validateInteger(
 
   return n as number;
 }
-
 
 export const AI_AGENTS: [string, string][] = [
   // The beginning of the section generated from our OpenAPI spec

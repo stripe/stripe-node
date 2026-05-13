@@ -346,7 +346,9 @@ describe('Stripe Module', function() {
     });
 
     it('handles platform with no env or runtime version', () => {
-      const {PlatformFunctions} = require('../src/platform/PlatformFunctions.js');
+      const {
+        PlatformFunctions,
+      } = require('../src/platform/PlatformFunctions.js');
       const basePlatform = new PlatformFunctions();
 
       StripeCore.initialize(basePlatform);
