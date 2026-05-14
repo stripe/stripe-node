@@ -1051,7 +1051,7 @@ export class SubscriptionResource extends StripeResource {
    */
   pause(
     id: string,
-    params: SubscriptionPauseParams,
+    params?: SubscriptionPauseParams,
     options?: RequestOptions
   ): Promise<Response<Subscription>> {
     return this._makeRequest(
@@ -5817,11 +5817,6 @@ export namespace SubscriptionMigrateParams {
 }
 export interface SubscriptionPauseParams {
   /**
-   * The type of pause to apply.
-   */
-  type: 'subscription';
-
-  /**
    * Controls what to bill for when pausing the subscription.
    */
   bill_for?: SubscriptionPauseParams.BillFor;
@@ -5835,6 +5830,11 @@ export interface SubscriptionPauseParams {
    * Determines how to handle debits and credits when pausing. The default is `pending_invoice_item`.
    */
   invoicing_behavior?: SubscriptionPauseParams.InvoicingBehavior;
+
+  /**
+   * The type of pause to apply. Defaults to `subscription`.
+   */
+  type?: 'subscription';
 }
 export namespace SubscriptionPauseParams {
   export interface BillFor {
