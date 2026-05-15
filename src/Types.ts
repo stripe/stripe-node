@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+// TODO(DEVSDK-3113): Remove EventEmitter from shared types in next major version.
+// eslint-disable-next-line wintertc-compat
 import {EventEmitter} from 'events';
 import {
   HttpClientInterface,

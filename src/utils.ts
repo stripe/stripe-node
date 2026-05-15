@@ -311,16 +311,6 @@ export function pascalToCamelCase(name: string): string {
   }
 }
 
-export function emitWarning(warning: string): void {
-  if (typeof process.emitWarning !== 'function') {
-    return console.warn(
-      `Stripe: ${warning}`
-    ); /* eslint-disable-line no-console */
-  }
-
-  return process.emitWarning(warning, 'Stripe');
-}
-
 export function isObject(obj: unknown): boolean {
   const type = typeof obj;
   return (type === 'function' || type === 'object') && !!obj;
@@ -373,14 +363,6 @@ export function validateInteger(
   }
 
   return n as number;
-}
-
-export function determineProcessUserAgentProperties(): Record<string, string> {
-  return typeof process === 'undefined'
-    ? {}
-    : {
-        lang_version: process.version,
-      };
 }
 
 export const AI_AGENTS: [string, string][] = [
