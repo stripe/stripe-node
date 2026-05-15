@@ -6,6 +6,21 @@ import {RequestOptions, Response} from '../../../lib.js';
 
 export class DisputeResource extends StripeResource {
   /**
+   * Test helper: closes a test-mode Issuing dispute as won or lost.
+   */
+  close(
+    id: string,
+    params: TestHelpers.Issuing.DisputeCloseParams,
+    options?: RequestOptions
+  ): Promise<Response<Dispute>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/issuing/disputes/${id}/close`,
+      params,
+      options
+    ) as any;
+  }
+  /**
    * Test helper: populates network_lifecycle.dispute_response on a test-mode Visa Issuing Dispute using placeholder file tokens. Only supported for Visa disputes.
    */
   simulateNetworkLifecycleDisputeResponse(
@@ -49,6 +64,25 @@ export class DisputeResource extends StripeResource {
       params,
       options
     ) as any;
+  }
+}
+export namespace TestHelpers {
+  export namespace Issuing {
+    export interface DisputeCloseParams {
+      /**
+       * Whether to close the dispute as `won` or `lost`.
+       */
+      status: DisputeCloseParams.Status;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    export namespace DisputeCloseParams {
+      export type Status = 'lost' | 'won';
+    }
   }
 }
 export namespace TestHelpers {
