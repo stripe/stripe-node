@@ -236,6 +236,39 @@ export interface ApiListPromise<T>
 }
 
 /**
+ * A container for paginated lists of V2 API objects.
+ * The array of objects is on the `.data` property,
+ * and `.next_page_url` provides the URL for the next page of results.
+ */
+export interface V2List<T> {
+  data: Array<T>;
+
+  /**
+   * The URL for the next page of results, or `null` if there are no more results.
+   */
+  next_page_url: string | null;
+
+  /**
+   * The URL for the previous page of results, or `null` if this is the first page.
+   */
+  previous_page_url: string | null;
+}
+
+export interface V2ListPromise<T>
+  extends Promise<Response<V2List<T>>>,
+    AsyncIterableIterator<T> {
+  autoPagingEach(
+    handler: (item: T) => boolean | void | Promise<boolean | void>,
+    onDone?: (err: any) => void
+  ): Promise<void>;
+
+  autoPagingToArray(
+    opts: {limit: number},
+    onDone?: (err: any) => void
+  ): Promise<Array<T>>;
+}
+
+/**
  * A container for paginated lists of search results.
  * The array of objects is on the `.data` property,
  * and `.has_more` indicates whether there are additional objects beyond the end of this list.
