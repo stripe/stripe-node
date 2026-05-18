@@ -1,5 +1,9 @@
+// TODO(DEVSDK-3114): Remove http import from shared base class in next major version.
+// eslint-disable-next-line wintertc-compat
 import * as http from 'http';
 import {CryptoProvider} from '../crypto/CryptoProvider.js';
+// TODO(DEVSDK-3113): Remove EventEmitter from shared base class in next major version.
+// eslint-disable-next-line wintertc-compat
 import {EventEmitter} from 'events';
 import {FetchHttpClient} from '../net/FetchHttpClient.js';
 import {
@@ -28,6 +32,30 @@ export class PlatformFunctions {
    * Returns platform info string for telemetry, or null if unavailable.
    */
   getPlatformInfo(): string | null {
+    return null;
+  }
+
+  /**
+   * Emits a warning. Node.js uses process.emitWarning; other runtimes
+   * fall back to console.warn.
+   */
+  emitWarning(warning: string): void {
+    /* eslint-disable no-console */
+    console.warn(`Stripe: ${warning}`);
+    /* eslint-enable no-console */
+  }
+
+  /**
+   * Returns environment variables, or null if unavailable.
+   */
+  getEnv(): Record<string, string | undefined> | null {
+    return null;
+  }
+
+  /**
+   * Returns the runtime version string, or null if unavailable.
+   */
+  getRuntimeVersion(): string | null {
     return null;
   }
 

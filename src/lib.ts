@@ -1,3 +1,5 @@
+// TODO(DEVSDK-3114): Remove http.Agent from shared types in next major version.
+// eslint-disable-next-line wintertc-compat
 import {Agent} from 'http';
 
 import {RequestAuthenticator} from './Types.js';
@@ -279,6 +281,8 @@ export interface ApiSearchResultPromise<T>
   autoPagingToArray(opts: {limit: number}): Promise<Array<T>>;
 }
 
+// TODO(DEVSDK-3112): Replace with WHATWG ReadableStream in next major version.
+// eslint-disable-next-line wintertc-compat
 export type StripeStreamResponse = NodeJS.ReadableStream;
 
 export interface RequestEvent {
@@ -315,7 +319,8 @@ export interface AppInfo {
 }
 
 export interface FileData {
-  data: string | Buffer | Uint8Array;
+  // Buffer (Node.js) is accepted here because it extends Uint8Array.
+  data: string | Uint8Array;
   name?: string;
   type?: string;
 }

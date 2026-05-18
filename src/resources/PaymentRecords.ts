@@ -2923,6 +2923,11 @@ export namespace PaymentRecordReportPaymentParams {
     failure_code?: Failed.FailureCode;
 
     /**
+     * Payment evaluations associated with this reported payment.
+     */
+    payment_evaluations?: Array<string>;
+
+    /**
      * Processor information for this payment.
      */
     processor_details?: Failed.ProcessorDetails;
@@ -3130,6 +3135,11 @@ export namespace PaymentRecordReportPaymentAttemptParams {
     failure_code?: Failed.FailureCode;
 
     /**
+     * Payment evaluations associated with this reported payment.
+     */
+    payment_evaluations?: Array<string>;
+
+    /**
      * Processor information for this payment.
      */
     processor_details?: Failed.ProcessorDetails;
@@ -3294,6 +3304,11 @@ export interface PaymentRecordReportPaymentAttemptCanceledParams {
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
+
+  /**
+   * Payment evaluations associated with this reported payment.
+   */
+  payment_evaluations?: Array<string>;
 }
 export interface PaymentRecordReportPaymentAttemptFailedParams {
   /**
@@ -3315,6 +3330,11 @@ export interface PaymentRecordReportPaymentAttemptFailedParams {
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
+
+  /**
+   * Payment evaluations associated with this reported payment.
+   */
+  payment_evaluations?: Array<string>;
 
   /**
    * Processor information for this payment.

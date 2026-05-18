@@ -6,6 +6,36 @@ import {RequestOptions, Response} from '../../../lib.js';
 
 export class DisputeResource extends StripeResource {
   /**
+   * Test helper: closes a test-mode Issuing dispute as won or lost.
+   */
+  close(
+    id: string,
+    params: TestHelpers.Issuing.DisputeCloseParams,
+    options?: RequestOptions
+  ): Promise<Response<Dispute>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/issuing/disputes/${id}/close`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Test helper: populates network_lifecycle.dispute_response on a test-mode Visa Issuing Dispute using placeholder file tokens. Only supported for Visa disputes.
+   */
+  simulateNetworkLifecycleDisputeResponse(
+    id: string,
+    params: TestHelpers.Issuing.DisputeSimulateNetworkLifecycleDisputeResponseParams,
+    options?: RequestOptions
+  ): Promise<Response<Dispute>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/issuing/disputes/${id}/simulate_network_lifecycle_dispute_response`,
+      params,
+      options
+    ) as any;
+  }
+  /**
    * Test helper: populates network_lifecycle.pre_arbitration_response on a test-mode Visa Issuing Dispute using placeholder file tokens. Only supported for Visa disputes in the collaboration flow.
    */
   simulateNetworkLifecyclePreArbitrationResponse(
@@ -34,6 +64,49 @@ export class DisputeResource extends StripeResource {
       params,
       options
     ) as any;
+  }
+}
+export namespace TestHelpers {
+  export namespace Issuing {
+    export interface DisputeCloseParams {
+      /**
+       * Whether to close the dispute as `won` or `lost`.
+       */
+      status: DisputeCloseParams.Status;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    export namespace DisputeCloseParams {
+      export type Status = 'lost' | 'won';
+    }
+  }
+}
+export namespace TestHelpers {
+  export namespace Issuing {
+    export interface DisputeSimulateNetworkLifecycleDisputeResponseParams {
+      /**
+       * Controls the acquiring merchant's simulated submitted evidence files for the dispute response stage.
+       */
+      merchant_evidence_files: DisputeSimulateNetworkLifecycleDisputeResponseParams.MerchantEvidenceFiles;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    export namespace DisputeSimulateNetworkLifecycleDisputeResponseParams {
+      export interface MerchantEvidenceFiles {
+        /**
+         * How many simulated merchant evidence file tokens to attach (between 1 and 12).
+         */
+        number_to_generate: number;
+      }
+    }
   }
 }
 export namespace TestHelpers {

@@ -42,6 +42,8 @@ export interface NodeHttpClientInterface extends HttpClientInterface {
 
 export interface NodeHttpClientResponseInterface
   extends HttpClientResponseInterface {
+  // TODO(DEVSDK-3112): Replace with WHATWG ReadableStream in next major version.
+  // eslint-disable-next-line wintertc-compat
   toStream: (streamCompleteCallback: () => void) => NodeJS.ReadableStream;
 }
 

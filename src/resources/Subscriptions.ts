@@ -1051,7 +1051,7 @@ export class SubscriptionResource extends StripeResource {
    */
   pause(
     id: string,
-    params: SubscriptionPauseParams,
+    params?: SubscriptionPauseParams,
     options?: RequestOptions
   ): Promise<Response<Subscription>> {
     return this._makeRequest(
@@ -1546,11 +1546,6 @@ export interface Subscription {
   status: Subscription.Status;
 
   /**
-   * Describes changes to the subscription's status.
-   */
-  status_details?: Subscription.StatusDetails;
-
-  /**
    * ID of the test clock this subscription belongs to.
    */
   test_clock: string | TestHelpers.TestClock | null;
@@ -1829,13 +1824,6 @@ export namespace Subscription {
     | 'paused'
     | 'trialing'
     | 'unpaid';
-
-  export interface StatusDetails {
-    /**
-     * Indicates when and why the subscription transitioned to the paused status.
-     */
-    paused: StatusDetails.Paused;
-  }
 
   export interface TransferData {
     /**
@@ -2475,41 +2463,6 @@ export namespace Subscription {
 
   export namespace Prebilling {
     export type UpdateBehavior = 'prebill' | 'reset';
-  }
-
-  export namespace StatusDetails {
-    export interface Paused {
-      /**
-       * Information on the `type=subscription` pause.
-       */
-      subscription: Paused.Subscription;
-
-      /**
-       * Unix timestamp in seconds of when the subscription status transitioned to `paused`.
-       */
-      transitioned_at: number;
-
-      /**
-       * The type of pause.
-       */
-      type: 'subscription';
-    }
-
-    export namespace Paused {
-      export interface Subscription {
-        /**
-         * The reason that the subscription was paused.
-         */
-        type: Subscription.Type;
-      }
-
-      export namespace Subscription {
-        export type Type =
-          | 'pause_requested'
-          | 'system'
-          | 'trial_end_without_payment_method';
-      }
-    }
   }
 
   export namespace TrialSettings {
@@ -5817,11 +5770,6 @@ export namespace SubscriptionMigrateParams {
 }
 export interface SubscriptionPauseParams {
   /**
-   * The type of pause to apply.
-   */
-  type: 'subscription';
-
-  /**
    * Controls what to bill for when pausing the subscription.
    */
   bill_for?: SubscriptionPauseParams.BillFor;
@@ -5835,6 +5783,11 @@ export interface SubscriptionPauseParams {
    * Determines how to handle debits and credits when pausing. The default is `pending_invoice_item`.
    */
   invoicing_behavior?: SubscriptionPauseParams.InvoicingBehavior;
+
+  /**
+   * The type of pause to apply. Defaults to `subscription`.
+   */
+  type?: 'subscription';
 }
 export namespace SubscriptionPauseParams {
   export interface BillFor {
@@ -5887,11 +5840,6 @@ export interface SubscriptionResumeParams {
   expand?: Array<string>;
 
   /**
-   * Controls whether Stripe attempts payment on the resumption invoice in the resume request, and how payment on that invoice affects the subscription's status. The default is `resume_on_payment_attempt`.
-   */
-  payment_behavior?: SubscriptionResumeParams.PaymentBehavior;
-
-  /**
    * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) resulting from the `billing_cycle_anchor` being `unchanged`. When the `billing_cycle_anchor` is set to `now` (default value), no prorations are generated. If no value is passed, the default is `create_prorations`.
    */
   proration_behavior?: SubscriptionResumeParams.ProrationBehavior;
@@ -5903,10 +5851,6 @@ export interface SubscriptionResumeParams {
 }
 export namespace SubscriptionResumeParams {
   export type BillingCycleAnchor = 'now' | 'unchanged';
-
-  export type PaymentBehavior =
-    | 'resume_on_payment_attempt'
-    | 'resume_on_payment_success';
 
   export type ProrationBehavior =
     | 'always_invoice'
