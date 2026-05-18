@@ -1,6 +1,5 @@
 // File generated from our OpenAPI spec
 
-import * as crypto from 'crypto';
 import {StripeResource} from '../StripeResource.js';
 import {Capability} from './Capabilities.js';
 import {DeletedExternalAccount, ExternalAccount} from './ExternalAccounts.js';
@@ -144,7 +143,7 @@ export class AccountResource extends StripeResource {
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
-    const itemId = crypto.randomUUID();
+    const itemId = this._stripe._platformFunctions.uuid4();
     const stripeVersion =
       options.apiVersion || this._stripe.getApiField('version');
 

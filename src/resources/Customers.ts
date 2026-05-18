@@ -1,6 +1,5 @@
 // File generated from our OpenAPI spec
 
-import * as crypto from 'crypto';
 import {StripeResource} from '../StripeResource.js';
 import {DeletedDiscount, Discount} from './Discounts.js';
 import {CustomerBalanceTransaction} from './CustomerBalanceTransactions.js';
@@ -589,7 +588,7 @@ export class CustomerResource extends StripeResource {
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
-    const itemId = crypto.randomUUID();
+    const itemId = this._stripe._platformFunctions.uuid4();
     const stripeVersion =
       options.apiVersion || this._stripe.getApiField('version');
 
