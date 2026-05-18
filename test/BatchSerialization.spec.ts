@@ -9,8 +9,7 @@ import {getSpyableStripe} from './testUtils.js';
 
 const stripe = getSpyableStripe();
 
-const UUID_V4_REGEX =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const UUID_V4_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 describe('Batch serialization methods', () => {
   describe('serializeBatchCreate (no path params)', () => {
@@ -66,12 +65,8 @@ describe('Batch serialization methods', () => {
 
   describe('uuid generation', () => {
     it('produces unique ids across calls', () => {
-      const a = JSON.parse(
-        stripe.promotionCodes.serializeBatchCreate({}, {})
-      );
-      const b = JSON.parse(
-        stripe.promotionCodes.serializeBatchCreate({}, {})
-      );
+      const a = JSON.parse(stripe.promotionCodes.serializeBatchCreate({}, {}));
+      const b = JSON.parse(stripe.promotionCodes.serializeBatchCreate({}, {}));
 
       expect(a.id).to.not.equal(b.id);
     });
