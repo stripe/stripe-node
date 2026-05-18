@@ -414,7 +414,9 @@ import {
 } from './resources/PaymentLocations.js';
 import {
   PaymentLocationCapability,
+  PaymentLocationCapabilityRetrieveParams,
   PaymentLocationCapabilityUpdateParams,
+  PaymentLocationCapabilityListParams,
   PaymentLocationCapabilityResource,
 } from './resources/PaymentLocationCapabilities.js';
 import {
@@ -2283,7 +2285,9 @@ export declare namespace Stripe {
   };
   export {
     PaymentLocationCapability,
+    PaymentLocationCapabilityRetrieveParams,
     PaymentLocationCapabilityUpdateParams,
+    PaymentLocationCapabilityListParams,
     PaymentLocationCapabilityResource,
   };
   export {

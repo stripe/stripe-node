@@ -1,9 +1,41 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {RequestOptions, Response} from '../lib.js';
+import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class PaymentLocationCapabilityResource extends StripeResource {
+  /**
+   * Returns a list of PaymentLocationCapability objects associated with the location.
+   */
+  list(
+    params: PaymentLocationCapabilityListParams,
+    options?: RequestOptions
+  ): ApiListPromise<PaymentLocationCapability> {
+    return this._makeRequest(
+      'GET',
+      '/v1/payment_location_capabilities',
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
+  }
+  /**
+   * Retrieves information about the specified Payment Location Capability.
+   */
+  retrieve(
+    id: string,
+    params: PaymentLocationCapabilityRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<PaymentLocationCapability>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/payment_location_capabilities/${id}`,
+      params,
+      options
+    ) as any;
+  }
   /**
    * Updates a specified Payment Location Capability. Request or remove a payment location capability by updating its requested parameter.
    */
@@ -35,6 +67,11 @@ export interface PaymentLocationCapability {
    * The identifier for the capability.
    */
   capability: 'fr_meal_vouchers_conecs_payments';
+
+  /**
+   * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
+   */
+  livemode: boolean;
 
   /**
    * The payment location for which the capability enables functionality.
@@ -109,6 +146,17 @@ export namespace PaymentLocationCapability {
     }
   }
 }
+export interface PaymentLocationCapabilityRetrieveParams {
+  /**
+   * The payment location for which the capability enables functionality.
+   */
+  location: string;
+
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}
 export interface PaymentLocationCapabilityUpdateParams {
   /**
    * The location for which the capability enables functionality.
@@ -119,6 +167,17 @@ export interface PaymentLocationCapabilityUpdateParams {
    * To request a new capability for the location, set this to `true`. You can remove it from the location by passing `false`.
    */
   requested: boolean;
+
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}
+export interface PaymentLocationCapabilityListParams {
+  /**
+   * The location for which the capabilities enable functionality.
+   */
+  location: string;
 
   /**
    * Specifies which fields in the response should be expanded.
