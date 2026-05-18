@@ -56,25 +56,25 @@ export class FinancialConnections {
 }
 
 export declare namespace FinancialConnections {
-  export type AccountListParams = FinancialConnectionsNamespace0.AccountListParams;
-  export type AccountRetrieveParams = FinancialConnectionsNamespace0.AccountRetrieveParams;
-  export type AccountDisconnectParams = FinancialConnectionsNamespace0.AccountDisconnectParams;
-  export type AccountRefreshParams = FinancialConnectionsNamespace0.AccountRefreshParams;
-  export type AccountSubscribeParams = FinancialConnectionsNamespace0.AccountSubscribeParams;
-  export type AccountUnsubscribeParams = FinancialConnectionsNamespace0.AccountUnsubscribeParams;
-  export type AccountListInferredBalancesParams = FinancialConnectionsNamespace0.AccountListInferredBalancesParams;
-  export type AccountListOwnersParams = FinancialConnectionsNamespace0.AccountListOwnersParams;
+  export import AccountListParams = FinancialConnectionsNamespace0.AccountListParams;
+  export import AccountRetrieveParams = FinancialConnectionsNamespace0.AccountRetrieveParams;
+  export import AccountDisconnectParams = FinancialConnectionsNamespace0.AccountDisconnectParams;
+  export import AccountRefreshParams = FinancialConnectionsNamespace0.AccountRefreshParams;
+  export import AccountSubscribeParams = FinancialConnectionsNamespace0.AccountSubscribeParams;
+  export import AccountUnsubscribeParams = FinancialConnectionsNamespace0.AccountUnsubscribeParams;
+  export import AccountListInferredBalancesParams = FinancialConnectionsNamespace0.AccountListInferredBalancesParams;
+  export import AccountListOwnersParams = FinancialConnectionsNamespace0.AccountListOwnersParams;
   export {Account};
-  export type AuthorizationRetrieveParams = FinancialConnectionsNamespace1.AuthorizationRetrieveParams;
+  export import AuthorizationRetrieveParams = FinancialConnectionsNamespace1.AuthorizationRetrieveParams;
   export {Authorization};
-  export type InstitutionListParams = FinancialConnectionsNamespace2.InstitutionListParams;
-  export type InstitutionRetrieveParams = FinancialConnectionsNamespace2.InstitutionRetrieveParams;
+  export import InstitutionListParams = FinancialConnectionsNamespace2.InstitutionListParams;
+  export import InstitutionRetrieveParams = FinancialConnectionsNamespace2.InstitutionRetrieveParams;
   export {Institution};
-  export type SessionRetrieveParams = FinancialConnectionsNamespace3.SessionRetrieveParams;
-  export type SessionCreateParams = FinancialConnectionsNamespace3.SessionCreateParams;
+  export import SessionRetrieveParams = FinancialConnectionsNamespace3.SessionRetrieveParams;
+  export import SessionCreateParams = FinancialConnectionsNamespace3.SessionCreateParams;
   export {Session};
-  export type TransactionListParams = FinancialConnectionsNamespace4.TransactionListParams;
-  export type TransactionRetrieveParams = FinancialConnectionsNamespace4.TransactionRetrieveParams;
+  export import TransactionListParams = FinancialConnectionsNamespace4.TransactionListParams;
+  export import TransactionRetrieveParams = FinancialConnectionsNamespace4.TransactionRetrieveParams;
   export {Transaction};
   export {AccountOwner};
   export {AccountOwnership};

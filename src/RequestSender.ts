@@ -25,7 +25,6 @@ import {RawRequestOptions, RequestOptions} from './lib.js';
 import {HttpClient, HttpClientResponseInterface} from './net/HttpClient.js';
 import {Stripe} from './stripe.core.js';
 import {
-  emitWarning,
   jsonStringifyRequestData,
   normalizeHeaders,
   queryStringifyRequestData,
@@ -418,7 +417,7 @@ export class RequestSender {
     // and fix these cases as they are semantically incorrect.
     if (methodHasPayload || contentLength) {
       if (!methodHasPayload) {
-        emitWarning(
+        this._stripe._platformFunctions.emitWarning(
           `${method} method had non-zero contentLength but no payload is expected for this verb`
         );
       }
@@ -470,7 +469,7 @@ export class RequestSender {
       if (
         this._stripe._prevRequestMetrics.length > this._maxBufferedRequestMetric
       ) {
-        emitWarning(
+        this._stripe._platformFunctions.emitWarning(
           'Request metrics buffer is full, dropping telemetry message.'
         );
       } else {
@@ -580,7 +579,7 @@ export class RequestSender {
       headers: RequestHeaders,
       requestRetries: number,
       retryAfter: number | null
-    ): NodeJS.Timeout => {
+    ): ReturnType<typeof setTimeout> => {
       return setTimeout(
         requestFn,
         this._getSleepTimeInMS(requestRetries, retryAfter),

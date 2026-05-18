@@ -31,6 +31,25 @@ export class NodePlatformFunctions extends PlatformFunctions {
     return `${process.platform} ${release()} ${arch()}`;
   }
 
+  /** @override */
+  emitWarning(warning: string): void {
+    if (typeof process.emitWarning === 'function') {
+      process.emitWarning(warning, 'Stripe');
+    } else {
+      super.emitWarning(warning);
+    }
+  }
+
+  /** @override */
+  getEnv(): Record<string, string | undefined> {
+    return process.env;
+  }
+
+  /** @override */
+  getRuntimeVersion(): string {
+    return process.version;
+  }
+
   /**
    * @override
    * Secure compare, from https://github.com/freewil/scmp

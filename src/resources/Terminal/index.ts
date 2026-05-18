@@ -88,6 +88,6 @@ export declare namespace Terminal {
   export import ReaderRefundPaymentParams = TerminalNamespace4.ReaderRefundPaymentParams;
   export import ReaderSetReaderDisplayParams = TerminalNamespace4.ReaderSetReaderDisplayParams;
   export {Reader};
-  export type ReaderCollectedDataRetrieveParams = TerminalNamespace5.ReaderCollectedDataRetrieveParams;
+  export import ReaderCollectedDataRetrieveParams = TerminalNamespace5.ReaderCollectedDataRetrieveParams;
   export {ReaderCollectedData};
 }
