@@ -1,11 +1,7 @@
 import {expect} from 'chai';
 import {Stripe} from '../src/stripe.core';
-import {
-  createMockClient,
-  getSpyableStripe,
-  SpyableStripe,
-} from './testUtils.js';
-import {ApiList} from '../src/lib';
+import {createMockClient, getSpyableStripe} from './testUtils.js';
+import {ApiList} from '../src/lib.js';
 
 const v2EventPayloadWithoutRelatedObject = `
   {
