@@ -239,8 +239,12 @@ export interface ApiListPromise<T>
  * A container for paginated lists of V2 API objects.
  * The array of objects is on the `.data` property,
  * and `.next_page_url` provides the URL for the next page of results.
+ * 
+ * TODO(DEVSDK-2534): remove ApiList<T> base interface at next major;
+ * this is here to not break existing types, but v1 list properties
+ * like has_more will continue to be not populated at runtime.
  */
-export interface V2List<T> {
+export interface V2List<T> extends ApiList<T> {
   data: Array<T>;
 
   /**
