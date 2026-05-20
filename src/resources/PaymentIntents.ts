@@ -371,6 +371,8 @@ export interface PaymentIntent {
    */
   object: 'payment_intent';
 
+  advanced_feature_details?: PaymentIntent.AdvancedFeatureDetails;
+
   /**
    * Details about the agent that initiated the creation of this PaymentIntent.
    */
@@ -630,6 +632,28 @@ export interface PaymentIntent {
   transfer_group: string | null;
 }
 export namespace PaymentIntent {
+  export interface AdvancedFeatureDetails {
+    /**
+     * Timestamp at which the authorization will expire if not captured.
+     */
+    capture_before?: number;
+
+    decremental_authorization?: AdvancedFeatureDetails.DecrementalAuthorization;
+
+    incremental_authorization?: AdvancedFeatureDetails.IncrementalAuthorization;
+
+    multicapture?: AdvancedFeatureDetails.Multicapture;
+
+    overcapture?: AdvancedFeatureDetails.Overcapture;
+
+    reauthorization?: AdvancedFeatureDetails.Reauthorization;
+
+    /**
+     * Timestamp at which the reauthorization window closes.
+     */
+    reauthorize_before: number | null;
+  }
+
   export interface AgentDetails {
     /**
      * The name of the agent that initiated the payment.
@@ -1191,6 +1215,68 @@ export namespace PaymentIntent {
      * The account (if any) that the payment is attributed to for tax reporting, and where funds from the payment are transferred to after payment success.
      */
     destination: string | Account;
+  }
+
+  export namespace AdvancedFeatureDetails {
+    export interface DecrementalAuthorization {
+      /**
+       * Indicates whether the feature is supported.
+       */
+      status: DecrementalAuthorization.Status;
+    }
+
+    export interface IncrementalAuthorization {
+      /**
+       * Indicates whether the feature is supported.
+       */
+      status: IncrementalAuthorization.Status;
+    }
+
+    export interface Multicapture {
+      /**
+       * Indicates whether the feature is supported.
+       */
+      status: Multicapture.Status;
+    }
+
+    export interface Overcapture {
+      /**
+       * The maximum amount that can be captured.
+       */
+      maximum_amount_capturable?: number;
+
+      /**
+       * Indicates whether overcapture is supported.
+       */
+      status: Overcapture.Status;
+    }
+
+    export interface Reauthorization {
+      /**
+       * Indicates whether the feature is supported.
+       */
+      status: Reauthorization.Status;
+    }
+
+    export namespace DecrementalAuthorization {
+      export type Status = 'available' | 'unavailable';
+    }
+
+    export namespace IncrementalAuthorization {
+      export type Status = 'available' | 'unavailable';
+    }
+
+    export namespace Multicapture {
+      export type Status = 'available' | 'unavailable';
+    }
+
+    export namespace Overcapture {
+      export type Status = 'available' | 'unavailable';
+    }
+
+    export namespace Reauthorization {
+      export type Status = 'available' | 'unavailable';
+    }
   }
 
   export namespace AmountDetails {
