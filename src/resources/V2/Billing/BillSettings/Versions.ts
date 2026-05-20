@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../../StripeResource.js';
 import {BillSettingVersion} from './../../../V2/Billing/BillSettingVersions.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 
 export class VersionResource extends StripeResource {
   /**
@@ -12,7 +12,7 @@ export class VersionResource extends StripeResource {
     id: string,
     params?: V2.Billing.BillSettings.VersionListParams,
     options?: RequestOptions
-  ): ApiListPromise<BillSettingVersion> {
+  ): V2ListPromise<BillSettingVersion> {
     return this._makeRequest(
       'GET',
       `/v2/billing/bill_settings/${id}/versions`,

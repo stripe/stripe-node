@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class AdjustmentResource extends StripeResource {
   /**
@@ -11,7 +11,7 @@ export class AdjustmentResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.AdjustmentListParams,
     options?: RequestOptions
-  ): ApiListPromise<Adjustment> {
+  ): V2ListPromise<Adjustment> {
     return this._makeRequest(
       'GET',
       '/v2/money_management/adjustments',

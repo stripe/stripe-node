@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {PayoutMethod} from './PayoutMethods.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class OutboundSetupIntentResource extends StripeResource {
   /**
@@ -11,7 +11,7 @@ export class OutboundSetupIntentResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.OutboundSetupIntentListParams,
     options?: RequestOptions
-  ): ApiListPromise<OutboundSetupIntent> {
+  ): V2ListPromise<OutboundSetupIntent> {
     return this._makeRequest(
       'GET',
       '/v2/money_management/outbound_setup_intents',

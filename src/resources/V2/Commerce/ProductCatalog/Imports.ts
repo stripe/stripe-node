@@ -3,7 +3,7 @@
 import {StripeResource} from '../../../../StripeResource.js';
 import {ProductCatalogImport} from './../../../V2/Commerce/ProductCatalogImports.js';
 import {MetadataParam} from '../../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 
 export class ImportResource extends StripeResource {
   /**
@@ -12,7 +12,7 @@ export class ImportResource extends StripeResource {
   list(
     params?: V2.Commerce.ProductCatalog.ImportListParams,
     options?: RequestOptions
-  ): ApiListPromise<ProductCatalogImport> {
+  ): V2ListPromise<ProductCatalogImport> {
     return this._makeRequest(
       'GET',
       '/v2/commerce/product_catalog/imports',

@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class InboundTransferResource extends StripeResource {
   /**
@@ -11,7 +11,7 @@ export class InboundTransferResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.InboundTransferListParams,
     options?: RequestOptions
-  ): ApiListPromise<InboundTransfer> {
+  ): V2ListPromise<InboundTransfer> {
     return this._makeRequest(
       'GET',
       '/v2/money_management/inbound_transfers',

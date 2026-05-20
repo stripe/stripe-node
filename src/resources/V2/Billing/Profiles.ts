@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ProfileResource extends StripeResource {
   /**
@@ -11,7 +11,7 @@ export class ProfileResource extends StripeResource {
   list(
     params: V2.Billing.ProfileListParams,
     options?: RequestOptions
-  ): ApiListPromise<Profile> {
+  ): V2ListPromise<Profile> {
     return this._makeRequest('GET', '/v2/billing/profiles', params, options, {
       methodType: 'list',
     }) as any;

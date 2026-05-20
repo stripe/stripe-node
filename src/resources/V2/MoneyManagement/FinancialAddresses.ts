@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {JapanAddress} from '../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class FinancialAddressResource extends StripeResource {
   /**
@@ -11,7 +11,7 @@ export class FinancialAddressResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.FinancialAddressListParams,
     options?: RequestOptions
-  ): ApiListPromise<FinancialAddress> {
+  ): V2ListPromise<FinancialAddress> {
     return this._makeRequest(
       'GET',
       '/v2/money_management/financial_addresses',
