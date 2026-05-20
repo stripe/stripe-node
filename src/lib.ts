@@ -236,6 +236,68 @@ export interface ApiListPromise<T>
 }
 
 /**
+ * A container for paginated lists of V2 API objects.
+ * The array of objects is on the `.data` property,
+ * and `.next_page_url` provides the URL for the next page of results.
+ *
+ * Learn more in Stripe's [V2 list pagination docs](https://docs.stripe.com/api-v2-overview#list-pagination)
+ * or, when iterating over many items, try [auto-pagination](https://github.com/stripe/stripe-node#auto-pagination) instead.
+ *
+ */
+export interface V2List<T> {
+  data: Array<T>;
+
+  /**
+   * The URL for the next page of results, or `null` if there are no more results.
+   */
+  next_page_url: string | null;
+
+  /**
+   * The URL for the previous page of results, or `null` if this is the first page.
+   */
+  previous_page_url: string | null;
+
+  /**
+   * TODO(DEVSDK-2534): remove these properties in our next major release.
+   * these deprecated properties were copied from ApiList<T> to not break
+   * existing code.  these properties will continue to be not populated at
+   * runtime.
+   */
+
+  /**
+   * @deprecated This property is not populated at runtime for v2 lists
+   */
+  object: 'list';
+
+  /**
+   * True if this list has another page of items after this one that can be fetched.
+   *
+   * @deprecated This property is not populated at runtime for v2 lists
+   */
+  has_more: boolean;
+
+  /**
+   * The URL where this list can be accessed.
+   * @deprecated This property is not populated at runtime for v2 lists
+   */
+  url: string;
+}
+
+export interface V2ListPromise<T>
+  extends Promise<Response<V2List<T>>>,
+    AsyncIterableIterator<T> {
+  autoPagingEach(
+    handler: (item: T) => boolean | void | Promise<boolean | void>,
+    onDone?: (err: any) => void
+  ): Promise<void>;
+
+  autoPagingToArray(
+    opts: {limit: number},
+    onDone?: (err: any) => void
+  ): Promise<Array<T>>;
+}
+
+/**
  * A container for paginated lists of search results.
  * The array of objects is on the `.data` property,
  * and `.has_more` indicates whether there are additional objects beyond the end of this list.
