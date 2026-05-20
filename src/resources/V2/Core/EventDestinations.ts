@@ -3,7 +3,7 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {Event} from './Events.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {DeletedObject} from './../../V2/DeletedObject.js';
 
 export class EventDestinationResource extends StripeResource {
@@ -13,7 +13,7 @@ export class EventDestinationResource extends StripeResource {
   list(
     params?: V2.Core.EventDestinationListParams,
     options?: RequestOptions
-  ): ApiListPromise<EventDestination> {
+  ): V2ListPromise<EventDestination> {
     return this._makeRequest(
       'GET',
       '/v2/core/event_destinations',

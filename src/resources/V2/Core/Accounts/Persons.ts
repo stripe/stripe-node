@@ -8,7 +8,7 @@ import {
   Decimal,
   JapanAddressParam,
 } from '../../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 import {DeletedObject} from './../../../V2/DeletedObject.js';
 
 export class PersonResource extends StripeResource {
@@ -20,7 +20,7 @@ export class PersonResource extends StripeResource {
     id: string,
     params?: V2.Core.Accounts.PersonListParams,
     options?: RequestOptions
-  ): ApiListPromise<AccountPerson> {
+  ): V2ListPromise<AccountPerson> {
     return this._makeRequest(
       'GET',
       `/v2/core/accounts/${id}/persons`,
