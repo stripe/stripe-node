@@ -3,7 +3,7 @@
 import {StripeResource} from '../../../../StripeResource.js';
 import {RateCardRate} from './../../../V2/Billing/RateCardRates.js';
 import {MetadataParam, Decimal} from '../../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 import {DeletedObject} from './../../../V2/DeletedObject.js';
 
 export class RateResource extends StripeResource {
@@ -14,7 +14,7 @@ export class RateResource extends StripeResource {
     id: string,
     params?: V2.Billing.RateCards.RateListParams,
     options?: RequestOptions
-  ): ApiListPromise<RateCardRate> {
+  ): V2ListPromise<RateCardRate> {
     return this._makeRequest(
       'GET',
       `/v2/billing/rate_cards/${id}/rates`,

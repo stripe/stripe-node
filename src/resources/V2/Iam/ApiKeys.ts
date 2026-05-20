@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ApiKeyResource extends StripeResource {
   /**
@@ -10,7 +10,7 @@ export class ApiKeyResource extends StripeResource {
   list(
     params?: V2.Iam.ApiKeyListParams,
     options?: RequestOptions
-  ): ApiListPromise<ApiKey> {
+  ): V2ListPromise<ApiKey> {
     return this._makeRequest('GET', '/v2/iam/api_keys', params, options, {
       methodType: 'list',
     }) as any;

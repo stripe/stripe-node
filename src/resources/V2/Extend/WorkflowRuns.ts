@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class WorkflowRunResource extends StripeResource {
   /**
@@ -10,7 +10,7 @@ export class WorkflowRunResource extends StripeResource {
   list(
     params?: V2.Extend.WorkflowRunListParams,
     options?: RequestOptions
-  ): ApiListPromise<WorkflowRun> {
+  ): V2ListPromise<WorkflowRun> {
     return this._makeRequest(
       'GET',
       '/v2/extend/workflow_runs',

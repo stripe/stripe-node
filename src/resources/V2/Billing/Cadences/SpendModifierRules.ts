@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../../StripeResource.js';
 import {CadenceSpendModifier} from './../../../V2/Billing/CadenceSpendModifiers.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 
 export class SpendModifierRuleResource extends StripeResource {
   /**
@@ -12,7 +12,7 @@ export class SpendModifierRuleResource extends StripeResource {
     id: string,
     params?: V2.Billing.Cadences.SpendModifierRuleListParams,
     options?: RequestOptions
-  ): ApiListPromise<CadenceSpendModifier> {
+  ): V2ListPromise<CadenceSpendModifier> {
     return this._makeRequest(
       'GET',
       `/v2/billing/cadences/${id}/spend_modifier_rules`,

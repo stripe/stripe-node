@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class CurrencyConversionResource extends StripeResource {
   /**
@@ -11,7 +11,7 @@ export class CurrencyConversionResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.CurrencyConversionListParams,
     options?: RequestOptions
-  ): ApiListPromise<CurrencyConversion> {
+  ): V2ListPromise<CurrencyConversion> {
     return this._makeRequest(
       'GET',
       '/v2/money_management/currency_conversions',

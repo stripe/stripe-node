@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {WorkflowRun} from './WorkflowRuns.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class WorkflowResource extends StripeResource {
   /**
@@ -11,7 +11,7 @@ export class WorkflowResource extends StripeResource {
   list(
     params?: V2.Extend.WorkflowListParams,
     options?: RequestOptions
-  ): ApiListPromise<Workflow> {
+  ): V2ListPromise<Workflow> {
     return this._makeRequest('GET', '/v2/extend/workflows', params, options, {
       methodType: 'list',
     }) as any;

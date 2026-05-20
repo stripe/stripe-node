@@ -10,7 +10,7 @@ import {
   JapanAddressParam,
   Metadata,
 } from '../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {PersonResource} from './Accounts/Persons.js';
 import {PersonTokenResource} from './Accounts/PersonTokens.js';
 import {Stripe} from '../../../stripe.core.js';
@@ -30,7 +30,7 @@ export class AccountResource extends StripeResource {
   list(
     params?: V2.Core.AccountListParams,
     options?: RequestOptions
-  ): ApiListPromise<Account> {
+  ): V2ListPromise<Account> {
     return this._makeRequest('GET', '/v2/core/accounts', params, options, {
       methodType: 'list',
       responseSchema: {

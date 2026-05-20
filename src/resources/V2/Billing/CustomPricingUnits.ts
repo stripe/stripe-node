@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class CustomPricingUnitResource extends StripeResource {
   /**
@@ -11,7 +11,7 @@ export class CustomPricingUnitResource extends StripeResource {
   list(
     params?: V2.Billing.CustomPricingUnitListParams,
     options?: RequestOptions
-  ): ApiListPromise<CustomPricingUnit> {
+  ): V2ListPromise<CustomPricingUnit> {
     return this._makeRequest(
       'GET',
       '/v2/billing/custom_pricing_units',

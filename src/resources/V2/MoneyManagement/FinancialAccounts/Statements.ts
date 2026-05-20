@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../../StripeResource.js';
 import {FinancialAccountStatement} from './../../../V2/MoneyManagement/FinancialAccountStatements.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 
 export class StatementResource extends StripeResource {
   /**
@@ -12,7 +12,7 @@ export class StatementResource extends StripeResource {
     id: string,
     params?: V2.MoneyManagement.FinancialAccounts.StatementListParams,
     options?: RequestOptions
-  ): ApiListPromise<FinancialAccountStatement> {
+  ): V2ListPromise<FinancialAccountStatement> {
     return this._makeRequest(
       'GET',
       `/v2/money_management/financial_accounts/${id}/statements`,

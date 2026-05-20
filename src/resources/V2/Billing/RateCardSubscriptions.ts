@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class RateCardSubscriptionResource extends StripeResource {
   /**
@@ -11,7 +11,7 @@ export class RateCardSubscriptionResource extends StripeResource {
   list(
     params?: V2.Billing.RateCardSubscriptionListParams,
     options?: RequestOptions
-  ): ApiListPromise<RateCardSubscription> {
+  ): V2ListPromise<RateCardSubscription> {
     return this._makeRequest(
       'GET',
       '/v2/billing/rate_card_subscriptions',

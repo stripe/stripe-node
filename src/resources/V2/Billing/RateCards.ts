@@ -3,7 +3,7 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {RateCardVersion} from './RateCardVersions.js';
 import {MetadataParam, Decimal, Metadata} from '../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {CustomPricingUnitOverageRateResource} from './RateCards/CustomPricingUnitOverageRates.js';
 import {RateResource} from './RateCards/Rates.js';
 import {VersionResource} from './RateCards/Versions.js';
@@ -27,7 +27,7 @@ export class RateCardResource extends StripeResource {
   list(
     params?: V2.Billing.RateCardListParams,
     options?: RequestOptions
-  ): ApiListPromise<RateCard> {
+  ): V2ListPromise<RateCard> {
     return this._makeRequest('GET', '/v2/billing/rate_cards', params, options, {
       methodType: 'list',
     }) as any;

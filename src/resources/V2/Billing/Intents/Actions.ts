@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../../StripeResource.js';
 import {IntentAction} from './../../../V2/Billing/IntentActions.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 
 export class ActionResource extends StripeResource {
   /**
@@ -12,7 +12,7 @@ export class ActionResource extends StripeResource {
     id: string,
     params?: V2.Billing.Intents.ActionListParams,
     options?: RequestOptions
-  ): ApiListPromise<IntentAction> {
+  ): V2ListPromise<IntentAction> {
     return this._makeRequest(
       'GET',
       `/v2/billing/intents/${id}/actions`,

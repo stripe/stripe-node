@@ -3,7 +3,7 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {StatementResource} from './FinancialAccounts/Statements.js';
 import {Stripe} from '../../../stripe.core.js';
 export class FinancialAccountResource extends StripeResource {
@@ -19,7 +19,7 @@ export class FinancialAccountResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.FinancialAccountListParams,
     options?: RequestOptions
-  ): ApiListPromise<FinancialAccount> {
+  ): V2ListPromise<FinancialAccount> {
     return this._makeRequest(
       'GET',
       '/v2/money_management/financial_accounts',

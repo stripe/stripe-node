@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../../StripeResource.js';
 import {LicenseFeeVersion} from './../../../V2/Billing/LicenseFeeVersions.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 
 export class VersionResource extends StripeResource {
   /**
@@ -12,7 +12,7 @@ export class VersionResource extends StripeResource {
     id: string,
     params?: V2.Billing.LicenseFees.VersionListParams,
     options?: RequestOptions
-  ): ApiListPromise<LicenseFeeVersion> {
+  ): V2ListPromise<LicenseFeeVersion> {
     return this._makeRequest(
       'GET',
       `/v2/billing/license_fees/${id}/versions`,

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ApprovalRequestResource extends StripeResource {
   /**
@@ -11,7 +11,7 @@ export class ApprovalRequestResource extends StripeResource {
   list(
     params?: V2.Core.ApprovalRequestListParams,
     options?: RequestOptions
-  ): ApiListPromise<ApprovalRequest> {
+  ): V2ListPromise<ApprovalRequest> {
     return this._makeRequest(
       'GET',
       '/v2/core/approval_requests',

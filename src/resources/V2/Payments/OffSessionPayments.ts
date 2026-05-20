@@ -3,7 +3,7 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {MetadataParam, AddressParam, Metadata} from '../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class OffSessionPaymentResource extends StripeResource {
   /**
@@ -12,7 +12,7 @@ export class OffSessionPaymentResource extends StripeResource {
   list(
     params?: V2.Payments.OffSessionPaymentListParams,
     options?: RequestOptions
-  ): ApiListPromise<OffSessionPayment> {
+  ): V2ListPromise<OffSessionPayment> {
     return this._makeRequest(
       'GET',
       '/v2/payments/off_session_payments',

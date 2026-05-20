@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {VersionResource} from './BillSettings/Versions.js';
 import {Stripe} from '../../../stripe.core.js';
 export class BillSettingResource extends StripeResource {
@@ -17,7 +17,7 @@ export class BillSettingResource extends StripeResource {
   list(
     params?: V2.Billing.BillSettingListParams,
     options?: RequestOptions
-  ): ApiListPromise<BillSetting> {
+  ): V2ListPromise<BillSetting> {
     return this._makeRequest(
       'GET',
       '/v2/billing/bill_settings',
