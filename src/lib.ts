@@ -243,11 +243,8 @@ export interface ApiListPromise<T>
  * Learn more in Stripe's [V2 list pagination docs](https://docs.stripe.com/api-v2-overview#list-pagination)
  * or, when iterating over many items, try [auto-pagination](https://github.com/stripe/stripe-node#auto-pagination) instead.
  *
- * TODO(DEVSDK-2534): remove ApiList<T> base interface at next major.
- * this inheritence was added to not break existing types.  v1 list
- * properties like has_more will continue to be not populated at runtime.
  */
-export interface V2List<T> extends ApiList<T> {
+export interface V2List<T> {
   data: Array<T>;
 
   /**
@@ -259,6 +256,30 @@ export interface V2List<T> extends ApiList<T> {
    * The URL for the previous page of results, or `null` if this is the first page.
    */
   previous_page_url: string | null;
+
+  /**
+   * TODO(DEVSDK-2534): remove ApiList<T> properties a our next major release.
+   * these deprecated properties were added to not break existing types.  these
+   * properties will continue to be not populated at runtime.
+   */
+
+  /**
+   * @deprecated This property is not populated at runtime for v2 lists
+   */
+  object: 'list';
+
+  /**
+   * True if this list has another page of items after this one that can be fetched.
+   *
+   * @deprecated This property is not populated at runtime for v2 lists
+   */
+  has_more: boolean;
+
+  /**
+   * The URL where this list can be accessed.
+   * @deprecated This property is not populated at runtime for v2 lists
+   */
+  url: string;
 }
 
 export interface V2ListPromise<T>

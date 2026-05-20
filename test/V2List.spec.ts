@@ -24,7 +24,7 @@ const v2EventPayloadWithoutRelatedObject = `
 `;
 
 describe('V2 Core Events Resource', () => {
-  let stripe: SpyableStripe;
+  let stripe: any;
   beforeEach(() => {
     stripe = getSpyableStripe({});
   });
