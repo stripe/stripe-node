@@ -258,9 +258,10 @@ export interface V2List<T> {
   previous_page_url: string | null;
 
   /**
-   * TODO(DEVSDK-2534): remove ApiList<T> properties a our next major release.
-   * these deprecated properties were added to not break existing types.  these
-   * properties will continue to be not populated at runtime.
+   * TODO(DEVSDK-2534): remove these properties in our next major release.
+   * these deprecated properties were copied from ApiList<T> to not break
+   * existing code.  these properties will continue to be not populated at
+   * runtime.
    */
 
   /**
