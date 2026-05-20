@@ -240,9 +240,12 @@ export interface ApiListPromise<T>
  * The array of objects is on the `.data` property,
  * and `.next_page_url` provides the URL for the next page of results.
  * 
- * TODO(DEVSDK-2534): remove ApiList<T> base interface at next major;
- * this is here to not break existing types, but v1 list properties
- * like has_more will continue to be not populated at runtime.
+ * Learn more in Stripe's [V2 list pagination docs](https://docs.stripe.com/api-v2-overview#list-pagination)
+ * or, when iterating over many items, try [auto-pagination](https://github.com/stripe/stripe-node#auto-pagination) instead.
+ *
+ * TODO(DEVSDK-2534): remove ApiList<T> base interface at next major.
+ * this inheritence was added to not break existing types.  v1 list
+ * properties like has_more will continue to be not populated at runtime.
  */
 export interface V2List<T> extends ApiList<T> {
   data: Array<T>;
