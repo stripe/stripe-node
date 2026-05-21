@@ -3483,9 +3483,18 @@ export namespace SetupIntentCreateParams {
     export namespace Benefit {
       export interface FrMealVoucher {
         /**
+         * Whether to enable meal voucher benefit for this setup intent.
+         */
+        enabled?: FrMealVoucher.Enabled;
+
+        /**
          * The 14-digit SIRET of the meal voucher acceptor.
          */
         siret: string;
+      }
+
+      export namespace FrMealVoucher {
+        export type Enabled = 'if_payment_method_is_eligible' | 'never';
       }
     }
   }
@@ -5445,9 +5454,18 @@ export namespace SetupIntentUpdateParams {
     export namespace Benefit {
       export interface FrMealVoucher {
         /**
+         * Whether to enable meal voucher benefit for this setup intent.
+         */
+        enabled?: FrMealVoucher.Enabled;
+
+        /**
          * The 14-digit SIRET of the meal voucher acceptor.
          */
         siret: string;
+      }
+
+      export namespace FrMealVoucher {
+        export type Enabled = 'if_payment_method_is_eligible' | 'never';
       }
     }
   }
@@ -7398,9 +7416,18 @@ export namespace SetupIntentConfirmParams {
     export namespace Benefit {
       export interface FrMealVoucher {
         /**
+         * Whether to enable meal voucher benefit for this setup intent.
+         */
+        enabled?: FrMealVoucher.Enabled;
+
+        /**
          * The 14-digit SIRET of the meal voucher acceptor.
          */
         siret: string;
+      }
+
+      export namespace FrMealVoucher {
+        export type Enabled = 'if_payment_method_is_eligible' | 'never';
       }
     }
   }

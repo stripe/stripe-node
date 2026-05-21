@@ -3,7 +3,7 @@
 import {StripeResource} from '../../../../StripeResource.js';
 import {RateCardCustomPricingUnitOverageRate} from './../../../V2/Billing/RateCardCustomPricingUnitOverageRates.js';
 import {MetadataParam} from '../../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 import {DeletedObject} from './../../../V2/DeletedObject.js';
 
 export class CustomPricingUnitOverageRateResource extends StripeResource {
@@ -14,7 +14,7 @@ export class CustomPricingUnitOverageRateResource extends StripeResource {
     id: string,
     params?: V2.Billing.RateCards.CustomPricingUnitOverageRateListParams,
     options?: RequestOptions
-  ): ApiListPromise<RateCardCustomPricingUnitOverageRate> {
+  ): V2ListPromise<RateCardCustomPricingUnitOverageRate> {
     return this._makeRequest(
       'GET',
       `/v2/billing/rate_cards/${id}/custom_pricing_unit_overage_rates`,

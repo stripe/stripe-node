@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {MetadataParam, Metadata, Decimal} from '../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {SpendModifierRuleResource} from './Cadences/SpendModifierRules.js';
 import {Stripe} from '../../../stripe.core.js';
 export class CadenceResource extends StripeResource {
@@ -18,7 +18,7 @@ export class CadenceResource extends StripeResource {
   list(
     params?: V2.Billing.CadenceListParams,
     options?: RequestOptions
-  ): ApiListPromise<Cadence> {
+  ): V2ListPromise<Cadence> {
     return this._makeRequest('GET', '/v2/billing/cadences', params, options, {
       methodType: 'list',
       responseSchema: {

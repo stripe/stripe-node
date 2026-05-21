@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../../StripeResource.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 
 export class GbBankAccountResource extends StripeResource {
   /**
@@ -10,7 +10,7 @@ export class GbBankAccountResource extends StripeResource {
   list(
     params?: V2.Core.Vault.GbBankAccountListParams,
     options?: RequestOptions
-  ): ApiListPromise<GbBankAccount> {
+  ): V2ListPromise<GbBankAccount> {
     return this._makeRequest(
       'GET',
       '/v2/core/vault/gb_bank_accounts',

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class PayoutMethodResource extends StripeResource {
   /**
@@ -10,7 +10,7 @@ export class PayoutMethodResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.PayoutMethodListParams,
     options?: RequestOptions
-  ): ApiListPromise<PayoutMethod> {
+  ): V2ListPromise<PayoutMethod> {
     return this._makeRequest(
       'GET',
       '/v2/money_management/payout_methods',

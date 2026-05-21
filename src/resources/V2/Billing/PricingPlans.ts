@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {ComponentResource} from './PricingPlans/Components.js';
 import {VersionResource} from './PricingPlans/Versions.js';
 import {Stripe} from '../../../stripe.core.js';
@@ -21,7 +21,7 @@ export class PricingPlanResource extends StripeResource {
   list(
     params?: V2.Billing.PricingPlanListParams,
     options?: RequestOptions
-  ): ApiListPromise<PricingPlan> {
+  ): V2ListPromise<PricingPlan> {
     return this._makeRequest(
       'GET',
       '/v2/billing/pricing_plans',

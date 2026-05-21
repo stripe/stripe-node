@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class FeeBatchResource extends StripeResource {
   /**
@@ -11,7 +11,7 @@ export class FeeBatchResource extends StripeResource {
   list(
     params?: V2.Core.FeeBatchListParams,
     options?: RequestOptions
-  ): ApiListPromise<FeeBatch> {
+  ): V2ListPromise<FeeBatch> {
     return this._makeRequest('GET', '/v2/core/fee_batches', params, options, {
       methodType: 'list',
     }) as any;

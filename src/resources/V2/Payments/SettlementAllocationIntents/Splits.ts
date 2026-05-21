@@ -4,7 +4,7 @@ import {StripeResource} from '../../../../StripeResource.js';
 import {SettlementAllocationIntentSplit} from './../../../V2/Payments/SettlementAllocationIntentSplits.js';
 import {V2Amount} from './../../V2Amounts.js';
 import {MetadataParam} from '../../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 
 export class SplitResource extends StripeResource {
   /**
@@ -14,7 +14,7 @@ export class SplitResource extends StripeResource {
     id: string,
     params?: V2.Payments.SettlementAllocationIntents.SplitListParams,
     options?: RequestOptions
-  ): ApiListPromise<SettlementAllocationIntentSplit> {
+  ): V2ListPromise<SettlementAllocationIntentSplit> {
     return this._makeRequest(
       'GET',
       `/v2/payments/settlement_allocation_intents/${id}/splits`,

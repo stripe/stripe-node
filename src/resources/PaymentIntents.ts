@@ -371,6 +371,8 @@ export interface PaymentIntent {
    */
   object: 'payment_intent';
 
+  advanced_feature_details?: PaymentIntent.AdvancedFeatureDetails;
+
   /**
    * Details about the agent that initiated the creation of this PaymentIntent.
    */
@@ -380,6 +382,11 @@ export interface PaymentIntent {
    * Allocated Funds configuration for this PaymentIntent.
    */
   allocated_funds?: PaymentIntent.AllocatedFunds | null;
+
+  /**
+   * The list of payment method types allowed for use with this payment. Stripe automatically returns compatible payment methods from this list in the `payment_method_types` field of the response, based on the other PaymentIntent parameters, such as `currency`, `amount`, and `customer`.
+   */
+  allowed_payment_method_types?: Array<string> | null;
 
   /**
    * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://docs.stripe.com/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
@@ -625,6 +632,28 @@ export interface PaymentIntent {
   transfer_group: string | null;
 }
 export namespace PaymentIntent {
+  export interface AdvancedFeatureDetails {
+    /**
+     * Timestamp at which the authorization will expire if not captured.
+     */
+    capture_before?: number;
+
+    decremental_authorization?: AdvancedFeatureDetails.DecrementalAuthorization;
+
+    incremental_authorization?: AdvancedFeatureDetails.IncrementalAuthorization;
+
+    multicapture?: AdvancedFeatureDetails.Multicapture;
+
+    overcapture?: AdvancedFeatureDetails.Overcapture;
+
+    reauthorization?: AdvancedFeatureDetails.Reauthorization;
+
+    /**
+     * Timestamp at which the reauthorization window closes.
+     */
+    reauthorize_before: number | null;
+  }
+
   export interface AgentDetails {
     /**
      * The name of the agent that initiated the payment.
@@ -1186,6 +1215,68 @@ export namespace PaymentIntent {
      * The account (if any) that the payment is attributed to for tax reporting, and where funds from the payment are transferred to after payment success.
      */
     destination: string | Account;
+  }
+
+  export namespace AdvancedFeatureDetails {
+    export interface DecrementalAuthorization {
+      /**
+       * Indicates whether the feature is supported.
+       */
+      status: DecrementalAuthorization.Status;
+    }
+
+    export interface IncrementalAuthorization {
+      /**
+       * Indicates whether the feature is supported.
+       */
+      status: IncrementalAuthorization.Status;
+    }
+
+    export interface Multicapture {
+      /**
+       * Indicates whether the feature is supported.
+       */
+      status: Multicapture.Status;
+    }
+
+    export interface Overcapture {
+      /**
+       * The maximum amount that can be captured.
+       */
+      maximum_amount_capturable?: number;
+
+      /**
+       * Indicates whether overcapture is supported.
+       */
+      status: Overcapture.Status;
+    }
+
+    export interface Reauthorization {
+      /**
+       * Indicates whether the feature is supported.
+       */
+      status: Reauthorization.Status;
+    }
+
+    export namespace DecrementalAuthorization {
+      export type Status = 'available' | 'unavailable';
+    }
+
+    export namespace IncrementalAuthorization {
+      export type Status = 'available' | 'unavailable';
+    }
+
+    export namespace Multicapture {
+      export type Status = 'available' | 'unavailable';
+    }
+
+    export namespace Overcapture {
+      export type Status = 'available' | 'unavailable';
+    }
+
+    export namespace Reauthorization {
+      export type Status = 'available' | 'unavailable';
+    }
   }
 
   export namespace AmountDetails {
@@ -7736,9 +7827,18 @@ export namespace PaymentIntentCreateParams {
     export namespace Benefit {
       export interface FrMealVoucher {
         /**
+         * Whether to enable meal voucher benefit for this payment.
+         */
+        enabled?: FrMealVoucher.Enabled;
+
+        /**
          * The 14-digit SIRET of the meal voucher acceptor.
          */
         siret: string;
+      }
+
+      export namespace FrMealVoucher {
+        export type Enabled = 'if_payment_method_is_eligible' | 'never';
       }
     }
 
@@ -15464,9 +15564,18 @@ export namespace PaymentIntentUpdateParams {
     export namespace Benefit {
       export interface FrMealVoucher {
         /**
+         * Whether to enable meal voucher benefit for this payment.
+         */
+        enabled?: FrMealVoucher.Enabled;
+
+        /**
          * The 14-digit SIRET of the meal voucher acceptor.
          */
         siret: string;
+      }
+
+      export namespace FrMealVoucher {
+        export type Enabled = 'if_payment_method_is_eligible' | 'never';
       }
     }
 
@@ -25855,9 +25964,18 @@ export namespace PaymentIntentConfirmParams {
     export namespace Benefit {
       export interface FrMealVoucher {
         /**
+         * Whether to enable meal voucher benefit for this payment.
+         */
+        enabled?: FrMealVoucher.Enabled;
+
+        /**
          * The 14-digit SIRET of the meal voucher acceptor.
          */
         siret: string;
+      }
+
+      export namespace FrMealVoucher {
+        export type Enabled = 'if_payment_method_is_eligible' | 'never';
       }
     }
 

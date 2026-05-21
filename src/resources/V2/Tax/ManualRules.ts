@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {Decimal} from '../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ManualRuleResource extends StripeResource {
   /**
@@ -11,7 +11,7 @@ export class ManualRuleResource extends StripeResource {
   list(
     params?: V2.Tax.ManualRuleListParams,
     options?: RequestOptions
-  ): ApiListPromise<ManualRule> {
+  ): V2ListPromise<ManualRule> {
     return this._makeRequest('GET', '/v2/tax/manual_rules', params, options, {
       methodType: 'list',
       responseSchema: {

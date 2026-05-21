@@ -964,6 +964,8 @@ export interface Authorization {
    */
   authorization_method: Issuing.Authorization.AuthorizationMethod;
 
+  balance_response?: Issuing.Authorization.BalanceResponse;
+
   /**
    * List of balance transactions associated with this authorization.
    */
@@ -1105,6 +1107,23 @@ export namespace Issuing {
       | 'keyed_in'
       | 'online'
       | 'swipe';
+
+    export interface BalanceResponse {
+      /**
+       * The cardholder account type affected by this authorization.
+       */
+      account_type: BalanceResponse.AccountType;
+
+      /**
+       * The remaining balance in the cardholder's account after the authorization, in the smallest currency unit.
+       */
+      amount: number;
+
+      /**
+       * The currency of the remaining balance in the cardholder's account after the authorization.
+       */
+      currency: string;
+    }
 
     export type CardPresence = 'not_present' | 'present';
 
@@ -1447,6 +1466,16 @@ export namespace Issuing {
        * 3D Secure details.
        */
       three_d_secure: VerificationData.ThreeDSecure | null;
+    }
+
+    export namespace BalanceResponse {
+      export type AccountType =
+        | 'checking'
+        | 'credit'
+        | 'default'
+        | 'other'
+        | 'savings'
+        | 'universal';
     }
 
     export namespace CryptoTransaction {

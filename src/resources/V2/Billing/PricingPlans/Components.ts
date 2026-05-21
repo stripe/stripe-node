@@ -3,7 +3,7 @@
 import {StripeResource} from '../../../../StripeResource.js';
 import {PricingPlanComponent} from './../../../V2/Billing/PricingPlanComponents.js';
 import {MetadataParam} from '../../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../../lib.js';
 import {DeletedObject} from './../../../V2/DeletedObject.js';
 
 export class ComponentResource extends StripeResource {
@@ -14,7 +14,7 @@ export class ComponentResource extends StripeResource {
     id: string,
     params?: V2.Billing.PricingPlans.ComponentListParams,
     options?: RequestOptions
-  ): ApiListPromise<PricingPlanComponent> {
+  ): V2ListPromise<PricingPlanComponent> {
     return this._makeRequest(
       'GET',
       `/v2/billing/pricing_plans/${id}/components`,
