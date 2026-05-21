@@ -149,8 +149,8 @@ export class StripeEventNotificationHandler {
 
   public async handle(
     // these types are duplicated in the manual types, so they're just here for internal use
-    rawBody: string | Buffer,
-    signature: string | Buffer
+    rawBody: string | Uint8Array,
+    signature: string | Uint8Array
   ): Promise<void> {
     // we're not worried about thread safety here because we expect callbacks will be registered synchronously on app startup
     this.hasHandledEvent = true;
