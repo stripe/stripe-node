@@ -82,6 +82,8 @@ import {
   AccountRetrieveExternalAccountParams,
   AccountRetrievePersonParams,
   AccountRetrieveSignalsParams,
+  AccountSerializeBatchCreateParams,
+  AccountSerializeBatchDeleteParams,
   AccountSerializeBatchUpdateParams,
   AccountUpdateCapabilityParams,
   AccountUpdateExternalAccountParams,
@@ -175,6 +177,9 @@ import {
   CouponUpdateParams,
   CouponListParams,
   CouponDeleteParams,
+  CouponSerializeBatchCreateParams,
+  CouponSerializeBatchDeleteParams,
+  CouponSerializeBatchUpdateParams,
   CouponResource,
 } from './resources/Coupons.js';
 import {
@@ -217,7 +222,20 @@ import {
   CustomerRetrieveSourceParams,
   CustomerRetrieveTaxIdParams,
   CustomerSearchParams,
+  CustomerSerializeBatchCreateParams,
+  CustomerSerializeBatchCreateBalanceTransactionParams,
+  CustomerSerializeBatchCreateForCustomerTaxIdParams,
+  CustomerSerializeBatchCreateFundingInstructionsFundingInstructionsParams,
+  CustomerSerializeBatchCreateSourceParams,
+  CustomerSerializeBatchDeleteParams,
+  CustomerSerializeBatchDeleteDiscountParams,
+  CustomerSerializeBatchDeleteSourceParams,
+  CustomerSerializeBatchDeleteTaxIdParams,
   CustomerSerializeBatchUpdateParams,
+  CustomerSerializeBatchUpdateBalanceTransactionParams,
+  CustomerSerializeBatchUpdateCashBalanceParams,
+  CustomerSerializeBatchUpdateSourceParams,
+  CustomerSerializeBatchVerifySourceParams,
   CustomerUpdateBalanceTransactionParams,
   CustomerUpdateCashBalanceParams,
   CustomerUpdateSourceParams,
@@ -227,6 +245,7 @@ import {
 import {
   CustomerSession,
   CustomerSessionCreateParams,
+  CustomerSessionSerializeBatchCreateParams,
   CustomerSessionResource,
 } from './resources/CustomerSessions.js';
 import {
@@ -235,6 +254,7 @@ import {
   DisputeUpdateParams,
   DisputeListParams,
   DisputeCloseParams,
+  DisputeSerializeBatchCloseParams,
   DisputeResource,
 } from './resources/Disputes.js';
 import {
@@ -308,8 +328,19 @@ import {
   InvoiceRemoveLinesParams,
   InvoiceSearchParams,
   InvoiceSendInvoiceParams,
+  InvoiceSerializeBatchAddLinesParams,
+  InvoiceSerializeBatchCreateParams,
+  InvoiceSerializeBatchCreatePreviewParams,
+  InvoiceSerializeBatchDeleteParams,
+  InvoiceSerializeBatchFinalizeInvoiceParams,
+  InvoiceSerializeBatchMarkUncollectibleParams,
   InvoiceSerializeBatchPayParams,
+  InvoiceSerializeBatchRemoveLinesParams,
+  InvoiceSerializeBatchSendInvoiceParams,
   InvoiceSerializeBatchUpdateParams,
+  InvoiceSerializeBatchUpdateLineItemParams,
+  InvoiceSerializeBatchUpdateLinesParams,
+  InvoiceSerializeBatchVoidInvoiceParams,
   InvoiceUpdateLinesParams,
   InvoiceUpdateLineItemParams,
   InvoiceVoidInvoiceParams,
@@ -323,6 +354,9 @@ import {
   InvoiceItemUpdateParams,
   InvoiceItemListParams,
   InvoiceItemDeleteParams,
+  InvoiceItemSerializeBatchCreateParams,
+  InvoiceItemSerializeBatchDeleteParams,
+  InvoiceItemSerializeBatchUpdateParams,
   InvoiceItemResource,
 } from './resources/InvoiceItems.js';
 import {
@@ -336,6 +370,8 @@ import {
   InvoiceRenderingTemplateRetrieveParams,
   InvoiceRenderingTemplateListParams,
   InvoiceRenderingTemplateArchiveParams,
+  InvoiceRenderingTemplateSerializeBatchArchiveParams,
+  InvoiceRenderingTemplateSerializeBatchUnarchiveParams,
   InvoiceRenderingTemplateUnarchiveParams,
   InvoiceRenderingTemplateResource,
 } from './resources/InvoiceRenderingTemplates.js';
@@ -429,6 +465,7 @@ import {
   PaymentMethodAttachParams,
   PaymentMethodCheckBalanceParams,
   PaymentMethodDetachParams,
+  PaymentMethodSerializeBatchAttachParams,
   PaymentMethodResource,
 } from './resources/PaymentMethods.js';
 import {
@@ -488,6 +525,8 @@ import {
   PriceUpdateParams,
   PriceListParams,
   PriceSearchParams,
+  PriceSerializeBatchCreateParams,
+  PriceSerializeBatchUpdateParams,
   PriceResource,
 } from './resources/Prices.js';
 import {
@@ -503,6 +542,11 @@ import {
   ProductListFeaturesParams,
   ProductRetrieveFeatureParams,
   ProductSearchParams,
+  ProductSerializeBatchCreateParams,
+  ProductSerializeBatchCreateFeatureParams,
+  ProductSerializeBatchDeleteParams,
+  ProductSerializeBatchDeleteFeatureParams,
+  ProductSerializeBatchUpdateParams,
   ProductResource,
 } from './resources/Products.js';
 import {
@@ -543,6 +587,8 @@ import {
   RefundUpdateParams,
   RefundListParams,
   RefundCancelParams,
+  RefundSerializeBatchCancelParams,
+  RefundSerializeBatchCreateParams,
   RefundResource,
 } from './resources/Refunds.js';
 import {
@@ -598,7 +644,11 @@ import {
   SubscriptionPauseParams,
   SubscriptionResumeParams,
   SubscriptionSearchParams,
+  SubscriptionSerializeBatchCancelParams,
+  SubscriptionSerializeBatchCreateParams,
   SubscriptionSerializeBatchMigrateParams,
+  SubscriptionSerializeBatchPauseParams,
+  SubscriptionSerializeBatchResumeParams,
   SubscriptionSerializeBatchUpdateParams,
   SubscriptionResource,
 } from './resources/Subscriptions.js';
@@ -610,6 +660,9 @@ import {
   SubscriptionItemUpdateParams,
   SubscriptionItemListParams,
   SubscriptionItemDeleteParams,
+  SubscriptionItemSerializeBatchCreateParams,
+  SubscriptionItemSerializeBatchDeleteParams,
+  SubscriptionItemSerializeBatchUpdateParams,
   SubscriptionItemResource,
 } from './resources/SubscriptionItems.js';
 import {
@@ -623,6 +676,7 @@ import {
   SubscriptionScheduleReleaseParams,
   SubscriptionScheduleSerializeBatchCancelParams,
   SubscriptionScheduleSerializeBatchCreateParams,
+  SubscriptionScheduleSerializeBatchReleaseParams,
   SubscriptionScheduleSerializeBatchUpdateParams,
   SubscriptionScheduleResource,
 } from './resources/SubscriptionSchedules.js';
@@ -639,6 +693,7 @@ import {
   TaxIdRetrieveParams,
   TaxIdListParams,
   TaxIdDeleteParams,
+  TaxIdSerializeBatchCreateParams,
   TaxIdResource,
 } from './resources/TaxIds.js';
 import {
@@ -647,6 +702,8 @@ import {
   TaxRateRetrieveParams,
   TaxRateUpdateParams,
   TaxRateListParams,
+  TaxRateSerializeBatchCreateParams,
+  TaxRateSerializeBatchUpdateParams,
   TaxRateResource,
 } from './resources/TaxRates.js';
 import {
@@ -1964,6 +2021,8 @@ export declare namespace Stripe {
     AccountRetrieveExternalAccountParams,
     AccountRetrievePersonParams,
     AccountRetrieveSignalsParams,
+    AccountSerializeBatchCreateParams,
+    AccountSerializeBatchDeleteParams,
     AccountSerializeBatchUpdateParams,
     AccountUpdateCapabilityParams,
     AccountUpdateExternalAccountParams,
@@ -2045,6 +2104,9 @@ export declare namespace Stripe {
     CouponUpdateParams,
     CouponListParams,
     CouponDeleteParams,
+    CouponSerializeBatchCreateParams,
+    CouponSerializeBatchDeleteParams,
+    CouponSerializeBatchUpdateParams,
     CouponResource,
   };
   export {
@@ -2087,7 +2149,20 @@ export declare namespace Stripe {
     CustomerRetrieveSourceParams,
     CustomerRetrieveTaxIdParams,
     CustomerSearchParams,
+    CustomerSerializeBatchCreateParams,
+    CustomerSerializeBatchCreateBalanceTransactionParams,
+    CustomerSerializeBatchCreateForCustomerTaxIdParams,
+    CustomerSerializeBatchCreateFundingInstructionsFundingInstructionsParams,
+    CustomerSerializeBatchCreateSourceParams,
+    CustomerSerializeBatchDeleteParams,
+    CustomerSerializeBatchDeleteDiscountParams,
+    CustomerSerializeBatchDeleteSourceParams,
+    CustomerSerializeBatchDeleteTaxIdParams,
     CustomerSerializeBatchUpdateParams,
+    CustomerSerializeBatchUpdateBalanceTransactionParams,
+    CustomerSerializeBatchUpdateCashBalanceParams,
+    CustomerSerializeBatchUpdateSourceParams,
+    CustomerSerializeBatchVerifySourceParams,
     CustomerUpdateBalanceTransactionParams,
     CustomerUpdateCashBalanceParams,
     CustomerUpdateSourceParams,
@@ -2097,6 +2172,7 @@ export declare namespace Stripe {
   export {
     CustomerSession,
     CustomerSessionCreateParams,
+    CustomerSessionSerializeBatchCreateParams,
     CustomerSessionResource,
   };
   export {
@@ -2105,6 +2181,7 @@ export declare namespace Stripe {
     DisputeUpdateParams,
     DisputeListParams,
     DisputeCloseParams,
+    DisputeSerializeBatchCloseParams,
     DisputeResource,
   };
   export {
@@ -2185,8 +2262,19 @@ export declare namespace Stripe {
     InvoiceRemoveLinesParams,
     InvoiceSearchParams,
     InvoiceSendInvoiceParams,
+    InvoiceSerializeBatchAddLinesParams,
+    InvoiceSerializeBatchCreateParams,
+    InvoiceSerializeBatchCreatePreviewParams,
+    InvoiceSerializeBatchDeleteParams,
+    InvoiceSerializeBatchFinalizeInvoiceParams,
+    InvoiceSerializeBatchMarkUncollectibleParams,
     InvoiceSerializeBatchPayParams,
+    InvoiceSerializeBatchRemoveLinesParams,
+    InvoiceSerializeBatchSendInvoiceParams,
     InvoiceSerializeBatchUpdateParams,
+    InvoiceSerializeBatchUpdateLineItemParams,
+    InvoiceSerializeBatchUpdateLinesParams,
+    InvoiceSerializeBatchVoidInvoiceParams,
     InvoiceUpdateLinesParams,
     InvoiceUpdateLineItemParams,
     InvoiceVoidInvoiceParams,
@@ -2200,6 +2288,9 @@ export declare namespace Stripe {
     InvoiceItemUpdateParams,
     InvoiceItemListParams,
     InvoiceItemDeleteParams,
+    InvoiceItemSerializeBatchCreateParams,
+    InvoiceItemSerializeBatchDeleteParams,
+    InvoiceItemSerializeBatchUpdateParams,
     InvoiceItemResource,
   };
   export {
@@ -2213,6 +2304,8 @@ export declare namespace Stripe {
     InvoiceRenderingTemplateRetrieveParams,
     InvoiceRenderingTemplateListParams,
     InvoiceRenderingTemplateArchiveParams,
+    InvoiceRenderingTemplateSerializeBatchArchiveParams,
+    InvoiceRenderingTemplateSerializeBatchUnarchiveParams,
     InvoiceRenderingTemplateUnarchiveParams,
     InvoiceRenderingTemplateResource,
   };
@@ -2301,6 +2394,7 @@ export declare namespace Stripe {
     PaymentMethodAttachParams,
     PaymentMethodCheckBalanceParams,
     PaymentMethodDetachParams,
+    PaymentMethodSerializeBatchAttachParams,
     PaymentMethodResource,
   };
   export {
@@ -2360,6 +2454,8 @@ export declare namespace Stripe {
     PriceUpdateParams,
     PriceListParams,
     PriceSearchParams,
+    PriceSerializeBatchCreateParams,
+    PriceSerializeBatchUpdateParams,
     PriceResource,
   };
   export {
@@ -2375,6 +2471,11 @@ export declare namespace Stripe {
     ProductListFeaturesParams,
     ProductRetrieveFeatureParams,
     ProductSearchParams,
+    ProductSerializeBatchCreateParams,
+    ProductSerializeBatchCreateFeatureParams,
+    ProductSerializeBatchDeleteParams,
+    ProductSerializeBatchDeleteFeatureParams,
+    ProductSerializeBatchUpdateParams,
     ProductResource,
   };
   export {
@@ -2415,6 +2516,8 @@ export declare namespace Stripe {
     RefundUpdateParams,
     RefundListParams,
     RefundCancelParams,
+    RefundSerializeBatchCancelParams,
+    RefundSerializeBatchCreateParams,
     RefundResource,
   };
   export {
@@ -2466,7 +2569,11 @@ export declare namespace Stripe {
     SubscriptionPauseParams,
     SubscriptionResumeParams,
     SubscriptionSearchParams,
+    SubscriptionSerializeBatchCancelParams,
+    SubscriptionSerializeBatchCreateParams,
     SubscriptionSerializeBatchMigrateParams,
+    SubscriptionSerializeBatchPauseParams,
+    SubscriptionSerializeBatchResumeParams,
     SubscriptionSerializeBatchUpdateParams,
     SubscriptionResource,
   };
@@ -2478,6 +2585,9 @@ export declare namespace Stripe {
     SubscriptionItemUpdateParams,
     SubscriptionItemListParams,
     SubscriptionItemDeleteParams,
+    SubscriptionItemSerializeBatchCreateParams,
+    SubscriptionItemSerializeBatchDeleteParams,
+    SubscriptionItemSerializeBatchUpdateParams,
     SubscriptionItemResource,
   };
   export {
@@ -2491,6 +2601,7 @@ export declare namespace Stripe {
     SubscriptionScheduleReleaseParams,
     SubscriptionScheduleSerializeBatchCancelParams,
     SubscriptionScheduleSerializeBatchCreateParams,
+    SubscriptionScheduleSerializeBatchReleaseParams,
     SubscriptionScheduleSerializeBatchUpdateParams,
     SubscriptionScheduleResource,
   };
@@ -2502,6 +2613,7 @@ export declare namespace Stripe {
     TaxIdRetrieveParams,
     TaxIdListParams,
     TaxIdDeleteParams,
+    TaxIdSerializeBatchCreateParams,
     TaxIdResource,
   };
   export {
@@ -2510,6 +2622,8 @@ export declare namespace Stripe {
     TaxRateRetrieveParams,
     TaxRateUpdateParams,
     TaxRateListParams,
+    TaxRateSerializeBatchCreateParams,
+    TaxRateSerializeBatchUpdateParams,
     TaxRateResource,
   };
   export {Token, TokenCreateParams, TokenRetrieveParams, TokenResource};

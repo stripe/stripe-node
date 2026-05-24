@@ -67,6 +67,46 @@ export class InvoiceRenderingTemplateResource extends StripeResource {
       options
     ) as any;
   }
+  serializeBatchArchive(
+    template: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {template: template};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
+  serializeBatchUnarchive(
+    template: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {template: template};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
 }
 export interface InvoiceRenderingTemplate {
   /**
@@ -137,6 +177,8 @@ export interface InvoiceRenderingTemplateArchiveParams {
    */
   expand?: Array<string>;
 }
+export interface InvoiceRenderingTemplateSerializeBatchArchiveParams {}
+export interface InvoiceRenderingTemplateSerializeBatchUnarchiveParams {}
 export interface InvoiceRenderingTemplateUnarchiveParams {
   /**
    * Specifies which fields in the response should be expanded.

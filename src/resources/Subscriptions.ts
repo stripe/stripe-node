@@ -1271,6 +1271,26 @@ export class SubscriptionResource extends StripeResource {
       }
     ) as any;
   }
+  serializeBatchCancel(
+    subscriptionExposedId: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {subscription_exposed_id: subscriptionExposedId};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
   serializeBatchUpdate(
     subscriptionExposedId: string,
     params: Record<string, unknown> = {},
@@ -1280,16 +1300,34 @@ export class SubscriptionResource extends StripeResource {
     const stripeVersion =
       options.apiVersion || this._stripe.getApiField('version');
 
-    const item: Record<string, unknown> = {
+    const entry: Record<string, unknown> = {
       id: itemId,
       params: params,
       stripe_version: stripeVersion,
     };
-    item.path_params = {subscription_exposed_id: subscriptionExposedId};
+    entry.path_params = {subscription_exposed_id: subscriptionExposedId};
     if (options.stripeContext) {
-      item.context = options.stripeContext;
+      entry.context = options.stripeContext;
     }
-    return JSON.stringify(item);
+    return JSON.stringify(entry);
+  }
+  serializeBatchCreate(
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
   }
   serializeBatchMigrate(
     subscription: string,
@@ -1300,16 +1338,56 @@ export class SubscriptionResource extends StripeResource {
     const stripeVersion =
       options.apiVersion || this._stripe.getApiField('version');
 
-    const item: Record<string, unknown> = {
+    const entry: Record<string, unknown> = {
       id: itemId,
       params: params,
       stripe_version: stripeVersion,
     };
-    item.path_params = {subscription: subscription};
+    entry.path_params = {subscription: subscription};
     if (options.stripeContext) {
-      item.context = options.stripeContext;
+      entry.context = options.stripeContext;
     }
-    return JSON.stringify(item);
+    return JSON.stringify(entry);
+  }
+  serializeBatchPause(
+    subscription: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {subscription: subscription};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
+  serializeBatchResume(
+    subscription: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {subscription: subscription};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
   }
 }
 export interface Subscription {
@@ -5877,5 +5955,9 @@ export interface SubscriptionSearchParams {
    */
   page?: string;
 }
+export interface SubscriptionSerializeBatchCancelParams {}
+export interface SubscriptionSerializeBatchCreateParams {}
 export interface SubscriptionSerializeBatchMigrateParams {}
+export interface SubscriptionSerializeBatchPauseParams {}
+export interface SubscriptionSerializeBatchResumeParams {}
 export interface SubscriptionSerializeBatchUpdateParams {}

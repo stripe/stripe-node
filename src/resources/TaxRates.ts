@@ -61,6 +61,44 @@ export class TaxRateResource extends StripeResource {
       options
     ) as any;
   }
+  serializeBatchCreate(
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
+  serializeBatchUpdate(
+    taxRate: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {tax_rate: taxRate};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
 }
 export interface TaxRate {
   /**
@@ -357,3 +395,5 @@ export interface TaxRateListParams extends PaginationParams {
    */
   inclusive?: boolean;
 }
+export interface TaxRateSerializeBatchCreateParams {}
+export interface TaxRateSerializeBatchUpdateParams {}

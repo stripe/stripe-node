@@ -131,6 +131,26 @@ export class PaymentMethodResource extends StripeResource {
       options
     ) as any;
   }
+  serializeBatchAttach(
+    paymentMethod: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {payment_method: paymentMethod};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
 }
 export interface PaymentMethod {
   /**
@@ -3233,3 +3253,4 @@ export interface PaymentMethodDetachParams {
    */
   expand?: Array<string>;
 }
+export interface PaymentMethodSerializeBatchAttachParams {}

@@ -5991,7 +5991,7 @@ describe('Generated tests', function() {
     const batchJob = await stripe.v2.core.batchJobs.create({
       endpoint: {
         http_method: 'delete',
-        path: '/v1/subscription_schedules',
+        path: '/v1/products',
       },
       metadata: {
         key: 'metadata',

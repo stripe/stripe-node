@@ -28,6 +28,24 @@ export class SettingResource extends StripeResource {
       options
     ) as any;
   }
+  serializeBatchUpdate(
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
 }
 export interface Settings {
   /**
@@ -159,4 +177,7 @@ export namespace Tax {
         | 'inferred_by_currency';
     }
   }
+}
+export namespace Tax {
+  export interface SettingsSerializeBatchUpdateParams {}
 }

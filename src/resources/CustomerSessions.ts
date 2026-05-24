@@ -19,6 +19,24 @@ export class CustomerSessionResource extends StripeResource {
       options
     ) as any;
   }
+  serializeBatchCreate(
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
 }
 export interface CustomerSession {
   /**
@@ -616,3 +634,4 @@ export namespace CustomerSessionCreateParams {
     }
   }
 }
+export interface CustomerSessionSerializeBatchCreateParams {}
