@@ -110,6 +110,8 @@ export interface PaymentMethodConfiguration {
 
   billie?: PaymentMethodConfiguration.Billie;
 
+  bizum?: PaymentMethodConfiguration.Bizum;
+
   blik?: PaymentMethodConfiguration.Blik;
 
   boleto?: PaymentMethodConfiguration.Boleto;
@@ -201,6 +203,8 @@ export interface PaymentMethodConfiguration {
   samsung_pay?: PaymentMethodConfiguration.SamsungPay;
 
   satispay?: PaymentMethodConfiguration.Satispay;
+
+  scalapay?: PaymentMethodConfiguration.Scalapay;
 
   sepa_debit?: PaymentMethodConfiguration.SepaDebit;
 
@@ -318,6 +322,15 @@ export namespace PaymentMethodConfiguration {
     available: boolean;
 
     display_preference: Billie.DisplayPreference;
+  }
+
+  export interface Bizum {
+    /**
+     * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+     */
+    available: boolean;
+
+    display_preference: Bizum.DisplayPreference;
   }
 
   export interface Blik {
@@ -642,6 +655,15 @@ export namespace PaymentMethodConfiguration {
     available: boolean;
 
     display_preference: Satispay.DisplayPreference;
+  }
+
+  export interface Scalapay {
+    /**
+     * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+     */
+    available: boolean;
+
+    display_preference: Scalapay.DisplayPreference;
   }
 
   export interface SepaDebit {
@@ -1000,6 +1022,31 @@ export namespace PaymentMethodConfiguration {
     }
   }
 
+  export namespace Bizum {
+    export interface DisplayPreference {
+      /**
+       * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+       */
+      overridable: boolean | null;
+
+      /**
+       * The account's display preference.
+       */
+      preference: DisplayPreference.Preference;
+
+      /**
+       * The effective display preference value.
+       */
+      value: DisplayPreference.Value;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on';
+
+      export type Value = 'off' | 'on';
+    }
+  }
+
   export namespace Blik {
     export interface DisplayPreference {
       /**
@@ -1876,6 +1923,31 @@ export namespace PaymentMethodConfiguration {
   }
 
   export namespace Satispay {
+    export interface DisplayPreference {
+      /**
+       * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+       */
+      overridable: boolean | null;
+
+      /**
+       * The account's display preference.
+       */
+      preference: DisplayPreference.Preference;
+
+      /**
+       * The effective display preference value.
+       */
+      value: DisplayPreference.Value;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on';
+
+      export type Value = 'off' | 'on';
+    }
+  }
+
+  export namespace Scalapay {
     export interface DisplayPreference {
       /**
        * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
@@ -2187,6 +2259,11 @@ export interface PaymentMethodConfigurationCreateParams {
   billie?: PaymentMethodConfigurationCreateParams.Billie;
 
   /**
+   * To enable Bizum, buyers need a Spanish IBAN from a bank connected to Bizum. Within their banking app, they can enable Bizum and link their mobile number to their IBAN.
+   */
+  bizum?: PaymentMethodConfigurationCreateParams.Bizum;
+
+  /**
    * BLIK is a [single use](https://docs.stripe.com/payments/payment-methods#usage) payment method that requires customers to authenticate their payments. When customers want to pay online using BLIK, they request a six-digit code from their banking application and enter it into the payment collection form. Check this [page](https://docs.stripe.com/payments/blik) for more details.
    */
   blik?: PaymentMethodConfigurationCreateParams.Blik;
@@ -2387,6 +2464,11 @@ export interface PaymentMethodConfigurationCreateParams {
   satispay?: PaymentMethodConfigurationCreateParams.Satispay;
 
   /**
+   * Scalapay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that lets customers pay in 3 or 4 installments. Customers are redirected from your website or app, authorize the payment with Scalapay, then return to your website or app. You get [immediate notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of whether the payment succeeded or failed.
+   */
+  scalapay?: PaymentMethodConfigurationCreateParams.Scalapay;
+
+  /**
    * The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is an initiative of the European Union to simplify payments within and across member countries. SEPA established and enforced banking standards to allow for the direct debiting of every EUR-denominated bank account within the SEPA region, check this [page](https://docs.stripe.com/payments/sepa-debit) for more details.
    */
   sepa_debit?: PaymentMethodConfigurationCreateParams.SepaDebit;
@@ -2514,6 +2596,13 @@ export namespace PaymentMethodConfigurationCreateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: Billie.DisplayPreference;
+  }
+
+  export interface Bizum {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Bizum.DisplayPreference;
   }
 
   export interface Blik {
@@ -2775,6 +2864,13 @@ export namespace PaymentMethodConfigurationCreateParams {
     display_preference?: Satispay.DisplayPreference;
   }
 
+  export interface Scalapay {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Scalapay.DisplayPreference;
+  }
+
   export interface SepaDebit {
     /**
      * Whether or not the payment method should be displayed.
@@ -2982,6 +3078,19 @@ export namespace PaymentMethodConfigurationCreateParams {
   }
 
   export namespace Billie {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on';
+    }
+  }
+
+  export namespace Bizum {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.
@@ -3463,6 +3572,19 @@ export namespace PaymentMethodConfigurationCreateParams {
   }
 
   export namespace Satispay {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on';
+    }
+  }
+
+  export namespace Scalapay {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.
@@ -3665,6 +3787,11 @@ export interface PaymentMethodConfigurationUpdateParams {
   billie?: PaymentMethodConfigurationUpdateParams.Billie;
 
   /**
+   * To enable Bizum, buyers need a Spanish IBAN from a bank connected to Bizum. Within their banking app, they can enable Bizum and link their mobile number to their IBAN.
+   */
+  bizum?: PaymentMethodConfigurationUpdateParams.Bizum;
+
+  /**
    * BLIK is a [single use](https://docs.stripe.com/payments/payment-methods#usage) payment method that requires customers to authenticate their payments. When customers want to pay online using BLIK, they request a six-digit code from their banking application and enter it into the payment collection form. Check this [page](https://docs.stripe.com/payments/blik) for more details.
    */
   blik?: PaymentMethodConfigurationUpdateParams.Blik;
@@ -3860,6 +3987,11 @@ export interface PaymentMethodConfigurationUpdateParams {
   satispay?: PaymentMethodConfigurationUpdateParams.Satispay;
 
   /**
+   * Scalapay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that lets customers pay in 3 or 4 installments. Customers are redirected from your website or app, authorize the payment with Scalapay, then return to your website or app. You get [immediate notification](https://docs.stripe.com/payments/payment-methods#payment-notification) of whether the payment succeeded or failed.
+   */
+  scalapay?: PaymentMethodConfigurationUpdateParams.Scalapay;
+
+  /**
    * The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is an initiative of the European Union to simplify payments within and across member countries. SEPA established and enforced banking standards to allow for the direct debiting of every EUR-denominated bank account within the SEPA region, check this [page](https://docs.stripe.com/payments/sepa-debit) for more details.
    */
   sepa_debit?: PaymentMethodConfigurationUpdateParams.SepaDebit;
@@ -3987,6 +4119,13 @@ export namespace PaymentMethodConfigurationUpdateParams {
      * Whether or not the payment method should be displayed.
      */
     display_preference?: Billie.DisplayPreference;
+  }
+
+  export interface Bizum {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Bizum.DisplayPreference;
   }
 
   export interface Blik {
@@ -4248,6 +4387,13 @@ export namespace PaymentMethodConfigurationUpdateParams {
     display_preference?: Satispay.DisplayPreference;
   }
 
+  export interface Scalapay {
+    /**
+     * Whether or not the payment method should be displayed.
+     */
+    display_preference?: Scalapay.DisplayPreference;
+  }
+
   export interface SepaDebit {
     /**
      * Whether or not the payment method should be displayed.
@@ -4455,6 +4601,19 @@ export namespace PaymentMethodConfigurationUpdateParams {
   }
 
   export namespace Billie {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on';
+    }
+  }
+
+  export namespace Bizum {
     export interface DisplayPreference {
       /**
        * The account's preference for whether or not to display this payment method.
@@ -4948,6 +5107,19 @@ export namespace PaymentMethodConfigurationUpdateParams {
     }
   }
 
+  export namespace Scalapay {
+    export interface DisplayPreference {
+      /**
+       * The account's preference for whether or not to display this payment method.
+       */
+      preference?: DisplayPreference.Preference;
+    }
+
+    export namespace DisplayPreference {
+      export type Preference = 'none' | 'off' | 'on';
+    }
+  }
+
   export namespace SepaDebit {
     export interface DisplayPreference {
       /**
@@ -5066,6 +5238,11 @@ export namespace PaymentMethodConfigurationUpdateParams {
   }
 }
 export interface PaymentMethodConfigurationListParams extends PaginationParams {
+  /**
+   * Whether the configuration is active.
+   */
+  active?: boolean;
+
   /**
    * The Connect application to filter by.
    */

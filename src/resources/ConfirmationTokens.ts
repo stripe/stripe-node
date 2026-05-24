@@ -140,6 +140,8 @@ export namespace ConfirmationToken {
 
     billing_details: PaymentMethodPreview.BillingDetails;
 
+    bizum?: PaymentMethodPreview.Bizum;
+
     blik?: PaymentMethodPreview.Blik;
 
     boleto?: PaymentMethodPreview.Boleto;
@@ -216,6 +218,8 @@ export namespace ConfirmationToken {
     samsung_pay?: PaymentMethodPreview.SamsungPay;
 
     satispay?: PaymentMethodPreview.Satispay;
+
+    scalapay?: PaymentMethodPreview.Scalapay;
 
     sepa_debit?: PaymentMethodPreview.SepaDebit;
 
@@ -433,6 +437,8 @@ export namespace ConfirmationToken {
        */
       tax_id: string | null;
     }
+
+    export interface Bizum {}
 
     export interface Blik {}
 
@@ -889,6 +895,8 @@ export namespace ConfirmationToken {
 
     export interface Satispay {}
 
+    export interface Scalapay {}
+
     export interface SepaDebit {
       /**
        * Bank code of bank associated with the bank account.
@@ -945,6 +953,7 @@ export namespace ConfirmationToken {
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
+      | 'bizum'
       | 'blik'
       | 'boleto'
       | 'card'
@@ -981,6 +990,7 @@ export namespace ConfirmationToken {
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
+      | 'scalapay'
       | 'sepa_debit'
       | 'sofort'
       | 'sunbit'

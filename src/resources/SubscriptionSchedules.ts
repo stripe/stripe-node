@@ -600,6 +600,11 @@ export namespace SubscriptionSchedule {
   export namespace Phase {
     export interface AddInvoiceItem {
       /**
+       * Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
+       */
+      discountable: boolean | null;
+
+      /**
        * The stackable discounts that will be applied to the item.
        */
       discounts: Array<AddInvoiceItem.Discount>;
@@ -1210,6 +1215,11 @@ export namespace SubscriptionScheduleCreateParams {
 
   export namespace Phase {
     export interface AddInvoiceItem {
+      /**
+       * Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
+       */
+      discountable?: boolean;
+
       /**
        * The coupons to redeem into discounts for the item.
        */
@@ -1903,6 +1913,11 @@ export namespace SubscriptionScheduleUpdateParams {
 
   export namespace Phase {
     export interface AddInvoiceItem {
+      /**
+       * Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
+       */
+      discountable?: boolean;
+
       /**
        * The coupons to redeem into discounts for the item.
        */

@@ -130,7 +130,15 @@ export interface Configuration {
 
   tipping?: Terminal.Configuration.Tipping;
 
+  verifone_m425?: Terminal.Configuration.VerifoneM425;
+
   verifone_p400?: Terminal.Configuration.VerifoneP400;
+
+  verifone_p630?: Terminal.Configuration.VerifoneP630;
+
+  verifone_ux700?: Terminal.Configuration.VerifoneUx700;
+
+  verifone_v660p?: Terminal.Configuration.VerifoneV660p;
 
   wifi?: Terminal.Configuration.Wifi;
 }
@@ -251,7 +259,35 @@ export namespace Terminal {
       usd?: Tipping.Usd;
     }
 
+    export interface VerifoneM425 {
+      /**
+       * A File ID representing an image to display on the reader
+       */
+      splashscreen?: string | File;
+    }
+
     export interface VerifoneP400 {
+      /**
+       * A File ID representing an image to display on the reader
+       */
+      splashscreen?: string | File;
+    }
+
+    export interface VerifoneP630 {
+      /**
+       * A File ID representing an image to display on the reader
+       */
+      splashscreen?: string | File;
+    }
+
+    export interface VerifoneUx700 {
+      /**
+       * A File ID representing an image to display on the reader
+       */
+      splashscreen?: string | File;
+    }
+
+    export interface VerifoneV660p {
       /**
        * A File ID representing an image to display on the reader
        */
@@ -752,9 +788,29 @@ export namespace Terminal {
     tipping?: Emptyable<ConfigurationCreateParams.Tipping>;
 
     /**
+     * An object containing device type specific settings for Verifone M425 readers.
+     */
+    verifone_m425?: ConfigurationCreateParams.VerifoneM425;
+
+    /**
      * An object containing device type specific settings for Verifone P400 readers.
      */
     verifone_p400?: ConfigurationCreateParams.VerifoneP400;
+
+    /**
+     * An object containing device type specific settings for Verifone P630 readers.
+     */
+    verifone_p630?: ConfigurationCreateParams.VerifoneP630;
+
+    /**
+     * An object containing device type specific settings for Verifone UX700 readers.
+     */
+    verifone_ux700?: ConfigurationCreateParams.VerifoneUx700;
+
+    /**
+     * An object containing device type specific settings for Verifone V660p readers.
+     */
+    verifone_v660p?: ConfigurationCreateParams.VerifoneV660p;
 
     /**
      * Configurations for connecting to a WiFi network.
@@ -924,7 +980,35 @@ export namespace Terminal {
       usd?: Tipping.Usd;
     }
 
+    export interface VerifoneM425 {
+      /**
+       * A File ID representing an image you want to display on the reader.
+       */
+      splashscreen?: Emptyable<string>;
+    }
+
     export interface VerifoneP400 {
+      /**
+       * A File ID representing an image you want to display on the reader.
+       */
+      splashscreen?: Emptyable<string>;
+    }
+
+    export interface VerifoneP630 {
+      /**
+       * A File ID representing an image you want to display on the reader.
+       */
+      splashscreen?: Emptyable<string>;
+    }
+
+    export interface VerifoneUx700 {
+      /**
+       * A File ID representing an image you want to display on the reader.
+       */
+      splashscreen?: Emptyable<string>;
+    }
+
+    export interface VerifoneV660p {
       /**
        * A File ID representing an image you want to display on the reader.
        */
@@ -1442,9 +1526,29 @@ export namespace Terminal {
     tipping?: Emptyable<ConfigurationUpdateParams.Tipping>;
 
     /**
+     * An object containing device type specific settings for Verifone M425 readers.
+     */
+    verifone_m425?: Emptyable<ConfigurationUpdateParams.VerifoneM425>;
+
+    /**
      * An object containing device type specific settings for Verifone P400 readers.
      */
     verifone_p400?: Emptyable<ConfigurationUpdateParams.VerifoneP400>;
+
+    /**
+     * An object containing device type specific settings for Verifone P630 readers.
+     */
+    verifone_p630?: Emptyable<ConfigurationUpdateParams.VerifoneP630>;
+
+    /**
+     * An object containing device type specific settings for Verifone UX700 readers.
+     */
+    verifone_ux700?: Emptyable<ConfigurationUpdateParams.VerifoneUx700>;
+
+    /**
+     * An object containing device type specific settings for Verifone V660p readers.
+     */
+    verifone_v660p?: Emptyable<ConfigurationUpdateParams.VerifoneV660p>;
 
     /**
      * Configurations for connecting to a WiFi network.
@@ -1614,7 +1718,35 @@ export namespace Terminal {
       usd?: Tipping.Usd;
     }
 
+    export interface VerifoneM425 {
+      /**
+       * A File ID representing an image you want to display on the reader.
+       */
+      splashscreen?: Emptyable<string>;
+    }
+
     export interface VerifoneP400 {
+      /**
+       * A File ID representing an image you want to display on the reader.
+       */
+      splashscreen?: Emptyable<string>;
+    }
+
+    export interface VerifoneP630 {
+      /**
+       * A File ID representing an image you want to display on the reader.
+       */
+      splashscreen?: Emptyable<string>;
+    }
+
+    export interface VerifoneUx700 {
+      /**
+       * A File ID representing an image you want to display on the reader.
+       */
+      splashscreen?: Emptyable<string>;
+    }
+
+    export interface VerifoneV660p {
       /**
        * A File ID representing an image you want to display on the reader.
        */
