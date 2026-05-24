@@ -697,8 +697,8 @@ export interface Session {
   client_reference_id: string | null;
 
   /**
-   * The client secret of your Checkout Session. Applies to Checkout Sessions with `ui_mode: embedded` or `ui_mode: custom`. For `ui_mode: embedded`, the client secret is to be used when initializing Stripe.js embedded checkout.
-   *  For `ui_mode: custom`, use the client secret with [initCheckout](https://docs.stripe.com/js/custom_checkout/init) on your front end.
+   * The client secret of your Checkout Session. Applies to Checkout Sessions with `ui_mode: embedded_page` or `ui_mode: elements`. For `ui_mode: embedded_page`, the client secret is to be used when initializing Stripe.js embedded checkout.
+   *  For `ui_mode: elements`, use the client secret with [initCheckout](https://docs.stripe.com/js/custom_checkout/init) on your front end.
    */
   client_secret: string | null;
 
@@ -898,12 +898,12 @@ export interface Session {
   recovered_from: string | null;
 
   /**
-   * This parameter applies to `ui_mode: embedded`. Learn more about the [redirect behavior](https://docs.stripe.com/payments/checkout/custom-success-page?payment-ui=embedded-form) of embedded sessions. Defaults to `always`.
+   * This parameter applies to `ui_mode: embedded_page`. Learn more about the [redirect behavior](https://docs.stripe.com/payments/checkout/custom-success-page?payment-ui=embedded-form) of embedded sessions. Defaults to `always`.
    */
   redirect_on_completion?: Checkout.Session.RedirectOnCompletion;
 
   /**
-   * Applies to Checkout Sessions with `ui_mode: embedded` or `ui_mode: custom`. The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site.
+   * Applies to Checkout Sessions with `ui_mode: embedded_page` or `ui_mode: elements`. The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site.
    */
   return_url?: string;
 
@@ -968,7 +968,7 @@ export interface Session {
   ui_mode: Checkout.Session.UiMode | null;
 
   /**
-   * The URL to the Checkout Session. Applies to Checkout Sessions with `ui_mode: hosted`. Redirect customers to this URL to take them to Checkout. If you're using [Custom Domains](https://docs.stripe.com/payments/checkout/custom-domains), the URL will use your subdomain. Otherwise, it'll use `checkout.stripe.com.`
+   * The URL to the Checkout Session. Applies to Checkout Sessions with `ui_mode: hosted_page`. Redirect customers to this URL to take them to Checkout. If you're using [Custom Domains](https://docs.stripe.com/payments/checkout/custom-domains), the URL will use your subdomain. Otherwise, it'll use `checkout.stripe.com.`
    * This value is only present when the session is active.
    */
   url: string | null;
@@ -1109,7 +1109,7 @@ export namespace Checkout {
       /**
        * If set to `auto`, enables the collection of customer consent for promotional communications. The Checkout
        * Session will determine whether to display an option to opt into promotional communication
-       * from the merchant depending on the customer's locale. Only available to US merchants.
+       * from the merchant depending on the customer's locale. Only available to US merchants and US customers.
        */
       promotions: ConsentCollection.Promotions | null;
 
@@ -1410,6 +1410,8 @@ export namespace Checkout {
       samsung_pay?: PaymentMethodOptions.SamsungPay;
 
       satispay?: PaymentMethodOptions.Satispay;
+
+      scalapay?: PaymentMethodOptions.Scalapay;
 
       sepa_debit?: PaymentMethodOptions.SepaDebit;
 
@@ -2863,6 +2865,13 @@ export namespace Checkout {
         capture_method?: 'manual';
       }
 
+      export interface Scalapay {
+        /**
+         * Controls when the funds will be captured from the customer's account.
+         */
+        capture_method?: 'manual';
+      }
+
       export interface SepaDebit {
         mandate_options?: SepaDebit.MandateOptions;
 
@@ -2913,7 +2922,7 @@ export namespace Checkout {
          *
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
-        setup_future_usage?: 'none';
+        setup_future_usage?: Twint.SetupFutureUsage;
       }
 
       export interface Upi {
@@ -3043,7 +3052,7 @@ export namespace Checkout {
 
         export interface Restrictions {
           /**
-           * Specify the card brands to block in the Checkout Session. If a customer enters or selects a card belonging to a blocked brand, they can't complete the Session.
+           * The card brands to block. If a customer enters or selects a card belonging to a blocked brand, they can't complete the payment.
            */
           brands_blocked?: Array<Restrictions.BrandsBlocked>;
         }
@@ -3272,6 +3281,10 @@ export namespace Checkout {
         }
 
         export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      }
+
+      export namespace Twint {
+        export type SetupFutureUsage = 'none' | 'off_session';
       }
 
       export namespace Upi {
@@ -3800,7 +3813,7 @@ export namespace Checkout {
     adaptive_pricing?: SessionCreateParams.AdaptivePricing;
 
     /**
-     * Configure actions after a Checkout Session has expired. You can't set this parameter if `ui_mode` is `custom`.
+     * Configure actions after a Checkout Session has expired. You can't set this parameter if `ui_mode` is `elements`.
      */
     after_expiration?: SessionCreateParams.AfterExpiration;
 
@@ -3820,12 +3833,12 @@ export namespace Checkout {
     billing_address_collection?: SessionCreateParams.BillingAddressCollection;
 
     /**
-     * The branding settings for the Checkout Session. This parameter is not allowed if ui_mode is `custom`.
+     * The branding settings for the Checkout Session. This parameter is not allowed if ui_mode is `elements`.
      */
     branding_settings?: SessionCreateParams.BrandingSettings;
 
     /**
-     * If set, Checkout displays a back button and customers will be directed to this URL if they decide to cancel payment and return to your website. This parameter is not allowed if ui_mode is `embedded` or `custom`.
+     * If set, Checkout displays a back button and customers will be directed to this URL if they decide to cancel payment and return to your website. This parameter is not allowed if ui_mode is `embedded_page` or `elements`.
      */
     cancel_url?: string;
 
@@ -3989,7 +4002,7 @@ export namespace Checkout {
     optional_items?: Array<SessionCreateParams.OptionalItem>;
 
     /**
-     * Where the user is coming from. This informs the optimizations that are applied to the session. You can't set this parameter if `ui_mode` is `custom`.
+     * Where the user is coming from. This informs the optimizations that are applied to the session. You can't set this parameter if `ui_mode` is `elements`.
      */
     origin_context?: SessionCreateParams.OriginContext;
 
@@ -4054,13 +4067,13 @@ export namespace Checkout {
     phone_number_collection?: SessionCreateParams.PhoneNumberCollection;
 
     /**
-     * This parameter applies to `ui_mode: embedded`. Learn more about the [redirect behavior](https://docs.stripe.com/payments/checkout/custom-success-page?payment-ui=embedded-form) of embedded sessions. Defaults to `always`.
+     * This parameter applies to `ui_mode: embedded_page`. Learn more about the [redirect behavior](https://docs.stripe.com/payments/checkout/custom-success-page?payment-ui=embedded-form) of embedded sessions. Defaults to `always`.
      */
     redirect_on_completion?: SessionCreateParams.RedirectOnCompletion;
 
     /**
      * The URL to redirect your customer back to after they authenticate or cancel their payment on the
-     * payment method's app or site. This parameter is required if `ui_mode` is `embedded` or `custom`
+     * payment method's app or site. This parameter is required if `ui_mode` is `embedded_page` or `elements`
      * and redirect-based payment methods are enabled on the session.
      */
     return_url?: string;
@@ -4090,7 +4103,7 @@ export namespace Checkout {
      * to customize relevant text on the page, such as the submit button.
      *  `submit_type` can only be specified on Checkout Sessions in
      * `payment` or `subscription` mode. If blank or `auto`, `pay` is used.
-     * You can't set this parameter if `ui_mode` is `custom`.
+     * You can't set this parameter if `ui_mode` is `elements`.
      */
     submit_type?: SessionCreateParams.SubmitType;
 
@@ -4102,7 +4115,7 @@ export namespace Checkout {
     /**
      * The URL to which Stripe should send customers when payment or setup
      * is complete.
-     * This parameter is not allowed if ui_mode is `embedded` or `custom`. If you'd like to use
+     * This parameter is not allowed if ui_mode is `embedded_page` or `elements`. If you'd like to use
      * information from the successful Checkout Session on your page, read the
      * guide on [customizing your success page](https://docs.stripe.com/payments/checkout/custom-success-page).
      */
@@ -4114,7 +4127,7 @@ export namespace Checkout {
     tax_id_collection?: SessionCreateParams.TaxIdCollection;
 
     /**
-     * The UI mode of the Session. Defaults to `hosted`.
+     * The UI mode of the Session. Defaults to `hosted_page`.
      */
     ui_mode?: SessionCreateParams.UiMode;
 
@@ -4201,7 +4214,7 @@ export namespace Checkout {
       /**
        * If set to `auto`, enables the collection of customer consent for promotional communications. The Checkout
        * Session will determine whether to display an option to opt into promotional communication
-       * from the merchant depending on the customer's locale. Only available to US merchants.
+       * from the merchant depending on the customer's locale. Only available to US merchants and US customers.
        */
       promotions?: ConsentCollection.Promotions;
 
@@ -4322,6 +4335,7 @@ export namespace Checkout {
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
+      | 'bizum'
       | 'blik'
       | 'boleto'
       | 'card'
@@ -4358,6 +4372,7 @@ export namespace Checkout {
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
+      | 'scalapay'
       | 'sepa_debit'
       | 'shopeepay'
       | 'sofort'
@@ -4598,7 +4613,7 @@ export namespace Checkout {
 
     export interface PaymentMethodOptions {
       /**
-       * contains details about the ACSS Debit payment method options. You can't set this parameter if `ui_mode` is `custom`.
+       * contains details about the ACSS Debit payment method options. You can't set this parameter if `ui_mode` is `elements`.
        */
       acss_debit?: PaymentMethodOptions.AcssDebit;
 
@@ -4728,7 +4743,7 @@ export namespace Checkout {
       kr_card?: PaymentMethodOptions.KrCard;
 
       /**
-       * contains details about the Link payment method options.
+       * contains details about the Link payment method options (Link is also known as Onelink in the UK).
        */
       link?: PaymentMethodOptions.Link;
 
@@ -4803,6 +4818,11 @@ export namespace Checkout {
       satispay?: PaymentMethodOptions.Satispay;
 
       /**
+       * contains details about the Scalapay payment method options.
+       */
+      scalapay?: PaymentMethodOptions.Scalapay;
+
+      /**
        * contains details about the Sepa Debit payment method options.
        */
       sepa_debit?: PaymentMethodOptions.SepaDebit;
@@ -4849,6 +4869,7 @@ export namespace Checkout {
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
+      | 'bizum'
       | 'blik'
       | 'boleto'
       | 'card'
@@ -4886,6 +4907,7 @@ export namespace Checkout {
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
+      | 'scalapay'
       | 'sepa_debit'
       | 'shopeepay'
       | 'sofort'
@@ -5005,7 +5027,7 @@ export namespace Checkout {
       application_fee_percent?: number;
 
       /**
-       * A future timestamp to anchor the subscription's billing cycle for new subscriptions. You can't set this parameter if `ui_mode` is `custom`.
+       * A future timestamp to anchor the subscription's billing cycle for new subscriptions. You can't set this parameter if `ui_mode` is `elements`.
        */
       billing_cycle_anchor?: number;
 
@@ -5090,7 +5112,7 @@ export namespace Checkout {
 
     export interface WalletOptions {
       /**
-       * contains details about the Link wallet options.
+       * contains details about the Link wallet options (Link is also known as Onelink in the UK).
        */
       link?: WalletOptions.Link;
     }
@@ -6405,6 +6427,13 @@ export namespace Checkout {
         capture_method?: 'manual';
       }
 
+      export interface Scalapay {
+        /**
+         * Controls when the funds will be captured from the customer's account.
+         */
+        capture_method?: 'manual';
+      }
+
       export interface SepaDebit {
         /**
          * Additional fields for Mandate creation
@@ -6458,7 +6487,7 @@ export namespace Checkout {
          *
          * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
          */
-        setup_future_usage?: 'none';
+        setup_future_usage?: Twint.SetupFutureUsage;
       }
 
       export interface Upi {
@@ -6622,7 +6651,7 @@ export namespace Checkout {
 
         export interface Restrictions {
           /**
-           * Specify the card brands to block in the Checkout Session. If a customer enters or selects a card belonging to a blocked brand, they can't complete the Session.
+           * The card brands to block. If a customer enters or selects a card belonging to a blocked brand, they can't complete the payment.
            */
           brands_blocked?: Array<Restrictions.BrandsBlocked>;
         }
@@ -6922,6 +6951,10 @@ export namespace Checkout {
         }
 
         export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+      }
+
+      export namespace Twint {
+        export type SetupFutureUsage = 'none' | 'off_session';
       }
 
       export namespace Upi {

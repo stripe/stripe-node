@@ -73,7 +73,7 @@ export interface PaymentEvaluation {
   payment_details?: Radar.PaymentEvaluation.PaymentDetails;
 
   /**
-   * Recommended action based on the score of the `fraudulent_payment` signal. Possible values are `block` and `continue`.
+   * Recommended action based on the score of the `fraudulent_payment` signal. Possible values are `block`, `continue` and `request_three_d_secure`.
    */
   recommended_action: Radar.PaymentEvaluation.RecommendedAction;
 

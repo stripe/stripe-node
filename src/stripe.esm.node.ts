@@ -169,6 +169,7 @@ import {
   CouponUpdateParams,
   CouponListParams,
   CouponDeleteParams,
+  CouponSerializeBatchCreateParams,
   CouponResource,
 } from './resources/Coupons.js';
 import {
@@ -180,7 +181,6 @@ import {
   CreditNoteListLineItemsParams,
   CreditNoteListPreviewLineItemsParams,
   CreditNotePreviewParams,
-  CreditNoteSerializeBatchCreateParams,
   CreditNoteVoidCreditNoteParams,
   CreditNoteResource,
 } from './resources/CreditNotes.js';
@@ -294,8 +294,6 @@ import {
   InvoiceRemoveLinesParams,
   InvoiceSearchParams,
   InvoiceSendInvoiceParams,
-  InvoiceSerializeBatchPayParams,
-  InvoiceSerializeBatchUpdateParams,
   InvoiceUpdateLinesParams,
   InvoiceUpdateLineItemParams,
   InvoiceVoidInvoiceParams,
@@ -554,8 +552,10 @@ import {
   SubscriptionCancelParams,
   SubscriptionDeleteDiscountParams,
   SubscriptionMigrateParams,
+  SubscriptionPauseParams,
   SubscriptionResumeParams,
   SubscriptionSearchParams,
+  SubscriptionSerializeBatchCancelParams,
   SubscriptionSerializeBatchMigrateParams,
   SubscriptionSerializeBatchUpdateParams,
   SubscriptionResource,
@@ -579,9 +579,6 @@ import {
   SubscriptionScheduleAmendParams,
   SubscriptionScheduleCancelParams,
   SubscriptionScheduleReleaseParams,
-  SubscriptionScheduleSerializeBatchCancelParams,
-  SubscriptionScheduleSerializeBatchCreateParams,
-  SubscriptionScheduleSerializeBatchUpdateParams,
   SubscriptionScheduleResource,
 } from './resources/SubscriptionSchedules.js';
 import {
@@ -1978,6 +1975,7 @@ export declare namespace Stripe {
     CouponUpdateParams,
     CouponListParams,
     CouponDeleteParams,
+    CouponSerializeBatchCreateParams,
     CouponResource,
   };
   export {
@@ -1989,7 +1987,6 @@ export declare namespace Stripe {
     CreditNoteListLineItemsParams,
     CreditNoteListPreviewLineItemsParams,
     CreditNotePreviewParams,
-    CreditNoteSerializeBatchCreateParams,
     CreditNoteVoidCreditNoteParams,
     CreditNoteResource,
   };
@@ -2110,8 +2107,6 @@ export declare namespace Stripe {
     InvoiceRemoveLinesParams,
     InvoiceSearchParams,
     InvoiceSendInvoiceParams,
-    InvoiceSerializeBatchPayParams,
-    InvoiceSerializeBatchUpdateParams,
     InvoiceUpdateLinesParams,
     InvoiceUpdateLineItemParams,
     InvoiceVoidInvoiceParams,
@@ -2361,8 +2356,10 @@ export declare namespace Stripe {
     SubscriptionCancelParams,
     SubscriptionDeleteDiscountParams,
     SubscriptionMigrateParams,
+    SubscriptionPauseParams,
     SubscriptionResumeParams,
     SubscriptionSearchParams,
+    SubscriptionSerializeBatchCancelParams,
     SubscriptionSerializeBatchMigrateParams,
     SubscriptionSerializeBatchUpdateParams,
     SubscriptionResource,
@@ -2386,9 +2383,6 @@ export declare namespace Stripe {
     SubscriptionScheduleAmendParams,
     SubscriptionScheduleCancelParams,
     SubscriptionScheduleReleaseParams,
-    SubscriptionScheduleSerializeBatchCancelParams,
-    SubscriptionScheduleSerializeBatchCreateParams,
-    SubscriptionScheduleSerializeBatchUpdateParams,
     SubscriptionScheduleResource,
   };
   export {TaxCode, TaxCodeRetrieveParams, TaxCodeListParams, TaxCodeResource};

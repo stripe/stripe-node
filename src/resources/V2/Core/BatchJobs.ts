@@ -657,17 +657,13 @@ export namespace V2 {
 
         export type Path =
           | '/v1/accounts/:account'
-          | '/v1/credit_notes'
+          | '/v1/coupons'
           | '/v1/customers/:customer'
-          | '/v1/invoices/:invoice'
-          | '/v1/invoices/:invoice/pay'
           | '/v1/promotion_codes'
           | '/v1/promotion_codes/:promotion_code'
           | '/v1/subscriptions/:subscription_exposed_id'
-          | '/v1/subscriptions/:subscription/migrate'
-          | '/v1/subscription_schedules'
-          | '/v1/subscription_schedules/:schedule'
-          | '/v1/subscription_schedules/:schedule/cancel';
+          | '/v1/subscriptions/:subscription_exposed_id'
+          | '/v1/subscriptions/:subscription/migrate';
       }
 
       export namespace NotificationSuppression {

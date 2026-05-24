@@ -54,7 +54,7 @@ export interface Settlement {
   net_total_amount: number;
 
   /**
-   * The card network for this settlement report. One of ["visa", "maestro"]
+   * The card network for this settlement report. One of ["visa", "maestro", "mastercard"]
    */
   network: Issuing.Settlement.Network;
 
@@ -100,7 +100,7 @@ export interface Settlement {
 }
 export namespace Issuing {
   export namespace Settlement {
-    export type Network = 'maestro' | 'visa';
+    export type Network = 'maestro' | 'mastercard' | 'visa';
 
     export type Status = 'complete' | 'pending';
   }

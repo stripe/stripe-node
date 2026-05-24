@@ -273,7 +273,9 @@ export class PaymentIntentResource extends StripeResource {
    * Each PaymentIntent can have a maximum of 10 incremental authorization attempts, including declines.
    * After it's captured, a PaymentIntent can no longer be incremented.
    *
-   * Learn more about [incremental authorizations](https://docs.stripe.com/docs/terminal/features/incremental-authorizations).
+   * Learn more about incremental authorizations with
+   * [in-person payments](https://docs.stripe.com/docs/terminal/features/incremental-authorizations) and
+   * [online payments](https://docs.stripe.com/docs/payments/incremental-authorization?platform=web&ui=elements).
    */
   incrementAuthorization(
     id: string,
@@ -653,6 +655,7 @@ export namespace PaymentIntent {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -690,6 +693,7 @@ export namespace PaymentIntent {
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
+    | 'scalapay'
     | 'sepa_debit'
     | 'shopeepay'
     | 'sofort'
@@ -829,6 +833,8 @@ export namespace PaymentIntent {
   export interface NextAction {
     alipay_handle_redirect?: NextAction.AlipayHandleRedirect;
 
+    blik_authorize?: NextAction.BlikAuthorize;
+
     boleto_display_details?: NextAction.BoletoDisplayDetails;
 
     card_await_notification?: NextAction.CardAwaitNotification;
@@ -937,6 +943,8 @@ export namespace PaymentIntent {
 
     billie?: PaymentMethodOptions.Billie;
 
+    bizum?: PaymentMethodOptions.Bizum;
+
     blik?: PaymentMethodOptions.Blik;
 
     boleto?: PaymentMethodOptions.Boleto;
@@ -1016,6 +1024,8 @@ export namespace PaymentIntent {
     samsung_pay?: PaymentMethodOptions.SamsungPay;
 
     satispay?: PaymentMethodOptions.Satispay;
+
+    scalapay?: PaymentMethodOptions.Scalapay;
 
     sepa_debit?: PaymentMethodOptions.SepaDebit;
 
@@ -1105,9 +1115,21 @@ export namespace PaymentIntent {
     amount?: number;
 
     /**
+     * An arbitrary string attached to the transfer. Often useful for displaying to users.
+     */
+    description?: string;
+
+    /**
      * The account (if any) that the payment is attributed to for tax reporting, and where funds from the payment are transferred to after payment success.
      */
     destination: string | Account;
+
+    /**
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: Metadata;
+
+    payment_data?: TransferData.PaymentData;
   }
 
   export namespace AmountDetails {
@@ -1130,12 +1152,12 @@ export namespace PaymentIntent {
       amount: number | null;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       from_postal_code: string | null;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       to_postal_code: string | null;
     }
@@ -1350,6 +1372,7 @@ export namespace PaymentIntent {
       | 'payment_method_invalid_parameter'
       | 'payment_method_invalid_parameter_testmode'
       | 'payment_method_microdeposit_failed'
+      | 'payment_method_microdeposit_processing_error'
       | 'payment_method_microdeposit_verification_amounts_invalid'
       | 'payment_method_microdeposit_verification_amounts_mismatch'
       | 'payment_method_microdeposit_verification_attempts_exceeded'
@@ -1391,6 +1414,7 @@ export namespace PaymentIntent {
       | 'setup_intent_unexpected_state'
       | 'shipping_address_invalid'
       | 'shipping_calculation_failed'
+      | 'siret_invalid'
       | 'sku_inactive'
       | 'state_unsupported'
       | 'status_transition_invalid'
@@ -1448,6 +1472,8 @@ export namespace PaymentIntent {
        */
       url: string | null;
     }
+
+    export interface BlikAuthorize {}
 
     export interface BoletoDisplayDetails {
       /**
@@ -3662,6 +3688,8 @@ export namespace PaymentIntent {
       capture_method?: 'manual';
     }
 
+    export interface Bizum {}
+
     export interface Blik {
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -4352,6 +4380,13 @@ export namespace PaymentIntent {
       capture_method?: 'manual';
     }
 
+    export interface Scalapay {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+    }
+
     export interface SepaDebit {
       mandate_options?: SepaDebit.MandateOptions;
 
@@ -4444,7 +4479,7 @@ export namespace PaymentIntent {
        *
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Twint.SetupFutureUsage;
     }
 
     export interface Upi {
@@ -5107,6 +5142,10 @@ export namespace PaymentIntent {
       export type SetupFutureUsage = 'none' | 'off_session';
     }
 
+    export namespace Twint {
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
     export namespace Upi {
       export type SetupFutureUsage = 'off_session' | 'on_session';
     }
@@ -5217,6 +5256,20 @@ export namespace PaymentIntent {
          */
         completes_at: number | null;
       }
+    }
+  }
+
+  export namespace TransferData {
+    export interface PaymentData {
+      /**
+       * An arbitrary string attached to the destination payment. Often useful for displaying to users.
+       */
+      description?: string;
+
+      /**
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: Metadata;
     }
   }
 }
@@ -5334,7 +5387,7 @@ export interface PaymentIntentCreateParams {
   metadata?: MetadataParam;
 
   /**
-   * Set to `true` to indicate that the customer isn't in your checkout flow during this payment attempt and can't authenticate. Use this parameter in scenarios where you collect card details and [charge them later](https://docs.stripe.com/payments/cards/charging-saved-cards). This parameter can only be used with [`confirm=true`](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-confirm).
+   * Set to `true` to indicate that the customer isn't in your checkout flow during this payment attempt and can't authenticate. Use this parameter in scenarios where you collect payment method details and [charge them later](https://docs.stripe.com/payments/save-during-payment). This parameter can only be used with [`confirm=true`](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-confirm).
    */
   off_session?: boolean | PaymentIntentCreateParams.OffSession;
 
@@ -5511,6 +5564,7 @@ export namespace PaymentIntentCreateParams {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -5548,6 +5602,7 @@ export namespace PaymentIntentCreateParams {
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
+    | 'scalapay'
     | 'sepa_debit'
     | 'shopeepay'
     | 'sofort'
@@ -5694,6 +5749,11 @@ export namespace PaymentIntentCreateParams {
     billing_details?: PaymentMethodData.BillingDetails;
 
     /**
+     * If this is a `bizum` PaymentMethod, this hash contains details about the Bizum payment method.
+     */
+    bizum?: PaymentMethodData.Bizum;
+
+    /**
      * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
      */
     blik?: PaymentMethodData.Blik;
@@ -5779,7 +5839,7 @@ export namespace PaymentIntentCreateParams {
     kr_card?: PaymentMethodData.KrCard;
 
     /**
-     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method (Link is also known as Onelink in the UK).
      */
     link?: PaymentMethodData.Link;
 
@@ -5892,6 +5952,11 @@ export namespace PaymentIntentCreateParams {
      * If this is a `satispay` PaymentMethod, this hash contains details about the Satispay payment method.
      */
     satispay?: PaymentMethodData.Satispay;
+
+    /**
+     * If this is a Scalapay PaymentMethod, this hash contains details about the Scalapay payment method.
+     */
+    scalapay?: PaymentMethodData.Scalapay;
 
     /**
      * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -6011,6 +6076,11 @@ export namespace PaymentIntentCreateParams {
     billie?: Emptyable<PaymentMethodOptions.Billie>;
 
     /**
+     * If this is a `bizum` PaymentMethod, this sub-hash contains details about the Bizum payment method options.
+     */
+    bizum?: Emptyable<PaymentMethodOptions.Bizum>;
+
+    /**
      * If this is a `blik` PaymentMethod, this sub-hash contains details about the BLIK payment method options.
      */
     blik?: Emptyable<PaymentMethodOptions.Blik>;
@@ -6106,7 +6176,7 @@ export namespace PaymentIntentCreateParams {
     kr_card?: Emptyable<PaymentMethodOptions.KrCard>;
 
     /**
-     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options (Link is also known as Onelink in the UK).
      */
     link?: Emptyable<PaymentMethodOptions.Link>;
 
@@ -6211,6 +6281,11 @@ export namespace PaymentIntentCreateParams {
     satispay?: Emptyable<PaymentMethodOptions.Satispay>;
 
     /**
+     * If this is a `scalapay` PaymentMethod, this sub-hash contains details about the ScalaPay payment method options.
+     */
+    scalapay?: Emptyable<PaymentMethodOptions.Scalapay>;
+
+    /**
      * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
      */
     sepa_debit?: Emptyable<PaymentMethodOptions.SepaDebit>;
@@ -6312,12 +6387,27 @@ export namespace PaymentIntentCreateParams {
     amount?: number;
 
     /**
+     * An arbitrary string attached to the transfer. Often useful for displaying to users.
+     */
+    description?: string;
+
+    /**
      * If specified, successful charges will be attributed to the destination
      * account for tax reporting, and the funds from charges will be transferred
      * to the destination account. The ID of the resulting transfer will be
      * returned on the successful charge's `transfer` field.
      */
     destination: string;
+
+    /**
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: Emptyable<MetadataParam>;
+
+    /**
+     * The data with which to populate the destination payment.
+     */
+    payment_data?: TransferData.PaymentData;
   }
 
   export namespace AmountDetails {
@@ -6374,12 +6464,12 @@ export namespace PaymentIntentCreateParams {
       amount?: Emptyable<number>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       from_postal_code?: Emptyable<string>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       to_postal_code?: Emptyable<string>;
     }
@@ -8479,6 +8569,8 @@ export namespace PaymentIntentCreateParams {
       tax_id?: string;
     }
 
+    export interface Bizum {}
+
     export interface Blik {}
 
     export interface Boleto {
@@ -8654,6 +8746,8 @@ export namespace PaymentIntentCreateParams {
 
     export interface Satispay {}
 
+    export interface Scalapay {}
+
     export interface SepaDebit {
       /**
        * IBAN of the bank account.
@@ -8694,6 +8788,7 @@ export namespace PaymentIntentCreateParams {
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
+      | 'bizum'
       | 'blik'
       | 'boleto'
       | 'cashapp'
@@ -8731,6 +8826,7 @@ export namespace PaymentIntentCreateParams {
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
+      | 'scalapay'
       | 'sepa_debit'
       | 'shopeepay'
       | 'sofort'
@@ -9193,6 +9289,8 @@ export namespace PaymentIntentCreateParams {
        */
       capture_method?: Emptyable<'manual'>;
     }
+
+    export interface Bizum {}
 
     export interface Blik {
       /**
@@ -10062,6 +10160,17 @@ export namespace PaymentIntentCreateParams {
       capture_method?: Emptyable<'manual'>;
     }
 
+    export interface Scalapay {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+    }
+
     export interface SepaDebit {
       /**
        * Additional fields for Mandate creation
@@ -10169,7 +10278,7 @@ export namespace PaymentIntentCreateParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Twint.SetupFutureUsage;
     }
 
     export interface Upi {
@@ -12212,6 +12321,10 @@ export namespace PaymentIntentCreateParams {
       export type SetupFutureUsage = 'none' | 'off_session';
     }
 
+    export namespace Twint {
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
     export namespace Upi {
       export interface MandateOptions {
         /**
@@ -12345,6 +12458,20 @@ export namespace PaymentIntentCreateParams {
 
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web';
+    }
+  }
+
+  export namespace TransferData {
+    export interface PaymentData {
+      /**
+       * An arbitrary string attached to the destination payment. Often useful for displaying to users.
+       */
+      description?: string;
+
+      /**
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: Emptyable<MetadataParam>;
     }
   }
 }
@@ -12566,6 +12693,7 @@ export namespace PaymentIntentUpdateParams {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -12603,6 +12731,7 @@ export namespace PaymentIntentUpdateParams {
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
+    | 'scalapay'
     | 'sepa_debit'
     | 'shopeepay'
     | 'sofort'
@@ -12747,6 +12876,11 @@ export namespace PaymentIntentUpdateParams {
     billing_details?: PaymentMethodData.BillingDetails;
 
     /**
+     * If this is a `bizum` PaymentMethod, this hash contains details about the Bizum payment method.
+     */
+    bizum?: PaymentMethodData.Bizum;
+
+    /**
      * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
      */
     blik?: PaymentMethodData.Blik;
@@ -12832,7 +12966,7 @@ export namespace PaymentIntentUpdateParams {
     kr_card?: PaymentMethodData.KrCard;
 
     /**
-     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method (Link is also known as Onelink in the UK).
      */
     link?: PaymentMethodData.Link;
 
@@ -12945,6 +13079,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is a `satispay` PaymentMethod, this hash contains details about the Satispay payment method.
      */
     satispay?: PaymentMethodData.Satispay;
+
+    /**
+     * If this is a Scalapay PaymentMethod, this hash contains details about the Scalapay payment method.
+     */
+    scalapay?: PaymentMethodData.Scalapay;
 
     /**
      * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -13064,6 +13203,11 @@ export namespace PaymentIntentUpdateParams {
     billie?: Emptyable<PaymentMethodOptions.Billie>;
 
     /**
+     * If this is a `bizum` PaymentMethod, this sub-hash contains details about the Bizum payment method options.
+     */
+    bizum?: Emptyable<PaymentMethodOptions.Bizum>;
+
+    /**
      * If this is a `blik` PaymentMethod, this sub-hash contains details about the BLIK payment method options.
      */
     blik?: Emptyable<PaymentMethodOptions.Blik>;
@@ -13159,7 +13303,7 @@ export namespace PaymentIntentUpdateParams {
     kr_card?: Emptyable<PaymentMethodOptions.KrCard>;
 
     /**
-     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options (Link is also known as Onelink in the UK).
      */
     link?: Emptyable<PaymentMethodOptions.Link>;
 
@@ -13264,6 +13408,11 @@ export namespace PaymentIntentUpdateParams {
     satispay?: Emptyable<PaymentMethodOptions.Satispay>;
 
     /**
+     * If this is a `scalapay` PaymentMethod, this sub-hash contains details about the ScalaPay payment method options.
+     */
+    scalapay?: Emptyable<PaymentMethodOptions.Scalapay>;
+
+    /**
      * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
      */
     sepa_debit?: Emptyable<PaymentMethodOptions.SepaDebit>;
@@ -13348,6 +13497,21 @@ export namespace PaymentIntentUpdateParams {
      * The amount that will be transferred automatically when a charge succeeds.
      */
     amount?: number;
+
+    /**
+     * An arbitrary string attached to the transfer. Often useful for displaying to users.
+     */
+    description?: string;
+
+    /**
+     * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: Emptyable<MetadataParam>;
+
+    /**
+     * The data with which to populate the destination payment.
+     */
+    payment_data?: TransferData.PaymentData;
   }
 
   export namespace AmountDetails {
@@ -13404,12 +13568,12 @@ export namespace PaymentIntentUpdateParams {
       amount?: Emptyable<number>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       from_postal_code?: Emptyable<string>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       to_postal_code?: Emptyable<string>;
     }
@@ -15491,6 +15655,8 @@ export namespace PaymentIntentUpdateParams {
       tax_id?: string;
     }
 
+    export interface Bizum {}
+
     export interface Blik {}
 
     export interface Boleto {
@@ -15666,6 +15832,8 @@ export namespace PaymentIntentUpdateParams {
 
     export interface Satispay {}
 
+    export interface Scalapay {}
+
     export interface SepaDebit {
       /**
        * IBAN of the bank account.
@@ -15706,6 +15874,7 @@ export namespace PaymentIntentUpdateParams {
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
+      | 'bizum'
       | 'blik'
       | 'boleto'
       | 'cashapp'
@@ -15743,6 +15912,7 @@ export namespace PaymentIntentUpdateParams {
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
+      | 'scalapay'
       | 'sepa_debit'
       | 'shopeepay'
       | 'sofort'
@@ -16205,6 +16375,8 @@ export namespace PaymentIntentUpdateParams {
        */
       capture_method?: Emptyable<'manual'>;
     }
+
+    export interface Bizum {}
 
     export interface Blik {
       /**
@@ -17074,6 +17246,17 @@ export namespace PaymentIntentUpdateParams {
       capture_method?: Emptyable<'manual'>;
     }
 
+    export interface Scalapay {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+    }
+
     export interface SepaDebit {
       /**
        * Additional fields for Mandate creation
@@ -17181,7 +17364,7 @@ export namespace PaymentIntentUpdateParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Twint.SetupFutureUsage;
     }
 
     export interface Upi {
@@ -19224,6 +19407,10 @@ export namespace PaymentIntentUpdateParams {
       export type SetupFutureUsage = 'none' | 'off_session';
     }
 
+    export namespace Twint {
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
     export namespace Upi {
       export interface MandateOptions {
         /**
@@ -19357,6 +19544,20 @@ export namespace PaymentIntentUpdateParams {
 
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web';
+    }
+  }
+
+  export namespace TransferData {
+    export interface PaymentData {
+      /**
+       * An arbitrary string attached to the destination payment. Often useful for displaying to users.
+       */
+      description?: string;
+
+      /**
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: Emptyable<MetadataParam>;
     }
   }
 }
@@ -19641,12 +19842,12 @@ export namespace PaymentIntentCaptureParams {
       amount?: Emptyable<number>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       from_postal_code?: Emptyable<string>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       to_postal_code?: Emptyable<string>;
     }
@@ -21678,7 +21879,7 @@ export interface PaymentIntentConfirmParams {
   mandate_data?: Emptyable<PaymentIntentConfirmParams.MandateData>;
 
   /**
-   * Set to `true` to indicate that the customer isn't in your checkout flow during this payment attempt and can't authenticate. Use this parameter in scenarios where you collect card details and [charge them later](https://docs.stripe.com/payments/cards/charging-saved-cards).
+   * Set to `true` to indicate that the customer isn't in your checkout flow during this payment attempt and can't authenticate. Use this parameter in scenarios where you collect payment method details and [charge them later](https://docs.stripe.com/payments/save-during-payment).
    */
   off_session?: boolean | PaymentIntentConfirmParams.OffSession;
 
@@ -21802,6 +22003,7 @@ export namespace PaymentIntentConfirmParams {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -21839,6 +22041,7 @@ export namespace PaymentIntentConfirmParams {
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
+    | 'scalapay'
     | 'sepa_debit'
     | 'shopeepay'
     | 'sofort'
@@ -21985,6 +22188,11 @@ export namespace PaymentIntentConfirmParams {
     billing_details?: PaymentMethodData.BillingDetails;
 
     /**
+     * If this is a `bizum` PaymentMethod, this hash contains details about the Bizum payment method.
+     */
+    bizum?: PaymentMethodData.Bizum;
+
+    /**
      * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
      */
     blik?: PaymentMethodData.Blik;
@@ -22070,7 +22278,7 @@ export namespace PaymentIntentConfirmParams {
     kr_card?: PaymentMethodData.KrCard;
 
     /**
-     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method (Link is also known as Onelink in the UK).
      */
     link?: PaymentMethodData.Link;
 
@@ -22183,6 +22391,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `satispay` PaymentMethod, this hash contains details about the Satispay payment method.
      */
     satispay?: PaymentMethodData.Satispay;
+
+    /**
+     * If this is a Scalapay PaymentMethod, this hash contains details about the Scalapay payment method.
+     */
+    scalapay?: PaymentMethodData.Scalapay;
 
     /**
      * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -22302,6 +22515,11 @@ export namespace PaymentIntentConfirmParams {
     billie?: Emptyable<PaymentMethodOptions.Billie>;
 
     /**
+     * If this is a `bizum` PaymentMethod, this sub-hash contains details about the Bizum payment method options.
+     */
+    bizum?: Emptyable<PaymentMethodOptions.Bizum>;
+
+    /**
      * If this is a `blik` PaymentMethod, this sub-hash contains details about the BLIK payment method options.
      */
     blik?: Emptyable<PaymentMethodOptions.Blik>;
@@ -22397,7 +22615,7 @@ export namespace PaymentIntentConfirmParams {
     kr_card?: Emptyable<PaymentMethodOptions.KrCard>;
 
     /**
-     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options (Link is also known as Onelink in the UK).
      */
     link?: Emptyable<PaymentMethodOptions.Link>;
 
@@ -22500,6 +22718,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `satispay` PaymentMethod, this sub-hash contains details about the Satispay payment method options.
      */
     satispay?: Emptyable<PaymentMethodOptions.Satispay>;
+
+    /**
+     * If this is a `scalapay` PaymentMethod, this sub-hash contains details about the ScalaPay payment method options.
+     */
+    scalapay?: Emptyable<PaymentMethodOptions.Scalapay>;
 
     /**
      * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -22642,12 +22865,12 @@ export namespace PaymentIntentConfirmParams {
       amount?: Emptyable<number>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       from_postal_code?: Emptyable<string>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       to_postal_code?: Emptyable<string>;
     }
@@ -24743,6 +24966,8 @@ export namespace PaymentIntentConfirmParams {
       tax_id?: string;
     }
 
+    export interface Bizum {}
+
     export interface Blik {}
 
     export interface Boleto {
@@ -24918,6 +25143,8 @@ export namespace PaymentIntentConfirmParams {
 
     export interface Satispay {}
 
+    export interface Scalapay {}
+
     export interface SepaDebit {
       /**
        * IBAN of the bank account.
@@ -24958,6 +25185,7 @@ export namespace PaymentIntentConfirmParams {
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
+      | 'bizum'
       | 'blik'
       | 'boleto'
       | 'cashapp'
@@ -24995,6 +25223,7 @@ export namespace PaymentIntentConfirmParams {
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
+      | 'scalapay'
       | 'sepa_debit'
       | 'shopeepay'
       | 'sofort'
@@ -25457,6 +25686,8 @@ export namespace PaymentIntentConfirmParams {
        */
       capture_method?: Emptyable<'manual'>;
     }
+
+    export interface Bizum {}
 
     export interface Blik {
       /**
@@ -26326,6 +26557,17 @@ export namespace PaymentIntentConfirmParams {
       capture_method?: Emptyable<'manual'>;
     }
 
+    export interface Scalapay {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+    }
+
     export interface SepaDebit {
       /**
        * Additional fields for Mandate creation
@@ -26433,7 +26675,7 @@ export namespace PaymentIntentConfirmParams {
        *
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: 'none';
+      setup_future_usage?: Twint.SetupFutureUsage;
     }
 
     export interface Upi {
@@ -28476,6 +28718,10 @@ export namespace PaymentIntentConfirmParams {
       export type SetupFutureUsage = 'none' | 'off_session';
     }
 
+    export namespace Twint {
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
     export namespace Upi {
       export interface MandateOptions {
         /**
@@ -28782,12 +29028,12 @@ export namespace PaymentIntentDecrementAuthorizationParams {
       amount?: Emptyable<number>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       from_postal_code?: Emptyable<string>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       to_postal_code?: Emptyable<string>;
     }
@@ -29118,12 +29364,12 @@ export namespace PaymentIntentIncrementAuthorizationParams {
       amount?: Emptyable<number>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       from_postal_code?: Emptyable<string>;
 
       /**
-       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+       * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens and spaces are allowed.
        */
       to_postal_code?: Emptyable<string>;
     }

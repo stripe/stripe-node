@@ -592,16 +592,16 @@ export class CustomerResource extends StripeResource {
     const stripeVersion =
       options.apiVersion || this._stripe.getApiField('version');
 
-    const item: Record<string, unknown> = {
+    const entry: Record<string, unknown> = {
       id: itemId,
       params: params,
       stripe_version: stripeVersion,
     };
-    item.path_params = {customer: customer};
+    entry.path_params = {customer: customer};
     if (options.stripeContext) {
-      item.context = options.stripeContext;
+      entry.context = options.stripeContext;
     }
-    return JSON.stringify(item);
+    return JSON.stringify(entry);
   }
   /**
    * Returns a list of transactions that updated the customer's [balances](https://docs.stripe.com/docs/billing/customer/balance).
@@ -2156,6 +2156,7 @@ export namespace CustomerListPaymentMethodsParams {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -2195,6 +2196,7 @@ export namespace CustomerListPaymentMethodsParams {
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
+    | 'scalapay'
     | 'sepa_debit'
     | 'shopeepay'
     | 'sofort'

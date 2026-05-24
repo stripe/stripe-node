@@ -76,15 +76,15 @@ export class PromotionCodeResource extends StripeResource {
     const stripeVersion =
       options.apiVersion || this._stripe.getApiField('version');
 
-    const item: Record<string, unknown> = {
+    const entry: Record<string, unknown> = {
       id: itemId,
       params: params,
       stripe_version: stripeVersion,
     };
     if (options.stripeContext) {
-      item.context = options.stripeContext;
+      entry.context = options.stripeContext;
     }
-    return JSON.stringify(item);
+    return JSON.stringify(entry);
   }
   serializeBatchUpdate(
     promotionCode: string,
@@ -95,16 +95,16 @@ export class PromotionCodeResource extends StripeResource {
     const stripeVersion =
       options.apiVersion || this._stripe.getApiField('version');
 
-    const item: Record<string, unknown> = {
+    const entry: Record<string, unknown> = {
       id: itemId,
       params: params,
       stripe_version: stripeVersion,
     };
-    item.path_params = {promotion_code: promotionCode};
+    entry.path_params = {promotion_code: promotionCode};
     if (options.stripeContext) {
-      item.context = options.stripeContext;
+      entry.context = options.stripeContext;
     }
-    return JSON.stringify(item);
+    return JSON.stringify(entry);
   }
 }
 export interface PromotionCode {
