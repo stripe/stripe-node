@@ -21,7 +21,7 @@ export class MeterEventAdjustmentResource extends StripeResource {
 }
 export interface MeterEventAdjustment {
   /**
-   * The unique id of this meter event adjustment.
+   * The unique ID of this meter event adjustment.
    */
   id: string;
 
@@ -56,7 +56,7 @@ export interface MeterEventAdjustment {
   status: V2.Billing.MeterEventAdjustment.Status;
 
   /**
-   * Open Enum. Specifies whether to cancel a single event or a range of events for a time period. Time period cancellation is not supported yet.
+   * Open Enum. Specifies the type of cancellation. Currently supports canceling a single event.
    */
   type: 'cancel';
 }
@@ -65,7 +65,7 @@ export namespace V2 {
     export namespace MeterEventAdjustment {
       export interface Cancel {
         /**
-         * Unique identifier for the event. You can only cancel events within 24 hours of Stripe receiving them.
+         * The identifier that was originally assigned to the meter event. You can only cancel events within 24 hours of Stripe receiving them.
          */
         identifier: string;
       }
@@ -88,7 +88,7 @@ export namespace V2 {
       event_name: string;
 
       /**
-       * Specifies whether to cancel a single event or a range of events for a time period. Time period cancellation is not supported yet.
+       * Specifies the type of cancellation. Currently supports canceling a single event.
        */
       type: 'cancel';
     }
@@ -96,7 +96,7 @@ export namespace V2 {
     export namespace MeterEventAdjustmentCreateParams {
       export interface Cancel {
         /**
-         * Unique identifier for the event. You can only cancel events within 24 hours of Stripe receiving them.
+         * The identifier that was originally assigned to the meter event. You can only cancel events within 24 hours of Stripe receiving them.
          */
         identifier: string;
       }

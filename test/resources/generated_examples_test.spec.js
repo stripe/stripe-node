@@ -3996,6 +3996,55 @@ describe('Generated tests', function() {
     expect(emptyObject).to.eql({});
   });
 
+  it('test_v2_commerce_product_catalog_import_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/commerce/product_catalog/imports',
+        response:
+          '{"data":[{"object":"v2.commerce.product_catalog_import","created":"1970-01-12T21:42:34.472Z","feed_type":"pricing","id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"status":"awaiting_upload"}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const productCatalogImports = await stripe.v2.commerce.productCatalog.imports.list();
+    expect(productCatalogImports).not.to.be.null;
+  });
+
+  it('test_v2_commerce_product_catalog_import_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/commerce/product_catalog/imports',
+        response:
+          '{"object":"v2.commerce.product_catalog_import","created":"1970-01-12T21:42:34.472Z","feed_type":"pricing","id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"status":"awaiting_upload"}',
+      },
+    ]);
+    const productCatalogImport = await stripe.v2.commerce.productCatalog.imports.create(
+      {
+        feed_type: 'pricing',
+        metadata: {
+          key: 'metadata',
+        },
+        mode: 'upsert',
+      }
+    );
+    expect(productCatalogImport).not.to.be.null;
+  });
+
+  it('test_v2_commerce_product_catalog_import_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/commerce/product_catalog/imports/id_123',
+        response:
+          '{"object":"v2.commerce.product_catalog_import","created":"1970-01-12T21:42:34.472Z","feed_type":"pricing","id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"status":"awaiting_upload"}',
+      },
+    ]);
+    const productCatalogImport = await stripe.v2.commerce.productCatalog.imports.retrieve(
+      'id_123'
+    );
+    expect(productCatalogImport).not.to.be.null;
+  });
+
   it('test_v2_core_account_get', async function() {
     const stripe = testUtils.createMockClient([
       {
