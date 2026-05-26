@@ -1393,6 +1393,11 @@ export interface Invoice {
   amount_paid: number;
 
   /**
+   * Amount, in cents (or local equivalent), that was paid on the invoice outside of Stripe.
+   */
+  amount_paid_off_stripe?: number;
+
+  /**
    * The difference between amount_due and amount_paid, in cents (or local equivalent).
    */
   amount_remaining: number;
@@ -2567,6 +2572,7 @@ export namespace Invoice {
       | 'payment_method_invalid_parameter'
       | 'payment_method_invalid_parameter_testmode'
       | 'payment_method_microdeposit_failed'
+      | 'payment_method_microdeposit_processing_error'
       | 'payment_method_microdeposit_verification_amounts_invalid'
       | 'payment_method_microdeposit_verification_amounts_mismatch'
       | 'payment_method_microdeposit_verification_attempts_exceeded'
@@ -2608,6 +2614,7 @@ export namespace Invoice {
       | 'setup_intent_unexpected_state'
       | 'shipping_address_invalid'
       | 'shipping_calculation_failed'
+      | 'siret_invalid'
       | 'sku_inactive'
       | 'state_unsupported'
       | 'status_transition_invalid'
@@ -2789,6 +2796,11 @@ export namespace Invoice {
        * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
        */
       us_bank_account: PaymentMethodOptions.UsBankAccount | null;
+
+      /**
+       * If paying by `wechat_pay`, this sub-hash contains details about the WeChat Pay payment method options to pass to the invoice's PaymentIntent.
+       */
+      wechat_pay?: PaymentMethodOptions.WechatPay | null;
     }
 
     export type PaymentMethodType =
@@ -2839,6 +2851,7 @@ export namespace Invoice {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'twint'
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay';
@@ -2917,6 +2930,18 @@ export namespace Invoice {
          * Bank account verification method. The default value is `automatic`.
          */
         verification_method?: UsBankAccount.VerificationMethod;
+      }
+
+      export interface WechatPay {
+        /**
+         * The app ID registered with WeChat Pay. Only required when client is `ios` or `android`.
+         */
+        app_id?: string;
+
+        /**
+         * The client type that the end customer will pay from.
+         */
+        client?: WechatPay.Client;
       }
 
       export namespace AcssDebit {
@@ -3093,6 +3118,10 @@ export namespace Invoice {
             export type AccountSubcategory = 'checking' | 'savings';
           }
         }
+      }
+
+      export namespace WechatPay {
+        export type Client = 'android' | 'ios' | 'mobile_web' | 'web';
       }
     }
   }
@@ -3687,6 +3716,11 @@ export namespace InvoiceCreateParams {
        * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
        */
       us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
+
+      /**
+       * If paying by `wechat_pay`, this sub-hash contains details about the WeChat Pay payment method options to pass to the invoice's PaymentIntent.
+       */
+      wechat_pay?: Emptyable<PaymentMethodOptions.WechatPay>;
     }
 
     export type PaymentMethodType =
@@ -3737,6 +3771,7 @@ export namespace InvoiceCreateParams {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'twint'
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay';
@@ -3835,6 +3870,18 @@ export namespace InvoiceCreateParams {
          * Verification method for the intent
          */
         verification_method?: UsBankAccount.VerificationMethod;
+      }
+
+      export interface WechatPay {
+        /**
+         * The app ID registered with WeChat Pay. Only required when client is `ios` or `android`.
+         */
+        app_id?: string;
+
+        /**
+         * The client type that the end customer will pay from.
+         */
+        client?: WechatPay.Client;
       }
 
       export namespace AcssDebit {
@@ -4036,6 +4083,10 @@ export namespace InvoiceCreateParams {
             export type AccountSubcategory = 'checking' | 'savings';
           }
         }
+      }
+
+      export namespace WechatPay {
+        export type Client = 'android' | 'ios' | 'mobile_web' | 'web';
       }
     }
   }
@@ -4630,6 +4681,11 @@ export namespace InvoiceUpdateParams {
        * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
        */
       us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
+
+      /**
+       * If paying by `wechat_pay`, this sub-hash contains details about the WeChat Pay payment method options to pass to the invoice's PaymentIntent.
+       */
+      wechat_pay?: Emptyable<PaymentMethodOptions.WechatPay>;
     }
 
     export type PaymentMethodType =
@@ -4680,6 +4736,7 @@ export namespace InvoiceUpdateParams {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'twint'
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay';
@@ -4778,6 +4835,18 @@ export namespace InvoiceUpdateParams {
          * Verification method for the intent
          */
         verification_method?: UsBankAccount.VerificationMethod;
+      }
+
+      export interface WechatPay {
+        /**
+         * The app ID registered with WeChat Pay. Only required when client is `ios` or `android`.
+         */
+        app_id?: string;
+
+        /**
+         * The client type that the end customer will pay from.
+         */
+        client?: WechatPay.Client;
       }
 
       export namespace AcssDebit {
@@ -4979,6 +5048,10 @@ export namespace InvoiceUpdateParams {
             export type AccountSubcategory = 'checking' | 'savings';
           }
         }
+      }
+
+      export namespace WechatPay {
+        export type Client = 'android' | 'ios' | 'mobile_web' | 'web';
       }
     }
   }
@@ -7550,6 +7623,11 @@ export namespace InvoiceCreatePreviewParams {
     export namespace Phase {
       export interface AddInvoiceItem {
         /**
+         * Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
+         */
+        discountable?: boolean;
+
+        /**
          * The coupons to redeem into discounts for the item.
          */
         discounts?: Array<AddInvoiceItem.Discount>;
@@ -8354,7 +8432,10 @@ export namespace InvoiceCreatePreviewParams {
       key?: string;
     }
 
-    export type CancelAt = 'max_period_end' | 'min_period_end';
+    export type CancelAt =
+      | 'max_billed_until'
+      | 'max_period_end'
+      | 'min_period_end';
 
     export interface Item {
       /**

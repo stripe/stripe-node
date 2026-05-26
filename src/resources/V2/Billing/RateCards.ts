@@ -152,11 +152,6 @@ export interface RateCard {
   display_name: string;
 
   /**
-   * The ID of this rate card's most recently created version.
-   */
-  latest_version: string;
-
-  /**
    * The ID of the Rate Card Version used by all subscriptions when no specific version is specified.
    */
   live_version: string;
@@ -185,20 +180,6 @@ export interface RateCard {
   service_cycle: V2.Billing.RateCard.ServiceCycle;
 
   /**
-   * The interval for assessing service. For example, a monthly Rate Card with a rate of 1 USD for the first 10 "workloads"
-   * and 2 USD thereafter means "1 USD per workload up to 10 workloads during a month of service." This is similar to but
-   * distinct from billing interval; the service interval deals with the rate at which the customer accumulates fees,
-   * while the billing interval in Cadence deals with the rate the customer is billed.
-   */
-  service_interval: V2.Billing.RateCard.ServiceInterval;
-
-  /**
-   * The length of the interval for assessing service. For example, set this to 3 and `service_interval` to `"month"`
-   * to specify quarterly service.
-   */
-  service_interval_count: number;
-
-  /**
    * The tax behavior for Stripe Tax — whether the rate card price includes or excludes tax.
    */
   tax_behavior: V2.Billing.RateCard.TaxBehavior;
@@ -218,8 +199,6 @@ export namespace V2 {
          */
         interval_count: number;
       }
-
-      export type ServiceInterval = 'day' | 'month' | 'week' | 'year';
 
       export type TaxBehavior = 'exclusive' | 'inclusive';
 

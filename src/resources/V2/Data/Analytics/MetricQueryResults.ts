@@ -78,7 +78,7 @@ export namespace V2 {
             currency?: string;
 
             /**
-             * The Gen6 ID of this metric.
+             * The ID of this metric.
              */
             metric: string;
 

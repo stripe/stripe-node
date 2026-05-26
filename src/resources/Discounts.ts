@@ -6,7 +6,7 @@ import {Coupon} from './Coupons.js';
 import {RequestOptions} from '../lib.js';
 export interface Discount {
   /**
-   * The ID of the discount object. Discounts cannot be fetched by ID. Use `expand[]=discounts` in API calls to expand discount IDs in an array.
+   * The ID of the discount object. Discounts can't be fetched by ID. Use `expand[]=discounts` in API calls to expand discount IDs in an array.
    */
   id: string;
 
@@ -16,7 +16,7 @@ export interface Discount {
   object: 'discount';
 
   /**
-   * The Checkout session that this coupon is applied to, if it is applied to a particular session in payment mode. Will not be present for subscription mode.
+   * The Checkout session that this coupon is applied to, if it is applied to a particular session in payment mode. Not present for subscription mode.
    */
   checkout_session: string | null;
 
@@ -81,7 +81,7 @@ export interface Discount {
 }
 export interface DeletedDiscount {
   /**
-   * The ID of the discount object. Discounts cannot be fetched by ID. Use `expand[]=discounts` in API calls to expand discount IDs in an array.
+   * The ID of the discount object. Discounts can't be fetched by ID. Use `expand[]=discounts` in API calls to expand discount IDs in an array.
    */
   id: string;
 
@@ -91,7 +91,7 @@ export interface DeletedDiscount {
   object: 'discount';
 
   /**
-   * The Checkout session that this coupon is applied to, if it is applied to a particular session in payment mode. Will not be present for subscription mode.
+   * The Checkout session that this coupon is applied to, if it is applied to a particular session in payment mode. Not present for subscription mode.
    */
   checkout_session: string | null;
 

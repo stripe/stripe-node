@@ -484,7 +484,7 @@ export namespace Billing {
       /**
        * Defines the granularity of spend aggregation.
        */
-      group_by: 'pricing_plan_subscription' | null;
+      group_by: SpendThreshold.GroupBy | null;
 
       /**
        * The threshold value configuration for a spend threshold alert.
@@ -632,6 +632,8 @@ export namespace Billing {
          */
         pricing_plan_subscription: string | null;
       }
+
+      export type GroupBy = 'billing_cadence' | 'pricing_plan_subscription';
 
       export interface Gte {
         /**
@@ -795,7 +797,7 @@ export namespace Billing {
       /**
        * Defines the granularity of spend aggregation. Defaults to `pricing_plan_subscription`.
        */
-      group_by?: 'pricing_plan_subscription';
+      group_by?: SpendThreshold.GroupBy;
 
       /**
        * Defines at which value the alert will fire.
@@ -966,6 +968,8 @@ export namespace Billing {
          */
         pricing_plan_subscription?: string;
       }
+
+      export type GroupBy = 'billing_cadence' | 'pricing_plan_subscription';
 
       export interface Gte {
         /**

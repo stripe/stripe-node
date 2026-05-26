@@ -287,6 +287,11 @@ export namespace V2 {
 
       export interface StripeBalancePayment {
         /**
+         * ID of the debit agreement associated with this payment.
+         */
+        debit_agreement?: string;
+
+        /**
          * Statement descriptor for the Stripe Balance Payment.
          */
         statement_descriptor?: string;
@@ -378,7 +383,7 @@ export namespace V2 {
           /**
            * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
            */
-          network: 'fps';
+          network: GbBankAccount.Network;
 
           /**
            * The sort code of the account that originated the transfer.
@@ -469,6 +474,10 @@ export namespace V2 {
            * The routing number of the account that originated the transfer.
            */
           routing_number?: string;
+        }
+
+        export namespace GbBankAccount {
+          export type Network = 'chaps' | 'fps';
         }
 
         export namespace UsBankAccount {

@@ -124,6 +124,11 @@ export namespace TestHelpers {
       billing_details?: PaymentMethodData.BillingDetails;
 
       /**
+       * If this is a `bizum` PaymentMethod, this hash contains details about the Bizum payment method.
+       */
+      bizum?: PaymentMethodData.Bizum;
+
+      /**
        * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
        */
       blik?: PaymentMethodData.Blik;
@@ -214,7 +219,7 @@ export namespace TestHelpers {
       kr_card?: PaymentMethodData.KrCard;
 
       /**
-       * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+       * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method (Link is also known as Onelink in the UK).
        */
       link?: PaymentMethodData.Link;
 
@@ -327,6 +332,11 @@ export namespace TestHelpers {
        * If this is a `satispay` PaymentMethod, this hash contains details about the Satispay payment method.
        */
       satispay?: PaymentMethodData.Satispay;
+
+      /**
+       * If this is a Scalapay PaymentMethod, this hash contains details about the Scalapay payment method.
+       */
+      scalapay?: PaymentMethodData.Scalapay;
 
       /**
        * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -504,6 +514,8 @@ export namespace TestHelpers {
          */
         tax_id?: string;
       }
+
+      export interface Bizum {}
 
       export interface Blik {}
 
@@ -687,6 +699,8 @@ export namespace TestHelpers {
 
       export interface Satispay {}
 
+      export interface Scalapay {}
+
       export interface SepaDebit {
         /**
          * IBAN of the bank account.
@@ -727,6 +741,7 @@ export namespace TestHelpers {
         | 'bacs_debit'
         | 'bancontact'
         | 'billie'
+        | 'bizum'
         | 'blik'
         | 'boleto'
         | 'cashapp'
@@ -765,6 +780,7 @@ export namespace TestHelpers {
         | 'revolut_pay'
         | 'samsung_pay'
         | 'satispay'
+        | 'scalapay'
         | 'sepa_debit'
         | 'shopeepay'
         | 'sofort'

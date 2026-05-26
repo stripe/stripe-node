@@ -295,6 +295,8 @@ export namespace Refund {
 
     revolut?: DestinationDetails.Revolut;
 
+    scalapay?: DestinationDetails.Scalapay;
+
     sofort?: DestinationDetails.Sofort;
 
     swish?: DestinationDetails.Swish;
@@ -540,6 +542,8 @@ export namespace Refund {
     export interface Pix {}
 
     export interface Revolut {}
+
+    export interface Scalapay {}
 
     export interface Sofort {}
 

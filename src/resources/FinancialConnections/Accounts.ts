@@ -516,6 +516,7 @@ export namespace FinancialConnections {
           | 'access_expired'
           | 'account_closed'
           | 'account_unavailable'
+          | 'institution_requirement'
           | 'unspecified';
       }
     }

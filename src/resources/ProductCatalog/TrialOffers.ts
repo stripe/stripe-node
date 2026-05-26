@@ -86,7 +86,7 @@ export namespace ProductCatalog {
         /**
          * The new price to use at the end of the trial offer period.
          */
-        price: string;
+        price: string | Price;
       }
     }
   }

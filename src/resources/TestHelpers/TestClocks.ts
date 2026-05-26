@@ -173,6 +173,11 @@ export namespace TestHelpers {
     frozen_time: number;
 
     /**
+     * Existing customer this test clock will be attached to. Once attached, customers can't be removed from a test clock.
+     */
+    customer?: string;
+
+    /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;

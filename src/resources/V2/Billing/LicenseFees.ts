@@ -219,11 +219,6 @@ export interface LicenseFee {
   display_name: string;
 
   /**
-   * The ID of the license fee's most recently created version.
-   */
-  latest_version: string;
-
-  /**
    * A Licensed Item represents a billable item whose pricing is based on license fees. You can use license fees
    * to specify the pricing and create subscriptions to these items.
    */
@@ -253,17 +248,6 @@ export interface LicenseFee {
    * The service cycle configuration for this License Fee.
    */
   service_cycle: V2.Billing.LicenseFee.ServiceCycle;
-
-  /**
-   * The interval for assessing service.
-   */
-  service_interval: V2.Billing.LicenseFee.ServiceInterval;
-
-  /**
-   * The length of the interval for assessing service. For example, set this to 3 and `service_interval` to `"month"`
-   * to specify quarterly service.
-   */
-  service_interval_count: number;
 
   /**
    * The tax behavior for Stripe Tax — whether the license fee price includes or excludes tax.
@@ -308,8 +292,6 @@ export namespace V2 {
          */
         interval_count: number;
       }
-
-      export type ServiceInterval = 'day' | 'month' | 'week' | 'year';
 
       export type TaxBehavior = 'exclusive' | 'inclusive';
 

@@ -4748,15 +4748,20 @@ export namespace V2 {
               | 'ag_bank_account'
               | 'al_bank_account'
               | 'am_bank_account'
+              | 'ao_bank_account'
               | 'ar_bank_account'
               | 'at_bank_account'
               | 'au_bank_account'
+              | 'az_bank_account'
               | 'ba_bank_account'
+              | 'bd_bank_account'
               | 'be_bank_account'
               | 'bg_bank_account'
               | 'bh_bank_account'
               | 'bj_bank_account'
               | 'bn_bank_account'
+              | 'bo_bank_account'
+              | 'br_bank_account'
               | 'bs_bank_account'
               | 'bt_bank_account'
               | 'bw_bank_account'
@@ -4764,6 +4769,7 @@ export namespace V2 {
               | 'ca_bank_account'
               | 'ch_bank_account'
               | 'ci_bank_account'
+              | 'cl_bank_account'
               | 'cn_bank_account'
               | 'co_bank_account'
               | 'crypto_wallet'
@@ -4781,12 +4787,16 @@ export namespace V2 {
               | 'et_bank_account'
               | 'fi_bank_account'
               | 'fr_bank_account'
+              | 'ga_bank_account'
               | 'gb_bank_account'
+              | 'gh_bank_account'
+              | 'gi_bank_account'
               | 'gm_bank_account'
               | 'gr_bank_account'
               | 'gt_bank_account'
               | 'gy_bank_account'
               | 'hk_bank_account'
+              | 'hn_bank_account'
               | 'hr_bank_account'
               | 'hu_bank_account'
               | 'id_bank_account'
@@ -4800,7 +4810,10 @@ export namespace V2 {
               | 'jp_bank_account'
               | 'ke_bank_account'
               | 'kh_bank_account'
+              | 'kr_bank_account'
               | 'kw_bank_account'
+              | 'kz_bank_account'
+              | 'la_bank_account'
               | 'lc_bank_account'
               | 'li_bank_account'
               | 'lk_bank_account'
@@ -4820,6 +4833,9 @@ export namespace V2 {
               | 'my_bank_account'
               | 'mz_bank_account'
               | 'na_bank_account'
+              | 'ne_bank_account'
+              | 'ng_bank_account'
+              | 'ni_bank_account'
               | 'nl_bank_account'
               | 'no_bank_account'
               | 'nz_bank_account'
@@ -4830,14 +4846,17 @@ export namespace V2 {
               | 'pk_bank_account'
               | 'pl_bank_account'
               | 'pt_bank_account'
+              | 'py_bank_account'
               | 'qa_bank_account'
               | 'ro_bank_account'
               | 'rs_bank_account'
               | 'rw_bank_account'
+              | 'sa_bank_account'
               | 'se_bank_account'
               | 'sg_bank_account'
               | 'si_bank_account'
               | 'sk_bank_account'
+              | 'sm_bank_account'
               | 'sn_bank_account'
               | 'sv_bank_account'
               | 'th_bank_account'
@@ -4847,6 +4866,7 @@ export namespace V2 {
               | 'tw_bank_account'
               | 'tz_bank_account'
               | 'us_bank_account'
+              | 'uy_bank_account'
               | 'uz_bank_account'
               | 'vn_bank_account'
               | 'za_bank_account';
@@ -8219,6 +8239,11 @@ export namespace V2 {
               files: Array<string>;
 
               /**
+               * Person that is signing the document.
+               */
+              signer?: ProofOfRegistration.Signer;
+
+              /**
                * The format of the document. Currently supports `files` only.
                */
               type: 'files';
@@ -8229,6 +8254,11 @@ export namespace V2 {
                * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
+
+              /**
+               * Person that is signing the document.
+               */
+              signer?: ProofOfUltimateBeneficialOwnership.Signer;
 
               /**
                * The format of the document. Currently supports `files` only.
@@ -8247,6 +8277,24 @@ export namespace V2 {
                  * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 front: string;
+              }
+            }
+
+            export namespace ProofOfRegistration {
+              export interface Signer {
+                /**
+                 * Person signing the document.
+                 */
+                person: string;
+              }
+            }
+
+            export namespace ProofOfUltimateBeneficialOwnership {
+              export interface Signer {
+                /**
+                 * Person signing the document.
+                 */
+                person: string;
               }
             }
           }
@@ -13107,6 +13155,11 @@ export namespace V2 {
               files: Array<string>;
 
               /**
+               * Person that is signing the document.
+               */
+              signer?: ProofOfRegistration.Signer;
+
+              /**
                * The format of the document. Currently supports `files` only.
                */
               type: 'files';
@@ -13117,6 +13170,11 @@ export namespace V2 {
                * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
+
+              /**
+               * Person that is signing the document.
+               */
+              signer?: ProofOfUltimateBeneficialOwnership.Signer;
 
               /**
                * The format of the document. Currently supports `files` only.
@@ -13135,6 +13193,24 @@ export namespace V2 {
                  * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 front: string;
+              }
+            }
+
+            export namespace ProofOfRegistration {
+              export interface Signer {
+                /**
+                 * Person signing the document.
+                 */
+                person: string;
+              }
+            }
+
+            export namespace ProofOfUltimateBeneficialOwnership {
+              export interface Signer {
+                /**
+                 * Person signing the document.
+                 */
+                person: string;
               }
             }
           }
@@ -17381,7 +17457,7 @@ export namespace V2 {
             proof_of_address?: Documents.ProofOfAddress;
 
             /**
-             * One or more documents showing the company's proof of registration with the national business registry.
+             * One or more documents that demonstrate proof of ultimate beneficial ownership.
              */
             proof_of_registration?: Documents.ProofOfRegistration;
 
@@ -17589,6 +17665,11 @@ export namespace V2 {
               files: Array<string>;
 
               /**
+               * Person that is signing the document.
+               */
+              signer?: ProofOfRegistration.Signer;
+
+              /**
                * The format of the document. Currently supports `files` only.
                */
               type: 'files';
@@ -17599,6 +17680,11 @@ export namespace V2 {
                * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
+
+              /**
+               * Person that is signing the document.
+               */
+              signer?: ProofOfUltimateBeneficialOwnership.Signer;
 
               /**
                * The format of the document. Currently supports `files` only.
@@ -17617,6 +17703,24 @@ export namespace V2 {
                  * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 front?: string;
+              }
+            }
+
+            export namespace ProofOfRegistration {
+              export interface Signer {
+                /**
+                 * Person signing the document.
+                 */
+                person: string;
+              }
+            }
+
+            export namespace ProofOfUltimateBeneficialOwnership {
+              export interface Signer {
+                /**
+                 * Person signing the document.
+                 */
+                person: string;
               }
             }
           }
