@@ -244,7 +244,7 @@ export namespace V2 {
           /**
            * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
            */
-          network: 'fps';
+          network: GbBankAccount.Network;
 
           /**
            * The sort code of the account that originated the transfer.
@@ -309,6 +309,10 @@ export namespace V2 {
            * The routing number of the account that originated the transfer.
            */
           routing_number?: string;
+        }
+
+        export namespace GbBankAccount {
+          export type Network = 'chaps' | 'fps';
         }
 
         export namespace UsBankAccount {

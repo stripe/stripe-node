@@ -15,6 +15,21 @@ export class ActivityLogResource extends StripeResource {
       methodType: 'list',
     }) as any;
   }
+  /**
+   * Retrieve an activity log.
+   */
+  retrieve(
+    id: string,
+    params?: V2.Iam.ActivityLogRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<ActivityLog>> {
+    return this._makeRequest(
+      'GET',
+      `/v2/iam/activity_logs/${id}`,
+      params,
+      options
+    ) as any;
+  }
 }
 export interface ActivityLog {
   /**
@@ -233,6 +248,11 @@ export namespace V2 {
         }
       }
     }
+  }
+}
+export namespace V2 {
+  export namespace Iam {
+    export interface ActivityLogRetrieveParams {}
   }
 }
 export namespace V2 {

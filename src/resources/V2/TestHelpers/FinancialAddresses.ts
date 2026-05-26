@@ -60,7 +60,7 @@ export namespace V2 {
     }
 
     export namespace FinancialAddressCreditParams {
-      export type Network = 'ach' | 'fps' | 'rtp' | 'wire';
+      export type Network = 'ach' | 'chaps' | 'fps' | 'rtp' | 'wire';
     }
   }
 }

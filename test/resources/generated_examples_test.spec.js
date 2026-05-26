@@ -5131,6 +5131,19 @@ describe('Generated tests', function() {
     expect(activityLogs).not.to.be.null;
   });
 
+  it('test_v2_iam_activity_log_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/iam/activity_logs/id_123',
+        response:
+          '{"object":"v2.iam.activity_log","actor":{"type":"api_key"},"context":"context","created":"1970-01-12T21:42:34.472Z","details":{"type":"api_key"},"id":"obj_123","livemode":true,"type":"api_key_created"}',
+      },
+    ]);
+    const activityLog = await stripe.v2.iam.activityLogs.retrieve('id_123');
+    expect(activityLog).not.to.be.null;
+  });
+
   it('test_v2_money_management_adjustment_get', async function() {
     const stripe = testUtils.createMockClient([
       {
@@ -5881,7 +5894,7 @@ describe('Generated tests', function() {
           value: 96,
           currency: 'USD',
         },
-        network: 'rtp',
+        network: 'ach',
       }
     );
     expect(financialAddressCreditSimulation).not.to.be.null;

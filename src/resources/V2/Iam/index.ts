@@ -19,5 +19,6 @@ export class Iam {
 
 export declare namespace Iam {
   export import ActivityLogListParams = V2Namespace0.Iam.ActivityLogListParams;
+  export import ActivityLogRetrieveParams = V2Namespace0.Iam.ActivityLogRetrieveParams;
   export {ActivityLog};
 }
