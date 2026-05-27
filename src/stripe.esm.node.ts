@@ -2588,6 +2588,20 @@ export declare namespace Stripe {
   export {StripeRawError};
   export import ErrorType = _Error;
   export import Events = V2.Core.Events;
+
+  export namespace errors {
+    export type StripeError = _Error.StripeError;
+    export type StripeCardError = _Error.StripeCardError;
+    export type StripeInvalidRequestError = _Error.StripeInvalidRequestError;
+    export type StripeAPIError = _Error.StripeAPIError;
+    export type StripeAuthenticationError = _Error.StripeAuthenticationError;
+    export type StripePermissionError = _Error.StripePermissionError;
+    export type StripeRateLimitError = _Error.StripeRateLimitError;
+    export type StripeConnectionError = _Error.StripeConnectionError;
+    export type StripeSignatureVerificationError = _Error.StripeSignatureVerificationError;
+    export type StripeIdempotencyError = _Error.StripeIdempotencyError;
+    export type StripeInvalidGrantError = _Error.StripeInvalidGrantError;
+  }
 }
 
 Stripe.initialize(new NodePlatformFunctions());

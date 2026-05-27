@@ -29,8 +29,8 @@ export declare namespace Reporting {
   export import ReportRunListParams = ReportingNamespace0.ReportRunListParams;
   export import ReportRunCreateParams = ReportingNamespace0.ReportRunCreateParams;
   export import ReportRunRetrieveParams = ReportingNamespace0.ReportRunRetrieveParams;
-  export {ReportRun};
+  export {ReportRun, ReportRunResource};
   export import ReportTypeListParams = ReportingNamespace1.ReportTypeListParams;
   export import ReportTypeRetrieveParams = ReportingNamespace1.ReportTypeRetrieveParams;
-  export {ReportType};
+  export {ReportType, ReportTypeResource};
 }
