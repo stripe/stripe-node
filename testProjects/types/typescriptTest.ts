@@ -106,6 +106,13 @@ stripe = new Stripe('sk_test_123', {unknownProperty: true});
 
   const cusList: Stripe.ApiList<Stripe.Customer> = await stripe.customers.list();
 
+  /**
+   * TODO(DEVSDK-2534): remove this test when we fix V2List at next major.
+   */
+  const v2EventsListBC: Stripe.ApiList<Stripe.V2.Core.Event> = await stripe.v2.core.events.list();
+
+  const v2EventsList: Stripe.V2List<Stripe.V2.Core.Event> = await stripe.v2.core.events.list();
+
   const aThousandCustomers: Array<Stripe.Customer> = await stripe.customers
     .list()
     .autoPagingToArray({limit: 1000});
@@ -382,5 +389,17 @@ event = stripe.webhooks.constructEvent(
   'secret'
 );
 
+const v2AccountCreateParamConfiguration: Stripe.V2.Core.AccountCreateParams.Configuration = {};
 const checkoutSessionParam: Stripe.Checkout.SessionCreateParams = {};
 const v2EventListParams: Stripe.V2.Core.EventListParams = {};
+const v2AccountCreateParams: Stripe.V2.Core.AccountCreateParams = {};
+const oAuthToken: Stripe.OAuthToken = {};
+const oAuthResource: Stripe.OAuthResource = stripe.oauth;
+
+const oAuthTokenParams: Stripe.OAuthTokenParams = {
+  grant_type: 'authorization_code',
+};
+const oAuthAuthorizeUrlOptions: Stripe.OAuthAuthorizeUrlOptions = {};
+const oAuthAuthorizeUrlParams: Stripe.OAuthAuthorizeUrlParams = {};
+const oAuthDeauthorization: Stripe.OAuthDeauthorization = {stripe_user_id: ''};
+const oAuthDeauthorizeParams: Stripe.OAuthDeauthorizeParams = {};

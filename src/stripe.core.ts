@@ -19,7 +19,6 @@ import * as resources from './resources.js';
 import {
   createApiKeyAuthenticator,
   detectAIAgent,
-  determineProcessUserAgentProperties,
   pascalToCamelCase,
   validateInteger,
 } from './utils.js';
@@ -29,6 +28,8 @@ import {
   RawRequestOptions,
   ApiList,
   ApiListPromise,
+  V2List,
+  V2ListPromise,
   ApiSearchResultPromise,
   ApiSearchResult,
   StripeStreamResponse,
@@ -897,6 +898,14 @@ import {
 } from './resources/Events.js';
 // V1EventImports: The end of the section generated from our OpenAPI spec
 import {OAuthResource} from './resources.js';
+import {
+  OAuthToken,
+  OAuthTokenParams,
+  OAuthAuthorizeUrlOptions,
+  OAuthAuthorizeUrlParams,
+  OAuthDeauthorization,
+  OAuthDeauthorizeParams,
+} from './resources/OAuth.js';
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -940,17 +949,12 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
 export class Stripe {
   static PACKAGE_VERSION = '22.1.1';
   static API_VERSION: typeof ApiVersion = ApiVersion;
-  static aiAgent =
-    typeof process !== 'undefined' && process.env
-      ? detectAIAgent(process.env)
-      : '';
-  static AI_AGENT = Stripe.aiAgent;
-  static USER_AGENT = {
+  static aiAgent = '';
+  static AI_AGENT = '';
+  static USER_AGENT: Record<string, string | boolean | null> = {
     bindings_version: Stripe.PACKAGE_VERSION,
     lang: 'node',
     typescript: false,
-    ...determineProcessUserAgentProperties(),
-    ...(Stripe.aiAgent ? {ai_agent: Stripe.aiAgent} : {}),
   };
   static StripeResource = StripeResource;
   static resources = resources;
@@ -1082,6 +1086,19 @@ export class Stripe {
       platformFunctions.createNodeCryptoProvider;
     Stripe.createSubtleCryptoProvider =
       platformFunctions.createSubtleCryptoProvider;
+
+    const env = platformFunctions.getEnv();
+    const runtimeVersion = platformFunctions.getRuntimeVersion();
+
+    Stripe.aiAgent = env ? detectAIAgent(env) : '';
+    Stripe.AI_AGENT = Stripe.aiAgent;
+    Stripe.USER_AGENT = {
+      bindings_version: Stripe.PACKAGE_VERSION,
+      lang: 'node',
+      typescript: false,
+      ...(runtimeVersion ? {lang_version: runtimeVersion} : {}),
+      ...(Stripe.aiAgent ? {ai_agent: Stripe.aiAgent} : {}),
+    };
   }
 
   constructor(key: string, config: StripeConfig = {}) {
@@ -2531,6 +2548,8 @@ export declare namespace Stripe {
     RawRequestOptions,
     ApiList,
     ApiListPromise,
+    V2List,
+    V2ListPromise,
     ApiSearchResultPromise,
     ApiSearchResult,
     StripeStreamResponse,
@@ -2551,6 +2570,16 @@ export declare namespace Stripe {
     RangeQueryParam,
     PaginationParams,
     Emptyable,
+  };
+
+  export {
+    OAuthResource,
+    OAuthToken,
+    OAuthTokenParams,
+    OAuthAuthorizeUrlOptions,
+    OAuthAuthorizeUrlParams,
+    OAuthDeauthorization,
+    OAuthDeauthorizeParams,
   };
 
   export type Decimal = import('./shared.js').Decimal;

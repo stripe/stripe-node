@@ -9,6 +9,7 @@ import {
 import {StripeContext} from './StripeContext.js';
 import {
   RequestHeaders,
+  ResponseHeaders,
   RequestEvent,
   ResponseEvent,
   RequestCallback,
@@ -25,7 +26,6 @@ import {RawRequestOptions, RequestOptions} from './lib.js';
 import {HttpClient, HttpClientResponseInterface} from './net/HttpClient.js';
 import {Stripe} from './stripe.core.js';
 import {
-  emitWarning,
   jsonStringifyRequestData,
   normalizeHeaders,
   queryStringifyRequestData,
@@ -97,6 +97,15 @@ export class RequestSender {
     return headers['request-id'] as string;
   }
 
+  private _emitStripeNotice(headers: ResponseHeaders): void {
+    const notice = headers['stripe-notice'];
+    if (notice) {
+      this._stripe._platformFunctions.emitWarning(
+        typeof notice === 'string' ? notice : notice[0]
+      );
+    }
+  }
+
   /**
    * Used by methods with spec.streaming === true. For these methods, we do not
    * buffer successful responses into memory or do parse them into stripe
@@ -114,6 +123,7 @@ export class RequestSender {
   ): (res: HttpClientResponseInterface) => RequestCallbackReturn {
     return (res: HttpClientResponseInterface): RequestCallbackReturn => {
       const headers = res.getHeaders();
+      this._emitStripeNotice(headers);
 
       const streamCompleteCallback = (): void => {
         const responseEvent = this._makeResponseEvent(
@@ -153,6 +163,7 @@ export class RequestSender {
   ) {
     return (res: HttpClientResponseInterface): void => {
       const headers = res.getHeaders();
+      this._emitStripeNotice(headers);
       const requestId = this._getRequestId(headers);
       const statusCode = res.getStatusCode();
 
@@ -418,7 +429,7 @@ export class RequestSender {
     // and fix these cases as they are semantically incorrect.
     if (methodHasPayload || contentLength) {
       if (!methodHasPayload) {
-        emitWarning(
+        this._stripe._platformFunctions.emitWarning(
           `${method} method had non-zero contentLength but no payload is expected for this verb`
         );
       }
@@ -470,7 +481,7 @@ export class RequestSender {
       if (
         this._stripe._prevRequestMetrics.length > this._maxBufferedRequestMetric
       ) {
-        emitWarning(
+        this._stripe._platformFunctions.emitWarning(
           'Request metrics buffer is full, dropping telemetry message.'
         );
       } else {
@@ -580,7 +591,7 @@ export class RequestSender {
       headers: RequestHeaders,
       requestRetries: number,
       retryAfter: number | null
-    ): NodeJS.Timeout => {
+    ): ReturnType<typeof setTimeout> => {
       return setTimeout(
         requestFn,
         this._getSleepTimeInMS(requestRetries, retryAfter),

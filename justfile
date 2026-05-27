@@ -53,7 +53,7 @@ lint: (lint-check "--fix")
 
 # run style checks without changing anything
 lint-check *args: install
-    eslint --ext .js,.ts . {{ args }}
+    eslint --rulesdir eslint-rules --ext .js,.ts . {{ args }}
 
 # reinstall dependencies, if needed
 install:

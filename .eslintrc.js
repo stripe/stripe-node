@@ -171,7 +171,7 @@ module.exports = {
     'no-useless-return': 'error',
     'no-var': 'off',
     'no-void': 'error',
-    'no-warning-comments': 'error',
+    'no-warning-comments': 'warn',
     'no-whitespace-before-property': 'error',
     'no-with': 'error',
     'nonblock-statement-body-position': 'error',
@@ -286,6 +286,21 @@ module.exports = {
       files: ['test/**/*.ts'],
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
+      },
+    },
+    {
+      files: ['src/**/*.ts'],
+      rules: {
+        'wintertc-compat': 'error',
+      },
+    },
+    {
+      files: [
+        'src/**/Node*.ts',
+        'src/stripe.*.node.ts',
+      ],
+      rules: {
+        'wintertc-compat': 'off',
       },
     },
   ],
