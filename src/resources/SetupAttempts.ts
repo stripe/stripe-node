@@ -155,6 +155,8 @@ export namespace SetupAttempt {
 
     sofort?: PaymentMethodDetails.Sofort;
 
+    twint?: PaymentMethodDetails.Twint;
+
     /**
      * The type of the payment method used in the SetupIntent (e.g., `card`). An additional hash is included on `payment_method_details` with a name matching this value. It contains confirmation-specific information for the payment method.
      */
@@ -530,6 +532,8 @@ export namespace SetupAttempt {
       verified_name: string | null;
     }
 
+    export interface Twint {}
+
     export interface Upi {}
 
     export interface UsBankAccount {}
@@ -834,6 +838,7 @@ export namespace SetupAttempt {
       | 'payment_method_invalid_parameter'
       | 'payment_method_invalid_parameter_testmode'
       | 'payment_method_microdeposit_failed'
+      | 'payment_method_microdeposit_processing_error'
       | 'payment_method_microdeposit_verification_amounts_invalid'
       | 'payment_method_microdeposit_verification_amounts_mismatch'
       | 'payment_method_microdeposit_verification_attempts_exceeded'
@@ -874,6 +879,7 @@ export namespace SetupAttempt {
       | 'setup_intent_unexpected_state'
       | 'shipping_address_invalid'
       | 'shipping_calculation_failed'
+      | 'siret_invalid'
       | 'sku_inactive'
       | 'state_unsupported'
       | 'status_transition_invalid'

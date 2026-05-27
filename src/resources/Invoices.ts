@@ -1084,6 +1084,11 @@ export interface Invoice {
   amount_paid: number;
 
   /**
+   * Amount, in cents (or local equivalent), that was paid on the invoice outside of Stripe.
+   */
+  amount_paid_off_stripe?: number;
+
+  /**
    * The difference between amount_due and amount_paid, in cents (or local equivalent).
    */
   amount_remaining: number;
@@ -2169,6 +2174,7 @@ export namespace Invoice {
       | 'payment_method_invalid_parameter'
       | 'payment_method_invalid_parameter_testmode'
       | 'payment_method_microdeposit_failed'
+      | 'payment_method_microdeposit_processing_error'
       | 'payment_method_microdeposit_verification_amounts_invalid'
       | 'payment_method_microdeposit_verification_amounts_mismatch'
       | 'payment_method_microdeposit_verification_attempts_exceeded'
@@ -2209,6 +2215,7 @@ export namespace Invoice {
       | 'setup_intent_unexpected_state'
       | 'shipping_address_invalid'
       | 'shipping_calculation_failed'
+      | 'siret_invalid'
       | 'sku_inactive'
       | 'state_unsupported'
       | 'status_transition_invalid'
@@ -2365,6 +2372,7 @@ export namespace Invoice {
       | 'sepa_debit'
       | 'sofort'
       | 'swish'
+      | 'twint'
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay';
@@ -3144,6 +3152,7 @@ export namespace InvoiceCreateParams {
       | 'sepa_debit'
       | 'sofort'
       | 'swish'
+      | 'twint'
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay';
@@ -3968,6 +3977,7 @@ export namespace InvoiceUpdateParams {
       | 'sepa_debit'
       | 'sofort'
       | 'swish'
+      | 'twint'
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay';
@@ -5033,6 +5043,11 @@ export namespace InvoiceCreatePreviewParams {
     billing_mode?: SubscriptionDetails.BillingMode;
 
     /**
+     * Sets the billing schedules for the subscription.
+     */
+    billing_schedules?: Emptyable<Array<SubscriptionDetails.BillingSchedule>>;
+
+    /**
      * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
      */
     cancel_at?: Emptyable<number | SubscriptionDetails.CancelAt>;
@@ -5479,6 +5494,11 @@ export namespace InvoiceCreatePreviewParams {
     export namespace Phase {
       export interface AddInvoiceItem {
         /**
+         * Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
+         */
+        discountable?: boolean;
+
+        /**
          * The coupons to redeem into discounts for the item.
          */
         discounts?: Array<AddInvoiceItem.Discount>;
@@ -5884,7 +5904,27 @@ export namespace InvoiceCreatePreviewParams {
       type: BillingMode.Type;
     }
 
-    export type CancelAt = 'max_period_end' | 'min_period_end';
+    export interface BillingSchedule {
+      /**
+       * Configure billing schedule differently for individual subscription items.
+       */
+      applies_to?: Array<BillingSchedule.AppliesTo>;
+
+      /**
+       * The end date for the billing schedule.
+       */
+      bill_until?: BillingSchedule.BillUntil;
+
+      /**
+       * Specify a key for the billing schedule. Must be unique to this field, alphanumeric, and up to 200 characters. If not provided, a unique key will be generated.
+       */
+      key?: string;
+    }
+
+    export type CancelAt =
+      | 'max_billed_until'
+      | 'max_period_end'
+      | 'min_period_end';
 
     export interface Item {
       /**
@@ -5960,6 +6000,57 @@ export namespace InvoiceCreatePreviewParams {
 
       export namespace Flexible {
         export type ProrationDiscounts = 'included' | 'itemized';
+      }
+    }
+
+    export namespace BillingSchedule {
+      export interface AppliesTo {
+        /**
+         * The ID of the price object.
+         */
+        price?: string;
+
+        /**
+         * Controls which subscription items the billing schedule applies to.
+         */
+        type: 'price';
+      }
+
+      export interface BillUntil {
+        /**
+         * Specifies the billing period.
+         */
+        duration?: BillUntil.Duration;
+
+        /**
+         * The end date of the billing schedule.
+         */
+        timestamp?: number;
+
+        /**
+         * Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.
+         */
+        type: BillUntil.Type;
+      }
+
+      export namespace BillUntil {
+        export interface Duration {
+          /**
+           * Specifies billing duration. Either `day`, `week`, `month` or `year`.
+           */
+          interval: Duration.Interval;
+
+          /**
+           * The multiplier applied to the interval.
+           */
+          interval_count?: number;
+        }
+
+        export type Type = 'duration' | 'timestamp';
+
+        export namespace Duration {
+          export type Interval = 'day' | 'month' | 'week' | 'year';
+        }
       }
     }
 

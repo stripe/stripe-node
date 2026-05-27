@@ -144,7 +144,7 @@ export interface Dispute {
   transaction: string | Transaction;
 
   /**
-   * [Treasury](https://docs.stripe.com/api/treasury) details related to this dispute if it was created on a [FinancialAccount](/docs/api/treasury/financial_accounts
+   * [Treasury](https://docs.stripe.com/api/treasury) details related to this dispute if it was created on a [FinancialAccount](https://docs.stripe.com/api/treasury/financial_accounts)
    */
   treasury?: Issuing.Dispute.Treasury | null;
 }

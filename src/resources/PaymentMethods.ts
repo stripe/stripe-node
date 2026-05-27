@@ -153,6 +153,8 @@ export interface PaymentMethod {
 
   billing_details: PaymentMethod.BillingDetails;
 
+  bizum?: PaymentMethod.Bizum;
+
   blik?: PaymentMethod.Blik;
 
   boleto?: PaymentMethod.Boleto;
@@ -251,6 +253,8 @@ export interface PaymentMethod {
   samsung_pay?: PaymentMethod.SamsungPay;
 
   satispay?: PaymentMethod.Satispay;
+
+  scalapay?: PaymentMethod.Scalapay;
 
   sepa_debit?: PaymentMethod.SepaDebit;
 
@@ -379,6 +383,8 @@ export namespace PaymentMethod {
      */
     tax_id: string | null;
   }
+
+  export interface Bizum {}
 
   export interface Blik {}
 
@@ -859,6 +865,8 @@ export namespace PaymentMethod {
 
   export interface Satispay {}
 
+  export interface Scalapay {}
+
   export interface SepaDebit {
     /**
      * Bank code of bank associated with the bank account.
@@ -915,6 +923,7 @@ export namespace PaymentMethod {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -951,6 +960,7 @@ export namespace PaymentMethod {
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
+    | 'scalapay'
     | 'sepa_debit'
     | 'sofort'
     | 'sunbit'
@@ -1813,6 +1823,11 @@ export interface PaymentMethodCreateParams {
   billing_details?: PaymentMethodCreateParams.BillingDetails;
 
   /**
+   * If this is a `bizum` PaymentMethod, this hash contains details about the Bizum payment method.
+   */
+  bizum?: PaymentMethodCreateParams.Bizum;
+
+  /**
    * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
    */
   blik?: PaymentMethodCreateParams.Blik;
@@ -1908,7 +1923,7 @@ export interface PaymentMethodCreateParams {
   kr_card?: PaymentMethodCreateParams.KrCard;
 
   /**
-   * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+   * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method (Link is also known as Onelink in the UK).
    */
   link?: PaymentMethodCreateParams.Link;
 
@@ -2011,6 +2026,11 @@ export interface PaymentMethodCreateParams {
    * If this is a `satispay` PaymentMethod, this hash contains details about the Satispay payment method.
    */
   satispay?: PaymentMethodCreateParams.Satispay;
+
+  /**
+   * If this is a Scalapay PaymentMethod, this hash contains details about the Scalapay payment method.
+   */
+  scalapay?: PaymentMethodCreateParams.Scalapay;
 
   /**
    * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -2146,6 +2166,8 @@ export namespace PaymentMethodCreateParams {
      */
     tax_id?: string;
   }
+
+  export interface Bizum {}
 
   export interface Blik {}
 
@@ -2341,6 +2363,8 @@ export namespace PaymentMethodCreateParams {
 
   export interface Satispay {}
 
+  export interface Scalapay {}
+
   export interface SepaDebit {
     /**
      * IBAN of the bank account.
@@ -2372,6 +2396,7 @@ export namespace PaymentMethodCreateParams {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -2406,6 +2431,7 @@ export namespace PaymentMethodCreateParams {
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
+    | 'scalapay'
     | 'sepa_debit'
     | 'sofort'
     | 'sunbit'
@@ -2819,6 +2845,7 @@ export namespace PaymentMethodListParams {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -2853,6 +2880,7 @@ export namespace PaymentMethodListParams {
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
+    | 'scalapay'
     | 'sepa_debit'
     | 'sofort'
     | 'sunbit'

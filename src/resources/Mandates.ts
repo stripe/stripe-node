@@ -129,6 +129,8 @@ export namespace Mandate {
 
     sepa_debit?: PaymentMethodDetails.SepaDebit;
 
+    twint?: PaymentMethodDetails.Twint;
+
     /**
      * This mandate corresponds with a specific payment method type. The `payment_method_details` includes an additional hash with the same name and contains mandate information that's specific to that payment method.
      */
@@ -347,6 +349,8 @@ export namespace Mandate {
        */
       url: string;
     }
+
+    export interface Twint {}
 
     export interface Upi {
       /**

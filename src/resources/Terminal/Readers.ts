@@ -5,6 +5,7 @@ import {Location} from './Locations.js';
 import {PaymentIntent} from './../PaymentIntents.js';
 import {PaymentMethod} from './../PaymentMethods.js';
 import {SetupIntent} from './../SetupIntents.js';
+import {CustomerSource} from './../CustomerSources.js';
 import {Charge} from './../Charges.js';
 import {Refund} from './../Refunds.js';
 import {
@@ -314,15 +315,28 @@ export namespace Terminal {
       | 'mobile_phone_reader'
       | 'simulated_stripe_s700'
       | 'simulated_stripe_s710'
+      | 'simulated_verifone_m425'
+      | 'simulated_verifone_p630'
+      | 'simulated_verifone_ux700'
+      | 'simulated_verifone_v660p'
       | 'simulated_wisepos_e'
       | 'stripe_m2'
       | 'stripe_s700'
       | 'stripe_s710'
-      | 'verifone_P400';
+      | 'verifone_P400'
+      | 'verifone_m425'
+      | 'verifone_p630'
+      | 'verifone_ux700'
+      | 'verifone_v660p';
   }
 
   export namespace Reader {
     export interface Action {
+      /**
+       * The reader action failed due to an [API error](https://docs.stripe.com/api/errors). Only present when `status` is `failed` and the underlying failure was an API error. Avoid parsing the `message` field for programmatic logic; use `type` or `code` instead. The `message` field is for display to humans only and may be updated at anytime. Requires [reader version](https://docs.stripe.com/terminal/readers/stripe-reader-s700-s710#reader-software-version) 2.42 or later. Readers on older versions always return null.
+       */
+      api_error: Action.ApiError | null;
+
       /**
        * Represents a reader action to collect customer inputs
        */
@@ -347,6 +361,11 @@ export namespace Terminal {
        * Detailed failure message, only set if status is `failed`.
        */
       failure_message: string | null;
+
+      /**
+       * Represents a reader action to print content
+       */
+      print_content?: Action.PrintContent;
 
       /**
        * Represents a reader action to process a payment intent
@@ -386,15 +405,136 @@ export namespace Terminal {
       | 'mobile_phone_reader'
       | 'simulated_stripe_s700'
       | 'simulated_stripe_s710'
+      | 'simulated_verifone_m425'
+      | 'simulated_verifone_p630'
+      | 'simulated_verifone_ux700'
+      | 'simulated_verifone_v660p'
       | 'simulated_wisepos_e'
       | 'stripe_m2'
       | 'stripe_s700'
       | 'stripe_s710'
-      | 'verifone_P400';
+      | 'verifone_P400'
+      | 'verifone_m425'
+      | 'verifone_p630'
+      | 'verifone_ux700'
+      | 'verifone_v660p';
 
     export type Status = 'offline' | 'online';
 
     export namespace Action {
+      export interface ApiError {
+        /**
+         * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://docs.stripe.com/declines#retrying-issuer-declines) if they provide one.
+         */
+        advice_code?: string;
+
+        /**
+         * For card errors, the ID of the failed charge.
+         */
+        charge?: string;
+
+        /**
+         * For some errors that could be handled programmatically, a short string indicating the [error code](https://docs.stripe.com/error-codes) reported.
+         */
+        code?: ApiError.Code;
+
+        /**
+         * For card errors resulting from a card issuer decline, a short string indicating the [card issuer's reason for the decline](https://docs.stripe.com/declines#issuer-declines) if they provide one.
+         */
+        decline_code?: string;
+
+        /**
+         * A URL to more information about the [error code](https://docs.stripe.com/error-codes) reported.
+         */
+        doc_url?: string;
+
+        /**
+         * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
+         */
+        message?: string;
+
+        /**
+         * For card errors resulting from a card issuer decline, a 2 digit code which indicates the advice given to merchant by the card network on how to proceed with an error.
+         */
+        network_advice_code?: string;
+
+        /**
+         * For payments declined by the network, an alphanumeric code which indicates the reason the payment failed.
+         */
+        network_decline_code?: string;
+
+        /**
+         * If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
+         */
+        param?: string;
+
+        /**
+         * A PaymentIntent guides you through the process of collecting a payment from your customer.
+         * We recommend that you create exactly one PaymentIntent for each order or
+         * customer session in your system. You can reference the PaymentIntent later to
+         * see the history of payment attempts for a particular session.
+         *
+         * A PaymentIntent transitions through
+         * [multiple statuses](https://docs.stripe.com/payments/paymentintents/lifecycle)
+         * throughout its lifetime as it interfaces with Stripe.js to perform
+         * authentication flows and ultimately creates at most one successful charge.
+         *
+         * Related guide: [Payment Intents API](https://docs.stripe.com/payments/payment-intents)
+         */
+        payment_intent?: PaymentIntent;
+
+        /**
+         * PaymentMethod objects represent your customer's payment instruments.
+         * You can use them with [PaymentIntents](https://docs.stripe.com/payments/payment-intents) to collect payments or save them to
+         * Customer objects to store instrument details for future payments.
+         *
+         * Related guides: [Payment Methods](https://docs.stripe.com/payments/payment-methods) and [More Payment Scenarios](https://docs.stripe.com/payments/more-payment-scenarios).
+         */
+        payment_method?: PaymentMethod;
+
+        /**
+         * If the error is specific to the type of payment method, the payment method type that had a problem. This field is only populated for invoice-related errors.
+         */
+        payment_method_type?: string;
+
+        /**
+         * A URL to the request log entry in your dashboard.
+         */
+        request_log_url?: string;
+
+        /**
+         * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
+         * For example, you can use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
+         * Later, you can use [PaymentIntents](https://api.stripe.com#payment_intents) to drive the payment flow.
+         *
+         * Create a SetupIntent when you're ready to collect your customer's payment credentials.
+         * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
+         * The SetupIntent transitions through multiple [statuses](https://docs.stripe.com/payments/intents#intent-statuses) as it guides
+         * you through the setup process.
+         *
+         * Successful SetupIntents result in payment credentials that are optimized for future payments.
+         * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
+         * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
+         * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
+         * If you use the SetupIntent with a [Customer](https://api.stripe.com#setup_intent_object-customer),
+         * it automatically attaches the resulting payment method to that Customer after successful setup.
+         * We recommend using SetupIntents or [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) on
+         * PaymentIntents to save payment methods to prevent saving invalid or unoptimized payment methods.
+         *
+         * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
+         *
+         * Related guide: [Setup Intents API](https://docs.stripe.com/payments/setup-intents)
+         */
+        setup_intent?: SetupIntent;
+
+        source?: CustomerSource;
+
+        /**
+         * The type of error returned. One of `api_error`, `card_error`, `idempotency_error`, or `invalid_request_error`
+         */
+        type: ApiError.Type;
+      }
+
       export interface CollectInputs {
         /**
          * List of inputs to be collected.
@@ -438,6 +578,18 @@ export namespace Terminal {
          * Most recent PaymentIntent processed by the reader.
          */
         payment_intent: string | PaymentIntent;
+      }
+
+      export interface PrintContent {
+        /**
+         * Metadata of an uploaded file
+         */
+        image?: PrintContent.Image;
+
+        /**
+         * The type of content to print. Currently supports `image`.
+         */
+        type: 'image';
       }
 
       export interface ProcessPaymentIntent {
@@ -534,10 +686,211 @@ export namespace Terminal {
         | 'collect_inputs'
         | 'collect_payment_method'
         | 'confirm_payment_intent'
+        | 'print_content'
         | 'process_payment_intent'
         | 'process_setup_intent'
         | 'refund_payment'
         | 'set_reader_display';
+
+      export namespace ApiError {
+        export type Code =
+          | 'account_closed'
+          | 'account_country_invalid_address'
+          | 'account_error_country_change_requires_additional_steps'
+          | 'account_information_mismatch'
+          | 'account_invalid'
+          | 'account_number_invalid'
+          | 'account_token_required_for_v2_account'
+          | 'acss_debit_session_incomplete'
+          | 'action_blocked'
+          | 'alipay_upgrade_required'
+          | 'amount_too_large'
+          | 'amount_too_small'
+          | 'api_key_expired'
+          | 'application_fees_not_allowed'
+          | 'approval_required'
+          | 'authentication_required'
+          | 'balance_insufficient'
+          | 'balance_invalid_parameter'
+          | 'bank_account_bad_routing_numbers'
+          | 'bank_account_declined'
+          | 'bank_account_exists'
+          | 'bank_account_restricted'
+          | 'bank_account_unusable'
+          | 'bank_account_unverified'
+          | 'bank_account_verification_failed'
+          | 'billing_invalid_mandate'
+          | 'bitcoin_upgrade_required'
+          | 'capture_charge_authorization_expired'
+          | 'capture_unauthorized_payment'
+          | 'card_decline_rate_limit_exceeded'
+          | 'card_declined'
+          | 'cardholder_phone_number_required'
+          | 'charge_already_captured'
+          | 'charge_already_refunded'
+          | 'charge_disputed'
+          | 'charge_exceeds_source_limit'
+          | 'charge_exceeds_transaction_limit'
+          | 'charge_expired_for_capture'
+          | 'charge_invalid_parameter'
+          | 'charge_not_refundable'
+          | 'clearing_code_unsupported'
+          | 'country_code_invalid'
+          | 'country_unsupported'
+          | 'coupon_expired'
+          | 'customer_max_payment_methods'
+          | 'customer_max_subscriptions'
+          | 'customer_session_expired'
+          | 'customer_tax_location_invalid'
+          | 'debit_not_authorized'
+          | 'email_invalid'
+          | 'expired_card'
+          | 'financial_connections_account_inactive'
+          | 'financial_connections_account_pending_account_numbers'
+          | 'financial_connections_account_unavailable_account_numbers'
+          | 'financial_connections_no_successful_transaction_refresh'
+          | 'forwarding_api_inactive'
+          | 'forwarding_api_invalid_parameter'
+          | 'forwarding_api_retryable_upstream_error'
+          | 'forwarding_api_upstream_connection_error'
+          | 'forwarding_api_upstream_connection_timeout'
+          | 'forwarding_api_upstream_error'
+          | 'idempotency_key_in_use'
+          | 'incorrect_address'
+          | 'incorrect_cvc'
+          | 'incorrect_number'
+          | 'incorrect_zip'
+          | 'india_recurring_payment_mandate_canceled'
+          | 'instant_payouts_config_disabled'
+          | 'instant_payouts_currency_disabled'
+          | 'instant_payouts_limit_exceeded'
+          | 'instant_payouts_unsupported'
+          | 'insufficient_funds'
+          | 'intent_invalid_state'
+          | 'intent_verification_method_missing'
+          | 'invalid_card_type'
+          | 'invalid_characters'
+          | 'invalid_charge_amount'
+          | 'invalid_cvc'
+          | 'invalid_expiry_month'
+          | 'invalid_expiry_year'
+          | 'invalid_mandate_reference_prefix_format'
+          | 'invalid_number'
+          | 'invalid_source_usage'
+          | 'invalid_tax_location'
+          | 'invoice_no_customer_line_items'
+          | 'invoice_no_payment_method_types'
+          | 'invoice_no_subscription_line_items'
+          | 'invoice_not_editable'
+          | 'invoice_on_behalf_of_not_editable'
+          | 'invoice_payment_intent_requires_action'
+          | 'invoice_upcoming_none'
+          | 'livemode_mismatch'
+          | 'lock_timeout'
+          | 'missing'
+          | 'no_account'
+          | 'not_allowed_on_standard_account'
+          | 'out_of_inventory'
+          | 'ownership_declaration_not_allowed'
+          | 'parameter_invalid_empty'
+          | 'parameter_invalid_integer'
+          | 'parameter_invalid_string_blank'
+          | 'parameter_invalid_string_empty'
+          | 'parameter_missing'
+          | 'parameter_unknown'
+          | 'parameters_exclusive'
+          | 'payment_intent_action_required'
+          | 'payment_intent_authentication_failure'
+          | 'payment_intent_incompatible_payment_method'
+          | 'payment_intent_invalid_parameter'
+          | 'payment_intent_konbini_rejected_confirmation_number'
+          | 'payment_intent_mandate_invalid'
+          | 'payment_intent_payment_attempt_expired'
+          | 'payment_intent_payment_attempt_failed'
+          | 'payment_intent_rate_limit_exceeded'
+          | 'payment_intent_unexpected_state'
+          | 'payment_method_bank_account_already_verified'
+          | 'payment_method_bank_account_blocked'
+          | 'payment_method_billing_details_address_missing'
+          | 'payment_method_configuration_failures'
+          | 'payment_method_currency_mismatch'
+          | 'payment_method_customer_decline'
+          | 'payment_method_invalid_parameter'
+          | 'payment_method_invalid_parameter_testmode'
+          | 'payment_method_microdeposit_failed'
+          | 'payment_method_microdeposit_processing_error'
+          | 'payment_method_microdeposit_verification_amounts_invalid'
+          | 'payment_method_microdeposit_verification_amounts_mismatch'
+          | 'payment_method_microdeposit_verification_attempts_exceeded'
+          | 'payment_method_microdeposit_verification_descriptor_code_mismatch'
+          | 'payment_method_microdeposit_verification_timeout'
+          | 'payment_method_not_available'
+          | 'payment_method_provider_decline'
+          | 'payment_method_provider_timeout'
+          | 'payment_method_unactivated'
+          | 'payment_method_unexpected_state'
+          | 'payment_method_unsupported_type'
+          | 'payout_reconciliation_not_ready'
+          | 'payouts_limit_exceeded'
+          | 'payouts_not_allowed'
+          | 'platform_account_required'
+          | 'platform_api_key_expired'
+          | 'postal_code_invalid'
+          | 'processing_error'
+          | 'product_inactive'
+          | 'progressive_onboarding_limit_exceeded'
+          | 'rate_limit'
+          | 'refer_to_customer'
+          | 'refund_disputed_payment'
+          | 'request_blocked'
+          | 'resource_already_exists'
+          | 'resource_missing'
+          | 'return_intent_already_processed'
+          | 'routing_number_invalid'
+          | 'secret_key_required'
+          | 'sepa_unsupported_account'
+          | 'service_period_coupon_with_metered_tiered_item_unsupported'
+          | 'setup_attempt_failed'
+          | 'setup_intent_authentication_failure'
+          | 'setup_intent_invalid_parameter'
+          | 'setup_intent_mandate_invalid'
+          | 'setup_intent_mobile_wallet_unsupported'
+          | 'setup_intent_setup_attempt_expired'
+          | 'setup_intent_unexpected_state'
+          | 'shipping_address_invalid'
+          | 'shipping_calculation_failed'
+          | 'siret_invalid'
+          | 'sku_inactive'
+          | 'state_unsupported'
+          | 'status_transition_invalid'
+          | 'storer_capability_missing'
+          | 'storer_capability_not_active'
+          | 'stripe_tax_inactive'
+          | 'tax_id_invalid'
+          | 'tax_id_prohibited'
+          | 'taxes_calculation_failed'
+          | 'terminal_location_country_unsupported'
+          | 'terminal_reader_busy'
+          | 'terminal_reader_hardware_fault'
+          | 'terminal_reader_invalid_location_for_activation'
+          | 'terminal_reader_invalid_location_for_payment'
+          | 'terminal_reader_offline'
+          | 'terminal_reader_timeout'
+          | 'testmode_charges_only'
+          | 'tls_version_unsupported'
+          | 'token_already_used'
+          | 'token_card_network_invalid'
+          | 'token_in_use'
+          | 'transfer_source_balance_parameters_mismatch'
+          | 'transfers_not_allowed'
+          | 'url_invalid';
+
+        export type Type =
+          | 'api_error'
+          | 'card_error'
+          | 'idempotency_error'
+          | 'invalid_request_error';
+      }
 
       export namespace CollectInputs {
         export interface Input {
@@ -770,6 +1123,30 @@ export namespace Terminal {
         }
       }
 
+      export namespace PrintContent {
+        export interface Image {
+          /**
+           * Creation time of the object (in seconds since the Unix epoch).
+           */
+          created_at: number;
+
+          /**
+           * The original name of the uploaded file (e.g. `receipt.png`).
+           */
+          filename: string;
+
+          /**
+           * The size (in bytes) of the uploaded file.
+           */
+          size: number;
+
+          /**
+           * The format of the uploaded file.
+           */
+          type: string;
+        }
+      }
+
       export namespace ProcessPaymentIntent {
         export interface ProcessConfig {
           /**
@@ -961,11 +1338,19 @@ export namespace Terminal {
       | 'mobile_phone_reader'
       | 'simulated_stripe_s700'
       | 'simulated_stripe_s710'
+      | 'simulated_verifone_m425'
+      | 'simulated_verifone_p630'
+      | 'simulated_verifone_ux700'
+      | 'simulated_verifone_v660p'
       | 'simulated_wisepos_e'
       | 'stripe_m2'
       | 'stripe_s700'
       | 'stripe_s710'
-      | 'verifone_P400';
+      | 'verifone_P400'
+      | 'verifone_m425'
+      | 'verifone_p630'
+      | 'verifone_ux700'
+      | 'verifone_v660p';
 
     export type Status = 'offline' | 'online';
   }

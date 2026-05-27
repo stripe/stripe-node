@@ -63,7 +63,7 @@ export class AccountResource extends StripeResource {
     }) as any;
   }
   /**
-   * An Account is a representation of a company, individual or other entity that a user interacts with. Accounts contain identifying information about the entity, and configurations that store the features an account has access to. An account can be configured as any or all of the following configurations: Customer, Merchant and/or Recipient.
+   * Create an Account that represents a company, individual, or other entity that your business interacts with. Accounts contain identifying information about the entity, and configurations that store the features an account has access to. An account can be configured as any or all of the following configurations: Customer, Merchant and/or Recipient.
    * @throws Stripe.RateLimitError
    */
   create(
@@ -269,7 +269,7 @@ export interface Account {
   configuration?: V2.Core.Account.Configuration;
 
   /**
-   * The default contact email address for the Account. Required when configuring the account as a merchant or recipient.
+   * The primary contact email address for the Account.
    */
   contact_email?: string;
 
@@ -330,7 +330,7 @@ export namespace V2 {
 
       export interface Configuration {
         /**
-         * The Customer Configuration allows the Account to be used in inbound payment flows.
+         * The Customer Configuration allows the Account to be used in inbound payment flows (i.e. customer-facing payment and billing flows).
          */
         customer?: Configuration.Customer;
 
@@ -403,7 +403,7 @@ export namespace V2 {
         country?: string;
 
         /**
-         * The entity type.
+         * The entity type represented by the Account. Ensure this field is accurate before adding configurations that rely on identity information, as it determines which identity fields apply and how the Account is validated.
          */
         entity_type?: Identity.EntityType;
 
@@ -552,7 +552,7 @@ export namespace V2 {
 
           export interface Billing {
             /**
-             * ID of a PaymentMethod attached to the customer account to use as the default for invoices and subscriptions.
+             * The ID of a `PaymentMethod` attached to this Account's `customer` configuration, used as the default payment method for invoices and subscriptions.
              */
             default_payment_method?: string;
 
@@ -4087,7 +4087,7 @@ export namespace V2 {
           documents?: Individual.Documents;
 
           /**
-           * The individual's email address.
+           * The individual's email address. You can only set this field when the Account is configured as a `merchant` or `recipient`. Use `contact_email` as the primary contact email for this Account.
            */
           email?: string;
 
@@ -4564,6 +4564,11 @@ export namespace V2 {
               files: Array<string>;
 
               /**
+               * Person that is signing the document.
+               */
+              signer?: ProofOfRegistration.Signer;
+
+              /**
                * The format of the document. Currently supports `files` only.
                */
               type: 'files';
@@ -4574,6 +4579,11 @@ export namespace V2 {
                * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
+
+              /**
+               * Person that is signing the document.
+               */
+              signer?: ProofOfUltimateBeneficialOwnership.Signer;
 
               /**
                * The format of the document. Currently supports `files` only.
@@ -4592,6 +4602,24 @@ export namespace V2 {
                  * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 front: string;
+              }
+            }
+
+            export namespace ProofOfRegistration {
+              export interface Signer {
+                /**
+                 * Person signing the document.
+                 */
+                person: string;
+              }
+            }
+
+            export namespace ProofOfUltimateBeneficialOwnership {
+              export interface Signer {
+                /**
+                 * Person signing the document.
+                 */
+                person: string;
               }
             }
           }
@@ -5678,7 +5706,7 @@ export namespace V2 {
       configuration?: AccountCreateParams.Configuration;
 
       /**
-       * The default contact email address for the Account. Required when configuring the account as a merchant or recipient.
+       * The primary contact email address for the Account.
        */
       contact_email?: string;
 
@@ -5721,7 +5749,7 @@ export namespace V2 {
     export namespace AccountCreateParams {
       export interface Configuration {
         /**
-         * The Customer Configuration allows the Account to be used in inbound payment flows.
+         * The Customer Configuration allows the Account to be used in inbound payment flows (i.e. customer-facing payment and billing flows).
          */
         customer?: Configuration.Customer;
 
@@ -5777,7 +5805,7 @@ export namespace V2 {
         country?: string;
 
         /**
-         * The entity type.
+         * The entity type represented by the Account. Ensure this field is accurate before adding configurations that rely on identity information, as it determines which identity fields apply and how the Account is validated.
          */
         entity_type?: Identity.EntityType;
 
@@ -7010,7 +7038,7 @@ export namespace V2 {
           documents?: Individual.Documents;
 
           /**
-           * The individual's email address.
+           * The individual's email address. You can only set this field when the Account is configured as a `merchant` or `recipient`. Use `contact_email` as the primary contact email for this Account.
            */
           email?: string;
 
@@ -7477,6 +7505,11 @@ export namespace V2 {
               files: Array<string>;
 
               /**
+               * Person that is signing the document.
+               */
+              signer?: ProofOfRegistration.Signer;
+
+              /**
                * The format of the document. Currently supports `files` only.
                */
               type: 'files';
@@ -7487,6 +7520,11 @@ export namespace V2 {
                * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
+
+              /**
+               * Person that is signing the document.
+               */
+              signer?: ProofOfUltimateBeneficialOwnership.Signer;
 
               /**
                * The format of the document. Currently supports `files` only.
@@ -7505,6 +7543,24 @@ export namespace V2 {
                  * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 front: string;
+              }
+            }
+
+            export namespace ProofOfRegistration {
+              export interface Signer {
+                /**
+                 * Person signing the document.
+                 */
+                person: string;
+              }
+            }
+
+            export namespace ProofOfUltimateBeneficialOwnership {
+              export interface Signer {
+                /**
+                 * Person signing the document.
+                 */
+                person: string;
               }
             }
           }
@@ -8250,7 +8306,7 @@ export namespace V2 {
       configuration?: AccountUpdateParams.Configuration;
 
       /**
-       * The default contact email address for the Account. Required when configuring the account as a merchant or recipient.
+       * The primary contact email address for the Account.
        */
       contact_email?: string;
 
@@ -8349,7 +8405,7 @@ export namespace V2 {
         country?: string;
 
         /**
-         * The entity type.
+         * The entity type represented by the Account. Ensure this field is accurate before adding configurations that rely on identity information, as it determines which identity fields apply and how the Account is validated.
          */
         entity_type?: Identity.EntityType;
 
@@ -8485,7 +8541,7 @@ export namespace V2 {
 
           export interface Billing {
             /**
-             * ID of a PaymentMethod attached to the customer account to use as the default for invoices and subscriptions.
+             * The ID of a `PaymentMethod` attached to this Account's `customer` configuration, used as the default payment method for invoices and subscriptions.
              */
             default_payment_method?: string;
 
@@ -9570,7 +9626,7 @@ export namespace V2 {
           documents?: Individual.Documents;
 
           /**
-           * The individual's email address.
+           * The individual's email address. You can only set this field when the Account is configured as a `merchant` or `recipient`. Use `contact_email` as the primary contact email for this Account.
            */
           email?: string;
 
@@ -9836,7 +9892,7 @@ export namespace V2 {
             proof_of_address?: Documents.ProofOfAddress;
 
             /**
-             * One or more documents showing the company's proof of registration with the national business registry.
+             * One or more documents that demonstrate proof of ultimate beneficial ownership.
              */
             proof_of_registration?: Documents.ProofOfRegistration;
 
@@ -10044,6 +10100,11 @@ export namespace V2 {
               files: Array<string>;
 
               /**
+               * Person that is signing the document.
+               */
+              signer?: ProofOfRegistration.Signer;
+
+              /**
                * The format of the document. Currently supports `files` only.
                */
               type: 'files';
@@ -10054,6 +10115,11 @@ export namespace V2 {
                * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
+
+              /**
+               * Person that is signing the document.
+               */
+              signer?: ProofOfUltimateBeneficialOwnership.Signer;
 
               /**
                * The format of the document. Currently supports `files` only.
@@ -10072,6 +10138,24 @@ export namespace V2 {
                  * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 front?: string;
+              }
+            }
+
+            export namespace ProofOfRegistration {
+              export interface Signer {
+                /**
+                 * Person signing the document.
+                 */
+                person: string;
+              }
+            }
+
+            export namespace ProofOfUltimateBeneficialOwnership {
+              export interface Signer {
+                /**
+                 * Person signing the document.
+                 */
+                person: string;
               }
             }
           }
