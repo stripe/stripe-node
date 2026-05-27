@@ -1850,6 +1850,75 @@ describe('RequestSender', () => {
     });
   });
 
+  describe('Stripe-Notice header', () => {
+    it('emits a warning when stripe-notice header is present', (done) => {
+      const warnings: Array<string> = [];
+
+      return getTestServerStripe(
+        {},
+        (req, res) => {
+          res.setHeader('Stripe-Notice', 'test notice');
+          res.writeHead(200, {'Content-Type': 'application/json'});
+          res.write('{}');
+          res.end();
+        },
+        (err, stripe, closeServer) => {
+          if (err) {
+            return done(err);
+          }
+
+          const originalEmitWarning = stripe._platformFunctions.emitWarning.bind(
+            stripe._platformFunctions
+          );
+          stripe._platformFunctions.emitWarning = (warning: string): void => {
+            warnings.push(warning);
+            originalEmitWarning(warning);
+          };
+
+          stripe.balance
+            .retrieve()
+            .then(() => {
+              expect(warnings).to.include('test notice');
+              closeServer();
+              done();
+            })
+            .catch(done);
+        }
+      );
+    });
+
+    it('does not emit a warning when stripe-notice header is absent', (done) => {
+      const warnings: Array<string> = [];
+
+      return getTestServerStripe(
+        {},
+        (req, res) => {
+          res.writeHead(200, {'Content-Type': 'application/json'});
+          res.write('{}');
+          res.end();
+        },
+        (err, stripe, closeServer) => {
+          if (err) {
+            return done(err);
+          }
+
+          stripe._platformFunctions.emitWarning = (warning: string): void => {
+            warnings.push(warning);
+          };
+
+          stripe.balance
+            .retrieve()
+            .then(() => {
+              expect(warnings).to.be.empty;
+              closeServer();
+              done();
+            })
+            .catch(done);
+        }
+      );
+    });
+  });
+
   describe('Request Timeout', () => {
     it('should allow the setting of a request timeout on a per-request basis', (done) => {
       stripe.charges.create({});
