@@ -22,9 +22,6 @@ let rawError: StripeType.StripeRawError;
 // ——— Pattern 2: value import for construction + namespace access ———
 import Stripe from 'stripe';
 
-// The CJS entry is a callable function wrapper; `new` is supported at runtime (see stripe.cjs.node.js)
-// but TypeScript does not infer a construct signature from the merged typings (TS7009).
-// @ts-expect-error TS7009
 let stripe = new Stripe('sk_test_123', {
   apiVersion: Stripe.API_VERSION,
 });
@@ -292,7 +289,7 @@ async (): Promise<void> => {
 };
 
 // Can reference error types
-let rawError: Stripe.StripeRawError;
+let rawError2: Stripe.StripeRawError;
 
 let newError: typeof Stripe.errors.StripeError;
 
@@ -433,3 +430,13 @@ const oAuthAuthorizeUrlOptions: Stripe.OAuthAuthorizeUrlOptions = {};
 const oAuthAuthorizeUrlParams: Stripe.OAuthAuthorizeUrlParams = {};
 const oAuthDeauthorization: Stripe.OAuthDeauthorization = {stripe_user_id: ''};
 const oAuthDeauthorizeParams: Stripe.OAuthDeauthorizeParams = {};
+
+// Access and type top level resources and nested resources
+const customerResource: Stripe.CustomerResource = new Stripe.CustomerResource(
+  stripe
+);
+
+// Access nested resource
+const v2AccountResource: Stripe.V2.Billing.MeterEventResource = new Stripe.V2.Billing.MeterEventResource(
+  stripe
+);
