@@ -19,7 +19,6 @@ import * as resources from './resources.js';
 import {
   createApiKeyAuthenticator,
   detectAIAgent,
-  determineProcessUserAgentProperties,
   pascalToCamelCase,
   validateInteger,
 } from './utils.js';
@@ -33,6 +32,8 @@ import {
   RawRequestOptions,
   ApiList,
   ApiListPromise,
+  V2List,
+  V2ListPromise,
   ApiSearchResultPromise,
   ApiSearchResult,
   StripeStreamResponse,
@@ -167,6 +168,7 @@ import {
   CouponUpdateParams,
   CouponListParams,
   CouponDeleteParams,
+  CouponSerializeBatchCreateParams,
   CouponResource,
 } from './resources/Coupons.js';
 import {
@@ -178,7 +180,6 @@ import {
   CreditNoteListLineItemsParams,
   CreditNoteListPreviewLineItemsParams,
   CreditNotePreviewParams,
-  CreditNoteSerializeBatchCreateParams,
   CreditNoteVoidCreditNoteParams,
   CreditNoteResource,
 } from './resources/CreditNotes.js';
@@ -292,8 +293,6 @@ import {
   InvoiceRemoveLinesParams,
   InvoiceSearchParams,
   InvoiceSendInvoiceParams,
-  InvoiceSerializeBatchPayParams,
-  InvoiceSerializeBatchUpdateParams,
   InvoiceUpdateLinesParams,
   InvoiceUpdateLineItemParams,
   InvoiceVoidInvoiceParams,
@@ -552,8 +551,10 @@ import {
   SubscriptionCancelParams,
   SubscriptionDeleteDiscountParams,
   SubscriptionMigrateParams,
+  SubscriptionPauseParams,
   SubscriptionResumeParams,
   SubscriptionSearchParams,
+  SubscriptionSerializeBatchCancelParams,
   SubscriptionSerializeBatchMigrateParams,
   SubscriptionSerializeBatchUpdateParams,
   SubscriptionResource,
@@ -577,9 +578,6 @@ import {
   SubscriptionScheduleAmendParams,
   SubscriptionScheduleCancelParams,
   SubscriptionScheduleReleaseParams,
-  SubscriptionScheduleSerializeBatchCancelParams,
-  SubscriptionScheduleSerializeBatchCreateParams,
-  SubscriptionScheduleSerializeBatchUpdateParams,
   SubscriptionScheduleResource,
 } from './resources/SubscriptionSchedules.js';
 import {
@@ -1059,17 +1057,12 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
 export class Stripe {
   static PACKAGE_VERSION = '22.2.0-beta.3';
   static API_VERSION: typeof ApiVersion = ApiVersion;
-  static aiAgent =
-    typeof process !== 'undefined' && process.env
-      ? detectAIAgent(process.env)
-      : '';
-  static AI_AGENT = Stripe.aiAgent;
-  static USER_AGENT = {
+  static aiAgent = '';
+  static AI_AGENT = '';
+  static USER_AGENT: Record<string, string | boolean | null> = {
     bindings_version: Stripe.PACKAGE_VERSION,
     lang: 'node',
     typescript: false,
-    ...determineProcessUserAgentProperties(),
-    ...(Stripe.aiAgent ? {ai_agent: Stripe.aiAgent} : {}),
   };
   static StripeResource = StripeResource;
   static resources = resources;
@@ -1211,6 +1204,19 @@ export class Stripe {
       platformFunctions.createNodeCryptoProvider;
     Stripe.createSubtleCryptoProvider =
       platformFunctions.createSubtleCryptoProvider;
+
+    const env = platformFunctions.getEnv();
+    const runtimeVersion = platformFunctions.getRuntimeVersion();
+
+    Stripe.aiAgent = env ? detectAIAgent(env) : '';
+    Stripe.AI_AGENT = Stripe.aiAgent;
+    Stripe.USER_AGENT = {
+      bindings_version: Stripe.PACKAGE_VERSION,
+      lang: 'node',
+      typescript: false,
+      ...(runtimeVersion ? {lang_version: runtimeVersion} : {}),
+      ...(Stripe.aiAgent ? {ai_agent: Stripe.aiAgent} : {}),
+    };
   }
 
   constructor(key: string, config: StripeConfig = {}) {
@@ -1969,6 +1975,7 @@ export declare namespace Stripe {
     CouponUpdateParams,
     CouponListParams,
     CouponDeleteParams,
+    CouponSerializeBatchCreateParams,
     CouponResource,
   };
   export {
@@ -1980,7 +1987,6 @@ export declare namespace Stripe {
     CreditNoteListLineItemsParams,
     CreditNoteListPreviewLineItemsParams,
     CreditNotePreviewParams,
-    CreditNoteSerializeBatchCreateParams,
     CreditNoteVoidCreditNoteParams,
     CreditNoteResource,
   };
@@ -2101,8 +2107,6 @@ export declare namespace Stripe {
     InvoiceRemoveLinesParams,
     InvoiceSearchParams,
     InvoiceSendInvoiceParams,
-    InvoiceSerializeBatchPayParams,
-    InvoiceSerializeBatchUpdateParams,
     InvoiceUpdateLinesParams,
     InvoiceUpdateLineItemParams,
     InvoiceVoidInvoiceParams,
@@ -2352,8 +2356,10 @@ export declare namespace Stripe {
     SubscriptionCancelParams,
     SubscriptionDeleteDiscountParams,
     SubscriptionMigrateParams,
+    SubscriptionPauseParams,
     SubscriptionResumeParams,
     SubscriptionSearchParams,
+    SubscriptionSerializeBatchCancelParams,
     SubscriptionSerializeBatchMigrateParams,
     SubscriptionSerializeBatchUpdateParams,
     SubscriptionResource,
@@ -2377,9 +2383,6 @@ export declare namespace Stripe {
     SubscriptionScheduleAmendParams,
     SubscriptionScheduleCancelParams,
     SubscriptionScheduleReleaseParams,
-    SubscriptionScheduleSerializeBatchCancelParams,
-    SubscriptionScheduleSerializeBatchCreateParams,
-    SubscriptionScheduleSerializeBatchUpdateParams,
     SubscriptionScheduleResource,
   };
   export {TaxCode, TaxCodeRetrieveParams, TaxCodeListParams, TaxCodeResource};
@@ -2794,6 +2797,8 @@ export declare namespace Stripe {
     RawRequestOptions,
     ApiList,
     ApiListPromise,
+    V2List,
+    V2ListPromise,
     ApiSearchResultPromise,
     ApiSearchResult,
     StripeStreamResponse,

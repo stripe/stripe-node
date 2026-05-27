@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ReceivedCreditResource extends StripeResource {
   /**
@@ -11,7 +11,7 @@ export class ReceivedCreditResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.ReceivedCreditListParams,
     options?: RequestOptions
-  ): ApiListPromise<ReceivedCredit> {
+  ): V2ListPromise<ReceivedCredit> {
     return this._makeRequest(
       'GET',
       '/v2/money_management/received_credits',
@@ -244,7 +244,7 @@ export namespace V2 {
           /**
            * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
            */
-          network: 'fps';
+          network: GbBankAccount.Network;
 
           /**
            * The sort code of the account that originated the transfer.
@@ -309,6 +309,10 @@ export namespace V2 {
            * The routing number of the account that originated the transfer.
            */
           routing_number?: string;
+        }
+
+        export namespace GbBankAccount {
+          export type Network = 'chaps' | 'fps';
         }
 
         export namespace UsBankAccount {

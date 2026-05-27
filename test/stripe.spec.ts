@@ -320,6 +320,46 @@ describe('Stripe Module', function() {
     });
   });
 
+  describe('initialize() populates statics from platform functions', () => {
+    const origAIAgent = StripeCore.aiAgent;
+    const origAiAgentStatic = StripeCore.AI_AGENT;
+    const origUserAgent = StripeCore.USER_AGENT;
+
+    afterEach(() => {
+      StripeCore.aiAgent = origAIAgent;
+      StripeCore.AI_AGENT = origAiAgentStatic;
+      StripeCore.USER_AGENT = origUserAgent;
+      StripeCore.initialize(new NodePlatformFunctions());
+    });
+
+    it('sets aiAgent and USER_AGENT from platform env', () => {
+      const mockPlatform = new NodePlatformFunctions();
+      mockPlatform.getEnv = () => ({CLAUDECODE: '1'});
+      mockPlatform.getRuntimeVersion = () => '99.0.0';
+
+      StripeCore.initialize(mockPlatform);
+
+      expect(StripeCore.aiAgent).to.equal('claude_code');
+      expect(StripeCore.AI_AGENT).to.equal('claude_code');
+      expect(StripeCore.USER_AGENT).to.have.property('ai_agent', 'claude_code');
+      expect(StripeCore.USER_AGENT).to.have.property('lang_version', '99.0.0');
+    });
+
+    it('handles platform with no env or runtime version', () => {
+      const {
+        PlatformFunctions,
+      } = require('../src/platform/PlatformFunctions.js');
+      const basePlatform = new PlatformFunctions();
+
+      StripeCore.initialize(basePlatform);
+
+      expect(StripeCore.aiAgent).to.equal('');
+      expect(StripeCore.AI_AGENT).to.equal('');
+      expect(StripeCore.USER_AGENT).to.not.have.property('ai_agent');
+      expect(StripeCore.USER_AGENT).to.not.have.property('lang_version');
+    });
+  });
+
   describe('timeout config', () => {
     const defaultTimeout = 80000;
     it('Should define a default of 80000', () => {

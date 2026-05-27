@@ -37,7 +37,7 @@ export interface GrantedToken {
   /**
    * Details about the agent that issued this SharedPaymentGrantedToken.
    */
-  agent_details?: SharedPayment.GrantedToken.AgentDetails | null;
+  agent_details: SharedPayment.GrantedToken.AgentDetails | null;
 
   /**
    * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -127,6 +127,8 @@ export namespace SharedPayment {
        */
       billing_details: PaymentMethodDetails.BillingDetails | null;
 
+      bizum?: PaymentMethodDetails.Bizum;
+
       blik?: PaymentMethodDetails.Blik;
 
       boleto?: PaymentMethodDetails.Boleto;
@@ -206,6 +208,8 @@ export namespace SharedPayment {
       samsung_pay?: PaymentMethodDetails.SamsungPay;
 
       satispay?: PaymentMethodDetails.Satispay;
+
+      scalapay?: PaymentMethodDetails.Scalapay;
 
       sepa_debit?: PaymentMethodDetails.SepaDebit;
 
@@ -373,6 +377,8 @@ export namespace SharedPayment {
          */
         tax_id: string | null;
       }
+
+      export interface Bizum {}
 
       export interface Blik {}
 
@@ -845,6 +851,8 @@ export namespace SharedPayment {
 
       export interface Satispay {}
 
+      export interface Scalapay {}
+
       export interface SepaDebit {
         /**
          * Bank code of bank associated with the bank account.
@@ -910,6 +918,7 @@ export namespace SharedPayment {
         | 'bacs_debit'
         | 'bancontact'
         | 'billie'
+        | 'bizum'
         | 'blik'
         | 'boleto'
         | 'card'
@@ -951,6 +960,7 @@ export namespace SharedPayment {
         | 'revolut_pay'
         | 'samsung_pay'
         | 'satispay'
+        | 'scalapay'
         | 'sepa_debit'
         | 'shopeepay'
         | 'sofort'

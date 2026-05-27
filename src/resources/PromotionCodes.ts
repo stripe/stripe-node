@@ -1,6 +1,5 @@
 // File generated from our OpenAPI spec
 
-import * as crypto from 'crypto';
 import {StripeResource} from '../StripeResource.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {Coupon} from './Coupons.js';
@@ -73,39 +72,39 @@ export class PromotionCodeResource extends StripeResource {
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
-    const itemId = crypto.randomUUID();
+    const itemId = this._stripe._platformFunctions.uuid4();
     const stripeVersion =
       options.apiVersion || this._stripe.getApiField('version');
 
-    const item: Record<string, unknown> = {
+    const entry: Record<string, unknown> = {
       id: itemId,
       params: params,
       stripe_version: stripeVersion,
     };
     if (options.stripeContext) {
-      item.context = options.stripeContext;
+      entry.context = options.stripeContext;
     }
-    return JSON.stringify(item);
+    return JSON.stringify(entry);
   }
   serializeBatchUpdate(
     promotionCode: string,
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
-    const itemId = crypto.randomUUID();
+    const itemId = this._stripe._platformFunctions.uuid4();
     const stripeVersion =
       options.apiVersion || this._stripe.getApiField('version');
 
-    const item: Record<string, unknown> = {
+    const entry: Record<string, unknown> = {
       id: itemId,
       params: params,
       stripe_version: stripeVersion,
     };
-    item.path_params = {promotion_code: promotionCode};
+    entry.path_params = {promotion_code: promotionCode};
     if (options.stripeContext) {
-      item.context = options.stripeContext;
+      entry.context = options.stripeContext;
     }
-    return JSON.stringify(item);
+    return JSON.stringify(entry);
   }
 }
 export interface PromotionCode {

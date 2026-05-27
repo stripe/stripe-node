@@ -3,7 +3,7 @@
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {MetadataParam, Metadata} from '../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class OutboundPaymentResource extends StripeResource {
   /**
@@ -12,7 +12,7 @@ export class OutboundPaymentResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.OutboundPaymentListParams,
     options?: RequestOptions
-  ): ApiListPromise<OutboundPayment> {
+  ): V2ListPromise<OutboundPayment> {
     return this._makeRequest(
       'GET',
       '/v2/money_management/outbound_payments',

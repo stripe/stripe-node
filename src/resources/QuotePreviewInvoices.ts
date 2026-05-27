@@ -61,6 +61,11 @@ export interface QuotePreviewInvoice {
   amount_paid: number;
 
   /**
+   * Amount, in cents (or local equivalent), that was paid on the invoice outside of Stripe.
+   */
+  amount_paid_off_stripe?: number;
+
+  /**
    * The difference between amount_due and amount_paid, in cents (or local equivalent).
    */
   amount_remaining: number;
@@ -1211,6 +1216,7 @@ export namespace QuotePreviewInvoice {
       | 'payment_method_invalid_parameter'
       | 'payment_method_invalid_parameter_testmode'
       | 'payment_method_microdeposit_failed'
+      | 'payment_method_microdeposit_processing_error'
       | 'payment_method_microdeposit_verification_amounts_invalid'
       | 'payment_method_microdeposit_verification_amounts_mismatch'
       | 'payment_method_microdeposit_verification_attempts_exceeded'
@@ -1252,6 +1258,7 @@ export namespace QuotePreviewInvoice {
       | 'setup_intent_unexpected_state'
       | 'shipping_address_invalid'
       | 'shipping_calculation_failed'
+      | 'siret_invalid'
       | 'sku_inactive'
       | 'state_unsupported'
       | 'status_transition_invalid'
@@ -1447,6 +1454,7 @@ export namespace QuotePreviewInvoice {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'twint'
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay';

@@ -1,6 +1,5 @@
 // File generated from our OpenAPI spec
 
-import * as crypto from 'crypto';
 import {StripeResource} from '../StripeResource.js';
 import {Discount} from './Discounts.js';
 import {Application, DeletedApplication} from './Applications.js';
@@ -218,64 +217,6 @@ export class SubscriptionScheduleResource extends StripeResource {
       params,
       options
     ) as any;
-  }
-  serializeBatchCreate(
-    params: Record<string, unknown> = {},
-    options: {apiVersion?: string; stripeContext?: string} = {}
-  ): string {
-    const itemId = crypto.randomUUID();
-    const stripeVersion =
-      options.apiVersion || this._stripe.getApiField('version');
-
-    const item: Record<string, unknown> = {
-      id: itemId,
-      params: params,
-      stripe_version: stripeVersion,
-    };
-    if (options.stripeContext) {
-      item.context = options.stripeContext;
-    }
-    return JSON.stringify(item);
-  }
-  serializeBatchUpdate(
-    schedule: string,
-    params: Record<string, unknown> = {},
-    options: {apiVersion?: string; stripeContext?: string} = {}
-  ): string {
-    const itemId = crypto.randomUUID();
-    const stripeVersion =
-      options.apiVersion || this._stripe.getApiField('version');
-
-    const item: Record<string, unknown> = {
-      id: itemId,
-      params: params,
-      stripe_version: stripeVersion,
-    };
-    item.path_params = {schedule: schedule};
-    if (options.stripeContext) {
-      item.context = options.stripeContext;
-    }
-    return JSON.stringify(item);
-  }
-  serializeBatchCancel(
-    schedule: string,
-    params: Record<string, unknown> = {},
-    options: {apiVersion?: string; stripeContext?: string} = {}
-  ): string {
-    const itemId = crypto.randomUUID();
-    const stripeVersion =
-      options.apiVersion || this._stripe.getApiField('version');
-
-    const item: Record<string, unknown> = {
-      id: itemId,
-      params: params,
-      stripe_version: stripeVersion,
-    };
-    item.path_params = {schedule: schedule};
-    if (options.stripeContext) {
-      item.context = options.stripeContext;
-    }
-    return JSON.stringify(item);
   }
 }
 export interface SubscriptionSchedule {
@@ -759,6 +700,11 @@ export namespace SubscriptionSchedule {
 
   export namespace Phase {
     export interface AddInvoiceItem {
+      /**
+       * Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
+       */
+      discountable: boolean | null;
+
       /**
        * The stackable discounts that will be applied to the item.
        */
@@ -1529,6 +1475,11 @@ export namespace SubscriptionScheduleCreateParams {
 
   export namespace Phase {
     export interface AddInvoiceItem {
+      /**
+       * Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
+       */
+      discountable?: boolean;
+
       /**
        * The coupons to redeem into discounts for the item.
        */
@@ -2456,6 +2407,11 @@ export namespace SubscriptionScheduleUpdateParams {
 
   export namespace Phase {
     export interface AddInvoiceItem {
+      /**
+       * Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
+       */
+      discountable?: boolean;
+
       /**
        * The coupons to redeem into discounts for the item.
        */
@@ -3862,6 +3818,3 @@ export interface SubscriptionScheduleReleaseParams {
    */
   preserve_cancel_date?: boolean;
 }
-export interface SubscriptionScheduleSerializeBatchCancelParams {}
-export interface SubscriptionScheduleSerializeBatchCreateParams {}
-export interface SubscriptionScheduleSerializeBatchUpdateParams {}

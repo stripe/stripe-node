@@ -1,6 +1,5 @@
 // File generated from our OpenAPI spec
 
-import * as crypto from 'crypto';
 import {StripeResource} from '../StripeResource.js';
 import {InvoiceLineItem} from './InvoiceLineItems.js';
 import {Discount, DeletedDiscount} from './Discounts.js';
@@ -995,46 +994,6 @@ export class InvoiceResource extends StripeResource {
       }
     ) as any;
   }
-  serializeBatchUpdate(
-    invoice: string,
-    params: Record<string, unknown> = {},
-    options: {apiVersion?: string; stripeContext?: string} = {}
-  ): string {
-    const itemId = crypto.randomUUID();
-    const stripeVersion =
-      options.apiVersion || this._stripe.getApiField('version');
-
-    const item: Record<string, unknown> = {
-      id: itemId,
-      params: params,
-      stripe_version: stripeVersion,
-    };
-    item.path_params = {invoice: invoice};
-    if (options.stripeContext) {
-      item.context = options.stripeContext;
-    }
-    return JSON.stringify(item);
-  }
-  serializeBatchPay(
-    invoice: string,
-    params: Record<string, unknown> = {},
-    options: {apiVersion?: string; stripeContext?: string} = {}
-  ): string {
-    const itemId = crypto.randomUUID();
-    const stripeVersion =
-      options.apiVersion || this._stripe.getApiField('version');
-
-    const item: Record<string, unknown> = {
-      id: itemId,
-      params: params,
-      stripe_version: stripeVersion,
-    };
-    item.path_params = {invoice: invoice};
-    if (options.stripeContext) {
-      item.context = options.stripeContext;
-    }
-    return JSON.stringify(item);
-  }
   /**
    * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
    */
@@ -1175,6 +1134,11 @@ export interface Invoice {
    * The amount, in cents (or local equivalent), that was paid.
    */
   amount_paid: number;
+
+  /**
+   * Amount, in cents (or local equivalent), that was paid on the invoice outside of Stripe.
+   */
+  amount_paid_off_stripe?: number;
 
   /**
    * The difference between amount_due and amount_paid, in cents (or local equivalent).
@@ -2341,6 +2305,7 @@ export namespace Invoice {
       | 'payment_method_invalid_parameter'
       | 'payment_method_invalid_parameter_testmode'
       | 'payment_method_microdeposit_failed'
+      | 'payment_method_microdeposit_processing_error'
       | 'payment_method_microdeposit_verification_amounts_invalid'
       | 'payment_method_microdeposit_verification_amounts_mismatch'
       | 'payment_method_microdeposit_verification_attempts_exceeded'
@@ -2382,6 +2347,7 @@ export namespace Invoice {
       | 'setup_intent_unexpected_state'
       | 'shipping_address_invalid'
       | 'shipping_calculation_failed'
+      | 'siret_invalid'
       | 'sku_inactive'
       | 'state_unsupported'
       | 'status_transition_invalid'
@@ -2577,6 +2543,7 @@ export namespace Invoice {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'twint'
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay';
@@ -3458,6 +3425,7 @@ export namespace InvoiceCreateParams {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'twint'
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay';
@@ -4384,6 +4352,7 @@ export namespace InvoiceUpdateParams {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'twint'
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay';
@@ -6769,6 +6738,11 @@ export namespace InvoiceCreatePreviewParams {
     export namespace Phase {
       export interface AddInvoiceItem {
         /**
+         * Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
+         */
+        discountable?: boolean;
+
+        /**
          * The coupons to redeem into discounts for the item.
          */
         discounts?: Array<AddInvoiceItem.Discount>;
@@ -7437,7 +7411,10 @@ export namespace InvoiceCreatePreviewParams {
       key?: string;
     }
 
-    export type CancelAt = 'max_period_end' | 'min_period_end';
+    export type CancelAt =
+      | 'max_billed_until'
+      | 'max_period_end'
+      | 'min_period_end';
 
     export interface Item {
       /**
@@ -7848,8 +7825,6 @@ export interface InvoiceSendInvoiceParams {
    */
   expand?: Array<string>;
 }
-export interface InvoiceSerializeBatchPayParams {}
-export interface InvoiceSerializeBatchUpdateParams {}
 export interface InvoiceUpdateLinesParams {
   /**
    * The line items to update.

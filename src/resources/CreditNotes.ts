@@ -1,6 +1,5 @@
 // File generated from our OpenAPI spec
 
-import * as crypto from 'crypto';
 import {StripeResource} from '../StripeResource.js';
 import {CreditNoteLineItem} from './CreditNoteLineItems.js';
 import {Refund} from './Refunds.js';
@@ -325,24 +324,6 @@ export class CreditNoteResource extends StripeResource {
         },
       }
     ) as any;
-  }
-  serializeBatchCreate(
-    params: Record<string, unknown> = {},
-    options: {apiVersion?: string; stripeContext?: string} = {}
-  ): string {
-    const itemId = crypto.randomUUID();
-    const stripeVersion =
-      options.apiVersion || this._stripe.getApiField('version');
-
-    const item: Record<string, unknown> = {
-      id: itemId,
-      params: params,
-      stripe_version: stripeVersion,
-    };
-    if (options.stripeContext) {
-      item.context = options.stripeContext;
-    }
-    return JSON.stringify(item);
   }
   /**
    * When retrieving a credit note, you'll get a lines property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
@@ -1419,7 +1400,6 @@ export namespace CreditNotePreviewParams {
     export type Type = 'payment_record_refund' | 'refund';
   }
 }
-export interface CreditNoteSerializeBatchCreateParams {}
 export interface CreditNoteVoidCreditNoteParams {
   /**
    * Specifies which fields in the response should be expanded.

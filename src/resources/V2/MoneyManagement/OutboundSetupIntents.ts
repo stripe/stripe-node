@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {PayoutMethod} from './PayoutMethods.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class OutboundSetupIntentResource extends StripeResource {
   /**
@@ -11,7 +11,7 @@ export class OutboundSetupIntentResource extends StripeResource {
   list(
     params?: V2.MoneyManagement.OutboundSetupIntentListParams,
     options?: RequestOptions
-  ): ApiListPromise<OutboundSetupIntent> {
+  ): V2ListPromise<OutboundSetupIntent> {
     return this._makeRequest(
       'GET',
       '/v2/money_management/outbound_setup_intents',
@@ -308,6 +308,7 @@ export namespace V2 {
       /**
        * If no payout_method provided, used to create the underlying credential that is set up for outbound money movement.
        * If a payout_method provided, used to update data on the credential linked to this setup intent.
+       * Only card expiry (exp_month, exp_year) can be updated in the case where payout_method is provided.
        */
       payout_method_data?: OutboundSetupIntentUpdateParams.PayoutMethodData;
     }

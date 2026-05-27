@@ -20,14 +20,14 @@ export class Privacy {
 }
 
 export declare namespace Privacy {
-  export type RedactionJobListParams = PrivacyNamespace0.RedactionJobListParams;
-  export type RedactionJobCreateParams = PrivacyNamespace0.RedactionJobCreateParams;
-  export type RedactionJobRetrieveParams = PrivacyNamespace0.RedactionJobRetrieveParams;
-  export type RedactionJobUpdateParams = PrivacyNamespace0.RedactionJobUpdateParams;
-  export type RedactionJobCancelParams = PrivacyNamespace0.RedactionJobCancelParams;
-  export type RedactionJobRunParams = PrivacyNamespace0.RedactionJobRunParams;
-  export type RedactionJobValidateParams = PrivacyNamespace0.RedactionJobValidateParams;
-  export type RedactionJobListValidationErrorsParams = PrivacyNamespace0.RedactionJobListValidationErrorsParams;
+  export import RedactionJobListParams = PrivacyNamespace0.RedactionJobListParams;
+  export import RedactionJobCreateParams = PrivacyNamespace0.RedactionJobCreateParams;
+  export import RedactionJobRetrieveParams = PrivacyNamespace0.RedactionJobRetrieveParams;
+  export import RedactionJobUpdateParams = PrivacyNamespace0.RedactionJobUpdateParams;
+  export import RedactionJobCancelParams = PrivacyNamespace0.RedactionJobCancelParams;
+  export import RedactionJobRunParams = PrivacyNamespace0.RedactionJobRunParams;
+  export import RedactionJobValidateParams = PrivacyNamespace0.RedactionJobValidateParams;
+  export import RedactionJobListValidationErrorsParams = PrivacyNamespace0.RedactionJobListValidationErrorsParams;
   export {RedactionJob};
   export {RedactionJobValidationError};
 }

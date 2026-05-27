@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {RangeQueryParam, Decimal} from '../../../shared.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class EventResource extends StripeResource {
   /**
@@ -11,7 +11,7 @@ export class EventResource extends StripeResource {
   list(
     params?: V2.Core.EventListParams,
     options?: RequestOptions
-  ): ApiListPromise<Event> {
+  ): V2ListPromise<Event> {
     const transformResponseData = (response: any): any => {
       return {
         ...response,
@@ -24,7 +24,8 @@ export class EventResource extends StripeResource {
     }) as any;
   }
   /**
-   * Retrieves the details of an event.
+   * Retrieves the details of an event if it was created in the last 30 days. Supply the unique
+   * identifier of the event, which might have been delivered to your event destination.
    */
   retrieve(
     id: string,

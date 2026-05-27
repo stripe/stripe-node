@@ -1,6 +1,5 @@
 // File generated from our OpenAPI spec
 
-import * as crypto from 'crypto';
 import {StripeResource} from '../StripeResource.js';
 import {Capability} from './Capabilities.js';
 import {DeletedExternalAccount, ExternalAccount} from './ExternalAccounts.js';
@@ -144,20 +143,20 @@ export class AccountResource extends StripeResource {
     params: Record<string, unknown> = {},
     options: {apiVersion?: string; stripeContext?: string} = {}
   ): string {
-    const itemId = crypto.randomUUID();
+    const itemId = this._stripe._platformFunctions.uuid4();
     const stripeVersion =
       options.apiVersion || this._stripe.getApiField('version');
 
-    const item: Record<string, unknown> = {
+    const entry: Record<string, unknown> = {
       id: itemId,
       params: params,
       stripe_version: stripeVersion,
     };
-    item.path_params = {account: account};
+    entry.path_params = {account: account};
     if (options.stripeContext) {
-      item.context = options.stripeContext;
+      entry.context = options.stripeContext;
     }
-    return JSON.stringify(item);
+    return JSON.stringify(entry);
   }
   /**
    * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
@@ -656,6 +655,11 @@ export namespace Account {
     billie_payments?: Capabilities.BilliePayments;
 
     /**
+     * The status of the Bizum capability of the account, or whether the account can directly process Bizum payments.
+     */
+    bizum_payments?: Capabilities.BizumPayments;
+
+    /**
      * The status of the blik payments capability of the account, or whether the account can directly process blik charges.
      */
     blik_payments?: Capabilities.BlikPayments;
@@ -884,6 +888,11 @@ export namespace Account {
      * The status of the Satispay capability of the account, or whether the account can directly process Satispay payments.
      */
     satispay_payments?: Capabilities.SatispayPayments;
+
+    /**
+     * The status of the Scalapay capability of the account, or whether the account can directly process Scalapay payments.
+     */
+    scalapay_payments?: Capabilities.ScalapayPayments;
 
     /**
      * The status of the SEPA customer_balance payments (EUR currency) capability of the account, or whether the account can directly process SEPA customer_balance charges.
@@ -1333,6 +1342,8 @@ export namespace Account {
 
     export type BilliePayments = 'active' | 'inactive' | 'pending';
 
+    export type BizumPayments = 'active' | 'inactive' | 'pending';
+
     export type BlikPayments = 'active' | 'inactive' | 'pending';
 
     export type BoletoPayments = 'active' | 'inactive' | 'pending';
@@ -1427,6 +1438,8 @@ export namespace Account {
     export type SamsungPayPayments = 'active' | 'inactive' | 'pending';
 
     export type SatispayPayments = 'active' | 'inactive' | 'pending';
+
+    export type ScalapayPayments = 'active' | 'inactive' | 'pending';
 
     export type SepaBankTransferPayments = 'active' | 'inactive' | 'pending';
 
@@ -2647,6 +2660,11 @@ export namespace AccountCreateParams {
     billie_payments?: Capabilities.BilliePayments;
 
     /**
+     * The bizum_payments capability.
+     */
+    bizum_payments?: Capabilities.BizumPayments;
+
+    /**
      * The blik_payments capability.
      */
     blik_payments?: Capabilities.BlikPayments;
@@ -2875,6 +2893,11 @@ export namespace AccountCreateParams {
      * The satispay_payments capability.
      */
     satispay_payments?: Capabilities.SatispayPayments;
+
+    /**
+     * The scalapay_payments capability.
+     */
+    scalapay_payments?: Capabilities.ScalapayPayments;
 
     /**
      * The sepa_bank_transfer_payments capability.
@@ -3555,6 +3578,13 @@ export namespace AccountCreateParams {
       requested?: boolean;
     }
 
+    export interface BizumPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface BlikPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -3871,6 +3901,13 @@ export namespace AccountCreateParams {
     }
 
     export interface SatispayPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface ScalapayPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */
@@ -4978,6 +5015,11 @@ export namespace AccountUpdateParams {
     billie_payments?: Capabilities.BilliePayments;
 
     /**
+     * The bizum_payments capability.
+     */
+    bizum_payments?: Capabilities.BizumPayments;
+
+    /**
      * The blik_payments capability.
      */
     blik_payments?: Capabilities.BlikPayments;
@@ -5206,6 +5248,11 @@ export namespace AccountUpdateParams {
      * The satispay_payments capability.
      */
     satispay_payments?: Capabilities.SatispayPayments;
+
+    /**
+     * The scalapay_payments capability.
+     */
+    scalapay_payments?: Capabilities.ScalapayPayments;
 
     /**
      * The sepa_bank_transfer_payments capability.
@@ -5893,6 +5940,13 @@ export namespace AccountUpdateParams {
       requested?: boolean;
     }
 
+    export interface BizumPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
     export interface BlikPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -6209,6 +6263,13 @@ export namespace AccountUpdateParams {
     }
 
     export interface SatispayPayments {
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    export interface ScalapayPayments {
       /**
        * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
        */

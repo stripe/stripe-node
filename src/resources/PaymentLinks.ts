@@ -600,6 +600,11 @@ export interface PaymentLink {
   payment_method_collection: PaymentLink.PaymentMethodCollection;
 
   /**
+   * Payment-method-specific configuration.
+   */
+  payment_method_options: PaymentLink.PaymentMethodOptions | null;
+
+  /**
    * The list of payment method types that customers can use. When `null`, Stripe will dynamically show relevant payment methods you've enabled in your [payment method settings](https://dashboard.stripe.com/settings/payment_methods).
    */
   payment_method_types: Array<PaymentLink.PaymentMethodType> | null;
@@ -807,6 +812,13 @@ export namespace PaymentLink {
 
   export type PaymentMethodCollection = 'always' | 'if_required';
 
+  export interface PaymentMethodOptions {
+    /**
+     * Configuration for `card` payment methods.
+     */
+    card: PaymentMethodOptions.Card | null;
+  }
+
   export type PaymentMethodType =
     | 'affirm'
     | 'afterpay_clearpay'
@@ -816,6 +828,7 @@ export namespace PaymentLink {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -1223,6 +1236,32 @@ export namespace PaymentLink {
     export type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
     export type SetupFutureUsage = 'off_session' | 'on_session';
+  }
+
+  export namespace PaymentMethodOptions {
+    export interface Card {
+      /**
+       * Restrictions to apply to the card payment method. For example, you can block specific card brands.
+       */
+      restrictions: Card.Restrictions | null;
+    }
+
+    export namespace Card {
+      export interface Restrictions {
+        /**
+         * The card brands to block. If a customer enters or selects a card belonging to a blocked brand, they can't complete the payment.
+         */
+        brands_blocked: Array<Restrictions.BrandsBlocked>;
+      }
+
+      export namespace Restrictions {
+        export type BrandsBlocked =
+          | 'american_express'
+          | 'discover_global_network'
+          | 'mastercard'
+          | 'visa';
+      }
+    }
   }
 
   export namespace Restrictions {
@@ -1649,6 +1688,8 @@ export interface PaymentLinkCreateParams {
    */
   payment_method_collection?: PaymentLinkCreateParams.PaymentMethodCollection;
 
+  payment_method_options?: PaymentLinkCreateParams.PaymentMethodOptions;
+
   /**
    * The list of payment method types that customers can use. If no value is passed, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods) (20+ payment methods [supported](https://docs.stripe.com/payments/payment-methods/integration-options#payment-method-product-support)).
    */
@@ -1761,7 +1802,7 @@ export namespace PaymentLinkCreateParams {
     /**
      * If set to `auto`, enables the collection of customer consent for promotional communications. The Checkout
      * Session will determine whether to display an option to opt into promotional communication
-     * from the merchant depending on the customer's locale. Only available to US merchants.
+     * from the merchant depending on the customer's locale. Only available to US merchants and US customers.
      */
     promotions?: ConsentCollection.Promotions;
 
@@ -1934,6 +1975,13 @@ export namespace PaymentLinkCreateParams {
 
   export type PaymentMethodCollection = 'always' | 'if_required';
 
+  export interface PaymentMethodOptions {
+    /**
+     * Configuration for `card` payment methods.
+     */
+    card?: PaymentMethodOptions.Card;
+  }
+
   export type PaymentMethodType =
     | 'affirm'
     | 'afterpay_clearpay'
@@ -1943,6 +1991,7 @@ export namespace PaymentLinkCreateParams {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -2490,6 +2539,32 @@ export namespace PaymentLinkCreateParams {
     export type SetupFutureUsage = 'off_session' | 'on_session';
   }
 
+  export namespace PaymentMethodOptions {
+    export interface Card {
+      /**
+       * Restrictions to apply to the card payment method. For example, you can block specific card brands.
+       */
+      restrictions?: Card.Restrictions;
+    }
+
+    export namespace Card {
+      export interface Restrictions {
+        /**
+         * The card brands to block. If a customer enters or selects a card belonging to a blocked brand, they can't complete the payment.
+         */
+        brands_blocked?: Array<Restrictions.BrandsBlocked>;
+      }
+
+      export namespace Restrictions {
+        export type BrandsBlocked =
+          | 'american_express'
+          | 'discover_global_network'
+          | 'mastercard'
+          | 'visa';
+      }
+    }
+  }
+
   export namespace Restrictions {
     export interface CompletedSessions {
       /**
@@ -2894,6 +2969,13 @@ export interface PaymentLinkUpdateParams {
   payment_method_collection?: PaymentLinkUpdateParams.PaymentMethodCollection;
 
   /**
+   * Payment-method-specific configuration.
+   */
+  payment_method_options?: Emptyable<
+    PaymentLinkUpdateParams.PaymentMethodOptions
+  >;
+
+  /**
    * The list of payment method types that customers can use. Pass an empty string to enable dynamic payment methods that use your [payment method settings](https://dashboard.stripe.com/settings/payment_methods).
    */
   payment_method_types?: Emptyable<
@@ -3120,6 +3202,13 @@ export namespace PaymentLinkUpdateParams {
 
   export type PaymentMethodCollection = 'always' | 'if_required';
 
+  export interface PaymentMethodOptions {
+    /**
+     * Configuration for `card` payment methods.
+     */
+    card?: Emptyable<PaymentMethodOptions.Card>;
+  }
+
   export type PaymentMethodType =
     | 'affirm'
     | 'afterpay_clearpay'
@@ -3129,6 +3218,7 @@ export namespace PaymentLinkUpdateParams {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -3514,6 +3604,32 @@ export namespace PaymentLinkUpdateParams {
        * The minimum quantity of this item the customer must purchase, if they choose to purchase it. Because this item is optional, the customer will always be able to remove it from their order, even if the `minimum` configured here is greater than 0. By default this value is 0.
        */
       minimum?: number;
+    }
+  }
+
+  export namespace PaymentMethodOptions {
+    export interface Card {
+      /**
+       * Restrictions to apply to the card payment method. For example, you can block specific card brands.
+       */
+      restrictions?: Emptyable<Card.Restrictions>;
+    }
+
+    export namespace Card {
+      export interface Restrictions {
+        /**
+         * The card brands to block. If a customer enters or selects a card belonging to a blocked brand, they can't complete the payment.
+         */
+        brands_blocked?: Emptyable<Array<Restrictions.BrandsBlocked>>;
+      }
+
+      export namespace Restrictions {
+        export type BrandsBlocked =
+          | 'american_express'
+          | 'discover_global_network'
+          | 'mastercard'
+          | 'visa';
+      }
     }
   }
 

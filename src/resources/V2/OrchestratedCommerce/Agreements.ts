@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RequestOptions, ApiListPromise, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class AgreementResource extends StripeResource {
   /**
@@ -10,7 +10,7 @@ export class AgreementResource extends StripeResource {
   list(
     params?: V2.OrchestratedCommerce.AgreementListParams,
     options?: RequestOptions
-  ): ApiListPromise<Agreement> {
+  ): V2ListPromise<Agreement> {
     return this._makeRequest(
       'GET',
       '/v2/orchestrated_commerce/agreements',
