@@ -1857,7 +1857,7 @@ describe('RequestSender', () => {
       return getTestServerStripe(
         {},
         (req, res) => {
-          res.setHeader('stripe-notice', 'test notice');
+          res.setHeader('Stripe-Notice', 'test notice');
           res.writeHead(200, {'Content-Type': 'application/json'});
           res.write('{}');
           res.end();
