@@ -953,6 +953,9 @@ declare namespace StripeConstructor {
       export type AccountPersonToken = Stripe.V2.Core.AccountPersonToken;
       export type AccountPerson = Stripe.V2.Core.AccountPerson;
     }
+    export namespace Commerce {
+      export type ProductCatalogImport = Stripe.V2.Commerce.ProductCatalogImport;
+    }
   }
   export namespace Reserve {
     export type Hold = Stripe.Reserve.Hold;
