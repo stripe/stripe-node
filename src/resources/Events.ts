@@ -417,6 +417,7 @@ export namespace Event {
     | 'treasury.received_debit.created'
     | 'invoice_payment.detached'
     | 'billing.alert.recovered'
+    | 'payment_intent.expired'
     | 'billing.credit_balance_transaction.created'
     | 'billing.credit_grant.updated'
     | 'billing.meter.created'
@@ -734,6 +735,7 @@ export type Event =
   | PaymentIntentAmountCapturableUpdatedEvent
   | PaymentIntentCanceledEvent
   | PaymentIntentCreatedEvent
+  | PaymentIntentExpiredEvent
   | PaymentIntentPartiallyFundedEvent
   | PaymentIntentPaymentFailedEvent
   | PaymentIntentProcessingEvent
@@ -3517,6 +3519,22 @@ export interface PaymentIntentCreatedEvent extends EventBase {
 }
 
 export namespace PaymentIntentCreatedEvent {
+  export interface Data extends Event.Data {
+    object: PaymentIntent;
+
+    previous_attributes?: Partial<PaymentIntent>;
+  }
+}
+
+/**
+ * Occurs when the authorization of a PaymentIntent expires.
+ */
+export interface PaymentIntentExpiredEvent extends EventBase {
+  type: 'payment_intent.expired';
+  data: PaymentIntentExpiredEvent.Data;
+}
+
+export namespace PaymentIntentExpiredEvent {
   export interface Data extends Event.Data {
     object: PaymentIntent;
 

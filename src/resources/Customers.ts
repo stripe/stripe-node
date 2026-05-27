@@ -583,6 +583,26 @@ export class CustomerResource extends StripeResource {
       },
     }) as any;
   }
+  serializeBatchDelete(
+    customer: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {customer: customer};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
   serializeBatchUpdate(
     customer: string,
     params: Record<string, unknown> = {},
@@ -592,16 +612,54 @@ export class CustomerResource extends StripeResource {
     const stripeVersion =
       options.apiVersion || this._stripe.getApiField('version');
 
-    const item: Record<string, unknown> = {
+    const entry: Record<string, unknown> = {
       id: itemId,
       params: params,
       stripe_version: stripeVersion,
     };
-    item.path_params = {customer: customer};
+    entry.path_params = {customer: customer};
     if (options.stripeContext) {
-      item.context = options.stripeContext;
+      entry.context = options.stripeContext;
     }
-    return JSON.stringify(item);
+    return JSON.stringify(entry);
+  }
+  serializeBatchDeleteDiscount(
+    customer: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {customer: customer};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
+  serializeBatchCreate(
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
   }
   /**
    * Returns a list of transactions that updated the customer's [balances](https://docs.stripe.com/docs/billing/customer/balance).
@@ -668,6 +726,47 @@ export class CustomerResource extends StripeResource {
       options
     ) as any;
   }
+  serializeBatchCreateBalanceTransaction(
+    customer: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {customer: customer};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
+  serializeBatchUpdateBalanceTransaction(
+    customer: string,
+    transaction: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {customer: customer, transaction: transaction};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
   /**
    * Retrieves a customer's cash balance.
    */
@@ -697,6 +796,26 @@ export class CustomerResource extends StripeResource {
       params,
       options
     ) as any;
+  }
+  serializeBatchUpdateCashBalance(
+    customer: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {customer: customer};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
   }
   /**
    * Returns a list of transactions that modified the customer's [cash balance](https://docs.stripe.com/docs/payments/customer-balance).
@@ -748,6 +867,26 @@ export class CustomerResource extends StripeResource {
       params,
       options
     ) as any;
+  }
+  serializeBatchCreateFundingInstructionsFundingInstructions(
+    customer: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {customer: customer};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
   }
   /**
    * Returns a list of PaymentMethods for a given Customer
@@ -884,6 +1023,89 @@ export class CustomerResource extends StripeResource {
       options
     ) as any;
   }
+  serializeBatchCreateSource(
+    customer: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {customer: customer};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
+  serializeBatchUpdateSource(
+    customer: string,
+    id: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {customer: customer, id: id};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
+  serializeBatchDeleteSource(
+    customer: string,
+    id: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {customer: customer, id: id};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
+  serializeBatchVerifySource(
+    customer: string,
+    id: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {customer: customer, id: id};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
   /**
    * Deletes an existing tax_id object.
    */
@@ -948,6 +1170,47 @@ export class CustomerResource extends StripeResource {
       params,
       options
     ) as any;
+  }
+  serializeBatchDeleteTaxId(
+    customer: string,
+    id: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {customer: customer, id: id};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
+  serializeBatchCreateForCustomerTaxId(
+    customer: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {customer: customer};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
   }
 }
 export interface Customer {
@@ -2156,6 +2419,7 @@ export namespace CustomerListPaymentMethodsParams {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -2196,6 +2460,7 @@ export namespace CustomerListPaymentMethodsParams {
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
+    | 'scalapay'
     | 'sepa_debit'
     | 'shopeepay'
     | 'sofort'
@@ -2282,7 +2547,20 @@ export interface CustomerSearchParams {
    */
   page?: string;
 }
+export interface CustomerSerializeBatchCreateParams {}
+export interface CustomerSerializeBatchCreateBalanceTransactionParams {}
+export interface CustomerSerializeBatchCreateForCustomerTaxIdParams {}
+export interface CustomerSerializeBatchCreateFundingInstructionsFundingInstructionsParams {}
+export interface CustomerSerializeBatchCreateSourceParams {}
+export interface CustomerSerializeBatchDeleteParams {}
+export interface CustomerSerializeBatchDeleteDiscountParams {}
+export interface CustomerSerializeBatchDeleteSourceParams {}
+export interface CustomerSerializeBatchDeleteTaxIdParams {}
 export interface CustomerSerializeBatchUpdateParams {}
+export interface CustomerSerializeBatchUpdateBalanceTransactionParams {}
+export interface CustomerSerializeBatchUpdateCashBalanceParams {}
+export interface CustomerSerializeBatchUpdateSourceParams {}
+export interface CustomerSerializeBatchVerifySourceParams {}
 export interface CustomerUpdateBalanceTransactionParams {
   /**
    * An arbitrary string attached to the object. Often useful for displaying to users.

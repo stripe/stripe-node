@@ -24,7 +24,8 @@ export class EventResource extends StripeResource {
     }) as any;
   }
   /**
-   * Retrieves the details of an event.
+   * Retrieves the details of an event if it was created in the last 30 days. Supply the unique
+   * identifier of the event, which might have been delivered to your event destination.
    */
   retrieve(
     id: string,
@@ -597,8 +598,12 @@ export type Event =
   | V2CoreHealthApiLatencyResolvedEvent
   | V2CoreHealthAuthorizationRateDropFiringEvent
   | V2CoreHealthAuthorizationRateDropResolvedEvent
+  | V2CoreHealthElementsErrorFiringEvent
+  | V2CoreHealthElementsErrorResolvedEvent
   | V2CoreHealthEventGenerationFailureResolvedEvent
   | V2CoreHealthFraudRateIncreasedEvent
+  | V2CoreHealthInvoiceCountDroppedFiringEvent
+  | V2CoreHealthInvoiceCountDroppedResolvedEvent
   | V2CoreHealthIssuingAuthorizationRequestErrorsFiringEvent
   | V2CoreHealthIssuingAuthorizationRequestErrorsResolvedEvent
   | V2CoreHealthIssuingAuthorizationRequestTimeoutFiringEvent
@@ -1001,8 +1006,12 @@ export type EventNotification =
   | V2CoreHealthApiLatencyResolvedEventNotification
   | V2CoreHealthAuthorizationRateDropFiringEventNotification
   | V2CoreHealthAuthorizationRateDropResolvedEventNotification
+  | V2CoreHealthElementsErrorFiringEventNotification
+  | V2CoreHealthElementsErrorResolvedEventNotification
   | V2CoreHealthEventGenerationFailureResolvedEventNotification
   | V2CoreHealthFraudRateIncreasedEventNotification
+  | V2CoreHealthInvoiceCountDroppedFiringEventNotification
+  | V2CoreHealthInvoiceCountDroppedResolvedEventNotification
   | V2CoreHealthIssuingAuthorizationRequestErrorsFiringEventNotification
   | V2CoreHealthIssuingAuthorizationRequestErrorsResolvedEventNotification
   | V2CoreHealthIssuingAuthorizationRequestTimeoutFiringEventNotification
@@ -8319,6 +8328,133 @@ export namespace V2CoreHealthAuthorizationRateDropResolvedEvent {
 }
 
 /**
+ * Occurs when an elements error alert is firing.
+ */
+export interface V2CoreHealthElementsErrorFiringEvent extends EventBase {
+  type: 'v2.core.health.elements_error.firing';
+  // Retrieves data specific to this event.
+  data: V2CoreHealthElementsErrorFiringEvent.Data;
+}
+export interface V2CoreHealthElementsErrorFiringEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.health.elements_error.firing';
+  fetchEvent(): Promise<V2CoreHealthElementsErrorFiringEvent>;
+}
+
+export namespace V2CoreHealthElementsErrorFiringEvent {
+  export interface Data {
+    /**
+     * The alert ID.
+     */
+    alert_id: string;
+
+    /**
+     * The grouping key for the alert.
+     */
+    grouping_key: string;
+
+    /**
+     * The user impact.
+     */
+    impact: Data.Impact;
+
+    /**
+     * The time when impact on the user experience was first detected.
+     */
+    started_at: string;
+
+    /**
+     * A short description of the alert.
+     */
+    summary: string;
+  }
+
+  export namespace Data {
+    export interface Impact {
+      /**
+       * The type of the element.
+       */
+      element_type?: Impact.ElementType;
+
+      /**
+       * The number of impacted sessions.
+       */
+      impacted_sessions: number;
+    }
+
+    export namespace Impact {
+      export type ElementType = 'expressCheckout' | 'payment';
+    }
+  }
+}
+
+/**
+ * Occurs when an elements error alert is resolved.
+ */
+export interface V2CoreHealthElementsErrorResolvedEvent extends EventBase {
+  type: 'v2.core.health.elements_error.resolved';
+  // Retrieves data specific to this event.
+  data: V2CoreHealthElementsErrorResolvedEvent.Data;
+}
+export interface V2CoreHealthElementsErrorResolvedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.health.elements_error.resolved';
+  fetchEvent(): Promise<V2CoreHealthElementsErrorResolvedEvent>;
+}
+
+export namespace V2CoreHealthElementsErrorResolvedEvent {
+  export interface Data {
+    /**
+     * The alert ID.
+     */
+    alert_id: string;
+
+    /**
+     * The grouping key for the alert.
+     */
+    grouping_key: string;
+
+    /**
+     * The user impact.
+     */
+    impact: Data.Impact;
+
+    /**
+     * The time when the user experience has returned to expected levels.
+     */
+    resolved_at: string;
+
+    /**
+     * The time when impact on the user experience was first detected.
+     */
+    started_at: string;
+
+    /**
+     * A short description of the alert.
+     */
+    summary: string;
+  }
+
+  export namespace Data {
+    export interface Impact {
+      /**
+       * The type of the element.
+       */
+      element_type?: Impact.ElementType;
+
+      /**
+       * The number of impacted sessions.
+       */
+      impacted_sessions: number;
+    }
+
+    export namespace Impact {
+      export type ElementType = 'expressCheckout' | 'payment';
+    }
+  }
+}
+
+/**
  * Occurs when an event generation failure alert is resolved.
  */
 export interface V2CoreHealthEventGenerationFailureResolvedEvent
@@ -8467,6 +8603,136 @@ export namespace V2CoreHealthFraudRateIncreasedEvent {
 
     export namespace Impact {
       export type AttackType = 'spike' | 'sustained_attack';
+    }
+  }
+}
+
+/**
+ * Occurs when an invoice count dropped alert is firing.
+ */
+export interface V2CoreHealthInvoiceCountDroppedFiringEvent extends EventBase {
+  type: 'v2.core.health.invoice_count_dropped.firing';
+  // Retrieves data specific to this event.
+  data: V2CoreHealthInvoiceCountDroppedFiringEvent.Data;
+}
+export interface V2CoreHealthInvoiceCountDroppedFiringEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.health.invoice_count_dropped.firing';
+  fetchEvent(): Promise<V2CoreHealthInvoiceCountDroppedFiringEvent>;
+}
+
+export namespace V2CoreHealthInvoiceCountDroppedFiringEvent {
+  export interface Data {
+    /**
+     * The alert ID.
+     */
+    alert_id: string;
+
+    /**
+     * The grouping key for the alert.
+     */
+    grouping_key: string;
+
+    /**
+     * The user impact.
+     */
+    impact: Data.Impact;
+
+    /**
+     * The time when impact on the user experience was first detected.
+     */
+    started_at: string;
+
+    /**
+     * A short description of the alert.
+     */
+    summary: string;
+  }
+
+  export namespace Data {
+    export interface Impact {
+      /**
+       * The observed number of invoices within the time window.
+       */
+      observed_count: Decimal;
+
+      /**
+       * The expected threshold number of invoices within the time window.
+       */
+      threshold_count: Decimal;
+
+      /**
+       * The size of the observation time window.
+       */
+      time_window: string;
+    }
+  }
+}
+
+/**
+ * Occurs when an invoice count dropped alert is resolved.
+ */
+export interface V2CoreHealthInvoiceCountDroppedResolvedEvent
+  extends EventBase {
+  type: 'v2.core.health.invoice_count_dropped.resolved';
+  // Retrieves data specific to this event.
+  data: V2CoreHealthInvoiceCountDroppedResolvedEvent.Data;
+}
+export interface V2CoreHealthInvoiceCountDroppedResolvedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.health.invoice_count_dropped.resolved';
+  fetchEvent(): Promise<V2CoreHealthInvoiceCountDroppedResolvedEvent>;
+}
+
+export namespace V2CoreHealthInvoiceCountDroppedResolvedEvent {
+  export interface Data {
+    /**
+     * The alert ID.
+     */
+    alert_id: string;
+
+    /**
+     * The grouping key for the alert.
+     */
+    grouping_key: string;
+
+    /**
+     * The user impact.
+     */
+    impact: Data.Impact;
+
+    /**
+     * The time when the user experience has returned to expected levels.
+     */
+    resolved_at: string;
+
+    /**
+     * The time when impact on the user experience was first detected.
+     */
+    started_at: string;
+
+    /**
+     * A short description of the alert.
+     */
+    summary: string;
+  }
+
+  export namespace Data {
+    export interface Impact {
+      /**
+       * The observed number of invoices within the time window.
+       */
+      observed_count: Decimal;
+
+      /**
+       * The expected threshold number of invoices within the time window.
+       */
+      threshold_count: Decimal;
+
+      /**
+       * The size of the observation time window.
+       */
+      time_window: string;
     }
   }
 }
@@ -9370,6 +9636,11 @@ export namespace V2CoreHealthTrafficVolumeDropFiringEvent {
       actual_traffic: number;
 
       /**
+       * The canonical path.
+       */
+      canonical_path?: string;
+
+      /**
        * The expected volume of payment requests within the latest observation time window.
        */
       expected_traffic?: number;
@@ -9435,6 +9706,11 @@ export namespace V2CoreHealthTrafficVolumeDropResolvedEvent {
        * The total volume of payment requests within the latest observation time window.
        */
       actual_traffic: number;
+
+      /**
+       * The canonical path.
+       */
+      canonical_path?: string;
 
       /**
        * The expected volume of payment requests within the latest observation time window.
@@ -12284,8 +12560,12 @@ export declare namespace Events {
     V2CoreHealthApiLatencyResolvedEvent,
     V2CoreHealthAuthorizationRateDropFiringEvent,
     V2CoreHealthAuthorizationRateDropResolvedEvent,
+    V2CoreHealthElementsErrorFiringEvent,
+    V2CoreHealthElementsErrorResolvedEvent,
     V2CoreHealthEventGenerationFailureResolvedEvent,
     V2CoreHealthFraudRateIncreasedEvent,
+    V2CoreHealthInvoiceCountDroppedFiringEvent,
+    V2CoreHealthInvoiceCountDroppedResolvedEvent,
     V2CoreHealthIssuingAuthorizationRequestErrorsFiringEvent,
     V2CoreHealthIssuingAuthorizationRequestErrorsResolvedEvent,
     V2CoreHealthIssuingAuthorizationRequestTimeoutFiringEvent,
@@ -12686,8 +12966,12 @@ export declare namespace Events {
     V2CoreHealthApiLatencyResolvedEventNotification,
     V2CoreHealthAuthorizationRateDropFiringEventNotification,
     V2CoreHealthAuthorizationRateDropResolvedEventNotification,
+    V2CoreHealthElementsErrorFiringEventNotification,
+    V2CoreHealthElementsErrorResolvedEventNotification,
     V2CoreHealthEventGenerationFailureResolvedEventNotification,
     V2CoreHealthFraudRateIncreasedEventNotification,
+    V2CoreHealthInvoiceCountDroppedFiringEventNotification,
+    V2CoreHealthInvoiceCountDroppedResolvedEventNotification,
     V2CoreHealthIssuingAuthorizationRequestErrorsFiringEventNotification,
     V2CoreHealthIssuingAuthorizationRequestErrorsResolvedEventNotification,
     V2CoreHealthIssuingAuthorizationRequestTimeoutFiringEventNotification,

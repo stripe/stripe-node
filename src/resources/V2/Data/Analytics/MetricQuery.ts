@@ -102,12 +102,12 @@ export namespace V2 {
 
         export interface Metric {
           /**
-           * The Gen6 ID for this metric, e.g. metric_61Sud3n5oAGVCWiSr5.
+           * The ID for this metric, e.g. metric_61Sud3n5oAGVCWiSr5.
            */
           id?: string;
 
           /**
-           * The common name for this metric, e.g. mrr_minor_units.
+           * The common name for this metric, e.g. revenue.mrr.
            */
           name?: string;
         }

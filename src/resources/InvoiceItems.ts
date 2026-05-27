@@ -185,6 +185,64 @@ export class InvoiceItemResource extends StripeResource {
       },
     }) as any;
   }
+  serializeBatchDelete(
+    invoiceitem: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {invoiceitem: invoiceitem};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
+  serializeBatchUpdate(
+    invoiceitem: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {invoiceitem: invoiceitem};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
+  serializeBatchCreate(
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
+  }
 }
 export interface InvoiceItem {
   /**
@@ -391,6 +449,11 @@ export namespace InvoiceItem {
 
   export interface ProrationDetails {
     /**
+     * For a credit proration, links to the debit invoice line items or invoice item that the credit applies to.
+     */
+    credited_items: ProrationDetails.CreditedItems | null;
+
+    /**
      * Discount amounts applied when the proration was created.
      */
     discount_amounts: Array<ProrationDetails.DiscountAmount>;
@@ -529,6 +592,20 @@ export namespace InvoiceItem {
   }
 
   export namespace ProrationDetails {
+    export interface CreditedItems {
+      /**
+       * When `type` is `invoice_item`, the invoice item id for the debited invoice item corresponding to this credit proration.
+       */
+      invoice_item?: string;
+
+      invoice_line_item_details?: CreditedItems.InvoiceLineItemDetails;
+
+      /**
+       * Whether the credit references a pending invoice item or one or more invoice line items on an invoice.
+       */
+      type: CreditedItems.Type;
+    }
+
     export interface DiscountAmount {
       /**
        * The amount, in cents (or local equivalent), of the discount.
@@ -539,6 +616,22 @@ export namespace InvoiceItem {
        * The discount that was applied to get this discount amount.
        */
       discount: string | Discount | DeletedDiscount;
+    }
+
+    export namespace CreditedItems {
+      export interface InvoiceLineItemDetails {
+        /**
+         * The invoice id for the debited line item(s).
+         */
+        invoice: string;
+
+        /**
+         * IDs of the debited invoice line item(s) on the invoice that correspond to the credit proration.
+         */
+        invoice_line_items: Array<string>;
+      }
+
+      export type Type = 'invoice_item' | 'invoice_line_items';
     }
   }
 }
@@ -995,3 +1088,6 @@ export interface InvoiceItemListParams extends PaginationParams {
   pending?: boolean;
 }
 export interface InvoiceItemDeleteParams {}
+export interface InvoiceItemSerializeBatchCreateParams {}
+export interface InvoiceItemSerializeBatchDeleteParams {}
+export interface InvoiceItemSerializeBatchUpdateParams {}

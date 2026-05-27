@@ -328,6 +328,7 @@ export namespace SetupIntent {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -366,6 +367,7 @@ export namespace SetupIntent {
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
+    | 'scalapay'
     | 'sepa_debit'
     | 'shopeepay'
     | 'sofort'
@@ -501,6 +503,8 @@ export namespace SetupIntent {
   }
 
   export interface NextAction {
+    blik_authorize?: NextAction.BlikAuthorize;
+
     cashapp_handle_redirect_or_display_qr_code?: NextAction.CashappHandleRedirectOrDisplayQrCode;
 
     pix_display_qr_code?: NextAction.PixDisplayQrCode;
@@ -540,6 +544,8 @@ export namespace SetupIntent {
     amazon_pay?: PaymentMethodOptions.AmazonPay;
 
     bacs_debit?: PaymentMethodOptions.BacsDebit;
+
+    bizum?: PaymentMethodOptions.Bizum;
 
     card?: PaymentMethodOptions.Card;
 
@@ -707,6 +713,7 @@ export namespace SetupIntent {
       | 'payment_method_invalid_parameter'
       | 'payment_method_invalid_parameter_testmode'
       | 'payment_method_microdeposit_failed'
+      | 'payment_method_microdeposit_processing_error'
       | 'payment_method_microdeposit_verification_amounts_invalid'
       | 'payment_method_microdeposit_verification_amounts_mismatch'
       | 'payment_method_microdeposit_verification_attempts_exceeded'
@@ -748,6 +755,7 @@ export namespace SetupIntent {
       | 'setup_intent_unexpected_state'
       | 'shipping_address_invalid'
       | 'shipping_calculation_failed'
+      | 'siret_invalid'
       | 'sku_inactive'
       | 'state_unsupported'
       | 'status_transition_invalid'
@@ -784,6 +792,8 @@ export namespace SetupIntent {
   }
 
   export namespace NextAction {
+    export interface BlikAuthorize {}
+
     export interface CashappHandleRedirectOrDisplayQrCode {
       /**
        * The URL to the hosted Cash App Pay instructions page, which allows customers to view the QR code, and supports QR code refreshing on expiration.
@@ -930,6 +940,8 @@ export namespace SetupIntent {
     export interface BacsDebit {
       mandate_options?: BacsDebit.MandateOptions;
     }
+
+    export interface Bizum {}
 
     export interface Card {
       /**
@@ -1402,9 +1414,18 @@ export namespace SetupIntent {
     export namespace Benefit {
       export interface FrMealVoucher {
         /**
+         * Whether meal voucher benefit is enabled for this setup intent.
+         */
+        enabled?: FrMealVoucher.Enabled;
+
+        /**
          * The 14-digit SIRET of the meal voucher acceptor.
          */
         siret?: string;
+      }
+
+      export namespace FrMealVoucher {
+        export type Enabled = 'if_payment_method_is_eligible' | 'never';
       }
     }
   }
@@ -1566,6 +1587,7 @@ export namespace SetupIntentCreateParams {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -1604,6 +1626,7 @@ export namespace SetupIntentCreateParams {
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
+    | 'scalapay'
     | 'sepa_debit'
     | 'shopeepay'
     | 'sofort'
@@ -1685,6 +1708,11 @@ export namespace SetupIntentCreateParams {
      * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
      */
     billing_details?: PaymentMethodData.BillingDetails;
+
+    /**
+     * If this is a `bizum` PaymentMethod, this hash contains details about the Bizum payment method.
+     */
+    bizum?: PaymentMethodData.Bizum;
 
     /**
      * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
@@ -1777,7 +1805,7 @@ export namespace SetupIntentCreateParams {
     kr_card?: PaymentMethodData.KrCard;
 
     /**
-     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method (Link is also known as Onelink in the UK).
      */
     link?: PaymentMethodData.Link;
 
@@ -1892,6 +1920,11 @@ export namespace SetupIntentCreateParams {
     satispay?: PaymentMethodData.Satispay;
 
     /**
+     * If this is a Scalapay PaymentMethod, this hash contains details about the Scalapay payment method.
+     */
+    scalapay?: PaymentMethodData.Scalapay;
+
+    /**
      * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
      */
     sepa_debit?: PaymentMethodData.SepaDebit;
@@ -1974,6 +2007,11 @@ export namespace SetupIntentCreateParams {
     bacs_debit?: PaymentMethodOptions.BacsDebit;
 
     /**
+     * If this is a `bizum` SetupIntent, this sub-hash contains details about the Bizum payment method options.
+     */
+    bizum?: PaymentMethodOptions.Bizum;
+
+    /**
      * Configuration for any card setup attempted on this SetupIntent.
      */
     card?: PaymentMethodOptions.Card;
@@ -1989,7 +2027,7 @@ export namespace SetupIntentCreateParams {
     klarna?: PaymentMethodOptions.Klarna;
 
     /**
-     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options (Link is also known as Onelink in the UK).
      */
     link?: PaymentMethodOptions.Link;
 
@@ -2186,6 +2224,8 @@ export namespace SetupIntentCreateParams {
       tax_id?: string;
     }
 
+    export interface Bizum {}
+
     export interface Blik {}
 
     export interface Boleto {
@@ -2368,6 +2408,8 @@ export namespace SetupIntentCreateParams {
 
     export interface Satispay {}
 
+    export interface Scalapay {}
+
     export interface SepaDebit {
       /**
        * IBAN of the bank account.
@@ -2408,6 +2450,7 @@ export namespace SetupIntentCreateParams {
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
+      | 'bizum'
       | 'blik'
       | 'boleto'
       | 'cashapp'
@@ -2446,6 +2489,7 @@ export namespace SetupIntentCreateParams {
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
+      | 'scalapay'
       | 'sepa_debit'
       | 'shopeepay'
       | 'sofort'
@@ -2721,6 +2765,8 @@ export namespace SetupIntentCreateParams {
        */
       mandate_options?: BacsDebit.MandateOptions;
     }
+
+    export interface Bizum {}
 
     export interface Card {
       /**
@@ -3604,6 +3650,7 @@ export namespace SetupIntentUpdateParams {
     | 'bacs_debit'
     | 'bancontact'
     | 'billie'
+    | 'bizum'
     | 'blik'
     | 'boleto'
     | 'card'
@@ -3642,6 +3689,7 @@ export namespace SetupIntentUpdateParams {
     | 'revolut_pay'
     | 'samsung_pay'
     | 'satispay'
+    | 'scalapay'
     | 'sepa_debit'
     | 'shopeepay'
     | 'sofort'
@@ -3716,6 +3764,11 @@ export namespace SetupIntentUpdateParams {
      * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
      */
     billing_details?: PaymentMethodData.BillingDetails;
+
+    /**
+     * If this is a `bizum` PaymentMethod, this hash contains details about the Bizum payment method.
+     */
+    bizum?: PaymentMethodData.Bizum;
 
     /**
      * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
@@ -3808,7 +3861,7 @@ export namespace SetupIntentUpdateParams {
     kr_card?: PaymentMethodData.KrCard;
 
     /**
-     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method (Link is also known as Onelink in the UK).
      */
     link?: PaymentMethodData.Link;
 
@@ -3923,6 +3976,11 @@ export namespace SetupIntentUpdateParams {
     satispay?: PaymentMethodData.Satispay;
 
     /**
+     * If this is a Scalapay PaymentMethod, this hash contains details about the Scalapay payment method.
+     */
+    scalapay?: PaymentMethodData.Scalapay;
+
+    /**
      * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
      */
     sepa_debit?: PaymentMethodData.SepaDebit;
@@ -4005,6 +4063,11 @@ export namespace SetupIntentUpdateParams {
     bacs_debit?: PaymentMethodOptions.BacsDebit;
 
     /**
+     * If this is a `bizum` SetupIntent, this sub-hash contains details about the Bizum payment method options.
+     */
+    bizum?: PaymentMethodOptions.Bizum;
+
+    /**
      * Configuration for any card setup attempted on this SetupIntent.
      */
     card?: PaymentMethodOptions.Card;
@@ -4020,7 +4083,7 @@ export namespace SetupIntentUpdateParams {
     klarna?: PaymentMethodOptions.Klarna;
 
     /**
-     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options (Link is also known as Onelink in the UK).
      */
     link?: PaymentMethodOptions.Link;
 
@@ -4156,6 +4219,8 @@ export namespace SetupIntentUpdateParams {
        */
       tax_id?: string;
     }
+
+    export interface Bizum {}
 
     export interface Blik {}
 
@@ -4339,6 +4404,8 @@ export namespace SetupIntentUpdateParams {
 
     export interface Satispay {}
 
+    export interface Scalapay {}
+
     export interface SepaDebit {
       /**
        * IBAN of the bank account.
@@ -4379,6 +4446,7 @@ export namespace SetupIntentUpdateParams {
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
+      | 'bizum'
       | 'blik'
       | 'boleto'
       | 'cashapp'
@@ -4417,6 +4485,7 @@ export namespace SetupIntentUpdateParams {
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
+      | 'scalapay'
       | 'sepa_debit'
       | 'shopeepay'
       | 'sofort'
@@ -4692,6 +4761,8 @@ export namespace SetupIntentUpdateParams {
        */
       mandate_options?: BacsDebit.MandateOptions;
     }
+
+    export interface Bizum {}
 
     export interface Card {
       /**
@@ -5638,6 +5709,11 @@ export namespace SetupIntentConfirmParams {
     billing_details?: PaymentMethodData.BillingDetails;
 
     /**
+     * If this is a `bizum` PaymentMethod, this hash contains details about the Bizum payment method.
+     */
+    bizum?: PaymentMethodData.Bizum;
+
+    /**
      * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
      */
     blik?: PaymentMethodData.Blik;
@@ -5728,7 +5804,7 @@ export namespace SetupIntentConfirmParams {
     kr_card?: PaymentMethodData.KrCard;
 
     /**
-     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+     * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method (Link is also known as Onelink in the UK).
      */
     link?: PaymentMethodData.Link;
 
@@ -5843,6 +5919,11 @@ export namespace SetupIntentConfirmParams {
     satispay?: PaymentMethodData.Satispay;
 
     /**
+     * If this is a Scalapay PaymentMethod, this hash contains details about the Scalapay payment method.
+     */
+    scalapay?: PaymentMethodData.Scalapay;
+
+    /**
      * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
      */
     sepa_debit?: PaymentMethodData.SepaDebit;
@@ -5925,6 +6006,11 @@ export namespace SetupIntentConfirmParams {
     bacs_debit?: PaymentMethodOptions.BacsDebit;
 
     /**
+     * If this is a `bizum` SetupIntent, this sub-hash contains details about the Bizum payment method options.
+     */
+    bizum?: PaymentMethodOptions.Bizum;
+
+    /**
      * Configuration for any card setup attempted on this SetupIntent.
      */
     card?: PaymentMethodOptions.Card;
@@ -5940,7 +6026,7 @@ export namespace SetupIntentConfirmParams {
     klarna?: PaymentMethodOptions.Klarna;
 
     /**
-     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+     * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options (Link is also known as Onelink in the UK).
      */
     link?: PaymentMethodOptions.Link;
 
@@ -6118,6 +6204,8 @@ export namespace SetupIntentConfirmParams {
        */
       tax_id?: string;
     }
+
+    export interface Bizum {}
 
     export interface Blik {}
 
@@ -6301,6 +6389,8 @@ export namespace SetupIntentConfirmParams {
 
     export interface Satispay {}
 
+    export interface Scalapay {}
+
     export interface SepaDebit {
       /**
        * IBAN of the bank account.
@@ -6341,6 +6431,7 @@ export namespace SetupIntentConfirmParams {
       | 'bacs_debit'
       | 'bancontact'
       | 'billie'
+      | 'bizum'
       | 'blik'
       | 'boleto'
       | 'cashapp'
@@ -6379,6 +6470,7 @@ export namespace SetupIntentConfirmParams {
       | 'revolut_pay'
       | 'samsung_pay'
       | 'satispay'
+      | 'scalapay'
       | 'sepa_debit'
       | 'shopeepay'
       | 'sofort'
@@ -6654,6 +6746,8 @@ export namespace SetupIntentConfirmParams {
        */
       mandate_options?: BacsDebit.MandateOptions;
     }
+
+    export interface Bizum {}
 
     export interface Card {
       /**

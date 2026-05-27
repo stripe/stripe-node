@@ -279,67 +279,12 @@ export namespace Radar {
     expand?: Array<string>;
 
     /**
-     * Data for a failed login event.
-     */
-    login_failed?: CustomerEvaluationUpdateParams.LoginFailed;
-
-    /**
-     * Data for a failed registration event.
-     */
-    registration_failed?: CustomerEvaluationUpdateParams.RegistrationFailed;
-
-    /**
-     * Data for a successful registration event.
-     */
-    registration_success?: CustomerEvaluationUpdateParams.RegistrationSuccess;
-
-    /**
      * The outcome status of the evaluation: allowed, restricted, or blocked.
      */
     status?: CustomerEvaluationUpdateParams.Status;
-
-    /**
-     * The type of event to report on the customer evaluation.
-     */
-    type?: CustomerEvaluationUpdateParams.Type;
   }
 
   export namespace CustomerEvaluationUpdateParams {
-    export interface LoginFailed {
-      /**
-       * The reason why this login failed.
-       */
-      reason: LoginFailed.Reason;
-    }
-
-    export interface RegistrationFailed {
-      /**
-       * The reason why this registration failed.
-       */
-      reason: RegistrationFailed.Reason;
-    }
-
-    export interface RegistrationSuccess {
-      /**
-       * The ID of a Customer to attach to an entity-less registration evaluation.
-       */
-      customer?: string;
-    }
-
     export type Status = 'allowed' | 'blocked' | 'restricted';
-
-    export type Type =
-      | 'login_failed'
-      | 'login_success'
-      | 'registration_failed'
-      | 'registration_success';
-
-    export namespace LoginFailed {
-      export type Reason = 'other' | 'suspected_account_sharing';
-    }
-
-    export namespace RegistrationFailed {
-      export type Reason = 'other' | 'suspected_multi_accounting';
-    }
   }
 }

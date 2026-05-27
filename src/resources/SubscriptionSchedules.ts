@@ -226,15 +226,15 @@ export class SubscriptionScheduleResource extends StripeResource {
     const stripeVersion =
       options.apiVersion || this._stripe.getApiField('version');
 
-    const item: Record<string, unknown> = {
+    const entry: Record<string, unknown> = {
       id: itemId,
       params: params,
       stripe_version: stripeVersion,
     };
     if (options.stripeContext) {
-      item.context = options.stripeContext;
+      entry.context = options.stripeContext;
     }
-    return JSON.stringify(item);
+    return JSON.stringify(entry);
   }
   serializeBatchUpdate(
     schedule: string,
@@ -245,16 +245,16 @@ export class SubscriptionScheduleResource extends StripeResource {
     const stripeVersion =
       options.apiVersion || this._stripe.getApiField('version');
 
-    const item: Record<string, unknown> = {
+    const entry: Record<string, unknown> = {
       id: itemId,
       params: params,
       stripe_version: stripeVersion,
     };
-    item.path_params = {schedule: schedule};
+    entry.path_params = {schedule: schedule};
     if (options.stripeContext) {
-      item.context = options.stripeContext;
+      entry.context = options.stripeContext;
     }
-    return JSON.stringify(item);
+    return JSON.stringify(entry);
   }
   serializeBatchCancel(
     schedule: string,
@@ -265,16 +265,36 @@ export class SubscriptionScheduleResource extends StripeResource {
     const stripeVersion =
       options.apiVersion || this._stripe.getApiField('version');
 
-    const item: Record<string, unknown> = {
+    const entry: Record<string, unknown> = {
       id: itemId,
       params: params,
       stripe_version: stripeVersion,
     };
-    item.path_params = {schedule: schedule};
+    entry.path_params = {schedule: schedule};
     if (options.stripeContext) {
-      item.context = options.stripeContext;
+      entry.context = options.stripeContext;
     }
-    return JSON.stringify(item);
+    return JSON.stringify(entry);
+  }
+  serializeBatchRelease(
+    schedule: string,
+    params: Record<string, unknown> = {},
+    options: {apiVersion?: string; stripeContext?: string} = {}
+  ): string {
+    const itemId = this._stripe._platformFunctions.uuid4();
+    const stripeVersion =
+      options.apiVersion || this._stripe.getApiField('version');
+
+    const entry: Record<string, unknown> = {
+      id: itemId,
+      params: params,
+      stripe_version: stripeVersion,
+    };
+    entry.path_params = {schedule: schedule};
+    if (options.stripeContext) {
+      entry.context = options.stripeContext;
+    }
+    return JSON.stringify(entry);
   }
 }
 export interface SubscriptionSchedule {
@@ -853,6 +873,11 @@ export namespace SubscriptionSchedule {
 
   export namespace Phase {
     export interface AddInvoiceItem {
+      /**
+       * Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
+       */
+      discountable: boolean | null;
+
       /**
        * The stackable discounts that will be applied to the item.
        */
@@ -1826,6 +1851,11 @@ export namespace SubscriptionScheduleCreateParams {
 
   export namespace Phase {
     export interface AddInvoiceItem {
+      /**
+       * Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
+       */
+      discountable?: boolean;
+
       /**
        * The coupons to redeem into discounts for the item.
        */
@@ -2976,6 +3006,11 @@ export namespace SubscriptionScheduleUpdateParams {
 
   export namespace Phase {
     export interface AddInvoiceItem {
+      /**
+       * Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
+       */
+      discountable?: boolean;
+
       /**
        * The coupons to redeem into discounts for the item.
        */
@@ -4830,4 +4865,5 @@ export interface SubscriptionScheduleReleaseParams {
 }
 export interface SubscriptionScheduleSerializeBatchCancelParams {}
 export interface SubscriptionScheduleSerializeBatchCreateParams {}
+export interface SubscriptionScheduleSerializeBatchReleaseParams {}
 export interface SubscriptionScheduleSerializeBatchUpdateParams {}

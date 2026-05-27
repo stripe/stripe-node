@@ -96,7 +96,7 @@ export interface RequestedSession {
   /**
    * Affiliate attribution data associated with this requested session.
    */
-  affiliate_attributions?: Array<
+  affiliate_attributions: Array<
     DelegatedCheckout.RequestedSession.AffiliateAttribution
   > | null;
 

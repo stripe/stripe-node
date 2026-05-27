@@ -23,6 +23,7 @@ export class Iam {
 
 export declare namespace Iam {
   export import ActivityLogListParams = V2Namespace0.Iam.ActivityLogListParams;
+  export import ActivityLogRetrieveParams = V2Namespace0.Iam.ActivityLogRetrieveParams;
   export {ActivityLog};
   export import ApiKeyListParams = V2Namespace1.Iam.ApiKeyListParams;
   export import ApiKeyCreateParams = V2Namespace1.Iam.ApiKeyCreateParams;

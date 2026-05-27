@@ -333,15 +333,15 @@ export class CreditNoteResource extends StripeResource {
     const stripeVersion =
       options.apiVersion || this._stripe.getApiField('version');
 
-    const item: Record<string, unknown> = {
+    const entry: Record<string, unknown> = {
       id: itemId,
       params: params,
       stripe_version: stripeVersion,
     };
     if (options.stripeContext) {
-      item.context = options.stripeContext;
+      entry.context = options.stripeContext;
     }
-    return JSON.stringify(item);
+    return JSON.stringify(entry);
   }
   /**
    * When retrieving a credit note, you'll get a lines property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.

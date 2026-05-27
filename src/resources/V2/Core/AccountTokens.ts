@@ -7,7 +7,11 @@ import {RequestOptions, Response} from '../../../lib.js';
 
 export class AccountTokenResource extends StripeResource {
   /**
-   * Creates an Account Token.
+   * Create an account token with a publishable key and pass it to the Accounts v2 API to
+   * create or update an account without its data touching your server.
+   * Learn more about [account tokens](https://docs.stripe.com/connect/account-tokens).
+   * In live mode, you can only create account tokens with your application's publishable key.
+   * In test mode, you can create account tokens with your secret key or publishable key.
    * @throws Stripe.RateLimitError
    */
   create(
@@ -699,7 +703,7 @@ export namespace V2 {
             proof_of_address?: Documents.ProofOfAddress;
 
             /**
-             * One or more documents showing the company's proof of registration with the national business registry.
+             * One or more documents that demonstrate proof of ultimate beneficial ownership.
              */
             proof_of_registration?: Documents.ProofOfRegistration;
 
@@ -907,6 +911,11 @@ export namespace V2 {
               files: Array<string>;
 
               /**
+               * Person that is signing the document.
+               */
+              signer?: ProofOfRegistration.Signer;
+
+              /**
                * The format of the document. Currently supports `files` only.
                */
               type: 'files';
@@ -917,6 +926,11 @@ export namespace V2 {
                * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
                */
               files: Array<string>;
+
+              /**
+               * Person that is signing the document.
+               */
+              signer?: ProofOfUltimateBeneficialOwnership.Signer;
 
               /**
                * The format of the document. Currently supports `files` only.
@@ -935,6 +949,24 @@ export namespace V2 {
                  * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                  */
                 front?: string;
+              }
+            }
+
+            export namespace ProofOfRegistration {
+              export interface Signer {
+                /**
+                 * Person signing the document.
+                 */
+                person: string;
+              }
+            }
+
+            export namespace ProofOfUltimateBeneficialOwnership {
+              export interface Signer {
+                /**
+                 * Person signing the document.
+                 */
+                person: string;
               }
             }
           }

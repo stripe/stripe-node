@@ -61,6 +61,11 @@ export interface QuotePreviewInvoice {
   amount_paid: number;
 
   /**
+   * Amount, in cents (or local equivalent), that was paid on the invoice outside of Stripe.
+   */
+  amount_paid_off_stripe?: number;
+
+  /**
    * The difference between amount_due and amount_paid, in cents (or local equivalent).
    */
   amount_remaining: number;
@@ -1221,6 +1226,7 @@ export namespace QuotePreviewInvoice {
       | 'payment_method_invalid_parameter'
       | 'payment_method_invalid_parameter_testmode'
       | 'payment_method_microdeposit_failed'
+      | 'payment_method_microdeposit_processing_error'
       | 'payment_method_microdeposit_verification_amounts_invalid'
       | 'payment_method_microdeposit_verification_amounts_mismatch'
       | 'payment_method_microdeposit_verification_attempts_exceeded'
@@ -1262,6 +1268,7 @@ export namespace QuotePreviewInvoice {
       | 'setup_intent_unexpected_state'
       | 'shipping_address_invalid'
       | 'shipping_calculation_failed'
+      | 'siret_invalid'
       | 'sku_inactive'
       | 'state_unsupported'
       | 'status_transition_invalid'
@@ -1443,6 +1450,11 @@ export namespace QuotePreviewInvoice {
        * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
        */
       us_bank_account: PaymentMethodOptions.UsBankAccount | null;
+
+      /**
+       * If paying by `wechat_pay`, this sub-hash contains details about the WeChat Pay payment method options to pass to the invoice's PaymentIntent.
+       */
+      wechat_pay?: PaymentMethodOptions.WechatPay | null;
     }
 
     export type PaymentMethodType =
@@ -1493,6 +1505,7 @@ export namespace QuotePreviewInvoice {
       | 'sofort'
       | 'stripe_balance'
       | 'swish'
+      | 'twint'
       | 'upi'
       | 'us_bank_account'
       | 'wechat_pay';
@@ -1571,6 +1584,18 @@ export namespace QuotePreviewInvoice {
          * Bank account verification method. The default value is `automatic`.
          */
         verification_method?: UsBankAccount.VerificationMethod;
+      }
+
+      export interface WechatPay {
+        /**
+         * The app ID registered with WeChat Pay. Only required when client is `ios` or `android`.
+         */
+        app_id?: string;
+
+        /**
+         * The client type that the end customer will pay from.
+         */
+        client?: WechatPay.Client;
       }
 
       export namespace AcssDebit {
@@ -1747,6 +1772,10 @@ export namespace QuotePreviewInvoice {
             export type AccountSubcategory = 'checking' | 'savings';
           }
         }
+      }
+
+      export namespace WechatPay {
+        export type Client = 'android' | 'ios' | 'mobile_web' | 'web';
       }
     }
   }
