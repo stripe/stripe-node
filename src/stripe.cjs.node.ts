@@ -21,6 +21,7 @@ import {Terminal} from './resources/Terminal/index.js';
 import {TestHelpers} from './resources/TestHelpers/index.js';
 import {Treasury} from './resources/Treasury/index.js';
 import {V2} from './resources/V2/index.js';
+import {Reserve} from './resources/Reserve/index.js';
 // StripeInstanceCJSNestedResourceImports: The end of the section generated from our OpenAPI spec
 
 // Initialize the Stripe class with Node platform functions
@@ -539,6 +540,7 @@ declare namespace StripeConstructor {
   export type TestHelpers = Stripe.TestHelpers;
   export type Treasury = Stripe.Treasury;
   export type V2 = Stripe.V2;
+  export type Reserve = Stripe.Reserve;
   export namespace Apps {
     export type Secret = Stripe.Apps.Secret;
     export type SecretCreateParams = Stripe.Apps.SecretCreateParams;
@@ -1252,17 +1254,17 @@ declare namespace StripeConstructor {
   export type StripeRawError = Stripe.StripeRawError;
   export type Decimal = Stripe.Decimal;
   export namespace errors {
-    export type StripeError = Stripe.errors.StripeError;
-    export type StripeCardError = Stripe.errors.StripeCardError;
-    export type StripeInvalidRequestError = Stripe.errors.StripeInvalidRequestError;
-    export type StripeAPIError = Stripe.errors.StripeAPIError;
-    export type StripeAuthenticationError = Stripe.errors.StripeAuthenticationError;
-    export type StripePermissionError = Stripe.errors.StripePermissionError;
-    export type StripeRateLimitError = Stripe.errors.StripeRateLimitError;
-    export type StripeConnectionError = Stripe.errors.StripeConnectionError;
-    export type StripeSignatureVerificationError = Stripe.errors.StripeSignatureVerificationError;
-    export type StripeIdempotencyError = Stripe.errors.StripeIdempotencyError;
-    export type StripeInvalidGrantError = Stripe.errors.StripeInvalidGrantError;
+    export type StripeError = typeof Stripe.errors.StripeError;
+    export type StripeCardError = typeof Stripe.errors.StripeCardError;
+    export type StripeInvalidRequestError = typeof Stripe.errors.StripeInvalidRequestError;
+    export type StripeAPIError = typeof Stripe.errors.StripeAPIError;
+    export type StripeAuthenticationError = typeof Stripe.errors.StripeAuthenticationError;
+    export type StripePermissionError = typeof Stripe.errors.StripePermissionError;
+    export type StripeRateLimitError = typeof Stripe.errors.StripeRateLimitError;
+    export type StripeConnectionError = typeof Stripe.errors.StripeConnectionError;
+    export type StripeSignatureVerificationError = typeof Stripe.errors.StripeSignatureVerificationError;
+    export type StripeIdempotencyError = typeof Stripe.errors.StripeIdempotencyError;
+    export type StripeInvalidGrantError = typeof Stripe.errors.StripeInvalidGrantError;
   }
 }
 export = StripeConstructor;

@@ -403,3 +403,13 @@ const oAuthAuthorizeUrlOptions: Stripe.OAuthAuthorizeUrlOptions = {};
 const oAuthAuthorizeUrlParams: Stripe.OAuthAuthorizeUrlParams = {};
 const oAuthDeauthorization: Stripe.OAuthDeauthorization = {stripe_user_id: ''};
 const oAuthDeauthorizeParams: Stripe.OAuthDeauthorizeParams = {};
+
+// Access and type top level resources and nested resources
+const customerResource: Stripe.CustomerResource = new Stripe.CustomerResource(
+  stripe
+);
+
+// Access nested resource
+const v2AccountResource: Stripe.V2.Billing.MeterEventResource = new Stripe.V2.Billing.MeterEventResource(
+  stripe
+);
