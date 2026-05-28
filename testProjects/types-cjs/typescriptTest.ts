@@ -140,6 +140,8 @@ stripe = new Stripe('sk_test_123', {unknownProperty: true});
 
   const cusList: Stripe.ApiList<Stripe.Customer> = await stripe.customers.list();
 
+  const v2EventsList: Stripe.V2List<Stripe.V2.Core.Event> = await stripe.v2.core.events.list();
+
   const aThousandCustomers: Array<Stripe.Customer> = await stripe.customers
     .list()
     .autoPagingToArray({limit: 1000});
@@ -415,6 +417,15 @@ event = stripe.webhooks.constructEvent(
   ['also_signature_but_does_not_work_at_runtime'],
   'secret'
 );
+
+const taxExempt: Stripe.CustomerUpdateParams.TaxExempt = 'exempt';
+let subscription: Stripe.Subscription;
+let invoice: Stripe.Invoice;
+let refund: Stripe.Refund;
+let paymentIntent: Stripe.PaymentIntent;
+let subscriptionCancelParams: Stripe.SubscriptionCancelParams;
+// Stripe.Event (v1 webhook event)
+let event2683: Stripe.Event;
 
 const v2AccountCreateParamConfiguration: Stripe.V2.Core.AccountCreateParams.Configuration = {};
 const checkoutSessionParam: Stripe.Checkout.SessionCreateParams = {};

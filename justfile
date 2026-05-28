@@ -25,6 +25,8 @@ types-test: build
     tsc --build testProjects/types
     if [ ! -d testProjects/types-cjs/node_modules ]; then (cd testProjects/types-cjs && npm install); fi
     tsc --build testProjects/types-cjs
+    if [ ! -d testProjects/types-cjs-node16/node_modules ]; then (cd testProjects/types-cjs-node16 && npm install); fi
+    tsc --build testProjects/types-cjs-node16
 
 # run full integration tests by installing a bunch of packages and starting servers (slow)
 integrations-test: build
