@@ -833,6 +833,7 @@ declare namespace StripeConstructor {
     export type OptionalItem = Stripe.PaymentLinkCreateParams.OptionalItem;
     export type PaymentIntentData = Stripe.PaymentLinkCreateParams.PaymentIntentData;
     export type PaymentMethodCollection = Stripe.PaymentLinkCreateParams.PaymentMethodCollection;
+    export type PaymentMethodOptions = Stripe.PaymentLinkCreateParams.PaymentMethodOptions;
     export type PaymentMethodType = Stripe.PaymentLinkCreateParams.PaymentMethodType;
     export type PhoneNumberCollection = Stripe.PaymentLinkCreateParams.PhoneNumberCollection;
     export type Restrictions = Stripe.PaymentLinkCreateParams.Restrictions;
@@ -856,6 +857,7 @@ declare namespace StripeConstructor {
     export type OptionalItem = Stripe.PaymentLinkUpdateParams.OptionalItem;
     export type PaymentIntentData = Stripe.PaymentLinkUpdateParams.PaymentIntentData;
     export type PaymentMethodCollection = Stripe.PaymentLinkUpdateParams.PaymentMethodCollection;
+    export type PaymentMethodOptions = Stripe.PaymentLinkUpdateParams.PaymentMethodOptions;
     export type PaymentMethodType = Stripe.PaymentLinkUpdateParams.PaymentMethodType;
     export type PhoneNumberCollection = Stripe.PaymentLinkUpdateParams.PhoneNumberCollection;
     export type Restrictions = Stripe.PaymentLinkUpdateParams.Restrictions;
@@ -877,6 +879,7 @@ declare namespace StripeConstructor {
     export type Bancontact = Stripe.PaymentMethodCreateParams.Bancontact;
     export type Billie = Stripe.PaymentMethodCreateParams.Billie;
     export type BillingDetails = Stripe.PaymentMethodCreateParams.BillingDetails;
+    export type Bizum = Stripe.PaymentMethodCreateParams.Bizum;
     export type Blik = Stripe.PaymentMethodCreateParams.Blik;
     export type Boleto = Stripe.PaymentMethodCreateParams.Boleto;
     export type Card = Stripe.PaymentMethodCreateParams.Card;
@@ -913,6 +916,7 @@ declare namespace StripeConstructor {
     export type RevolutPay = Stripe.PaymentMethodCreateParams.RevolutPay;
     export type SamsungPay = Stripe.PaymentMethodCreateParams.SamsungPay;
     export type Satispay = Stripe.PaymentMethodCreateParams.Satispay;
+    export type Scalapay = Stripe.PaymentMethodCreateParams.Scalapay;
     export type SepaDebit = Stripe.PaymentMethodCreateParams.SepaDebit;
     export type Sofort = Stripe.PaymentMethodCreateParams.Sofort;
     export type Sunbit = Stripe.PaymentMethodCreateParams.Sunbit;
@@ -948,6 +952,7 @@ declare namespace StripeConstructor {
     export type BacsDebit = Stripe.PaymentMethodConfigurationCreateParams.BacsDebit;
     export type Bancontact = Stripe.PaymentMethodConfigurationCreateParams.Bancontact;
     export type Billie = Stripe.PaymentMethodConfigurationCreateParams.Billie;
+    export type Bizum = Stripe.PaymentMethodConfigurationCreateParams.Bizum;
     export type Blik = Stripe.PaymentMethodConfigurationCreateParams.Blik;
     export type Boleto = Stripe.PaymentMethodConfigurationCreateParams.Boleto;
     export type Card = Stripe.PaymentMethodConfigurationCreateParams.Card;
@@ -985,6 +990,7 @@ declare namespace StripeConstructor {
     export type RevolutPay = Stripe.PaymentMethodConfigurationCreateParams.RevolutPay;
     export type SamsungPay = Stripe.PaymentMethodConfigurationCreateParams.SamsungPay;
     export type Satispay = Stripe.PaymentMethodConfigurationCreateParams.Satispay;
+    export type Scalapay = Stripe.PaymentMethodConfigurationCreateParams.Scalapay;
     export type SepaDebit = Stripe.PaymentMethodConfigurationCreateParams.SepaDebit;
     export type Sofort = Stripe.PaymentMethodConfigurationCreateParams.Sofort;
     export type Sunbit = Stripe.PaymentMethodConfigurationCreateParams.Sunbit;
@@ -1008,6 +1014,7 @@ declare namespace StripeConstructor {
     export type BacsDebit = Stripe.PaymentMethodConfigurationUpdateParams.BacsDebit;
     export type Bancontact = Stripe.PaymentMethodConfigurationUpdateParams.Bancontact;
     export type Billie = Stripe.PaymentMethodConfigurationUpdateParams.Billie;
+    export type Bizum = Stripe.PaymentMethodConfigurationUpdateParams.Bizum;
     export type Blik = Stripe.PaymentMethodConfigurationUpdateParams.Blik;
     export type Boleto = Stripe.PaymentMethodConfigurationUpdateParams.Boleto;
     export type Card = Stripe.PaymentMethodConfigurationUpdateParams.Card;
@@ -1045,6 +1052,7 @@ declare namespace StripeConstructor {
     export type RevolutPay = Stripe.PaymentMethodConfigurationUpdateParams.RevolutPay;
     export type SamsungPay = Stripe.PaymentMethodConfigurationUpdateParams.SamsungPay;
     export type Satispay = Stripe.PaymentMethodConfigurationUpdateParams.Satispay;
+    export type Scalapay = Stripe.PaymentMethodConfigurationUpdateParams.Scalapay;
     export type SepaDebit = Stripe.PaymentMethodConfigurationUpdateParams.SepaDebit;
     export type Sofort = Stripe.PaymentMethodConfigurationUpdateParams.Sofort;
     export type Sunbit = Stripe.PaymentMethodConfigurationUpdateParams.Sunbit;
@@ -1211,6 +1219,7 @@ declare namespace StripeConstructor {
     export type AutomaticTax = Stripe.SubscriptionCreateParams.AutomaticTax;
     export type BillingCycleAnchorConfig = Stripe.SubscriptionCreateParams.BillingCycleAnchorConfig;
     export type BillingMode = Stripe.SubscriptionCreateParams.BillingMode;
+    export type BillingSchedule = Stripe.SubscriptionCreateParams.BillingSchedule;
     export type BillingThresholds = Stripe.SubscriptionCreateParams.BillingThresholds;
     export type CancelAt = Stripe.SubscriptionCreateParams.CancelAt;
     export type CollectionMethod = Stripe.SubscriptionCreateParams.CollectionMethod;
@@ -1228,6 +1237,7 @@ declare namespace StripeConstructor {
     export type AddInvoiceItem = Stripe.SubscriptionUpdateParams.AddInvoiceItem;
     export type AutomaticTax = Stripe.SubscriptionUpdateParams.AutomaticTax;
     export type BillingCycleAnchor = Stripe.SubscriptionUpdateParams.BillingCycleAnchor;
+    export type BillingSchedule = Stripe.SubscriptionUpdateParams.BillingSchedule;
     export type BillingThresholds = Stripe.SubscriptionUpdateParams.BillingThresholds;
     export type CancelAt = Stripe.SubscriptionUpdateParams.CancelAt;
     export type CancellationDetails = Stripe.SubscriptionUpdateParams.CancellationDetails;
@@ -1902,7 +1912,11 @@ declare namespace StripeConstructor {
       export type StripeS700 = Stripe.Terminal.ConfigurationCreateParams.StripeS700;
       export type StripeS710 = Stripe.Terminal.ConfigurationCreateParams.StripeS710;
       export type Tipping = Stripe.Terminal.ConfigurationCreateParams.Tipping;
+      export type VerifoneM425 = Stripe.Terminal.ConfigurationCreateParams.VerifoneM425;
       export type VerifoneP400 = Stripe.Terminal.ConfigurationCreateParams.VerifoneP400;
+      export type VerifoneP630 = Stripe.Terminal.ConfigurationCreateParams.VerifoneP630;
+      export type VerifoneUx700 = Stripe.Terminal.ConfigurationCreateParams.VerifoneUx700;
+      export type VerifoneV660p = Stripe.Terminal.ConfigurationCreateParams.VerifoneV660p;
       export type Wifi = Stripe.Terminal.ConfigurationCreateParams.Wifi;
     }
     export namespace ConfigurationUpdateParams {
@@ -1914,7 +1928,11 @@ declare namespace StripeConstructor {
       export type StripeS700 = Stripe.Terminal.ConfigurationUpdateParams.StripeS700;
       export type StripeS710 = Stripe.Terminal.ConfigurationUpdateParams.StripeS710;
       export type Tipping = Stripe.Terminal.ConfigurationUpdateParams.Tipping;
+      export type VerifoneM425 = Stripe.Terminal.ConfigurationUpdateParams.VerifoneM425;
       export type VerifoneP400 = Stripe.Terminal.ConfigurationUpdateParams.VerifoneP400;
+      export type VerifoneP630 = Stripe.Terminal.ConfigurationUpdateParams.VerifoneP630;
+      export type VerifoneUx700 = Stripe.Terminal.ConfigurationUpdateParams.VerifoneUx700;
+      export type VerifoneV660p = Stripe.Terminal.ConfigurationUpdateParams.VerifoneV660p;
       export type Wifi = Stripe.Terminal.ConfigurationUpdateParams.Wifi;
     }
     export namespace LocationCreateParams {
