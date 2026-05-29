@@ -7042,9 +7042,9 @@ export namespace PaymentIntentCreateParams {
     enabled: boolean;
 
     /**
-     * Payment-level details for the orchestrated payment.
+     * Merchant-provided reference for this payment, used for reconciliation.
      */
-    payment_details?: PaymentsOrchestration.PaymentDetails;
+    payment_reference?: string;
   }
 
   export interface RadarOptions {
@@ -11847,6 +11847,11 @@ export namespace PaymentIntentCreateParams {
         export namespace MoneyServices {
           export interface AccountFunding {
             /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+
+            /**
              * Details for a liquid asset (crypto or security) funding transaction.
              */
             liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
@@ -11858,6 +11863,12 @@ export namespace PaymentIntentCreateParams {
           }
 
           export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin';
+
             export interface LiquidAsset {
               /**
                * Details for a cryptocurrency liquid asset funding transaction.
@@ -12001,6 +12012,11 @@ export namespace PaymentIntentCreateParams {
         export namespace MoneyServices {
           export interface AccountFunding {
             /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+
+            /**
              * Details for a liquid asset (crypto or security) funding transaction.
              */
             liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
@@ -12012,6 +12028,12 @@ export namespace PaymentIntentCreateParams {
           }
 
           export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin';
+
             export interface LiquidAsset {
               /**
                * Details for a cryptocurrency liquid asset funding transaction.
@@ -13858,15 +13880,6 @@ export namespace PaymentIntentCreateParams {
 
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web';
-    }
-  }
-
-  export namespace PaymentsOrchestration {
-    export interface PaymentDetails {
-      /**
-       * Merchant-provided reference for this payment, used for reconciliation.
-       */
-      reference?: string;
     }
   }
 
@@ -19745,6 +19758,11 @@ export namespace PaymentIntentUpdateParams {
         export namespace MoneyServices {
           export interface AccountFunding {
             /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+
+            /**
              * Details for a liquid asset (crypto or security) funding transaction.
              */
             liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
@@ -19756,6 +19774,12 @@ export namespace PaymentIntentUpdateParams {
           }
 
           export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin';
+
             export interface LiquidAsset {
               /**
                * Details for a cryptocurrency liquid asset funding transaction.
@@ -19899,6 +19923,11 @@ export namespace PaymentIntentUpdateParams {
         export namespace MoneyServices {
           export interface AccountFunding {
             /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+
+            /**
              * Details for a liquid asset (crypto or security) funding transaction.
              */
             liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
@@ -19910,6 +19939,12 @@ export namespace PaymentIntentUpdateParams {
           }
 
           export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin';
+
             export interface LiquidAsset {
               /**
                * Details for a cryptocurrency liquid asset funding transaction.
@@ -30282,6 +30317,11 @@ export namespace PaymentIntentConfirmParams {
         export namespace MoneyServices {
           export interface AccountFunding {
             /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+
+            /**
              * Details for a liquid asset (crypto or security) funding transaction.
              */
             liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
@@ -30293,6 +30333,12 @@ export namespace PaymentIntentConfirmParams {
           }
 
           export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin';
+
             export interface LiquidAsset {
               /**
                * Details for a cryptocurrency liquid asset funding transaction.
@@ -30436,6 +30482,11 @@ export namespace PaymentIntentConfirmParams {
         export namespace MoneyServices {
           export interface AccountFunding {
             /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+
+            /**
              * Details for a liquid asset (crypto or security) funding transaction.
              */
             liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
@@ -30447,6 +30498,12 @@ export namespace PaymentIntentConfirmParams {
           }
 
           export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin';
+
             export interface LiquidAsset {
               /**
                * Details for a cryptocurrency liquid asset funding transaction.

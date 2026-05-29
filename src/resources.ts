@@ -34,6 +34,7 @@ import {ConfigurationResource as TerminalConfigurations} from './resources/Termi
 import {ConfirmationTokenResource as TestHelpersConfirmationTokens} from './resources/TestHelpers/ConfirmationTokens.js';
 import {ConnectionSessionResource as V2CoreConnectionSessions} from './resources/V2/Core/ConnectionSessions.js';
 import {ConnectionTokenResource as TerminalConnectionTokens} from './resources/Terminal/ConnectionTokens.js';
+import {ContractResource as V2BillingContracts} from './resources/V2/Billing/Contracts.js';
 import {CreditBalanceSummaryResource as BillingCreditBalanceSummary} from './resources/Billing/CreditBalanceSummary.js';
 import {CreditBalanceTransactionResource as BillingCreditBalanceTransactions} from './resources/Billing/CreditBalanceTransactions.js';
 import {CreditGrantResource as BillingCreditGrants} from './resources/Billing/CreditGrants.js';
@@ -399,6 +400,7 @@ export const V2 = resourceNamespace('v2', {
     BillSettings: V2BillingBillSettings,
     Cadences: V2BillingCadences,
     CollectionSettings: V2BillingCollectionSettings,
+    Contracts: V2BillingContracts,
     CustomPricingUnits: V2BillingCustomPricingUnits,
     Intents: V2BillingIntents,
     LicenseFees: V2BillingLicenseFees,

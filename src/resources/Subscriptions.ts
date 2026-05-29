@@ -2162,11 +2162,6 @@ export namespace Subscription {
        * This sub-hash contains details about the ACH direct debit payment method options to pass to invoices created by the subscription.
        */
       us_bank_account: PaymentMethodOptions.UsBankAccount | null;
-
-      /**
-       * This sub-hash contains details about the WeChat Pay payment method options to pass to invoices created by the subscription.
-       */
-      wechat_pay?: PaymentMethodOptions.WechatPay | null;
     }
 
     export type PaymentMethodType =
@@ -2304,18 +2299,6 @@ export namespace Subscription {
          * Bank account verification method. The default value is `automatic`.
          */
         verification_method?: UsBankAccount.VerificationMethod;
-      }
-
-      export interface WechatPay {
-        /**
-         * The app ID registered with WeChat Pay. Only required when client is `ios` or `android`.
-         */
-        app_id?: string;
-
-        /**
-         * The client type that the end customer will pay from.
-         */
-        client?: WechatPay.Client;
       }
 
       export namespace AcssDebit {
@@ -2575,10 +2558,6 @@ export namespace Subscription {
             export type AccountSubcategory = 'checking' | 'savings';
           }
         }
-      }
-
-      export namespace WechatPay {
-        export type Client = 'android' | 'ios' | 'mobile_web' | 'web';
       }
     }
   }
@@ -3762,11 +3741,6 @@ export namespace SubscriptionCreateParams {
        * This sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
        */
       us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
-
-      /**
-       * This sub-hash contains details about the WeChat Pay payment method options to pass to the invoice's PaymentIntent.
-       */
-      wechat_pay?: Emptyable<PaymentMethodOptions.WechatPay>;
     }
 
     export type PaymentMethodType =
@@ -3931,18 +3905,6 @@ export namespace SubscriptionCreateParams {
          * Verification method for the intent
          */
         verification_method?: UsBankAccount.VerificationMethod;
-      }
-
-      export interface WechatPay {
-        /**
-         * The app ID registered with WeChat Pay. Only required when client is `ios` or `android`.
-         */
-        app_id?: string;
-
-        /**
-         * The client type that the end customer will pay from.
-         */
-        client?: WechatPay.Client;
       }
 
       export namespace AcssDebit {
@@ -4197,10 +4159,6 @@ export namespace SubscriptionCreateParams {
             export type AccountSubcategory = 'checking' | 'savings';
           }
         }
-      }
-
-      export namespace WechatPay {
-        export type Client = 'android' | 'ios' | 'mobile_web' | 'web';
       }
     }
   }
@@ -5319,11 +5277,6 @@ export namespace SubscriptionUpdateParams {
        * This sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
        */
       us_bank_account?: Emptyable<PaymentMethodOptions.UsBankAccount>;
-
-      /**
-       * This sub-hash contains details about the WeChat Pay payment method options to pass to the invoice's PaymentIntent.
-       */
-      wechat_pay?: Emptyable<PaymentMethodOptions.WechatPay>;
     }
 
     export type PaymentMethodType =
@@ -5488,18 +5441,6 @@ export namespace SubscriptionUpdateParams {
          * Verification method for the intent
          */
         verification_method?: UsBankAccount.VerificationMethod;
-      }
-
-      export interface WechatPay {
-        /**
-         * The app ID registered with WeChat Pay. Only required when client is `ios` or `android`.
-         */
-        app_id?: string;
-
-        /**
-         * The client type that the end customer will pay from.
-         */
-        client?: WechatPay.Client;
       }
 
       export namespace AcssDebit {
@@ -5754,10 +5695,6 @@ export namespace SubscriptionUpdateParams {
             export type AccountSubcategory = 'checking' | 'savings';
           }
         }
-      }
-
-      export namespace WechatPay {
-        export type Client = 'android' | 'ios' | 'mobile_web' | 'web';
       }
     }
   }

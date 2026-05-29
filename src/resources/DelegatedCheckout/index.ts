@@ -6,8 +6,12 @@ import {
   RequestedSession,
   RequestedSessionResource,
 } from './RequestedSessions.js';
+import {Order} from './Orders.js';
+import {OrderEvent} from './OrderEvents.js';
 
 export {RequestedSession} from './RequestedSessions.js';
+export {Order} from './Orders.js';
+export {OrderEvent} from './OrderEvents.js';
 
 export class DelegatedCheckout {
   requestedSessions: RequestedSessionResource;
@@ -23,5 +27,8 @@ export declare namespace DelegatedCheckout {
   export import RequestedSessionCreateParams = DelegatedCheckoutNamespace0.RequestedSessionCreateParams;
   export import RequestedSessionConfirmParams = DelegatedCheckoutNamespace0.RequestedSessionConfirmParams;
   export import RequestedSessionExpireParams = DelegatedCheckoutNamespace0.RequestedSessionExpireParams;
+  export import RequestedSessionListOrdersParams = DelegatedCheckoutNamespace0.RequestedSessionListOrdersParams;
   export {RequestedSession};
+  export {Order};
+  export {OrderEvent};
 }

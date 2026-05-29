@@ -5,7 +5,7 @@ import {RequestOptions, ApiListPromise, Response} from '../lib.js';
 
 export class PaymentLocationCapabilityResource extends StripeResource {
   /**
-   * Returns a list of PaymentLocationCapability objects associated with the location.
+   * List all payment location capabilities associated with the payment location.
    */
   list(
     params: PaymentLocationCapabilityListParams,
@@ -22,7 +22,7 @@ export class PaymentLocationCapabilityResource extends StripeResource {
     ) as any;
   }
   /**
-   * Retrieves information about the specified Payment Location Capability.
+   * Retrieves a payment_location capability
    */
   retrieve(
     id: string,
@@ -37,7 +37,7 @@ export class PaymentLocationCapabilityResource extends StripeResource {
     ) as any;
   }
   /**
-   * Updates a specified Payment Location Capability. Request or remove a payment location capability by updating its requested parameter.
+   * Updates a payment_location capability. Request or remove a payment_location capability by updating its requested parameter.
    */
   update(
     id: string,
@@ -59,7 +59,7 @@ export interface PaymentLocationCapability {
   object: 'payment_location_capability';
 
   /**
-   * The account for which the capability enables functionality.
+   * The account that the capability enables functionality for.
    */
   account: string;
 
@@ -74,7 +74,7 @@ export interface PaymentLocationCapability {
   livemode: boolean;
 
   /**
-   * The payment location for which the capability enables functionality.
+   * The payment location that the capability enables functionality for.
    */
   location: string;
 
@@ -84,7 +84,7 @@ export interface PaymentLocationCapability {
   requested: boolean;
 
   /**
-   * Time at which the capability was requested. Measured in seconds since the Unix epoch.
+   * Time when the capability was requested. Measured in seconds since the Unix epoch.
    */
   requested_at: number | null;
 
@@ -148,7 +148,7 @@ export namespace PaymentLocationCapability {
 }
 export interface PaymentLocationCapabilityRetrieveParams {
   /**
-   * The payment location for which the capability enables functionality.
+   * The payment location that the capability enables functionality for.
    */
   location: string;
 
@@ -159,7 +159,7 @@ export interface PaymentLocationCapabilityRetrieveParams {
 }
 export interface PaymentLocationCapabilityUpdateParams {
   /**
-   * The location for which the capability enables functionality.
+   * The location that the capability enables functionality for.
    */
   location: string;
 
@@ -175,7 +175,7 @@ export interface PaymentLocationCapabilityUpdateParams {
 }
 export interface PaymentLocationCapabilityListParams {
   /**
-   * The location for which the capabilities enable functionality.
+   * The payment location that the capabilities enable functionality for.
    */
   location: string;
 

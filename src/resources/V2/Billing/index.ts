@@ -12,73 +12,75 @@ import {
   CollectionSetting,
   CollectionSettingResource,
 } from './CollectionSettings.js';
+import {V2 as V2Namespace3, Contract, ContractResource} from './Contracts.js';
 import {
-  V2 as V2Namespace3,
+  V2 as V2Namespace4,
   CustomPricingUnit,
   CustomPricingUnitResource,
 } from './CustomPricingUnits.js';
-import {V2 as V2Namespace4, Intent, IntentResource} from './Intents.js';
+import {V2 as V2Namespace5, Intent, IntentResource} from './Intents.js';
 import {
-  V2 as V2Namespace5,
+  V2 as V2Namespace6,
   LicenseFee,
   LicenseFeeResource,
 } from './LicenseFees.js';
 import {
-  V2 as V2Namespace6,
+  V2 as V2Namespace7,
   LicensedItem,
   LicensedItemResource,
 } from './LicensedItems.js';
 import {
-  V2 as V2Namespace7,
+  V2 as V2Namespace8,
   MeterEvent,
   MeterEventResource,
 } from './MeterEvents.js';
 import {
-  V2 as V2Namespace8,
+  V2 as V2Namespace9,
   MeterEventAdjustment,
   MeterEventAdjustmentResource,
 } from './MeterEventAdjustments.js';
 import {
-  V2 as V2Namespace9,
+  V2 as V2Namespace10,
   MeterEventSession,
   MeterEventSessionResource,
 } from './MeterEventSession.js';
 import {
-  V2 as V2Namespace10,
+  V2 as V2Namespace11,
   MeterEventStreamResource,
 } from './MeterEventStream.js';
 import {
-  V2 as V2Namespace11,
+  V2 as V2Namespace12,
   MeteredItem,
   MeteredItemResource,
 } from './MeteredItems.js';
 import {
-  V2 as V2Namespace12,
+  V2 as V2Namespace13,
   OneTimeItem,
   OneTimeItemResource,
 } from './OneTimeItems.js';
 import {
-  V2 as V2Namespace13,
+  V2 as V2Namespace14,
   PricingPlan,
   PricingPlanResource,
 } from './PricingPlans.js';
 import {
-  V2 as V2Namespace14,
+  V2 as V2Namespace15,
   PricingPlanSubscription,
   PricingPlanSubscriptionResource,
 } from './PricingPlanSubscriptions.js';
-import {V2 as V2Namespace15, Profile, ProfileResource} from './Profiles.js';
-import {V2 as V2Namespace16, RateCard, RateCardResource} from './RateCards.js';
+import {V2 as V2Namespace16, Profile, ProfileResource} from './Profiles.js';
+import {V2 as V2Namespace17, RateCard, RateCardResource} from './RateCards.js';
 import {
-  V2 as V2Namespace17,
+  V2 as V2Namespace18,
   RateCardSubscription,
   RateCardSubscriptionResource,
 } from './RateCardSubscriptions.js';
 import {
-  V2 as V2Namespace18,
+  V2 as V2Namespace19,
   ServiceAction,
   ServiceActionResource,
 } from './ServiceActions.js';
+import {ContractLicensePricingQuantityChange} from './ContractLicensePricingQuantityChanges.js';
 import {BillSettingVersion} from './BillSettingVersions.js';
 import {CadenceSpendModifier} from './CadenceSpendModifiers.js';
 import {CollectionSettingVersion} from './CollectionSettingVersions.js';
@@ -93,6 +95,7 @@ import {RateCardVersion} from './RateCardVersions.js';
 export {BillSetting} from './BillSettings.js';
 export {Cadence} from './Cadences.js';
 export {CollectionSetting} from './CollectionSettings.js';
+export {Contract} from './Contracts.js';
 export {CustomPricingUnit} from './CustomPricingUnits.js';
 export {Intent} from './Intents.js';
 export {LicenseFee} from './LicenseFees.js';
@@ -108,6 +111,7 @@ export {Profile} from './Profiles.js';
 export {RateCard} from './RateCards.js';
 export {RateCardSubscription} from './RateCardSubscriptions.js';
 export {ServiceAction} from './ServiceActions.js';
+export {ContractLicensePricingQuantityChange} from './ContractLicensePricingQuantityChanges.js';
 export {BillSettingVersion} from './BillSettingVersions.js';
 export {CadenceSpendModifier} from './CadenceSpendModifiers.js';
 export {CollectionSettingVersion} from './CollectionSettingVersions.js';
@@ -123,6 +127,7 @@ export class Billing {
   billSettings: BillSettingResource;
   cadences: CadenceResource;
   collectionSettings: CollectionSettingResource;
+  contracts: ContractResource;
   customPricingUnits: CustomPricingUnitResource;
   intents: IntentResource;
   licenseFees: LicenseFeeResource;
@@ -144,6 +149,7 @@ export class Billing {
     this.billSettings = new BillSettingResource(stripe);
     this.cadences = new CadenceResource(stripe);
     this.collectionSettings = new CollectionSettingResource(stripe);
+    this.contracts = new ContractResource(stripe);
     this.customPricingUnits = new CustomPricingUnitResource(stripe);
     this.intents = new IntentResource(stripe);
     this.licenseFees = new LicenseFeeResource(stripe);
@@ -180,76 +186,84 @@ export declare namespace Billing {
   export import CollectionSettingRetrieveParams = V2Namespace2.Billing.CollectionSettingRetrieveParams;
   export import CollectionSettingUpdateParams = V2Namespace2.Billing.CollectionSettingUpdateParams;
   export {CollectionSetting};
-  export import CustomPricingUnitListParams = V2Namespace3.Billing.CustomPricingUnitListParams;
-  export import CustomPricingUnitCreateParams = V2Namespace3.Billing.CustomPricingUnitCreateParams;
-  export import CustomPricingUnitRetrieveParams = V2Namespace3.Billing.CustomPricingUnitRetrieveParams;
-  export import CustomPricingUnitUpdateParams = V2Namespace3.Billing.CustomPricingUnitUpdateParams;
+  export import ContractListParams = V2Namespace3.Billing.ContractListParams;
+  export import ContractCreateParams = V2Namespace3.Billing.ContractCreateParams;
+  export import ContractRetrieveParams = V2Namespace3.Billing.ContractRetrieveParams;
+  export import ContractUpdateParams = V2Namespace3.Billing.ContractUpdateParams;
+  export import ContractActivateParams = V2Namespace3.Billing.ContractActivateParams;
+  export import ContractCancelParams = V2Namespace3.Billing.ContractCancelParams;
+  export {Contract};
+  export import CustomPricingUnitListParams = V2Namespace4.Billing.CustomPricingUnitListParams;
+  export import CustomPricingUnitCreateParams = V2Namespace4.Billing.CustomPricingUnitCreateParams;
+  export import CustomPricingUnitRetrieveParams = V2Namespace4.Billing.CustomPricingUnitRetrieveParams;
+  export import CustomPricingUnitUpdateParams = V2Namespace4.Billing.CustomPricingUnitUpdateParams;
   export {CustomPricingUnit};
-  export import IntentListParams = V2Namespace4.Billing.IntentListParams;
-  export import IntentCreateParams = V2Namespace4.Billing.IntentCreateParams;
-  export import IntentRetrieveParams = V2Namespace4.Billing.IntentRetrieveParams;
-  export import IntentCancelParams = V2Namespace4.Billing.IntentCancelParams;
-  export import IntentCommitParams = V2Namespace4.Billing.IntentCommitParams;
-  export import IntentReleaseReservationParams = V2Namespace4.Billing.IntentReleaseReservationParams;
-  export import IntentReserveParams = V2Namespace4.Billing.IntentReserveParams;
+  export import IntentListParams = V2Namespace5.Billing.IntentListParams;
+  export import IntentCreateParams = V2Namespace5.Billing.IntentCreateParams;
+  export import IntentRetrieveParams = V2Namespace5.Billing.IntentRetrieveParams;
+  export import IntentCancelParams = V2Namespace5.Billing.IntentCancelParams;
+  export import IntentCommitParams = V2Namespace5.Billing.IntentCommitParams;
+  export import IntentReleaseReservationParams = V2Namespace5.Billing.IntentReleaseReservationParams;
+  export import IntentReserveParams = V2Namespace5.Billing.IntentReserveParams;
   export {Intent};
-  export import LicenseFeeListParams = V2Namespace5.Billing.LicenseFeeListParams;
-  export import LicenseFeeCreateParams = V2Namespace5.Billing.LicenseFeeCreateParams;
-  export import LicenseFeeRetrieveParams = V2Namespace5.Billing.LicenseFeeRetrieveParams;
-  export import LicenseFeeUpdateParams = V2Namespace5.Billing.LicenseFeeUpdateParams;
+  export import LicenseFeeListParams = V2Namespace6.Billing.LicenseFeeListParams;
+  export import LicenseFeeCreateParams = V2Namespace6.Billing.LicenseFeeCreateParams;
+  export import LicenseFeeRetrieveParams = V2Namespace6.Billing.LicenseFeeRetrieveParams;
+  export import LicenseFeeUpdateParams = V2Namespace6.Billing.LicenseFeeUpdateParams;
   export {LicenseFee};
-  export import LicensedItemListParams = V2Namespace6.Billing.LicensedItemListParams;
-  export import LicensedItemCreateParams = V2Namespace6.Billing.LicensedItemCreateParams;
-  export import LicensedItemRetrieveParams = V2Namespace6.Billing.LicensedItemRetrieveParams;
-  export import LicensedItemUpdateParams = V2Namespace6.Billing.LicensedItemUpdateParams;
+  export import LicensedItemListParams = V2Namespace7.Billing.LicensedItemListParams;
+  export import LicensedItemCreateParams = V2Namespace7.Billing.LicensedItemCreateParams;
+  export import LicensedItemRetrieveParams = V2Namespace7.Billing.LicensedItemRetrieveParams;
+  export import LicensedItemUpdateParams = V2Namespace7.Billing.LicensedItemUpdateParams;
   export {LicensedItem};
-  export import MeterEventCreateParams = V2Namespace7.Billing.MeterEventCreateParams;
+  export import MeterEventCreateParams = V2Namespace8.Billing.MeterEventCreateParams;
   export {MeterEvent};
-  export import MeterEventAdjustmentCreateParams = V2Namespace8.Billing.MeterEventAdjustmentCreateParams;
+  export import MeterEventAdjustmentCreateParams = V2Namespace9.Billing.MeterEventAdjustmentCreateParams;
   export {MeterEventAdjustment};
-  export import MeterEventSessionCreateParams = V2Namespace9.Billing.MeterEventSessionCreateParams;
+  export import MeterEventSessionCreateParams = V2Namespace10.Billing.MeterEventSessionCreateParams;
   export {MeterEventSession};
-  export import MeteredItemListParams = V2Namespace11.Billing.MeteredItemListParams;
-  export import MeteredItemCreateParams = V2Namespace11.Billing.MeteredItemCreateParams;
-  export import MeteredItemRetrieveParams = V2Namespace11.Billing.MeteredItemRetrieveParams;
-  export import MeteredItemUpdateParams = V2Namespace11.Billing.MeteredItemUpdateParams;
+  export import MeteredItemListParams = V2Namespace12.Billing.MeteredItemListParams;
+  export import MeteredItemCreateParams = V2Namespace12.Billing.MeteredItemCreateParams;
+  export import MeteredItemRetrieveParams = V2Namespace12.Billing.MeteredItemRetrieveParams;
+  export import MeteredItemUpdateParams = V2Namespace12.Billing.MeteredItemUpdateParams;
   export {MeteredItem};
-  export import OneTimeItemListParams = V2Namespace12.Billing.OneTimeItemListParams;
-  export import OneTimeItemCreateParams = V2Namespace12.Billing.OneTimeItemCreateParams;
-  export import OneTimeItemRetrieveParams = V2Namespace12.Billing.OneTimeItemRetrieveParams;
-  export import OneTimeItemUpdateParams = V2Namespace12.Billing.OneTimeItemUpdateParams;
+  export import OneTimeItemListParams = V2Namespace13.Billing.OneTimeItemListParams;
+  export import OneTimeItemCreateParams = V2Namespace13.Billing.OneTimeItemCreateParams;
+  export import OneTimeItemRetrieveParams = V2Namespace13.Billing.OneTimeItemRetrieveParams;
+  export import OneTimeItemUpdateParams = V2Namespace13.Billing.OneTimeItemUpdateParams;
   export {OneTimeItem};
-  export import PricingPlanListParams = V2Namespace13.Billing.PricingPlanListParams;
-  export import PricingPlanCreateParams = V2Namespace13.Billing.PricingPlanCreateParams;
-  export import PricingPlanRetrieveParams = V2Namespace13.Billing.PricingPlanRetrieveParams;
-  export import PricingPlanUpdateParams = V2Namespace13.Billing.PricingPlanUpdateParams;
+  export import PricingPlanListParams = V2Namespace14.Billing.PricingPlanListParams;
+  export import PricingPlanCreateParams = V2Namespace14.Billing.PricingPlanCreateParams;
+  export import PricingPlanRetrieveParams = V2Namespace14.Billing.PricingPlanRetrieveParams;
+  export import PricingPlanUpdateParams = V2Namespace14.Billing.PricingPlanUpdateParams;
   export {PricingPlan};
-  export import PricingPlanSubscriptionListParams = V2Namespace14.Billing.PricingPlanSubscriptionListParams;
-  export import PricingPlanSubscriptionRetrieveParams = V2Namespace14.Billing.PricingPlanSubscriptionRetrieveParams;
-  export import PricingPlanSubscriptionUpdateParams = V2Namespace14.Billing.PricingPlanSubscriptionUpdateParams;
-  export import PricingPlanSubscriptionRemoveDiscountsParams = V2Namespace14.Billing.PricingPlanSubscriptionRemoveDiscountsParams;
+  export import PricingPlanSubscriptionListParams = V2Namespace15.Billing.PricingPlanSubscriptionListParams;
+  export import PricingPlanSubscriptionRetrieveParams = V2Namespace15.Billing.PricingPlanSubscriptionRetrieveParams;
+  export import PricingPlanSubscriptionUpdateParams = V2Namespace15.Billing.PricingPlanSubscriptionUpdateParams;
+  export import PricingPlanSubscriptionRemoveDiscountsParams = V2Namespace15.Billing.PricingPlanSubscriptionRemoveDiscountsParams;
   export {PricingPlanSubscription};
-  export import ProfileListParams = V2Namespace15.Billing.ProfileListParams;
-  export import ProfileCreateParams = V2Namespace15.Billing.ProfileCreateParams;
-  export import ProfileRetrieveParams = V2Namespace15.Billing.ProfileRetrieveParams;
-  export import ProfileUpdateParams = V2Namespace15.Billing.ProfileUpdateParams;
+  export import ProfileListParams = V2Namespace16.Billing.ProfileListParams;
+  export import ProfileCreateParams = V2Namespace16.Billing.ProfileCreateParams;
+  export import ProfileRetrieveParams = V2Namespace16.Billing.ProfileRetrieveParams;
+  export import ProfileUpdateParams = V2Namespace16.Billing.ProfileUpdateParams;
   export {Profile};
-  export import RateCardListParams = V2Namespace16.Billing.RateCardListParams;
-  export import RateCardCreateParams = V2Namespace16.Billing.RateCardCreateParams;
-  export import RateCardRetrieveParams = V2Namespace16.Billing.RateCardRetrieveParams;
-  export import RateCardUpdateParams = V2Namespace16.Billing.RateCardUpdateParams;
-  export import RateCardModifyRatesParams = V2Namespace16.Billing.RateCardModifyRatesParams;
+  export import RateCardListParams = V2Namespace17.Billing.RateCardListParams;
+  export import RateCardCreateParams = V2Namespace17.Billing.RateCardCreateParams;
+  export import RateCardRetrieveParams = V2Namespace17.Billing.RateCardRetrieveParams;
+  export import RateCardUpdateParams = V2Namespace17.Billing.RateCardUpdateParams;
+  export import RateCardModifyRatesParams = V2Namespace17.Billing.RateCardModifyRatesParams;
   export {RateCard};
-  export import RateCardSubscriptionListParams = V2Namespace17.Billing.RateCardSubscriptionListParams;
-  export import RateCardSubscriptionCreateParams = V2Namespace17.Billing.RateCardSubscriptionCreateParams;
-  export import RateCardSubscriptionRetrieveParams = V2Namespace17.Billing.RateCardSubscriptionRetrieveParams;
-  export import RateCardSubscriptionUpdateParams = V2Namespace17.Billing.RateCardSubscriptionUpdateParams;
-  export import RateCardSubscriptionCancelParams = V2Namespace17.Billing.RateCardSubscriptionCancelParams;
+  export import RateCardSubscriptionListParams = V2Namespace18.Billing.RateCardSubscriptionListParams;
+  export import RateCardSubscriptionCreateParams = V2Namespace18.Billing.RateCardSubscriptionCreateParams;
+  export import RateCardSubscriptionRetrieveParams = V2Namespace18.Billing.RateCardSubscriptionRetrieveParams;
+  export import RateCardSubscriptionUpdateParams = V2Namespace18.Billing.RateCardSubscriptionUpdateParams;
+  export import RateCardSubscriptionCancelParams = V2Namespace18.Billing.RateCardSubscriptionCancelParams;
   export {RateCardSubscription};
-  export import ServiceActionCreateParams = V2Namespace18.Billing.ServiceActionCreateParams;
-  export import ServiceActionRetrieveParams = V2Namespace18.Billing.ServiceActionRetrieveParams;
-  export import ServiceActionUpdateParams = V2Namespace18.Billing.ServiceActionUpdateParams;
+  export import ServiceActionCreateParams = V2Namespace19.Billing.ServiceActionCreateParams;
+  export import ServiceActionRetrieveParams = V2Namespace19.Billing.ServiceActionRetrieveParams;
+  export import ServiceActionUpdateParams = V2Namespace19.Billing.ServiceActionUpdateParams;
   export {ServiceAction};
+  export {ContractLicensePricingQuantityChange};
   export {BillSettingVersion};
   export {CadenceSpendModifier};
   export {CollectionSettingVersion};

@@ -531,7 +531,7 @@ export namespace V2 {
       recipient_verification?: string;
 
       /**
-       * The description that appears on the receiving end for an OutboundPayment (for example, on a bank statement). Must be between 3 and 22 characters long, and not contain profanity.
+       * The description that appears on the receiving end for an OutboundPayment (for example, on a bank statement). Must be between 3 and 22 characters long for most destinations (500 for FinancialAccount destinations), and not contain profanity.
        */
       statement_descriptor?: string;
     }

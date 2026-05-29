@@ -1450,11 +1450,6 @@ export namespace QuotePreviewInvoice {
        * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
        */
       us_bank_account: PaymentMethodOptions.UsBankAccount | null;
-
-      /**
-       * If paying by `wechat_pay`, this sub-hash contains details about the WeChat Pay payment method options to pass to the invoice's PaymentIntent.
-       */
-      wechat_pay?: PaymentMethodOptions.WechatPay | null;
     }
 
     export type PaymentMethodType =
@@ -1584,18 +1579,6 @@ export namespace QuotePreviewInvoice {
          * Bank account verification method. The default value is `automatic`.
          */
         verification_method?: UsBankAccount.VerificationMethod;
-      }
-
-      export interface WechatPay {
-        /**
-         * The app ID registered with WeChat Pay. Only required when client is `ios` or `android`.
-         */
-        app_id?: string;
-
-        /**
-         * The client type that the end customer will pay from.
-         */
-        client?: WechatPay.Client;
       }
 
       export namespace AcssDebit {
@@ -1772,10 +1755,6 @@ export namespace QuotePreviewInvoice {
             export type AccountSubcategory = 'checking' | 'savings';
           }
         }
-      }
-
-      export namespace WechatPay {
-        export type Client = 'android' | 'ios' | 'mobile_web' | 'web';
       }
     }
   }

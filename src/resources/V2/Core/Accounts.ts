@@ -11434,6 +11434,11 @@ export namespace V2 {
            * A value indicating who is responsible for losses when this Account can't pay back negative balances from payments.
            */
           losses_collector: Responsibilities.LossesCollector;
+
+          /**
+           * A value indicating the party responsible for collecting requirements on this account.
+           */
+          requirements_collector?: Responsibilities.RequirementsCollector;
         }
 
         export namespace Responsibilities {
@@ -11444,6 +11449,8 @@ export namespace V2 {
             | 'stripe';
 
           export type LossesCollector = 'application' | 'stripe';
+
+          export type RequirementsCollector = 'application' | 'stripe';
         }
       }
 
@@ -15981,6 +15988,11 @@ export namespace V2 {
            * A value indicating who is responsible for losses when this Account can't pay back negative balances from payments.
            */
           losses_collector: Responsibilities.LossesCollector;
+
+          /**
+           * A value indicating the party responsible for collecting requirements on this account.
+           */
+          requirements_collector?: Responsibilities.RequirementsCollector;
         }
 
         export namespace Responsibilities {
@@ -15991,6 +16003,8 @@ export namespace V2 {
             | 'stripe';
 
           export type LossesCollector = 'application' | 'stripe';
+
+          export type RequirementsCollector = 'application' | 'stripe';
         }
       }
 
