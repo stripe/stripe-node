@@ -291,6 +291,11 @@ export namespace TokenCreateParams {
     address_kanji?: JapanAddressParam;
 
     /**
+     * The person's place of birth.
+     */
+    birth_address?: AddressParam;
+
+    /**
      * The person's date of birth.
      */
     dob?: Emptyable<Person.Dob>;
@@ -567,6 +572,8 @@ export namespace TokenCreateParams {
        * The Kanji variation of the individual's primary address (Japan only).
        */
       address_kanji?: JapanAddressParam;
+
+      birth_address?: AddressParam;
 
       /**
        * The individual's date of birth.

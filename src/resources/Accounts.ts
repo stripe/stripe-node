@@ -3311,6 +3311,8 @@ export namespace AccountCreateParams {
      */
     address_kanji?: JapanAddressParam;
 
+    birth_address?: AddressParam;
+
     /**
      * The individual's date of birth.
      */
@@ -5728,6 +5730,8 @@ export namespace AccountUpdateParams {
      */
     address_kanji?: JapanAddressParam;
 
+    birth_address?: AddressParam;
+
     /**
      * The individual's date of birth.
      */
@@ -7397,6 +7401,11 @@ export interface AccountCreatePersonParams {
   address_kanji?: JapanAddressParam;
 
   /**
+   * The person's place of birth.
+   */
+  birth_address?: AddressParam;
+
+  /**
    * The person's date of birth.
    */
   dob?: Emptyable<AccountCreatePersonParams.Dob>;
@@ -8050,6 +8059,11 @@ export interface AccountUpdatePersonParams {
    * The Kanji variation of the person's address (Japan only).
    */
   address_kanji?: JapanAddressParam;
+
+  /**
+   * The person's place of birth.
+   */
+  birth_address?: AddressParam;
 
   /**
    * The person's date of birth.
