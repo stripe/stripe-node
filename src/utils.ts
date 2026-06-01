@@ -459,9 +459,20 @@ export function parseHttpHeaderAsString<K extends keyof RequestHeaders>(
 
 export function parseHttpHeaderAsNumber<K extends keyof RequestHeaders>(
   header: RequestHeaders[K]
-): number {
-  const number = Array.isArray(header) ? header[0] : header;
-  return Number(number);
+): number | null {
+  const value = Array.isArray(header) ? header[0] : header;
+  if (value == null) {
+    return null;
+  }
+  const trimmed = String(value).trim();
+  if (trimmed === '') {
+    return null;
+  }
+  const parsed = Number(trimmed);
+  if (!Number.isFinite(parsed)) {
+    return null;
+  }
+  return parsed;
 }
 
 export function parseHeadersForFetch(

@@ -816,6 +816,65 @@ describe('utils', () => {
     });
   });
 
+  describe('parseHttpHeaderAsNumber', () => {
+    it('returns the number for valid integer strings', () => {
+      expect(utils.parseHttpHeaderAsNumber('30')).to.equal(30);
+      expect(utils.parseHttpHeaderAsNumber('0')).to.equal(0);
+    });
+
+    it('returns the number for valid decimal strings', () => {
+      expect(utils.parseHttpHeaderAsNumber('1.5')).to.equal(1.5);
+    });
+
+    it('returns the number for strings with surrounding whitespace', () => {
+      expect(utils.parseHttpHeaderAsNumber('  42  ')).to.equal(42);
+    });
+
+    it('returns null for undefined', () => {
+      expect(utils.parseHttpHeaderAsNumber(undefined)).to.be.null;
+    });
+
+    it('returns null for null', () => {
+      expect(utils.parseHttpHeaderAsNumber(null)).to.be.null;
+    });
+
+    it('returns null for empty string', () => {
+      expect(utils.parseHttpHeaderAsNumber('')).to.be.null;
+    });
+
+    it('returns null for whitespace-only strings', () => {
+      expect(utils.parseHttpHeaderAsNumber('   ')).to.be.null;
+    });
+
+    it('returns null for non-numeric strings', () => {
+      expect(utils.parseHttpHeaderAsNumber('bad')).to.be.null;
+    });
+
+    it('returns null for "NaN"', () => {
+      expect(utils.parseHttpHeaderAsNumber('NaN')).to.be.null;
+    });
+
+    it('returns null for "Infinity"', () => {
+      expect(utils.parseHttpHeaderAsNumber('Infinity')).to.be.null;
+    });
+
+    it('returns null for "-Infinity"', () => {
+      expect(utils.parseHttpHeaderAsNumber('-Infinity')).to.be.null;
+    });
+
+    it('takes the first element for array input', () => {
+      expect(utils.parseHttpHeaderAsNumber(['30', '60'])).to.equal(30);
+    });
+
+    it('returns null for array with non-numeric first element', () => {
+      expect(utils.parseHttpHeaderAsNumber(['bad', '30'])).to.be.null;
+    });
+
+    it('returns null for array with empty string first element', () => {
+      expect(utils.parseHttpHeaderAsNumber(['', '30'])).to.be.null;
+    });
+  });
+
   describe('concat', () => {
     it('should return a joined Uint8Array', () => {
       const arr1 = new Uint8Array([1, 2, 3]);
