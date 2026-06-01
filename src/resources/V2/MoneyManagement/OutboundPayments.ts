@@ -370,6 +370,7 @@ export namespace V2 {
             | 'paper_check_attachment_too_large'
             | 'paper_check_expired'
             | 'paper_check_undeliverable'
+            | 'payout_method_amount_limit_exceeded'
             | 'payout_method_declined'
             | 'payout_method_does_not_exist'
             | 'payout_method_expired'
