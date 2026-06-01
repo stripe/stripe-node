@@ -1,7 +1,26 @@
 // File generated from our OpenAPI spec
 
+import {StripeResource} from '../../StripeResource.js';
 import {OrderEvent} from './OrderEvents.js';
-import {RequestOptions} from '../../lib.js';
+import {RequestOptions, Response} from '../../lib.js';
+
+export class OrderResource extends StripeResource {
+  /**
+   * Retrieves a delegated checkout order.
+   */
+  retrieve(
+    id: string,
+    params?: DelegatedCheckout.OrderRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<Order>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/delegated_checkout/orders/${id}`,
+      params,
+      options
+    ) as any;
+  }
+}
 export interface Order {
   /**
    * Unique identifier for the object.
@@ -175,5 +194,13 @@ export namespace DelegatedCheckout {
         total: number | null;
       }
     }
+  }
+}
+export namespace DelegatedCheckout {
+  export interface OrderRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
   }
 }

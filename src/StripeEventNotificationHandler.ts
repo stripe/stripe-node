@@ -426,6 +426,7 @@ const KNOWN_EVENT_TYPES = new Set([
   'v2.reporting.report_run.succeeded',
   'v2.reporting.report_run.updated',
   'v2.signals.account_signal.fraudulent_merchant_ready',
+  'v2.signals.account_signal.merchant_delinquency_ready',
   // event-types: The end of the section generated from our OpenAPI spec
 ]);
 

@@ -4,6 +4,7 @@ import {resourceNamespace} from './ResourceNamespace.js';
 import {AccountEvaluationResource as RadarAccountEvaluations} from './resources/Radar/AccountEvaluations.js';
 import {AccountEvaluationResource as V2CoreAccountEvaluations} from './resources/V2/Core/AccountEvaluations.js';
 import {AccountLinkResource as V2CoreAccountLinks} from './resources/V2/Core/AccountLinks.js';
+import {AccountSignalResource as V2SignalsAccountSignals} from './resources/V2/Signals/AccountSignals.js';
 import {AccountTokenResource as V2CoreAccountTokens} from './resources/V2/Core/AccountTokens.js';
 import {AccountResource as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
 import {AccountResource as V2CoreAccounts} from './resources/V2/Core/Accounts.js';
@@ -97,6 +98,7 @@ import {OffSessionPaymentResource as V2PaymentsOffSessionPayments} from './resou
 import {OnboardingLinkResource as TerminalOnboardingLinks} from './resources/Terminal/OnboardingLinks.js';
 import {OneTimeItemResource as V2BillingOneTimeItems} from './resources/V2/Billing/OneTimeItems.js';
 import {OrderResource as ClimateOrders} from './resources/Climate/Orders.js';
+import {OrderResource as DelegatedCheckoutOrders} from './resources/DelegatedCheckout/Orders.js';
 import {OutboundPaymentQuoteResource as V2MoneyManagementOutboundPaymentQuotes} from './resources/V2/MoneyManagement/OutboundPaymentQuotes.js';
 import {OutboundPaymentResource as TestHelpersTreasuryOutboundPayments} from './resources/TestHelpers/Treasury/OutboundPayments.js';
 import {OutboundPaymentResource as TreasuryOutboundPayments} from './resources/Treasury/OutboundPayments.js';
@@ -267,6 +269,7 @@ export const Climate = resourceNamespace('climate', {
   Suppliers: ClimateSuppliers,
 });
 export const DelegatedCheckout = resourceNamespace('delegatedCheckout', {
+  Orders: DelegatedCheckoutOrders,
   RequestedSessions: DelegatedCheckoutRequestedSessions,
 });
 export const Entitlements = resourceNamespace('entitlements', {
@@ -489,6 +492,9 @@ export const V2 = resourceNamespace('v2', {
   Reporting: resourceNamespace('reporting', {
     ReportRuns: V2ReportingReportRuns,
     Reports: V2ReportingReports,
+  }),
+  Signal: resourceNamespace('signal', {
+    AccountSignals: V2SignalsAccountSignals,
   }),
   Tax: resourceNamespace('tax', {ManualRules: V2TaxManualRules}),
   TestHelpers: resourceNamespace('testHelpers', {
