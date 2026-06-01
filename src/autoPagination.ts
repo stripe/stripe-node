@@ -176,6 +176,10 @@ class V2ListIterator<T> implements AsyncIterator<T> {
   private options: RequestOptions | undefined;
   private spec: MakeRequestSpec | undefined;
   private stripeResource: StripeResourceObject;
+  // Concurrency guard: mirrors V1Iterator.promiseCache to prevent duplicate
+  // page-fetch requests when .next() is called in parallel.
+  private promiseCache: PromiseCache;
+
   constructor(
     firstPagePromise: Promise<PageResult<T>>,
     options: RequestOptions | undefined,
@@ -188,7 +192,9 @@ class V2ListIterator<T> implements AsyncIterator<T> {
     this.options = options;
     this.spec = spec;
     this.stripeResource = stripeResource;
+    this.promiseCache = {currentPromise: null};
   }
+
   private async initFirstPage(): Promise<void> {
     if (this.firstPagePromise) {
       const page = await this.firstPagePromise;
@@ -197,6 +203,7 @@ class V2ListIterator<T> implements AsyncIterator<T> {
       this.nextPageUrl = page.next_page_url || null;
     }
   }
+
   private async turnPage(): Promise<Iterator<T> | null> {
     if (!this.nextPageUrl) return null;
     const page = await this.stripeResource._makeRequest(
@@ -210,19 +217,43 @@ class V2ListIterator<T> implements AsyncIterator<T> {
     this.currentPageIterator = page.data[Symbol.iterator]();
     return this.currentPageIterator;
   }
-  async next(): Promise<IteratorResult<T>> {
+
+  private async _next(): Promise<IteratorResult<T>> {
     await this.initFirstPage();
-    if (this.currentPageIterator) {
-      const result = this.currentPageIterator.next();
-      if (!result.done) return {done: false, value: result.value};
+
+    // Walk through pages until we find an item or exhaust all pages.
+    // Previously this only called turnPage() once, silently terminating
+    // iteration if an intermediate page happened to be empty.
+    while (true) {
+      if (this.currentPageIterator) {
+        const result = this.currentPageIterator.next();
+        if (!result.done) return {done: false, value: result.value};
+      }
+      const nextPageIterator = await this.turnPage();
+      if (!nextPageIterator) {
+        return {done: true, value: undefined};
+      }
     }
-    const nextPageIterator = await this.turnPage();
-    if (!nextPageIterator) {
-      return {done: true, value: undefined};
+  }
+
+  next(): Promise<IteratorResult<T>> {
+    /**
+     * If a user calls .next() multiple times in parallel,
+     * return the same result until something has resolved
+     * to prevent page-turning race conditions.
+     */
+    if (this.promiseCache.currentPromise) {
+      return this.promiseCache.currentPromise;
     }
-    const result = nextPageIterator.next();
-    if (!result.done) return {done: false, value: result.value};
-    return {done: true, value: undefined};
+
+    const nextPromise = (async (): Promise<IteratorResult<T>> => {
+      const ret = await this._next();
+      this.promiseCache.currentPromise = null;
+      return ret;
+    })();
+
+    this.promiseCache.currentPromise = nextPromise;
+    return nextPromise;
   }
 }
 
