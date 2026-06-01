@@ -2803,7 +2803,7 @@ export namespace PaymentIntent {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: 'account_funding';
+      transaction_type?: MoneyServices.TransactionType;
     }
 
     export interface Subscription {
@@ -3854,6 +3854,8 @@ export namespace PaymentIntent {
 
         sender_details?: AccountFunding.SenderDetails;
       }
+
+      export type TransactionType = 'account_funding' | 'debt_repayment';
 
       export namespace AccountFunding {
         export interface BeneficiaryDetails {
@@ -7993,7 +7995,7 @@ export namespace PaymentIntentCreateParams {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: Emptyable<'account_funding'>;
+      transaction_type?: Emptyable<MoneyServices.TransactionType>;
     }
 
     export interface Subscription {
@@ -9511,6 +9513,8 @@ export namespace PaymentIntentCreateParams {
          */
         sender_details?: Emptyable<AccountFunding.SenderDetails>;
       }
+
+      export type TransactionType = 'account_funding' | 'debt_repayment';
 
       export namespace AccountFunding {
         export interface BeneficiaryDetails {
@@ -15904,7 +15908,7 @@ export namespace PaymentIntentUpdateParams {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: Emptyable<'account_funding'>;
+      transaction_type?: Emptyable<MoneyServices.TransactionType>;
     }
 
     export interface Subscription {
@@ -17422,6 +17426,8 @@ export namespace PaymentIntentUpdateParams {
          */
         sender_details?: Emptyable<AccountFunding.SenderDetails>;
       }
+
+      export type TransactionType = 'account_funding' | 'debt_repayment';
 
       export namespace AccountFunding {
         export interface BeneficiaryDetails {
@@ -22864,7 +22870,7 @@ export namespace PaymentIntentCaptureParams {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: Emptyable<'account_funding'>;
+      transaction_type?: Emptyable<MoneyServices.TransactionType>;
     }
 
     export interface Subscription {
@@ -24364,6 +24370,8 @@ export namespace PaymentIntentCaptureParams {
          */
         sender_details?: Emptyable<AccountFunding.SenderDetails>;
       }
+
+      export type TransactionType = 'account_funding' | 'debt_repayment';
 
       export namespace AccountFunding {
         export interface BeneficiaryDetails {
@@ -26463,7 +26471,7 @@ export namespace PaymentIntentConfirmParams {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: Emptyable<'account_funding'>;
+      transaction_type?: Emptyable<MoneyServices.TransactionType>;
     }
 
     export interface Subscription {
@@ -27981,6 +27989,8 @@ export namespace PaymentIntentConfirmParams {
          */
         sender_details?: Emptyable<AccountFunding.SenderDetails>;
       }
+
+      export type TransactionType = 'account_funding' | 'debt_repayment';
 
       export namespace AccountFunding {
         export interface BeneficiaryDetails {
