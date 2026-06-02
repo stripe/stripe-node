@@ -493,7 +493,7 @@ export const V2 = resourceNamespace('v2', {
     ReportRuns: V2ReportingReportRuns,
     Reports: V2ReportingReports,
   }),
-  Signal: resourceNamespace('signal', {
+  Signals: resourceNamespace('signals', {
     AccountSignals: V2SignalsAccountSignals,
   }),
   Tax: resourceNamespace('tax', {ManualRules: V2TaxManualRules}),
