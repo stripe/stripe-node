@@ -306,10 +306,7 @@ export class RequestSender {
     return false;
   }
 
-  _getSleepTimeInMS(
-    numRetries: number,
-    retryAfter: number | null = null
-  ): number {
+  _getSleepTimeInMS(numRetries: number, retryAfter?: number): number {
     const initialNetworkRetryDelay = this._stripe.getInitialNetworkRetryDelay();
     const maxNetworkRetryDelay = this._stripe.getMaxNetworkRetryDelay();
 
@@ -590,7 +587,7 @@ export class RequestSender {
       apiVersion: string,
       headers: RequestHeaders,
       requestRetries: number,
-      retryAfter: number | null
+      retryAfter?: number
     ): ReturnType<typeof setTimeout> => {
       return setTimeout(
         requestFn,
@@ -705,8 +702,7 @@ export class RequestSender {
                   makeRequest,
                   apiVersion,
                   headers,
-                  requestRetries,
-                  null
+                  requestRetries
                 );
               } else {
                 const isTimeoutError =
