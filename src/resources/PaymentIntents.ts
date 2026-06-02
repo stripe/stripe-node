@@ -4239,15 +4239,6 @@ export namespace PaymentIntent {
 
     export interface Card {
       /**
-       * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
-       *
-       * If omitted, funds are captured before the authorization expires.
-       */
-      capture_by?: Card.CaptureBy;
-
-      capture_delay?: Card.CaptureDelay;
-
-      /**
        * Controls when the funds will be captured from the customer's account.
        */
       capture_method?: 'manual';
@@ -4339,15 +4330,6 @@ export namespace PaymentIntent {
     }
 
     export interface CardPresent {
-      /**
-       * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
-       *
-       * If omitted, funds are captured before the authorization expires.
-       */
-      capture_by?: CardPresent.CaptureBy;
-
-      capture_delay?: CardPresent.CaptureDelay;
-
       /**
        * Controls when the funds will be captured from the customer's account.
        */
@@ -5204,24 +5186,6 @@ export namespace PaymentIntent {
     }
 
     export namespace Card {
-      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
-
-      export interface CaptureDelay {
-        /**
-         * The number of days to delay the capture of the funds.
-         *
-         * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
-         */
-        days?: number;
-
-        /**
-         * The number of hours to delay the capture of the funds.
-         *
-         * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
-         */
-        hours?: number;
-      }
-
       export interface Installments {
         /**
          * Installment plans that may be selected for this PaymentIntent.
@@ -5416,24 +5380,6 @@ export namespace PaymentIntent {
     }
 
     export namespace CardPresent {
-      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
-
-      export interface CaptureDelay {
-        /**
-         * The number of days to delay the capture of the funds.
-         *
-         * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
-         */
-        days?: number;
-
-        /**
-         * The number of hours to delay the capture of the funds.
-         *
-         * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
-         */
-        hours?: number;
-      }
-
       export type CaptureMethod = 'manual' | 'manual_preferred';
 
       export type RequestReauthorization = 'if_available' | 'never';
@@ -10554,20 +10500,6 @@ export namespace PaymentIntentCreateParams {
 
     export interface Card {
       /**
-       * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
-       *
-       * If omitted, funds are captured before the authorization expires.
-       */
-      capture_by?: Card.CaptureBy;
-
-      /**
-       * The number of days or hours to delay the capture of the funds. You can set both days and hours as long as the total delay does not exceed 30 days.
-       *
-       * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
-       */
-      capture_delay?: Card.CaptureDelay;
-
-      /**
        * Controls when the funds are captured from the customer's account.
        *
        * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
@@ -10691,20 +10623,6 @@ export namespace PaymentIntentCreateParams {
     }
 
     export interface CardPresent {
-      /**
-       * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
-       *
-       * If omitted, funds are captured before the authorization expires.
-       */
-      capture_by?: CardPresent.CaptureBy;
-
-      /**
-       * The number of days or hours to delay the capture of the funds. You can set both days and hours as long as the total delay does not exceed 30 days.
-       *
-       * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
-       */
-      capture_delay?: CardPresent.CaptureDelay;
-
       /**
        * Controls when the funds are captured from the customer's account.
        *
@@ -11733,14 +11651,6 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace Card {
-      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
-
-      export interface CaptureDelay {
-        days?: number;
-
-        hours?: number;
-      }
-
       export interface Installments {
         /**
          * Setting to true enables installments for this PaymentIntent.
@@ -12082,14 +11992,6 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace CardPresent {
-      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
-
-      export interface CaptureDelay {
-        days?: number;
-
-        hours?: number;
-      }
-
       export type CaptureMethod = 'manual' | 'manual_preferred';
 
       export interface PaymentDetails {
@@ -18516,20 +18418,6 @@ export namespace PaymentIntentUpdateParams {
 
     export interface Card {
       /**
-       * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
-       *
-       * If omitted, funds are captured before the authorization expires.
-       */
-      capture_by?: Card.CaptureBy;
-
-      /**
-       * The number of days or hours to delay the capture of the funds. You can set both days and hours as long as the total delay does not exceed 30 days.
-       *
-       * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
-       */
-      capture_delay?: Card.CaptureDelay;
-
-      /**
        * Controls when the funds are captured from the customer's account.
        *
        * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
@@ -18653,20 +18541,6 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export interface CardPresent {
-      /**
-       * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
-       *
-       * If omitted, funds are captured before the authorization expires.
-       */
-      capture_by?: CardPresent.CaptureBy;
-
-      /**
-       * The number of days or hours to delay the capture of the funds. You can set both days and hours as long as the total delay does not exceed 30 days.
-       *
-       * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
-       */
-      capture_delay?: CardPresent.CaptureDelay;
-
       /**
        * Controls when the funds are captured from the customer's account.
        *
@@ -19695,14 +19569,6 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace Card {
-      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
-
-      export interface CaptureDelay {
-        days?: number;
-
-        hours?: number;
-      }
-
       export interface Installments {
         /**
          * Setting to true enables installments for this PaymentIntent.
@@ -20044,14 +19910,6 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace CardPresent {
-      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
-
-      export interface CaptureDelay {
-        days?: number;
-
-        hours?: number;
-      }
-
       export type CaptureMethod = 'manual' | 'manual_preferred';
 
       export interface PaymentDetails {
@@ -29128,20 +28986,6 @@ export namespace PaymentIntentConfirmParams {
 
     export interface Card {
       /**
-       * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
-       *
-       * If omitted, funds are captured before the authorization expires.
-       */
-      capture_by?: Card.CaptureBy;
-
-      /**
-       * The number of days or hours to delay the capture of the funds. You can set both days and hours as long as the total delay does not exceed 30 days.
-       *
-       * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
-       */
-      capture_delay?: Card.CaptureDelay;
-
-      /**
        * Controls when the funds are captured from the customer's account.
        *
        * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
@@ -29265,20 +29109,6 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export interface CardPresent {
-      /**
-       * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
-       *
-       * If omitted, funds are captured before the authorization expires.
-       */
-      capture_by?: CardPresent.CaptureBy;
-
-      /**
-       * The number of days or hours to delay the capture of the funds. You can set both days and hours as long as the total delay does not exceed 30 days.
-       *
-       * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
-       */
-      capture_delay?: CardPresent.CaptureDelay;
-
       /**
        * Controls when the funds are captured from the customer's account.
        *
@@ -30307,14 +30137,6 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace Card {
-      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
-
-      export interface CaptureDelay {
-        days?: number;
-
-        hours?: number;
-      }
-
       export interface Installments {
         /**
          * Setting to true enables installments for this PaymentIntent.
@@ -30656,14 +30478,6 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace CardPresent {
-      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
-
-      export interface CaptureDelay {
-        days?: number;
-
-        hours?: number;
-      }
-
       export type CaptureMethod = 'manual' | 'manual_preferred';
 
       export interface PaymentDetails {

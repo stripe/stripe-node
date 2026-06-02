@@ -645,11 +645,6 @@ export namespace Tax {
       performance_location?: string;
 
       /**
-       * Details of the performance location for this line item. Use this to specify an address directly instead of a tax location ID.
-       */
-      performance_location_details?: LineItem.PerformanceLocationDetails;
-
-      /**
        * If provided, the product's `tax_code` will be used as the line item's `tax_code`.
        */
       product?: string;
@@ -905,48 +900,7 @@ export namespace Tax {
     }
 
     export namespace LineItem {
-      export interface PerformanceLocationDetails {
-        /**
-         * The address of the performance venue.
-         */
-        address: PerformanceLocationDetails.Address;
-      }
-
       export type TaxBehavior = 'exclusive' | 'inclusive';
-
-      export namespace PerformanceLocationDetails {
-        export interface Address {
-          /**
-           * City, district, suburb, town, or village.
-           */
-          city?: Emptyable<string>;
-
-          /**
-           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-           */
-          country: string;
-
-          /**
-           * Address line 1, such as the street, PO Box, or company name.
-           */
-          line1?: Emptyable<string>;
-
-          /**
-           * Address line 2, such as the apartment, suite, unit, or building.
-           */
-          line2?: Emptyable<string>;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code?: Emptyable<string>;
-
-          /**
-           * State/province as an [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) subdivision code, without country prefix, such as "NY" or "TX".
-           */
-          state?: Emptyable<string>;
-        }
-      }
     }
 
     export namespace ShipFromDetails {
