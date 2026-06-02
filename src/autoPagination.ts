@@ -176,6 +176,7 @@ class V2ListIterator<T> implements AsyncIterator<T> {
   private options: RequestOptions | undefined;
   private spec: MakeRequestSpec | undefined;
   private stripeResource: StripeResourceObject;
+  private promiseCache: PromiseCache;
   constructor(
     firstPagePromise: Promise<PageResult<T>>,
     options: RequestOptions | undefined,
@@ -188,6 +189,7 @@ class V2ListIterator<T> implements AsyncIterator<T> {
     this.options = options;
     this.spec = spec;
     this.stripeResource = stripeResource;
+    this.promiseCache = {currentPromise: null};
   }
   private async initFirstPage(): Promise<void> {
     if (this.firstPagePromise) {
@@ -210,7 +212,7 @@ class V2ListIterator<T> implements AsyncIterator<T> {
     this.currentPageIterator = page.data[Symbol.iterator]();
     return this.currentPageIterator;
   }
-  async next(): Promise<IteratorResult<T>> {
+  private async _next(): Promise<IteratorResult<T>> {
     await this.initFirstPage();
     if (this.currentPageIterator) {
       const result = this.currentPageIterator.next();
@@ -223,6 +225,18 @@ class V2ListIterator<T> implements AsyncIterator<T> {
     const result = nextPageIterator.next();
     if (!result.done) return {done: false, value: result.value};
     return {done: true, value: undefined};
+  }
+  next(): Promise<IteratorResult<T>> {
+    if (this.promiseCache.currentPromise) {
+      return this.promiseCache.currentPromise;
+    }
+    const nextPromise = (async (): Promise<IteratorResult<T>> => {
+      const ret = await this._next();
+      this.promiseCache.currentPromise = null;
+      return ret;
+    })();
+    this.promiseCache.currentPromise = nextPromise;
+    return nextPromise;
   }
 }
 
