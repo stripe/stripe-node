@@ -59,19 +59,8 @@ export class NodePlatformFunctions extends PlatformFunctions {
       throw new Error('secureCompare must receive two arguments');
     }
 
-    // return early here if buffer lengths are not equal since timingSafeEqual
-    // will throw if buffer lengths are not equal
     if (a.length !== b.length) {
       return false;
-    }
-
-    // use crypto.timingSafeEqual if available (since Node.js v6.6.0),
-    // otherwise use our own scmp-internal function.
-    if (crypto.timingSafeEqual) {
-      const textEncoder = new TextEncoder();
-      const aEncoded: Uint8Array = textEncoder.encode(a);
-      const bEncoded: Uint8Array = textEncoder.encode(b);
-      return crypto.timingSafeEqual(aEncoded, bEncoded);
     }
 
     return super.secureCompare(a, b);
