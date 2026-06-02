@@ -1,15 +1,49 @@
 /**
- * This file does not exist to be executed, just compiled,
- * so that we can ensure that the definition files
- * only reference names that exist,
- * and to perform a basic sanity check that types are exported as intended.
+ * Regression test for https://github.com/stripe/stripe-node/issues/2683
+ *
+ * This file does not exist to be executed, just compiled, so that we can
+ * verify that the CJS entry point exposes the full Stripe namespace when
+ * using module: "commonjs" / moduleResolution: "node" / esModuleInterop: true.
+ *
+ * The issue: TypeScript generates a .d.ts that exports `StripeConstructor`,
+ * whose namespace only re-exports the Stripe class type — not the full
+ * namespace with resource types like Customer, Charge, etc.
  */
 
+// ——— Pattern 1: import type (the primary reported issue) ———
+import type StripeType from 'stripe';
+
+let customer: StripeType.Customer;
+let params: StripeType.CustomerCreateParams;
+let charge: StripeType.Charge;
+let checkout: StripeType.Checkout.SessionCreateParams;
+let rawError: StripeType.StripeRawError;
+
+// ——— Pattern 2: value import for construction + namespace access ———
 import Stripe from 'stripe';
 
 let stripe = new Stripe('sk_test_123', {
   apiVersion: Stripe.API_VERSION,
 });
+
+// Namespace types accessible on value import
+let customer2: Stripe.Customer;
+let opts: Stripe.RequestOptions;
+
+// Static members
+const version: typeof Stripe.API_VERSION = Stripe.API_VERSION;
+Stripe.errors;
+Stripe.errors.StripeError;
+
+// Instance usage
+async (): Promise<void> => {
+  const cust: Stripe.Customer = await stripe.customers.create({
+    description: 'test',
+  });
+};
+
+// Error instanceof
+const instanceofCheck = {} instanceof Stripe.errors.StripeError;
 
 stripe = new Stripe('sk_test_123');
 
@@ -105,11 +139,6 @@ stripe = new Stripe('sk_test_123', {unknownProperty: true});
   }
 
   const cusList: Stripe.ApiList<Stripe.Customer> = await stripe.customers.list();
-
-  /**
-   * TODO(DEVSDK-2534): remove this test when we fix V2List at next major.
-   */
-  const v2EventsListBC: Stripe.ApiList<Stripe.V2.Core.Event> = await stripe.v2.core.events.list();
 
   const v2EventsList: Stripe.V2List<Stripe.V2.Core.Event> = await stripe.v2.core.events.list();
 
@@ -262,7 +291,7 @@ async (): Promise<void> => {
 };
 
 // Can reference error types
-let rawError: Stripe.StripeRawError;
+let rawError2: Stripe.StripeRawError;
 
 let newError: typeof Stripe.errors.StripeError;
 
@@ -388,6 +417,15 @@ event = stripe.webhooks.constructEvent(
   ['also_signature_but_does_not_work_at_runtime'],
   'secret'
 );
+
+const taxExempt: Stripe.CustomerUpdateParams.TaxExempt = 'exempt';
+let subscription: Stripe.Subscription;
+let invoice: Stripe.Invoice;
+let refund: Stripe.Refund;
+let paymentIntent: Stripe.PaymentIntent;
+let subscriptionCancelParams: Stripe.SubscriptionCancelParams;
+// Stripe.Event (v1 webhook event)
+let event2683: Stripe.Event;
 
 const v2AccountCreateParamConfiguration: Stripe.V2.Core.AccountCreateParams.Configuration = {};
 const checkoutSessionParam: Stripe.Checkout.SessionCreateParams = {};

@@ -70,19 +70,19 @@ export declare namespace Billing {
   export import AlertActivateParams = BillingNamespace0.AlertActivateParams;
   export import AlertArchiveParams = BillingNamespace0.AlertArchiveParams;
   export import AlertDeactivateParams = BillingNamespace0.AlertDeactivateParams;
-  export {Alert};
+  export {Alert, AlertResource};
   export import CreditBalanceSummaryRetrieveParams = BillingNamespace1.CreditBalanceSummaryRetrieveParams;
-  export {CreditBalanceSummary};
+  export {CreditBalanceSummary, CreditBalanceSummaryResource};
   export import CreditBalanceTransactionListParams = BillingNamespace2.CreditBalanceTransactionListParams;
   export import CreditBalanceTransactionRetrieveParams = BillingNamespace2.CreditBalanceTransactionRetrieveParams;
-  export {CreditBalanceTransaction};
+  export {CreditBalanceTransaction, CreditBalanceTransactionResource};
   export import CreditGrantListParams = BillingNamespace3.CreditGrantListParams;
   export import CreditGrantCreateParams = BillingNamespace3.CreditGrantCreateParams;
   export import CreditGrantRetrieveParams = BillingNamespace3.CreditGrantRetrieveParams;
   export import CreditGrantUpdateParams = BillingNamespace3.CreditGrantUpdateParams;
   export import CreditGrantExpireParams = BillingNamespace3.CreditGrantExpireParams;
   export import CreditGrantVoidGrantParams = BillingNamespace3.CreditGrantVoidGrantParams;
-  export {CreditGrant};
+  export {CreditGrant, CreditGrantResource};
   export import MeterListParams = BillingNamespace4.MeterListParams;
   export import MeterCreateParams = BillingNamespace4.MeterCreateParams;
   export import MeterRetrieveParams = BillingNamespace4.MeterRetrieveParams;
@@ -90,11 +90,11 @@ export declare namespace Billing {
   export import MeterDeactivateParams = BillingNamespace4.MeterDeactivateParams;
   export import MeterReactivateParams = BillingNamespace4.MeterReactivateParams;
   export import MeterListEventSummariesParams = BillingNamespace4.MeterListEventSummariesParams;
-  export {Meter};
+  export {Meter, MeterResource};
   export import MeterEventCreateParams = BillingNamespace5.MeterEventCreateParams;
-  export {MeterEvent};
+  export {MeterEvent, MeterEventResource};
   export import MeterEventAdjustmentCreateParams = BillingNamespace6.MeterEventAdjustmentCreateParams;
-  export {MeterEventAdjustment};
+  export {MeterEventAdjustment, MeterEventAdjustmentResource};
   export {AlertTriggered};
   export {MeterEventSummary};
 }

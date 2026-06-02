@@ -45,13 +45,13 @@ export declare namespace FinancialConnections {
   export import AccountSubscribeParams = FinancialConnectionsNamespace0.AccountSubscribeParams;
   export import AccountUnsubscribeParams = FinancialConnectionsNamespace0.AccountUnsubscribeParams;
   export import AccountListOwnersParams = FinancialConnectionsNamespace0.AccountListOwnersParams;
-  export {Account};
+  export {Account, AccountResource};
   export import SessionRetrieveParams = FinancialConnectionsNamespace1.SessionRetrieveParams;
   export import SessionCreateParams = FinancialConnectionsNamespace1.SessionCreateParams;
-  export {Session};
+  export {Session, SessionResource};
   export import TransactionListParams = FinancialConnectionsNamespace2.TransactionListParams;
   export import TransactionRetrieveParams = FinancialConnectionsNamespace2.TransactionRetrieveParams;
-  export {Transaction};
+  export {Transaction, TransactionResource};
   export {AccountOwner};
   export {AccountOwnership};
 }
