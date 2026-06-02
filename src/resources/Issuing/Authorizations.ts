@@ -1412,6 +1412,16 @@ export namespace Issuing {
       device_fingerprint?: string;
 
       network_data?: TokenDetails.NetworkData;
+
+      /**
+       * The decision made during token provisioning.
+       */
+      provisioning_decision?: TokenDetails.ProvisioningDecision | null;
+
+      /**
+       * The type of the token, indicating how it is used.
+       */
+      token_type?: TokenDetails.TokenType | null;
     }
 
     export interface Treasury {
@@ -1815,6 +1825,19 @@ export namespace Issuing {
         wallet_provider?: NetworkData.WalletProvider;
       }
 
+      export type ProvisioningDecision =
+        | 'approve'
+        | 'approve_pending_id_and_v'
+        | 'decline';
+
+      export type TokenType =
+        | 'card_on_file'
+        | 'cloud_based'
+        | 'commerce_platform'
+        | 'commercial_virtual_account'
+        | 'secure_element'
+        | 'static_credential';
+
       export namespace NetworkData {
         export interface Device {
           /**
@@ -1857,6 +1880,11 @@ export namespace Issuing {
            * A unique reference ID from the network to represent the card account number.
            */
           card_reference_id?: string;
+
+          /**
+           * Stripe's recommendation to the network for this token activation request, derived from the same risk signals used for the activation decision.
+           */
+          token_decision_recommendation?: Visa.TokenDecisionRecommendation | null;
 
           /**
            * The network-unique identifier for the token.
@@ -2086,6 +2114,13 @@ export namespace Issuing {
             | 'za'
             | 'zh'
             | 'zu';
+        }
+
+        export namespace Visa {
+          export type TokenDecisionRecommendation =
+            | 'approve'
+            | 'decline'
+            | 'recommend_id_and_v';
         }
 
         export namespace WalletProvider {

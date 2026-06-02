@@ -477,7 +477,7 @@ export namespace Radar {
       /**
        * The last 4 digits of the card number.
        */
-      last4?: string;
+      last4: string;
 
       /**
        * User's specified unique ID of the card for this authorization attempt (e.g., RRN or internal reference).

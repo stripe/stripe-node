@@ -1,10 +1,17 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
+import {Order} from './Orders.js';
 import {Profile} from './../Profiles.js';
 import * as SharedPayment from './../SharedPayment/index.js';
-import {MetadataParam, Address, Emptyable, Metadata} from '../../shared.js';
-import {RequestOptions, Response} from '../../lib.js';
+import {
+  MetadataParam,
+  Address,
+  Emptyable,
+  PaginationParams,
+  Metadata,
+} from '../../shared.js';
+import {RequestOptions, Response, ApiListPromise} from '../../lib.js';
 
 export class RequestedSessionResource extends StripeResource {
   /**
@@ -79,6 +86,24 @@ export class RequestedSessionResource extends StripeResource {
       `/v1/delegated_checkout/requested_sessions/${id}/expire`,
       params,
       options
+    ) as any;
+  }
+  /**
+   * Lists orders for a delegated checkout requested session.
+   */
+  listOrders(
+    id: string,
+    params?: DelegatedCheckout.RequestedSessionListOrdersParams,
+    options?: RequestOptions
+  ): ApiListPromise<Order> {
+    return this._makeRequest(
+      'GET',
+      `/v1/delegated_checkout/requested_sessions/${id}/orders`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
     ) as any;
   }
 }
@@ -1770,6 +1795,14 @@ export namespace DelegatedCheckout {
 }
 export namespace DelegatedCheckout {
   export interface RequestedSessionExpireParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+}
+export namespace DelegatedCheckout {
+  export interface RequestedSessionListOrdersParams extends PaginationParams {
     /**
      * Specifies which fields in the response should be expanded.
      */

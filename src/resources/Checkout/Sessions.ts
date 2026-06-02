@@ -1833,7 +1833,7 @@ export namespace Checkout {
     export namespace AutomaticSurcharge {
       export type CalculationBasis = 'total_after_tax' | 'total_before_tax';
 
-      export type Provider = 'interpayments' | 'yeeld';
+      export type Provider = 'interpayments' | 'proserv' | 'yeeld';
 
       export type Status = 'complete' | 'failed' | 'requires_input';
 

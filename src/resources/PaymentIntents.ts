@@ -2803,7 +2803,7 @@ export namespace PaymentIntent {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: 'account_funding';
+      transaction_type?: MoneyServices.TransactionType;
     }
 
     export interface Subscription {
@@ -3854,6 +3854,8 @@ export namespace PaymentIntent {
 
         sender_details?: AccountFunding.SenderDetails;
       }
+
+      export type TransactionType = 'account_funding' | 'debt_repayment';
 
       export namespace AccountFunding {
         export interface BeneficiaryDetails {
@@ -5404,6 +5406,11 @@ export namespace PaymentIntent {
          * The blockchain networks to support for deposits. Learn more about [supported networks and tokens](https://docs.stripe.com/payments/deposit-mode-stablecoin-payments#token-and-network-support).
          */
         networks?: Array<DepositOptions.Network>;
+
+        /**
+         * If true, provisions a permanent per-customer deposit address reused across PaymentIntents.
+         */
+        static_address?: boolean;
       }
 
       export type Mode = 'default' | 'deposit';
@@ -7042,9 +7049,9 @@ export namespace PaymentIntentCreateParams {
     enabled: boolean;
 
     /**
-     * Payment-level details for the orchestrated payment.
+     * Merchant-provided reference for this payment, used for reconciliation.
      */
-    payment_details?: PaymentsOrchestration.PaymentDetails;
+    payment_reference?: string;
   }
 
   export interface RadarOptions {
@@ -7993,7 +8000,7 @@ export namespace PaymentIntentCreateParams {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: Emptyable<'account_funding'>;
+      transaction_type?: Emptyable<MoneyServices.TransactionType>;
     }
 
     export interface Subscription {
@@ -9511,6 +9518,8 @@ export namespace PaymentIntentCreateParams {
          */
         sender_details?: Emptyable<AccountFunding.SenderDetails>;
       }
+
+      export type TransactionType = 'account_funding' | 'debt_repayment';
 
       export namespace AccountFunding {
         export interface BeneficiaryDetails {
@@ -11847,6 +11856,11 @@ export namespace PaymentIntentCreateParams {
         export namespace MoneyServices {
           export interface AccountFunding {
             /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+
+            /**
              * Details for a liquid asset (crypto or security) funding transaction.
              */
             liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
@@ -11858,6 +11872,12 @@ export namespace PaymentIntentCreateParams {
           }
 
           export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin';
+
             export interface LiquidAsset {
               /**
                * Details for a cryptocurrency liquid asset funding transaction.
@@ -12001,6 +12021,11 @@ export namespace PaymentIntentCreateParams {
         export namespace MoneyServices {
           export interface AccountFunding {
             /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+
+            /**
              * Details for a liquid asset (crypto or security) funding transaction.
              */
             liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
@@ -12012,6 +12037,12 @@ export namespace PaymentIntentCreateParams {
           }
 
           export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin';
+
             export interface LiquidAsset {
               /**
                * Details for a cryptocurrency liquid asset funding transaction.
@@ -12088,6 +12119,11 @@ export namespace PaymentIntentCreateParams {
          * The blockchain networks to support for deposits. Learn more about [supported networks and tokens](https://docs.stripe.com/payments/deposit-mode-stablecoin-payments#token-and-network-support).
          */
         networks: Array<DepositOptions.Network>;
+
+        /**
+         * If true, provisions a permanent per-customer deposit address reused across PaymentIntents.
+         */
+        static_address?: boolean;
       }
 
       export type Mode = 'default' | 'deposit';
@@ -13858,15 +13894,6 @@ export namespace PaymentIntentCreateParams {
 
     export namespace WechatPay {
       export type Client = 'android' | 'ios' | 'web';
-    }
-  }
-
-  export namespace PaymentsOrchestration {
-    export interface PaymentDetails {
-      /**
-       * Merchant-provided reference for this payment, used for reconciliation.
-       */
-      reference?: string;
     }
   }
 
@@ -15891,7 +15918,7 @@ export namespace PaymentIntentUpdateParams {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: Emptyable<'account_funding'>;
+      transaction_type?: Emptyable<MoneyServices.TransactionType>;
     }
 
     export interface Subscription {
@@ -17409,6 +17436,8 @@ export namespace PaymentIntentUpdateParams {
          */
         sender_details?: Emptyable<AccountFunding.SenderDetails>;
       }
+
+      export type TransactionType = 'account_funding' | 'debt_repayment';
 
       export namespace AccountFunding {
         export interface BeneficiaryDetails {
@@ -19745,6 +19774,11 @@ export namespace PaymentIntentUpdateParams {
         export namespace MoneyServices {
           export interface AccountFunding {
             /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+
+            /**
              * Details for a liquid asset (crypto or security) funding transaction.
              */
             liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
@@ -19756,6 +19790,12 @@ export namespace PaymentIntentUpdateParams {
           }
 
           export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin';
+
             export interface LiquidAsset {
               /**
                * Details for a cryptocurrency liquid asset funding transaction.
@@ -19899,6 +19939,11 @@ export namespace PaymentIntentUpdateParams {
         export namespace MoneyServices {
           export interface AccountFunding {
             /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+
+            /**
              * Details for a liquid asset (crypto or security) funding transaction.
              */
             liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
@@ -19910,6 +19955,12 @@ export namespace PaymentIntentUpdateParams {
           }
 
           export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin';
+
             export interface LiquidAsset {
               /**
                * Details for a cryptocurrency liquid asset funding transaction.
@@ -19986,6 +20037,11 @@ export namespace PaymentIntentUpdateParams {
          * The blockchain networks to support for deposits. Learn more about [supported networks and tokens](https://docs.stripe.com/payments/deposit-mode-stablecoin-payments#token-and-network-support).
          */
         networks: Array<DepositOptions.Network>;
+
+        /**
+         * If true, provisions a permanent per-customer deposit address reused across PaymentIntents.
+         */
+        static_address?: boolean;
       }
 
       export type Mode = 'default' | 'deposit';
@@ -22829,7 +22885,7 @@ export namespace PaymentIntentCaptureParams {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: Emptyable<'account_funding'>;
+      transaction_type?: Emptyable<MoneyServices.TransactionType>;
     }
 
     export interface Subscription {
@@ -24329,6 +24385,8 @@ export namespace PaymentIntentCaptureParams {
          */
         sender_details?: Emptyable<AccountFunding.SenderDetails>;
       }
+
+      export type TransactionType = 'account_funding' | 'debt_repayment';
 
       export namespace AccountFunding {
         export interface BeneficiaryDetails {
@@ -26428,7 +26486,7 @@ export namespace PaymentIntentConfirmParams {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: Emptyable<'account_funding'>;
+      transaction_type?: Emptyable<MoneyServices.TransactionType>;
     }
 
     export interface Subscription {
@@ -27946,6 +28004,8 @@ export namespace PaymentIntentConfirmParams {
          */
         sender_details?: Emptyable<AccountFunding.SenderDetails>;
       }
+
+      export type TransactionType = 'account_funding' | 'debt_repayment';
 
       export namespace AccountFunding {
         export interface BeneficiaryDetails {
@@ -30282,6 +30342,11 @@ export namespace PaymentIntentConfirmParams {
         export namespace MoneyServices {
           export interface AccountFunding {
             /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+
+            /**
              * Details for a liquid asset (crypto or security) funding transaction.
              */
             liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
@@ -30293,6 +30358,12 @@ export namespace PaymentIntentConfirmParams {
           }
 
           export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin';
+
             export interface LiquidAsset {
               /**
                * Details for a cryptocurrency liquid asset funding transaction.
@@ -30436,6 +30507,11 @@ export namespace PaymentIntentConfirmParams {
         export namespace MoneyServices {
           export interface AccountFunding {
             /**
+             * The category of digital asset being acquired through this account funding transaction.
+             */
+            digital_asset_category?: AccountFunding.DigitalAssetCategory;
+
+            /**
              * Details for a liquid asset (crypto or security) funding transaction.
              */
             liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
@@ -30447,6 +30523,12 @@ export namespace PaymentIntentConfirmParams {
           }
 
           export namespace AccountFunding {
+            export type DigitalAssetCategory =
+              | 'blockchain_native'
+              | 'nft'
+              | 'other_non_fiat'
+              | 'stablecoin';
+
             export interface LiquidAsset {
               /**
                * Details for a cryptocurrency liquid asset funding transaction.
@@ -30523,6 +30605,11 @@ export namespace PaymentIntentConfirmParams {
          * The blockchain networks to support for deposits. Learn more about [supported networks and tokens](https://docs.stripe.com/payments/deposit-mode-stablecoin-payments#token-and-network-support).
          */
         networks: Array<DepositOptions.Network>;
+
+        /**
+         * If true, provisions a permanent per-customer deposit address reused across PaymentIntents.
+         */
+        static_address?: boolean;
       }
 
       export type Mode = 'default' | 'deposit';
