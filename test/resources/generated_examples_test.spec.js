@@ -6527,7 +6527,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/fee_batches',
         response:
-          '{"data":[{"object":"v2.core.fee_batch","amount":{"currency":"usd","value":"value"},"collected_by":{"type":"application"},"collection_records":[{"amount":{"currency":"usd","value":"value"},"type":"money_management_transaction"}],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"status":"billed","status_transitions":{}}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"object":"v2.core.fee_batch","amount":{"currency":"USD","value":96},"collected_by":{"type":"application"},"collection_records":[{"amount":{"currency":"USD","value":96},"type":"money_management_transaction"}],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"status":"billed","status_transitions":{}}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const feeBatches = await stripe.v2.core.feeBatches.list();
@@ -6540,7 +6540,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/fee_batches/id_123',
         response:
-          '{"object":"v2.core.fee_batch","amount":{"currency":"usd","value":"value"},"collected_by":{"type":"application"},"collection_records":[{"amount":{"currency":"usd","value":"value"},"type":"money_management_transaction"}],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"status":"billed","status_transitions":{}}',
+          '{"object":"v2.core.fee_batch","amount":{"currency":"USD","value":96},"collected_by":{"type":"application"},"collection_records":[{"amount":{"currency":"USD","value":96},"type":"money_management_transaction"}],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"status":"billed","status_transitions":{}}',
       },
     ]);
     const feeBatch = await stripe.v2.core.feeBatches.retrieve('id_123');
@@ -6553,7 +6553,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/fee_entries',
         response:
-          '{"data":[{"object":"v2.core.fee_entry","amount":{"currency":"usd","value":"value"},"charged_by":{"type":"application"},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","incurred_by":{"id":"obj_123","type":"type"},"livemode":true,"reason":"reprice","type":"application_fee"}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"object":"v2.core.fee_entry","amount":{"currency":"USD","value":96},"charged_by":{"type":"application"},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","incurred_by":{"id":"obj_123","type":"type"},"livemode":true,"reason":"reprice","type":"application_fee"}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const feeEntries = await stripe.v2.core.feeEntries.list();
@@ -6566,7 +6566,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/fee_entries/id_123',
         response:
-          '{"object":"v2.core.fee_entry","amount":{"currency":"usd","value":"value"},"charged_by":{"type":"application"},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","incurred_by":{"id":"obj_123","type":"type"},"livemode":true,"reason":"reprice","type":"application_fee"}',
+          '{"object":"v2.core.fee_entry","amount":{"currency":"USD","value":96},"charged_by":{"type":"application"},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","incurred_by":{"id":"obj_123","type":"type"},"livemode":true,"reason":"reprice","type":"application_fee"}',
       },
     ]);
     const feeEntry = await stripe.v2.core.feeEntries.retrieve('id_123');
