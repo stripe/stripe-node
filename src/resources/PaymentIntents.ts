@@ -5406,6 +5406,11 @@ export namespace PaymentIntent {
          * The blockchain networks to support for deposits. Learn more about [supported networks and tokens](https://docs.stripe.com/payments/deposit-mode-stablecoin-payments#token-and-network-support).
          */
         networks?: Array<DepositOptions.Network>;
+
+        /**
+         * If true, provisions a permanent per-customer deposit address reused across PaymentIntents.
+         */
+        static_address?: boolean;
       }
 
       export type Mode = 'default' | 'deposit';
@@ -12114,6 +12119,11 @@ export namespace PaymentIntentCreateParams {
          * The blockchain networks to support for deposits. Learn more about [supported networks and tokens](https://docs.stripe.com/payments/deposit-mode-stablecoin-payments#token-and-network-support).
          */
         networks: Array<DepositOptions.Network>;
+
+        /**
+         * If true, provisions a permanent per-customer deposit address reused across PaymentIntents.
+         */
+        static_address?: boolean;
       }
 
       export type Mode = 'default' | 'deposit';
@@ -20027,6 +20037,11 @@ export namespace PaymentIntentUpdateParams {
          * The blockchain networks to support for deposits. Learn more about [supported networks and tokens](https://docs.stripe.com/payments/deposit-mode-stablecoin-payments#token-and-network-support).
          */
         networks: Array<DepositOptions.Network>;
+
+        /**
+         * If true, provisions a permanent per-customer deposit address reused across PaymentIntents.
+         */
+        static_address?: boolean;
       }
 
       export type Mode = 'default' | 'deposit';
@@ -30590,6 +30605,11 @@ export namespace PaymentIntentConfirmParams {
          * The blockchain networks to support for deposits. Learn more about [supported networks and tokens](https://docs.stripe.com/payments/deposit-mode-stablecoin-payments#token-and-network-support).
          */
         networks: Array<DepositOptions.Network>;
+
+        /**
+         * If true, provisions a permanent per-customer deposit address reused across PaymentIntents.
+         */
+        static_address?: boolean;
       }
 
       export type Mode = 'default' | 'deposit';
