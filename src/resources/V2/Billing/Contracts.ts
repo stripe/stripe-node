@@ -7,6 +7,8 @@ import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 import {LicensePricingResource} from './Contracts/LicensePricing.js';
 import {Stripe} from '../../../stripe.core.js';
 export class ContractResource extends StripeResource {
+  licensePricing: LicensePricingResource;
+
   constructor(private readonly stripe: Stripe) {
     super(stripe);
     this.licensePricing = new LicensePricingResource(stripe);
