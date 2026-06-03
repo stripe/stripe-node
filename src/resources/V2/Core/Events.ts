@@ -302,6 +302,7 @@ import {MoneyManagement} from './../MoneyManagement/index.js';
 import {OrchestratedCommerce} from './../OrchestratedCommerce/index.js';
 import {Payments} from './../Payments/index.js';
 import {Reporting} from './../Reporting/index.js';
+import {Signals} from './../Signals/index.js';
 export type Event =
   | V1AccountApplicationAuthorizedEvent
   | V1AccountApplicationDeauthorizedEvent
@@ -708,7 +709,8 @@ export type Event =
   | V2ReportingReportRunFailedEvent
   | V2ReportingReportRunSucceededEvent
   | V2ReportingReportRunUpdatedEvent
-  | V2SignalsAccountSignalFraudulentMerchantReadyEvent;
+  | V2SignalsAccountSignalFraudulentMerchantReadyEvent
+  | V2SignalsAccountSignalMerchantDelinquencyReadyEvent;
 
 export type EventNotification =
   | V1AccountApplicationAuthorizedEventNotification
@@ -1116,7 +1118,8 @@ export type EventNotification =
   | V2ReportingReportRunFailedEventNotification
   | V2ReportingReportRunSucceededEventNotification
   | V2ReportingReportRunUpdatedEventNotification
-  | V2SignalsAccountSignalFraudulentMerchantReadyEventNotification;
+  | V2SignalsAccountSignalFraudulentMerchantReadyEventNotification
+  | V2SignalsAccountSignalMerchantDelinquencyReadyEventNotification;
 
 import {StripeContext} from '../../../StripeContext.js';
 
@@ -12262,6 +12265,27 @@ export namespace V2SignalsAccountSignalFraudulentMerchantReadyEvent {
   }
 }
 
+/**
+ * Occurs when a merchant delinquency signal is ready for an account.
+ */
+export interface V2SignalsAccountSignalMerchantDelinquencyReadyEvent
+  extends EventBase {
+  type: 'v2.signals.account_signal.merchant_delinquency_ready';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.AccountSignal>;
+}
+export interface V2SignalsAccountSignalMerchantDelinquencyReadyEventNotification
+  extends EventNotificationBase {
+  type: 'v2.signals.account_signal.merchant_delinquency_ready';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Signals.AccountSignal>;
+  fetchEvent(): Promise<V2SignalsAccountSignalMerchantDelinquencyReadyEvent>;
+}
+
 export declare namespace Events {
   export {
     UnknownEventNotification,
@@ -12671,6 +12695,7 @@ export declare namespace Events {
     V2ReportingReportRunSucceededEvent,
     V2ReportingReportRunUpdatedEvent,
     V2SignalsAccountSignalFraudulentMerchantReadyEvent,
+    V2SignalsAccountSignalMerchantDelinquencyReadyEvent,
     V1AccountApplicationAuthorizedEventNotification,
     V1AccountApplicationDeauthorizedEventNotification,
     V1AccountExternalAccountCreatedEventNotification,
@@ -13077,5 +13102,6 @@ export declare namespace Events {
     V2ReportingReportRunSucceededEventNotification,
     V2ReportingReportRunUpdatedEventNotification,
     V2SignalsAccountSignalFraudulentMerchantReadyEventNotification,
+    V2SignalsAccountSignalMerchantDelinquencyReadyEventNotification,
   };
 }

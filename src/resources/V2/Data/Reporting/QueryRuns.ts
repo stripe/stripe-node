@@ -162,6 +162,11 @@ export namespace V2 {
             download_url: File.DownloadUrl;
 
             /**
+             * The columns of the schema.
+             */
+            schema: Array<File.Schema>;
+
+            /**
              * The total size of the file in bytes.
              */
             size: bigint;
@@ -180,6 +185,27 @@ export namespace V2 {
                * The URL that can be used for accessing the file.
                */
               url: string;
+            }
+
+            export interface Schema {
+              /**
+               * The name of the column.
+               */
+              name: string;
+
+              /**
+               * The type of the column.
+               */
+              type: Schema.Type;
+            }
+
+            export namespace Schema {
+              export type Type =
+                | 'boolean'
+                | 'double'
+                | 'bigint'
+                | 'varchar'
+                | 'timestamp';
             }
           }
         }
@@ -221,7 +247,12 @@ export namespace V2 {
 export namespace V2 {
   export namespace Data {
     export namespace Reporting {
-      export interface QueryRunRetrieveParams {}
+      export interface QueryRunRetrieveParams {
+        /**
+         * Any optional includes (see https://docs.stripe.com/api-includable-response-values).
+         */
+        include?: Array<'result.file.schema'>;
+      }
     }
   }
 }

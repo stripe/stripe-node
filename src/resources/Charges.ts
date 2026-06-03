@@ -3932,7 +3932,7 @@ export namespace ChargeUpdateParams {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: Emptyable<'account_funding'>;
+      transaction_type?: Emptyable<MoneyServices.TransactionType>;
     }
 
     export interface Subscription {
@@ -5432,6 +5432,8 @@ export namespace ChargeUpdateParams {
          */
         sender_details?: Emptyable<AccountFunding.SenderDetails>;
       }
+
+      export type TransactionType = 'account_funding' | 'debt_repayment';
 
       export namespace AccountFunding {
         export interface BeneficiaryDetails {
@@ -6248,7 +6250,7 @@ export namespace ChargeCaptureParams {
       /**
        * The type of money services transaction.
        */
-      transaction_type?: Emptyable<'account_funding'>;
+      transaction_type?: Emptyable<MoneyServices.TransactionType>;
     }
 
     export interface Subscription {
@@ -7748,6 +7750,8 @@ export namespace ChargeCaptureParams {
          */
         sender_details?: Emptyable<AccountFunding.SenderDetails>;
       }
+
+      export type TransactionType = 'account_funding' | 'debt_repayment';
 
       export namespace AccountFunding {
         export interface BeneficiaryDetails {
