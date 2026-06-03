@@ -4,7 +4,7 @@ import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
 import {MetadataParam, Decimal, Metadata} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
-
+import {LicensePricingResource} from './Contracts/LicensePricing.js';
 import {Stripe} from '../../../stripe.core.js';
 export class ContractResource extends StripeResource {
   constructor(private readonly stripe: Stripe) {

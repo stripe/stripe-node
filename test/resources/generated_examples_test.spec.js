@@ -8261,7 +8261,7 @@ describe('Generated tests', function() {
           '{"data":[{"object":"v2.signals.account_signal","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"type":"fraudulent_merchant"}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
-    const accountSignals = await stripe.v2.signal.accountSignals.list({
+    const accountSignals = await stripe.v2.signals.accountSignals.list({
       type: ['fraudulent_merchant'],
     });
     expect(accountSignals).not.to.be.null;
@@ -8276,7 +8276,7 @@ describe('Generated tests', function() {
           '{"object":"v2.signals.account_signal","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"type":"fraudulent_merchant"}',
       },
     ]);
-    const accountSignal = await stripe.v2.signal.accountSignals.retrieve(
+    const accountSignal = await stripe.v2.signals.accountSignals.retrieve(
       'id_123'
     );
     expect(accountSignal).not.to.be.null;

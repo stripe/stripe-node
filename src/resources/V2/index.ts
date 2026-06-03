@@ -15,7 +15,7 @@ import {Network} from './Network/index.js';
 import {OrchestratedCommerce} from './OrchestratedCommerce/index.js';
 import {Payments} from './Payments/index.js';
 import {Reporting} from './Reporting/index.js';
-import {Signal} from './Signal/index.js';
+import {Signals} from './Signals/index.js';
 import {Tax} from './Tax/index.js';
 import {TestHelpers} from './TestHelpers/index.js';
 
@@ -35,7 +35,7 @@ export class V2 {
   orchestratedCommerce: OrchestratedCommerce;
   payments: Payments;
   reporting: Reporting;
-  signal: Signal;
+  signals: Signals;
   tax: Tax;
   testHelpers: TestHelpers;
 
@@ -51,7 +51,7 @@ export class V2 {
     this.orchestratedCommerce = new OrchestratedCommerce(stripe);
     this.payments = new Payments(stripe);
     this.reporting = new Reporting(stripe);
-    this.signal = new Signal(stripe);
+    this.signals = new Signals(stripe);
     this.tax = new Tax(stripe);
     this.testHelpers = new TestHelpers(stripe);
   }
@@ -72,7 +72,7 @@ export declare namespace V2 {
   export {OrchestratedCommerce};
   export {Payments};
   export {Reporting};
-  export {Signal};
+  export {Signals};
   export {Tax};
   export {TestHelpers};
 }

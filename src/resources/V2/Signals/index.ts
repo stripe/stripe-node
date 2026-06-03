@@ -9,7 +9,7 @@ import {
 
 export {AccountSignal} from './AccountSignals.js';
 
-export class Signal {
+export class Signals {
   accountSignals: AccountSignalResource;
 
   constructor(private readonly stripe: Stripe) {
@@ -17,7 +17,7 @@ export class Signal {
   }
 }
 
-export declare namespace Signal {
+export declare namespace Signals {
   export import AccountSignalListParams = V2Namespace0.Signals.AccountSignalListParams;
   export import AccountSignalRetrieveParams = V2Namespace0.Signals.AccountSignalRetrieveParams;
   export {AccountSignal};
