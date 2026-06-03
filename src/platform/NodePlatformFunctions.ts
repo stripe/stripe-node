@@ -1,5 +1,6 @@
 import * as crypto from 'crypto';
 import * as http from 'http';
+import * as os from 'os';
 import {CryptoProvider} from '../crypto/CryptoProvider.js';
 import {EventEmitter} from 'events';
 import {HttpClient, NodeHttpClientInterface} from '../net/HttpClient.js';
@@ -8,7 +9,6 @@ import {NodeHttpClient} from '../net/NodeHttpClient.js';
 import {PlatformFunctions} from './PlatformFunctions.js';
 import {StripeError} from '../Error.js';
 import {concat} from '../utils.js';
-import {arch, release} from 'os';
 import {MultipartRequestData, RequestData, BufferedFile} from '../Types.js';
 
 class StreamProcessingError extends StripeError {}
@@ -28,7 +28,7 @@ export class NodePlatformFunctions extends PlatformFunctions {
 
   /** @override */
   getPlatformInfo(): string {
-    return `${process.platform} ${release()} ${arch()}`;
+    return `${process.platform} ${os.release()} ${os.arch()}`;
   }
 
   /** @override */
@@ -48,6 +48,34 @@ export class NodePlatformFunctions extends PlatformFunctions {
   /** @override */
   getRuntimeVersion(): string {
     return process.version;
+  }
+
+  private getUname(): string | null {
+    try {
+      const parts = [os.type(), os.release(), os.arch()];
+      // os.version() returns detailed kernel version, available since Node 10.7.0
+      // It may not exist in older typings, so access carefully
+      const version = (os as any).version?.();
+      if (version) parts.push(version);
+      try {
+        parts.push(os.hostname());
+        // eslint-disable-next-line no-empty
+      } catch (_e) {}
+      return parts.join(' ');
+    } catch {
+      return null;
+    }
+  }
+
+  /** @override */
+  getSourceHash(): string | null {
+    const uname = this.getUname();
+    return uname
+      ? crypto
+          .createHash('md5')
+          .update(uname)
+          .digest('hex')
+      : null;
   }
 
   /**
