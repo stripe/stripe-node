@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {AddressParam, Address} from '../shared.js';
+import {AddressParam, PaginationParams, Address} from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 
 export class PaymentLocationResource extends StripeResource {
@@ -95,7 +95,7 @@ export interface PaymentLocation {
   business_registration: PaymentLocation.BusinessRegistration | null;
 
   /**
-   * The capability settings for the location. Only applicable for locations with requested Payment Location Capabilities.
+   * The capability settings for the location. Only applicable for locations with requested payment location capabilities.
    */
   capability_settings: PaymentLocation.CapabilitySettings | null;
 
@@ -231,7 +231,7 @@ export interface PaymentLocationUpdateParams {
   expand?: Array<string>;
 
   /**
-   * Pass true when updating location fields that will trigger onboarding review for any of the location's active location capabilities. If this parameter is not set to true, updates that would trigger onboarding review will fail. Only applicable for locations with active location capabilities.
+   * Pass true when updating location fields that trigger onboarding review for any of the location's active location capabilities. If this parameter isn't set to true, updates that would trigger onboarding review fail. Only applicable for locations with active location capabilities.
    */
   onboarding_data_update_acknowledged?: boolean;
 }
@@ -243,7 +243,7 @@ export namespace PaymentLocationUpdateParams {
     siret?: string;
   }
 }
-export interface PaymentLocationListParams {
+export interface PaymentLocationListParams extends PaginationParams {
   /**
    * Specifies which fields in the response should be expanded.
    */
