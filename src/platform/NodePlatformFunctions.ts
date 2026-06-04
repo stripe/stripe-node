@@ -69,13 +69,17 @@ export class NodePlatformFunctions extends PlatformFunctions {
 
   /** @override */
   getSourceHash(): string | null {
-    const uname = this.getUname();
-    return uname
-      ? crypto
-          .createHash('md5')
-          .update(uname)
-          .digest('hex')
-      : null;
+    try {
+      const uname = this.getUname();
+      return uname
+        ? crypto
+            .createHash('md5')
+            .update(uname)
+            .digest('hex')
+        : null;
+    } catch {
+      return null;
+    }
   }
 
   /**
