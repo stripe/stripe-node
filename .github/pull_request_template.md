@@ -9,3 +9,15 @@ List out the key changes made in this PR, e.g.
 
 ### See Also
 <!-- Include any links or additional information that help explain this change. -->
+
+## Changelog
+<!-- Heads up! This section should include entries for any user-facing changes.
+Either fill it out or remove it if there are no entries to report.
+
+List changes that affect end users, e.g.
+- Fixes crash when calling `foo.bar()` with null argument
+- Adds support for new `baz` parameter on `PaymentIntent` creation
+
+List breaking changes first with a ⚠️ prefix, e.g.
+- ⚠️ Removes deprecated `legacy_method` function
+-->
