@@ -581,7 +581,7 @@ const stripeClient = new Stripe('sk_test_...', {
 
 ### Private Preview SDKs
 
-Stripe has features in the [private preview phase](https://docs.stripe.com/release-phases) that can be accessed via versions of this package that have the `-alpha.X` suffix like `18.6.0-alpha.1`. These are invite-only features. Once invited, you can install the private preview SDKs by following the same instructions as for the [public preview SDKs](https://github.com/stripe/stripe-node?tab=readme-ov-file#public-preview-sdks) above and replacing the term `public-preview` with `private-preview`:
+Stripe has features in the [private preview phase](https://docs.stripe.com/release-phases) that can be accessed via versions of this package that have the `-alpha.X` suffix like `18.6.0-alpha.1`. You can install the private preview SDKs by following the same instructions as for the [public preview SDKs](#public-preview-sdks) above and replacing the term `public-preview` with `private-preview`. Note that access to specific private preview API features may require separate approval:
 
 ```
 npm install stripe@private-preview --save-exact
