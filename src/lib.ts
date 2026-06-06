@@ -1,0 +1,388 @@
+// TODO(DEVSDK-3114): Remove http.Agent from shared types in next major version.
+// eslint-disable-next-line wintertc-compat
+import {Agent} from 'http';
+
+import {RequestAuthenticator} from './Types.js';
+import {ApiVersion} from './apiVersion.js';
+import {HttpClientInterface} from './net/HttpClient.js';
+import {StripeContext} from './StripeContext.js';
+
+export declare class StripeResource {
+  static MAX_BUFFERED_REQUEST_METRICS: number;
+}
+export type LatestApiVersion = typeof ApiVersion;
+export type HttpAgent = Agent;
+export type HttpProtocol = 'http' | 'https';
+
+export interface StripeConfig {
+  /**
+   * This library's types only reflect the latest API version.
+   *
+   * We recommend upgrading your account's API Version to the latest version
+   * if you wish to use TypeScript with this library.
+   *
+   * If you wish to remain on your account's default API version,
+   * you may pass `null` or another version instead of the latest version,
+   * and add a `@ts-ignore` comment here and anywhere the types differ between API versions.
+   *
+   * @docs https://stripe.com/docs/api/versioning
+   */
+  apiVersion?: LatestApiVersion;
+
+  /**
+   * Provide a custom authenticator function for all requests.
+   * Cannot be used together with apiKey (the first constructor argument).
+   */
+  authenticator?: RequestAuthenticator;
+
+  /**
+   * Optionally indicate that you are using TypeScript.
+   * This currently has no runtime effect other than adding "TypeScript" to your user-agent.
+   */
+  typescript?: true;
+
+  /**
+   * Specifies maximum number of automatic network retries (default 1).
+   * Retries will be attempted with exponential backoff.
+   * Retries can be disabled by setting this option to 0.
+   * [Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
+   * @docs https://github.com/stripe/stripe-node#network-retries
+   */
+  maxNetworkRetries?: number;
+
+  /**
+   * Use a custom http(s) agent.
+   * Useful for making requests through a proxy.
+   */
+  httpAgent?: HttpAgent;
+
+  /**
+   * Use a custom http client, rather than relying on Node libraries.
+   * Useful for making requests in contexts other than NodeJS (eg. using
+   * `fetch`).
+   */
+  httpClient?: HttpClientInterface;
+
+  /**
+   * Request timeout in milliseconds.
+   * The default is 80000
+   */
+  timeout?: number;
+
+  /**
+   * Specify the host to use for API Requests.
+   */
+  host?: string;
+
+  /**
+   * Specify the port to use for API Requests.
+   */
+  port?: string | number;
+
+  /**
+   * Specify the HTTP protool to use for API Requests.
+   */
+  protocol?: HttpProtocol;
+
+  /**
+   * Pass `telemetry: false` to disable headers that provide Stripe
+   * with data about usage of the API.
+   * Currently, the only telemetry we send is latency metrics.
+   */
+  telemetry?: boolean;
+
+  /**
+   * Pass `emitEventBodies: true` to include request and response bodies
+   * in the `request` and `response` events emitted by the Stripe client.
+   * Bodies may contain sensitive data. Defaults to false.
+   */
+  emitEventBodies?: boolean;
+
+  /**
+   * For plugin authors to identify their code.
+   * @docs https://stripe.com/docs/building-plugins?lang=node#setappinfo
+   */
+  appInfo?: AppInfo;
+
+  /**
+   * An account id on whose behalf you wish to make every request.
+   */
+  stripeAccount?: string;
+
+  /**
+   * An account on whose behalf you wish to make every request. See https://docs.stripe.com/context for more information.
+   */
+  stripeContext?: string | StripeContext;
+}
+
+export interface RequestOptions {
+  /**
+   * Use a specific API Key for this request.
+   * For Connect, we recommend using `stripeContext` instead.
+   */
+  apiKey?: string;
+
+  /**
+   * See the [idempotency key docs](https://stripe.com/docs/api/idempotent_requests).
+   */
+  idempotencyKey?: string;
+
+  /**
+   * An account id on whose behalf you wish to make a request.
+   *
+   * NOTE: prefer sending `stripeContext` instead of `stripeAccount` for new code. They're currently identical, but we will eventually discourage and (later) drop support for `stripeAccount`.
+   */
+  stripeAccount?: string;
+
+  /**
+   * An account on whose behalf you wish to make a request. See https://docs.stripe.com/context for more information.
+   */
+  stripeContext?: string | StripeContext;
+
+  /**
+   * The [API Version](https://stripe.com/docs/upgrades) to use for a given request (e.g., '2020-03-02').
+   */
+  apiVersion?: string;
+
+  /**
+   * Specify the number of requests to retry in event of error.
+   * This overrides a default set on the Stripe object's config argument.
+   */
+  maxNetworkRetries?: number;
+
+  /**
+   * Specify a timeout for this request in milliseconds.
+   */
+  timeout?: number;
+
+  /**
+   * Provide a custom authenticator function for this request.
+   */
+  authenticator?: import('./Types.js').RequestAuthenticator;
+
+  /**
+   * Specify additional request headers.
+   */
+  headers?: {[headerName: string]: string};
+
+  /**
+   * Whether to stream the response body.
+   */
+  streaming?: boolean;
+}
+
+export type RawRequestOptions = RequestOptions & {
+  /**
+   * Specify additional request headers. This is an experimental interface and is not yet stable.
+   */
+  additionalHeaders?: {[headerName: string]: string};
+
+  /**
+   * Specify which Stripe API base address to send this request to.
+   * Allowed values: 'api', 'files', 'connect', 'meter_events'.
+   */
+  apiBase?: 'api' | 'files' | 'connect' | 'meter_events';
+};
+
+export type Response<T> = T & {
+  lastResponse: {
+    headers: {[key: string]: string};
+    requestId: string;
+    statusCode: number;
+    apiVersion?: string;
+    idempotencyKey?: string;
+    stripeAccount?: string;
+  };
+};
+
+/**
+ * A container for paginated lists of objects.
+ * The array of objects is on the `.data` property,
+ * and `.has_more` indicates whether there are additional objects beyond the end of this list.
+ *
+ * Learn more in Stripe's [pagination docs](https://stripe.com/docs/api/pagination?lang=node)
+ * or, when iterating over many items, try [auto-pagination](https://github.com/stripe/stripe-node#auto-pagination) instead.
+ */
+export interface ApiList<T> {
+  object: 'list';
+
+  data: Array<T>;
+
+  /**
+   * True if this list has another page of items after this one that can be fetched.
+   */
+  has_more: boolean;
+
+  /**
+   * The URL where this list can be accessed.
+   */
+  url: string;
+
+  // Looking for `total_count`? It is deprecated; please do not use it.
+}
+
+export interface ApiListPromise<T>
+  extends Promise<Response<ApiList<T>>>,
+    AsyncIterableIterator<T> {
+  autoPagingEach(
+    handler: (item: T) => boolean | void | Promise<boolean | void>,
+    onDone?: (err: any) => void
+  ): Promise<void>;
+
+  autoPagingToArray(
+    opts: {limit: number},
+    onDone?: (err: any) => void
+  ): Promise<Array<T>>;
+}
+
+/**
+ * A container for paginated lists of V2 API objects.
+ * The array of objects is on the `.data` property,
+ * and `.next_page_url` provides the URL for the next page of results.
+ *
+ * Learn more in Stripe's [V2 list pagination docs](https://docs.stripe.com/api-v2-overview#list-pagination)
+ * or, when iterating over many items, try [auto-pagination](https://github.com/stripe/stripe-node#auto-pagination) instead.
+ *
+ */
+export interface V2List<T> {
+  data: Array<T>;
+
+  /**
+   * The URL for the next page of results, or `null` if there are no more results.
+   */
+  next_page_url: string | null;
+
+  /**
+   * The URL for the previous page of results, or `null` if this is the first page.
+   */
+  previous_page_url: string | null;
+
+  /**
+   * TODO(DEVSDK-2534): remove these properties in our next major release.
+   * these deprecated properties were copied from ApiList<T> to not break
+   * existing code.  these properties will continue to be not populated at
+   * runtime.
+   */
+
+  /**
+   * @deprecated This property is not populated at runtime for v2 lists
+   */
+  object: 'list';
+
+  /**
+   * True if this list has another page of items after this one that can be fetched.
+   *
+   * @deprecated This property is not populated at runtime for v2 lists
+   */
+  has_more: boolean;
+
+  /**
+   * The URL where this list can be accessed.
+   * @deprecated This property is not populated at runtime for v2 lists
+   */
+  url: string;
+}
+
+export interface V2ListPromise<T>
+  extends Promise<Response<V2List<T>>>,
+    AsyncIterableIterator<T> {
+  autoPagingEach(
+    handler: (item: T) => boolean | void | Promise<boolean | void>,
+    onDone?: (err: any) => void
+  ): Promise<void>;
+
+  autoPagingToArray(
+    opts: {limit: number},
+    onDone?: (err: any) => void
+  ): Promise<Array<T>>;
+}
+
+/**
+ * A container for paginated lists of search results.
+ * The array of objects is on the `.data` property,
+ * and `.has_more` indicates whether there are additional objects beyond the end of this list.
+ * The `.next_page` field can be used to paginate forwards.
+ *
+ * Please note, ApiSearchResult<T> is beta functionality and is subject to change/removal
+ * at any time.
+ */
+export interface ApiSearchResult<T> {
+  object: 'search_result';
+
+  data: Array<T>;
+
+  /**
+   * True if this list has another page of items after this one that can be fetched.
+   */
+  has_more: boolean;
+
+  /**
+   * The URL where this list can be accessed.
+   */
+  url: string;
+
+  /**
+   * The page token to use to get the next page of results. If `has_more` is
+   * true, this will be set to a concrete string value.
+   */
+  next_page: string | null;
+
+  /**
+   * The total number of search results. Only present when `expand` request
+   * parameter contains `total_count`.
+   */
+  total_count?: number;
+}
+export interface ApiSearchResultPromise<T>
+  extends Promise<Response<ApiSearchResult<T>>>,
+    AsyncIterableIterator<T> {
+  autoPagingEach(
+    handler: (item: T) => boolean | void | Promise<boolean | void>
+  ): Promise<void>;
+
+  autoPagingToArray(opts: {limit: number}): Promise<Array<T>>;
+}
+
+// TODO(DEVSDK-3112): Replace with WHATWG ReadableStream in next major version.
+// eslint-disable-next-line wintertc-compat
+export type StripeStreamResponse = NodeJS.ReadableStream;
+
+export interface RequestEvent {
+  api_version: string;
+  account?: string;
+  idempotency_key?: string;
+  method: string;
+  path: string;
+  request_start_time: number;
+}
+
+export interface ResponseEvent {
+  api_version: string;
+  account?: string;
+  idempotency_key?: string;
+  method: string;
+  path: string;
+  status: number;
+  request_id: string;
+  elapsed: number;
+  request_start_time: number;
+  request_end_time: number;
+}
+
+/**
+ * Identify your plugin.
+ * @docs https://stripe.com/docs/building-plugins?lang=node#setappinfo
+ */
+export interface AppInfo {
+  name: string;
+  partner_id?: string;
+  url?: string;
+  version?: string;
+}
+
+export interface FileData {
+  // Buffer (Node.js) is accepted here because it extends Uint8Array.
+  data: string | Uint8Array;
+  name?: string;
+  type?: string;
+}

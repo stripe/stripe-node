@@ -1,15 +1,70 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-const stripeMethod = StripeResource.method;
-export const ExchangeRates = StripeResource.extend({
-  retrieve: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/exchange_rates/{rate_id}',
-  }),
-  list: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/exchange_rates',
-    methodType: 'list',
-  }),
-});
+import {PaginationParams} from '../shared.js';
+import {RequestOptions, ApiListPromise, Response} from '../lib.js';
+
+export class ExchangeRateResource extends StripeResource {
+  /**
+   * [Deprecated] The ExchangeRate APIs are deprecated. Please use the [FX Quotes API](https://docs.stripe.com/payments/currencies/localize-prices/fx-quotes-api) instead.
+   *
+   * Returns a list of objects that contain the rates at which foreign currencies are converted to one another. Only shows the currencies for which Stripe supports.
+   * @deprecated
+   */
+  list(
+    params?: ExchangeRateListParams,
+    options?: RequestOptions
+  ): ApiListPromise<ExchangeRate> {
+    return this._makeRequest('GET', '/v1/exchange_rates', params, options, {
+      methodType: 'list',
+    }) as any;
+  }
+  /**
+   * [Deprecated] The ExchangeRate APIs are deprecated. Please use the [FX Quotes API](https://docs.stripe.com/payments/currencies/localize-prices/fx-quotes-api) instead.
+   *
+   * Retrieves the exchange rates from the given currency to every supported currency.
+   * @deprecated
+   */
+  retrieve(
+    id: string,
+    params?: ExchangeRateRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<ExchangeRate>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/exchange_rates/${id}`,
+      params,
+      options
+    ) as any;
+  }
+}
+export interface ExchangeRate {
+  /**
+   * Unique identifier for the object. Represented as the three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) in lowercase.
+   */
+  id: string;
+
+  /**
+   * String representing the object's type. Objects of the same type share the same value.
+   */
+  object: 'exchange_rate';
+
+  /**
+   * Hash where the keys are supported currencies and the values are the exchange rate at which the base id currency converts to the key currency.
+   */
+  rates: {
+    [key: string]: number;
+  };
+}
+export interface ExchangeRateRetrieveParams {
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}
+export interface ExchangeRateListParams extends PaginationParams {
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}

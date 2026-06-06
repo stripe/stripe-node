@@ -21,7 +21,7 @@ describe('Files Resource', () => {
     });
 
     it('Sends the correct request [with specified auth]', () => {
-      stripe.files.retrieve('fil_12345', TEST_AUTH_KEY);
+      stripe.files.retrieve('fil_12345', undefined, {apiKey: TEST_AUTH_KEY});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/files/fil_12345',
@@ -47,6 +47,29 @@ describe('Files Resource', () => {
   });
 
   describe('create', () => {
+    it('Encodes file upload as multipart/form-data', () => {
+      const testFilename = path.join(__dirname, 'data/minimal.pdf');
+      const f = fs.readFileSync(testFilename);
+
+      return stripe.files
+        .create({
+          purpose: 'dispute_evidence',
+          file: {
+            data: f,
+            name: 'minimal.pdf',
+            type: 'application/octet-stream',
+          },
+        })
+        .then(() => {
+          const lastData = stripe.REQUESTS[stripe.REQUESTS.length - 1];
+          expect(lastData).to.be.an.instanceOf(Uint8Array);
+          const asString = new TextDecoder('utf8').decode(lastData);
+          expect(asString).to.contain('Content-Disposition: form-data');
+          expect(asString).to.contain('name="file"');
+          expect(asString).to.contain('name="purpose"');
+        });
+    });
+
     it('Sends the correct file upload request', () => {
       const testFilename = path.join(__dirname, 'data/minimal.pdf');
       const f = fs.readFileSync(testFilename);
@@ -80,7 +103,7 @@ describe('Files Resource', () => {
           },
           file_link_data: {create: true},
         },
-        TEST_AUTH_KEY
+        {apiKey: TEST_AUTH_KEY}
       );
 
       expect(stripe.LAST_REQUEST).to.deep.property('host', 'files.stripe.com');
@@ -128,7 +151,7 @@ describe('Files Resource', () => {
             },
             file_link_data: {create: true},
           },
-          TEST_AUTH_KEY
+          {apiKey: TEST_AUTH_KEY}
         )
         .then(() => {
           expect(stripe.LAST_REQUEST).to.deep.property(

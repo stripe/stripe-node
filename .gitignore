@@ -5,8 +5,10 @@ esm
 tags
 .nyc_output
 coverage
+.DS_Store
 .idea
 testProjects/**/node_modules
 testProjects/**/dist
 testProjects/**/package-lock.json
 testProjects/**/_worker.*
+testProjects/**/bun.lock

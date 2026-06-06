@@ -1,5 +1,5 @@
 import {CryptoProvider} from '../crypto/CryptoProvider.js';
-import {HttpClient} from '../net/HttpClient.js';
+import {HttpClient, NodeHttpClientInterface} from '../net/HttpClient.js';
 import {PlatformFunctions} from './PlatformFunctions.js';
 import {StripeEmitter} from '../StripeEmitter.js';
 import {MultipartRequestData, RequestData, BufferedFile} from '../Types.js';
@@ -8,11 +8,6 @@ import {MultipartRequestData, RequestData, BufferedFile} from '../Types.js';
  * Specializes WebPlatformFunctions using APIs available in Web workers.
  */
 export class WebPlatformFunctions extends PlatformFunctions {
-  /** @override */
-  getUname(): Promise<string | null> {
-    return Promise.resolve(null);
-  }
-
   /** @override */
   createEmitter(): StripeEmitter {
     return new StripeEmitter();
@@ -31,7 +26,7 @@ export class WebPlatformFunctions extends PlatformFunctions {
   }
 
   /** @override */
-  createNodeHttpClient(): HttpClient {
+  createNodeHttpClient(): NodeHttpClientInterface {
     throw new Error(
       'Stripe: `createNodeHttpClient()` is not available in non-Node environments. Please use `createFetchHttpClient()` instead.'
     );

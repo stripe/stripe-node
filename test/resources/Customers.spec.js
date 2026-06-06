@@ -19,7 +19,7 @@ describe('Customers Resource', () => {
     });
 
     it('Sends the correct request [with specified auth]', () => {
-      stripe.customers.retrieve('cus_123', TEST_AUTH_KEY);
+      stripe.customers.retrieve('cus_123', undefined, {apiKey: TEST_AUTH_KEY});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/customers/cus_123',
@@ -44,7 +44,10 @@ describe('Customers Resource', () => {
     });
 
     it('Sends the correct request [with specified auth]', () => {
-      stripe.customers.create({description: 'Some customer'}, TEST_AUTH_KEY);
+      stripe.customers.create(
+        {description: 'Some customer'},
+        {apiKey: TEST_AUTH_KEY}
+      );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/customers',
@@ -56,7 +59,7 @@ describe('Customers Resource', () => {
     });
 
     it('Sends the correct request [with specified auth and no body]', () => {
-      stripe.customers.create(TEST_AUTH_KEY);
+      stripe.customers.create({}, {apiKey: TEST_AUTH_KEY});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/customers',
@@ -112,7 +115,7 @@ describe('Customers Resource', () => {
     });
 
     it('Sends the correct request [with specified auth in options and no body]', () => {
-      stripe.customers.create({apiKey: TEST_AUTH_KEY});
+      stripe.customers.create({}, {apiKey: TEST_AUTH_KEY});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/customers',
@@ -165,7 +168,7 @@ describe('Customers Resource', () => {
     });
 
     it('Sends the correct request [with specified auth]', () => {
-      stripe.customers.list(TEST_AUTH_KEY);
+      stripe.customers.list(undefined, {apiKey: TEST_AUTH_KEY});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/customers',
@@ -206,7 +209,9 @@ describe('Customers Resource', () => {
       });
 
       it('Sends the correct request [with specified auth]', () => {
-        stripe.customers.retrieveSource('cus_123', 'card_123', TEST_AUTH_KEY);
+        stripe.customers.retrieveSource('cus_123', 'card_123', undefined, {
+          apiKey: TEST_AUTH_KEY,
+        });
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/customers/cus_123/sources/card_123',
@@ -247,7 +252,9 @@ describe('Customers Resource', () => {
             exp_year: '30',
           },
         };
-        stripe.customers.createSource('cus_123', params, TEST_AUTH_KEY);
+        stripe.customers.createSource('cus_123', params, {
+          apiKey: TEST_AUTH_KEY,
+        });
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
           url: '/v1/customers/cus_123/sources',
@@ -287,7 +294,9 @@ describe('Customers Resource', () => {
       });
 
       it('Sends the correct request [with specified auth]', () => {
-        stripe.customers.deleteSource('cus_123', 'card_123', TEST_AUTH_KEY);
+        stripe.customers.deleteSource('cus_123', 'card_123', undefined, {
+          apiKey: TEST_AUTH_KEY,
+        });
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
           url: '/v1/customers/cus_123/sources/card_123',
@@ -312,7 +321,9 @@ describe('Customers Resource', () => {
       });
 
       it('Sends the correct request [with specified auth]', () => {
-        stripe.customers.listSources('cus_123', TEST_AUTH_KEY);
+        stripe.customers.listSources('cus_123', undefined, {
+          apiKey: TEST_AUTH_KEY,
+        });
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/customers/cus_123/sources',
@@ -328,12 +339,9 @@ describe('Customers Resource', () => {
       it('Sends the correct request', () => {
         const data = {amounts: [32, 45]};
 
-        stripe.customers.verifySource(
-          'cus_123',
-          'card_123',
-          data,
-          TEST_AUTH_KEY
-        );
+        stripe.customers.verifySource('cus_123', 'card_123', data, {
+          apiKey: TEST_AUTH_KEY,
+        });
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
           url: '/v1/customers/cus_123/sources/card_123/verify',

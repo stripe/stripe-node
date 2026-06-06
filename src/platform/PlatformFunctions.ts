@@ -1,8 +1,16 @@
+// TODO(DEVSDK-3114): Remove http import from shared base class in next major version.
+// eslint-disable-next-line wintertc-compat
 import * as http from 'http';
 import {CryptoProvider} from '../crypto/CryptoProvider.js';
+// TODO(DEVSDK-3113): Remove EventEmitter from shared base class in next major version.
+// eslint-disable-next-line wintertc-compat
 import {EventEmitter} from 'events';
 import {FetchHttpClient} from '../net/FetchHttpClient.js';
-import {HttpClient} from '../net/HttpClient.js';
+import {
+  HttpClient,
+  NodeHttpClientInterface,
+  FetchHttpClientInterface,
+} from '../net/HttpClient.js';
 import {StripeEmitter} from '../StripeEmitter.js';
 import {SubtleCryptoProvider} from '../crypto/SubtleCryptoProvider.js';
 import {MultipartRequestData, RequestData, BufferedFile} from '../Types.js';
@@ -21,10 +29,38 @@ export class PlatformFunctions {
   }
 
   /**
-   * Gets uname with Node's built-in `exec` function, if available.
+   * Returns platform info string for telemetry, or null if unavailable.
    */
-  getUname(): Promise<string | null> {
-    throw new Error('getUname not implemented.');
+  getPlatformInfo(): string | null {
+    return null;
+  }
+
+  getSourceHash(): string | null {
+    return null;
+  }
+
+  /**
+   * Emits a warning. Node.js uses process.emitWarning; other runtimes
+   * fall back to console.warn.
+   */
+  emitWarning(warning: string): void {
+    /* eslint-disable no-console */
+    console.warn(`Stripe: ${warning}`);
+    /* eslint-enable no-console */
+  }
+
+  /**
+   * Returns environment variables, or null if unavailable.
+   */
+  getEnv(): Record<string, string | undefined> | null {
+    return null;
+  }
+
+  /**
+   * Returns the runtime version string, or null if unavailable.
+   */
+  getRuntimeVersion(): string | null {
+    return null;
   }
 
   /**
@@ -75,7 +111,7 @@ export class PlatformFunctions {
    * Creates an HTTP client which uses the Node `http` and `https` packages
    * to issue requests.
    */
-  createNodeHttpClient(agent?: http.Agent): HttpClient {
+  createNodeHttpClient(agent?: http.Agent): NodeHttpClientInterface {
     throw new Error('createNodeHttpClient not implemented.');
   }
 
@@ -86,7 +122,7 @@ export class PlatformFunctions {
    * A fetch function can optionally be passed in as a parameter. If none is
    * passed, will default to the default `fetch` function in the global scope.
    */
-  createFetchHttpClient(fetchFn?: typeof fetch): HttpClient {
+  createFetchHttpClient(fetchFn?: typeof fetch): FetchHttpClientInterface {
     return new FetchHttpClient(fetchFn);
   }
 

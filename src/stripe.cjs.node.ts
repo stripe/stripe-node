@@ -1,13 +1,50 @@
 import {NodePlatformFunctions} from './platform/NodePlatformFunctions.js';
-import {createStripe} from './stripe.core.js';
+import {Stripe} from './stripe.core.js';
+import {StripeConfig} from './lib.js';
 
-const Stripe = createStripe(new NodePlatformFunctions());
+// Initialize the Stripe class with Node platform functions
+Stripe.initialize(new NodePlatformFunctions());
 
-module.exports = Stripe;
+// Callable constructor: supports both `new Stripe()` and `Stripe()` for CJS consumers.
+// typeof Stripe provides the construct signature and static members; the intersection
+// adds a call signature for backward compatibility.
+type StripeCallableConstructor = typeof Stripe & {
+  (key: string, config?: Record<string, unknown>): Stripe;
+};
 
-// expose constructor as a named property to enable mocking with Sinon.JS
-module.exports.Stripe = Stripe;
+// @ts-expect-error: function expression lacks a construct signature, but at runtime
+// the prototype chain wiring below makes both `new StripeConstructor()` and
+// `StripeConstructor()` work correctly.
+// eslint-disable-next-line func-style
+const StripeConstructor: StripeCallableConstructor = function(
+  this: any,
+  key: string,
+  config?: StripeConfig
+): Stripe {
+  // Support calling without `new`
+  if (!(this instanceof StripeConstructor)) {
+    return new Stripe(key, config);
+  }
+  // If called with `new`, return a new Stripe instance
+  return new Stripe(key, config);
+};
 
-// Allow use with the TypeScript compiler without `esModuleInterop`.
-// We may also want to add `Object.defineProperty(exports, "__esModule", {value: true});` in the future, so that Babel users will use the `default` version.
-module.exports.default = Stripe;
+// Copy all static properties from Stripe to the wrapper
+Object.setPrototypeOf(StripeConstructor, Stripe);
+Object.setPrototypeOf(StripeConstructor.prototype, Stripe.prototype);
+
+// Copy static properties explicitly
+for (const key of Object.getOwnPropertyNames(Stripe)) {
+  if (key !== 'length' && key !== 'prototype' && key !== 'name') {
+    Object.defineProperty(StripeConstructor, key, {
+      value: (Stripe as any)[key],
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    });
+  }
+}
+declare namespace StripeConstructor {
+  export type Stripe = import('./stripe.core.js').Stripe;
+}
+export = StripeConstructor;

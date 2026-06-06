@@ -708,262 +708,6 @@ describe('utils', () => {
     });
   });
 
-  describe('protoExtend', () => {
-    it('Provides an extension mechanism', () => {
-      function A(): any {}
-      A.extend = utils.protoExtend;
-      const B = A.extend({
-        constructor: function() {
-          this.called = true;
-        },
-      });
-      expect(new B()).to.be.an.instanceof(A);
-      expect(new B()).to.be.an.instanceof(B);
-      expect(new B().called).to.equal(true);
-      expect(B.extend === utils.protoExtend).to.equal(true);
-    });
-  });
-
-  describe('getDataFromArgs', () => {
-    it('handles an empty list', () => {
-      expect(utils.getDataFromArgs([])).to.deep.equal({});
-    });
-
-    it('handles a list with no object', () => {
-      const args = [1, 3];
-      expect(utils.getDataFromArgs(args)).to.deep.equal({});
-      expect(args.length).to.equal(2);
-    });
-
-    it('ignores a hash with only options', (done) => {
-      const args = [{apiKey: 'foo'}];
-
-      handleWarnings(
-        () => {
-          expect(utils.getDataFromArgs(args)).to.deep.equal({});
-          expect(args.length).to.equal(1);
-
-          done();
-        },
-        (message) => {
-          throw new Error(`Should not have warned, but did: ${message}`);
-        }
-      );
-    });
-
-    it('warns if the hash contains both data and options', (done) => {
-      const args = [{foo: 'bar', apiKey: 'foo', idempotencyKey: 'baz'}];
-
-      handleWarnings(
-        () => {
-          utils.getDataFromArgs(args);
-        },
-        (message) => {
-          expect(message).to.equal(
-            'Stripe: Options found in arguments (apiKey, idempotencyKey).' +
-              ' Did you mean to pass an options object? See https://github.com/stripe/stripe-node/wiki/Passing-Options.'
-          );
-
-          done();
-        }
-      );
-    });
-
-    it('finds the data', () => {
-      const args = [{foo: 'bar'}, {apiKey: 'foo'}];
-      expect(utils.getDataFromArgs(args)).to.deep.equal({foo: 'bar'});
-      expect(args.length).to.equal(1);
-    });
-  });
-
-  describe('getOptsFromArgs', () => {
-    it('handles an empty list', () => {
-      expect(utils.getOptionsFromArgs([])).to.deep.equal({
-        host: null,
-        headers: {},
-        streaming: false,
-        settings: {},
-      });
-    });
-
-    it('handles an list with no object', () => {
-      const args = [1, 3];
-      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        host: null,
-        headers: {},
-        streaming: false,
-        settings: {},
-      });
-      expect(args.length).to.equal(2);
-    });
-
-    it('ignores a non-options object', () => {
-      const args = [{foo: 'bar'}];
-      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        host: null,
-        headers: {},
-        streaming: false,
-        settings: {},
-      });
-      expect(args.length).to.equal(1);
-    });
-
-    it('parses an api key', () => {
-      const args = ['sk_test_iiiiiiiiiiiiiiiiiiiiiiii'];
-      const options = utils.getOptionsFromArgs(args);
-      expect(options).to.deep.contain({
-        host: null,
-        headers: {},
-        streaming: false,
-        settings: {},
-      });
-      expect(args.length).to.equal(0);
-      expect(options.authenticator._apiKey).to.equal(
-        'sk_test_iiiiiiiiiiiiiiiiiiiiiiii'
-      );
-    });
-
-    it('assumes any string is an api key', () => {
-      const args = ['yolo'];
-      const options = utils.getOptionsFromArgs(args);
-      expect(options).to.deep.contain({
-        host: null,
-        headers: {},
-        streaming: false,
-        settings: {},
-      });
-      expect(args.length).to.equal(0);
-      expect(options.authenticator._apiKey).to.equal('yolo');
-    });
-
-    it('parses an idempotency key', () => {
-      const args = [{foo: 'bar'}, {idempotencyKey: 'foo'}];
-      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        host: null,
-        headers: {'Idempotency-Key': 'foo'},
-        streaming: false,
-        settings: {},
-      });
-      expect(args.length).to.equal(1);
-    });
-
-    it('parses an api version', () => {
-      const args = [{foo: 'bar'}, {apiVersion: '2003-03-30'}];
-      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        host: null,
-        headers: {'Stripe-Version': '2003-03-30'},
-        streaming: false,
-        settings: {},
-      });
-      expect(args.length).to.equal(1);
-    });
-
-    it('parses streaming', () => {
-      const args = [{foo: 'bar'}, {streaming: true}];
-      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        host: null,
-        headers: {},
-        streaming: true,
-        settings: {},
-      });
-      expect(args.length).to.equal(1);
-    });
-
-    it('parses an idempotency key and api key and api version (with data)', () => {
-      const args = [
-        {foo: 'bar'},
-        {
-          apiKey: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
-          idempotencyKey: 'foo',
-          apiVersion: '2010-01-10',
-        },
-      ];
-      const options = utils.getOptionsFromArgs(args);
-      expect(options).to.deep.contains({
-        host: null,
-        headers: {
-          'Idempotency-Key': 'foo',
-          'Stripe-Version': '2010-01-10',
-        },
-        streaming: false,
-        settings: {},
-      });
-      expect(args.length).to.equal(1);
-      expect(options.authenticator._apiKey).to.equal(
-        'sk_test_iiiiiiiiiiiiiiiiiiiiiiii'
-      );
-    });
-
-    it('parses an idempotency key and api key and api version', () => {
-      const args = [
-        {
-          apiKey: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
-          idempotencyKey: 'foo',
-          apiVersion: 'hunter2',
-        },
-      ];
-      const options = utils.getOptionsFromArgs(args);
-      expect(options).to.deep.contains({
-        host: null,
-        headers: {
-          'Idempotency-Key': 'foo',
-          'Stripe-Version': 'hunter2',
-        },
-        streaming: false,
-        settings: {},
-      });
-      expect(args.length).to.equal(0);
-      expect(options.authenticator._apiKey).to.equal(
-        'sk_test_iiiiiiiiiiiiiiiiiiiiiiii'
-      );
-    });
-
-    it('parses additional per-request settings', () => {
-      const args = [
-        {
-          maxNetworkRetries: 5,
-          timeout: 1000,
-        },
-      ];
-
-      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        host: null,
-        headers: {},
-        streaming: false,
-        settings: {
-          maxNetworkRetries: 5,
-          timeout: 1000,
-        },
-      });
-    });
-
-    it('warns if the hash contains something that does not belong', (done) => {
-      const args = [
-        {foo: 'bar'},
-        {
-          apiKey: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
-          idempotencyKey: 'foo',
-          apiVersion: '2010-01-10',
-          fishsticks: true,
-          custard: true,
-        },
-      ];
-
-      handleWarnings(
-        () => {
-          utils.getOptionsFromArgs(args);
-        },
-        (message) => {
-          expect(message).to.equal(
-            'Stripe: Invalid options found (fishsticks, custard); ignoring.'
-          );
-
-          done();
-        }
-      );
-    });
-  });
-
   describe('removeNullish', () => {
     it('removes empty properties and leaves non-empty ones', () => {
       expect(
@@ -1069,6 +813,65 @@ describe('utils', () => {
       expect(() => {
         utils.validateInteger('magicNumber');
       }).to.throw();
+    });
+  });
+
+  describe('parseHttpHeaderAsNumber', () => {
+    it('returns the number for valid integer strings', () => {
+      expect(utils.parseHttpHeaderAsNumber('30')).to.equal(30);
+      expect(utils.parseHttpHeaderAsNumber('0')).to.equal(0);
+    });
+
+    it('returns the number for valid decimal strings', () => {
+      expect(utils.parseHttpHeaderAsNumber('1.5')).to.equal(1.5);
+    });
+
+    it('returns the number for strings with surrounding whitespace', () => {
+      expect(utils.parseHttpHeaderAsNumber('  42  ')).to.equal(42);
+    });
+
+    it('returns undefined for undefined', () => {
+      expect(utils.parseHttpHeaderAsNumber(undefined)).to.be.undefined;
+    });
+
+    it('returns undefined for null', () => {
+      expect(utils.parseHttpHeaderAsNumber(null)).to.be.undefined;
+    });
+
+    it('returns undefined for empty string', () => {
+      expect(utils.parseHttpHeaderAsNumber('')).to.be.undefined;
+    });
+
+    it('returns undefined for whitespace-only strings', () => {
+      expect(utils.parseHttpHeaderAsNumber('   ')).to.be.undefined;
+    });
+
+    it('returns undefined for non-numeric strings', () => {
+      expect(utils.parseHttpHeaderAsNumber('bad')).to.be.undefined;
+    });
+
+    it('returns undefined for "NaN"', () => {
+      expect(utils.parseHttpHeaderAsNumber('NaN')).to.be.undefined;
+    });
+
+    it('returns undefined for "Infinity"', () => {
+      expect(utils.parseHttpHeaderAsNumber('Infinity')).to.be.undefined;
+    });
+
+    it('returns undefined for "-Infinity"', () => {
+      expect(utils.parseHttpHeaderAsNumber('-Infinity')).to.be.undefined;
+    });
+
+    it('takes the first element for array input', () => {
+      expect(utils.parseHttpHeaderAsNumber(['30', '60'])).to.equal(30);
+    });
+
+    it('returns undefined for array with non-numeric first element', () => {
+      expect(utils.parseHttpHeaderAsNumber(['bad', '30'])).to.be.undefined;
+    });
+
+    it('returns undefined for array with empty string first element', () => {
+      expect(utils.parseHttpHeaderAsNumber(['', '30'])).to.be.undefined;
     });
   });
 

@@ -46,6 +46,9 @@ describe('Integration test', function() {
 
   it('should work with CommonJS imports', () => runTestProject('cjs'));
 
+  it('should work with CommonJS TypeScript imports', () =>
+    runTestProject('cjs-ts'));
+
   it('should work with ESModule imports', async function() {
     // Node supports ES Modules starting at v12
     if (nodeVersion <= 12) {
@@ -63,6 +66,8 @@ describe('Integration test', function() {
 
     await runTestProject('mjs-ts');
   });
+
+  it('should work with Bun', () => runTestProject('bun'));
 
   describe('esbuild', () => {
     it('should not change error.type when minified', async function() {
