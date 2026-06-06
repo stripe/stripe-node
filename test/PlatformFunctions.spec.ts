@@ -160,6 +160,27 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
       }
     });
 
+    describe('getSourceHash', () => {
+      if (isNodeEnvironment) {
+        it('returns a 32-character hex MD5 string', () => {
+          const hash = platformFunctions.getSourceHash();
+          expect(hash).to.be.a('string');
+          expect(hash).to.match(/^[0-9a-f]{32}$/);
+        });
+
+        it('returns null when getUname returns null', () => {
+          const orig = platformFunctions.getUname.bind(platformFunctions);
+          (platformFunctions as any).getUname = () => null;
+          expect(platformFunctions.getSourceHash()).to.be.null;
+          (platformFunctions as any).getUname = orig;
+        });
+      } else {
+        it('returns null on non-Node environments', () => {
+          expect(platformFunctions.getSourceHash()).to.be.null;
+        });
+      }
+    });
+
     describe('createEmitter', () => {
       let emitter;
       beforeEach(() => {

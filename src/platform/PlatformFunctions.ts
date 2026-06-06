@@ -35,6 +35,10 @@ export class PlatformFunctions {
     return null;
   }
 
+  getSourceHash(): string | null {
+    return null;
+  }
+
   /**
    * Emits a warning. Node.js uses process.emitWarning; other runtimes
    * fall back to console.warn.
