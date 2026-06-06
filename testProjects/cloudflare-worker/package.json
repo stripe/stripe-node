@@ -13,6 +13,6 @@
     "stripe": "file:../../"
   },
   "devDependencies": {
-    "wrangler": "^3.50.0"
+    "wrangler": "^4.93.1"
   }
 }
