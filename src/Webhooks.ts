@@ -4,45 +4,56 @@ import {
   CryptoProviderOnlySupportsAsyncError,
 } from './crypto/CryptoProvider.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
+import {Event} from './resources/Events.js';
 
-type WebhookHeader = string | Uint8Array;
+/**
+ * Value of the `stripe-signature` header from Stripe.
+ * Typically a string.
+ *
+ * Note that this is typed to accept an array of strings
+ * so that it works seamlessly with express's types,
+ * but will throw if an array is passed in practice
+ * since express should never return this header as an array,
+ * only a string.
+ */
+type WebhookHeader = string | string[] | Uint8Array;
 type WebhookParsedHeader = {
   signatures: Array<string>;
   timestamp: number;
 };
 type WebhookParsedEvent = {
   details: WebhookParsedHeader;
-  decodedPayload: WebhookHeader;
-  decodedHeader: WebhookPayload;
+  decodedPayload: string;
+  decodedHeader: string;
   suspectPayloadType: boolean;
 };
 type WebhookTestHeaderOptions = {
-  timestamp: number;
+  timestamp?: number;
   payload: string;
   secret: string;
-  scheme: string;
-  signature: string;
-  cryptoProvider: CryptoProvider;
+  scheme?: string;
+  signature?: string;
+  cryptoProvider?: CryptoProvider;
 };
 
-export type WebhookEvent = Record<string, unknown>;
+// export type WebhookEvent = Record<string, unknown>;
 type WebhookPayload = string | Uint8Array;
 type WebhookSignatureObject = {
   verifyHeader: (
     encodedPayload: WebhookPayload,
     encodedHeader: WebhookHeader,
     secret: string,
-    tolerance: number,
-    cryptoProvider: CryptoProvider,
-    receivedAt: number
+    tolerance?: number,
+    cryptoProvider?: CryptoProvider,
+    receivedAt?: number
   ) => boolean;
   verifyHeaderAsync: (
     encodedPayload: WebhookPayload,
     encodedHeader: WebhookHeader,
     secret: string,
-    tolerance: number,
-    cryptoProvider: CryptoProvider,
-    receivedAt: number
+    tolerance?: number,
+    cryptoProvider?: CryptoProvider,
+    receivedAt?: number
   ) => Promise<boolean>;
 };
 export type WebhookObject = {
@@ -52,18 +63,18 @@ export type WebhookObject = {
     payload: WebhookPayload,
     header: WebhookHeader,
     secret: string,
-    tolerance: null,
-    cryptoProvider: CryptoProvider,
-    receivedAt: number
-  ) => WebhookEvent;
+    tolerance?: number,
+    cryptoProvider?: CryptoProvider,
+    receivedAt?: number
+  ) => Event;
   constructEventAsync: (
     payload: WebhookPayload,
     header: WebhookHeader,
     secret: string,
-    tolerance: number,
-    cryptoProvider: CryptoProvider,
-    receivedAt: number
-  ) => Promise<WebhookEvent>;
+    tolerance?: number,
+    cryptoProvider?: CryptoProvider,
+    receivedAt?: number
+  ) => Promise<Event>;
   generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
   generateTestHeaderStringAsync: (
     opts: WebhookTestHeaderOptions
@@ -80,14 +91,16 @@ export function createWebhooks(
       payload: WebhookPayload,
       header: WebhookHeader,
       secret: string,
-      tolerance: null,
-      cryptoProvider: CryptoProvider,
-      receivedAt: number
-    ): WebhookEvent {
+      tolerance?: number,
+      cryptoProvider?: CryptoProvider,
+      receivedAt?: number
+    ): Event {
       try {
         if (!this.signature) {
           throw new Error('ERR: missing signature helper, unable to verify');
         }
+
+        cryptoProvider = cryptoProvider || getCryptoProvider();
 
         this.signature.verifyHeader(
           payload,
@@ -109,6 +122,11 @@ export function createWebhooks(
         payload instanceof Uint8Array
           ? JSON.parse(new TextDecoder('utf8').decode(payload))
           : JSON.parse(payload);
+      if (jsonPayload && jsonPayload.object === 'v2.core.event') {
+        throw new Error(
+          'You passed an event notification to stripe.webhooks.constructEvent, which expects a webhook payload. Use stripe.parseEventNotification instead.'
+        );
+      }
       return jsonPayload;
     },
 
@@ -116,13 +134,15 @@ export function createWebhooks(
       payload: WebhookPayload,
       header: WebhookHeader,
       secret: string,
-      tolerance: number,
-      cryptoProvider: CryptoProvider,
-      receivedAt: number
-    ): Promise<WebhookEvent> {
+      tolerance?: number,
+      cryptoProvider?: CryptoProvider,
+      receivedAt?: number
+    ): Promise<Event> {
       if (!this.signature) {
         throw new Error('ERR: missing signature helper, unable to verify');
       }
+
+      cryptoProvider = cryptoProvider || getCryptoProvider();
 
       await this.signature.verifyHeaderAsync(
         payload,
@@ -137,6 +157,11 @@ export function createWebhooks(
         payload instanceof Uint8Array
           ? JSON.parse(new TextDecoder('utf8').decode(payload))
           : JSON.parse(payload);
+      if (jsonPayload && jsonPayload.object === 'v2.core.event') {
+        throw new Error(
+          'You passed an event notification to stripe.webhooks.constructEvent, which expects a webhook payload. Use stripe.parseEventNotificationAsync instead.'
+        );
+      }
       return jsonPayload;
     },
 
@@ -186,9 +211,9 @@ export function createWebhooks(
       encodedPayload: WebhookPayload,
       encodedHeader: WebhookHeader,
       secret: string,
-      tolerance: number,
-      cryptoProvider: CryptoProvider,
-      receivedAt: number
+      tolerance?: number,
+      cryptoProvider?: CryptoProvider,
+      receivedAt?: number
     ): boolean {
       const {
         decodedHeader: header,
@@ -208,12 +233,17 @@ export function createWebhooks(
         secret
       );
 
+      /**
+       * TODO(MAJOR): https://go/j/DEVSDK-3087
+       * Passing in 0 by default skips timestamp tolerance verifications. Although it is mostly used in test,
+       * we should change the default behavior to pass DEFAULT_TOLERANCE instead of 0 in the next major.
+       */
       validateComputedSignature(
         payload,
         header,
         details,
         expectedSignature,
-        tolerance,
+        tolerance || 0,
         suspectPayloadType,
         secretContainsWhitespace,
         receivedAt
@@ -226,9 +256,9 @@ export function createWebhooks(
       encodedPayload: WebhookPayload,
       encodedHeader: WebhookHeader,
       secret: string,
-      tolerance: number,
-      cryptoProvider: CryptoProvider,
-      receivedAt: number
+      tolerance?: number,
+      cryptoProvider?: CryptoProvider,
+      receivedAt?: number
     ): Promise<boolean> {
       const {
         decodedHeader: header,
@@ -249,12 +279,17 @@ export function createWebhooks(
         secret
       );
 
+      /**
+       * TODO(MAJOR): https://go/j/DEVSDK-3087
+       * Passing in 0 by default skips timestamp tolerance verifications. Although it is mostly used in test,
+       * we should change the default behavior to pass DEFAULT_TOLERANCE instead of 0 in the next major.
+       */
       return validateComputedSignature(
         payload,
         header,
         details,
         expectedSignature,
-        tolerance,
+        tolerance || 0,
         suspectPayloadType,
         secretContainsWhitespace,
         receivedAt
@@ -274,6 +309,16 @@ export function createWebhooks(
     encodedHeader: WebhookHeader,
     expectedScheme: string
   ): WebhookParsedEvent {
+    // Express's type for `Request#headers` is `string | []string`
+    // which is because the `set-cookie` header is an array,
+    // but no other headers are an array (docs: https://nodejs.org/api/http.html#http_message_headers)
+    // (Express's Request class is an extension of http.IncomingMessage, and doesn't appear to be relevantly modified: https://github.com/expressjs/express/blob/master/lib/request.js#L31)
+    if (Array.isArray(encodedHeader)) {
+      throw new Error(
+        'Unexpected: An array was passed as a header, which should not be possible for the stripe-signature header.'
+      );
+    }
+
     if (!encodedPayload) {
       throw new StripeSignatureVerificationError(
         encodedHeader,
@@ -293,16 +338,6 @@ export function createWebhooks(
       encodedPayload instanceof Uint8Array
         ? textDecoder.decode(encodedPayload)
         : encodedPayload;
-
-    // Express's type for `Request#headers` is `string | []string`
-    // which is because the `set-cookie` header is an array,
-    // but no other headers are an array (docs: https://nodejs.org/api/http.html#http_message_headers)
-    // (Express's Request class is an extension of http.IncomingMessage, and doesn't appear to be relevantly modified: https://github.com/expressjs/express/blob/master/lib/request.js#L31)
-    if (Array.isArray(encodedHeader)) {
-      throw new Error(
-        'Unexpected: An array was passed as a header, which should not be possible for the stripe-signature header.'
-      );
-    }
 
     if (encodedHeader == null || encodedHeader == '') {
       throw new StripeSignatureVerificationError(
@@ -349,15 +384,40 @@ export function createWebhooks(
     };
   }
 
+  /**
+   * Validates that at least one signature in the parsed header matches the
+   * expected signature, and that the event timestamp is within the allowed
+   * {@link tolerance} window (in seconds). Set `tolerance` to `0` to skip
+   * timestamp verification.
+   *
+   * TODO(MAJOR): https://go/j/DEVSDK-3087 - Change this default behavior to use DEFAULT_TOLERANCE instead of 0.
+   * By default, validateComputedSignature doesn't perform timestamp verification.
+   *
+   * This method is mostly meant for tests or offline processing where the delivery time
+   * of the event isn't important.
+   * Integrations that process webhooks as they come in should use constructEvent method instead.
+   *
+   * @param payload The decoded webhook payload string.
+   * @param header  The decoded `stripe-signature` header value.
+   * @param details Parsed header containing timestamp and signatures.
+   * @param expectedSignature HMAC signature computed from the payload and secret.
+   * @param tolerance Maximum allowed age of the event in seconds. Use 0 to skip timestamp tolerance verification.
+   * @param suspectPayloadType Whether the payload was not a string or Buffer.
+   * @param secretContainsWhitespace Whether the signing secret contains whitespace.
+   * @param receivedAt - Timestamp for age calculation
+   * @returns `true` if the signature and timestamp are valid.
+   *
+   * @throws {StripeSignatureVerificationError} If verification fails.
+   */
   function validateComputedSignature(
-    payload: WebhookPayload,
-    header: WebhookHeader,
+    payload: string,
+    header: string,
     details: WebhookParsedHeader,
     expectedSignature: string,
     tolerance: number,
     suspectPayloadType: boolean,
     secretContainsWhitespace: boolean,
-    receivedAt: number
+    receivedAt?: number
   ): boolean {
     const signatureFound = !!details.signatures.filter(
       platformFunctions.secureCompare.bind(platformFunctions, expectedSignature)
@@ -411,11 +471,12 @@ export function createWebhooks(
 
   function parseHeader(
     header: WebhookHeader,
-    scheme: string
+    scheme?: string
   ): WebhookParsedHeader | null {
     if (typeof header !== 'string') {
       return null;
     }
+    scheme = scheme || signature.EXPECTED_SCHEME;
 
     return header.split(',').reduce<WebhookParsedHeader>(
       (accum, item) => {
@@ -448,12 +509,18 @@ export function createWebhooks(
     if (!webhooksCryptoProviderInstance) {
       webhooksCryptoProviderInstance = platformFunctions.createDefaultCryptoProvider();
     }
-    return webhooksCryptoProviderInstance!;
+    return webhooksCryptoProviderInstance;
   }
 
   function prepareOptions(
     opts: WebhookTestHeaderOptions
-  ): WebhookTestHeaderOptions & {
+  ): Omit<
+    WebhookTestHeaderOptions,
+    'timestamp' | 'scheme' | 'cryptoProvider'
+  > & {
+    timestamp: number;
+    scheme: string;
+    cryptoProvider: CryptoProvider;
     payloadString: string;
     generateHeaderString: (signature: string) => string;
   } {
@@ -464,7 +531,8 @@ export function createWebhooks(
     }
 
     const timestamp =
-      Math.floor(opts.timestamp) || Math.floor(Date.now() / 1000);
+      (opts.timestamp && Math.floor(opts.timestamp)) ||
+      Math.floor(Date.now() / 1000);
     const scheme = opts.scheme || signature.EXPECTED_SCHEME;
     const cryptoProvider = opts.cryptoProvider || getCryptoProvider();
     const payloadString = `${timestamp}.${opts.payload}`;

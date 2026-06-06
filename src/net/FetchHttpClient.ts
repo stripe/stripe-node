@@ -2,9 +2,9 @@ import {RequestHeaders, RequestData, ResponseHeaders} from '../Types.js';
 import {parseHeadersForFetch} from '../utils.js';
 import {
   HttpClient,
-  HttpClientInterface,
   HttpClientResponse,
-  HttpClientResponseInterface,
+  FetchHttpClientInterface,
+  FetchHttpClientResponseInterface,
 } from './HttpClient.js';
 
 type FetchWithTimeout = (
@@ -21,7 +21,8 @@ type FetchWithTimeout = (
  * Fetch API. As an example, this could be the function provided by the
  * node-fetch package (https://github.com/node-fetch/node-fetch).
  */
-export class FetchHttpClient extends HttpClient implements HttpClientInterface {
+export class FetchHttpClient extends HttpClient
+  implements FetchHttpClientInterface {
   private readonly _fetchFn: FetchWithTimeout;
 
   constructor(fetchFn?: typeof fetch) {
@@ -56,7 +57,7 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
     fetchFn: typeof fetch
   ): FetchWithTimeout {
     return (url, init, timeout): Promise<Response> => {
-      let pendingTimeoutId: NodeJS.Timeout | null;
+      let pendingTimeoutId: ReturnType<typeof setTimeout> | null;
       const timeoutPromise = new Promise<never>((_, reject) => {
         pendingTimeoutId = setTimeout(() => {
           pendingTimeoutId = null;
@@ -79,7 +80,7 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
     return async (url, init, timeout): Promise<Response> => {
       // Use AbortController because AbortSignal.timeout() was added later in Node v17.3.0, v16.14.0
       const abort = new AbortController();
-      let timeoutId: NodeJS.Timeout | null = setTimeout(() => {
+      let timeoutId: ReturnType<typeof setTimeout> | null = setTimeout(() => {
         timeoutId = null;
         abort.abort(HttpClient.makeTimeoutError());
       }, timeout);
@@ -119,12 +120,14 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
     requestData: string,
     protocol: string,
     timeout: number
-  ): Promise<HttpClientResponseInterface> {
+  ): Promise<FetchHttpClientResponseInterface> {
     const isInsecureConnection = protocol === 'http';
 
+    if (!path.startsWith('/')) {
+      throw new Error(`Only relative paths are supported, got: "${path}"`);
+    }
     const url = new URL(
-      path,
-      `${isInsecureConnection ? 'http' : 'https'}://${host}`
+      `${isInsecureConnection ? 'http' : 'https'}://${host}${path}`
     );
     url.port = port;
 
@@ -150,7 +153,7 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
 }
 
 export class FetchHttpClientResponse extends HttpClientResponse
-  implements HttpClientResponseInterface {
+  implements FetchHttpClientResponseInterface {
   _res: Response;
 
   constructor(res: Response) {
@@ -180,7 +183,16 @@ export class FetchHttpClientResponse extends HttpClientResponse
   }
 
   toJSON(): Promise<any> {
-    return this._res.json();
+    return this._res.text().then((text) => {
+      try {
+        return JSON.parse(text);
+      } catch (e) {
+        if (e instanceof Error) {
+          (e as any).rawBody = text;
+        }
+        throw e;
+      }
+    });
   }
 
   static _transformHeadersToObject(headers: Headers): ResponseHeaders {

@@ -2,7 +2,7 @@
 # uses the active LTS, which is newer than the version pinned in codegen
 # can bump to the next even number each year in late Oct, but it's not time sensitive
 # https://endoflife.date/nodejs
-node = "22"
+node = "24"
 
 # used in unit tests
 deno = "1"

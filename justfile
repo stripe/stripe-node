@@ -9,6 +9,9 @@ export PATH := `pwd` + "/node_modules/.bin:" + env('PATH')
 _default:
     just --list --unsorted
 
+# ⭐ run format, lint, and tests to prepare for CI
+prepare: format lint test types-test
+
 # this uses positional-args so that mixed quoted and unquoted arguments
 # (like filtering for a certain test) work the way we expect
 # ⭐ run unit tests
@@ -18,7 +21,8 @@ test *args: install build
 
 # try to compile the example TS file to make sure exports work
 types-test: build
-    tsc --build types/test
+    if [ ! -d testProjects/types/node_modules ]; then (cd testProjects/types && npm install); fi
+    tsc --build testProjects/types
 
 # run full integration tests by installing a bunch of packages and starting servers (slow)
 integrations-test: build
@@ -49,7 +53,7 @@ lint: (lint-check "--fix")
 
 # run style checks without changing anything
 lint-check *args: install
-    eslint --ext .js,.ts . {{ args }}
+    eslint --rulesdir eslint-rules --ext .js,.ts . {{ args }}
 
 # reinstall dependencies, if needed
 install:
@@ -62,22 +66,18 @@ prettier *args: install
     prettier "{src,examples,scripts,test,types}/**/*.{ts,js}" {{ args }}
 
 # ⭐ format all files
-format: (prettier "--write --loglevel silent") _update-api-version
+format: (prettier "--write --loglevel silent")
 
 # verify formatting of files (without changes)
 format-check: (prettier "--check")
-
-# propagate automatic changes; should be run after generation
-# in practice, that means it runs after formatting, since that's the only recipe that the generator calls
-_update-api-version:
-    cp src/apiVersion.ts types/apiVersion.d.ts
 
 # called by tooling
 [private]
 update-version version:
     echo "{{ version }}" > VERSION
     perl -pi -e 's|"version": "[.\-\d\w]+"|"version": "{{ version }}"|' package.json
-    perl -pi -e "s|Stripe.PACKAGE_VERSION = '[.\-\d\w]+'|Stripe.PACKAGE_VERSION = '{{ version }}'|" src/stripe.core.ts
+    perl -pi -e "s|static PACKAGE_VERSION = '[.\-\d\w]+'|static PACKAGE_VERSION = '{{ version }}'|" src/stripe.core.ts
+    perl -pi -e "s|static PACKAGE_VERSION = '[.\-\d\w]+'|static PACKAGE_VERSION = '{{ version }}'|" src/stripe.esm.node.ts
 
 # remove build artifacts
 clean:

@@ -1,0 +1,16 @@
+{
+  "name": "bun-esm",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "stripe": "file:../../"
+  },
+  "scripts": {
+    "runtestproject": "node_modules/.bin/bun run index.ts",
+    "lint": ""
+  },
+  "devDependencies": {
+    "bun": "^1.3.11"
+  }
+}

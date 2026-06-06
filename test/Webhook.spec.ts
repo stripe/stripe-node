@@ -10,6 +10,13 @@ const EVENT_PAYLOAD = {
   object: 'event',
 };
 const EVENT_PAYLOAD_STRING = JSON.stringify(EVENT_PAYLOAD, null, 2);
+
+const V2_EVENT_PAYLOAD = {
+  id: 'evt_test_webhook',
+  object: 'v2.core.event',
+};
+const V2_EVENT_PAYLOAD_STRING = JSON.stringify(V2_EVENT_PAYLOAD, null, 2);
+
 const SECRET = 'whsec_test_secret';
 
 describe('Webhooks on static Stripe factory', () => {
@@ -182,6 +189,21 @@ function createWebhooksTestSuite(stripe) {
         );
 
         expect(event.id).to.equal(EVENT_PAYLOAD.id);
+      });
+
+      it('should throw when a v2 webhook payload is passed', async () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: V2_EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        const err = await constructEventFn(
+          V2_EVENT_PAYLOAD_STRING,
+          header,
+          SECRET
+        ).catch((e: Error) => e);
+        expect(err).to.be.instanceOf(Error);
+        expect(err.message).to.contain('stripe.parseEventNotification');
       });
     };
   };
@@ -454,11 +476,12 @@ function createWebhooksTestSuite(stripe) {
           );
         });
         it('should use the provider to compute a signature (success)', async () => {
+          const timestamp = Date.now() / 1000;
           const header = stripe.webhooks.generateTestHeaderString({
             payload: EVENT_PAYLOAD_STRING,
             secret: SECRET,
             signature: 'fake signature',
-            timestamp: 123,
+            timestamp,
           });
 
           expect(
@@ -489,4 +512,150 @@ function createWebhooksTestSuite(stripe) {
       stripe.webhooks.signature.verifyHeaderAsync(...args)
     )
   );
+
+  describe('optional parameter defaults', () => {
+    describe('.generateTestHeaderString with optional params', () => {
+      it('should use current timestamp when timestamp is not provided', () => {
+        const before = Math.floor(Date.now() / 1000);
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+        const after = Math.floor(Date.now() / 1000);
+
+        const timestampStr = header.split(',')[0].replace('t=', '');
+        const timestamp = parseInt(timestampStr, 10);
+        expect(timestamp).to.be.at.least(before);
+        expect(timestamp).to.be.at.most(after);
+      });
+
+      it('should use provided timestamp when given', () => {
+        const customTimestamp = 1234567890;
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+          timestamp: customTimestamp,
+        });
+
+        const timestampStr = header.split(',')[0].replace('t=', '');
+        expect(parseInt(timestampStr, 10)).to.equal(customTimestamp);
+      });
+    });
+
+    describe('.generateTestHeaderStringAsync with optional params', () => {
+      it('should use current timestamp when timestamp is not provided', async () => {
+        const before = Math.floor(Date.now() / 1000);
+        const header = await stripe.webhooks.generateTestHeaderStringAsync({
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+        const after = Math.floor(Date.now() / 1000);
+
+        const timestampStr = header.split(',')[0].replace('t=', '');
+        const timestamp = parseInt(timestampStr, 10);
+        expect(timestamp).to.be.at.least(before);
+        expect(timestamp).to.be.at.most(after);
+      });
+    });
+
+    describe('verifyHeader with optional tolerance and cryptoProvider', () => {
+      it('should use 0 and accept recent timestamps when tolerance is omitted', async () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          timestamp: Date.now() / 1000 - 100,
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        expect(
+          await stripe.webhooks.signature.verifyHeaderAsync(
+            EVENT_PAYLOAD_STRING,
+            header,
+            SECRET
+          )
+        ).to.equal(true);
+      });
+
+      it('should use default cryptoProvider when cryptoProvider is omitted', async () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          timestamp: Date.now() / 1000,
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        expect(
+          await stripe.webhooks.signature.verifyHeaderAsync(
+            EVENT_PAYLOAD_STRING,
+            header,
+            SECRET,
+            300
+          )
+        ).to.equal(true);
+      });
+
+      it('should work when both tolerance and cryptoProvider are omitted', async () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          timestamp: Date.now() / 1000,
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        expect(
+          await stripe.webhooks.signature.verifyHeaderAsync(
+            EVENT_PAYLOAD_STRING,
+            header,
+            SECRET
+          )
+        ).to.equal(true);
+      });
+    });
+
+    describe('constructEvent with optional tolerance and cryptoProvider', () => {
+      it('should use DEFAULT_TOLERANCE when tolerance is omitted', async () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          timestamp: Date.now() / 1000 - 400,
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        await expect(
+          stripe.webhooks.constructEventAsync(
+            EVENT_PAYLOAD_STRING,
+            header,
+            SECRET
+          )
+        ).to.be.rejectedWith(/Timestamp outside the tolerance zone/);
+      });
+
+      it('should succeed with a recent timestamp when tolerance is omitted', async () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          timestamp: Date.now() / 1000,
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        const event = await stripe.webhooks.constructEventAsync(
+          EVENT_PAYLOAD_STRING,
+          header,
+          SECRET
+        );
+        expect(event.id).to.equal(EVENT_PAYLOAD.id);
+      });
+
+      it('should succeed without cryptoProvider argument', async () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          timestamp: Date.now() / 1000,
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        const event = await stripe.webhooks.constructEventAsync(
+          EVENT_PAYLOAD_STRING,
+          header,
+          SECRET,
+          300
+        );
+        expect(event.id).to.equal(EVENT_PAYLOAD.id);
+      });
+    });
+  });
 }

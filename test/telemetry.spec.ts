@@ -157,16 +157,26 @@ describe('Client Telemetry', () => {
       }
     );
 
-    const resource = new (StripeResource.extend({
-      boop: StripeResource.method({
-        method: 'POST',
-        fullPath: '/v1/widgets/{widget}/boop',
-        usage: ['llama', 'bufo'],
-      }),
-    }))(stripe);
+    const resource = new StripeResource(stripe);
 
-    await resource.boop('w_123');
-    await resource.boop('w_123');
+    await resource._makeRequest(
+      'POST',
+      '/v1/widgets/w_123/boop',
+      undefined,
+      undefined,
+      {
+        usage: ['llama', 'bufo'],
+      }
+    );
+    await resource._makeRequest(
+      'POST',
+      '/v1/widgets/w_123/boop',
+      undefined,
+      undefined,
+      {
+        usage: ['llama', 'bufo'],
+      }
+    );
     expect(numRequests).to.equal(2);
   });
 

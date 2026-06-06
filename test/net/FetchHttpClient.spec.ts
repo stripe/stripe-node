@@ -85,6 +85,46 @@ describe('FetchHttpClient', () => {
     expect(capturedBody).to.equal('');
   });
 
+  describe('makeRequest path validation', () => {
+    it('throws when path is an absolute URL', async () => {
+      const client = createFetchHttpClient();
+      try {
+        await client.makeRequest(
+          'api.stripe.com',
+          443,
+          'https://example.com/steal',
+          'GET',
+          {},
+          '',
+          'https',
+          1000
+        );
+        throw new Error('Expected an error to be thrown');
+      } catch (e) {
+        expect(e.message).to.match(/Only relative paths are supported/);
+      }
+    });
+
+    it('sends request to the correct host when given a relative path', async () => {
+      nock('https://api.stripe.com')
+        .get('/v1/charges')
+        .reply(200, '{}');
+
+      const client = createFetchHttpClient();
+      const response = await client.makeRequest(
+        'api.stripe.com',
+        443,
+        '/v1/charges',
+        'GET',
+        {},
+        '',
+        'https',
+        1000
+      );
+      expect(response.getStatusCode()).to.equal(200);
+    });
+  });
+
   describe('it does not set a body value for empty GET requests', () => {
     let capturedBody;
 

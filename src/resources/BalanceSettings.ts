@@ -1,8 +1,330 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-const stripeMethod = StripeResource.method;
-export const BalanceSettings = StripeResource.extend({
-  retrieve: stripeMethod({method: 'GET', fullPath: '/v1/balance_settings'}),
-  update: stripeMethod({method: 'POST', fullPath: '/v1/balance_settings'}),
-});
+import {Emptyable} from '../shared.js';
+import {RequestOptions, Response} from '../lib.js';
+
+export class BalanceSettingResource extends StripeResource {
+  /**
+   * Retrieves balance settings for a given connected account.
+   *  Related guide: [Making API calls for connected accounts](https://docs.stripe.com/connect/authentication)
+   */
+  retrieve(
+    params?: BalanceSettingsRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<BalanceSettings>> {
+    return this._makeRequest(
+      'GET',
+      '/v1/balance_settings',
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Updates balance settings for a given connected account.
+   *  Related guide: [Making API calls for connected accounts](https://docs.stripe.com/connect/authentication)
+   */
+  update(
+    params?: BalanceSettingsUpdateParams,
+    options?: RequestOptions
+  ): Promise<Response<BalanceSettings>> {
+    return this._makeRequest(
+      'POST',
+      '/v1/balance_settings',
+      params,
+      options
+    ) as any;
+  }
+}
+export interface BalanceSettings {
+  /**
+   * String representing the object's type. Objects of the same type share the same value.
+   */
+  object: 'balance_settings';
+
+  payments: BalanceSettings.Payments;
+}
+export namespace BalanceSettings {
+  export interface Payments {
+    /**
+     * A Boolean indicating if Stripe should try to reclaim negative balances from an attached bank account. See [Understanding Connect account balances](https://docs.stripe.com/connect/account-balances) for details. The default value is `false` when [controller.requirement_collection](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts, otherwise `true`.
+     */
+    debit_negative_balances: boolean | null;
+
+    /**
+     * Settings specific to the account's payouts.
+     */
+    payouts: Payments.Payouts | null;
+
+    settlement_timing: Payments.SettlementTiming;
+  }
+
+  export namespace Payments {
+    export interface Payouts {
+      /**
+       * Configures per-currency rules for automatically transferring funds from the payments balance to a FinancialAccount.
+       */
+      automatic_transfer_rules_by_currency: {
+        [key: string]: Array<Payouts.AutomaticTransferRulesByCurrency>;
+      } | null;
+
+      /**
+       * The minimum balance amount to retain per currency after automatic payouts. Only funds that exceed these amounts are paid out. Learn more about the [minimum balances for automatic payouts](https://docs.stripe.com/payouts/minimum-balances-for-automatic-payouts).
+       */
+      minimum_balance_by_currency: {
+        [key: string]: number;
+      } | null;
+
+      /**
+       * Details on when funds from charges are available, and when they are paid out to an external account. See our [Setting Bank and Debit Card Payouts](https://docs.stripe.com/connect/bank-transfers#payout-information) documentation for details.
+       */
+      schedule: Payouts.Schedule | null;
+
+      /**
+       * The text that appears on the bank account statement for payouts. If not set, this defaults to the platform's bank descriptor as set in the Dashboard.
+       */
+      statement_descriptor: string | null;
+
+      /**
+       * Whether the funds in this account can be paid out.
+       */
+      status: Payouts.Status;
+    }
+
+    export interface SettlementTiming {
+      /**
+       * The number of days charge funds are held before becoming available.
+       */
+      delay_days: number;
+
+      /**
+       * The number of days charge funds are held before becoming available. If present, overrides the default, or minimum available, for the account.
+       */
+      delay_days_override?: number;
+
+      /**
+       * Customized start of day configuration for automatic payouts to group and send payments in local timezones with a customized day starting time. For details, see our [Customized start of day](https://docs.stripe.com/connect/customized-start-of-day) documentation.
+       */
+      start_of_day: SettlementTiming.StartOfDay | null;
+    }
+
+    export namespace Payouts {
+      export interface AutomaticTransferRulesByCurrency {
+        /**
+         * The ID of the FinancialAccount that funds will be transferred to during automatic transfers.
+         */
+        payout_method: string;
+
+        /**
+         * The maximum amount in minor units to transfer to the FinancialAccount. Only applicable when `type` is `transfer_up_to_amount`.
+         */
+        transfer_up_to_amount: number | null;
+
+        /**
+         * The type of automatic transfer rule.
+         */
+        type: AutomaticTransferRulesByCurrency.Type;
+      }
+
+      export interface Schedule {
+        /**
+         * How frequently funds will be paid out. One of `manual` (payouts only created via API call), `daily`, `weekly`, or `monthly`.
+         */
+        interval: Schedule.Interval | null;
+
+        /**
+         * The day of the month funds will be paid out. Only shown if `interval` is monthly. Payouts scheduled between the 29th and 31st of the month are sent on the last day of shorter months.
+         */
+        monthly_payout_days?: Array<number>;
+
+        /**
+         * The days of the week when available funds are paid out, specified as an array, for example, [`monday`, `tuesday`]. Only shown if `interval` is weekly.
+         */
+        weekly_payout_days?: Array<Schedule.WeeklyPayoutDay>;
+      }
+
+      export type Status = 'disabled' | 'enabled';
+
+      export namespace AutomaticTransferRulesByCurrency {
+        export type Type = 'transfer_all' | 'transfer_up_to_amount';
+      }
+
+      export namespace Schedule {
+        export type Interval = 'daily' | 'manual' | 'monthly' | 'weekly';
+
+        export type WeeklyPayoutDay =
+          | 'friday'
+          | 'monday'
+          | 'thursday'
+          | 'tuesday'
+          | 'wednesday';
+      }
+    }
+
+    export namespace SettlementTiming {
+      export interface StartOfDay {
+        /**
+         * Hour at which the customized start of day begins according to the given timezone. Must be a [supported customized start of day hour](https://docs.stripe.com/connect/customized-start-of-day#available-timezones-and-cutoffs).
+         */
+        hour: number;
+
+        /**
+         * Minutes at which the customized start of day begins according to the given timezone. Must be either 0 or 30.
+         */
+        minutes: number;
+
+        /**
+         * Timezone for the customized start of day. Must be a [supported customized start of day timezone](https://docs.stripe.com/connect/customized-start-of-day#available-timezones-and-cutoffs).
+         */
+        timezone: string;
+      }
+    }
+  }
+}
+export interface BalanceSettingsRetrieveParams {
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}
+export interface BalanceSettingsUpdateParams {
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+
+  /**
+   * Settings that apply to the [Payments Balance](https://docs.stripe.com/api/balance).
+   */
+  payments?: BalanceSettingsUpdateParams.Payments;
+}
+export namespace BalanceSettingsUpdateParams {
+  export interface Payments {
+    /**
+     * A Boolean indicating whether Stripe should try to reclaim negative balances from an attached bank account. For details, see [Understanding Connect Account Balances](https://docs.stripe.com/connect/account-balances).
+     */
+    debit_negative_balances?: boolean;
+
+    /**
+     * Settings specific to the account's payouts.
+     */
+    payouts?: Payments.Payouts;
+
+    /**
+     * Settings related to the account's balance settlement timing.
+     */
+    settlement_timing?: Payments.SettlementTiming;
+  }
+
+  export namespace Payments {
+    export interface Payouts {
+      /**
+       * Configures per-currency rules for automatically transferring funds from the payments balance to a FinancialAccount.
+       */
+      automatic_transfer_rules_by_currency?: Emptyable<{
+        [key: string]: Emptyable<
+          Array<Payouts.AutomaticTransferRulesByCurrency>
+        >;
+      }>;
+
+      /**
+       * The minimum balance amount to retain per currency after automatic payouts. Only funds that exceed these amounts are paid out. Learn more about the [minimum balances for automatic payouts](https://docs.stripe.com/payouts/minimum-balances-for-automatic-payouts).
+       */
+      minimum_balance_by_currency?: Emptyable<{
+        [key: string]: Emptyable<number>;
+      }>;
+
+      /**
+       * Details on when funds from charges are available, and when they are paid out to an external account. For details, see our [Setting Bank and Debit Card Payouts](https://docs.stripe.com/connect/bank-transfers#payout-information) documentation.
+       */
+      schedule?: Payouts.Schedule;
+
+      /**
+       * The text that appears on the bank account statement for payouts. If not set, this defaults to the platform's bank descriptor as set in the Dashboard.
+       */
+      statement_descriptor?: string;
+    }
+
+    export interface SettlementTiming {
+      /**
+       * Change `delay_days` for this account, which determines the number of days charge funds are held before becoming available. The maximum value is 31. Passing an empty string to `delay_days_override` will return `delay_days` to the default, which is the lowest available value for the account. [Learn more about controlling delay days](https://docs.stripe.com/connect/manage-payout-schedule).
+       */
+      delay_days_override?: Emptyable<number>;
+
+      /**
+       * Customized start of day configuration for automatic payouts to group and send payments in local timezones with a customized day starting time. For details, see our [Customized start of day](https://docs.stripe.com/connect/customized-start-of-day) documentation.
+       */
+      start_of_day?: Emptyable<SettlementTiming.StartOfDay>;
+    }
+
+    export namespace Payouts {
+      export interface AutomaticTransferRulesByCurrency {
+        /**
+         * The ID of the FinancialAccount that funds will be transferred to during automatic transfers.
+         */
+        payout_method: string;
+
+        /**
+         * The maximum amount in minor units to transfer to the FinancialAccount. Required and only applicable when `type` is `transfer_up_to_amount`.
+         */
+        transfer_up_to_amount?: number;
+
+        /**
+         * The type of automatic transfer rule.
+         */
+        type: AutomaticTransferRulesByCurrency.Type;
+      }
+
+      export interface Schedule {
+        /**
+         * How frequently available funds are paid out. One of: `daily`, `manual`, `weekly`, or `monthly`. Default is `daily`.
+         */
+        interval?: Schedule.Interval;
+
+        /**
+         * The days of the month when available funds are paid out, specified as an array of numbers between 1--31. Payouts nominally scheduled between the 29th and 31st of the month are instead sent on the last day of a shorter month. Required and applicable only if `interval` is `monthly`.
+         */
+        monthly_payout_days?: Array<number>;
+
+        /**
+         * The days of the week when available funds are paid out, specified as an array, e.g., [`monday`, `tuesday`]. Required and applicable only if `interval` is `weekly`.
+         */
+        weekly_payout_days?: Array<Schedule.WeeklyPayoutDay>;
+      }
+
+      export namespace AutomaticTransferRulesByCurrency {
+        export type Type = 'transfer_all' | 'transfer_up_to_amount';
+      }
+
+      export namespace Schedule {
+        export type Interval = 'daily' | 'manual' | 'monthly' | 'weekly';
+
+        export type WeeklyPayoutDay =
+          | 'friday'
+          | 'monday'
+          | 'thursday'
+          | 'tuesday'
+          | 'wednesday';
+      }
+    }
+
+    export namespace SettlementTiming {
+      export interface StartOfDay {
+        /**
+         * Hour at which the customized start of day begins according to the given timezone. Must be a [supported customized start of day hour](https://docs.stripe.com/connect/customized-start-of-day#available-timezones-and-cutoffs).
+         */
+        hour?: number;
+
+        /**
+         * Minutes at which the customized start of day begins according to the given timezone. Must be either 0 or 30.
+         */
+        minutes?: number;
+
+        /**
+         * Timezone for the customized start of day. Must be a [supported customized start of day timezone](https://docs.stripe.com/connect/customized-start-of-day#available-timezones-and-cutoffs).
+         */
+        timezone?: string;
+      }
+    }
+  }
+}

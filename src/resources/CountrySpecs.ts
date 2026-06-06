@@ -1,15 +1,119 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-const stripeMethod = StripeResource.method;
-export const CountrySpecs = StripeResource.extend({
-  retrieve: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/country_specs/{country}',
-  }),
-  list: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/country_specs',
-    methodType: 'list',
-  }),
-});
+import {PaginationParams} from '../shared.js';
+import {RequestOptions, ApiListPromise, Response} from '../lib.js';
+
+export class CountrySpecResource extends StripeResource {
+  /**
+   * Lists all Country Spec objects available in the API.
+   */
+  list(
+    params?: CountrySpecListParams,
+    options?: RequestOptions
+  ): ApiListPromise<CountrySpec> {
+    return this._makeRequest('GET', '/v1/country_specs', params, options, {
+      methodType: 'list',
+    }) as any;
+  }
+  /**
+   * Returns a Country Spec for a given Country code.
+   */
+  retrieve(
+    id: string,
+    params?: CountrySpecRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<CountrySpec>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/country_specs/${id}`,
+      params,
+      options
+    ) as any;
+  }
+}
+export interface CountrySpec {
+  /**
+   * Unique identifier for the object. Represented as the ISO country code for this country.
+   */
+  id: string;
+
+  /**
+   * String representing the object's type. Objects of the same type share the same value.
+   */
+  object: 'country_spec';
+
+  /**
+   * The default currency for this country. This applies to both payment methods and bank accounts.
+   */
+  default_currency: string;
+
+  /**
+   * Currencies that can be accepted in the specific country (for transfers).
+   */
+  supported_bank_account_currencies: {
+    [key: string]: Array<string>;
+  };
+
+  /**
+   * Currencies that can be accepted in the specified country (for payments).
+   */
+  supported_payment_currencies: Array<string>;
+
+  /**
+   * Payment methods available in the specified country. You may need to enable some payment methods (e.g., [ACH](https://stripe.com/docs/ach)) on your account before they appear in this list. The `stripe` payment method refers to [charging through your platform](https://stripe.com/docs/connect/destination-charges).
+   */
+  supported_payment_methods: Array<string>;
+
+  /**
+   * Countries that can accept transfers from the specified country.
+   */
+  supported_transfer_countries: Array<string>;
+
+  verification_fields: CountrySpec.VerificationFields;
+}
+export namespace CountrySpec {
+  export interface VerificationFields {
+    company: VerificationFields.Company;
+
+    individual: VerificationFields.Individual;
+  }
+
+  export namespace VerificationFields {
+    export interface Company {
+      /**
+       * Additional fields which are only required for some users.
+       */
+      additional: Array<string>;
+
+      /**
+       * Fields which every account must eventually provide.
+       */
+      minimum: Array<string>;
+    }
+
+    export interface Individual {
+      /**
+       * Additional fields which are only required for some users.
+       */
+      additional: Array<string>;
+
+      /**
+       * Fields which every account must eventually provide.
+       */
+      minimum: Array<string>;
+    }
+  }
+}
+export interface CountrySpecRetrieveParams {
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}
+export interface CountrySpecListParams extends PaginationParams {
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}

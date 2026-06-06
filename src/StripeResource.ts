@@ -1,255 +1,168 @@
 import {
-  getDataFromArgs,
-  getOptionsFromArgs,
+  attachCallSiteToError,
   makeURLInterpolator,
-  protoExtend,
+  processOptions,
   queryStringifyRequestData,
 } from './utils.js';
-import {stripeMethod} from './StripeMethod.js';
 import {
   StripeResourceObject,
-  StripeObject,
-  RequestArgs,
-  MethodSpec,
+  MakeRequestSpec,
   RequestData,
-  RequestOpts,
   UrlInterpolator,
 } from './Types.js';
 import {HttpClientResponseInterface} from './net/HttpClient.js';
-
-// Provide extension mechanism for Stripe Resource Sub-Classes
-StripeResource.extend = protoExtend;
-
-// Expose method-creator
-StripeResource.method = stripeMethod;
-
-StripeResource.MAX_BUFFERED_REQUEST_METRICS = 100;
+import {coerceV2RequestData, coerceV2ResponseData} from './V2Coercion.js';
+import {makeAutoPaginationMethods} from './autoPagination.js';
+import {Stripe} from './stripe.core.js';
+import {RequestOptions} from './lib.js';
 
 /**
  * Encapsulates request logic for a Stripe Resource
  */
-function StripeResource(
-  this: StripeResourceObject,
-  stripe: StripeObject,
-  deprecatedUrlData?: never
-): void {
-  this._stripe = stripe;
-  if (deprecatedUrlData) {
-    throw new Error(
-      'Support for curried url params was dropped in stripe-node v7.0.0. Instead, pass two ids.'
-    );
-  }
+class StripeResource implements StripeResourceObject {
+  static MAX_BUFFERED_REQUEST_METRICS = 100;
 
-  this.basePath = makeURLInterpolator(
-    // @ts-ignore changing type of basePath
-    this.basePath || stripe.getApiField('basePath')
-  );
-  // @ts-ignore changing type of path
-  this.resourcePath = this.path;
-  // @ts-ignore changing type of path
-  this.path = makeURLInterpolator(this.path);
-
-  this.initialize(...arguments);
-}
-
-StripeResource.prototype = {
-  _stripe: null as StripeObject | null,
-  // @ts-ignore the type of path changes in ctor
-  path: '' as UrlInterpolator,
-  resourcePath: '',
-
-  // Methods that don't use the API's default '/v1' path can override it with this setting.
-  basePath: null!,
-
-  initialize(): void {},
+  // Instance properties
+  _stripe!: Stripe;
+  path!: UrlInterpolator;
+  resourcePath = '';
+  basePath!: UrlInterpolator;
 
   // Function to override the default data processor. This allows full control
   // over how a StripeResource's request data will get converted into an HTTP
   // body. This is useful for non-standard HTTP requests. The function should
   // take method name, data, and headers as arguments.
-  requestDataProcessor: null,
+  requestDataProcessor: any = null;
 
-  // Function to add a validation checks before sending the request, errors should
-  // be thrown, and they will be passed to the callback/promise.
-  validateRequest: null,
-
-  createFullPath(
-    commandPath: string | ((urlData: Record<string, unknown>) => string),
-    urlData: Record<string, unknown>
-  ): string {
-    const urlParts = [this.basePath(urlData), this.path(urlData)];
-
-    if (typeof commandPath === 'function') {
-      const computedCommandPath = commandPath(urlData);
-      // If we have no actual command path, we just omit it to avoid adding a
-      // trailing slash. This is important for top-level listing requests, which
-      // do not have a command path.
-      if (computedCommandPath) {
-        urlParts.push(computedCommandPath);
-      }
-    } else {
-      urlParts.push(commandPath);
-    }
-
-    return this._joinUrlParts(urlParts);
-  },
-
-  // Creates a relative resource path with symbols left in (unlike
-  // createFullPath which takes some data to replace them with). For example it
-  // might produce: /invoices/{id}
-  createResourcePathWithSymbols(pathWithSymbols: string | null): string {
-    // If there is no path beyond the resource path, we want to produce just
-    // /<resource path> rather than /<resource path>/.
-    if (pathWithSymbols) {
-      return `/${this._joinUrlParts([this.resourcePath, pathWithSymbols])}`;
-    } else {
-      return `/${this.resourcePath}`;
-    }
-  },
-
-  _joinUrlParts(parts: Array<string>): string {
-    // Replace any accidentally doubled up slashes. This previously used
-    // path.join, which would do this as well. Unfortunately we need to do this
-    // as the functions for creating paths are technically part of the public
-    // interface and so we need to preserve backwards compatibility.
-    return parts.join('/').replace(/\/{2,}/g, '/');
-  },
-
-  _getRequestOpts(
-    requestArgs: RequestArgs,
-    spec: MethodSpec,
-    overrideData: RequestData
-  ): RequestOpts {
-    // Extract spec values with defaults.
-    const requestMethod = (spec.method || 'GET').toUpperCase();
-    const usage = spec.usage || [];
-    const urlParams = spec.urlParams || [];
-    const encode = spec.encode || ((data): RequestData => data);
-
-    const isUsingFullPath = !!spec.fullPath;
-    const commandPath: UrlInterpolator = makeURLInterpolator(
-      isUsingFullPath ? spec.fullPath! : spec.path || ''
-    );
-    // When using fullPath, we ignore the resource path as it should already be
-    // fully qualified.
-    const path = isUsingFullPath
-      ? spec.fullPath
-      : this.createResourcePathWithSymbols(spec.path);
-
-    // Don't mutate args externally.
-    const args: RequestArgs = [].slice.call(requestArgs);
-
-    // Generate and validate url params.
-    const urlData = urlParams.reduce<RequestData>((urlData, param) => {
-      const arg = args.shift();
-      if (typeof arg !== 'string') {
-        throw new Error(
-          `Stripe: Argument "${param}" must be a string, but got: ${arg} (on API request to \`${requestMethod} ${path}\`)`
-        );
-      }
-
-      urlData[param] = arg;
-      return urlData;
-    }, {});
-
-    // Pull request data and options (headers, auth) from args.
-    const dataFromArgs = getDataFromArgs(args);
-    const data = encode(Object.assign({}, dataFromArgs, overrideData));
-    const options = getOptionsFromArgs(args);
-    const host = options.host || spec.host;
-    const streaming = !!spec.streaming || !!options.streaming;
-    // Validate that there are no more args.
-    if (args.filter((x) => x != null).length) {
+  constructor(stripe: Stripe, deprecatedUrlData?: never) {
+    this._stripe = stripe;
+    if (deprecatedUrlData) {
       throw new Error(
-        `Stripe: Unknown arguments (${args}). Did you mean to pass an options object? See https://github.com/stripe/stripe-node/wiki/Passing-Options. (on API request to ${requestMethod} \`${path}\`)`
+        'Support for curried url params was dropped in stripe-node v7.0.0. Instead, pass two ids.'
       );
     }
 
-    // When using full path, we can just invoke the URL interpolator directly
-    // as we don't need to use the resource to create a full path.
-    const requestPath = isUsingFullPath
-      ? commandPath(urlData)
-      : this.createFullPath(commandPath, urlData);
+    this.basePath = makeURLInterpolator(
+      // @ts-expect-error changing type of basePath
+      this.basePath || stripe.getApiField('basePath')
+    );
+    // @ts-ignore changing type of path - path comes from prototype as string, convert to interpolator
+    const rawPath = this.path || '';
+    this.resourcePath = (rawPath as unknown) as string;
+    this.path = makeURLInterpolator((rawPath as unknown) as string);
 
-    const headers = Object.assign(options.headers, spec.headers);
+    this.initialize(stripe, deprecatedUrlData);
+  }
 
-    if (spec.validator) {
-      spec.validator(data, {headers});
-    }
-
-    const dataInQuery = spec.method === 'GET' || spec.method === 'DELETE';
-    const bodyData = dataInQuery ? null : data;
-    const queryData = dataInQuery ? data : {};
-
-    return {
-      requestMethod,
-      requestPath,
-      bodyData,
-      queryData,
-      authenticator: options.authenticator ?? null,
-      headers,
-      host: host ?? null,
-      streaming,
-      settings: options.settings,
-      usage,
-    };
-  },
+  initialize(_stripe?: Stripe, _deprecatedUrlData?: never): void {}
 
   _makeRequest(
-    requestArgs: RequestArgs,
-    spec: MethodSpec,
-    overrideData: RequestData
+    method: string,
+    path: string,
+    params: RequestData | undefined,
+    options: RequestOptions | undefined,
+    spec?: MakeRequestSpec
   ): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      let opts: RequestOpts;
-      try {
-        opts = this._getRequestOpts(requestArgs, spec, overrideData);
-      } catch (err) {
-        reject(err);
-        return;
+    const requestMethod = method.toUpperCase();
+    const encode = spec?.encode || ((data: RequestData): RequestData => data);
+    const data = encode(params ? {...params} : {});
+    const processed = processOptions(options);
+    const apiBase = processed.apiBase || spec?.apiBase || null;
+    const host = apiBase ? this._stripe.resolveBaseAddress(apiBase) : null;
+    const streaming = processed.streaming || !!spec?.streaming;
+    const headers = Object.assign(processed.headers, spec?.headers);
+    const usage = spec?.usage || [];
+
+    const dataInQuery = requestMethod === 'GET' || requestMethod === 'DELETE';
+    let bodyData: RequestData | null = dataInQuery ? null : data;
+    const queryData: RequestData = dataInQuery ? data : {};
+
+    try {
+      if (spec?.validator) {
+        spec.validator(data, {headers});
       }
 
+      // Coerce int64_string/decimal_string fields in request body
+      if (spec?.requestSchema && bodyData) {
+        bodyData = coerceV2RequestData(
+          bodyData,
+          spec.requestSchema
+        ) as RequestData;
+      }
+    } catch (err) {
+      return Promise.reject(err);
+    }
+
+    // Capture the caller's stack trace before the async boundary so errors can
+    // include the user's call site, not just SDK internals.
+    const callSiteStack = new Error().stack;
+
+    const innerPromise = new Promise<any>((resolve, reject) => {
       function requestCallback(
         err: any,
         response: HttpClientResponseInterface
       ): void {
         if (err) {
+          attachCallSiteToError(err, callSiteStack);
           reject(err);
         } else {
-          resolve(
-            spec.transformResponseData
-              ? spec.transformResponseData(response)
-              : response
-          );
+          try {
+            if (spec?.responseSchema) {
+              coerceV2ResponseData(response, spec.responseSchema);
+            }
+            resolve(
+              spec?.transformResponseData
+                ? spec.transformResponseData(response)
+                : response
+            );
+          } catch (e) {
+            reject(e);
+          }
         }
       }
 
-      const emptyQuery = Object.keys(opts.queryData).length === 0;
-      const path = [
-        opts.requestPath,
+      const emptyQuery = Object.keys(queryData).length === 0;
+      const fullPath = [
+        path,
         emptyQuery ? '' : '?',
-        queryStringifyRequestData(opts.queryData),
+        queryStringifyRequestData(queryData),
       ].join('');
 
-      const {headers, settings} = opts;
-
       this._stripe._requestSender._request(
-        opts.requestMethod,
-        opts.host,
-        path,
-        opts.bodyData,
-        opts.authenticator,
+        requestMethod,
+        host,
+        fullPath,
+        bodyData,
+        processed.authenticator,
         {
           headers,
-          settings,
-          streaming: opts.streaming,
+          settings: processed.settings,
+          streaming,
         },
-        opts.usage,
+        usage,
         requestCallback,
         this.requestDataProcessor?.bind(this)
       );
     });
-  },
-} as StripeResourceObject;
+
+    // Attach auto-pagination methods for list/search endpoints
+    if (spec?.methodType) {
+      Object.assign(
+        innerPromise,
+        makeAutoPaginationMethods(
+          this,
+          params ? {...params} : {},
+          options,
+          requestMethod,
+          path,
+          spec,
+          innerPromise
+        )
+      );
+    }
+
+    return innerPromise;
+  }
+}
 
 export {StripeResource};

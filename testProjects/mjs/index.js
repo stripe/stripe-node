@@ -21,6 +21,7 @@ assert(Stripe.createSubtleCryptoProvider);
 assert(Stripe.errors);
 assert(Stripe.errors.generateV1Error);
 assert(Stripe.errors.generateV2Error);
+assert(Stripe.errors.generateOAuthError);
 assert(Stripe.errors.StripeError);
 assert(Stripe.errors.StripeCardError);
 assert(Stripe.errors.StripeInvalidRequestError);
@@ -31,17 +32,22 @@ assert(Stripe.errors.StripeRateLimitError);
 assert(Stripe.errors.StripeConnectionError);
 assert(Stripe.errors.StripeSignatureVerificationError);
 assert(Stripe.errors.StripeIdempotencyError);
+assert(Stripe.errors.StripeOAuthError);
 assert(Stripe.errors.StripeInvalidGrantError);
-assert(Stripe.errors.StripeUnknownError);
+assert(Stripe.errors.StripeInvalidClientError);
+assert(Stripe.errors.StripeOAuthInvalidRequestError);
+assert(Stripe.errors.StripeInvalidScopeError);
+assert(Stripe.errors.StripeUnsupportedGrantTypeError);
+assert(Stripe.errors.StripeUnsupportedResponseTypeError);
+assert(Stripe.errors.StripeAPIError);
 
 assert(Stripe.StripeResource);
 assert(Stripe.StripeContext);
-assert(Stripe.StripeResource.method);
-assert(Stripe.StripeResource.extend);
 assert(Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
 assert(Stripe.webhooks);
 assert(Stripe.resources);
+assert(Stripe.Decimal);
 
 const stripe = new Stripe(process.argv[2], {
   host: process.env.STRIPE_MOCK_HOST || 'localhost',
@@ -67,6 +73,8 @@ assert(stripe._emitter);
 assert(stripe.on);
 assert(stripe.off);
 assert(stripe.once);
+
+Stripe.Decimal.from('1.1');
 
 try {
   throw new stripe.errors.StripeError({

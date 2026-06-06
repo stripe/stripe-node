@@ -3,7 +3,9 @@
 [![Version](https://img.shields.io/npm/v/stripe.svg)](https://www.npmjs.org/package/stripe)
 [![Build Status](https://github.com/stripe/stripe-node/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/stripe/stripe-node/actions?query=branch%3Amaster)
 [![Downloads](https://img.shields.io/npm/dm/stripe.svg)](https://www.npmjs.com/package/stripe)
-[![Try on RunKit](https://badge.runkitcdn.com/stripe.svg)](https://runkit.com/npm/stripe)
+
+> [!TIP]
+> Want to chat live with Stripe engineers? Join us on our [Discord server](https://stripe.com/go/discord/node).
 
 The Stripe Node library provides convenient access to the Stripe API from
 applications written in server-side JavaScript.
@@ -16,9 +18,9 @@ See the [`stripe-node` API docs](https://stripe.com/docs/api?lang=node) for Node
 
 ## Requirements
 
-Per our [Language Version Support Policy](https://docs.stripe.com/sdks/versioning?lang=node#stripe-sdk-language-version-support-policy), we currently support all LTS versions of **Node.js 16+**.
+Per our [Language Version Support Policy](https://docs.stripe.com/sdks/versioning?lang=node#stripe-sdk-language-version-support-policy), we currently support all LTS versions of **Node.js 18+**.
 
-Support for Node 16 is deprecated and will be removed in an upcoming major version. Read more and see the full schedule in the docs: https://docs.stripe.com/sdks/versioning?lang=node#stripe-sdk-language-version-support-policy
+Read more and see the full schedule in the docs: https://docs.stripe.com/sdks/versioning?lang=node#stripe-sdk-language-version-support-policy
 
 ## Installation
 
@@ -38,27 +40,30 @@ value:
 
 <!-- prettier-ignore -->
 ```js
-const stripe = require('stripe')('sk_test_...');
+import Stripe from 'stripe';
+const stripeClient = new Stripe('sk_test_...');
 
-stripe.customers.create({
+const customer = await stripeClient.customers.create({
+  email: 'customer@example.com',
+});
+
+console.log(customer.id);
+```
+
+Or using CJS:
+```js
+const Stripe = require('stripe');
+const stripeClient = Stripe('sk_test_...');
+
+stripeClient.customers.create({
   email: 'customer@example.com',
 })
   .then(customer => console.log(customer.id))
   .catch(error => console.error(error));
 ```
 
-Or using ES modules and `async`/`await`:
 
-```js
-import Stripe from 'stripe';
-const stripe = new Stripe('sk_test_...');
 
-const customer = await stripe.customers.create({
-  email: 'customer@example.com',
-});
-
-console.log(customer.id);
-```
 
 > [!WARNING]
 > If you're using `v17.x.x` or later and getting an error about a missing API key despite being sure it's available, it's likely you're importing the file that instantiates `Stripe` while the key isn't present (for instance, during a build step).
@@ -68,7 +73,7 @@ console.log(customer.id);
 > import Stripe from 'stripe';
 >
 > let _stripe: Stripe | null = null;
-> const getStripe = (): Stripe => {
+> const getStripeClient = (): Stripe => {
 >   if (!_stripe) {
 >     _stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 >       // ...
@@ -77,7 +82,7 @@ console.log(customer.id);
 >   return _stripe;
 > };
 >
-> const getCustomers = () => getStripe().customers.list();
+> const getCustomers = () => getStripeClient().customers.list();
 > ```
 >
 > Alternatively, you can provide a placeholder for the real key (which will be enough to get the code through a build step):
@@ -85,7 +90,7 @@ console.log(customer.id);
 > ```ts
 > import Stripe from 'stripe';
 >
-> export const stripe = new Stripe(
+> export const stripeClient = new Stripe(
 >   process.env.STRIPE_SECRET_KEY || 'api_key_placeholder',
 >   {
 >     // ...
@@ -102,14 +107,14 @@ and instantiate it as `new Stripe()` with the latest API version.
 
 ```ts
 import Stripe from 'stripe';
-const stripe = new Stripe('sk_test_...');
+const stripeClient = new Stripe('sk_test_...');
 
 const createCustomer = async () => {
   const params: Stripe.CustomerCreateParams = {
     description: 'test customer',
   };
 
-  const customer: Stripe.Customer = await stripe.customers.create(params);
+  const customer: Stripe.Customer = await stripeClient.customers.create(params);
 
   console.log(customer.id);
 };
@@ -139,13 +144,20 @@ We also recommend using `// @ts-ignore` if you have access to a beta feature and
 so you must cast them appropriately, e.g.,
 
 ```ts
-const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.retrieve(
+const paymentIntent: Stripe.PaymentIntent = await stripeClient.paymentIntents.retrieve(
   'pi_123456789',
   {
     expand: ['customer'],
   }
 );
 const customerEmail: string = (paymentIntent.customer as Stripe.Customer).email;
+
+// Define and use this helper method if you extract `id` often
+function getId(stripeObject: {id: string} | string) {
+  return typeof stripeObject === 'string' ? stripeObject : stripeObject.id;
+}
+
+const customerId: string = getId(paymentIntent.customer);
 ```
 
 #### TypeScript and the stripe-node versioning policy
@@ -161,7 +173,7 @@ callback:
 
 ```js
 // Create a new customer and then create an invoice item then invoice it:
-stripe.customers
+stripeClient.customers
   .create({
     email: 'customer@example.com',
   })
@@ -239,7 +251,7 @@ const stripe = Stripe('sk_test_...', {
 Timeout can be set globally via the config object:
 
 ```js
-const stripe = Stripe('sk_test_...', {
+const stripeClient = Stripe('sk_test_...', {
   timeout: 20 * 1000, // 20 seconds
 });
 ```
@@ -247,7 +259,7 @@ const stripe = Stripe('sk_test_...', {
 And overridden on a per-request basis:
 
 ```js
-stripe.customers.create(
+stripeClient.customers.create(
   {
     email: 'customer@example.com',
   },
@@ -264,7 +276,7 @@ can be added to any method:
 
 ```js
 // List the balance transactions for a connected account:
-stripe.balanceTransactions.list(
+stripeClient.balanceTransactions.list(
   {
     limit: 10,
   },
@@ -293,13 +305,13 @@ if (process.env.http_proxy) {
 As of [v13](https://github.com/stripe/stripe-node/releases/tag/v13.0.0) stripe-node will automatically do one reattempt for failed requests that are safe to retry. Automatic network retries can be disabled by setting the `maxNetworkRetries` config option to `0`. You can also set a higher number to reattempt multiple times, with exponential backoff. [Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
 
 ```js
-const stripe = Stripe('sk_test_...', {
+const stripeClient = Stripe('sk_test_...', {
   maxNetworkRetries: 0, // Disable retries
 });
 ```
 
 ```js
-const stripe = Stripe('sk_test_...', {
+const stripeClient = Stripe('sk_test_...', {
   maxNetworkRetries: 2, // Retry a request twice before giving up
 });
 ```
@@ -307,7 +319,7 @@ const stripe = Stripe('sk_test_...', {
 Network retries can also be set on a per-request basis:
 
 ```js
-stripe.customers.create(
+stripeClient.customers.create(
   {
     email: 'customer@example.com',
   },
@@ -332,17 +344,18 @@ customer.lastResponse.statusCode;
 The Stripe object emits `request` and `response` events. You can use them like this:
 
 ```js
-const stripe = require('stripe')('sk_test_...');
+const Stripe = require('stripe');
+const stripeClient = Stripe('sk_test_...');
 
 const onRequest = (request) => {
   // Do something.
 };
 
 // Add the event handler function:
-stripe.on('request', onRequest);
+stripeClient.on('request', onRequest);
 
 // Remove the event handler function:
-stripe.off('request', onRequest);
+stripeClient.off('request', onRequest);
 ```
 
 #### `request` object
@@ -354,6 +367,7 @@ stripe.off('request', onRequest);
   idempotency_key: 'abc123',         // Only present if provided
   method: 'POST',
   path: '/v1/customers',
+  body: {name: 'test'},              // Only present if emitEventBodies is true
   request_start_time: 1565125303932  // Unix timestamp in milliseconds
 }
 ```
@@ -363,15 +377,16 @@ stripe.off('request', onRequest);
 ```js
 {
   api_version: 'latest',
-  account: 'acct_TEST',              // Only present if provided
-  idempotency_key: 'abc123',         // Only present if provided
+  account: 'acct_TEST',                       // Only present if provided
+  idempotency_key: 'abc123',                  // Only present if provided
   method: 'POST',
   path: '/v1/customers',
-  status: 402,
+  status: 200,
   request_id: 'req_Ghc9r26ts73DRf',
-  elapsed: 445,                      // Elapsed time in milliseconds
-  request_start_time: 1565125303932, // Unix timestamp in milliseconds
-  request_end_time: 1565125304377    // Unix timestamp in milliseconds
+  body: {id: 'cus_123', object: 'customer'},  // Only present if emitEventBodies is true
+  elapsed: 445,                               // Elapsed time in milliseconds
+  request_start_time: 1565125303932,          // Unix timestamp in milliseconds
+  request_end_time: 1565125304377             // Unix timestamp in milliseconds
 }
 ```
 
@@ -384,7 +399,7 @@ Please note that you must pass the _raw_ request body, exactly as received from 
 You can find an example of how to use this with various JavaScript frameworks in [`examples/webhook-signing`](examples/webhook-signing) folder, but here's what it looks like:
 
 ```js
-const event = stripe.webhooks.constructEvent(
+const event = stripeClient.webhooks.constructEvent(
   webhookRawBody,
   webhookStripeSignatureHeader,
   webhookSecret
@@ -393,7 +408,7 @@ const event = stripe.webhooks.constructEvent(
 
 #### Testing Webhook signing
 
-You can use `stripe.webhooks.generateTestHeaderString` to mock webhook events that come from Stripe:
+You can use `stripeClient.webhooks.generateTestHeaderString` to mock webhook events that come from Stripe:
 
 ```js
 const payload = {
@@ -404,28 +419,31 @@ const payload = {
 const payloadString = JSON.stringify(payload, null, 2);
 const secret = 'whsec_test_secret';
 
-const header = stripe.webhooks.generateTestHeaderString({
+const header = stripeClient.webhooks.generateTestHeaderString({
   payload: payloadString,
   secret,
 });
 
-const event = stripe.webhooks.constructEvent(payloadString, header, secret);
+const event = stripeClient.webhooks.constructEvent(payloadString, header, secret);
 
 // Do something with mocked signed event
 expect(event.id).to.equal(payload.id);
 ```
+
 ### How to use undocumented parameters and properties
 
 In some cases, you might encounter parameters on an API request or fields on an API response that aren’t available in the SDKs.
-This might happen when they’re undocumented or when they’re in preview and you aren’t using a preview SDK. 
+This might happen when they’re undocumented or when they’re in preview and you aren’t using a preview SDK.
 See [undocumented params and properties](https://docs.stripe.com/sdks/server-side?lang=node#undocumented-params-and-fields) to send those parameters or access those fields.
 
 ### Writing a Plugin
 
 If you're writing a plugin that uses the library, we'd appreciate it if you instantiated your stripe client with `appInfo`, eg;
 
+With ES modules or TypeScript:
 ```js
-const stripe = require('stripe')('sk_test_...', {
+import Stripe from "stripe";
+const stripeClient = new Stripe(apiKey, {
   appInfo: {
     name: 'MyAwesomePlugin',
     version: '1.2.34', // Optional
@@ -434,10 +452,10 @@ const stripe = require('stripe')('sk_test_...', {
 });
 ```
 
-Or using ES modules or TypeScript:
-
+Or using CJS:
 ```js
-const stripe = new Stripe(apiKey, {
+const Stripe = require('stripe');
+const stripeClient = Stripe('sk_test_...', {
   appInfo: {
     name: 'MyAwesomePlugin',
     version: '1.2.34', // Optional
@@ -445,6 +463,7 @@ const stripe = new Stripe(apiKey, {
   },
 });
 ```
+
 
 This information is passed along when the library makes calls to the Stripe API.
 
@@ -459,7 +478,7 @@ such as Node 10+ or [babel](https://babeljs.io/docs/en/babel-plugin-transform-as
 the following will auto-paginate:
 
 ```js
-for await (const customer of stripe.customers.list()) {
+for await (const customer of stripeClient.customers.list()) {
   doSomething(customer);
   if (shouldStop()) {
     break;
@@ -473,7 +492,7 @@ If you are in a Node environment that has support for `await`, such as Node 7.9 
 you may pass an async function to `.autoPagingEach`:
 
 ```js
-await stripe.customers.list().autoPagingEach(async (customer) => {
+await stripeClient.customers.list().autoPagingEach(async (customer) => {
   await doSomething(customer);
   if (shouldBreak()) {
     return false;
@@ -485,7 +504,7 @@ console.log('Done iterating.');
 Equivalently, without `await`, you may return a Promise, which can resolve to `false` to break:
 
 ```js
-stripe.customers
+stripeClient.customers
   .list()
   .autoPagingEach((customer) => {
     return doSomething(customer).then(() => {
@@ -510,7 +529,7 @@ to prevent runaway list growth from consuming too much memory. Once the
 Returns a promise of an array of all items across pages for a list request.
 
 ```js
-const allNewCustomers = await stripe.customers
+const allNewCustomers = await stripeClient.customers
   .list({created: {gt: lastMonth}, limit: 100}) // 100 items per page
   .autoPagingToArray({limit: 10000}); // Stop after 10000 items total
 ```
@@ -525,7 +544,7 @@ improve popular features.
 You can disable this behavior if you prefer:
 
 ```js
-const stripe = new Stripe('sk_test_...', {
+const stripeClient = new Stripe('sk_test_...', {
   telemetry: false,
 });
 ```
@@ -555,14 +574,14 @@ npm install stripe@<some-version>
 Some preview features require a name and version to be set in the `Stripe-Version` header like `feature_beta=v3`. If your preview feature has this requirement, use the `apiVersion` property of `config` object to set it:
 
 ```js
-const stripe = new Stripe('sk_test_...', {
+const stripeClient = new Stripe('sk_test_...', {
   apiVersion: '2022-08-01; feature_beta=v3',
 });
 ```
 
 ### Private Preview SDKs
 
-Stripe has features in the [private preview phase](https://docs.stripe.com/release-phases) that can be accessed via versions of this package that have the `-alpha.X` suffix like `18.6.0-alpha.1`. These are invite-only features. Once invited, you can install the private preview SDKs by following the same instructions as for the [public preview SDKs](https://github.com/stripe/stripe-node?tab=readme-ov-file#public-preview-sdks) above and replacing the term `public-preview` with `private-preview`:
+Stripe has features in the [private preview phase](https://docs.stripe.com/release-phases) that can be accessed via versions of this package that have the `-alpha.X` suffix like `18.6.0-alpha.1`. You can install the private preview SDKs by following the same instructions as for the [public preview SDKs](#public-preview-sdks) above and replacing the term `public-preview` with `private-preview`. Note that access to specific private preview API features may require separate approval:
 
 ```
 npm install stripe@private-preview --save-exact
@@ -574,20 +593,7 @@ npm install stripe@private-preview --save-exact
 
 If you would like to send a request to an undocumented API (for example you are in a private beta), or if you prefer to bypass the method definitions in the library and specify your request details directly, you can use the `rawRequest` method on the StripeClient object.
 
-```javascript
-const client = new Stripe('sk_test_...');
-
-client.rawRequest(
-    'POST',
-    '/v1/beta_endpoint',
-    { param: 123 },
-    { apiVersion: '2022-11-15; feature_beta=v3' }
-  )
-  .then((response) => /* handle response */ )
-  .catch((error) => console.error(error));
-```
-
-Or using ES modules and `async`/`await`:
+Using ES modules and `async`/`await`:
 
 ```javascript
 import Stripe from 'stripe';
@@ -601,6 +607,21 @@ const response = await stripe.rawRequest(
 );
 
 // handle response
+```
+
+Or using CJS and promises:
+
+```javascript
+const stripeClient = new Stripe('sk_test_...');
+
+stripeClient.rawRequest(
+    'POST',
+    '/v1/beta_endpoint',
+    { param: 123 },
+    { apiVersion: '2022-11-15; feature_beta=v3' }
+  )
+  .then((response) => /* handle response */ )
+  .catch((error) => console.error(error));
 ```
 
 ## Support

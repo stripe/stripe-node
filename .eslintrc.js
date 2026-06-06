@@ -171,7 +171,7 @@ module.exports = {
     'no-useless-return': 'error',
     'no-var': 'off',
     'no-void': 'error',
-    'no-warning-comments': 'error',
+    'no-warning-comments': 'warn',
     'no-whitespace-before-property': 'error',
     'no-with': 'error',
     'nonblock-statement-body-position': 'error',
@@ -262,6 +262,7 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': 0,
         '@typescript-eslint/triple-slash-reference': 0,
         '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/no-namespace': 'off',
         '@typescript-eslint/no-empty-function': 0,
         '@typescript-eslint/naming-convention': [
           'error',
@@ -285,6 +286,21 @@ module.exports = {
       files: ['test/**/*.ts'],
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
+      },
+    },
+    {
+      files: ['src/**/*.ts'],
+      rules: {
+        'wintertc-compat': 'error',
+      },
+    },
+    {
+      files: [
+        'src/**/Node*.ts',
+        'src/stripe.*.node.ts',
+      ],
+      rules: {
+        'wintertc-compat': 'off',
       },
     },
   ],
