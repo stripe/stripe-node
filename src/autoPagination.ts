@@ -241,9 +241,11 @@ class V2ListIterator<T> implements AsyncIterator<T> {
     }
 
     const nextPromise = (async (): Promise<IteratorResult<T>> => {
-      const ret = await this._next();
-      this.promiseCache.currentPromise = null;
-      return ret;
+      try {
+        return await this._next();
+      } finally {
+        this.promiseCache.currentPromise = null;
+      }
     })();
 
     this.promiseCache.currentPromise = nextPromise;
