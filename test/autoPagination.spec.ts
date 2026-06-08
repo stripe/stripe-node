@@ -894,21 +894,23 @@ describe('auto pagination', () => {
       });
     });
 
-    it('gives the same result for parallel next() calls', async () => {
-      const {paginator} = mockPaginationV2List(
-        [{ids: [1, 2], next_page_url: '/v2/items?page=foo'}, {ids: [3, 4]}],
+    it('coalesces parallel next() calls at a page boundary into one request', async () => {
+      const {paginator, paramsLog} = mockPaginationV2List(
+        [{ids: [1], next_page_url: '/v2/items?page=foo'}, {ids: [2, 3]}],
         {}
       );
 
-      // Call next() twice in parallel — both should resolve to the same item
+      // Drain the first page
+      const first = await paginator.next();
+      expect((first as any).value.id).to.equal(1);
+
+      // Now at page boundary — fire parallel next() calls
       const [r1, r2] = await Promise.all([paginator.next(), paginator.next()]);
       expect(r1).to.deep.equal(r2);
+      expect((r1 as any).value.id).to.equal(2);
 
-      // Collect remaining items via autoPagingToArray
-      const remaining = await paginator.autoPagingToArray({limit: 10});
-      const ids = [(r1 as any).value.id, ...remaining.map((x) => x.id)];
-
-      expect(ids).to.deep.equal([1, 2, 3, 4]);
+      // Only one page request should have been made
+      expect(paramsLog).to.deep.equal(['?page=foo']);
     });
   });
   describe('stack traces', () => {
