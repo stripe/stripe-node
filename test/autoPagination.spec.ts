@@ -879,6 +879,37 @@ describe('auto pagination', () => {
         'Should not have any unhandled promise rejections'
       ).to.have.length(0);
     });
+
+    it('iterates through empty intermediate pages', () => {
+      return testCaseV2List({
+        pages: [
+          {ids: [1, 2], next_page_url: '/v2/items?page=a'},
+          {ids: [], next_page_url: '/v2/items?page=b'},
+          {ids: [], next_page_url: '/v2/items?page=c'},
+          {ids: [3, 4]},
+        ],
+        limit: 10,
+        expectedIds: [1, 2, 3, 4],
+        expectedParamsLog: ['?page=a', '?page=b', '?page=c'],
+      });
+    });
+
+    it('gives the same result for parallel next() calls', async () => {
+      const {paginator} = mockPaginationV2List(
+        [{ids: [1, 2], next_page_url: '/v2/items?page=foo'}, {ids: [3, 4]}],
+        {}
+      );
+
+      // Call next() twice in parallel — both should resolve to the same item
+      const [r1, r2] = await Promise.all([paginator.next(), paginator.next()]);
+      expect(r1).to.deep.equal(r2);
+
+      // Collect remaining items via autoPagingToArray
+      const remaining = await paginator.autoPagingToArray({limit: 10});
+      const ids = [(r1 as any).value.id, ...remaining.map((x) => x.id)];
+
+      expect(ids).to.deep.equal([1, 2, 3, 4]);
+    });
   });
   describe('stack traces', () => {
     // Builds a paginator whose first page succeeds but whose second page

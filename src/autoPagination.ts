@@ -173,6 +173,7 @@ class V2ListIterator<T> implements AsyncIterator<T> {
   private firstPagePromise: Promise<PageResult<T>> | null;
   private currentPageIterator: Iterator<T> | null;
   private nextPageUrl: string | null;
+  private promiseCache: PromiseCache;
   private options: RequestOptions | undefined;
   private spec: MakeRequestSpec | undefined;
   private stripeResource: StripeResourceObject;
@@ -185,6 +186,7 @@ class V2ListIterator<T> implements AsyncIterator<T> {
     this.firstPagePromise = firstPagePromise;
     this.currentPageIterator = null;
     this.nextPageUrl = null;
+    this.promiseCache = {currentPromise: null};
     this.options = options;
     this.spec = spec;
     this.stripeResource = stripeResource;
@@ -210,19 +212,43 @@ class V2ListIterator<T> implements AsyncIterator<T> {
     this.currentPageIterator = page.data[Symbol.iterator]();
     return this.currentPageIterator;
   }
-  async next(): Promise<IteratorResult<T>> {
+  private async _next(): Promise<IteratorResult<T>> {
     await this.initFirstPage();
     if (this.currentPageIterator) {
       const result = this.currentPageIterator.next();
       if (!result.done) return {done: false, value: result.value};
     }
+    return this.nextFromNewPage();
+  }
+  private async nextFromNewPage(): Promise<IteratorResult<T>> {
     const nextPageIterator = await this.turnPage();
     if (!nextPageIterator) {
       return {done: true, value: undefined};
     }
     const result = nextPageIterator.next();
     if (!result.done) return {done: false, value: result.value};
-    return {done: true, value: undefined};
+    // Empty intermediate page — recurse to try the next page.
+    return this.nextFromNewPage();
+  }
+  next(): Promise<IteratorResult<T>> {
+    /**
+     * If a user calls `.next()` multiple times in parallel,
+     * return the same result until something has resolved
+     * to prevent page-turning race conditions.
+     */
+    if (this.promiseCache.currentPromise) {
+      return this.promiseCache.currentPromise;
+    }
+
+    const nextPromise = (async (): Promise<IteratorResult<T>> => {
+      const ret = await this._next();
+      this.promiseCache.currentPromise = null;
+      return ret;
+    })();
+
+    this.promiseCache.currentPromise = nextPromise;
+
+    return nextPromise;
   }
 }
 
