@@ -2147,6 +2147,8 @@ export namespace Checkout {
 
         link?: PaymentMethodDetails.Link;
 
+        pix?: PaymentMethodDetails.Pix;
+
         sepa_debit?: PaymentMethodDetails.SepaDebit;
 
         /**
@@ -2246,6 +2248,13 @@ export namespace Checkout {
           fingerprint?: string | null;
         }
 
+        export interface Pix {
+          /**
+           * Uniquely identifies this particular Pix account. You can use this attribute to check whether two Pix accounts are the same.
+           */
+          fingerprint: string | null;
+        }
+
         export interface SepaDebit {
           /**
            * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
@@ -2273,6 +2282,7 @@ export namespace Checkout {
             | 'elo'
             | 'girocard'
             | 'interac'
+            | 'jaywan'
             | 'jcb'
             | 'link'
             | 'maestro'

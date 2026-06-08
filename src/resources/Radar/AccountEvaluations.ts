@@ -235,18 +235,47 @@ export namespace Radar {
     export namespace LoginInitiated {
       export interface ClientDeviceMetadataDetails {
         /**
-         * ID for the Radar Session associated with the account evaluation.
+         * Raw client metadata fallback when Stripe.js is blocked. Required unless radar_session is provided.
          */
-        radar_session: string;
+        data?: ClientDeviceMetadataDetails.Data;
+
+        /**
+         * ID for the Radar Session. Required unless data is provided.
+         */
+        radar_session?: string;
+      }
+
+      export namespace ClientDeviceMetadataDetails {
+        export interface Data {
+          /**
+           * The end user's IP address. Used for proxy detection and IP-clustering signals.
+           */
+          ip: string;
+
+          /**
+           * The referring URL of the login or registration page.
+           */
+          referrer?: string;
+
+          /**
+           * The User-Agent HTTP header.
+           */
+          user_agent?: string;
+        }
       }
     }
 
     export namespace RegistrationInitiated {
       export interface ClientDeviceMetadataDetails {
         /**
-         * ID for the Radar Session associated with the account evaluation.
+         * Raw client metadata fallback when Stripe.js is blocked. Required unless radar_session is provided.
          */
-        radar_session: string;
+        data?: ClientDeviceMetadataDetails.Data;
+
+        /**
+         * ID for the Radar Session. Required unless data is provided.
+         */
+        radar_session?: string;
       }
 
       export interface CustomerData {
@@ -264,6 +293,25 @@ export namespace Radar {
          * Customer phone
          */
         phone?: string;
+      }
+
+      export namespace ClientDeviceMetadataDetails {
+        export interface Data {
+          /**
+           * The end user's IP address. Used for proxy detection and IP-clustering signals.
+           */
+          ip: string;
+
+          /**
+           * The referring URL of the login or registration page.
+           */
+          referrer?: string;
+
+          /**
+           * The User-Agent HTTP header.
+           */
+          user_agent?: string;
+        }
       }
     }
   }

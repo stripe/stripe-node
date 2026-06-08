@@ -310,6 +310,22 @@ import {
   FxQuoteResource,
 } from './resources/FxQuotes.js';
 import {
+  GiftCard,
+  GiftCardCreateParams,
+  GiftCardRetrieveParams,
+  GiftCardActivateParams,
+  GiftCardCashoutParams,
+  GiftCardCheckBalanceParams,
+  GiftCardReloadParams,
+  GiftCardVoidOperationParams,
+  GiftCardResource,
+} from './resources/GiftCards.js';
+import {
+  GiftCardOperation,
+  GiftCardOperationRetrieveParams,
+  GiftCardOperationResource,
+} from './resources/GiftCardOperations.js';
+import {
   Invoice,
   DeletedInvoice,
   InvoiceCreateParams,
@@ -427,6 +443,7 @@ import {
   PaymentIntentReauthorizeParams,
   PaymentIntentSearchParams,
   PaymentIntentTriggerActionParams,
+  PaymentIntentUpdateCryptoRefundAddressParams,
   PaymentIntentVerifyMicrodepositsParams,
   PaymentIntentResource,
 } from './resources/PaymentIntents.js';
@@ -686,6 +703,12 @@ import {
   TaxCodeListParams,
   TaxCodeResource,
 } from './resources/TaxCodes.js';
+import {
+  TaxFund,
+  TaxFundRetrieveParams,
+  TaxFundListParams,
+  TaxFundResource,
+} from './resources/TaxFunds.js';
 import {
   TaxId,
   DeletedTaxId,
@@ -1242,6 +1265,8 @@ export class Stripe {
   files: FileResource;
   frMealVouchersOnboardings: FrMealVouchersOnboardingResource;
   fxQuotes: FxQuoteResource;
+  giftCardOperations: GiftCardOperationResource;
+  giftCards: GiftCardResource;
   invoiceItems: InvoiceItemResource;
   invoicePayments: InvoicePaymentResource;
   invoiceRenderingTemplates: InvoiceRenderingTemplateResource;
@@ -1274,6 +1299,7 @@ export class Stripe {
   subscriptionSchedules: SubscriptionScheduleResource;
   subscriptions: SubscriptionResource;
   taxCodes: TaxCodeResource;
+  taxFunds: TaxFundResource;
   taxIds: TaxIdResource;
   taxRates: TaxRateResource;
   tokens: TokenResource;
@@ -1436,6 +1462,8 @@ export class Stripe {
     this.files = new FileResource(this);
     this.frMealVouchersOnboardings = new FrMealVouchersOnboardingResource(this);
     this.fxQuotes = new FxQuoteResource(this);
+    this.giftCardOperations = new GiftCardOperationResource(this);
+    this.giftCards = new GiftCardResource(this);
     this.invoiceItems = new InvoiceItemResource(this);
     this.invoicePayments = new InvoicePaymentResource(this);
     this.invoiceRenderingTemplates = new InvoiceRenderingTemplateResource(this);
@@ -1472,6 +1500,7 @@ export class Stripe {
     this.subscriptionSchedules = new SubscriptionScheduleResource(this);
     this.subscriptions = new SubscriptionResource(this);
     this.taxCodes = new TaxCodeResource(this);
+    this.taxFunds = new TaxFundResource(this);
     this.taxIds = new TaxIdResource(this);
     this.taxRates = new TaxRateResource(this);
     this.tokens = new TokenResource(this);
@@ -2252,6 +2281,22 @@ export declare namespace Stripe {
     FxQuoteResource,
   };
   export {
+    GiftCard,
+    GiftCardCreateParams,
+    GiftCardRetrieveParams,
+    GiftCardActivateParams,
+    GiftCardCashoutParams,
+    GiftCardCheckBalanceParams,
+    GiftCardReloadParams,
+    GiftCardVoidOperationParams,
+    GiftCardResource,
+  };
+  export {
+    GiftCardOperation,
+    GiftCardOperationRetrieveParams,
+    GiftCardOperationResource,
+  };
+  export {
     Invoice,
     DeletedInvoice,
     InvoiceCreateParams,
@@ -2364,6 +2409,7 @@ export declare namespace Stripe {
     PaymentIntentReauthorizeParams,
     PaymentIntentSearchParams,
     PaymentIntentTriggerActionParams,
+    PaymentIntentUpdateCryptoRefundAddressParams,
     PaymentIntentVerifyMicrodepositsParams,
     PaymentIntentResource,
   };
@@ -2614,6 +2660,7 @@ export declare namespace Stripe {
     SubscriptionScheduleResource,
   };
   export {TaxCode, TaxCodeRetrieveParams, TaxCodeListParams, TaxCodeResource};
+  export {TaxFund, TaxFundRetrieveParams, TaxFundListParams, TaxFundResource};
   export {
     TaxId,
     DeletedTaxId,

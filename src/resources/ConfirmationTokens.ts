@@ -1366,6 +1366,8 @@ export namespace ConfirmationToken {
              */
             location?: string;
 
+            multicapture?: CardPresent.Multicapture;
+
             /**
              * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
              */
@@ -1420,6 +1422,13 @@ export namespace ConfirmationToken {
           }
 
           export namespace CardPresent {
+            export interface Multicapture {
+              /**
+               * Indicates whether or not multiple captures are supported.
+               */
+              status: Multicapture.Status;
+            }
+
             export interface Offline {
               /**
                * Time at which the payment was collected while offline
@@ -1498,6 +1507,10 @@ export namespace ConfirmationToken {
                * The type of mobile wallet, one of `apple_pay`, `google_pay`, `samsung_pay`, or `unknown`.
                */
               type: Wallet.Type;
+            }
+
+            export namespace Multicapture {
+              export type Status = 'available' | 'unavailable';
             }
 
             export namespace Reauthorization {

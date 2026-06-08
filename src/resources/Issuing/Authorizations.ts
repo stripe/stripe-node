@@ -1882,7 +1882,7 @@ export namespace Issuing {
           card_reference_id?: string;
 
           /**
-           * Stripe's recommendation to the network for this token activation request, derived from the same risk signals used for the activation decision.
+           * The network's recommendation to Stripe for this token activation request.
            */
           token_decision_recommendation?: Visa.TokenDecisionRecommendation | null;
 

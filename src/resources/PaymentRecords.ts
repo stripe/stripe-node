@@ -531,9 +531,24 @@ export namespace PaymentRecord {
     custom?: ProcessorDetails.Custom;
 
     /**
+     * Represents the Fiserv ValueLink gift card processor.
+     */
+    fiserv_valuelink?: ProcessorDetails.FiservValuelink;
+
+    /**
+     * Represents the Givex gift card processor.
+     */
+    givex?: ProcessorDetails.Givex;
+
+    /**
+     * Represents the SVS gift card processor.
+     */
+    svs?: ProcessorDetails.Svs;
+
+    /**
      * The processor used for this payment attempt.
      */
-    type: 'custom';
+    type: ProcessorDetails.Type;
   }
 
   export type ReportedBy = 'self' | 'stripe';
@@ -1068,6 +1083,8 @@ export namespace PaymentRecord {
        * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
        */
       location?: string;
+
+      multicapture?: CardPresent.Multicapture;
 
       /**
        * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
@@ -2285,6 +2302,13 @@ export namespace PaymentRecord {
     }
 
     export namespace CardPresent {
+      export interface Multicapture {
+        /**
+         * Indicates whether or not multiple captures are supported.
+         */
+        status: Multicapture.Status;
+      }
+
       export interface Offline {
         /**
          * Time at which the payment was collected while offline
@@ -2363,6 +2387,10 @@ export namespace PaymentRecord {
          * The type of mobile wallet, one of `apple_pay`, `google_pay`, `samsung_pay`, or `unknown`.
          */
         type: Wallet.Type;
+      }
+
+      export namespace Multicapture {
+        export type Status = 'available' | 'unavailable';
       }
 
       export namespace Reauthorization {
@@ -2796,6 +2824,29 @@ export namespace PaymentRecord {
        */
       payment_reference: string | null;
     }
+
+    export interface FiservValuelink {
+      /**
+       * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
+       */
+      payment_reference: string;
+    }
+
+    export interface Givex {
+      /**
+       * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
+       */
+      payment_reference: string;
+    }
+
+    export interface Svs {
+      /**
+       * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
+       */
+      payment_reference: string;
+    }
+
+    export type Type = 'custom' | 'fiserv_valuelink' | 'givex' | 'svs';
   }
 }
 export interface PaymentRecordRetrieveParams {
@@ -3327,6 +3378,11 @@ export interface PaymentRecordReportPaymentAttemptCanceledParams {
    * Payment evaluations associated with this reported payment.
    */
   payment_evaluations?: Array<string>;
+
+  /**
+   * The reason the payment attempt was canceled.
+   */
+  reason?: 'blocked_for_fraud';
 }
 export interface PaymentRecordReportPaymentAttemptFailedParams {
   /**

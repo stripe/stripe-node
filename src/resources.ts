@@ -199,6 +199,8 @@ export {FileResource as Files} from './resources/Files.js';
 export {FileLinkResource as FileLinks} from './resources/FileLinks.js';
 export {FrMealVouchersOnboardingResource as FrMealVouchersOnboardings} from './resources/FrMealVouchersOnboardings.js';
 export {FxQuoteResource as FxQuotes} from './resources/FxQuotes.js';
+export {GiftCardResource as GiftCards} from './resources/GiftCards.js';
+export {GiftCardOperationResource as GiftCardOperations} from './resources/GiftCardOperations.js';
 export {InvoiceResource as Invoices} from './resources/Invoices.js';
 export {InvoiceItemResource as InvoiceItems} from './resources/InvoiceItems.js';
 export {InvoicePaymentResource as InvoicePayments} from './resources/InvoicePayments.js';
@@ -232,6 +234,7 @@ export {SubscriptionResource as Subscriptions} from './resources/Subscriptions.j
 export {SubscriptionItemResource as SubscriptionItems} from './resources/SubscriptionItems.js';
 export {SubscriptionScheduleResource as SubscriptionSchedules} from './resources/SubscriptionSchedules.js';
 export {TaxCodeResource as TaxCodes} from './resources/TaxCodes.js';
+export {TaxFundResource as TaxFunds} from './resources/TaxFunds.js';
 export {TaxIdResource as TaxIds} from './resources/TaxIds.js';
 export {TaxRateResource as TaxRates} from './resources/TaxRates.js';
 export {TokenResource as Tokens} from './resources/Tokens.js';

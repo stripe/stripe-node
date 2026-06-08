@@ -7,6 +7,7 @@ import {Customer, DeletedCustomer} from './Customers.js';
 import {Charge} from './Charges.js';
 import {Account} from './Accounts.js';
 import {PaymentMethod} from './PaymentMethods.js';
+import {PaymentRecord} from './PaymentRecords.js';
 import {Review} from './Reviews.js';
 import {CustomerSource, DeletedCustomerSource} from './CustomerSources.js';
 import {Profile} from './Profiles.js';
@@ -314,6 +315,21 @@ export class PaymentIntentResource extends StripeResource {
     ) as any;
   }
   /**
+   * Updates the refund address for a static crypto deposit PaymentIntent on the specified network.
+   */
+  updateCryptoRefundAddress(
+    id: string,
+    params: PaymentIntentUpdateCryptoRefundAddressParams,
+    options?: RequestOptions
+  ): Promise<Response<PaymentIntent>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_intents/${id}/update_crypto_refund_address`,
+      params,
+      options
+    ) as any;
+  }
+  /**
    * Verifies microdeposits on a PaymentIntent object.
    */
   verifyMicrodeposits(
@@ -511,6 +527,11 @@ export interface PaymentIntent {
   latest_charge: string | Charge | null;
 
   /**
+   * ID of the latest [Payment Attempt Record object](https://docs.stripe.com/api/payment-attempt-record) created by this PaymentIntent. This property is `null` until PaymentIntent confirmation is attempted.
+   */
+  latest_payment_attempt_record?: string | null;
+
+  /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
    */
   livemode: boolean;
@@ -557,6 +578,11 @@ export interface PaymentIntent {
    * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use. A comprehensive list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
    */
   payment_method_types: Array<string>;
+
+  /**
+   * ID of the [Payment Record object](https://docs.stripe.com/api/payment-record) created by this PaymentIntent.
+   */
+  payment_record?: string | PaymentRecord | null;
 
   /**
    * When you enable this parameter, this PaymentIntent will route your payment to processors that you configure in the dashboard.
@@ -647,13 +673,6 @@ export namespace PaymentIntent {
     multicapture?: AdvancedFeatureDetails.Multicapture;
 
     overcapture?: AdvancedFeatureDetails.Overcapture;
-
-    reauthorization?: AdvancedFeatureDetails.Reauthorization;
-
-    /**
-     * Timestamp at which the reauthorization window closes.
-     */
-    reauthorize_before: number | null;
   }
 
   export interface AgentDetails {
@@ -995,6 +1014,11 @@ export namespace PaymentIntent {
 
     flight_data?: Array<PaymentDetails.FlightDatum>;
 
+    /**
+     * The Payment Location associated with this PaymentIntent.
+     */
+    location?: string;
+
     lodging_data?: Array<PaymentDetails.LodgingDatum>;
 
     money_services?: PaymentDetails.MoneyServices;
@@ -1276,13 +1300,6 @@ export namespace PaymentIntent {
       status: Overcapture.Status;
     }
 
-    export interface Reauthorization {
-      /**
-       * Indicates whether the feature is supported.
-       */
-      status: Reauthorization.Status;
-    }
-
     export namespace DecrementalAuthorization {
       export type Status = 'available' | 'unavailable';
     }
@@ -1296,10 +1313,6 @@ export namespace PaymentIntent {
     }
 
     export namespace Overcapture {
-      export type Status = 'available' | 'unavailable';
-    }
-
-    export namespace Reauthorization {
       export type Status = 'available' | 'unavailable';
     }
   }
@@ -2042,6 +2055,11 @@ export namespace PaymentIntent {
           address: string;
 
           /**
+           * The wallet address that should receive refunds for deposits on this network.
+           */
+          refund_address?: string;
+
+          /**
            * The token currencies supported on this network.
            */
           supported_tokens: Array<Base.SupportedToken>;
@@ -2054,6 +2072,11 @@ export namespace PaymentIntent {
           address: string;
 
           /**
+           * The wallet address that should receive refunds for deposits on this network.
+           */
+          refund_address?: string;
+
+          /**
            * The token currencies supported on this network.
            */
           supported_tokens: Array<Solana.SupportedToken>;
@@ -2064,6 +2087,11 @@ export namespace PaymentIntent {
            * Address of the deposit address.
            */
           address: string;
+
+          /**
+           * The wallet address that should receive refunds for deposits on this network.
+           */
+          refund_address?: string;
 
           /**
            * The token currencies supported on this network.
@@ -4239,6 +4267,15 @@ export namespace PaymentIntent {
 
     export interface Card {
       /**
+       * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
+       *
+       * If omitted, funds are captured before the authorization expires.
+       */
+      capture_by?: Card.CaptureBy;
+
+      capture_delay?: Card.CaptureDelay;
+
+      /**
        * Controls when the funds will be captured from the customer's account.
        */
       capture_method?: 'manual';
@@ -4331,6 +4368,15 @@ export namespace PaymentIntent {
 
     export interface CardPresent {
       /**
+       * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
+       *
+       * If omitted, funds are captured before the authorization expires.
+       */
+      capture_by?: CardPresent.CaptureBy;
+
+      capture_delay?: CardPresent.CaptureDelay;
+
+      /**
        * Controls when the funds will be captured from the customer's account.
        */
       capture_method?: CardPresent.CaptureMethod;
@@ -4344,6 +4390,11 @@ export namespace PaymentIntent {
        * Request ability to [increment](https://docs.stripe.com/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://docs.stripe.com/api/payment_intents/confirm) response to verify support.
        */
       request_incremental_authorization_support: boolean | null;
+
+      /**
+       * Request ability to make [multiple captures](https://docs.stripe.com/payments/multicapture) for this PaymentIntent.
+       */
+      request_multicapture?: CardPresent.RequestMulticapture;
 
       /**
        * Request ability to [reauthorize](https://docs.stripe.com/payments/reauthorization) for this PaymentIntent.
@@ -5186,6 +5237,24 @@ export namespace PaymentIntent {
     }
 
     export namespace Card {
+      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
+
+      export interface CaptureDelay {
+        /**
+         * The number of days to delay the capture of the funds.
+         *
+         * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
+         */
+        days?: number;
+
+        /**
+         * The number of hours to delay the capture of the funds.
+         *
+         * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
+         */
+        hours?: number;
+      }
+
       export interface Installments {
         /**
          * Installment plans that may be selected for this PaymentIntent.
@@ -5380,7 +5449,27 @@ export namespace PaymentIntent {
     }
 
     export namespace CardPresent {
+      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
+
+      export interface CaptureDelay {
+        /**
+         * The number of days to delay the capture of the funds.
+         *
+         * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
+         */
+        days?: number;
+
+        /**
+         * The number of hours to delay the capture of the funds.
+         *
+         * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
+         */
+        hours?: number;
+      }
+
       export type CaptureMethod = 'manual' | 'manual_preferred';
+
+      export type RequestMulticapture = 'if_available' | 'never';
 
       export type RequestReauthorization = 'if_available' | 'never';
 
@@ -5413,7 +5502,7 @@ export namespace PaymentIntent {
         static_address?: boolean;
       }
 
-      export type Mode = 'default' | 'deposit';
+      export type Mode = 'default' | 'deposit' | 'transaction_verification';
 
       export namespace DepositOptions {
         export type Network = 'base' | 'solana' | 'tempo';
@@ -8045,7 +8134,7 @@ export namespace PaymentIntentCreateParams {
         /**
          * The 14-digit SIRET of the meal voucher acceptor.
          */
-        siret: string;
+        siret?: string;
       }
 
       export namespace FrMealVoucher {
@@ -10500,6 +10589,20 @@ export namespace PaymentIntentCreateParams {
 
     export interface Card {
       /**
+       * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
+       *
+       * If omitted, funds are captured before the authorization expires.
+       */
+      capture_by?: Card.CaptureBy;
+
+      /**
+       * The number of days or hours to delay the capture of the funds. You can set both days and hours as long as the total delay does not exceed 30 days.
+       *
+       * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
+       */
+      capture_delay?: Card.CaptureDelay;
+
+      /**
        * Controls when the funds are captured from the customer's account.
        *
        * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
@@ -10624,6 +10727,20 @@ export namespace PaymentIntentCreateParams {
 
     export interface CardPresent {
       /**
+       * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
+       *
+       * If omitted, funds are captured before the authorization expires.
+       */
+      capture_by?: CardPresent.CaptureBy;
+
+      /**
+       * The number of days or hours to delay the capture of the funds. You can set both days and hours as long as the total delay does not exceed 30 days.
+       *
+       * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
+       */
+      capture_delay?: CardPresent.CaptureDelay;
+
+      /**
        * Controls when the funds are captured from the customer's account.
        *
        * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
@@ -10646,6 +10763,11 @@ export namespace PaymentIntentCreateParams {
        * Request ability to [increment](https://docs.stripe.com/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://docs.stripe.com/api/payment_intents/confirm) response to verify support.
        */
       request_incremental_authorization_support?: boolean;
+
+      /**
+       * Request ability to make [multiple captures](https://docs.stripe.com/payments/multicapture) for this PaymentIntent.
+       */
+      request_multicapture?: CardPresent.RequestMulticapture;
 
       /**
        * Request ability to [reauthorize](https://docs.stripe.com/payments/reauthorization) for this PaymentIntent.
@@ -10762,7 +10884,22 @@ export namespace PaymentIntentCreateParams {
       setup_future_usage?: 'none';
     }
 
-    export interface GiftCard {}
+    export interface GiftCard {
+      /**
+       * Set to `yes` to ignore the application fee on the PaymentIntent when redeeming this gift card.
+       */
+      ignore_application_fee?: 'yes';
+
+      /**
+       * Set to `yes` to ignore transfer data on the PaymentIntent when redeeming this gift card.
+       */
+      ignore_transfer_data?: 'yes';
+
+      /**
+       * Request partial authorization on this PaymentIntent.
+       */
+      request_partial_authorization?: GiftCard.RequestPartialAuthorization;
+    }
 
     export interface Giropay {
       /**
@@ -11651,6 +11788,14 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace Card {
+      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
+
+      export interface CaptureDelay {
+        days?: number;
+
+        hours?: number;
+      }
+
       export interface Installments {
         /**
          * Setting to true enables installments for this PaymentIntent.
@@ -11861,11 +12006,6 @@ export namespace PaymentIntentCreateParams {
             digital_asset_category?: AccountFunding.DigitalAssetCategory;
 
             /**
-             * Details for a liquid asset (crypto or security) funding transaction.
-             */
-            liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
-
-            /**
              * Details for a wallet funding transaction.
              */
             wallet?: AccountFunding.Wallet;
@@ -11878,39 +12018,11 @@ export namespace PaymentIntentCreateParams {
               | 'other_non_fiat'
               | 'stablecoin';
 
-            export interface LiquidAsset {
-              /**
-               * Details for a cryptocurrency liquid asset funding transaction.
-               */
-              crypto?: LiquidAsset.Crypto;
-
-              /**
-               * Details for a security liquid asset funding transaction.
-               */
-              security?: LiquidAsset.Security;
-            }
-
             export interface Wallet {
               /**
                * Details for a staged purchase.
                */
               staged_purchase?: Emptyable<Wallet.StagedPurchase>;
-            }
-
-            export namespace LiquidAsset {
-              export interface Crypto {
-                /**
-                 * The cryptocurrency currency code (e.g. BTC, ETH).
-                 */
-                currency_code?: string;
-              }
-
-              export interface Security {
-                /**
-                 * The security's ticker symbol (e.g. AAPL).
-                 */
-                ticker_symbol?: string;
-              }
             }
 
             export namespace Wallet {
@@ -11992,6 +12104,14 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace CardPresent {
+      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
+
+      export interface CaptureDelay {
+        days?: number;
+
+        hours?: number;
+      }
+
       export type CaptureMethod = 'manual' | 'manual_preferred';
 
       export interface PaymentDetails {
@@ -12000,6 +12120,8 @@ export namespace PaymentIntentCreateParams {
          */
         money_services?: PaymentDetails.MoneyServices;
       }
+
+      export type RequestMulticapture = 'if_available' | 'never';
 
       export type RequestReauthorization = 'if_available' | 'never';
 
@@ -12026,11 +12148,6 @@ export namespace PaymentIntentCreateParams {
             digital_asset_category?: AccountFunding.DigitalAssetCategory;
 
             /**
-             * Details for a liquid asset (crypto or security) funding transaction.
-             */
-            liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
-
-            /**
              * Details for a wallet funding transaction.
              */
             wallet?: AccountFunding.Wallet;
@@ -12043,39 +12160,11 @@ export namespace PaymentIntentCreateParams {
               | 'other_non_fiat'
               | 'stablecoin';
 
-            export interface LiquidAsset {
-              /**
-               * Details for a cryptocurrency liquid asset funding transaction.
-               */
-              crypto?: LiquidAsset.Crypto;
-
-              /**
-               * Details for a security liquid asset funding transaction.
-               */
-              security?: LiquidAsset.Security;
-            }
-
             export interface Wallet {
               /**
                * Details for a staged purchase.
                */
               staged_purchase?: Emptyable<Wallet.StagedPurchase>;
-            }
-
-            export namespace LiquidAsset {
-              export interface Crypto {
-                /**
-                 * The cryptocurrency currency code (e.g. BTC, ETH).
-                 */
-                currency_code?: string;
-              }
-
-              export interface Security {
-                /**
-                 * The security's ticker symbol (e.g. AAPL).
-                 */
-                ticker_symbol?: string;
-              }
             }
 
             export namespace Wallet {
@@ -12126,7 +12215,7 @@ export namespace PaymentIntentCreateParams {
         static_address?: boolean;
       }
 
-      export type Mode = 'default' | 'deposit';
+      export type Mode = 'default' | 'deposit' | 'transaction_verification';
 
       export namespace DepositOptions {
         export type Network = 'base' | 'solana' | 'tempo';
@@ -12177,6 +12266,10 @@ export namespace PaymentIntentCreateParams {
           | 'mx_bank_transfer'
           | 'us_bank_transfer';
       }
+    }
+
+    export namespace GiftCard {
+      export type RequestPartialAuthorization = 'if_available' | 'never';
     }
 
     export namespace Gopay {
@@ -15963,7 +16056,7 @@ export namespace PaymentIntentUpdateParams {
         /**
          * The 14-digit SIRET of the meal voucher acceptor.
          */
-        siret: string;
+        siret?: string;
       }
 
       export namespace FrMealVoucher {
@@ -18418,6 +18511,20 @@ export namespace PaymentIntentUpdateParams {
 
     export interface Card {
       /**
+       * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
+       *
+       * If omitted, funds are captured before the authorization expires.
+       */
+      capture_by?: Card.CaptureBy;
+
+      /**
+       * The number of days or hours to delay the capture of the funds. You can set both days and hours as long as the total delay does not exceed 30 days.
+       *
+       * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
+       */
+      capture_delay?: Card.CaptureDelay;
+
+      /**
        * Controls when the funds are captured from the customer's account.
        *
        * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
@@ -18542,6 +18649,20 @@ export namespace PaymentIntentUpdateParams {
 
     export interface CardPresent {
       /**
+       * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
+       *
+       * If omitted, funds are captured before the authorization expires.
+       */
+      capture_by?: CardPresent.CaptureBy;
+
+      /**
+       * The number of days or hours to delay the capture of the funds. You can set both days and hours as long as the total delay does not exceed 30 days.
+       *
+       * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
+       */
+      capture_delay?: CardPresent.CaptureDelay;
+
+      /**
        * Controls when the funds are captured from the customer's account.
        *
        * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
@@ -18564,6 +18685,11 @@ export namespace PaymentIntentUpdateParams {
        * Request ability to [increment](https://docs.stripe.com/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://docs.stripe.com/api/payment_intents/confirm) response to verify support.
        */
       request_incremental_authorization_support?: boolean;
+
+      /**
+       * Request ability to make [multiple captures](https://docs.stripe.com/payments/multicapture) for this PaymentIntent.
+       */
+      request_multicapture?: CardPresent.RequestMulticapture;
 
       /**
        * Request ability to [reauthorize](https://docs.stripe.com/payments/reauthorization) for this PaymentIntent.
@@ -18680,7 +18806,22 @@ export namespace PaymentIntentUpdateParams {
       setup_future_usage?: 'none';
     }
 
-    export interface GiftCard {}
+    export interface GiftCard {
+      /**
+       * Set to `yes` to ignore the application fee on the PaymentIntent when redeeming this gift card.
+       */
+      ignore_application_fee?: 'yes';
+
+      /**
+       * Set to `yes` to ignore transfer data on the PaymentIntent when redeeming this gift card.
+       */
+      ignore_transfer_data?: 'yes';
+
+      /**
+       * Request partial authorization on this PaymentIntent.
+       */
+      request_partial_authorization?: GiftCard.RequestPartialAuthorization;
+    }
 
     export interface Giropay {
       /**
@@ -19569,6 +19710,14 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace Card {
+      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
+
+      export interface CaptureDelay {
+        days?: number;
+
+        hours?: number;
+      }
+
       export interface Installments {
         /**
          * Setting to true enables installments for this PaymentIntent.
@@ -19779,11 +19928,6 @@ export namespace PaymentIntentUpdateParams {
             digital_asset_category?: AccountFunding.DigitalAssetCategory;
 
             /**
-             * Details for a liquid asset (crypto or security) funding transaction.
-             */
-            liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
-
-            /**
              * Details for a wallet funding transaction.
              */
             wallet?: AccountFunding.Wallet;
@@ -19796,39 +19940,11 @@ export namespace PaymentIntentUpdateParams {
               | 'other_non_fiat'
               | 'stablecoin';
 
-            export interface LiquidAsset {
-              /**
-               * Details for a cryptocurrency liquid asset funding transaction.
-               */
-              crypto?: LiquidAsset.Crypto;
-
-              /**
-               * Details for a security liquid asset funding transaction.
-               */
-              security?: LiquidAsset.Security;
-            }
-
             export interface Wallet {
               /**
                * Details for a staged purchase.
                */
               staged_purchase?: Emptyable<Wallet.StagedPurchase>;
-            }
-
-            export namespace LiquidAsset {
-              export interface Crypto {
-                /**
-                 * The cryptocurrency currency code (e.g. BTC, ETH).
-                 */
-                currency_code?: string;
-              }
-
-              export interface Security {
-                /**
-                 * The security's ticker symbol (e.g. AAPL).
-                 */
-                ticker_symbol?: string;
-              }
             }
 
             export namespace Wallet {
@@ -19910,6 +20026,14 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace CardPresent {
+      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
+
+      export interface CaptureDelay {
+        days?: number;
+
+        hours?: number;
+      }
+
       export type CaptureMethod = 'manual' | 'manual_preferred';
 
       export interface PaymentDetails {
@@ -19918,6 +20042,8 @@ export namespace PaymentIntentUpdateParams {
          */
         money_services?: PaymentDetails.MoneyServices;
       }
+
+      export type RequestMulticapture = 'if_available' | 'never';
 
       export type RequestReauthorization = 'if_available' | 'never';
 
@@ -19944,11 +20070,6 @@ export namespace PaymentIntentUpdateParams {
             digital_asset_category?: AccountFunding.DigitalAssetCategory;
 
             /**
-             * Details for a liquid asset (crypto or security) funding transaction.
-             */
-            liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
-
-            /**
              * Details for a wallet funding transaction.
              */
             wallet?: AccountFunding.Wallet;
@@ -19961,39 +20082,11 @@ export namespace PaymentIntentUpdateParams {
               | 'other_non_fiat'
               | 'stablecoin';
 
-            export interface LiquidAsset {
-              /**
-               * Details for a cryptocurrency liquid asset funding transaction.
-               */
-              crypto?: LiquidAsset.Crypto;
-
-              /**
-               * Details for a security liquid asset funding transaction.
-               */
-              security?: LiquidAsset.Security;
-            }
-
             export interface Wallet {
               /**
                * Details for a staged purchase.
                */
               staged_purchase?: Emptyable<Wallet.StagedPurchase>;
-            }
-
-            export namespace LiquidAsset {
-              export interface Crypto {
-                /**
-                 * The cryptocurrency currency code (e.g. BTC, ETH).
-                 */
-                currency_code?: string;
-              }
-
-              export interface Security {
-                /**
-                 * The security's ticker symbol (e.g. AAPL).
-                 */
-                ticker_symbol?: string;
-              }
             }
 
             export namespace Wallet {
@@ -20044,7 +20137,7 @@ export namespace PaymentIntentUpdateParams {
         static_address?: boolean;
       }
 
-      export type Mode = 'default' | 'deposit';
+      export type Mode = 'default' | 'deposit' | 'transaction_verification';
 
       export namespace DepositOptions {
         export type Network = 'base' | 'solana' | 'tempo';
@@ -20095,6 +20188,10 @@ export namespace PaymentIntentUpdateParams {
           | 'mx_bank_transfer'
           | 'us_bank_transfer';
       }
+    }
+
+    export namespace GiftCard {
+      export type RequestPartialAuthorization = 'if_available' | 'never';
     }
 
     export namespace Gopay {
@@ -22042,11 +22139,6 @@ export namespace PaymentIntentCaptureParams {
     lodging_data?: Emptyable<Array<PaymentDetails.LodgingDatum>>;
 
     /**
-     * Money services details for this PaymentIntent.
-     */
-    money_services?: Emptyable<PaymentDetails.MoneyServices>;
-
-    /**
      * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
      *
      * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
@@ -22874,18 +22966,6 @@ export namespace PaymentIntentCaptureParams {
        * Total details for the lodging.
        */
       total: LodgingDatum.Total;
-    }
-
-    export interface MoneyServices {
-      /**
-       * Account funding transaction details including sender and beneficiary information.
-       */
-      account_funding?: Emptyable<MoneyServices.AccountFunding>;
-
-      /**
-       * The type of money services transaction.
-       */
-      transaction_type?: Emptyable<MoneyServices.TransactionType>;
     }
 
     export interface Subscription {
@@ -24358,126 +24438,6 @@ export namespace PaymentIntentCaptureParams {
              * Type of tax applied.
              */
             type?: string;
-          }
-        }
-      }
-    }
-
-    export namespace MoneyServices {
-      export interface AccountFunding {
-        /**
-         * ID of the Account representing the beneficiary in this account funding transaction.
-         */
-        beneficiary_account?: string;
-
-        /**
-         * Inline identity details for the beneficiary of this account funding transaction.
-         */
-        beneficiary_details?: Emptyable<AccountFunding.BeneficiaryDetails>;
-
-        /**
-         * ID of the Account representing the sender in this account funding transaction.
-         */
-        sender_account?: string;
-
-        /**
-         * Inline identity details for the sender of this account funding transaction.
-         */
-        sender_details?: Emptyable<AccountFunding.SenderDetails>;
-      }
-
-      export type TransactionType = 'account_funding' | 'debt_repayment';
-
-      export namespace AccountFunding {
-        export interface BeneficiaryDetails {
-          /**
-           * Address.
-           */
-          address?: AddressParam;
-
-          /**
-           * Date of birth.
-           */
-          date_of_birth?: BeneficiaryDetails.DateOfBirth;
-
-          /**
-           * Email address.
-           */
-          email?: string;
-
-          /**
-           * Full name.
-           */
-          name?: string;
-
-          /**
-           * Phone number.
-           */
-          phone?: string;
-        }
-
-        export interface SenderDetails {
-          /**
-           * Address.
-           */
-          address?: AddressParam;
-
-          /**
-           * Date of birth.
-           */
-          date_of_birth?: SenderDetails.DateOfBirth;
-
-          /**
-           * Email address.
-           */
-          email?: string;
-
-          /**
-           * Full name.
-           */
-          name?: string;
-
-          /**
-           * Phone number.
-           */
-          phone?: string;
-        }
-
-        export namespace BeneficiaryDetails {
-          export interface DateOfBirth {
-            /**
-             * Day of birth, between 1 and 31.
-             */
-            day: number;
-
-            /**
-             * Month of birth, between 1 and 12.
-             */
-            month: number;
-
-            /**
-             * Four-digit year of birth.
-             */
-            year: number;
-          }
-        }
-
-        export namespace SenderDetails {
-          export interface DateOfBirth {
-            /**
-             * Day of birth, between 1 and 31.
-             */
-            day: number;
-
-            /**
-             * Month of birth, between 1 and 12.
-             */
-            month: number;
-
-            /**
-             * Four-digit year of birth.
-             */
-            year: number;
           }
         }
       }
@@ -26531,7 +26491,7 @@ export namespace PaymentIntentConfirmParams {
         /**
          * The 14-digit SIRET of the meal voucher acceptor.
          */
-        siret: string;
+        siret?: string;
       }
 
       export namespace FrMealVoucher {
@@ -28986,6 +28946,20 @@ export namespace PaymentIntentConfirmParams {
 
     export interface Card {
       /**
+       * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
+       *
+       * If omitted, funds are captured before the authorization expires.
+       */
+      capture_by?: Card.CaptureBy;
+
+      /**
+       * The number of days or hours to delay the capture of the funds. You can set both days and hours as long as the total delay does not exceed 30 days.
+       *
+       * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
+       */
+      capture_delay?: Card.CaptureDelay;
+
+      /**
        * Controls when the funds are captured from the customer's account.
        *
        * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
@@ -29110,6 +29084,20 @@ export namespace PaymentIntentConfirmParams {
 
     export interface CardPresent {
       /**
+       * Controls when funds are captured from the customer's account when `capture_method` is `automatic_delayed`.
+       *
+       * If omitted, funds are captured before the authorization expires.
+       */
+      capture_by?: CardPresent.CaptureBy;
+
+      /**
+       * The number of days or hours to delay the capture of the funds. You can set both days and hours as long as the total delay does not exceed 30 days.
+       *
+       * You can only set this if `capture_method` is `automatic_delayed` and `capture_by` is `target_delay`.
+       */
+      capture_delay?: CardPresent.CaptureDelay;
+
+      /**
        * Controls when the funds are captured from the customer's account.
        *
        * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
@@ -29132,6 +29120,11 @@ export namespace PaymentIntentConfirmParams {
        * Request ability to [increment](https://docs.stripe.com/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://docs.stripe.com/api/payment_intents/confirm) response to verify support.
        */
       request_incremental_authorization_support?: boolean;
+
+      /**
+       * Request ability to make [multiple captures](https://docs.stripe.com/payments/multicapture) for this PaymentIntent.
+       */
+      request_multicapture?: CardPresent.RequestMulticapture;
 
       /**
        * Request ability to [reauthorize](https://docs.stripe.com/payments/reauthorization) for this PaymentIntent.
@@ -29248,7 +29241,22 @@ export namespace PaymentIntentConfirmParams {
       setup_future_usage?: 'none';
     }
 
-    export interface GiftCard {}
+    export interface GiftCard {
+      /**
+       * Set to `yes` to ignore the application fee on the PaymentIntent when redeeming this gift card.
+       */
+      ignore_application_fee?: 'yes';
+
+      /**
+       * Set to `yes` to ignore transfer data on the PaymentIntent when redeeming this gift card.
+       */
+      ignore_transfer_data?: 'yes';
+
+      /**
+       * Request partial authorization on this PaymentIntent.
+       */
+      request_partial_authorization?: GiftCard.RequestPartialAuthorization;
+    }
 
     export interface Giropay {
       /**
@@ -30137,6 +30145,14 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace Card {
+      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
+
+      export interface CaptureDelay {
+        days?: number;
+
+        hours?: number;
+      }
+
       export interface Installments {
         /**
          * Setting to true enables installments for this PaymentIntent.
@@ -30347,11 +30363,6 @@ export namespace PaymentIntentConfirmParams {
             digital_asset_category?: AccountFunding.DigitalAssetCategory;
 
             /**
-             * Details for a liquid asset (crypto or security) funding transaction.
-             */
-            liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
-
-            /**
              * Details for a wallet funding transaction.
              */
             wallet?: AccountFunding.Wallet;
@@ -30364,39 +30375,11 @@ export namespace PaymentIntentConfirmParams {
               | 'other_non_fiat'
               | 'stablecoin';
 
-            export interface LiquidAsset {
-              /**
-               * Details for a cryptocurrency liquid asset funding transaction.
-               */
-              crypto?: LiquidAsset.Crypto;
-
-              /**
-               * Details for a security liquid asset funding transaction.
-               */
-              security?: LiquidAsset.Security;
-            }
-
             export interface Wallet {
               /**
                * Details for a staged purchase.
                */
               staged_purchase?: Emptyable<Wallet.StagedPurchase>;
-            }
-
-            export namespace LiquidAsset {
-              export interface Crypto {
-                /**
-                 * The cryptocurrency currency code (e.g. BTC, ETH).
-                 */
-                currency_code?: string;
-              }
-
-              export interface Security {
-                /**
-                 * The security's ticker symbol (e.g. AAPL).
-                 */
-                ticker_symbol?: string;
-              }
             }
 
             export namespace Wallet {
@@ -30478,6 +30461,14 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace CardPresent {
+      export type CaptureBy = 'auth_expiry' | 'end_of_day' | 'target_delay';
+
+      export interface CaptureDelay {
+        days?: number;
+
+        hours?: number;
+      }
+
       export type CaptureMethod = 'manual' | 'manual_preferred';
 
       export interface PaymentDetails {
@@ -30486,6 +30477,8 @@ export namespace PaymentIntentConfirmParams {
          */
         money_services?: PaymentDetails.MoneyServices;
       }
+
+      export type RequestMulticapture = 'if_available' | 'never';
 
       export type RequestReauthorization = 'if_available' | 'never';
 
@@ -30512,11 +30505,6 @@ export namespace PaymentIntentConfirmParams {
             digital_asset_category?: AccountFunding.DigitalAssetCategory;
 
             /**
-             * Details for a liquid asset (crypto or security) funding transaction.
-             */
-            liquid_asset?: Emptyable<AccountFunding.LiquidAsset>;
-
-            /**
              * Details for a wallet funding transaction.
              */
             wallet?: AccountFunding.Wallet;
@@ -30529,39 +30517,11 @@ export namespace PaymentIntentConfirmParams {
               | 'other_non_fiat'
               | 'stablecoin';
 
-            export interface LiquidAsset {
-              /**
-               * Details for a cryptocurrency liquid asset funding transaction.
-               */
-              crypto?: LiquidAsset.Crypto;
-
-              /**
-               * Details for a security liquid asset funding transaction.
-               */
-              security?: LiquidAsset.Security;
-            }
-
             export interface Wallet {
               /**
                * Details for a staged purchase.
                */
               staged_purchase?: Emptyable<Wallet.StagedPurchase>;
-            }
-
-            export namespace LiquidAsset {
-              export interface Crypto {
-                /**
-                 * The cryptocurrency currency code (e.g. BTC, ETH).
-                 */
-                currency_code?: string;
-              }
-
-              export interface Security {
-                /**
-                 * The security's ticker symbol (e.g. AAPL).
-                 */
-                ticker_symbol?: string;
-              }
             }
 
             export namespace Wallet {
@@ -30612,7 +30572,7 @@ export namespace PaymentIntentConfirmParams {
         static_address?: boolean;
       }
 
-      export type Mode = 'default' | 'deposit';
+      export type Mode = 'default' | 'deposit' | 'transaction_verification';
 
       export namespace DepositOptions {
         export type Network = 'base' | 'solana' | 'tempo';
@@ -30663,6 +30623,10 @@ export namespace PaymentIntentConfirmParams {
           | 'mx_bank_transfer'
           | 'us_bank_transfer';
       }
+    }
+
+    export namespace GiftCard {
+      export type RequestPartialAuthorization = 'if_available' | 'never';
     }
 
     export namespace Gopay {
@@ -33274,6 +33238,31 @@ export namespace PaymentIntentTriggerActionParams {
   export namespace ScanQrCode {
     export type Result = 'failure' | 'success';
   }
+}
+export interface PaymentIntentUpdateCryptoRefundAddressParams {
+  /**
+   * The blockchain network for the refund address.
+   */
+  network: PaymentIntentUpdateCryptoRefundAddressParams.Network;
+
+  /**
+   * The wallet address that should receive refunds for deposits on the specified network.
+   */
+  refund_address: string;
+
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+}
+export namespace PaymentIntentUpdateCryptoRefundAddressParams {
+  export type Network =
+    | 'base'
+    | 'ethereum'
+    | 'polygon'
+    | 'solana'
+    | 'sui'
+    | 'tempo';
 }
 export interface PaymentIntentVerifyMicrodepositsParams {
   /**

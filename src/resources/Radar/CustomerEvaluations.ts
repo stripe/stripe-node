@@ -226,9 +226,14 @@ export namespace Radar {
     export namespace EvaluationContext {
       export interface ClientDetails {
         /**
-         * ID for the Radar Session associated with the customer evaluation.
+         * Raw client metadata fallback in case a Radar Session is unavailable.
          */
-        radar_session: string;
+        data?: ClientDetails.Data;
+
+        /**
+         * ID for the Radar Session. Required unless data is provided.
+         */
+        radar_session?: string;
       }
 
       export interface CustomerDetails {
@@ -244,6 +249,25 @@ export namespace Radar {
       }
 
       export type Type = 'client_details' | 'customer_details';
+
+      export namespace ClientDetails {
+        export interface Data {
+          /**
+           * The end user's IP address. Used for proxy detection and IP-clustering signals.
+           */
+          ip: string;
+
+          /**
+           * The referring URL of the login or registration page.
+           */
+          referrer?: string;
+
+          /**
+           * The User-Agent HTTP header.
+           */
+          user_agent?: string;
+        }
+      }
 
       export namespace CustomerDetails {
         export interface CustomerData {

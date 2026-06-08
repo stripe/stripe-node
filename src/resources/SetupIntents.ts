@@ -572,6 +572,11 @@ export namespace SetupIntent {
 
   export interface SetupDetails {
     benefit?: SetupDetails.Benefit;
+
+    /**
+     * The Payment Location associated with this SetupIntent.
+     */
+    location?: string;
   }
 
   export type Status =
@@ -3536,7 +3541,7 @@ export namespace SetupIntentCreateParams {
         /**
          * The 14-digit SIRET of the meal voucher acceptor.
          */
-        siret: string;
+        siret?: string;
       }
 
       export namespace FrMealVoucher {
@@ -5532,7 +5537,7 @@ export namespace SetupIntentUpdateParams {
         /**
          * The 14-digit SIRET of the meal voucher acceptor.
          */
-        siret: string;
+        siret?: string;
       }
 
       export namespace FrMealVoucher {
@@ -7517,7 +7522,7 @@ export namespace SetupIntentConfirmParams {
         /**
          * The 14-digit SIRET of the meal voucher acceptor.
          */
-        siret: string;
+        siret?: string;
       }
 
       export namespace FrMealVoucher {

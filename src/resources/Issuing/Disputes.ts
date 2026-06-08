@@ -144,6 +144,11 @@ export interface Dispute {
   network_lifecycle?: Issuing.Dispute.NetworkLifecycle | null;
 
   /**
+   * Provisional credit details for this dispute.
+   */
+  provisional_credit?: Issuing.Dispute.ProvisionalCredit | null;
+
+  /**
    * Current status of the dispute.
    */
   status: Issuing.Dispute.Status;
@@ -237,6 +242,33 @@ export namespace Issuing {
        * Information related to the acquiring merchant's pre-arbitration submission for this dispute.
        */
       pre_arbitration_submission: NetworkLifecycle.PreArbitrationSubmission | null;
+    }
+
+    export interface ProvisionalCredit {
+      /**
+       * The time by which the platform must grant a provisional credit to the consumer.
+       */
+      grant_deadline: number | null;
+
+      /**
+       * The time at which the platform reported granting the provisional credit.
+       */
+      granted_at: number | null;
+
+      /**
+       * The earliest time after which the platform can revoke the provisional credit.
+       */
+      revocable_after: number | null;
+
+      /**
+       * The time at which the platform reported revoking the provisional credit.
+       */
+      revoked_at: number | null;
+
+      /**
+       * The status of the provisional credit obligation.
+       */
+      status: ProvisionalCredit.Status;
     }
 
     export type Status =
@@ -689,6 +721,18 @@ export namespace Issuing {
          */
         merchant_evidence_files: Array<string> | null;
       }
+    }
+
+    export namespace ProvisionalCredit {
+      export type Status =
+        | 'delinquent'
+        | 'granted'
+        | 'not_required'
+        | 'permanent'
+        | 'required'
+        | 'revocable'
+        | 'revocation_notice_period'
+        | 'revoked';
     }
   }
 }
