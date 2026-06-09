@@ -970,6 +970,173 @@ describe('auto pagination', () => {
         });
     });
   });
+
+  describe('V2 list iterator concurrency guard', () => {
+    it('returns the same promise for parallel next() calls', async () => {
+      let callIndex = 1;
+      const pages = [
+        {data: [{id: 'item_1'}, {id: 'item_2'}], next_page_url: '/v2/items?page=p2'},
+        {data: [{id: 'item_3'}, {id: 'item_4'}]},
+      ];
+
+      const mockStripe = getMockStripe(
+        {},
+        (_1, _2, _path, _4, _5, _6, _7, callback) => {
+          const page = pages[callIndex++];
+          callback(
+            null,
+            Promise.resolve({
+              data: page.data,
+              next_page_url: page.next_page_url ?? null,
+            })
+          );
+        }
+      );
+      const resource = new StripeResource(mockStripe);
+      const paginator = makeAutoPaginationMethods(
+        resource,
+        {},
+        undefined,
+        'GET',
+        '/v2/items',
+        {methodType: 'list'},
+        Promise.resolve({
+          data: pages[0].data,
+          next_page_url: pages[0].next_page_url,
+        })
+      );
+
+      const p1 = paginator.next();
+      const p2 = paginator.next();
+      expect(p1).to.equal(p2);
+
+      const result = await p1;
+      expect(result.done).to.equal(false);
+      expect(result.value.id).to.equal('item_1');
+    });
+
+    it('yields every item exactly once with no duplicates', async () => {
+      let callIndex = 1;
+      const pages = [
+        {data: [{id: 'item_1'}, {id: 'item_2'}], next_page_url: '/v2/items?page=p2'},
+        {data: [{id: 'item_3'}, {id: 'item_4'}]},
+      ];
+
+      const mockStripe = getMockStripe(
+        {},
+        (_1, _2, _path, _4, _5, _6, _7, callback) => {
+          const page = pages[callIndex++];
+          callback(
+            null,
+            Promise.resolve({
+              data: page.data,
+              next_page_url: page.next_page_url ?? null,
+            })
+          );
+        }
+      );
+      const resource = new StripeResource(mockStripe);
+      const paginator = makeAutoPaginationMethods(
+        resource,
+        {},
+        undefined,
+        'GET',
+        '/v2/items',
+        {methodType: 'list'},
+        Promise.resolve({
+          data: pages[0].data,
+          next_page_url: pages[0].next_page_url,
+        })
+      );
+
+      const items = await paginator.autoPagingToArray({limit: 100});
+      const ids = items.map((i) => i.id);
+      expect(ids).to.deep.equal(['item_1', 'item_2', 'item_3', 'item_4']);
+      expect(ids.length).to.equal(new Set(ids).size);
+    });
+  });
+
+  describe('V2 list iterator empty intermediate page handling', () => {
+    it('continues past a single empty intermediate page', async () => {
+      let callIndex = 1;
+      const pages = [
+        {data: [{id: 'item_1'}], next_page_url: '/v2/items?page=p2'},
+        {data: [], next_page_url: '/v2/items?page=p3'},
+        {data: [{id: 'item_2'}, {id: 'item_3'}]},
+      ];
+
+      const mockStripe = getMockStripe(
+        {},
+        (_1, _2, _path, _4, _5, _6, _7, callback) => {
+          const page = pages[callIndex++];
+          callback(
+            null,
+            Promise.resolve({
+              data: page.data,
+              next_page_url: page.next_page_url ?? null,
+            })
+          );
+        }
+      );
+      const resource = new StripeResource(mockStripe);
+      const paginator = makeAutoPaginationMethods(
+        resource,
+        {},
+        undefined,
+        'GET',
+        '/v2/items',
+        {methodType: 'list'},
+        Promise.resolve({
+          data: pages[0].data,
+          next_page_url: pages[0].next_page_url,
+        })
+      );
+
+      const items = await paginator.autoPagingToArray({limit: 100});
+      expect(items.map((i) => i.id)).to.deep.equal(['item_1', 'item_2', 'item_3']);
+    });
+
+    it('continues past multiple consecutive empty intermediate pages', async () => {
+      let callIndex = 1;
+      const pages = [
+        {data: [{id: 'item_1'}], next_page_url: '/v2/items?page=p2'},
+        {data: [], next_page_url: '/v2/items?page=p3'},
+        {data: [], next_page_url: '/v2/items?page=p4'},
+        {data: [{id: 'item_2'}]},
+      ];
+
+      const mockStripe = getMockStripe(
+        {},
+        (_1, _2, _path, _4, _5, _6, _7, callback) => {
+          const page = pages[callIndex++];
+          callback(
+            null,
+            Promise.resolve({
+              data: page.data,
+              next_page_url: page.next_page_url ?? null,
+            })
+          );
+        }
+      );
+      const resource = new StripeResource(mockStripe);
+      const paginator = makeAutoPaginationMethods(
+        resource,
+        {},
+        undefined,
+        'GET',
+        '/v2/items',
+        {methodType: 'list'},
+        Promise.resolve({
+          data: pages[0].data,
+          next_page_url: pages[0].next_page_url,
+        })
+      );
+
+      const items = await paginator.autoPagingToArray({limit: 100});
+      expect(items.map((i) => i.id)).to.deep.equal(['item_1', 'item_2']);
+    });
+  });
+  
 });
 
 export {};
