@@ -9,13 +9,13 @@ export class StatementResource extends StripeResource {
    * Returns a list of statements for a Financial Account.
    */
   list(
-    id: string,
+    financialAccountId: string,
     params?: V2.MoneyManagement.FinancialAccounts.StatementListParams,
     options?: RequestOptions
   ): V2ListPromise<FinancialAccountStatement> {
     return this._makeRequest(
       'GET',
-      `/v2/money_management/financial_accounts/${id}/statements`,
+      `/v2/money_management/financial_accounts/${financialAccountId}/statements`,
       params,
       options,
       {

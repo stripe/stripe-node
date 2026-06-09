@@ -12,13 +12,13 @@ export class PersonTokenResource extends StripeResource {
    * @throws Stripe.RateLimitError
    */
   create(
-    id: string,
+    accountId: string,
     params?: V2.Core.Accounts.PersonTokenCreateParams,
     options?: RequestOptions
   ): Promise<Response<AccountPersonToken>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/accounts/${id}/person_tokens`,
+      `/v2/core/accounts/${accountId}/person_tokens`,
       params,
       options,
       {

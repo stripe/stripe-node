@@ -9,13 +9,13 @@ export class ActionResource extends StripeResource {
    * List Billing Intent Actions.
    */
   list(
-    id: string,
+    intentId: string,
     params?: V2.Billing.Intents.ActionListParams,
     options?: RequestOptions
   ): V2ListPromise<IntentAction> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/intents/${id}/actions`,
+      `/v2/billing/intents/${intentId}/actions`,
       params,
       options,
       {

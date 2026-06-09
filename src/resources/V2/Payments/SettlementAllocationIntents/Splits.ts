@@ -11,13 +11,13 @@ export class SplitResource extends StripeResource {
    * List SettlementAllocationIntentSplits API.
    */
   list(
-    id: string,
+    settlementAllocationIntentId: string,
     params?: V2.Payments.SettlementAllocationIntents.SplitListParams,
     options?: RequestOptions
   ): V2ListPromise<SettlementAllocationIntentSplit> {
     return this._makeRequest(
       'GET',
-      `/v2/payments/settlement_allocation_intents/${id}/splits`,
+      `/v2/payments/settlement_allocation_intents/${settlementAllocationIntentId}/splits`,
       params,
       options,
       {
@@ -29,13 +29,13 @@ export class SplitResource extends StripeResource {
    * Create SettlementAllocationIntentSplit API.
    */
   create(
-    id: string,
+    settlementAllocationIntentId: string,
     params: V2.Payments.SettlementAllocationIntents.SplitCreateParams,
     options?: RequestOptions
   ): Promise<Response<SettlementAllocationIntentSplit>> {
     return this._makeRequest(
       'POST',
-      `/v2/payments/settlement_allocation_intents/${id}/splits`,
+      `/v2/payments/settlement_allocation_intents/${settlementAllocationIntentId}/splits`,
       params,
       options
     ) as any;

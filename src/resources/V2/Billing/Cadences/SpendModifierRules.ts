@@ -9,13 +9,13 @@ export class SpendModifierRuleResource extends StripeResource {
    * List all Spend Modifiers associated with a Billing Cadence.
    */
   list(
-    id: string,
+    cadenceId: string,
     params?: V2.Billing.Cadences.SpendModifierRuleListParams,
     options?: RequestOptions
   ): V2ListPromise<CadenceSpendModifier> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/cadences/${id}/spend_modifier_rules`,
+      `/v2/billing/cadences/${cadenceId}/spend_modifier_rules`,
       params,
       options,
       {

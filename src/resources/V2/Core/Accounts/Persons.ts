@@ -17,13 +17,13 @@ export class PersonResource extends StripeResource {
    * @throws Stripe.RateLimitError
    */
   list(
-    id: string,
+    accountId: string,
     params?: V2.Core.Accounts.PersonListParams,
     options?: RequestOptions
   ): V2ListPromise<AccountPerson> {
     return this._makeRequest(
       'GET',
-      `/v2/core/accounts/${id}/persons`,
+      `/v2/core/accounts/${accountId}/persons`,
       params,
       options,
       {
@@ -53,13 +53,13 @@ export class PersonResource extends StripeResource {
    * @throws Stripe.RateLimitError
    */
   create(
-    id: string,
+    accountId: string,
     params?: V2.Core.Accounts.PersonCreateParams,
     options?: RequestOptions
   ): Promise<Response<AccountPerson>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/accounts/${id}/persons`,
+      `/v2/core/accounts/${accountId}/persons`,
       params,
       options,
       {

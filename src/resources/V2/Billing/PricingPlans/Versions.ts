@@ -9,13 +9,13 @@ export class VersionResource extends StripeResource {
    * List all Pricing Plan Versions of a Pricing Plan.
    */
   list(
-    id: string,
+    pricingPlanId: string,
     params?: V2.Billing.PricingPlans.VersionListParams,
     options?: RequestOptions
   ): V2ListPromise<PricingPlanVersion> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/pricing_plans/${id}/versions`,
+      `/v2/billing/pricing_plans/${pricingPlanId}/versions`,
       params,
       options,
       {

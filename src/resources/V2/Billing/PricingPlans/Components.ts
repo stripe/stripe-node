@@ -11,13 +11,13 @@ export class ComponentResource extends StripeResource {
    * List all Pricing Plan Component objects for a Pricing Plan.
    */
   list(
-    id: string,
+    pricingPlanId: string,
     params?: V2.Billing.PricingPlans.ComponentListParams,
     options?: RequestOptions
   ): V2ListPromise<PricingPlanComponent> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/pricing_plans/${id}/components`,
+      `/v2/billing/pricing_plans/${pricingPlanId}/components`,
       params,
       options,
       {
@@ -29,13 +29,13 @@ export class ComponentResource extends StripeResource {
    * Create a Pricing Plan Component object.
    */
   create(
-    id: string,
+    pricingPlanId: string,
     params: V2.Billing.PricingPlans.ComponentCreateParams,
     options?: RequestOptions
   ): Promise<Response<PricingPlanComponent>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/pricing_plans/${id}/components`,
+      `/v2/billing/pricing_plans/${pricingPlanId}/components`,
       params,
       options
     ) as any;

@@ -9,13 +9,13 @@ export class VersionResource extends StripeResource {
    * List the versions of a Rate Card object. Results are sorted in reverse chronological order (most recent first).
    */
   list(
-    id: string,
+    rateCardId: string,
     params?: V2.Billing.RateCards.VersionListParams,
     options?: RequestOptions
   ): V2ListPromise<RateCardVersion> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/rate_cards/${id}/versions`,
+      `/v2/billing/rate_cards/${rateCardId}/versions`,
       params,
       options,
       {
