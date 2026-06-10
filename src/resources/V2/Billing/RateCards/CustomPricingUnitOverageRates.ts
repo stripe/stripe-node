@@ -11,13 +11,13 @@ export class CustomPricingUnitOverageRateResource extends StripeResource {
    * List all Rate Card Custom Pricing Unit Overage Rates on a Rate Card.
    */
   list(
-    id: string,
+    rateCardId: string,
     params?: V2.Billing.RateCards.CustomPricingUnitOverageRateListParams,
     options?: RequestOptions
   ): V2ListPromise<RateCardCustomPricingUnitOverageRate> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/rate_cards/${id}/custom_pricing_unit_overage_rates`,
+      `/v2/billing/rate_cards/${rateCardId}/custom_pricing_unit_overage_rates`,
       params,
       options,
       {
@@ -29,13 +29,13 @@ export class CustomPricingUnitOverageRateResource extends StripeResource {
    * Create a Rate Card Custom Pricing Unit Overage Rate on a Rate Card.
    */
   create(
-    id: string,
+    rateCardId: string,
     params: V2.Billing.RateCards.CustomPricingUnitOverageRateCreateParams,
     options?: RequestOptions
   ): Promise<Response<RateCardCustomPricingUnitOverageRate>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/rate_cards/${id}/custom_pricing_unit_overage_rates`,
+      `/v2/billing/rate_cards/${rateCardId}/custom_pricing_unit_overage_rates`,
       params,
       options
     ) as any;

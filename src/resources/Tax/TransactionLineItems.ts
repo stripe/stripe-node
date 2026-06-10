@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Metadata} from '../../shared.js';
+import {Metadata, Address} from '../../shared.js';
 import {RequestOptions} from '../../lib.js';
 export interface TransactionLineItem {
   /**
@@ -32,6 +32,11 @@ export interface TransactionLineItem {
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
   metadata: Metadata | null;
+
+  /**
+   * The address of the location where this line item's event or service takes place. Depending on the [tax code](https://docs.stripe.com/tax/tax-codes), providing a performance location is required, optional, or not supported. Use this to provide the address inline without pre-creating a [TaxLocation](https://docs.stripe.com/api/tax/location) object. Can't be used with `performance_location`.
+   */
+  performance_location_details?: Tax.TransactionLineItem.PerformanceLocationDetails | null;
 
   /**
    * The ID of an existing [Product](https://docs.stripe.com/api/products/object).
@@ -70,6 +75,10 @@ export interface TransactionLineItem {
 }
 export namespace Tax {
   export namespace TransactionLineItem {
+    export interface PerformanceLocationDetails {
+      address: Address;
+    }
+
     export interface Reversal {
       /**
        * The `id` of the line item to reverse in the original transaction.

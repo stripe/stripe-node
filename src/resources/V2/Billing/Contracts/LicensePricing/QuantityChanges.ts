@@ -10,13 +10,13 @@ export class QuantityChangeResource extends StripeResource {
    */
   listQuantityChanges(
     contractId: string,
-    id: string,
+    licensePricingId: string,
     params?: V2.Billing.Contracts.LicensePricing.QuantityChangeListQuantityChangesParams,
     options?: RequestOptions
   ): V2ListPromise<ContractLicensePricingQuantityChange> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/contracts/${contractId}/license_pricing/${id}/quantity_changes`,
+      `/v2/billing/contracts/${contractId}/license_pricing/${licensePricingId}/quantity_changes`,
       params,
       options,
       {

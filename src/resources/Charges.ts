@@ -1235,6 +1235,8 @@ export namespace Charge {
        */
       location?: string;
 
+      multicapture?: CardPresent.Multicapture;
+
       /**
        * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
        */
@@ -2249,6 +2251,8 @@ export namespace Charge {
       }
 
       export interface Benefits {
+        fr_meal_voucher?: Benefits.FrMealVoucher;
+
         /**
          * Issuer of the benefit card utilized on this payment
          */
@@ -2419,6 +2423,15 @@ export namespace Charge {
         export type ProcessedTransactionType = 'account_funding' | 'purchase';
       }
 
+      export namespace Benefits {
+        export interface FrMealVoucher {
+          /**
+           * The 14-digit SIRET of the meal voucher acceptor used for this charge.
+           */
+          siret: string;
+        }
+      }
+
       export namespace DecrementalAuthorization {
         export type Status = 'available' | 'unavailable';
       }
@@ -2574,6 +2587,13 @@ export namespace Charge {
     }
 
     export namespace CardPresent {
+      export interface Multicapture {
+        /**
+         * Indicates whether or not multiple captures are supported.
+         */
+        status: Multicapture.Status;
+      }
+
       export interface Offline {
         /**
          * Time at which the payment was collected while offline
@@ -2652,6 +2672,10 @@ export namespace Charge {
          * The type of mobile wallet, one of `apple_pay`, `google_pay`, `samsung_pay`, or `unknown`.
          */
         type: Wallet.Type;
+      }
+
+      export namespace Multicapture {
+        export type Status = 'available' | 'unavailable';
       }
 
       export namespace Reauthorization {
@@ -3343,11 +3367,6 @@ export namespace ChargeUpdateParams {
     lodging_data?: Emptyable<Array<PaymentDetails.LodgingDatum>>;
 
     /**
-     * Money services details for this PaymentIntent.
-     */
-    money_services?: Emptyable<PaymentDetails.MoneyServices>;
-
-    /**
      * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
      *
      * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
@@ -3923,18 +3942,6 @@ export namespace ChargeUpdateParams {
       total: LodgingDatum.Total;
     }
 
-    export interface MoneyServices {
-      /**
-       * Account funding transaction details including sender and beneficiary information.
-       */
-      account_funding?: Emptyable<MoneyServices.AccountFunding>;
-
-      /**
-       * The type of money services transaction.
-       */
-      transaction_type?: Emptyable<MoneyServices.TransactionType>;
-    }
-
     export interface Subscription {
       /**
        * Affiliate details for this purchase.
@@ -5410,126 +5417,6 @@ export namespace ChargeUpdateParams {
       }
     }
 
-    export namespace MoneyServices {
-      export interface AccountFunding {
-        /**
-         * ID of the Account representing the beneficiary in this account funding transaction.
-         */
-        beneficiary_account?: string;
-
-        /**
-         * Inline identity details for the beneficiary of this account funding transaction.
-         */
-        beneficiary_details?: Emptyable<AccountFunding.BeneficiaryDetails>;
-
-        /**
-         * ID of the Account representing the sender in this account funding transaction.
-         */
-        sender_account?: string;
-
-        /**
-         * Inline identity details for the sender of this account funding transaction.
-         */
-        sender_details?: Emptyable<AccountFunding.SenderDetails>;
-      }
-
-      export type TransactionType = 'account_funding' | 'debt_repayment';
-
-      export namespace AccountFunding {
-        export interface BeneficiaryDetails {
-          /**
-           * Address.
-           */
-          address?: AddressParam;
-
-          /**
-           * Date of birth.
-           */
-          date_of_birth?: BeneficiaryDetails.DateOfBirth;
-
-          /**
-           * Email address.
-           */
-          email?: string;
-
-          /**
-           * Full name.
-           */
-          name?: string;
-
-          /**
-           * Phone number.
-           */
-          phone?: string;
-        }
-
-        export interface SenderDetails {
-          /**
-           * Address.
-           */
-          address?: AddressParam;
-
-          /**
-           * Date of birth.
-           */
-          date_of_birth?: SenderDetails.DateOfBirth;
-
-          /**
-           * Email address.
-           */
-          email?: string;
-
-          /**
-           * Full name.
-           */
-          name?: string;
-
-          /**
-           * Phone number.
-           */
-          phone?: string;
-        }
-
-        export namespace BeneficiaryDetails {
-          export interface DateOfBirth {
-            /**
-             * Day of birth, between 1 and 31.
-             */
-            day: number;
-
-            /**
-             * Month of birth, between 1 and 12.
-             */
-            month: number;
-
-            /**
-             * Four-digit year of birth.
-             */
-            year: number;
-          }
-        }
-
-        export namespace SenderDetails {
-          export interface DateOfBirth {
-            /**
-             * Day of birth, between 1 and 31.
-             */
-            day: number;
-
-            /**
-             * Month of birth, between 1 and 12.
-             */
-            month: number;
-
-            /**
-             * Four-digit year of birth.
-             */
-            year: number;
-          }
-        }
-      }
-    }
-
     export namespace Subscription {
       export interface Affiliate {
         /**
@@ -5683,11 +5570,6 @@ export namespace ChargeCaptureParams {
      * Lodging data for this PaymentIntent.
      */
     lodging_data?: Emptyable<Array<PaymentDetails.LodgingDatum>>;
-
-    /**
-     * Money services details for this PaymentIntent.
-     */
-    money_services?: Emptyable<PaymentDetails.MoneyServices>;
 
     /**
      * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
@@ -6241,18 +6123,6 @@ export namespace ChargeCaptureParams {
       total: LodgingDatum.Total;
     }
 
-    export interface MoneyServices {
-      /**
-       * Account funding transaction details including sender and beneficiary information.
-       */
-      account_funding?: Emptyable<MoneyServices.AccountFunding>;
-
-      /**
-       * The type of money services transaction.
-       */
-      transaction_type?: Emptyable<MoneyServices.TransactionType>;
-    }
-
     export interface Subscription {
       /**
        * Affiliate details for this purchase.
@@ -7723,126 +7593,6 @@ export namespace ChargeCaptureParams {
              * Type of tax applied.
              */
             type?: string;
-          }
-        }
-      }
-    }
-
-    export namespace MoneyServices {
-      export interface AccountFunding {
-        /**
-         * ID of the Account representing the beneficiary in this account funding transaction.
-         */
-        beneficiary_account?: string;
-
-        /**
-         * Inline identity details for the beneficiary of this account funding transaction.
-         */
-        beneficiary_details?: Emptyable<AccountFunding.BeneficiaryDetails>;
-
-        /**
-         * ID of the Account representing the sender in this account funding transaction.
-         */
-        sender_account?: string;
-
-        /**
-         * Inline identity details for the sender of this account funding transaction.
-         */
-        sender_details?: Emptyable<AccountFunding.SenderDetails>;
-      }
-
-      export type TransactionType = 'account_funding' | 'debt_repayment';
-
-      export namespace AccountFunding {
-        export interface BeneficiaryDetails {
-          /**
-           * Address.
-           */
-          address?: AddressParam;
-
-          /**
-           * Date of birth.
-           */
-          date_of_birth?: BeneficiaryDetails.DateOfBirth;
-
-          /**
-           * Email address.
-           */
-          email?: string;
-
-          /**
-           * Full name.
-           */
-          name?: string;
-
-          /**
-           * Phone number.
-           */
-          phone?: string;
-        }
-
-        export interface SenderDetails {
-          /**
-           * Address.
-           */
-          address?: AddressParam;
-
-          /**
-           * Date of birth.
-           */
-          date_of_birth?: SenderDetails.DateOfBirth;
-
-          /**
-           * Email address.
-           */
-          email?: string;
-
-          /**
-           * Full name.
-           */
-          name?: string;
-
-          /**
-           * Phone number.
-           */
-          phone?: string;
-        }
-
-        export namespace BeneficiaryDetails {
-          export interface DateOfBirth {
-            /**
-             * Day of birth, between 1 and 31.
-             */
-            day: number;
-
-            /**
-             * Month of birth, between 1 and 12.
-             */
-            month: number;
-
-            /**
-             * Four-digit year of birth.
-             */
-            year: number;
-          }
-        }
-
-        export namespace SenderDetails {
-          export interface DateOfBirth {
-            /**
-             * Day of birth, between 1 and 31.
-             */
-            day: number;
-
-            /**
-             * Month of birth, between 1 and 12.
-             */
-            month: number;
-
-            /**
-             * Four-digit year of birth.
-             */
-            year: number;
           }
         }
       }

@@ -9,13 +9,13 @@ export class VersionResource extends StripeResource {
    * List all CollectionSettingVersions by CollectionSetting ID.
    */
   list(
-    id: string,
+    collectionSettingId: string,
     params?: V2.Billing.CollectionSettings.VersionListParams,
     options?: RequestOptions
   ): V2ListPromise<CollectionSettingVersion> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/collection_settings/${id}/versions`,
+      `/v2/billing/collection_settings/${collectionSettingId}/versions`,
       params,
       options,
       {

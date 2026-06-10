@@ -1508,7 +1508,7 @@ export namespace V2 {
         overwrite_price?: PricingOverride.OverwritePrice;
 
         /**
-         * The priority of this override relative to others. Lower number = higher priority.
+         * The priority of this override relative to others. The highest priority is 0 and the lowest is 100.
          */
         priority: number;
 
@@ -2572,7 +2572,7 @@ export namespace V2 {
           overwrite_price?: Add.OverwritePrice;
 
           /**
-           * The priority for the pricing override.
+           * The priority for the pricing override. The highest priority is 0 and the lowest is 100.
            */
           priority: number;
 

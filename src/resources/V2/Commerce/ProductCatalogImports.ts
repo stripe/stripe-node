@@ -46,7 +46,7 @@ export interface ProductCatalogImport {
 export namespace V2 {
   export namespace Commerce {
     export namespace ProductCatalogImport {
-      export type FeedType = 'inventory' | 'pricing' | 'product';
+      export type FeedType = 'inventory' | 'pricing' | 'product' | 'promotion';
 
       export type Status =
         | 'awaiting_upload'

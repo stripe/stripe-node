@@ -144,6 +144,11 @@ export interface Dispute {
   network_lifecycle?: Issuing.Dispute.NetworkLifecycle | null;
 
   /**
+   * Provisional credit details for this dispute.
+   */
+  provisional_credit?: Issuing.Dispute.ProvisionalCredit | null;
+
+  /**
    * Current status of the dispute.
    */
   status: Issuing.Dispute.Status;
@@ -237,6 +242,33 @@ export namespace Issuing {
        * Information related to the acquiring merchant's pre-arbitration submission for this dispute.
        */
       pre_arbitration_submission: NetworkLifecycle.PreArbitrationSubmission | null;
+    }
+
+    export interface ProvisionalCredit {
+      /**
+       * The time by which the platform must grant a provisional credit to the consumer.
+       */
+      grant_deadline: number | null;
+
+      /**
+       * The time at which the platform reported granting the provisional credit.
+       */
+      granted_at: number | null;
+
+      /**
+       * The earliest time after which the platform can revoke the provisional credit.
+       */
+      revocable_after: number | null;
+
+      /**
+       * The time at which the platform reported revoking the provisional credit.
+       */
+      revoked_at: number | null;
+
+      /**
+       * The status of the provisional credit obligation.
+       */
+      status: ProvisionalCredit.Status;
     }
 
     export type Status =
@@ -690,6 +722,18 @@ export namespace Issuing {
         merchant_evidence_files: Array<string> | null;
       }
     }
+
+    export namespace ProvisionalCredit {
+      export type Status =
+        | 'delinquent'
+        | 'granted'
+        | 'not_required'
+        | 'permanent'
+        | 'required'
+        | 'revocable'
+        | 'revocation_notice_period'
+        | 'revoked';
+    }
   }
 }
 export namespace Issuing {
@@ -1058,6 +1102,11 @@ export namespace Issuing {
      * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
     metadata?: Emptyable<MetadataParam>;
+
+    /**
+     * Provisional credit information for this dispute.
+     */
+    provisional_credit?: DisputeUpdateParams.ProvisionalCredit;
   }
 
   export namespace DisputeUpdateParams {
@@ -1108,6 +1157,18 @@ export namespace Issuing {
        * Evidence provided when `reason` is 'service_not_as_described'.
        */
       service_not_as_described?: Emptyable<Evidence.ServiceNotAsDescribed>;
+    }
+
+    export interface ProvisionalCredit {
+      /**
+       * The time at which the platform granted the provisional credit to their user.
+       */
+      granted_at?: number;
+
+      /**
+       * The time at which the platform revoked the provisional credit from their user.
+       */
+      revoked_at?: number;
     }
 
     export namespace Evidence {

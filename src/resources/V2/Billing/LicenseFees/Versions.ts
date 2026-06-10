@@ -9,13 +9,13 @@ export class VersionResource extends StripeResource {
    * List all versions of a License Fee object.
    */
   list(
-    id: string,
+    licenseFeeId: string,
     params?: V2.Billing.LicenseFees.VersionListParams,
     options?: RequestOptions
   ): V2ListPromise<LicenseFeeVersion> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/license_fees/${id}/versions`,
+      `/v2/billing/license_fees/${licenseFeeId}/versions`,
       params,
       options,
       {

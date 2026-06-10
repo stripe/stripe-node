@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Metadata} from '../../shared.js';
+import {Metadata, Address} from '../../shared.js';
 import {RequestOptions} from '../../lib.js';
 export interface CalculationLineItem {
   /**
@@ -39,6 +39,11 @@ export interface CalculationLineItem {
   performance_location?: string | null;
 
   /**
+   * The address of the location where this line item's event or service takes place. Depending on the [tax code](https://docs.stripe.com/tax/tax-codes), providing a performance location is required, optional, or not supported. Use this to provide the address inline without pre-creating a [TaxLocation](https://docs.stripe.com/api/tax/location) object. Can't be used with `performance_location`.
+   */
+  performance_location_details?: Tax.CalculationLineItem.PerformanceLocationDetails | null;
+
+  /**
    * The ID of an existing [Product](https://docs.stripe.com/api/products/object).
    */
   product: string | null;
@@ -70,6 +75,10 @@ export interface CalculationLineItem {
 }
 export namespace Tax {
   export namespace CalculationLineItem {
+    export interface PerformanceLocationDetails {
+      address: Address;
+    }
+
     export type TaxBehavior = 'exclusive' | 'inclusive';
 
     export interface TaxBreakdown {

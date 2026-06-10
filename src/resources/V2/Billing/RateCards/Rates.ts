@@ -11,13 +11,13 @@ export class RateResource extends StripeResource {
    * List all Rates associated with a Rate Card for a specific version. Defaults to latest. Rates remain active for all subsequent versions until a new rate is created for the same Metered Item.
    */
   list(
-    id: string,
+    rateCardId: string,
     params?: V2.Billing.RateCards.RateListParams,
     options?: RequestOptions
   ): V2ListPromise<RateCardRate> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/rate_cards/${id}/rates`,
+      `/v2/billing/rate_cards/${rateCardId}/rates`,
       params,
       options,
       {
@@ -54,13 +54,13 @@ export class RateResource extends StripeResource {
    * if the Metered Item already has a rate on the Rate Card.
    */
   create(
-    id: string,
+    rateCardId: string,
     params: V2.Billing.RateCards.RateCreateParams,
     options?: RequestOptions
   ): Promise<Response<RateCardRate>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/rate_cards/${id}/rates`,
+      `/v2/billing/rate_cards/${rateCardId}/rates`,
       params,
       options,
       {
