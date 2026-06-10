@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {V2Amount} from './../V2Amounts.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class FeeBatchResource extends StripeResource {
@@ -51,7 +50,7 @@ export interface FeeBatch {
   /**
    * The total fee amount billed in this batch.
    */
-  amount: V2Amount;
+  amount: V2.Core.FeeBatch.Amount;
 
   /**
    * The entity that collected this batch.
@@ -95,7 +94,21 @@ export namespace V2 {
         /**
          * The amount of tax adjusted for this batch.
          */
-        tax_adjustment?: V2Amount;
+        tax_adjustment?: Adjustments.TaxAdjustment;
+      }
+
+      export interface Amount {
+        /**
+         * A lowercase alpha3 currency code like "usd"
+         * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+         */
+        currency: string;
+
+        /**
+         * In major units like "1.23" for 1.23 USD
+         * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+         */
+        value: string;
       }
 
       export interface CollectedBy {
@@ -109,7 +122,7 @@ export namespace V2 {
         /**
          * The fee amount collected via this record.
          */
-        amount: V2Amount;
+        amount: CollectionRecord.Amount;
 
         /**
          * The ID of the associated v1 balance transaction.
@@ -155,7 +168,23 @@ export namespace V2 {
         /**
          * The tax amount included in this batch.
          */
-        amount: V2Amount;
+        amount: Tax.Amount;
+      }
+
+      export namespace Adjustments {
+        export interface TaxAdjustment {
+          /**
+           * A lowercase alpha3 currency code like "usd"
+           * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+           */
+          currency: string;
+
+          /**
+           * In major units like "1.23" for 1.23 USD
+           * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+           */
+          value: string;
+        }
       }
 
       export namespace CollectedBy {
@@ -163,11 +192,25 @@ export namespace V2 {
       }
 
       export namespace CollectionRecord {
+        export interface Amount {
+          /**
+           * A lowercase alpha3 currency code like "usd"
+           * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+           */
+          currency: string;
+
+          /**
+           * In major units like "1.23" for 1.23 USD
+           * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+           */
+          value: string;
+        }
+
         export interface Tax {
           /**
            * The tax amount collected via this record.
            */
-          amount: V2Amount;
+          amount: Tax.Amount;
         }
 
         export type Type =
@@ -175,6 +218,38 @@ export namespace V2 {
           | 'credit_transaction'
           | 'money_management_transaction'
           | 'payable_invoice';
+
+        export namespace Tax {
+          export interface Amount {
+            /**
+             * A lowercase alpha3 currency code like "usd"
+             * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+             */
+            currency: string;
+
+            /**
+             * In major units like "1.23" for 1.23 USD
+             * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+             */
+            value: string;
+          }
+        }
+      }
+
+      export namespace Tax {
+        export interface Amount {
+          /**
+           * A lowercase alpha3 currency code like "usd"
+           * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+           */
+          currency: string;
+
+          /**
+           * In major units like "1.23" for 1.23 USD
+           * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+           */
+          value: string;
+        }
       }
     }
   }

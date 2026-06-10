@@ -5970,7 +5970,7 @@ export namespace V2 {
           fees_collector?: Responsibilities.FeesCollector;
 
           /**
-           * A value indicating responsibility for collecting requirements on this account.
+           * A value indicating the responsibility for losses on this account.
            */
           losses_collector?: Responsibilities.LossesCollector;
 

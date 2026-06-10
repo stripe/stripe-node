@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {V2Amount} from './../V2Amounts.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class FeeEntryResource extends StripeResource {
@@ -46,7 +45,7 @@ export interface FeeEntry {
   /**
    * The fee amount.
    */
-  amount: V2Amount;
+  amount: V2.Core.FeeEntry.Amount;
 
   /**
    * The entity that assessed this fee.
@@ -91,6 +90,20 @@ export interface FeeEntry {
 export namespace V2 {
   export namespace Core {
     export namespace FeeEntry {
+      export interface Amount {
+        /**
+         * A lowercase alpha3 currency code like "usd"
+         * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+         */
+        currency: string;
+
+        /**
+         * In major units like "1.23" for 1.23 USD
+         * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+         */
+        value: string;
+      }
+
       export interface ChargedBy {
         /**
          * Details for a fee charged by a Connect application.
@@ -147,7 +160,7 @@ export namespace V2 {
         /**
          * The tax amount calculated for this fee.
          */
-        amount: V2Amount;
+        amount: Tax.Amount;
       }
 
       export type Type = 'application_fee' | 'passthrough_fee' | 'stripe_fee';
@@ -175,6 +188,22 @@ export namespace V2 {
         }
 
         export type Type = 'application' | 'network' | 'stripe';
+      }
+
+      export namespace Tax {
+        export interface Amount {
+          /**
+           * A lowercase alpha3 currency code like "usd"
+           * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+           */
+          currency: string;
+
+          /**
+           * In major units like "1.23" for 1.23 USD
+           * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+           */
+          value: string;
+        }
       }
     }
   }
