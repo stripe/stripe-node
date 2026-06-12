@@ -48,7 +48,7 @@ export class PromotionCodeResource extends StripeResource {
   ): Promise<Response<PromotionCode>> {
     return this._makeRequest(
       'GET',
-      `/v1/promotion_codes/${id}`,
+      `/v1/promotion_codes/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -63,7 +63,7 @@ export class PromotionCodeResource extends StripeResource {
   ): Promise<Response<PromotionCode>> {
     return this._makeRequest(
       'POST',
-      `/v1/promotion_codes/${id}`,
+      `/v1/promotion_codes/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

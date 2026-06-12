@@ -222,7 +222,7 @@ export class AuthorizationResource extends StripeResource {
   ): Promise<Response<Authorization>> {
     return this._makeRequest(
       'GET',
-      `/v1/issuing/authorizations/${id}`,
+      `/v1/issuing/authorizations/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -401,7 +401,7 @@ export class AuthorizationResource extends StripeResource {
   ): Promise<Response<Authorization>> {
     return this._makeRequest(
       'POST',
-      `/v1/issuing/authorizations/${id}`,
+      `/v1/issuing/authorizations/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -582,7 +582,7 @@ export class AuthorizationResource extends StripeResource {
   ): Promise<Response<Authorization>> {
     return this._makeRequest(
       'POST',
-      `/v1/issuing/authorizations/${id}/approve`,
+      `/v1/issuing/authorizations/${encodeURIComponent(id)}/approve`,
       params,
       options,
       {
@@ -763,7 +763,7 @@ export class AuthorizationResource extends StripeResource {
   ): Promise<Response<Authorization>> {
     return this._makeRequest(
       'POST',
-      `/v1/issuing/authorizations/${id}/decline`,
+      `/v1/issuing/authorizations/${encodeURIComponent(id)}/decline`,
       params,
       options,
       {

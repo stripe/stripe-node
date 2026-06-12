@@ -39,7 +39,7 @@ export class ProductResource extends StripeResource {
   ): Promise<Response<Product>> {
     return this._makeRequest(
       'GET',
-      `/v1/climate/products/${id}`,
+      `/v1/climate/products/${encodeURIComponent(id)}`,
       params,
       options,
       {

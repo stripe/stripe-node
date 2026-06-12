@@ -35,7 +35,7 @@ export class CreditBalanceTransactionResource extends StripeResource {
   ): Promise<Response<CreditBalanceTransaction>> {
     return this._makeRequest(
       'GET',
-      `/v1/billing/credit_balance_transactions/${id}`,
+      `/v1/billing/credit_balance_transactions/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

@@ -30,7 +30,7 @@ export class InvoicePaymentResource extends StripeResource {
   ): Promise<Response<InvoicePayment>> {
     return this._makeRequest(
       'GET',
-      `/v1/invoice_payments/${id}`,
+      `/v1/invoice_payments/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

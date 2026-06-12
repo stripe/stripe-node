@@ -51,7 +51,7 @@ export class RequestResource extends StripeResource {
   ): Promise<Response<Request>> {
     return this._makeRequest(
       'GET',
-      `/v1/forwarding/requests/${id}`,
+      `/v1/forwarding/requests/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

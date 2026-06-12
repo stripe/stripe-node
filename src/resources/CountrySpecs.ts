@@ -26,7 +26,7 @@ export class CountrySpecResource extends StripeResource {
   ): Promise<Response<CountrySpec>> {
     return this._makeRequest(
       'GET',
-      `/v1/country_specs/${id}`,
+      `/v1/country_specs/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

@@ -15,7 +15,7 @@ export class ValueListItemResource extends StripeResource {
   ): Promise<Response<Radar.DeletedValueListItem>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/radar/value_list_items/${id}`,
+      `/v1/radar/value_list_items/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -30,7 +30,7 @@ export class ValueListItemResource extends StripeResource {
   ): Promise<Response<ValueListItem>> {
     return this._makeRequest(
       'GET',
-      `/v1/radar/value_list_items/${id}`,
+      `/v1/radar/value_list_items/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

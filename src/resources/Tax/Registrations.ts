@@ -40,7 +40,7 @@ export class RegistrationResource extends StripeResource {
   ): Promise<Response<Registration>> {
     return this._makeRequest(
       'GET',
-      `/v1/tax/registrations/${id}`,
+      `/v1/tax/registrations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -57,7 +57,7 @@ export class RegistrationResource extends StripeResource {
   ): Promise<Response<Registration>> {
     return this._makeRequest(
       'POST',
-      `/v1/tax/registrations/${id}`,
+      `/v1/tax/registrations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

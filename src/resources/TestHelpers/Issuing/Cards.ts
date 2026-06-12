@@ -15,7 +15,9 @@ export class CardResource extends StripeResource {
   ): Promise<Response<Card>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/cards/${id}/shipping/deliver`,
+      `/v1/test_helpers/issuing/cards/${encodeURIComponent(
+        id
+      )}/shipping/deliver`,
       params,
       options
     ) as any;
@@ -30,7 +32,7 @@ export class CardResource extends StripeResource {
   ): Promise<Response<Card>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/cards/${id}/shipping/fail`,
+      `/v1/test_helpers/issuing/cards/${encodeURIComponent(id)}/shipping/fail`,
       params,
       options
     ) as any;
@@ -45,7 +47,9 @@ export class CardResource extends StripeResource {
   ): Promise<Response<Card>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/cards/${id}/shipping/return`,
+      `/v1/test_helpers/issuing/cards/${encodeURIComponent(
+        id
+      )}/shipping/return`,
       params,
       options
     ) as any;
@@ -60,7 +64,7 @@ export class CardResource extends StripeResource {
   ): Promise<Response<Card>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/cards/${id}/shipping/ship`,
+      `/v1/test_helpers/issuing/cards/${encodeURIComponent(id)}/shipping/ship`,
       params,
       options
     ) as any;
@@ -75,7 +79,9 @@ export class CardResource extends StripeResource {
   ): Promise<Response<Card>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/cards/${id}/shipping/submit`,
+      `/v1/test_helpers/issuing/cards/${encodeURIComponent(
+        id
+      )}/shipping/submit`,
       params,
       options
     ) as any;

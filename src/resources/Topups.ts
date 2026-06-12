@@ -41,7 +41,12 @@ export class TopupResource extends StripeResource {
     params?: TopupRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Topup>> {
-    return this._makeRequest('GET', `/v1/topups/${id}`, params, options) as any;
+    return this._makeRequest(
+      'GET',
+      `/v1/topups/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
   }
   /**
    * Updates the metadata of a top-up. Other top-up details are not editable by design.
@@ -53,7 +58,7 @@ export class TopupResource extends StripeResource {
   ): Promise<Response<Topup>> {
     return this._makeRequest(
       'POST',
-      `/v1/topups/${id}`,
+      `/v1/topups/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -68,7 +73,7 @@ export class TopupResource extends StripeResource {
   ): Promise<Response<Topup>> {
     return this._makeRequest(
       'POST',
-      `/v1/topups/${id}/cancel`,
+      `/v1/topups/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;

@@ -53,7 +53,7 @@ export class PersonalizationDesignResource extends StripeResource {
   ): Promise<Response<PersonalizationDesign>> {
     return this._makeRequest(
       'GET',
-      `/v1/issuing/personalization_designs/${id}`,
+      `/v1/issuing/personalization_designs/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -68,7 +68,7 @@ export class PersonalizationDesignResource extends StripeResource {
   ): Promise<Response<PersonalizationDesign>> {
     return this._makeRequest(
       'POST',
-      `/v1/issuing/personalization_designs/${id}`,
+      `/v1/issuing/personalization_designs/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

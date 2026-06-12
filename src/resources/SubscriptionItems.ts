@@ -25,7 +25,7 @@ export class SubscriptionItemResource extends StripeResource {
   ): Promise<Response<DeletedSubscriptionItem>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/subscription_items/${id}`,
+      `/v1/subscription_items/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -40,7 +40,7 @@ export class SubscriptionItemResource extends StripeResource {
   ): Promise<Response<SubscriptionItem>> {
     return this._makeRequest(
       'GET',
-      `/v1/subscription_items/${id}`,
+      `/v1/subscription_items/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -140,7 +140,7 @@ export class SubscriptionItemResource extends StripeResource {
   ): Promise<Response<SubscriptionItem>> {
     return this._makeRequest(
       'POST',
-      `/v1/subscription_items/${id}`,
+      `/v1/subscription_items/${encodeURIComponent(id)}`,
       params,
       options,
       {
