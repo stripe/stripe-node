@@ -1,5 +1,11 @@
 # Changelog
 
+## 22.2.1 - 2026-06-12
+* [#2750](https://github.com/stripe/stripe-node/pull/2750) URI Encode path params
+* [#2747](https://github.com/stripe/stripe-node/pull/2747) Fix V2ListIterator: concurrency guard and empty page handling
+* [#2740](https://github.com/stripe/stripe-node/pull/2740) Add "source" field to user-agent header
+* [#2734](https://github.com/stripe/stripe-node/pull/2734) Fix parseHttpHeaderAsNumber to return undefined instead of NaN
+
 ## 22.2.0 - 2026-05-27
 This release changes the pinned API version to 2026-05-27.dahlia.
 
