@@ -126,21 +126,27 @@ export class CreditNoteResource extends StripeResource {
     params?: CreditNoteRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<CreditNote>> {
-    return this._makeRequest('GET', `/v1/credit_notes/${id}`, params, options, {
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    unit_amount_decimal: {
-                      kind: 'nullable',
-                      inner: {kind: 'decimal_string'},
+    return this._makeRequest(
+      'GET',
+      `/v1/credit_notes/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      unit_amount_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
@@ -148,8 +154,8 @@ export class CreditNoteResource extends StripeResource {
             },
           },
         },
-      },
-    }) as any;
+      }
+    ) as any;
   }
   /**
    * Updates an existing credit note.
@@ -161,7 +167,7 @@ export class CreditNoteResource extends StripeResource {
   ): Promise<Response<CreditNote>> {
     return this._makeRequest(
       'POST',
-      `/v1/credit_notes/${id}`,
+      `/v1/credit_notes/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -250,7 +256,7 @@ export class CreditNoteResource extends StripeResource {
   ): Promise<Response<CreditNote>> {
     return this._makeRequest(
       'POST',
-      `/v1/credit_notes/${id}/void`,
+      `/v1/credit_notes/${encodeURIComponent(id)}/void`,
       params,
       options,
       {
@@ -335,7 +341,7 @@ export class CreditNoteResource extends StripeResource {
   ): ApiListPromise<CreditNoteLineItem> {
     return this._makeRequest(
       'GET',
-      `/v1/credit_notes/${id}/lines`,
+      `/v1/credit_notes/${encodeURIComponent(id)}/lines`,
       params,
       options,
       {

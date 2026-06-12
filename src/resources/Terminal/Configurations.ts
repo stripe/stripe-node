@@ -16,7 +16,7 @@ export class ConfigurationResource extends StripeResource {
   ): Promise<Response<Terminal.DeletedConfiguration>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/terminal/configurations/${id}`,
+      `/v1/terminal/configurations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -31,7 +31,7 @@ export class ConfigurationResource extends StripeResource {
   ): Promise<Response<Configuration | Terminal.DeletedConfiguration>> {
     return this._makeRequest(
       'GET',
-      `/v1/terminal/configurations/${id}`,
+      `/v1/terminal/configurations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -46,7 +46,7 @@ export class ConfigurationResource extends StripeResource {
   ): Promise<Response<Configuration | Terminal.DeletedConfiguration>> {
     return this._makeRequest(
       'POST',
-      `/v1/terminal/configurations/${id}`,
+      `/v1/terminal/configurations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

@@ -28,7 +28,7 @@ export class ReviewResource extends StripeResource {
   ): Promise<Response<Review>> {
     return this._makeRequest(
       'GET',
-      `/v1/reviews/${id}`,
+      `/v1/reviews/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -43,7 +43,7 @@ export class ReviewResource extends StripeResource {
   ): Promise<Response<Review>> {
     return this._makeRequest(
       'POST',
-      `/v1/reviews/${id}/approve`,
+      `/v1/reviews/${encodeURIComponent(id)}/approve`,
       params,
       options
     ) as any;

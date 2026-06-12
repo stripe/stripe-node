@@ -38,7 +38,7 @@ export class DisputeResource extends StripeResource {
   ): Promise<Response<Dispute>> {
     return this._makeRequest(
       'GET',
-      `/v1/disputes/${id}`,
+      `/v1/disputes/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -55,7 +55,7 @@ export class DisputeResource extends StripeResource {
   ): Promise<Response<Dispute>> {
     return this._makeRequest(
       'POST',
-      `/v1/disputes/${id}`,
+      `/v1/disputes/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -72,7 +72,7 @@ export class DisputeResource extends StripeResource {
   ): Promise<Response<Dispute>> {
     return this._makeRequest(
       'POST',
-      `/v1/disputes/${id}/close`,
+      `/v1/disputes/${encodeURIComponent(id)}/close`,
       params,
       options
     ) as any;

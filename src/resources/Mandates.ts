@@ -15,7 +15,7 @@ export class MandateResource extends StripeResource {
   ): Promise<Response<Mandate>> {
     return this._makeRequest(
       'GET',
-      `/v1/mandates/${id}`,
+      `/v1/mandates/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

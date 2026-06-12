@@ -15,7 +15,7 @@ export class ApplePayDomainResource extends StripeResource {
   ): Promise<Response<DeletedApplePayDomain>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/apple_pay/domains/${id}`,
+      `/v1/apple_pay/domains/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -30,7 +30,7 @@ export class ApplePayDomainResource extends StripeResource {
   ): Promise<Response<ApplePayDomain>> {
     return this._makeRequest(
       'GET',
-      `/v1/apple_pay/domains/${id}`,
+      `/v1/apple_pay/domains/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

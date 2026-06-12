@@ -49,7 +49,7 @@ export class CardResource extends StripeResource {
   ): Promise<Response<Card>> {
     return this._makeRequest(
       'GET',
-      `/v1/issuing/cards/${id}`,
+      `/v1/issuing/cards/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -64,7 +64,7 @@ export class CardResource extends StripeResource {
   ): Promise<Response<Card>> {
     return this._makeRequest(
       'POST',
-      `/v1/issuing/cards/${id}`,
+      `/v1/issuing/cards/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

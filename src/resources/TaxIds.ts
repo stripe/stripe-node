@@ -18,7 +18,7 @@ export class TaxIdResource extends StripeResource {
   ): Promise<Response<DeletedTaxId>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/tax_ids/${id}`,
+      `/v1/tax_ids/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -33,7 +33,7 @@ export class TaxIdResource extends StripeResource {
   ): Promise<Response<TaxId>> {
     return this._makeRequest(
       'GET',
-      `/v1/tax_ids/${id}`,
+      `/v1/tax_ids/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

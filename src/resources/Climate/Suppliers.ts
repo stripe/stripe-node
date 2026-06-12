@@ -26,7 +26,7 @@ export class SupplierResource extends StripeResource {
   ): Promise<Response<Supplier>> {
     return this._makeRequest(
       'GET',
-      `/v1/climate/suppliers/${id}`,
+      `/v1/climate/suppliers/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

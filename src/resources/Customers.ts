@@ -40,7 +40,7 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<DeletedCustomer>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/customers/${id}`,
+      `/v1/customers/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -55,7 +55,7 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<Customer | DeletedCustomer>> {
     return this._makeRequest(
       'GET',
-      `/v1/customers/${id}`,
+      `/v1/customers/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -70,101 +70,111 @@ export class CustomerResource extends StripeResource {
     params?: CustomerUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Customer>> {
-    return this._makeRequest('POST', `/v1/customers/${id}`, params, options, {
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          subscriptions: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    items: {
-                      kind: 'object',
-                      fields: {
-                        data: {
-                          kind: 'array',
-                          element: {
-                            kind: 'object',
-                            fields: {
-                              plan: {
-                                kind: 'object',
-                                fields: {
-                                  amount_decimal: {
-                                    kind: 'nullable',
-                                    inner: {kind: 'decimal_string'},
-                                  },
-                                  tiers: {
-                                    kind: 'array',
-                                    element: {
-                                      kind: 'object',
-                                      fields: {
-                                        flat_amount_decimal: {
-                                          kind: 'nullable',
-                                          inner: {kind: 'decimal_string'},
-                                        },
-                                        unit_amount_decimal: {
-                                          kind: 'nullable',
-                                          inner: {kind: 'decimal_string'},
+    return this._makeRequest(
+      'POST',
+      `/v1/customers/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            subscriptions: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      items: {
+                        kind: 'object',
+                        fields: {
+                          data: {
+                            kind: 'array',
+                            element: {
+                              kind: 'object',
+                              fields: {
+                                plan: {
+                                  kind: 'object',
+                                  fields: {
+                                    amount_decimal: {
+                                      kind: 'nullable',
+                                      inner: {kind: 'decimal_string'},
+                                    },
+                                    tiers: {
+                                      kind: 'array',
+                                      element: {
+                                        kind: 'object',
+                                        fields: {
+                                          flat_amount_decimal: {
+                                            kind: 'nullable',
+                                            inner: {kind: 'decimal_string'},
+                                          },
+                                          unit_amount_decimal: {
+                                            kind: 'nullable',
+                                            inner: {kind: 'decimal_string'},
+                                          },
                                         },
                                       },
                                     },
                                   },
                                 },
-                              },
-                              price: {
-                                kind: 'object',
-                                fields: {
-                                  currency_options: {
-                                    kind: 'array',
-                                    element: {
-                                      kind: 'object',
-                                      fields: {
-                                        tiers: {
-                                          kind: 'array',
-                                          element: {
-                                            kind: 'object',
-                                            fields: {
-                                              flat_amount_decimal: {
-                                                kind: 'nullable',
-                                                inner: {kind: 'decimal_string'},
-                                              },
-                                              unit_amount_decimal: {
-                                                kind: 'nullable',
-                                                inner: {kind: 'decimal_string'},
+                                price: {
+                                  kind: 'object',
+                                  fields: {
+                                    currency_options: {
+                                      kind: 'array',
+                                      element: {
+                                        kind: 'object',
+                                        fields: {
+                                          tiers: {
+                                            kind: 'array',
+                                            element: {
+                                              kind: 'object',
+                                              fields: {
+                                                flat_amount_decimal: {
+                                                  kind: 'nullable',
+                                                  inner: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
+                                                unit_amount_decimal: {
+                                                  kind: 'nullable',
+                                                  inner: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
                                               },
                                             },
                                           },
-                                        },
-                                        unit_amount_decimal: {
-                                          kind: 'nullable',
-                                          inner: {kind: 'decimal_string'},
-                                        },
-                                      },
-                                    },
-                                  },
-                                  tiers: {
-                                    kind: 'array',
-                                    element: {
-                                      kind: 'object',
-                                      fields: {
-                                        flat_amount_decimal: {
-                                          kind: 'nullable',
-                                          inner: {kind: 'decimal_string'},
-                                        },
-                                        unit_amount_decimal: {
-                                          kind: 'nullable',
-                                          inner: {kind: 'decimal_string'},
+                                          unit_amount_decimal: {
+                                            kind: 'nullable',
+                                            inner: {kind: 'decimal_string'},
+                                          },
                                         },
                                       },
                                     },
-                                  },
-                                  unit_amount_decimal: {
-                                    kind: 'nullable',
-                                    inner: {kind: 'decimal_string'},
+                                    tiers: {
+                                      kind: 'array',
+                                      element: {
+                                        kind: 'object',
+                                        fields: {
+                                          flat_amount_decimal: {
+                                            kind: 'nullable',
+                                            inner: {kind: 'decimal_string'},
+                                          },
+                                          unit_amount_decimal: {
+                                            kind: 'nullable',
+                                            inner: {kind: 'decimal_string'},
+                                          },
+                                        },
+                                      },
+                                    },
+                                    unit_amount_decimal: {
+                                      kind: 'nullable',
+                                      inner: {kind: 'decimal_string'},
+                                    },
                                   },
                                 },
                               },
@@ -179,8 +189,8 @@ export class CustomerResource extends StripeResource {
             },
           },
         },
-      },
-    }) as any;
+      }
+    ) as any;
   }
   /**
    * Removes the currently applied discount on a customer.
@@ -192,7 +202,7 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<DeletedDiscount>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/customers/${id}/discount`,
+      `/v1/customers/${encodeURIComponent(id)}/discount`,
       params,
       options
     ) as any;
@@ -593,7 +603,7 @@ export class CustomerResource extends StripeResource {
   ): ApiListPromise<CustomerBalanceTransaction> {
     return this._makeRequest(
       'GET',
-      `/v1/customers/${id}/balance_transactions`,
+      `/v1/customers/${encodeURIComponent(id)}/balance_transactions`,
       params,
       options,
       {
@@ -611,7 +621,7 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<CustomerBalanceTransaction>> {
     return this._makeRequest(
       'POST',
-      `/v1/customers/${id}/balance_transactions`,
+      `/v1/customers/${encodeURIComponent(id)}/balance_transactions`,
       params,
       options
     ) as any;
@@ -627,7 +637,9 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<CustomerBalanceTransaction>> {
     return this._makeRequest(
       'GET',
-      `/v1/customers/${customerId}/balance_transactions/${id}`,
+      `/v1/customers/${encodeURIComponent(
+        customerId
+      )}/balance_transactions/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -643,7 +655,9 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<CustomerBalanceTransaction>> {
     return this._makeRequest(
       'POST',
-      `/v1/customers/${customerId}/balance_transactions/${id}`,
+      `/v1/customers/${encodeURIComponent(
+        customerId
+      )}/balance_transactions/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -658,7 +672,7 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<CashBalance>> {
     return this._makeRequest(
       'GET',
-      `/v1/customers/${id}/cash_balance`,
+      `/v1/customers/${encodeURIComponent(id)}/cash_balance`,
       params,
       options
     ) as any;
@@ -673,7 +687,7 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<CashBalance>> {
     return this._makeRequest(
       'POST',
-      `/v1/customers/${id}/cash_balance`,
+      `/v1/customers/${encodeURIComponent(id)}/cash_balance`,
       params,
       options
     ) as any;
@@ -688,7 +702,7 @@ export class CustomerResource extends StripeResource {
   ): ApiListPromise<CustomerCashBalanceTransaction> {
     return this._makeRequest(
       'GET',
-      `/v1/customers/${id}/cash_balance_transactions`,
+      `/v1/customers/${encodeURIComponent(id)}/cash_balance_transactions`,
       params,
       options,
       {
@@ -707,7 +721,9 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<CustomerCashBalanceTransaction>> {
     return this._makeRequest(
       'GET',
-      `/v1/customers/${customerId}/cash_balance_transactions/${id}`,
+      `/v1/customers/${encodeURIComponent(
+        customerId
+      )}/cash_balance_transactions/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -724,7 +740,7 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<FundingInstructions>> {
     return this._makeRequest(
       'POST',
-      `/v1/customers/${id}/funding_instructions`,
+      `/v1/customers/${encodeURIComponent(id)}/funding_instructions`,
       params,
       options
     ) as any;
@@ -739,7 +755,7 @@ export class CustomerResource extends StripeResource {
   ): ApiListPromise<PaymentMethod> {
     return this._makeRequest(
       'GET',
-      `/v1/customers/${id}/payment_methods`,
+      `/v1/customers/${encodeURIComponent(id)}/payment_methods`,
       params,
       options,
       {
@@ -758,7 +774,9 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<PaymentMethod>> {
     return this._makeRequest(
       'GET',
-      `/v1/customers/${customerId}/payment_methods/${id}`,
+      `/v1/customers/${encodeURIComponent(
+        customerId
+      )}/payment_methods/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -773,7 +791,7 @@ export class CustomerResource extends StripeResource {
   ): ApiListPromise<CustomerSource> {
     return this._makeRequest(
       'GET',
-      `/v1/customers/${id}/sources`,
+      `/v1/customers/${encodeURIComponent(id)}/sources`,
       params,
       options,
       {
@@ -795,7 +813,7 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<CustomerSource>> {
     return this._makeRequest(
       'POST',
-      `/v1/customers/${id}/sources`,
+      `/v1/customers/${encodeURIComponent(id)}/sources`,
       params,
       options
     ) as any;
@@ -811,7 +829,9 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<CustomerSource>> {
     return this._makeRequest(
       'GET',
-      `/v1/customers/${customerId}/sources/${id}`,
+      `/v1/customers/${encodeURIComponent(
+        customerId
+      )}/sources/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -827,7 +847,9 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<CustomerSource>> {
     return this._makeRequest(
       'POST',
-      `/v1/customers/${customerId}/sources/${id}`,
+      `/v1/customers/${encodeURIComponent(
+        customerId
+      )}/sources/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -843,7 +865,9 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<CustomerSource | DeletedCustomerSource>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/customers/${customerId}/sources/${id}`,
+      `/v1/customers/${encodeURIComponent(
+        customerId
+      )}/sources/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -859,7 +883,9 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<BankAccount>> {
     return this._makeRequest(
       'POST',
-      `/v1/customers/${customerId}/sources/${id}/verify`,
+      `/v1/customers/${encodeURIComponent(
+        customerId
+      )}/sources/${encodeURIComponent(id)}/verify`,
       params,
       options
     ) as any;
@@ -875,7 +901,9 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<DeletedTaxId>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/customers/${customerId}/tax_ids/${id}`,
+      `/v1/customers/${encodeURIComponent(
+        customerId
+      )}/tax_ids/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -891,7 +919,9 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<TaxId>> {
     return this._makeRequest(
       'GET',
-      `/v1/customers/${customerId}/tax_ids/${id}`,
+      `/v1/customers/${encodeURIComponent(
+        customerId
+      )}/tax_ids/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -906,7 +936,7 @@ export class CustomerResource extends StripeResource {
   ): ApiListPromise<TaxId> {
     return this._makeRequest(
       'GET',
-      `/v1/customers/${id}/tax_ids`,
+      `/v1/customers/${encodeURIComponent(id)}/tax_ids`,
       params,
       options,
       {
@@ -924,7 +954,7 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<TaxId>> {
     return this._makeRequest(
       'POST',
-      `/v1/customers/${id}/tax_ids`,
+      `/v1/customers/${encodeURIComponent(id)}/tax_ids`,
       params,
       options
     ) as any;

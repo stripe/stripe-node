@@ -35,7 +35,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Account>> {
     return this._makeRequest(
       'GET',
-      `/v1/financial_connections/accounts/${id}`,
+      `/v1/financial_connections/accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -50,7 +50,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Account>> {
     return this._makeRequest(
       'POST',
-      `/v1/financial_connections/accounts/${id}/disconnect`,
+      `/v1/financial_connections/accounts/${encodeURIComponent(id)}/disconnect`,
       params,
       options
     ) as any;
@@ -65,7 +65,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Account>> {
     return this._makeRequest(
       'POST',
-      `/v1/financial_connections/accounts/${id}/refresh`,
+      `/v1/financial_connections/accounts/${encodeURIComponent(id)}/refresh`,
       params,
       options
     ) as any;
@@ -80,7 +80,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Account>> {
     return this._makeRequest(
       'POST',
-      `/v1/financial_connections/accounts/${id}/subscribe`,
+      `/v1/financial_connections/accounts/${encodeURIComponent(id)}/subscribe`,
       params,
       options
     ) as any;
@@ -95,7 +95,9 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Account>> {
     return this._makeRequest(
       'POST',
-      `/v1/financial_connections/accounts/${id}/unsubscribe`,
+      `/v1/financial_connections/accounts/${encodeURIComponent(
+        id
+      )}/unsubscribe`,
       params,
       options
     ) as any;
@@ -110,7 +112,7 @@ export class AccountResource extends StripeResource {
   ): ApiListPromise<AccountOwner> {
     return this._makeRequest(
       'GET',
-      `/v1/financial_connections/accounts/${id}/owners`,
+      `/v1/financial_connections/accounts/${encodeURIComponent(id)}/owners`,
       params,
       options,
       {
