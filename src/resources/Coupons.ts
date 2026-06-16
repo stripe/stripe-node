@@ -21,7 +21,7 @@ export class CouponResource extends StripeResource {
   ): Promise<Response<DeletedCoupon>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/coupons/${id}`,
+      `/v1/coupons/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -36,7 +36,7 @@ export class CouponResource extends StripeResource {
   ): Promise<Response<Coupon>> {
     return this._makeRequest(
       'GET',
-      `/v1/coupons/${id}`,
+      `/v1/coupons/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -51,7 +51,7 @@ export class CouponResource extends StripeResource {
   ): Promise<Response<Coupon>> {
     return this._makeRequest(
       'POST',
-      `/v1/coupons/${id}`,
+      `/v1/coupons/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

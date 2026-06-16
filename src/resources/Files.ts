@@ -54,7 +54,12 @@ export class FileResource extends StripeResource {
     params?: FileRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<File>> {
-    return this._makeRequest('GET', `/v1/files/${id}`, params, options) as any;
+    return this._makeRequest(
+      'GET',
+      `/v1/files/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface File {

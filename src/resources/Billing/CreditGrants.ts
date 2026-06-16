@@ -112,7 +112,7 @@ export class CreditGrantResource extends StripeResource {
   ): Promise<Response<CreditGrant>> {
     return this._makeRequest(
       'GET',
-      `/v1/billing/credit_grants/${id}`,
+      `/v1/billing/credit_grants/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -146,7 +146,7 @@ export class CreditGrantResource extends StripeResource {
   ): Promise<Response<CreditGrant>> {
     return this._makeRequest(
       'POST',
-      `/v1/billing/credit_grants/${id}`,
+      `/v1/billing/credit_grants/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -180,7 +180,7 @@ export class CreditGrantResource extends StripeResource {
   ): Promise<Response<CreditGrant>> {
     return this._makeRequest(
       'POST',
-      `/v1/billing/credit_grants/${id}/expire`,
+      `/v1/billing/credit_grants/${encodeURIComponent(id)}/expire`,
       params,
       options,
       {
@@ -214,7 +214,7 @@ export class CreditGrantResource extends StripeResource {
   ): Promise<Response<CreditGrant>> {
     return this._makeRequest(
       'POST',
-      `/v1/billing/credit_grants/${id}/void`,
+      `/v1/billing/credit_grants/${encodeURIComponent(id)}/void`,
       params,
       options,
       {

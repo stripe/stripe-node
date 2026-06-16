@@ -30,7 +30,7 @@ export class ProductResource extends StripeResource {
   ): Promise<Response<DeletedProduct>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/products/${id}`,
+      `/v1/products/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -45,7 +45,7 @@ export class ProductResource extends StripeResource {
   ): Promise<Response<Product>> {
     return this._makeRequest(
       'GET',
-      `/v1/products/${id}`,
+      `/v1/products/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -60,7 +60,7 @@ export class ProductResource extends StripeResource {
   ): Promise<Response<Product>> {
     return this._makeRequest(
       'POST',
-      `/v1/products/${id}`,
+      `/v1/products/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -199,7 +199,9 @@ export class ProductResource extends StripeResource {
   ): Promise<Response<DeletedProductFeature>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/products/${productId}/features/${id}`,
+      `/v1/products/${encodeURIComponent(
+        productId
+      )}/features/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -215,7 +217,9 @@ export class ProductResource extends StripeResource {
   ): Promise<Response<ProductFeature>> {
     return this._makeRequest(
       'GET',
-      `/v1/products/${productId}/features/${id}`,
+      `/v1/products/${encodeURIComponent(
+        productId
+      )}/features/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -230,7 +234,7 @@ export class ProductResource extends StripeResource {
   ): ApiListPromise<ProductFeature> {
     return this._makeRequest(
       'GET',
-      `/v1/products/${id}/features`,
+      `/v1/products/${encodeURIComponent(id)}/features`,
       params,
       options,
       {
@@ -248,7 +252,7 @@ export class ProductResource extends StripeResource {
   ): Promise<Response<ProductFeature>> {
     return this._makeRequest(
       'POST',
-      `/v1/products/${id}/features`,
+      `/v1/products/${encodeURIComponent(id)}/features`,
       params,
       options
     ) as any;

@@ -15,7 +15,7 @@ export class CustomerResource extends StripeResource {
   ): Promise<Response<CustomerCashBalanceTransaction>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/customers/${id}/fund_cash_balance`,
+      `/v1/test_helpers/customers/${encodeURIComponent(id)}/fund_cash_balance`,
       params,
       options
     ) as any;

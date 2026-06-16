@@ -15,7 +15,9 @@ export class InboundTransferResource extends StripeResource {
   ): Promise<Response<InboundTransfer>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/treasury/inbound_transfers/${id}/fail`,
+      `/v1/test_helpers/treasury/inbound_transfers/${encodeURIComponent(
+        id
+      )}/fail`,
       params,
       options
     ) as any;
@@ -30,7 +32,9 @@ export class InboundTransferResource extends StripeResource {
   ): Promise<Response<InboundTransfer>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/treasury/inbound_transfers/${id}/return`,
+      `/v1/test_helpers/treasury/inbound_transfers/${encodeURIComponent(
+        id
+      )}/return`,
       params,
       options
     ) as any;
@@ -45,7 +49,9 @@ export class InboundTransferResource extends StripeResource {
   ): Promise<Response<InboundTransfer>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/treasury/inbound_transfers/${id}/succeed`,
+      `/v1/test_helpers/treasury/inbound_transfers/${encodeURIComponent(
+        id
+      )}/succeed`,
       params,
       options
     ) as any;

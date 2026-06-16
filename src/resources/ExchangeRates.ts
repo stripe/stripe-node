@@ -32,7 +32,7 @@ export class ExchangeRateResource extends StripeResource {
   ): Promise<Response<ExchangeRate>> {
     return this._makeRequest(
       'GET',
-      `/v1/exchange_rates/${id}`,
+      `/v1/exchange_rates/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

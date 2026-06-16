@@ -196,61 +196,67 @@ export class PriceResource extends StripeResource {
     params?: PriceRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Price>> {
-    return this._makeRequest('GET', `/v1/prices/${id}`, params, options, {
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          currency_options: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                tiers: {
-                  kind: 'array',
-                  element: {
-                    kind: 'object',
-                    fields: {
-                      flat_amount_decimal: {
-                        kind: 'nullable',
-                        inner: {kind: 'decimal_string'},
-                      },
-                      unit_amount_decimal: {
-                        kind: 'nullable',
-                        inner: {kind: 'decimal_string'},
+    return this._makeRequest(
+      'GET',
+      `/v1/prices/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            currency_options: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  tiers: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {
+                        flat_amount_decimal: {
+                          kind: 'nullable',
+                          inner: {kind: 'decimal_string'},
+                        },
+                        unit_amount_decimal: {
+                          kind: 'nullable',
+                          inner: {kind: 'decimal_string'},
+                        },
                       },
                     },
                   },
-                },
-                unit_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
-                },
-              },
-            },
-          },
-          tiers: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                flat_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
-                },
-                unit_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
+                  unit_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
                 },
               },
             },
-          },
-          unit_amount_decimal: {
-            kind: 'nullable',
-            inner: {kind: 'decimal_string'},
+            tiers: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  flat_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
+                  unit_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
+                },
+              },
+            },
+            unit_amount_decimal: {
+              kind: 'nullable',
+              inner: {kind: 'decimal_string'},
+            },
           },
         },
-      },
-    }) as any;
+      }
+    ) as any;
   }
   /**
    * Updates the specified price by setting the values of the parameters passed. Any parameters not provided are left unchanged.
@@ -260,61 +266,67 @@ export class PriceResource extends StripeResource {
     params?: PriceUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Price>> {
-    return this._makeRequest('POST', `/v1/prices/${id}`, params, options, {
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          currency_options: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                tiers: {
-                  kind: 'array',
-                  element: {
-                    kind: 'object',
-                    fields: {
-                      flat_amount_decimal: {
-                        kind: 'nullable',
-                        inner: {kind: 'decimal_string'},
-                      },
-                      unit_amount_decimal: {
-                        kind: 'nullable',
-                        inner: {kind: 'decimal_string'},
+    return this._makeRequest(
+      'POST',
+      `/v1/prices/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            currency_options: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  tiers: {
+                    kind: 'array',
+                    element: {
+                      kind: 'object',
+                      fields: {
+                        flat_amount_decimal: {
+                          kind: 'nullable',
+                          inner: {kind: 'decimal_string'},
+                        },
+                        unit_amount_decimal: {
+                          kind: 'nullable',
+                          inner: {kind: 'decimal_string'},
+                        },
                       },
                     },
                   },
-                },
-                unit_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
-                },
-              },
-            },
-          },
-          tiers: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                flat_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
-                },
-                unit_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
+                  unit_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
                 },
               },
             },
-          },
-          unit_amount_decimal: {
-            kind: 'nullable',
-            inner: {kind: 'decimal_string'},
+            tiers: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  flat_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
+                  unit_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
+                },
+              },
+            },
+            unit_amount_decimal: {
+              kind: 'nullable',
+              inner: {kind: 'decimal_string'},
+            },
           },
         },
-      },
-    }) as any;
+      }
+    ) as any;
   }
   /**
    * Search for prices you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).

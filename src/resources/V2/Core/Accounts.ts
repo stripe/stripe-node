@@ -122,7 +122,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Account>> {
     return this._makeRequest(
       'GET',
-      `/v2/core/accounts/${id}`,
+      `/v2/core/accounts/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -159,7 +159,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Account>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/accounts/${id}`,
+      `/v2/core/accounts/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -215,7 +215,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Account>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/accounts/${id}/close`,
+      `/v2/core/accounts/${encodeURIComponent(id)}/close`,
       params,
       options,
       {

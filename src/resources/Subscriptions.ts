@@ -46,7 +46,7 @@ export class SubscriptionResource extends StripeResource {
   ): Promise<Response<Subscription>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/subscriptions/${id}`,
+      `/v1/subscriptions/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -159,7 +159,7 @@ export class SubscriptionResource extends StripeResource {
   ): Promise<Response<Subscription>> {
     return this._makeRequest(
       'GET',
-      `/v1/subscriptions/${id}`,
+      `/v1/subscriptions/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -292,7 +292,7 @@ export class SubscriptionResource extends StripeResource {
   ): Promise<Response<Subscription>> {
     return this._makeRequest(
       'POST',
-      `/v1/subscriptions/${id}`,
+      `/v1/subscriptions/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -434,7 +434,7 @@ export class SubscriptionResource extends StripeResource {
   ): Promise<Response<DeletedDiscount>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/subscriptions/${id}/discount`,
+      `/v1/subscriptions/${encodeURIComponent(id)}/discount`,
       params,
       options
     ) as any;
@@ -942,7 +942,7 @@ export class SubscriptionResource extends StripeResource {
   ): Promise<Response<Subscription>> {
     return this._makeRequest(
       'POST',
-      `/v1/subscriptions/${id}/migrate`,
+      `/v1/subscriptions/${encodeURIComponent(id)}/migrate`,
       params,
       options,
       {
@@ -1168,7 +1168,7 @@ export class SubscriptionResource extends StripeResource {
   ): Promise<Response<Subscription>> {
     return this._makeRequest(
       'POST',
-      `/v1/subscriptions/${id}/resume`,
+      `/v1/subscriptions/${encodeURIComponent(id)}/resume`,
       params,
       options,
       {

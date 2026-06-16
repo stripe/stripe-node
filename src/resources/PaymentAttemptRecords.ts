@@ -40,7 +40,7 @@ export class PaymentAttemptRecordResource extends StripeResource {
   ): Promise<Response<PaymentAttemptRecord>> {
     return this._makeRequest(
       'GET',
-      `/v1/payment_attempt_records/${id}`,
+      `/v1/payment_attempt_records/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

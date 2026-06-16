@@ -46,7 +46,7 @@ export class PaymentMethodDomainResource extends StripeResource {
   ): Promise<Response<PaymentMethodDomain>> {
     return this._makeRequest(
       'GET',
-      `/v1/payment_method_domains/${id}`,
+      `/v1/payment_method_domains/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -61,7 +61,7 @@ export class PaymentMethodDomainResource extends StripeResource {
   ): Promise<Response<PaymentMethodDomain>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_method_domains/${id}`,
+      `/v1/payment_method_domains/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -81,7 +81,7 @@ export class PaymentMethodDomainResource extends StripeResource {
   ): Promise<Response<PaymentMethodDomain>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_method_domains/${id}/validate`,
+      `/v1/payment_method_domains/${encodeURIComponent(id)}/validate`,
       params,
       options
     ) as any;

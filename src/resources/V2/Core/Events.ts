@@ -35,9 +35,15 @@ export class EventResource extends StripeResource {
     const transformResponseData = (response: any): any => {
       return this.addFetchRelatedObjectIfNeeded(response);
     };
-    return this._makeRequest('GET', `/v2/core/events/${id}`, params, options, {
-      transformResponseData: transformResponseData,
-    }) as any;
+    return this._makeRequest(
+      'GET',
+      `/v2/core/events/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        transformResponseData: transformResponseData,
+      }
+    ) as any;
   }
   /**
    * @private

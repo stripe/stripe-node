@@ -15,7 +15,9 @@ export class ReaderResource extends StripeResource {
   ): Promise<Response<Reader>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/terminal/readers/${id}/present_payment_method`,
+      `/v1/test_helpers/terminal/readers/${encodeURIComponent(
+        id
+      )}/present_payment_method`,
       params,
       options
     ) as any;
@@ -30,7 +32,9 @@ export class ReaderResource extends StripeResource {
   ): Promise<Response<Reader>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/terminal/readers/${id}/succeed_input_collection`,
+      `/v1/test_helpers/terminal/readers/${encodeURIComponent(
+        id
+      )}/succeed_input_collection`,
       params,
       options
     ) as any;
@@ -45,7 +49,9 @@ export class ReaderResource extends StripeResource {
   ): Promise<Response<Reader>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/terminal/readers/${id}/timeout_input_collection`,
+      `/v1/test_helpers/terminal/readers/${encodeURIComponent(
+        id
+      )}/timeout_input_collection`,
       params,
       options
     ) as any;

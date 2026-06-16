@@ -62,7 +62,7 @@ export class SetupIntentResource extends StripeResource {
   ): Promise<Response<SetupIntent>> {
     return this._makeRequest(
       'GET',
-      `/v1/setup_intents/${id}`,
+      `/v1/setup_intents/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -77,7 +77,7 @@ export class SetupIntentResource extends StripeResource {
   ): Promise<Response<SetupIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/setup_intents/${id}`,
+      `/v1/setup_intents/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -94,7 +94,7 @@ export class SetupIntentResource extends StripeResource {
   ): Promise<Response<SetupIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/setup_intents/${id}/cancel`,
+      `/v1/setup_intents/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;
@@ -122,7 +122,7 @@ export class SetupIntentResource extends StripeResource {
   ): Promise<Response<SetupIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/setup_intents/${id}/confirm`,
+      `/v1/setup_intents/${encodeURIComponent(id)}/confirm`,
       params,
       options
     ) as any;
@@ -137,7 +137,7 @@ export class SetupIntentResource extends StripeResource {
   ): Promise<Response<SetupIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/setup_intents/${id}/verify_microdeposits`,
+      `/v1/setup_intents/${encodeURIComponent(id)}/verify_microdeposits`,
       params,
       options
     ) as any;

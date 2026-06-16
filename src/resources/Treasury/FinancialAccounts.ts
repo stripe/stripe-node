@@ -53,7 +53,7 @@ export class FinancialAccountResource extends StripeResource {
   ): Promise<Response<FinancialAccount>> {
     return this._makeRequest(
       'GET',
-      `/v1/treasury/financial_accounts/${id}`,
+      `/v1/treasury/financial_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -68,7 +68,7 @@ export class FinancialAccountResource extends StripeResource {
   ): Promise<Response<FinancialAccount>> {
     return this._makeRequest(
       'POST',
-      `/v1/treasury/financial_accounts/${id}`,
+      `/v1/treasury/financial_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -83,7 +83,7 @@ export class FinancialAccountResource extends StripeResource {
   ): Promise<Response<FinancialAccount>> {
     return this._makeRequest(
       'POST',
-      `/v1/treasury/financial_accounts/${id}/close`,
+      `/v1/treasury/financial_accounts/${encodeURIComponent(id)}/close`,
       params,
       options
     ) as any;
@@ -98,7 +98,7 @@ export class FinancialAccountResource extends StripeResource {
   ): Promise<Response<FinancialAccountFeatures>> {
     return this._makeRequest(
       'POST',
-      `/v1/treasury/financial_accounts/${id}/features`,
+      `/v1/treasury/financial_accounts/${encodeURIComponent(id)}/features`,
       params,
       options
     ) as any;
@@ -113,7 +113,7 @@ export class FinancialAccountResource extends StripeResource {
   ): Promise<Response<FinancialAccountFeatures>> {
     return this._makeRequest(
       'GET',
-      `/v1/treasury/financial_accounts/${id}/features`,
+      `/v1/treasury/financial_accounts/${encodeURIComponent(id)}/features`,
       params,
       options
     ) as any;

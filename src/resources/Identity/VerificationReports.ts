@@ -33,7 +33,7 @@ export class VerificationReportResource extends StripeResource {
   ): Promise<Response<VerificationReport>> {
     return this._makeRequest(
       'GET',
-      `/v1/identity/verification_reports/${id}`,
+      `/v1/identity/verification_reports/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

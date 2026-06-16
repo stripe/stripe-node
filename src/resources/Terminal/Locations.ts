@@ -23,7 +23,7 @@ export class LocationResource extends StripeResource {
   ): Promise<Response<Terminal.DeletedLocation>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/terminal/locations/${id}`,
+      `/v1/terminal/locations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -38,7 +38,7 @@ export class LocationResource extends StripeResource {
   ): Promise<Response<Location | Terminal.DeletedLocation>> {
     return this._makeRequest(
       'GET',
-      `/v1/terminal/locations/${id}`,
+      `/v1/terminal/locations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -53,7 +53,7 @@ export class LocationResource extends StripeResource {
   ): Promise<Response<Location | Terminal.DeletedLocation>> {
     return this._makeRequest(
       'POST',
-      `/v1/terminal/locations/${id}`,
+      `/v1/terminal/locations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

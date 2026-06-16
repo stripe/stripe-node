@@ -21,7 +21,7 @@ export class TransactionResource extends StripeResource {
   ): Promise<Response<Transaction>> {
     return this._makeRequest(
       'GET',
-      `/v1/tax/transactions/${id}`,
+      `/v1/tax/transactions/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -82,7 +82,7 @@ export class TransactionResource extends StripeResource {
   ): ApiListPromise<TransactionLineItem> {
     return this._makeRequest(
       'GET',
-      `/v1/tax/transactions/${id}/line_items`,
+      `/v1/tax/transactions/${encodeURIComponent(id)}/line_items`,
       params,
       options,
       {

@@ -247,7 +247,7 @@ export class SessionResource extends StripeResource {
   ): Promise<Response<Session>> {
     return this._makeRequest(
       'GET',
-      `/v1/checkout/sessions/${id}`,
+      `/v1/checkout/sessions/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -347,7 +347,7 @@ export class SessionResource extends StripeResource {
   ): Promise<Response<Session>> {
     return this._makeRequest(
       'POST',
-      `/v1/checkout/sessions/${id}`,
+      `/v1/checkout/sessions/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -562,7 +562,7 @@ export class SessionResource extends StripeResource {
   ): Promise<Response<Session>> {
     return this._makeRequest(
       'POST',
-      `/v1/checkout/sessions/${id}/expire`,
+      `/v1/checkout/sessions/${encodeURIComponent(id)}/expire`,
       params,
       options,
       {
@@ -660,7 +660,7 @@ export class SessionResource extends StripeResource {
   ): ApiListPromise<LineItem> {
     return this._makeRequest(
       'GET',
-      `/v1/checkout/sessions/${id}/line_items`,
+      `/v1/checkout/sessions/${encodeURIComponent(id)}/line_items`,
       params,
       options,
       {
