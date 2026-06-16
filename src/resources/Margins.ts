@@ -40,7 +40,7 @@ export class MarginResource extends StripeResource {
   ): Promise<Response<Margin>> {
     return this._makeRequest(
       'GET',
-      `/v1/billing/margins/${id}`,
+      `/v1/billing/margins/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -55,7 +55,7 @@ export class MarginResource extends StripeResource {
   ): Promise<Response<Margin>> {
     return this._makeRequest(
       'POST',
-      `/v1/billing/margins/${id}`,
+      `/v1/billing/margins/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

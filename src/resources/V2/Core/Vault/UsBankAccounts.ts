@@ -48,7 +48,7 @@ export class UsBankAccountResource extends StripeResource {
   ): Promise<Response<UsBankAccount>> {
     return this._makeRequest(
       'GET',
-      `/v2/core/vault/us_bank_accounts/${id}`,
+      `/v2/core/vault/us_bank_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -66,7 +66,7 @@ export class UsBankAccountResource extends StripeResource {
   ): Promise<Response<UsBankAccount>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/vault/us_bank_accounts/${id}`,
+      `/v2/core/vault/us_bank_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -85,7 +85,7 @@ export class UsBankAccountResource extends StripeResource {
   ): Promise<Response<UsBankAccount>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/vault/us_bank_accounts/${id}/archive`,
+      `/v2/core/vault/us_bank_accounts/${encodeURIComponent(id)}/archive`,
       params,
       options
     ) as any;
@@ -100,7 +100,9 @@ export class UsBankAccountResource extends StripeResource {
   ): Promise<Response<UsBankAccount>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/vault/us_bank_accounts/${id}/confirm_microdeposits`,
+      `/v2/core/vault/us_bank_accounts/${encodeURIComponent(
+        id
+      )}/confirm_microdeposits`,
       params,
       options
     ) as any;
@@ -115,7 +117,9 @@ export class UsBankAccountResource extends StripeResource {
   ): Promise<Response<UsBankAccount>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/vault/us_bank_accounts/${id}/send_microdeposits`,
+      `/v2/core/vault/us_bank_accounts/${encodeURIComponent(
+        id
+      )}/send_microdeposits`,
       params,
       options
     ) as any;

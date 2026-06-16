@@ -28,7 +28,7 @@ export class RecipientVerificationResource extends StripeResource {
   ): Promise<Response<RecipientVerification>> {
     return this._makeRequest(
       'GET',
-      `/v2/money_management/recipient_verifications/${id}`,
+      `/v2/money_management/recipient_verifications/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -43,7 +43,9 @@ export class RecipientVerificationResource extends StripeResource {
   ): Promise<Response<RecipientVerification>> {
     return this._makeRequest(
       'POST',
-      `/v2/money_management/recipient_verifications/${id}/acknowledge`,
+      `/v2/money_management/recipient_verifications/${encodeURIComponent(
+        id
+      )}/acknowledge`,
       params,
       options
     ) as any;

@@ -30,7 +30,7 @@ export class ReleaseResource extends StripeResource {
   ): Promise<Response<Release>> {
     return this._makeRequest(
       'GET',
-      `/v1/reserve/releases/${id}`,
+      `/v1/reserve/releases/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

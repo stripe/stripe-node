@@ -15,7 +15,9 @@ export class SpendModifierRuleResource extends StripeResource {
   ): V2ListPromise<CadenceSpendModifier> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/cadences/${cadenceId}/spend_modifier_rules`,
+      `/v2/billing/cadences/${encodeURIComponent(
+        cadenceId
+      )}/spend_modifier_rules`,
       params,
       options,
       {
@@ -34,7 +36,9 @@ export class SpendModifierRuleResource extends StripeResource {
   ): Promise<Response<CadenceSpendModifier>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/cadences/${cadenceId}/spend_modifier_rules/${id}`,
+      `/v2/billing/cadences/${encodeURIComponent(
+        cadenceId
+      )}/spend_modifier_rules/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

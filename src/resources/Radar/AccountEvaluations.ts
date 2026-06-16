@@ -14,7 +14,7 @@ export class AccountEvaluationResource extends StripeResource {
   ): Promise<Response<AccountEvaluation>> {
     return this._makeRequest(
       'GET',
-      `/v1/radar/account_evaluations/${id}`,
+      `/v1/radar/account_evaluations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -43,7 +43,7 @@ export class AccountEvaluationResource extends StripeResource {
   ): Promise<Response<AccountEvaluation>> {
     return this._makeRequest(
       'POST',
-      `/v1/radar/account_evaluations/${id}/report_event`,
+      `/v1/radar/account_evaluations/${encodeURIComponent(id)}/report_event`,
       params,
       options
     ) as any;

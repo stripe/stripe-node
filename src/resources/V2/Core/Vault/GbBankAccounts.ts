@@ -45,7 +45,7 @@ export class GbBankAccountResource extends StripeResource {
   ): Promise<Response<GbBankAccount>> {
     return this._makeRequest(
       'GET',
-      `/v2/core/vault/gb_bank_accounts/${id}`,
+      `/v2/core/vault/gb_bank_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -63,7 +63,9 @@ export class GbBankAccountResource extends StripeResource {
   ): Promise<Response<GbBankAccount>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/vault/gb_bank_accounts/${id}/acknowledge_confirmation_of_payee`,
+      `/v2/core/vault/gb_bank_accounts/${encodeURIComponent(
+        id
+      )}/acknowledge_confirmation_of_payee`,
       params,
       options
     ) as any;
@@ -79,7 +81,7 @@ export class GbBankAccountResource extends StripeResource {
   ): Promise<Response<GbBankAccount>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/vault/gb_bank_accounts/${id}/archive`,
+      `/v2/core/vault/gb_bank_accounts/${encodeURIComponent(id)}/archive`,
       params,
       options
     ) as any;
@@ -97,7 +99,9 @@ export class GbBankAccountResource extends StripeResource {
   ): Promise<Response<GbBankAccount>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/vault/gb_bank_accounts/${id}/initiate_confirmation_of_payee`,
+      `/v2/core/vault/gb_bank_accounts/${encodeURIComponent(
+        id
+      )}/initiate_confirmation_of_payee`,
       params,
       options
     ) as any;

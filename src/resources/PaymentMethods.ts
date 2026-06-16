@@ -111,7 +111,7 @@ export class PaymentMethodResource extends StripeResource {
   ): Promise<Response<PaymentMethodBalance>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_methods/${id}/check_balance`,
+      `/v1/payment_methods/${encodeURIComponent(id)}/check_balance`,
       params,
       options
     ) as any;

@@ -15,7 +15,7 @@ export class VersionResource extends StripeResource {
   ): V2ListPromise<PricingPlanVersion> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/pricing_plans/${pricingPlanId}/versions`,
+      `/v2/billing/pricing_plans/${encodeURIComponent(pricingPlanId)}/versions`,
       params,
       options,
       {
@@ -34,7 +34,9 @@ export class VersionResource extends StripeResource {
   ): Promise<Response<PricingPlanVersion>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/pricing_plans/${pricingPlanId}/versions/${id}`,
+      `/v2/billing/pricing_plans/${encodeURIComponent(
+        pricingPlanId
+      )}/versions/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

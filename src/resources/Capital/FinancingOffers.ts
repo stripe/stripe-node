@@ -32,7 +32,7 @@ export class FinancingOfferResource extends StripeResource {
   ): Promise<Response<FinancingOffer>> {
     return this._makeRequest(
       'GET',
-      `/v1/capital/financing_offers/${id}`,
+      `/v1/capital/financing_offers/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -48,7 +48,7 @@ export class FinancingOfferResource extends StripeResource {
   ): Promise<Response<FinancingOffer>> {
     return this._makeRequest(
       'POST',
-      `/v1/capital/financing_offers/${id}/mark_delivered`,
+      `/v1/capital/financing_offers/${encodeURIComponent(id)}/mark_delivered`,
       params,
       options
     ) as any;

@@ -25,7 +25,7 @@ export class FeeBatchResource extends StripeResource {
   ): Promise<Response<FeeBatch>> {
     return this._makeRequest(
       'GET',
-      `/v2/core/fee_batches/${id}`,
+      `/v2/core/fee_batches/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

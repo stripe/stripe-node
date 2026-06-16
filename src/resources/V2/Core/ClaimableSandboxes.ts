@@ -31,7 +31,7 @@ export class ClaimableSandboxResource extends StripeResource {
   ): Promise<Response<ClaimableSandbox>> {
     return this._makeRequest(
       'GET',
-      `/v2/core/claimable_sandboxes/${id}`,
+      `/v2/core/claimable_sandboxes/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -47,7 +47,9 @@ export class ClaimableSandboxResource extends StripeResource {
   ): Promise<Response<ClaimableSandbox>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/claimable_sandboxes/${id}/renew_onboarding_link`,
+      `/v2/core/claimable_sandboxes/${encodeURIComponent(
+        id
+      )}/renew_onboarding_link`,
       params,
       options
     ) as any;

@@ -112,7 +112,7 @@ export class LicenseFeeResource extends StripeResource {
   ): Promise<Response<LicenseFee>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/license_fees/${id}`,
+      `/v2/billing/license_fees/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -145,7 +145,7 @@ export class LicenseFeeResource extends StripeResource {
   ): Promise<Response<LicenseFee>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/license_fees/${id}`,
+      `/v2/billing/license_fees/${encodeURIComponent(id)}`,
       params,
       options,
       {

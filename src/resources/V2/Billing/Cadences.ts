@@ -133,7 +133,7 @@ export class CadenceResource extends StripeResource {
   ): Promise<Response<Cadence>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/cadences/${id}`,
+      `/v2/billing/cadences/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -191,7 +191,7 @@ export class CadenceResource extends StripeResource {
   ): Promise<Response<Cadence>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/cadences/${id}`,
+      `/v2/billing/cadences/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -249,7 +249,7 @@ export class CadenceResource extends StripeResource {
   ): Promise<Response<Cadence>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/cadences/${id}/cancel`,
+      `/v2/billing/cadences/${encodeURIComponent(id)}/cancel`,
       params,
       options,
       {

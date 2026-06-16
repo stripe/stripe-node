@@ -15,7 +15,7 @@ export class GiftCardOperationResource extends StripeResource {
   ): Promise<Response<GiftCardOperation>> {
     return this._makeRequest(
       'GET',
-      `/v1/gift_card_operations/${id}`,
+      `/v1/gift_card_operations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

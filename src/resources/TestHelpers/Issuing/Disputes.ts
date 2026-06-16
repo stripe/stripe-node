@@ -15,7 +15,7 @@ export class DisputeResource extends StripeResource {
   ): Promise<Response<Dispute>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/disputes/${id}/close`,
+      `/v1/test_helpers/issuing/disputes/${encodeURIComponent(id)}/close`,
       params,
       options
     ) as any;
@@ -30,7 +30,9 @@ export class DisputeResource extends StripeResource {
   ): Promise<Response<Dispute>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/disputes/${id}/simulate_network_lifecycle_dispute_response`,
+      `/v1/test_helpers/issuing/disputes/${encodeURIComponent(
+        id
+      )}/simulate_network_lifecycle_dispute_response`,
       params,
       options
     ) as any;
@@ -45,7 +47,9 @@ export class DisputeResource extends StripeResource {
   ): Promise<Response<Dispute>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/disputes/${id}/simulate_network_lifecycle_pre_arbitration_response`,
+      `/v1/test_helpers/issuing/disputes/${encodeURIComponent(
+        id
+      )}/simulate_network_lifecycle_pre_arbitration_response`,
       params,
       options
     ) as any;
@@ -60,7 +64,9 @@ export class DisputeResource extends StripeResource {
   ): Promise<Response<Dispute>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/disputes/${id}/simulate_network_lifecycle_pre_arbitration_submission`,
+      `/v1/test_helpers/issuing/disputes/${encodeURIComponent(
+        id
+      )}/simulate_network_lifecycle_pre_arbitration_submission`,
       params,
       options
     ) as any;

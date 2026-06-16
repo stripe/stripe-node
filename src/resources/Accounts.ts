@@ -460,7 +460,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<AccountSignals>> {
     return this._makeRequest(
       'GET',
-      `/v1/accounts/${id}/signals`,
+      `/v1/accounts/${encodeURIComponent(id)}/signals`,
       params,
       options
     ) as any;

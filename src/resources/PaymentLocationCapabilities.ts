@@ -31,7 +31,7 @@ export class PaymentLocationCapabilityResource extends StripeResource {
   ): Promise<Response<PaymentLocationCapability>> {
     return this._makeRequest(
       'GET',
-      `/v1/payment_location_capabilities/${id}`,
+      `/v1/payment_location_capabilities/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -46,7 +46,7 @@ export class PaymentLocationCapabilityResource extends StripeResource {
   ): Promise<Response<PaymentLocationCapability>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_location_capabilities/${id}`,
+      `/v1/payment_location_capabilities/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

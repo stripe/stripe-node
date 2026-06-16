@@ -223,70 +223,76 @@ export class OrderResource extends StripeResource {
     params?: OrderRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Order>> {
-    return this._makeRequest('GET', `/v1/orders/${id}`, params, options, {
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          line_items: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    price: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          currency_options: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                tiers: {
-                                  kind: 'array',
-                                  element: {
-                                    kind: 'object',
-                                    fields: {
-                                      flat_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
-                                      },
-                                      unit_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
+    return this._makeRequest(
+      'GET',
+      `/v1/orders/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            line_items: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      price: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            currency_options: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  tiers: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        flat_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
+                                        unit_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
                                       },
                                     },
                                   },
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                              },
-                            },
-                          },
-                          tiers: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                flat_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
+                                  unit_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
                                 },
                               },
                             },
-                          },
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
+                            tiers: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  flat_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                  unit_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                },
+                              },
+                            },
+                            unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
                           },
                         },
                       },
@@ -297,8 +303,8 @@ export class OrderResource extends StripeResource {
             },
           },
         },
-      },
-    }) as any;
+      }
+    ) as any;
   }
   /**
    * Updates the specific order by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -308,87 +314,93 @@ export class OrderResource extends StripeResource {
     params?: OrderUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Order>> {
-    return this._makeRequest('POST', `/v1/orders/${id}`, params, options, {
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          line_items: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                price_data: {
-                  kind: 'object',
-                  fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+    return this._makeRequest(
+      'POST',
+      `/v1/orders/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            line_items: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  price_data: {
+                    kind: 'object',
+                    fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+                  },
                 },
               },
             },
           },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          line_items: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    price: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          currency_options: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                tiers: {
-                                  kind: 'array',
-                                  element: {
-                                    kind: 'object',
-                                    fields: {
-                                      flat_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
-                                      },
-                                      unit_amount_decimal: {
-                                        kind: 'nullable',
-                                        inner: {kind: 'decimal_string'},
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            line_items: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      price: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            currency_options: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  tiers: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        flat_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
+                                        unit_amount_decimal: {
+                                          kind: 'nullable',
+                                          inner: {kind: 'decimal_string'},
+                                        },
                                       },
                                     },
                                   },
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                              },
-                            },
-                          },
-                          tiers: {
-                            kind: 'array',
-                            element: {
-                              kind: 'object',
-                              fields: {
-                                flat_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
-                                },
-                                unit_amount_decimal: {
-                                  kind: 'nullable',
-                                  inner: {kind: 'decimal_string'},
+                                  unit_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
                                 },
                               },
                             },
-                          },
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
+                            tiers: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  flat_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                  unit_amount_decimal: {
+                                    kind: 'nullable',
+                                    inner: {kind: 'decimal_string'},
+                                  },
+                                },
+                              },
+                            },
+                            unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
                           },
                         },
                       },
@@ -399,8 +411,8 @@ export class OrderResource extends StripeResource {
             },
           },
         },
-      },
-    }) as any;
+      }
+    ) as any;
   }
   /**
    * Submitting an Order transitions the status to processing and creates a PaymentIntent object so the order can be paid. If the Order has an amount_total of 0, no PaymentIntent object will be created. Once the order is submitted, its contents cannot be changed, unless the [reopen](https://docs.stripe.com/api#reopen_order) method is called.
@@ -412,7 +424,7 @@ export class OrderResource extends StripeResource {
   ): Promise<Response<Order>> {
     return this._makeRequest(
       'POST',
-      `/v1/orders/${id}/submit`,
+      `/v1/orders/${encodeURIComponent(id)}/submit`,
       params,
       options,
       {

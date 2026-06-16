@@ -47,7 +47,7 @@ export class RedactionJobResource extends StripeResource {
   ): Promise<Response<RedactionJob>> {
     return this._makeRequest(
       'GET',
-      `/v1/privacy/redaction_jobs/${id}`,
+      `/v1/privacy/redaction_jobs/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -64,7 +64,7 @@ export class RedactionJobResource extends StripeResource {
   ): Promise<Response<RedactionJob>> {
     return this._makeRequest(
       'POST',
-      `/v1/privacy/redaction_jobs/${id}`,
+      `/v1/privacy/redaction_jobs/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -81,7 +81,7 @@ export class RedactionJobResource extends StripeResource {
   ): Promise<Response<RedactionJob>> {
     return this._makeRequest(
       'POST',
-      `/v1/privacy/redaction_jobs/${id}/cancel`,
+      `/v1/privacy/redaction_jobs/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;
@@ -100,7 +100,7 @@ export class RedactionJobResource extends StripeResource {
   ): Promise<Response<RedactionJob>> {
     return this._makeRequest(
       'POST',
-      `/v1/privacy/redaction_jobs/${id}/run`,
+      `/v1/privacy/redaction_jobs/${encodeURIComponent(id)}/run`,
       params,
       options
     ) as any;
@@ -119,7 +119,7 @@ export class RedactionJobResource extends StripeResource {
   ): Promise<Response<RedactionJob>> {
     return this._makeRequest(
       'POST',
-      `/v1/privacy/redaction_jobs/${id}/validate`,
+      `/v1/privacy/redaction_jobs/${encodeURIComponent(id)}/validate`,
       params,
       options
     ) as any;
@@ -134,7 +134,7 @@ export class RedactionJobResource extends StripeResource {
   ): ApiListPromise<RedactionJobValidationError> {
     return this._makeRequest(
       'GET',
-      `/v1/privacy/redaction_jobs/${id}/validation_errors`,
+      `/v1/privacy/redaction_jobs/${encodeURIComponent(id)}/validation_errors`,
       params,
       options,
       {

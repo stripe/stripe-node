@@ -54,7 +54,7 @@ export class SettlementAllocationIntentResource extends StripeResource {
   ): Promise<Response<SettlementAllocationIntent>> {
     return this._makeRequest(
       'GET',
-      `/v2/payments/settlement_allocation_intents/${id}`,
+      `/v2/payments/settlement_allocation_intents/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -69,7 +69,7 @@ export class SettlementAllocationIntentResource extends StripeResource {
   ): Promise<Response<SettlementAllocationIntent>> {
     return this._makeRequest(
       'POST',
-      `/v2/payments/settlement_allocation_intents/${id}`,
+      `/v2/payments/settlement_allocation_intents/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -84,7 +84,9 @@ export class SettlementAllocationIntentResource extends StripeResource {
   ): Promise<Response<SettlementAllocationIntent>> {
     return this._makeRequest(
       'POST',
-      `/v2/payments/settlement_allocation_intents/${id}/cancel`,
+      `/v2/payments/settlement_allocation_intents/${encodeURIComponent(
+        id
+      )}/cancel`,
       params,
       options
     ) as any;
@@ -99,7 +101,9 @@ export class SettlementAllocationIntentResource extends StripeResource {
   ): Promise<Response<SettlementAllocationIntent>> {
     return this._makeRequest(
       'POST',
-      `/v2/payments/settlement_allocation_intents/${id}/submit`,
+      `/v2/payments/settlement_allocation_intents/${encodeURIComponent(
+        id
+      )}/submit`,
       params,
       options
     ) as any;

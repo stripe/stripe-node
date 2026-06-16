@@ -25,7 +25,7 @@ export class FeeEntryResource extends StripeResource {
   ): Promise<Response<FeeEntry>> {
     return this._makeRequest(
       'GET',
-      `/v2/core/fee_entries/${id}`,
+      `/v2/core/fee_entries/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

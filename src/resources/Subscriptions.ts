@@ -829,7 +829,7 @@ export class SubscriptionResource extends StripeResource {
   ): Promise<Response<Subscription>> {
     return this._makeRequest(
       'POST',
-      `/v1/subscriptions/${id}/attach_cadence`,
+      `/v1/subscriptions/${encodeURIComponent(id)}/attach_cadence`,
       params,
       options,
       {
@@ -1055,7 +1055,7 @@ export class SubscriptionResource extends StripeResource {
   ): Promise<Response<Subscription>> {
     return this._makeRequest(
       'POST',
-      `/v1/subscriptions/${id}/pause`,
+      `/v1/subscriptions/${encodeURIComponent(id)}/pause`,
       params,
       options,
       {

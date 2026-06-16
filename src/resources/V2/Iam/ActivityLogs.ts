@@ -25,7 +25,7 @@ export class ActivityLogResource extends StripeResource {
   ): Promise<Response<ActivityLog>> {
     return this._makeRequest(
       'GET',
-      `/v2/iam/activity_logs/${id}`,
+      `/v2/iam/activity_logs/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

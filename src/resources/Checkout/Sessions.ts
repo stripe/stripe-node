@@ -462,7 +462,7 @@ export class SessionResource extends StripeResource {
   ): Promise<Response<Session>> {
     return this._makeRequest(
       'POST',
-      `/v1/checkout/sessions/${id}/approve`,
+      `/v1/checkout/sessions/${encodeURIComponent(id)}/approve`,
       params,
       options,
       {

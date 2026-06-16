@@ -451,7 +451,7 @@ export class InvoiceResource extends StripeResource {
   ): Promise<Response<Invoice>> {
     return this._makeRequest(
       'POST',
-      `/v1/invoices/${id}/detach_payment`,
+      `/v1/invoices/${encodeURIComponent(id)}/detach_payment`,
       params,
       options,
       {

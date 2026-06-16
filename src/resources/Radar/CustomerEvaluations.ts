@@ -28,7 +28,7 @@ export class CustomerEvaluationResource extends StripeResource {
   ): Promise<Response<CustomerEvaluation>> {
     return this._makeRequest(
       'POST',
-      `/v1/radar/customer_evaluations/${id}/report`,
+      `/v1/radar/customer_evaluations/${encodeURIComponent(id)}/report`,
       params,
       options
     ) as any;

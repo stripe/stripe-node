@@ -32,7 +32,7 @@ export class AdjustmentResource extends StripeResource {
   ): Promise<Response<Adjustment>> {
     return this._makeRequest(
       'GET',
-      `/v2/money_management/adjustments/${id}`,
+      `/v2/money_management/adjustments/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

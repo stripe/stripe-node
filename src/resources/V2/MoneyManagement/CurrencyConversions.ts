@@ -48,7 +48,7 @@ export class CurrencyConversionResource extends StripeResource {
   ): Promise<Response<CurrencyConversion>> {
     return this._makeRequest(
       'GET',
-      `/v2/money_management/currency_conversions/${id}`,
+      `/v2/money_management/currency_conversions/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

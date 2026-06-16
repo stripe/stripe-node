@@ -16,7 +16,11 @@ export class QuantityChangeResource extends StripeResource {
   ): V2ListPromise<ContractLicensePricingQuantityChange> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/contracts/${contractId}/license_pricing/${licensePricingId}/quantity_changes`,
+      `/v2/billing/contracts/${encodeURIComponent(
+        contractId
+      )}/license_pricing/${encodeURIComponent(
+        licensePricingId
+      )}/quantity_changes`,
       params,
       options,
       {

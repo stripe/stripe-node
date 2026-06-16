@@ -46,7 +46,7 @@ export class CustomPricingUnitResource extends StripeResource {
   ): Promise<Response<CustomPricingUnit>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/custom_pricing_units/${id}`,
+      `/v2/billing/custom_pricing_units/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -61,7 +61,7 @@ export class CustomPricingUnitResource extends StripeResource {
   ): Promise<Response<CustomPricingUnit>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/custom_pricing_units/${id}`,
+      `/v2/billing/custom_pricing_units/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

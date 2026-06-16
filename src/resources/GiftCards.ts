@@ -15,7 +15,7 @@ export class GiftCardResource extends StripeResource {
   ): Promise<Response<GiftCard>> {
     return this._makeRequest(
       'GET',
-      `/v1/gift_cards/${id}`,
+      `/v1/gift_cards/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -39,7 +39,7 @@ export class GiftCardResource extends StripeResource {
   ): Promise<Response<GiftCardOperation>> {
     return this._makeRequest(
       'POST',
-      `/v1/gift_cards/${id}/activate`,
+      `/v1/gift_cards/${encodeURIComponent(id)}/activate`,
       params,
       options
     ) as any;
@@ -54,7 +54,7 @@ export class GiftCardResource extends StripeResource {
   ): Promise<Response<GiftCardOperation>> {
     return this._makeRequest(
       'POST',
-      `/v1/gift_cards/${id}/cashout`,
+      `/v1/gift_cards/${encodeURIComponent(id)}/cashout`,
       params,
       options
     ) as any;
@@ -69,7 +69,7 @@ export class GiftCardResource extends StripeResource {
   ): Promise<Response<GiftCardOperation>> {
     return this._makeRequest(
       'POST',
-      `/v1/gift_cards/${id}/check_balance`,
+      `/v1/gift_cards/${encodeURIComponent(id)}/check_balance`,
       params,
       options
     ) as any;
@@ -84,7 +84,7 @@ export class GiftCardResource extends StripeResource {
   ): Promise<Response<GiftCardOperation>> {
     return this._makeRequest(
       'POST',
-      `/v1/gift_cards/${id}/reload`,
+      `/v1/gift_cards/${encodeURIComponent(id)}/reload`,
       params,
       options
     ) as any;
@@ -99,7 +99,7 @@ export class GiftCardResource extends StripeResource {
   ): Promise<Response<GiftCardOperation>> {
     return this._makeRequest(
       'POST',
-      `/v1/gift_cards/${id}/void_operation`,
+      `/v1/gift_cards/${encodeURIComponent(id)}/void_operation`,
       params,
       options
     ) as any;

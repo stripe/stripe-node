@@ -46,7 +46,7 @@ export class MeteredItemResource extends StripeResource {
   ): Promise<Response<MeteredItem>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/metered_items/${id}`,
+      `/v2/billing/metered_items/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -61,7 +61,7 @@ export class MeteredItemResource extends StripeResource {
   ): Promise<Response<MeteredItem>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/metered_items/${id}`,
+      `/v2/billing/metered_items/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

@@ -23,7 +23,7 @@ export class PersonResource extends StripeResource {
   ): V2ListPromise<AccountPerson> {
     return this._makeRequest(
       'GET',
-      `/v2/core/accounts/${accountId}/persons`,
+      `/v2/core/accounts/${encodeURIComponent(accountId)}/persons`,
       params,
       options,
       {
@@ -59,7 +59,7 @@ export class PersonResource extends StripeResource {
   ): Promise<Response<AccountPerson>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/accounts/${accountId}/persons`,
+      `/v2/core/accounts/${encodeURIComponent(accountId)}/persons`,
       params,
       options,
       {

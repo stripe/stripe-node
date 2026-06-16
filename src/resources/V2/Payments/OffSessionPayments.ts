@@ -47,7 +47,7 @@ export class OffSessionPaymentResource extends StripeResource {
   ): Promise<Response<OffSessionPayment>> {
     return this._makeRequest(
       'GET',
-      `/v2/payments/off_session_payments/${id}`,
+      `/v2/payments/off_session_payments/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -62,7 +62,7 @@ export class OffSessionPaymentResource extends StripeResource {
   ): Promise<Response<OffSessionPayment>> {
     return this._makeRequest(
       'POST',
-      `/v2/payments/off_session_payments/${id}/cancel`,
+      `/v2/payments/off_session_payments/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;
@@ -77,7 +77,7 @@ export class OffSessionPaymentResource extends StripeResource {
   ): Promise<Response<OffSessionPayment>> {
     return this._makeRequest(
       'POST',
-      `/v2/payments/off_session_payments/${id}/capture`,
+      `/v2/payments/off_session_payments/${encodeURIComponent(id)}/capture`,
       params,
       options
     ) as any;
@@ -92,7 +92,7 @@ export class OffSessionPaymentResource extends StripeResource {
   ): Promise<Response<OffSessionPayment>> {
     return this._makeRequest(
       'POST',
-      `/v2/payments/off_session_payments/${id}/pause`,
+      `/v2/payments/off_session_payments/${encodeURIComponent(id)}/pause`,
       params,
       options
     ) as any;
@@ -107,7 +107,7 @@ export class OffSessionPaymentResource extends StripeResource {
   ): Promise<Response<OffSessionPayment>> {
     return this._makeRequest(
       'POST',
-      `/v2/payments/off_session_payments/${id}/resume`,
+      `/v2/payments/off_session_payments/${encodeURIComponent(id)}/resume`,
       params,
       options
     ) as any;

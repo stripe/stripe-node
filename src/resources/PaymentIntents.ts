@@ -247,7 +247,7 @@ export class PaymentIntentResource extends StripeResource {
   ): Promise<Response<PaymentIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_intents/${id}/decrement_authorization`,
+      `/v1/payment_intents/${encodeURIComponent(id)}/decrement_authorization`,
       params,
       options
     ) as any;
@@ -309,7 +309,7 @@ export class PaymentIntentResource extends StripeResource {
   ): Promise<Response<PaymentIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_intents/${id}/reauthorize`,
+      `/v1/payment_intents/${encodeURIComponent(id)}/reauthorize`,
       params,
       options
     ) as any;
@@ -324,7 +324,9 @@ export class PaymentIntentResource extends StripeResource {
   ): Promise<Response<PaymentIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_intents/${id}/update_crypto_refund_address`,
+      `/v1/payment_intents/${encodeURIComponent(
+        id
+      )}/update_crypto_refund_address`,
       params,
       options
     ) as any;
@@ -354,7 +356,7 @@ export class PaymentIntentResource extends StripeResource {
   ): Promise<Response<PaymentIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/test/payment_intents/${id}/trigger_action`,
+      `/v1/test/payment_intents/${encodeURIComponent(id)}/trigger_action`,
       params,
       options
     ) as any;

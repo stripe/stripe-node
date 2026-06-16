@@ -15,7 +15,9 @@ export class PaymentIntentResource extends StripeResource {
   ): Promise<Response<PaymentIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/payment_intents/${id}/simulate_crypto_deposit`,
+      `/v1/test_helpers/payment_intents/${encodeURIComponent(
+        id
+      )}/simulate_crypto_deposit`,
       params,
       options
     ) as any;

@@ -32,7 +32,7 @@ export class ReceivedDebitResource extends StripeResource {
   ): Promise<Response<ReceivedDebit>> {
     return this._makeRequest(
       'GET',
-      `/v2/money_management/received_debits/${id}`,
+      `/v2/money_management/received_debits/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

@@ -90,7 +90,7 @@ export class BatchJobResource extends StripeResource {
   ): Promise<Response<BatchJob>> {
     return this._makeRequest(
       'GET',
-      `/v2/core/batch_jobs/${id}`,
+      `/v2/core/batch_jobs/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -172,7 +172,7 @@ export class BatchJobResource extends StripeResource {
   ): Promise<Response<BatchJob>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/batch_jobs/${id}/cancel`,
+      `/v2/core/batch_jobs/${encodeURIComponent(id)}/cancel`,
       params,
       options,
       {

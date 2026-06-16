@@ -46,7 +46,7 @@ export class DebitDisputeResource extends StripeResource {
   ): Promise<Response<DebitDispute>> {
     return this._makeRequest(
       'GET',
-      `/v2/money_management/debit_disputes/${id}`,
+      `/v2/money_management/debit_disputes/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

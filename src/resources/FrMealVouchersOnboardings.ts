@@ -49,7 +49,7 @@ export class FrMealVouchersOnboardingResource extends StripeResource {
   ): Promise<Response<FrMealVouchersOnboarding>> {
     return this._makeRequest(
       'GET',
-      `/v1/fr_meal_vouchers_onboardings/${id}`,
+      `/v1/fr_meal_vouchers_onboardings/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -68,7 +68,7 @@ export class FrMealVouchersOnboardingResource extends StripeResource {
   ): Promise<Response<FrMealVouchersOnboarding>> {
     return this._makeRequest(
       'POST',
-      `/v1/fr_meal_vouchers_onboardings/${id}`,
+      `/v1/fr_meal_vouchers_onboardings/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

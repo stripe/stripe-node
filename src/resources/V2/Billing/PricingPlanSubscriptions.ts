@@ -106,7 +106,7 @@ export class PricingPlanSubscriptionResource extends StripeResource {
   ): Promise<Response<PricingPlanSubscription>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/pricing_plan_subscriptions/${id}`,
+      `/v2/billing/pricing_plan_subscriptions/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -185,7 +185,7 @@ export class PricingPlanSubscriptionResource extends StripeResource {
   ): Promise<Response<PricingPlanSubscription>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/pricing_plan_subscriptions/${id}`,
+      `/v2/billing/pricing_plan_subscriptions/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -264,7 +264,9 @@ export class PricingPlanSubscriptionResource extends StripeResource {
   ): Promise<Response<PricingPlanSubscription>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/pricing_plan_subscriptions/${id}/remove_discounts`,
+      `/v2/billing/pricing_plan_subscriptions/${encodeURIComponent(
+        id
+      )}/remove_discounts`,
       params,
       options,
       {

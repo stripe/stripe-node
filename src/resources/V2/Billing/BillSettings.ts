@@ -52,7 +52,7 @@ export class BillSettingResource extends StripeResource {
   ): Promise<Response<BillSetting>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/bill_settings/${id}`,
+      `/v2/billing/bill_settings/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -67,7 +67,7 @@ export class BillSettingResource extends StripeResource {
   ): Promise<Response<BillSetting>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/bill_settings/${id}`,
+      `/v2/billing/bill_settings/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

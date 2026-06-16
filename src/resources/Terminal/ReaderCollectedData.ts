@@ -14,7 +14,7 @@ export class ReaderCollectedDatumResource extends StripeResource {
   ): Promise<Response<ReaderCollectedData>> {
     return this._makeRequest(
       'GET',
-      `/v1/terminal/reader_collected_data/${id}`,
+      `/v1/terminal/reader_collected_data/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

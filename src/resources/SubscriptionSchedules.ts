@@ -183,7 +183,7 @@ export class SubscriptionScheduleResource extends StripeResource {
   ): Promise<Response<SubscriptionSchedule>> {
     return this._makeRequest(
       'POST',
-      `/v1/subscription_schedules/${id}/amend`,
+      `/v1/subscription_schedules/${encodeURIComponent(id)}/amend`,
       params,
       options
     ) as any;
