@@ -136,7 +136,7 @@ export class TransactionResource extends StripeResource {
   ): Promise<Response<Transaction>> {
     return this._makeRequest(
       'GET',
-      `/v1/issuing/transactions/${id}`,
+      `/v1/issuing/transactions/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -235,7 +235,7 @@ export class TransactionResource extends StripeResource {
   ): Promise<Response<Transaction>> {
     return this._makeRequest(
       'POST',
-      `/v1/issuing/transactions/${id}`,
+      `/v1/issuing/transactions/${encodeURIComponent(id)}`,
       params,
       options,
       {

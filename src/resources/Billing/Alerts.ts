@@ -42,7 +42,7 @@ export class AlertResource extends StripeResource {
   ): Promise<Response<Alert>> {
     return this._makeRequest(
       'GET',
-      `/v1/billing/alerts/${id}`,
+      `/v1/billing/alerts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -57,7 +57,7 @@ export class AlertResource extends StripeResource {
   ): Promise<Response<Alert>> {
     return this._makeRequest(
       'POST',
-      `/v1/billing/alerts/${id}/activate`,
+      `/v1/billing/alerts/${encodeURIComponent(id)}/activate`,
       params,
       options
     ) as any;
@@ -72,7 +72,7 @@ export class AlertResource extends StripeResource {
   ): Promise<Response<Alert>> {
     return this._makeRequest(
       'POST',
-      `/v1/billing/alerts/${id}/archive`,
+      `/v1/billing/alerts/${encodeURIComponent(id)}/archive`,
       params,
       options
     ) as any;
@@ -87,7 +87,7 @@ export class AlertResource extends StripeResource {
   ): Promise<Response<Alert>> {
     return this._makeRequest(
       'POST',
-      `/v1/billing/alerts/${id}/deactivate`,
+      `/v1/billing/alerts/${encodeURIComponent(id)}/deactivate`,
       params,
       options
     ) as any;

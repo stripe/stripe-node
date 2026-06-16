@@ -20,7 +20,7 @@ export class WebhookEndpointResource extends StripeResource {
   ): Promise<Response<DeletedWebhookEndpoint>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/webhook_endpoints/${id}`,
+      `/v1/webhook_endpoints/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -35,7 +35,7 @@ export class WebhookEndpointResource extends StripeResource {
   ): Promise<Response<WebhookEndpoint>> {
     return this._makeRequest(
       'GET',
-      `/v1/webhook_endpoints/${id}`,
+      `/v1/webhook_endpoints/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -50,7 +50,7 @@ export class WebhookEndpointResource extends StripeResource {
   ): Promise<Response<WebhookEndpoint>> {
     return this._makeRequest(
       'POST',
-      `/v1/webhook_endpoints/${id}`,
+      `/v1/webhook_endpoints/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

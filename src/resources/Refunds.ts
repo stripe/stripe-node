@@ -55,7 +55,7 @@ export class RefundResource extends StripeResource {
   ): Promise<Response<Refund>> {
     return this._makeRequest(
       'GET',
-      `/v1/refunds/${id}`,
+      `/v1/refunds/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -72,7 +72,7 @@ export class RefundResource extends StripeResource {
   ): Promise<Response<Refund>> {
     return this._makeRequest(
       'POST',
-      `/v1/refunds/${id}`,
+      `/v1/refunds/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -89,7 +89,7 @@ export class RefundResource extends StripeResource {
   ): Promise<Response<Refund>> {
     return this._makeRequest(
       'POST',
-      `/v1/refunds/${id}/cancel`,
+      `/v1/refunds/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;

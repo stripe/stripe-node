@@ -21,7 +21,7 @@ export class CalculationResource extends StripeResource {
   ): Promise<Response<Calculation>> {
     return this._makeRequest(
       'GET',
-      `/v1/tax/calculations/${id}`,
+      `/v1/tax/calculations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -50,7 +50,7 @@ export class CalculationResource extends StripeResource {
   ): ApiListPromise<CalculationLineItem> {
     return this._makeRequest(
       'GET',
-      `/v1/tax/calculations/${id}/line_items`,
+      `/v1/tax/calculations/${encodeURIComponent(id)}/line_items`,
       params,
       options,
       {

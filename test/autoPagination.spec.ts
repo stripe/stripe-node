@@ -879,6 +879,39 @@ describe('auto pagination', () => {
         'Should not have any unhandled promise rejections'
       ).to.have.length(0);
     });
+
+    it('iterates through empty intermediate pages', () => {
+      return testCaseV2List({
+        pages: [
+          {ids: [1, 2], next_page_url: '/v2/items?page=a'},
+          {ids: [], next_page_url: '/v2/items?page=b'},
+          {ids: [], next_page_url: '/v2/items?page=c'},
+          {ids: [3, 4]},
+        ],
+        limit: 10,
+        expectedIds: [1, 2, 3, 4],
+        expectedParamsLog: ['?page=a', '?page=b', '?page=c'],
+      });
+    });
+
+    it('coalesces parallel next() calls at a page boundary into one request', async () => {
+      const {paginator, paramsLog} = mockPaginationV2List(
+        [{ids: [1], next_page_url: '/v2/items?page=foo'}, {ids: [2, 3]}],
+        {}
+      );
+
+      // Drain the first page
+      const first = await paginator.next();
+      expect((first as any).value.id).to.equal(1);
+
+      // Now at page boundary — fire parallel next() calls
+      const [r1, r2] = await Promise.all([paginator.next(), paginator.next()]);
+      expect(r1).to.deep.equal(r2);
+      expect((r1 as any).value.id).to.equal(2);
+
+      // Only one page request should have been made
+      expect(paramsLog).to.deep.equal(['?page=foo']);
+    });
   });
   describe('stack traces', () => {
     // Builds a paginator whose first page succeeds but whose second page

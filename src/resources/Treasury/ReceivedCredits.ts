@@ -37,7 +37,7 @@ export class ReceivedCreditResource extends StripeResource {
   ): Promise<Response<ReceivedCredit>> {
     return this._makeRequest(
       'GET',
-      `/v1/treasury/received_credits/${id}`,
+      `/v1/treasury/received_credits/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

@@ -47,7 +47,7 @@ export class DebitReversalResource extends StripeResource {
   ): Promise<Response<DebitReversal>> {
     return this._makeRequest(
       'GET',
-      `/v1/treasury/debit_reversals/${id}`,
+      `/v1/treasury/debit_reversals/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

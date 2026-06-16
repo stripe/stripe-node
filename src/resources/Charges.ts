@@ -63,7 +63,7 @@ export class ChargeResource extends StripeResource {
   ): Promise<Response<Charge>> {
     return this._makeRequest(
       'GET',
-      `/v1/charges/${id}`,
+      `/v1/charges/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -78,7 +78,7 @@ export class ChargeResource extends StripeResource {
   ): Promise<Response<Charge>> {
     return this._makeRequest(
       'POST',
-      `/v1/charges/${id}`,
+      `/v1/charges/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -111,7 +111,7 @@ export class ChargeResource extends StripeResource {
   ): Promise<Response<Charge>> {
     return this._makeRequest(
       'POST',
-      `/v1/charges/${id}/capture`,
+      `/v1/charges/${encodeURIComponent(id)}/capture`,
       params,
       options
     ) as any;
