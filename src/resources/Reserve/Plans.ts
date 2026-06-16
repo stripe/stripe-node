@@ -15,7 +15,7 @@ export class PlanResource extends StripeResource {
   ): Promise<Response<Plan>> {
     return this._makeRequest(
       'GET',
-      `/v1/reserve/plans/${id}`,
+      `/v1/reserve/plans/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

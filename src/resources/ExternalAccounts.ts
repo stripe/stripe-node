@@ -17,7 +17,7 @@ export class ExternalAccountResource extends StripeResource {
   ): Promise<Response<DeletedExternalAccount>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/external_accounts/${id}`,
+      `/v1/external_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -32,7 +32,7 @@ export class ExternalAccountResource extends StripeResource {
   ): Promise<Response<ExternalAccount>> {
     return this._makeRequest(
       'GET',
-      `/v1/external_accounts/${id}`,
+      `/v1/external_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -54,7 +54,7 @@ export class ExternalAccountResource extends StripeResource {
   ): Promise<Response<ExternalAccount>> {
     return this._makeRequest(
       'POST',
-      `/v1/external_accounts/${id}`,
+      `/v1/external_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

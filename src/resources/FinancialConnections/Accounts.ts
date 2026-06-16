@@ -114,7 +114,9 @@ export class AccountResource extends StripeResource {
   ): ApiListPromise<AccountInferredBalance> {
     return this._makeRequest(
       'GET',
-      `/v1/financial_connections/accounts/${id}/inferred_balances`,
+      `/v1/financial_connections/accounts/${encodeURIComponent(
+        id
+      )}/inferred_balances`,
       params,
       options,
       {

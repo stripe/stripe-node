@@ -352,11 +352,6 @@ export const V2 = resourceNamespace('v2', {
       Imports: V2CommerceProductCatalogImports,
     }),
   }),
-  Commerce: resourceNamespace('commerce', {
-    ProductCatalog: resourceNamespace('productCatalog', {
-      Imports: V2CommerceProductCatalogImports,
-    }),
-  }),
   Core: resourceNamespace('core', {
     AccountLinks: V2CoreAccountLinks,
     AccountTokens: V2CoreAccountTokens,

@@ -35,7 +35,7 @@ export class FxQuoteResource extends StripeResource {
   ): Promise<Response<FxQuote>> {
     return this._makeRequest(
       'GET',
-      `/v1/fx_quotes/${id}`,
+      `/v1/fx_quotes/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

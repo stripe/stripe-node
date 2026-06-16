@@ -135,7 +135,7 @@ export class ImportResource extends StripeResource {
   ): Promise<Response<ProductCatalogImport>> {
     return this._makeRequest(
       'GET',
-      `/v2/commerce/product_catalog/imports/${id}`,
+      `/v2/commerce/product_catalog/imports/${encodeURIComponent(id)}`,
       params,
       options,
       {

@@ -32,7 +32,7 @@ export class PayoutMethodResource extends StripeResource {
   ): Promise<Response<PayoutMethod>> {
     return this._makeRequest(
       'GET',
-      `/v2/money_management/payout_methods/${id}`,
+      `/v2/money_management/payout_methods/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -52,7 +52,7 @@ export class PayoutMethodResource extends StripeResource {
   ): Promise<Response<PayoutMethod>> {
     return this._makeRequest(
       'POST',
-      `/v2/money_management/payout_methods/${id}/archive`,
+      `/v2/money_management/payout_methods/${encodeURIComponent(id)}/archive`,
       params,
       options
     ) as any;
@@ -70,7 +70,7 @@ export class PayoutMethodResource extends StripeResource {
   ): Promise<Response<PayoutMethod>> {
     return this._makeRequest(
       'POST',
-      `/v2/money_management/payout_methods/${id}/unarchive`,
+      `/v2/money_management/payout_methods/${encodeURIComponent(id)}/unarchive`,
       params,
       options
     ) as any;

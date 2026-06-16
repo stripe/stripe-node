@@ -48,7 +48,7 @@ export class FinancialAddressResource extends StripeResource {
   ): Promise<Response<FinancialAddress>> {
     return this._makeRequest(
       'GET',
-      `/v2/money_management/financial_addresses/${id}`,
+      `/v2/money_management/financial_addresses/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
