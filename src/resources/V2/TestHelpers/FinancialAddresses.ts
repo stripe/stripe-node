@@ -18,7 +18,7 @@ export class FinancialAddressResource extends StripeResource {
   ): Promise<Response<FinancialAddressCreditSimulation>> {
     return this._makeRequest(
       'POST',
-      `/v2/test_helpers/financial_addresses/${id}/credit`,
+      `/v2/test_helpers/financial_addresses/${encodeURIComponent(id)}/credit`,
       params,
       options
     ) as any;
@@ -34,7 +34,9 @@ export class FinancialAddressResource extends StripeResource {
   ): Promise<Response<FinancialAddressGeneratedMicrodeposits>> {
     return this._makeRequest(
       'POST',
-      `/v2/test_helpers/financial_addresses/${id}/generate_microdeposits`,
+      `/v2/test_helpers/financial_addresses/${encodeURIComponent(
+        id
+      )}/generate_microdeposits`,
       params,
       options
     ) as any;

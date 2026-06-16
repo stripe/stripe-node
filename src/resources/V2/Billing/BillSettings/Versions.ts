@@ -9,13 +9,13 @@ export class VersionResource extends StripeResource {
    * List all BillSettingVersions by BillSetting ID.
    */
   list(
-    id: string,
+    billSettingId: string,
     params?: V2.Billing.BillSettings.VersionListParams,
     options?: RequestOptions
   ): V2ListPromise<BillSettingVersion> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/bill_settings/${id}/versions`,
+      `/v2/billing/bill_settings/${encodeURIComponent(billSettingId)}/versions`,
       params,
       options,
       {
@@ -34,7 +34,9 @@ export class VersionResource extends StripeResource {
   ): Promise<Response<BillSettingVersion>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/bill_settings/${billSettingId}/versions/${id}`,
+      `/v2/billing/bill_settings/${encodeURIComponent(
+        billSettingId
+      )}/versions/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

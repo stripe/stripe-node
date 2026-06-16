@@ -42,24 +42,25 @@ value:
 ```js
 const stripe = require('stripe')('sk_test_...');
 
-stripe.customers.create({
-  email: 'customer@example.com',
-})
-  .then(customer => console.log(customer.id))
-  .catch(error => console.error(error));
-```
-
-Or using ES modules and `async`/`await`:
-
-```js
-import Stripe from 'stripe';
-const stripe = new Stripe('sk_test_...');
-
-const customer = await stripe.customers.create({
+const customer = await stripeClient.customers.create({
   email: 'customer@example.com',
 });
 
 console.log(customer.id);
+```
+
+Or using CJS:
+
+```js
+const Stripe = require('stripe');
+const stripeClient = Stripe('sk_test_...');
+
+stripeClient.customers
+  .create({
+    email: 'customer@example.com',
+  })
+  .then((customer) => console.log(customer.id))
+  .catch((error) => console.error(error));
 ```
 
 > [!WARNING]
@@ -420,7 +421,11 @@ const header = stripe.webhooks.generateTestHeaderString({
   secret,
 });
 
-const event = stripe.webhooks.constructEvent(payloadString, header, secret);
+const event = stripeClient.webhooks.constructEvent(
+  payloadString,
+  header,
+  secret
+);
 
 // Do something with mocked signed event
 expect(event.id).to.equal(payload.id);
@@ -436,20 +441,11 @@ See [undocumented params and properties](https://docs.stripe.com/sdks/server-sid
 
 If you're writing a plugin that uses the library, we'd appreciate it if you instantiated your stripe client with `appInfo`, eg;
 
-```js
-const stripe = require('stripe')('sk_test_...', {
-  appInfo: {
-    name: 'MyAwesomePlugin',
-    version: '1.2.34', // Optional
-    url: 'https://myawesomeplugin.info', // Optional
-  },
-});
-```
-
-Or using ES modules or TypeScript:
+With ES modules or TypeScript:
 
 ```js
-const stripe = new Stripe(apiKey, {
+import Stripe from 'stripe';
+const stripeClient = new Stripe(apiKey, {
   appInfo: {
     name: 'MyAwesomePlugin',
     version: '1.2.34', // Optional
@@ -574,7 +570,7 @@ const stripe = new Stripe('sk_test_...', {
 
 ### Private Preview SDKs
 
-Stripe has features in the [private preview phase](https://docs.stripe.com/release-phases) that can be accessed via versions of this package that have the `-alpha.X` suffix like `18.6.0-alpha.1`. These are invite-only features. Once invited, you can install the private preview SDKs by following the same instructions as for the [public preview SDKs](https://github.com/stripe/stripe-node?tab=readme-ov-file#public-preview-sdks) above and replacing the term `public-preview` with `private-preview`:
+Stripe has features in the [private preview phase](https://docs.stripe.com/release-phases) that can be accessed via versions of this package that have the `-alpha.X` suffix like `18.6.0-alpha.1`. You can install the private preview SDKs by following the same instructions as for the [public preview SDKs](#public-preview-sdks) above and replacing the term `public-preview` with `private-preview`. Note that access to specific private preview API features may require separate approval:
 
 ```
 npm install stripe@private-preview --save-exact
@@ -628,6 +624,9 @@ New features and bug fixes are released on the latest major version of the `stri
 - [Using Stripe Connect](https://github.com/stripe/stripe-node/wiki/Using-Stripe-Connect-with-node.js)
 
 ## Development
+
+> [!WARNING]
+> External contributions to this repo from first-time contributors are currently on hiatus. If you'd like to see a change made to the package, please open an issue.
 
 [Contribution guidelines for this project](CONTRIBUTING.md)
 

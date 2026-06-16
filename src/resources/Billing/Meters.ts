@@ -41,7 +41,7 @@ export class MeterResource extends StripeResource {
   ): Promise<Response<Meter>> {
     return this._makeRequest(
       'GET',
-      `/v1/billing/meters/${id}`,
+      `/v1/billing/meters/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -56,7 +56,7 @@ export class MeterResource extends StripeResource {
   ): Promise<Response<Meter>> {
     return this._makeRequest(
       'POST',
-      `/v1/billing/meters/${id}`,
+      `/v1/billing/meters/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -71,7 +71,7 @@ export class MeterResource extends StripeResource {
   ): Promise<Response<Meter>> {
     return this._makeRequest(
       'POST',
-      `/v1/billing/meters/${id}/deactivate`,
+      `/v1/billing/meters/${encodeURIComponent(id)}/deactivate`,
       params,
       options
     ) as any;
@@ -86,7 +86,7 @@ export class MeterResource extends StripeResource {
   ): Promise<Response<Meter>> {
     return this._makeRequest(
       'POST',
-      `/v1/billing/meters/${id}/reactivate`,
+      `/v1/billing/meters/${encodeURIComponent(id)}/reactivate`,
       params,
       options
     ) as any;
@@ -101,7 +101,7 @@ export class MeterResource extends StripeResource {
   ): ApiListPromise<MeterEventSummary> {
     return this._makeRequest(
       'GET',
-      `/v1/billing/meters/${id}/event_summaries`,
+      `/v1/billing/meters/${encodeURIComponent(id)}/event_summaries`,
       params,
       options,
       {

@@ -32,7 +32,7 @@ export class PhysicalBundleResource extends StripeResource {
   ): Promise<Response<PhysicalBundle>> {
     return this._makeRequest(
       'GET',
-      `/v1/issuing/physical_bundles/${id}`,
+      `/v1/issuing/physical_bundles/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

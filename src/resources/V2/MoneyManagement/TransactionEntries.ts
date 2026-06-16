@@ -32,7 +32,7 @@ export class TransactionEntryResource extends StripeResource {
   ): Promise<Response<TransactionEntry>> {
     return this._makeRequest(
       'GET',
-      `/v2/money_management/transaction_entries/${id}`,
+      `/v2/money_management/transaction_entries/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

@@ -47,7 +47,7 @@ export class InvoiceResource extends StripeResource {
   ): Promise<Response<DeletedInvoice>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/invoices/${id}`,
+      `/v1/invoices/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -60,33 +60,39 @@ export class InvoiceResource extends StripeResource {
     params?: InvoiceRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Invoice>> {
-    return this._makeRequest('GET', `/v1/invoices/${id}`, params, options, {
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    pricing: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
+    return this._makeRequest(
+      'GET',
+      `/v1/invoices/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      pricing: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
                           },
                         },
                       },
-                    },
-                    quantity_decimal: {
-                      kind: 'nullable',
-                      inner: {kind: 'decimal_string'},
+                      quantity_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
@@ -94,8 +100,8 @@ export class InvoiceResource extends StripeResource {
             },
           },
         },
-      },
-    }) as any;
+      }
+    ) as any;
   }
   /**
    * Draft invoices are fully editable. Once an invoice is [finalized](https://docs.stripe.com/docs/billing/invoices/workflow#finalized),
@@ -110,33 +116,39 @@ export class InvoiceResource extends StripeResource {
     params?: InvoiceUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Invoice>> {
-    return this._makeRequest('POST', `/v1/invoices/${id}`, params, options, {
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          lines: {
-            kind: 'object',
-            fields: {
-              data: {
-                kind: 'array',
-                element: {
-                  kind: 'object',
-                  fields: {
-                    pricing: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          unit_amount_decimal: {
-                            kind: 'nullable',
-                            inner: {kind: 'decimal_string'},
+    return this._makeRequest(
+      'POST',
+      `/v1/invoices/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            lines: {
+              kind: 'object',
+              fields: {
+                data: {
+                  kind: 'array',
+                  element: {
+                    kind: 'object',
+                    fields: {
+                      pricing: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            unit_amount_decimal: {
+                              kind: 'nullable',
+                              inner: {kind: 'decimal_string'},
+                            },
                           },
                         },
                       },
-                    },
-                    quantity_decimal: {
-                      kind: 'nullable',
-                      inner: {kind: 'decimal_string'},
+                      quantity_decimal: {
+                        kind: 'nullable',
+                        inner: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
@@ -144,8 +156,8 @@ export class InvoiceResource extends StripeResource {
             },
           },
         },
-      },
-    }) as any;
+      }
+    ) as any;
   }
   /**
    * You can list all invoices, or list the invoices for a specific customer. The invoices are returned sorted by creation date, with the most recently created invoices appearing first.
@@ -310,7 +322,7 @@ export class InvoiceResource extends StripeResource {
   ): Promise<Response<Invoice>> {
     return this._makeRequest(
       'POST',
-      `/v1/invoices/${id}/add_lines`,
+      `/v1/invoices/${encodeURIComponent(id)}/add_lines`,
       params,
       options,
       {
@@ -388,7 +400,7 @@ export class InvoiceResource extends StripeResource {
   ): Promise<Response<Invoice>> {
     return this._makeRequest(
       'POST',
-      `/v1/invoices/${id}/attach_payment`,
+      `/v1/invoices/${encodeURIComponent(id)}/attach_payment`,
       params,
       options,
       {
@@ -439,7 +451,7 @@ export class InvoiceResource extends StripeResource {
   ): Promise<Response<Invoice>> {
     return this._makeRequest(
       'POST',
-      `/v1/invoices/${id}/detach_payment`,
+      `/v1/invoices/${encodeURIComponent(id)}/detach_payment`,
       params,
       options,
       {
@@ -490,7 +502,7 @@ export class InvoiceResource extends StripeResource {
   ): Promise<Response<Invoice>> {
     return this._makeRequest(
       'POST',
-      `/v1/invoices/${id}/finalize`,
+      `/v1/invoices/${encodeURIComponent(id)}/finalize`,
       params,
       options,
       {
@@ -541,7 +553,7 @@ export class InvoiceResource extends StripeResource {
   ): Promise<Response<Invoice>> {
     return this._makeRequest(
       'POST',
-      `/v1/invoices/${id}/mark_uncollectible`,
+      `/v1/invoices/${encodeURIComponent(id)}/mark_uncollectible`,
       params,
       options,
       {
@@ -592,7 +604,7 @@ export class InvoiceResource extends StripeResource {
   ): Promise<Response<Invoice>> {
     return this._makeRequest(
       'POST',
-      `/v1/invoices/${id}/pay`,
+      `/v1/invoices/${encodeURIComponent(id)}/pay`,
       params,
       options,
       {
@@ -643,7 +655,7 @@ export class InvoiceResource extends StripeResource {
   ): Promise<Response<Invoice>> {
     return this._makeRequest(
       'POST',
-      `/v1/invoices/${id}/remove_lines`,
+      `/v1/invoices/${encodeURIComponent(id)}/remove_lines`,
       params,
       options,
       {
@@ -696,7 +708,7 @@ export class InvoiceResource extends StripeResource {
   ): Promise<Response<Invoice>> {
     return this._makeRequest(
       'POST',
-      `/v1/invoices/${id}/send`,
+      `/v1/invoices/${encodeURIComponent(id)}/send`,
       params,
       options,
       {
@@ -747,7 +759,7 @@ export class InvoiceResource extends StripeResource {
   ): Promise<Response<Invoice>> {
     return this._makeRequest(
       'POST',
-      `/v1/invoices/${id}/update_lines`,
+      `/v1/invoices/${encodeURIComponent(id)}/update_lines`,
       params,
       options,
       {
@@ -818,7 +830,7 @@ export class InvoiceResource extends StripeResource {
   ): Promise<Response<Invoice>> {
     return this._makeRequest(
       'POST',
-      `/v1/invoices/${id}/void`,
+      `/v1/invoices/${encodeURIComponent(id)}/void`,
       params,
       options,
       {
@@ -1004,7 +1016,7 @@ export class InvoiceResource extends StripeResource {
   ): ApiListPromise<InvoiceLineItem> {
     return this._makeRequest(
       'GET',
-      `/v1/invoices/${id}/lines`,
+      `/v1/invoices/${encodeURIComponent(id)}/lines`,
       params,
       options,
       {
@@ -1055,7 +1067,9 @@ export class InvoiceResource extends StripeResource {
   ): Promise<Response<InvoiceLineItem>> {
     return this._makeRequest(
       'POST',
-      `/v1/invoices/${invoiceId}/lines/${id}`,
+      `/v1/invoices/${encodeURIComponent(invoiceId)}/lines/${encodeURIComponent(
+        id
+      )}`,
       params,
       options,
       {

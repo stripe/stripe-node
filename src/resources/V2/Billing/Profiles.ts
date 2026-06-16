@@ -40,7 +40,7 @@ export class ProfileResource extends StripeResource {
   ): Promise<Response<Profile>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/profiles/${id}`,
+      `/v2/billing/profiles/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -55,7 +55,7 @@ export class ProfileResource extends StripeResource {
   ): Promise<Response<Profile>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/profiles/${id}`,
+      `/v2/billing/profiles/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

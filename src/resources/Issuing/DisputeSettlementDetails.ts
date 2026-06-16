@@ -32,7 +32,7 @@ export class DisputeSettlementDetailResource extends StripeResource {
   ): Promise<Response<DisputeSettlementDetail>> {
     return this._makeRequest(
       'GET',
-      `/v1/issuing/dispute_settlement_details/${id}`,
+      `/v1/issuing/dispute_settlement_details/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

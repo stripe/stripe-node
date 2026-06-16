@@ -15,7 +15,7 @@ export class OutboundPaymentResource extends StripeResource {
   ): Promise<Response<OutboundPayment>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/treasury/outbound_payments/${id}`,
+      `/v1/test_helpers/treasury/outbound_payments/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -30,7 +30,9 @@ export class OutboundPaymentResource extends StripeResource {
   ): Promise<Response<OutboundPayment>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/treasury/outbound_payments/${id}/fail`,
+      `/v1/test_helpers/treasury/outbound_payments/${encodeURIComponent(
+        id
+      )}/fail`,
       params,
       options
     ) as any;
@@ -45,7 +47,9 @@ export class OutboundPaymentResource extends StripeResource {
   ): Promise<Response<OutboundPayment>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/treasury/outbound_payments/${id}/post`,
+      `/v1/test_helpers/treasury/outbound_payments/${encodeURIComponent(
+        id
+      )}/post`,
       params,
       options
     ) as any;
@@ -60,7 +64,9 @@ export class OutboundPaymentResource extends StripeResource {
   ): Promise<Response<OutboundPayment>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/treasury/outbound_payments/${id}/return`,
+      `/v1/test_helpers/treasury/outbound_payments/${encodeURIComponent(
+        id
+      )}/return`,
       params,
       options
     ) as any;

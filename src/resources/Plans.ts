@@ -23,7 +23,7 @@ export class PlanResource extends StripeResource {
   ): Promise<Response<DeletedPlan>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/plans/${id}`,
+      `/v1/plans/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -36,30 +36,36 @@ export class PlanResource extends StripeResource {
     params?: PlanRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Plan>> {
-    return this._makeRequest('GET', `/v1/plans/${id}`, params, options, {
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          amount_decimal: {kind: 'nullable', inner: {kind: 'decimal_string'}},
-          tiers: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                flat_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
-                },
-                unit_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
+    return this._makeRequest(
+      'GET',
+      `/v1/plans/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            amount_decimal: {kind: 'nullable', inner: {kind: 'decimal_string'}},
+            tiers: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  flat_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
+                  unit_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }) as any;
+      }
+    ) as any;
   }
   /**
    * Updates the specified plan by setting the values of the parameters passed. Any parameters not provided are left unchanged. By design, you cannot change a plan's ID, amount, currency, or billing cycle.
@@ -69,30 +75,36 @@ export class PlanResource extends StripeResource {
     params?: PlanUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Plan>> {
-    return this._makeRequest('POST', `/v1/plans/${id}`, params, options, {
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          amount_decimal: {kind: 'nullable', inner: {kind: 'decimal_string'}},
-          tiers: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                flat_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
-                },
-                unit_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
+    return this._makeRequest(
+      'POST',
+      `/v1/plans/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            amount_decimal: {kind: 'nullable', inner: {kind: 'decimal_string'}},
+            tiers: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  flat_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
+                  unit_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
                 },
               },
             },
           },
         },
-      },
-    }) as any;
+      }
+    ) as any;
   }
   /**
    * Returns a list of your plans.

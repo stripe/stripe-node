@@ -220,7 +220,7 @@ export class PaymentLinkResource extends StripeResource {
   ): Promise<Response<PaymentLink>> {
     return this._makeRequest(
       'GET',
-      `/v1/payment_links/${id}`,
+      `/v1/payment_links/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -311,7 +311,7 @@ export class PaymentLinkResource extends StripeResource {
   ): Promise<Response<PaymentLink>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_links/${id}`,
+      `/v1/payment_links/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -402,7 +402,7 @@ export class PaymentLinkResource extends StripeResource {
   ): ApiListPromise<LineItem> {
     return this._makeRequest(
       'GET',
-      `/v1/payment_links/${id}/line_items`,
+      `/v1/payment_links/${encodeURIComponent(id)}/line_items`,
       params,
       options,
       {

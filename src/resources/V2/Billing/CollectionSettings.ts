@@ -119,7 +119,7 @@ export class CollectionSettingResource extends StripeResource {
   ): Promise<Response<CollectionSetting>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/collection_settings/${id}`,
+      `/v2/billing/collection_settings/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -155,7 +155,7 @@ export class CollectionSettingResource extends StripeResource {
   ): Promise<Response<CollectionSetting>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/collection_settings/${id}`,
+      `/v2/billing/collection_settings/${encodeURIComponent(id)}`,
       params,
       options,
       {

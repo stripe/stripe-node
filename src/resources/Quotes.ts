@@ -420,76 +420,86 @@ export class QuoteResource extends StripeResource {
     params?: QuoteRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Quote>> {
-    return this._makeRequest('GET', `/v1/quotes/${id}`, params, options, {
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          computed: {
-            kind: 'object',
-            fields: {
-              upfront: {
-                kind: 'object',
-                fields: {
-                  line_items: {
-                    kind: 'object',
-                    fields: {
-                      data: {
-                        kind: 'array',
-                        element: {
-                          kind: 'object',
-                          fields: {
-                            price: {
-                              kind: 'nullable',
-                              inner: {
-                                kind: 'object',
-                                fields: {
-                                  currency_options: {
-                                    kind: 'array',
-                                    element: {
-                                      kind: 'object',
-                                      fields: {
-                                        tiers: {
-                                          kind: 'array',
-                                          element: {
-                                            kind: 'object',
-                                            fields: {
-                                              flat_amount_decimal: {
-                                                kind: 'nullable',
-                                                inner: {kind: 'decimal_string'},
-                                              },
-                                              unit_amount_decimal: {
-                                                kind: 'nullable',
-                                                inner: {kind: 'decimal_string'},
+    return this._makeRequest(
+      'GET',
+      `/v1/quotes/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            computed: {
+              kind: 'object',
+              fields: {
+                upfront: {
+                  kind: 'object',
+                  fields: {
+                    line_items: {
+                      kind: 'object',
+                      fields: {
+                        data: {
+                          kind: 'array',
+                          element: {
+                            kind: 'object',
+                            fields: {
+                              price: {
+                                kind: 'nullable',
+                                inner: {
+                                  kind: 'object',
+                                  fields: {
+                                    currency_options: {
+                                      kind: 'array',
+                                      element: {
+                                        kind: 'object',
+                                        fields: {
+                                          tiers: {
+                                            kind: 'array',
+                                            element: {
+                                              kind: 'object',
+                                              fields: {
+                                                flat_amount_decimal: {
+                                                  kind: 'nullable',
+                                                  inner: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
+                                                unit_amount_decimal: {
+                                                  kind: 'nullable',
+                                                  inner: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
                                               },
                                             },
                                           },
-                                        },
-                                        unit_amount_decimal: {
-                                          kind: 'nullable',
-                                          inner: {kind: 'decimal_string'},
-                                        },
-                                      },
-                                    },
-                                  },
-                                  tiers: {
-                                    kind: 'array',
-                                    element: {
-                                      kind: 'object',
-                                      fields: {
-                                        flat_amount_decimal: {
-                                          kind: 'nullable',
-                                          inner: {kind: 'decimal_string'},
-                                        },
-                                        unit_amount_decimal: {
-                                          kind: 'nullable',
-                                          inner: {kind: 'decimal_string'},
+                                          unit_amount_decimal: {
+                                            kind: 'nullable',
+                                            inner: {kind: 'decimal_string'},
+                                          },
                                         },
                                       },
                                     },
-                                  },
-                                  unit_amount_decimal: {
-                                    kind: 'nullable',
-                                    inner: {kind: 'decimal_string'},
+                                    tiers: {
+                                      kind: 'array',
+                                      element: {
+                                        kind: 'object',
+                                        fields: {
+                                          flat_amount_decimal: {
+                                            kind: 'nullable',
+                                            inner: {kind: 'decimal_string'},
+                                          },
+                                          unit_amount_decimal: {
+                                            kind: 'nullable',
+                                            inner: {kind: 'decimal_string'},
+                                          },
+                                        },
+                                      },
+                                    },
+                                    unit_amount_decimal: {
+                                      kind: 'nullable',
+                                      inner: {kind: 'decimal_string'},
+                                    },
                                   },
                                 },
                               },
@@ -502,62 +512,62 @@ export class QuoteResource extends StripeResource {
                 },
               },
             },
-          },
-          status_details: {
-            kind: 'nullable',
-            inner: {
-              kind: 'object',
-              fields: {
-                stale: {
-                  kind: 'object',
-                  fields: {
-                    last_reason: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          subscription_changed: {
-                            kind: 'object',
-                            fields: {
-                              previous_subscription: {
-                                kind: 'nullable',
-                                inner: {
-                                  kind: 'object',
-                                  fields: {
-                                    items: {
-                                      kind: 'object',
-                                      fields: {
-                                        data: {
-                                          kind: 'array',
-                                          element: {
-                                            kind: 'object',
-                                            fields: {
-                                              plan: {
-                                                kind: 'object',
-                                                fields: {
-                                                  amount_decimal: {
-                                                    kind: 'nullable',
-                                                    inner: {
-                                                      kind: 'decimal_string',
+            status_details: {
+              kind: 'nullable',
+              inner: {
+                kind: 'object',
+                fields: {
+                  stale: {
+                    kind: 'object',
+                    fields: {
+                      last_reason: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            subscription_changed: {
+                              kind: 'object',
+                              fields: {
+                                previous_subscription: {
+                                  kind: 'nullable',
+                                  inner: {
+                                    kind: 'object',
+                                    fields: {
+                                      items: {
+                                        kind: 'object',
+                                        fields: {
+                                          data: {
+                                            kind: 'array',
+                                            element: {
+                                              kind: 'object',
+                                              fields: {
+                                                plan: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    amount_decimal: {
+                                                      kind: 'nullable',
+                                                      inner: {
+                                                        kind: 'decimal_string',
+                                                      },
                                                     },
-                                                  },
-                                                  tiers: {
-                                                    kind: 'array',
-                                                    element: {
-                                                      kind: 'object',
-                                                      fields: {
-                                                        flat_amount_decimal: {
-                                                          kind: 'nullable',
-                                                          inner: {
-                                                            kind:
-                                                              'decimal_string',
+                                                    tiers: {
+                                                      kind: 'array',
+                                                      element: {
+                                                        kind: 'object',
+                                                        fields: {
+                                                          flat_amount_decimal: {
+                                                            kind: 'nullable',
+                                                            inner: {
+                                                              kind:
+                                                                'decimal_string',
+                                                            },
                                                           },
-                                                        },
-                                                        unit_amount_decimal: {
-                                                          kind: 'nullable',
-                                                          inner: {
-                                                            kind:
-                                                              'decimal_string',
+                                                          unit_amount_decimal: {
+                                                            kind: 'nullable',
+                                                            inner: {
+                                                              kind:
+                                                                'decimal_string',
+                                                            },
                                                           },
                                                         },
                                                       },
@@ -584,8 +594,8 @@ export class QuoteResource extends StripeResource {
             },
           },
         },
-      },
-    }) as any;
+      }
+    ) as any;
   }
   /**
    * A quote models prices and services for a customer.
@@ -595,93 +605,103 @@ export class QuoteResource extends StripeResource {
     params?: QuoteUpdateParams,
     options?: RequestOptions
   ): Promise<Response<Quote>> {
-    return this._makeRequest('POST', `/v1/quotes/${id}`, params, options, {
-      requestSchema: {
-        kind: 'object',
-        fields: {
-          line_items: {
-            kind: 'array',
-            element: {
-              kind: 'object',
-              fields: {
-                price_data: {
-                  kind: 'object',
-                  fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+    return this._makeRequest(
+      'POST',
+      `/v1/quotes/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        requestSchema: {
+          kind: 'object',
+          fields: {
+            line_items: {
+              kind: 'array',
+              element: {
+                kind: 'object',
+                fields: {
+                  price_data: {
+                    kind: 'object',
+                    fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+                  },
                 },
               },
             },
           },
         },
-      },
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          computed: {
-            kind: 'object',
-            fields: {
-              upfront: {
-                kind: 'object',
-                fields: {
-                  line_items: {
-                    kind: 'object',
-                    fields: {
-                      data: {
-                        kind: 'array',
-                        element: {
-                          kind: 'object',
-                          fields: {
-                            price: {
-                              kind: 'nullable',
-                              inner: {
-                                kind: 'object',
-                                fields: {
-                                  currency_options: {
-                                    kind: 'array',
-                                    element: {
-                                      kind: 'object',
-                                      fields: {
-                                        tiers: {
-                                          kind: 'array',
-                                          element: {
-                                            kind: 'object',
-                                            fields: {
-                                              flat_amount_decimal: {
-                                                kind: 'nullable',
-                                                inner: {kind: 'decimal_string'},
-                                              },
-                                              unit_amount_decimal: {
-                                                kind: 'nullable',
-                                                inner: {kind: 'decimal_string'},
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            computed: {
+              kind: 'object',
+              fields: {
+                upfront: {
+                  kind: 'object',
+                  fields: {
+                    line_items: {
+                      kind: 'object',
+                      fields: {
+                        data: {
+                          kind: 'array',
+                          element: {
+                            kind: 'object',
+                            fields: {
+                              price: {
+                                kind: 'nullable',
+                                inner: {
+                                  kind: 'object',
+                                  fields: {
+                                    currency_options: {
+                                      kind: 'array',
+                                      element: {
+                                        kind: 'object',
+                                        fields: {
+                                          tiers: {
+                                            kind: 'array',
+                                            element: {
+                                              kind: 'object',
+                                              fields: {
+                                                flat_amount_decimal: {
+                                                  kind: 'nullable',
+                                                  inner: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
+                                                unit_amount_decimal: {
+                                                  kind: 'nullable',
+                                                  inner: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
                                               },
                                             },
                                           },
-                                        },
-                                        unit_amount_decimal: {
-                                          kind: 'nullable',
-                                          inner: {kind: 'decimal_string'},
-                                        },
-                                      },
-                                    },
-                                  },
-                                  tiers: {
-                                    kind: 'array',
-                                    element: {
-                                      kind: 'object',
-                                      fields: {
-                                        flat_amount_decimal: {
-                                          kind: 'nullable',
-                                          inner: {kind: 'decimal_string'},
-                                        },
-                                        unit_amount_decimal: {
-                                          kind: 'nullable',
-                                          inner: {kind: 'decimal_string'},
+                                          unit_amount_decimal: {
+                                            kind: 'nullable',
+                                            inner: {kind: 'decimal_string'},
+                                          },
                                         },
                                       },
                                     },
-                                  },
-                                  unit_amount_decimal: {
-                                    kind: 'nullable',
-                                    inner: {kind: 'decimal_string'},
+                                    tiers: {
+                                      kind: 'array',
+                                      element: {
+                                        kind: 'object',
+                                        fields: {
+                                          flat_amount_decimal: {
+                                            kind: 'nullable',
+                                            inner: {kind: 'decimal_string'},
+                                          },
+                                          unit_amount_decimal: {
+                                            kind: 'nullable',
+                                            inner: {kind: 'decimal_string'},
+                                          },
+                                        },
+                                      },
+                                    },
+                                    unit_amount_decimal: {
+                                      kind: 'nullable',
+                                      inner: {kind: 'decimal_string'},
+                                    },
                                   },
                                 },
                               },
@@ -694,62 +714,62 @@ export class QuoteResource extends StripeResource {
                 },
               },
             },
-          },
-          status_details: {
-            kind: 'nullable',
-            inner: {
-              kind: 'object',
-              fields: {
-                stale: {
-                  kind: 'object',
-                  fields: {
-                    last_reason: {
-                      kind: 'nullable',
-                      inner: {
-                        kind: 'object',
-                        fields: {
-                          subscription_changed: {
-                            kind: 'object',
-                            fields: {
-                              previous_subscription: {
-                                kind: 'nullable',
-                                inner: {
-                                  kind: 'object',
-                                  fields: {
-                                    items: {
-                                      kind: 'object',
-                                      fields: {
-                                        data: {
-                                          kind: 'array',
-                                          element: {
-                                            kind: 'object',
-                                            fields: {
-                                              plan: {
-                                                kind: 'object',
-                                                fields: {
-                                                  amount_decimal: {
-                                                    kind: 'nullable',
-                                                    inner: {
-                                                      kind: 'decimal_string',
+            status_details: {
+              kind: 'nullable',
+              inner: {
+                kind: 'object',
+                fields: {
+                  stale: {
+                    kind: 'object',
+                    fields: {
+                      last_reason: {
+                        kind: 'nullable',
+                        inner: {
+                          kind: 'object',
+                          fields: {
+                            subscription_changed: {
+                              kind: 'object',
+                              fields: {
+                                previous_subscription: {
+                                  kind: 'nullable',
+                                  inner: {
+                                    kind: 'object',
+                                    fields: {
+                                      items: {
+                                        kind: 'object',
+                                        fields: {
+                                          data: {
+                                            kind: 'array',
+                                            element: {
+                                              kind: 'object',
+                                              fields: {
+                                                plan: {
+                                                  kind: 'object',
+                                                  fields: {
+                                                    amount_decimal: {
+                                                      kind: 'nullable',
+                                                      inner: {
+                                                        kind: 'decimal_string',
+                                                      },
                                                     },
-                                                  },
-                                                  tiers: {
-                                                    kind: 'array',
-                                                    element: {
-                                                      kind: 'object',
-                                                      fields: {
-                                                        flat_amount_decimal: {
-                                                          kind: 'nullable',
-                                                          inner: {
-                                                            kind:
-                                                              'decimal_string',
+                                                    tiers: {
+                                                      kind: 'array',
+                                                      element: {
+                                                        kind: 'object',
+                                                        fields: {
+                                                          flat_amount_decimal: {
+                                                            kind: 'nullable',
+                                                            inner: {
+                                                              kind:
+                                                                'decimal_string',
+                                                            },
                                                           },
-                                                        },
-                                                        unit_amount_decimal: {
-                                                          kind: 'nullable',
-                                                          inner: {
-                                                            kind:
-                                                              'decimal_string',
+                                                          unit_amount_decimal: {
+                                                            kind: 'nullable',
+                                                            inner: {
+                                                              kind:
+                                                                'decimal_string',
+                                                            },
                                                           },
                                                         },
                                                       },
@@ -776,8 +796,8 @@ export class QuoteResource extends StripeResource {
             },
           },
         },
-      },
-    }) as any;
+      }
+    ) as any;
   }
   /**
    * Accepts the specified quote.
@@ -789,7 +809,7 @@ export class QuoteResource extends StripeResource {
   ): Promise<Response<Quote>> {
     return this._makeRequest(
       'POST',
-      `/v1/quotes/${id}/accept`,
+      `/v1/quotes/${encodeURIComponent(id)}/accept`,
       params,
       options,
       {
@@ -974,7 +994,7 @@ export class QuoteResource extends StripeResource {
   ): Promise<Response<Quote>> {
     return this._makeRequest(
       'POST',
-      `/v1/quotes/${id}/cancel`,
+      `/v1/quotes/${encodeURIComponent(id)}/cancel`,
       params,
       options,
       {
@@ -1159,7 +1179,7 @@ export class QuoteResource extends StripeResource {
   ): Promise<Response<Quote>> {
     return this._makeRequest(
       'POST',
-      `/v1/quotes/${id}/finalize`,
+      `/v1/quotes/${encodeURIComponent(id)}/finalize`,
       params,
       options,
       {
@@ -1344,7 +1364,7 @@ export class QuoteResource extends StripeResource {
   ): Promise<Response<Quote>> {
     return this._makeRequest(
       'POST',
-      `/v1/quotes/${id}/mark_draft`,
+      `/v1/quotes/${encodeURIComponent(id)}/mark_draft`,
       params,
       options,
       {
@@ -1529,7 +1549,7 @@ export class QuoteResource extends StripeResource {
   ): Promise<Response<Quote>> {
     return this._makeRequest(
       'POST',
-      `/v1/quotes/${id}/mark_stale`,
+      `/v1/quotes/${encodeURIComponent(id)}/mark_stale`,
       params,
       options,
       {
@@ -1714,7 +1734,7 @@ export class QuoteResource extends StripeResource {
   ): Promise<Response<Quote>> {
     return this._makeRequest(
       'POST',
-      `/v1/quotes/${id}/reestimate`,
+      `/v1/quotes/${encodeURIComponent(id)}/reestimate`,
       params,
       options,
       {
@@ -1897,10 +1917,16 @@ export class QuoteResource extends StripeResource {
     params?: QuotePdfParams,
     options?: RequestOptions
   ): Promise<StripeStreamResponse> {
-    return this._makeRequest('GET', `/v1/quotes/${id}/pdf`, params, options, {
-      apiBase: 'files',
-      streaming: true,
-    }) as any;
+    return this._makeRequest(
+      'GET',
+      `/v1/quotes/${encodeURIComponent(id)}/pdf`,
+      params,
+      options,
+      {
+        apiBase: 'files',
+        streaming: true,
+      }
+    ) as any;
   }
   /**
    * Preview the invoice line items that would be generated by accepting the quote.
@@ -1913,7 +1939,9 @@ export class QuoteResource extends StripeResource {
   ): ApiListPromise<InvoiceLineItem> {
     return this._makeRequest(
       'GET',
-      `/v1/quotes/${quoteId}/preview_invoices/${id}/lines`,
+      `/v1/quotes/${encodeURIComponent(
+        quoteId
+      )}/preview_invoices/${encodeURIComponent(id)}/lines`,
       params,
       options,
       {
@@ -1960,7 +1988,7 @@ export class QuoteResource extends StripeResource {
   ): ApiListPromise<LineItem> {
     return this._makeRequest(
       'GET',
-      `/v1/quotes/${id}/computed_upfront_line_items`,
+      `/v1/quotes/${encodeURIComponent(id)}/computed_upfront_line_items`,
       params,
       options,
       {
@@ -2045,9 +2073,15 @@ export class QuoteResource extends StripeResource {
     params?: QuoteListLinesParams,
     options?: RequestOptions
   ): ApiListPromise<QuoteLine> {
-    return this._makeRequest('GET', `/v1/quotes/${id}/lines`, params, options, {
-      methodType: 'list',
-    }) as any;
+    return this._makeRequest(
+      'GET',
+      `/v1/quotes/${encodeURIComponent(id)}/lines`,
+      params,
+      options,
+      {
+        methodType: 'list',
+      }
+    ) as any;
   }
   /**
    * When retrieving a quote, there is an includable line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
@@ -2059,7 +2093,7 @@ export class QuoteResource extends StripeResource {
   ): ApiListPromise<LineItem> {
     return this._makeRequest(
       'GET',
-      `/v1/quotes/${id}/line_items`,
+      `/v1/quotes/${encodeURIComponent(id)}/line_items`,
       params,
       options,
       {
@@ -2146,7 +2180,7 @@ export class QuoteResource extends StripeResource {
   ): ApiListPromise<QuotePreviewInvoice> {
     return this._makeRequest(
       'GET',
-      `/v1/quotes/${id}/preview_invoices`,
+      `/v1/quotes/${encodeURIComponent(id)}/preview_invoices`,
       params,
       options,
       {
@@ -2206,7 +2240,7 @@ export class QuoteResource extends StripeResource {
   ): ApiListPromise<QuotePreviewSubscriptionSchedule> {
     return this._makeRequest(
       'GET',
-      `/v1/quotes/${id}/preview_subscription_schedules`,
+      `/v1/quotes/${encodeURIComponent(id)}/preview_subscription_schedules`,
       params,
       options,
       {

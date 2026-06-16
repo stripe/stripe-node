@@ -14,7 +14,7 @@ export class IssuedTokenResource extends StripeResource {
   ): Promise<Response<IssuedToken>> {
     return this._makeRequest(
       'GET',
-      `/v1/shared_payment/issued_tokens/${id}`,
+      `/v1/shared_payment/issued_tokens/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -43,7 +43,7 @@ export class IssuedTokenResource extends StripeResource {
   ): Promise<Response<IssuedToken>> {
     return this._makeRequest(
       'POST',
-      `/v1/shared_payment/issued_tokens/${id}/revoke`,
+      `/v1/shared_payment/issued_tokens/${encodeURIComponent(id)}/revoke`,
       params,
       options
     ) as any;

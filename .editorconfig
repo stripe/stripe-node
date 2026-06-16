@@ -10,3 +10,6 @@ trim_trailing_whitespace = true
 
 [justfile]
 indent_size = 4
+
+[CHANGELOG.md]
+trim_trailing_whitespace = false

@@ -50,7 +50,7 @@ export class OutboundSetupIntentResource extends StripeResource {
   ): Promise<Response<OutboundSetupIntent>> {
     return this._makeRequest(
       'GET',
-      `/v2/money_management/outbound_setup_intents/${id}`,
+      `/v2/money_management/outbound_setup_intents/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -69,7 +69,7 @@ export class OutboundSetupIntentResource extends StripeResource {
   ): Promise<Response<OutboundSetupIntent>> {
     return this._makeRequest(
       'POST',
-      `/v2/money_management/outbound_setup_intents/${id}`,
+      `/v2/money_management/outbound_setup_intents/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -84,7 +84,9 @@ export class OutboundSetupIntentResource extends StripeResource {
   ): Promise<Response<OutboundSetupIntent>> {
     return this._makeRequest(
       'POST',
-      `/v2/money_management/outbound_setup_intents/${id}/cancel`,
+      `/v2/money_management/outbound_setup_intents/${encodeURIComponent(
+        id
+      )}/cancel`,
       params,
       options
     ) as any;

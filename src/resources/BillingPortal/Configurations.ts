@@ -52,7 +52,7 @@ export class ConfigurationResource extends StripeResource {
   ): Promise<Response<Configuration>> {
     return this._makeRequest(
       'GET',
-      `/v1/billing_portal/configurations/${id}`,
+      `/v1/billing_portal/configurations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -67,7 +67,7 @@ export class ConfigurationResource extends StripeResource {
   ): Promise<Response<Configuration>> {
     return this._makeRequest(
       'POST',
-      `/v1/billing_portal/configurations/${id}`,
+      `/v1/billing_portal/configurations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

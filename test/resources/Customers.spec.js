@@ -470,4 +470,40 @@ describe('Customers Resource', () => {
       });
     });
   });
+
+  describe('Path parameter encoding', () => {
+    // these specific methods aren't important, just that they have 1+ path params
+    it('URL-encodes path separators in IDs', () => {
+      stripe.customers.retrieve('cus_123/sources');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/customers/cus_123%2Fsources',
+        headers: {},
+        data: null,
+        settings: {},
+      });
+    });
+
+    it('URL-encodes query metacharacters in IDs', () => {
+      stripe.customers.retrieve('cus_123?expand[]=sources');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/customers/cus_123%3Fexpand%5B%5D%3Dsources',
+        headers: {},
+        data: null,
+        settings: {},
+      });
+    });
+
+    it('URL-encodes both parent and child IDs in nested resources', () => {
+      stripe.customers.retrieveSource('cus/123', 'card?id');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/customers/cus%2F123/sources/card%3Fid',
+        headers: {},
+        data: null,
+        settings: {},
+      });
+    });
+  });
 });

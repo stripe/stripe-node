@@ -48,7 +48,7 @@ export class PayoutResource extends StripeResource {
   ): Promise<Response<Payout>> {
     return this._makeRequest(
       'GET',
-      `/v1/payouts/${id}`,
+      `/v1/payouts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -63,7 +63,7 @@ export class PayoutResource extends StripeResource {
   ): Promise<Response<Payout>> {
     return this._makeRequest(
       'POST',
-      `/v1/payouts/${id}`,
+      `/v1/payouts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -78,7 +78,7 @@ export class PayoutResource extends StripeResource {
   ): Promise<Response<Payout>> {
     return this._makeRequest(
       'POST',
-      `/v1/payouts/${id}/cancel`,
+      `/v1/payouts/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;
@@ -95,7 +95,7 @@ export class PayoutResource extends StripeResource {
   ): Promise<Response<Payout>> {
     return this._makeRequest(
       'POST',
-      `/v1/payouts/${id}/reverse`,
+      `/v1/payouts/${encodeURIComponent(id)}/reverse`,
       params,
       options
     ) as any;

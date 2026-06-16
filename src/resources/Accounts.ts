@@ -36,7 +36,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<DeletedAccount>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/accounts/${id}`,
+      `/v1/accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -82,7 +82,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Account>> {
     return this._makeRequest(
       'POST',
-      `/v1/accounts/${id}`,
+      `/v1/accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -133,7 +133,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Account>> {
     return this._makeRequest(
       'POST',
-      `/v1/accounts/${id}/reject`,
+      `/v1/accounts/${encodeURIComponent(id)}/reject`,
       params,
       options
     ) as any;
@@ -168,7 +168,7 @@ export class AccountResource extends StripeResource {
   ): ApiListPromise<Capability> {
     return this._makeRequest(
       'GET',
-      `/v1/accounts/${id}/capabilities`,
+      `/v1/accounts/${encodeURIComponent(id)}/capabilities`,
       params,
       options,
       {
@@ -187,7 +187,9 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Capability>> {
     return this._makeRequest(
       'GET',
-      `/v1/accounts/${accountId}/capabilities/${id}`,
+      `/v1/accounts/${encodeURIComponent(
+        accountId
+      )}/capabilities/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -203,7 +205,9 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Capability>> {
     return this._makeRequest(
       'POST',
-      `/v1/accounts/${accountId}/capabilities/${id}`,
+      `/v1/accounts/${encodeURIComponent(
+        accountId
+      )}/capabilities/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -219,7 +223,9 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<DeletedExternalAccount>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/accounts/${accountId}/external_accounts/${id}`,
+      `/v1/accounts/${encodeURIComponent(
+        accountId
+      )}/external_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -235,7 +241,9 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<ExternalAccount>> {
     return this._makeRequest(
       'GET',
-      `/v1/accounts/${accountId}/external_accounts/${id}`,
+      `/v1/accounts/${encodeURIComponent(
+        accountId
+      )}/external_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -258,7 +266,9 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<ExternalAccount>> {
     return this._makeRequest(
       'POST',
-      `/v1/accounts/${accountId}/external_accounts/${id}`,
+      `/v1/accounts/${encodeURIComponent(
+        accountId
+      )}/external_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -273,7 +283,7 @@ export class AccountResource extends StripeResource {
   ): ApiListPromise<ExternalAccount> {
     return this._makeRequest(
       'GET',
-      `/v1/accounts/${id}/external_accounts`,
+      `/v1/accounts/${encodeURIComponent(id)}/external_accounts`,
       params,
       options,
       {
@@ -291,7 +301,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<ExternalAccount>> {
     return this._makeRequest(
       'POST',
-      `/v1/accounts/${id}/external_accounts`,
+      `/v1/accounts/${encodeURIComponent(id)}/external_accounts`,
       params,
       options
     ) as any;
@@ -308,7 +318,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<LoginLink>> {
     return this._makeRequest(
       'POST',
-      `/v1/accounts/${id}/login_links`,
+      `/v1/accounts/${encodeURIComponent(id)}/login_links`,
       params,
       options
     ) as any;
@@ -324,7 +334,9 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<DeletedPerson>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/accounts/${accountId}/persons/${id}`,
+      `/v1/accounts/${encodeURIComponent(
+        accountId
+      )}/persons/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -340,7 +352,9 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Person>> {
     return this._makeRequest(
       'GET',
-      `/v1/accounts/${accountId}/persons/${id}`,
+      `/v1/accounts/${encodeURIComponent(
+        accountId
+      )}/persons/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -356,7 +370,9 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Person>> {
     return this._makeRequest(
       'POST',
-      `/v1/accounts/${accountId}/persons/${id}`,
+      `/v1/accounts/${encodeURIComponent(
+        accountId
+      )}/persons/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -371,7 +387,7 @@ export class AccountResource extends StripeResource {
   ): ApiListPromise<Person> {
     return this._makeRequest(
       'GET',
-      `/v1/accounts/${id}/persons`,
+      `/v1/accounts/${encodeURIComponent(id)}/persons`,
       params,
       options,
       {
@@ -389,7 +405,7 @@ export class AccountResource extends StripeResource {
   ): Promise<Response<Person>> {
     return this._makeRequest(
       'POST',
-      `/v1/accounts/${id}/persons`,
+      `/v1/accounts/${encodeURIComponent(id)}/persons`,
       params,
       options
     ) as any;

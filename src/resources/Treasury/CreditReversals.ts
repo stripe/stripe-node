@@ -47,7 +47,7 @@ export class CreditReversalResource extends StripeResource {
   ): Promise<Response<CreditReversal>> {
     return this._makeRequest(
       'GET',
-      `/v1/treasury/credit_reversals/${id}`,
+      `/v1/treasury/credit_reversals/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

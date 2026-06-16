@@ -56,7 +56,7 @@ export class OutboundPaymentResource extends StripeResource {
   ): Promise<Response<OutboundPayment>> {
     return this._makeRequest(
       'GET',
-      `/v1/treasury/outbound_payments/${id}`,
+      `/v1/treasury/outbound_payments/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -71,7 +71,7 @@ export class OutboundPaymentResource extends StripeResource {
   ): Promise<Response<OutboundPayment>> {
     return this._makeRequest(
       'POST',
-      `/v1/treasury/outbound_payments/${id}/cancel`,
+      `/v1/treasury/outbound_payments/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;

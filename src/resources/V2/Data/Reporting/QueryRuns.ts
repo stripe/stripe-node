@@ -42,7 +42,7 @@ export class QueryRunResource extends StripeResource {
   ): Promise<Response<QueryRun>> {
     return this._makeRequest(
       'GET',
-      `/v2/data/reporting/query_runs/${id}`,
+      `/v2/data/reporting/query_runs/${encodeURIComponent(id)}`,
       params,
       options,
       {

@@ -231,7 +231,9 @@ export class AuthorizationResource extends StripeResource {
   ): Promise<Response<Authorization>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/authorizations/${id}/capture`,
+      `/v1/test_helpers/issuing/authorizations/${encodeURIComponent(
+        id
+      )}/capture`,
       params,
       options,
       {
@@ -463,7 +465,9 @@ export class AuthorizationResource extends StripeResource {
   ): Promise<Response<Authorization>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/authorizations/${id}/expire`,
+      `/v1/test_helpers/issuing/authorizations/${encodeURIComponent(
+        id
+      )}/expire`,
       params,
       options,
       {
@@ -642,7 +646,9 @@ export class AuthorizationResource extends StripeResource {
   ): Promise<Response<Authorization>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/authorizations/${id}/finalize_amount`,
+      `/v1/test_helpers/issuing/authorizations/${encodeURIComponent(
+        id
+      )}/finalize_amount`,
       params,
       options,
       {
@@ -858,7 +864,9 @@ export class AuthorizationResource extends StripeResource {
   ): Promise<Response<Authorization>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/authorizations/${id}/fraud_challenges/respond`,
+      `/v1/test_helpers/issuing/authorizations/${encodeURIComponent(
+        id
+      )}/fraud_challenges/respond`,
       params,
       options,
       {
@@ -1037,7 +1045,9 @@ export class AuthorizationResource extends StripeResource {
   ): Promise<Response<Authorization>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/authorizations/${id}/increment`,
+      `/v1/test_helpers/issuing/authorizations/${encodeURIComponent(
+        id
+      )}/increment`,
       params,
       options,
       {
@@ -1216,7 +1226,9 @@ export class AuthorizationResource extends StripeResource {
   ): Promise<Response<Authorization>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/authorizations/${id}/reverse`,
+      `/v1/test_helpers/issuing/authorizations/${encodeURIComponent(
+        id
+      )}/reverse`,
       params,
       options,
       {

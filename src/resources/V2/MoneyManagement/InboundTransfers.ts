@@ -47,7 +47,7 @@ export class InboundTransferResource extends StripeResource {
   ): Promise<Response<InboundTransfer>> {
     return this._makeRequest(
       'GET',
-      `/v2/money_management/inbound_transfers/${id}`,
+      `/v2/money_management/inbound_transfers/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

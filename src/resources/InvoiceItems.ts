@@ -29,7 +29,7 @@ export class InvoiceItemResource extends StripeResource {
   ): Promise<Response<DeletedInvoiceItem>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/invoiceitems/${id}`,
+      `/v1/invoiceitems/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -42,26 +42,32 @@ export class InvoiceItemResource extends StripeResource {
     params?: InvoiceItemRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<InvoiceItem>> {
-    return this._makeRequest('GET', `/v1/invoiceitems/${id}`, params, options, {
-      responseSchema: {
-        kind: 'object',
-        fields: {
-          pricing: {
-            kind: 'nullable',
-            inner: {
-              kind: 'object',
-              fields: {
-                unit_amount_decimal: {
-                  kind: 'nullable',
-                  inner: {kind: 'decimal_string'},
+    return this._makeRequest(
+      'GET',
+      `/v1/invoiceitems/${encodeURIComponent(id)}`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            pricing: {
+              kind: 'nullable',
+              inner: {
+                kind: 'object',
+                fields: {
+                  unit_amount_decimal: {
+                    kind: 'nullable',
+                    inner: {kind: 'decimal_string'},
+                  },
                 },
               },
             },
+            quantity_decimal: {kind: 'decimal_string'},
           },
-          quantity_decimal: {kind: 'decimal_string'},
         },
-      },
-    }) as any;
+      }
+    ) as any;
   }
   /**
    * Updates the amount or description of an invoice item on an upcoming invoice. Updating an invoice item is only possible before the invoice it's attached to is closed.
@@ -73,7 +79,7 @@ export class InvoiceItemResource extends StripeResource {
   ): Promise<Response<InvoiceItem>> {
     return this._makeRequest(
       'POST',
-      `/v1/invoiceitems/${id}`,
+      `/v1/invoiceitems/${encodeURIComponent(id)}`,
       params,
       options,
       {

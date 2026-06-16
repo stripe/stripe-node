@@ -15,7 +15,7 @@ export class TestClockResource extends StripeResource {
   ): Promise<Response<TestHelpers.DeletedTestClock>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/test_helpers/test_clocks/${id}`,
+      `/v1/test_helpers/test_clocks/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -30,7 +30,7 @@ export class TestClockResource extends StripeResource {
   ): Promise<Response<TestClock>> {
     return this._makeRequest(
       'GET',
-      `/v1/test_helpers/test_clocks/${id}`,
+      `/v1/test_helpers/test_clocks/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -76,7 +76,7 @@ export class TestClockResource extends StripeResource {
   ): Promise<Response<TestClock>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/test_clocks/${id}/advance`,
+      `/v1/test_helpers/test_clocks/${encodeURIComponent(id)}/advance`,
       params,
       options
     ) as any;
