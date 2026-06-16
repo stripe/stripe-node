@@ -28,7 +28,7 @@ export class HoldResource extends StripeResource {
   ): Promise<Response<Hold>> {
     return this._makeRequest(
       'GET',
-      `/v1/reserve/holds/${id}`,
+      `/v1/reserve/holds/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

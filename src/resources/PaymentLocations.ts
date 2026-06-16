@@ -15,7 +15,7 @@ export class PaymentLocationResource extends StripeResource {
   ): Promise<Response<DeletedPaymentLocation>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/payment_locations/${id}`,
+      `/v1/payment_locations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -30,7 +30,7 @@ export class PaymentLocationResource extends StripeResource {
   ): Promise<Response<PaymentLocation>> {
     return this._makeRequest(
       'GET',
-      `/v1/payment_locations/${id}`,
+      `/v1/payment_locations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -45,7 +45,7 @@ export class PaymentLocationResource extends StripeResource {
   ): Promise<Response<PaymentLocation>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_locations/${id}`,
+      `/v1/payment_locations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

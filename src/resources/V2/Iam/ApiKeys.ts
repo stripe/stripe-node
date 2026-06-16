@@ -39,7 +39,7 @@ export class ApiKeyResource extends StripeResource {
   ): Promise<Response<ApiKey>> {
     return this._makeRequest(
       'GET',
-      `/v2/iam/api_keys/${id}`,
+      `/v2/iam/api_keys/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -54,7 +54,7 @@ export class ApiKeyResource extends StripeResource {
   ): Promise<Response<ApiKey>> {
     return this._makeRequest(
       'POST',
-      `/v2/iam/api_keys/${id}`,
+      `/v2/iam/api_keys/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -69,7 +69,7 @@ export class ApiKeyResource extends StripeResource {
   ): Promise<Response<ApiKey>> {
     return this._makeRequest(
       'POST',
-      `/v2/iam/api_keys/${id}/expire`,
+      `/v2/iam/api_keys/${encodeURIComponent(id)}/expire`,
       params,
       options
     ) as any;
@@ -84,7 +84,7 @@ export class ApiKeyResource extends StripeResource {
   ): Promise<Response<ApiKey>> {
     return this._makeRequest(
       'POST',
-      `/v2/iam/api_keys/${id}/rotate`,
+      `/v2/iam/api_keys/${encodeURIComponent(id)}/rotate`,
       params,
       options
     ) as any;

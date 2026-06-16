@@ -48,7 +48,7 @@ export class EventDestinationResource extends StripeResource {
   ): Promise<Response<DeletedObject>> {
     return this._makeRequest(
       'DELETE',
-      `/v2/core/event_destinations/${id}`,
+      `/v2/core/event_destinations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -63,7 +63,7 @@ export class EventDestinationResource extends StripeResource {
   ): Promise<Response<EventDestination>> {
     return this._makeRequest(
       'GET',
-      `/v2/core/event_destinations/${id}`,
+      `/v2/core/event_destinations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -78,7 +78,7 @@ export class EventDestinationResource extends StripeResource {
   ): Promise<Response<EventDestination>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/event_destinations/${id}`,
+      `/v2/core/event_destinations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -93,7 +93,7 @@ export class EventDestinationResource extends StripeResource {
   ): Promise<Response<EventDestination>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/event_destinations/${id}/disable`,
+      `/v2/core/event_destinations/${encodeURIComponent(id)}/disable`,
       params,
       options
     ) as any;
@@ -108,7 +108,7 @@ export class EventDestinationResource extends StripeResource {
   ): Promise<Response<EventDestination>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/event_destinations/${id}/enable`,
+      `/v2/core/event_destinations/${encodeURIComponent(id)}/enable`,
       params,
       options
     ) as any;
@@ -123,7 +123,7 @@ export class EventDestinationResource extends StripeResource {
   ): Promise<Response<Event>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/event_destinations/${id}/ping`,
+      `/v2/core/event_destinations/${encodeURIComponent(id)}/ping`,
       params,
       options
     ) as any;

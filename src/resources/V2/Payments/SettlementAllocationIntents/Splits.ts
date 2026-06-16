@@ -17,7 +17,9 @@ export class SplitResource extends StripeResource {
   ): V2ListPromise<SettlementAllocationIntentSplit> {
     return this._makeRequest(
       'GET',
-      `/v2/payments/settlement_allocation_intents/${settlementAllocationIntentId}/splits`,
+      `/v2/payments/settlement_allocation_intents/${encodeURIComponent(
+        settlementAllocationIntentId
+      )}/splits`,
       params,
       options,
       {
@@ -35,7 +37,9 @@ export class SplitResource extends StripeResource {
   ): Promise<Response<SettlementAllocationIntentSplit>> {
     return this._makeRequest(
       'POST',
-      `/v2/payments/settlement_allocation_intents/${settlementAllocationIntentId}/splits`,
+      `/v2/payments/settlement_allocation_intents/${encodeURIComponent(
+        settlementAllocationIntentId
+      )}/splits`,
       params,
       options
     ) as any;
@@ -51,7 +55,9 @@ export class SplitResource extends StripeResource {
   ): Promise<Response<SettlementAllocationIntentSplit>> {
     return this._makeRequest(
       'GET',
-      `/v2/payments/settlement_allocation_intents/${settlementAllocationIntentId}/splits/${id}`,
+      `/v2/payments/settlement_allocation_intents/${encodeURIComponent(
+        settlementAllocationIntentId
+      )}/splits/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -67,7 +73,9 @@ export class SplitResource extends StripeResource {
   ): Promise<Response<SettlementAllocationIntentSplit>> {
     return this._makeRequest(
       'POST',
-      `/v2/payments/settlement_allocation_intents/${settlementAllocationIntentId}/splits/${id}/cancel`,
+      `/v2/payments/settlement_allocation_intents/${encodeURIComponent(
+        settlementAllocationIntentId
+      )}/splits/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;

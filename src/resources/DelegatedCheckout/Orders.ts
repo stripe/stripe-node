@@ -15,7 +15,7 @@ export class OrderResource extends StripeResource {
   ): Promise<Response<Order>> {
     return this._makeRequest(
       'GET',
-      `/v1/delegated_checkout/orders/${id}`,
+      `/v1/delegated_checkout/orders/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

@@ -172,7 +172,7 @@ export class ContractResource extends StripeResource {
   ): Promise<Response<Contract>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/contracts/${id}`,
+      `/v2/billing/contracts/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -229,7 +229,7 @@ export class ContractResource extends StripeResource {
   ): Promise<Response<Contract>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/contracts/${id}`,
+      `/v2/billing/contracts/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -316,7 +316,7 @@ export class ContractResource extends StripeResource {
   ): Promise<Response<Contract>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/contracts/${id}/activate`,
+      `/v2/billing/contracts/${encodeURIComponent(id)}/activate`,
       params,
       options,
       {
@@ -373,7 +373,7 @@ export class ContractResource extends StripeResource {
   ): Promise<Response<Contract>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/contracts/${id}/cancel`,
+      `/v2/billing/contracts/${encodeURIComponent(id)}/cancel`,
       params,
       options,
       {

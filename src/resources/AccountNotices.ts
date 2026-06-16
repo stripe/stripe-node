@@ -26,7 +26,7 @@ export class AccountNoticeResource extends StripeResource {
   ): Promise<Response<AccountNotice>> {
     return this._makeRequest(
       'GET',
-      `/v1/account_notices/${id}`,
+      `/v1/account_notices/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -41,7 +41,7 @@ export class AccountNoticeResource extends StripeResource {
   ): Promise<Response<AccountNotice>> {
     return this._makeRequest(
       'POST',
-      `/v1/account_notices/${id}`,
+      `/v1/account_notices/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

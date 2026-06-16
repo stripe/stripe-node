@@ -42,24 +42,25 @@ value:
 ```js
 const stripe = require('stripe')('sk_test_...');
 
-stripe.customers.create({
-  email: 'customer@example.com',
-})
-  .then(customer => console.log(customer.id))
-  .catch(error => console.error(error));
-```
-
-Or using ES modules and `async`/`await`:
-
-```js
-import Stripe from 'stripe';
-const stripe = new Stripe('sk_test_...');
-
-const customer = await stripe.customers.create({
+const customer = await stripeClient.customers.create({
   email: 'customer@example.com',
 });
 
 console.log(customer.id);
+```
+
+Or using CJS:
+
+```js
+const Stripe = require('stripe');
+const stripeClient = Stripe('sk_test_...');
+
+stripeClient.customers
+  .create({
+    email: 'customer@example.com',
+  })
+  .then((customer) => console.log(customer.id))
+  .catch((error) => console.error(error));
 ```
 
 > [!WARNING]
@@ -420,7 +421,11 @@ const header = stripe.webhooks.generateTestHeaderString({
   secret,
 });
 
-const event = stripe.webhooks.constructEvent(payloadString, header, secret);
+const event = stripeClient.webhooks.constructEvent(
+  payloadString,
+  header,
+  secret
+);
 
 // Do something with mocked signed event
 expect(event.id).to.equal(payload.id);
@@ -436,27 +441,18 @@ See [undocumented params and properties](https://docs.stripe.com/sdks/server-sid
 
 If you're writing a plugin that uses the library, we'd appreciate it if you instantiated your stripe client with `appInfo`, eg;
 
-```js
-const stripe = require('stripe')('sk_test_...', {
+With ES modules or TypeScript:
+
+````js
+import Stripe from 'stripe';
+const stripeClient = new Stripe(apiKey, {
   appInfo: {
     name: 'MyAwesomePlugin',
     version: '1.2.34', // Optional
     url: 'https://myawesomeplugin.info', // Optional
   },
 });
-```
-
-Or using ES modules or TypeScript:
-
-```js
-const stripe = new Stripe(apiKey, {
-  appInfo: {
-    name: 'MyAwesomePlugin',
-    version: '1.2.34', // Optional
-    url: 'https://myawesomeplugin.info', // Optional
-  },
-});
-```
+``
 
 This information is passed along when the library makes calls to the Stripe API.
 
@@ -477,7 +473,7 @@ for await (const customer of stripe.customers.list()) {
     break;
   }
 }
-```
+````
 
 #### `autoPagingEach`
 
@@ -628,6 +624,9 @@ New features and bug fixes are released on the latest major version of the `stri
 - [Using Stripe Connect](https://github.com/stripe/stripe-node/wiki/Using-Stripe-Connect-with-node.js)
 
 ## Development
+
+> [!WARNING]
+> External contributions to this repo from first-time contributors are currently on hiatus. If you'd like to see a change made to the package, please open an issue.(
 
 [Contribution guidelines for this project](CONTRIBUTING.md)
 

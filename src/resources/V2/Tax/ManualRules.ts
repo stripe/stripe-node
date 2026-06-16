@@ -104,7 +104,7 @@ export class ManualRuleResource extends StripeResource {
   ): Promise<Response<ManualRule>> {
     return this._makeRequest(
       'GET',
-      `/v2/tax/manual_rules/${id}`,
+      `/v2/tax/manual_rules/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -141,7 +141,7 @@ export class ManualRuleResource extends StripeResource {
   ): Promise<Response<ManualRule>> {
     return this._makeRequest(
       'POST',
-      `/v2/tax/manual_rules/${id}`,
+      `/v2/tax/manual_rules/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -198,7 +198,7 @@ export class ManualRuleResource extends StripeResource {
   ): Promise<Response<ManualRule>> {
     return this._makeRequest(
       'POST',
-      `/v2/tax/manual_rules/${id}/deactivate`,
+      `/v2/tax/manual_rules/${encodeURIComponent(id)}/deactivate`,
       params,
       options,
       {

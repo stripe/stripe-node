@@ -41,7 +41,7 @@ export class TaxRateResource extends StripeResource {
   ): Promise<Response<TaxRate>> {
     return this._makeRequest(
       'GET',
-      `/v1/tax_rates/${id}`,
+      `/v1/tax_rates/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -56,7 +56,7 @@ export class TaxRateResource extends StripeResource {
   ): Promise<Response<TaxRate>> {
     return this._makeRequest(
       'POST',
-      `/v1/tax_rates/${id}`,
+      `/v1/tax_rates/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

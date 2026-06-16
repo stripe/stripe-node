@@ -18,7 +18,7 @@ export class GrantedTokenResource extends StripeResource {
   ): Promise<Response<GrantedToken>> {
     return this._makeRequest(
       'GET',
-      `/v1/shared_payment/granted_tokens/${id}`,
+      `/v1/shared_payment/granted_tokens/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

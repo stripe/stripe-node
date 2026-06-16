@@ -15,7 +15,7 @@ export class ActionResource extends StripeResource {
   ): V2ListPromise<IntentAction> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/intents/${intentId}/actions`,
+      `/v2/billing/intents/${encodeURIComponent(intentId)}/actions`,
       params,
       options,
       {
@@ -61,7 +61,9 @@ export class ActionResource extends StripeResource {
   ): Promise<Response<IntentAction>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/intents/${intentId}/actions/${id}`,
+      `/v2/billing/intents/${encodeURIComponent(
+        intentId
+      )}/actions/${encodeURIComponent(id)}`,
       params,
       options,
       {

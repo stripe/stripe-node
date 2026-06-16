@@ -15,7 +15,9 @@ export class VersionResource extends StripeResource {
   ): V2ListPromise<CollectionSettingVersion> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/collection_settings/${collectionSettingId}/versions`,
+      `/v2/billing/collection_settings/${encodeURIComponent(
+        collectionSettingId
+      )}/versions`,
       params,
       options,
       {
@@ -61,7 +63,9 @@ export class VersionResource extends StripeResource {
   ): Promise<Response<CollectionSettingVersion>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/collection_settings/${collectionSettingId}/versions/${id}`,
+      `/v2/billing/collection_settings/${encodeURIComponent(
+        collectionSettingId
+      )}/versions/${encodeURIComponent(id)}`,
       params,
       options,
       {

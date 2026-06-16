@@ -32,7 +32,7 @@ export class CreditUnderwritingRecordResource extends StripeResource {
   ): Promise<Response<CreditUnderwritingRecord>> {
     return this._makeRequest(
       'GET',
-      `/v1/issuing/credit_underwriting_records/${id}`,
+      `/v1/issuing/credit_underwriting_records/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -47,7 +47,9 @@ export class CreditUnderwritingRecordResource extends StripeResource {
   ): Promise<Response<CreditUnderwritingRecord>> {
     return this._makeRequest(
       'POST',
-      `/v1/issuing/credit_underwriting_records/${id}/correct`,
+      `/v1/issuing/credit_underwriting_records/${encodeURIComponent(
+        id
+      )}/correct`,
       params,
       options
     ) as any;
@@ -62,7 +64,9 @@ export class CreditUnderwritingRecordResource extends StripeResource {
   ): Promise<Response<CreditUnderwritingRecord>> {
     return this._makeRequest(
       'POST',
-      `/v1/issuing/credit_underwriting_records/${id}/report_decision`,
+      `/v1/issuing/credit_underwriting_records/${encodeURIComponent(
+        id
+      )}/report_decision`,
       params,
       options
     ) as any;

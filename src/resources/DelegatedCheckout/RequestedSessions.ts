@@ -24,7 +24,7 @@ export class RequestedSessionResource extends StripeResource {
   ): Promise<Response<RequestedSession>> {
     return this._makeRequest(
       'GET',
-      `/v1/delegated_checkout/requested_sessions/${id}`,
+      `/v1/delegated_checkout/requested_sessions/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -39,7 +39,7 @@ export class RequestedSessionResource extends StripeResource {
   ): Promise<Response<RequestedSession>> {
     return this._makeRequest(
       'POST',
-      `/v1/delegated_checkout/requested_sessions/${id}`,
+      `/v1/delegated_checkout/requested_sessions/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -68,7 +68,9 @@ export class RequestedSessionResource extends StripeResource {
   ): Promise<Response<RequestedSession>> {
     return this._makeRequest(
       'POST',
-      `/v1/delegated_checkout/requested_sessions/${id}/confirm`,
+      `/v1/delegated_checkout/requested_sessions/${encodeURIComponent(
+        id
+      )}/confirm`,
       params,
       options
     ) as any;
@@ -83,7 +85,9 @@ export class RequestedSessionResource extends StripeResource {
   ): Promise<Response<RequestedSession>> {
     return this._makeRequest(
       'POST',
-      `/v1/delegated_checkout/requested_sessions/${id}/expire`,
+      `/v1/delegated_checkout/requested_sessions/${encodeURIComponent(
+        id
+      )}/expire`,
       params,
       options
     ) as any;
@@ -98,7 +102,9 @@ export class RequestedSessionResource extends StripeResource {
   ): ApiListPromise<Order> {
     return this._makeRequest(
       'GET',
-      `/v1/delegated_checkout/requested_sessions/${id}/orders`,
+      `/v1/delegated_checkout/requested_sessions/${encodeURIComponent(
+        id
+      )}/orders`,
       params,
       options,
       {

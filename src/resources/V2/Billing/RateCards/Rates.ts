@@ -17,7 +17,7 @@ export class RateResource extends StripeResource {
   ): V2ListPromise<RateCardRate> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/rate_cards/${rateCardId}/rates`,
+      `/v2/billing/rate_cards/${encodeURIComponent(rateCardId)}/rates`,
       params,
       options,
       {
@@ -60,7 +60,7 @@ export class RateResource extends StripeResource {
   ): Promise<Response<RateCardRate>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/rate_cards/${rateCardId}/rates`,
+      `/v2/billing/rate_cards/${encodeURIComponent(rateCardId)}/rates`,
       params,
       options,
       {
@@ -110,7 +110,9 @@ export class RateResource extends StripeResource {
   ): Promise<Response<DeletedObject>> {
     return this._makeRequest(
       'DELETE',
-      `/v2/billing/rate_cards/${rateCardId}/rates/${id}`,
+      `/v2/billing/rate_cards/${encodeURIComponent(
+        rateCardId
+      )}/rates/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -126,7 +128,9 @@ export class RateResource extends StripeResource {
   ): Promise<Response<RateCardRate>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/rate_cards/${rateCardId}/rates/${id}`,
+      `/v2/billing/rate_cards/${encodeURIComponent(
+        rateCardId
+      )}/rates/${encodeURIComponent(id)}`,
       params,
       options,
       {

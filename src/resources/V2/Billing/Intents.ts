@@ -70,7 +70,7 @@ export class IntentResource extends StripeResource {
   ): Promise<Response<Intent>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/intents/${id}`,
+      `/v2/billing/intents/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -85,7 +85,7 @@ export class IntentResource extends StripeResource {
   ): Promise<Response<Intent>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/intents/${id}/cancel`,
+      `/v2/billing/intents/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;
@@ -100,7 +100,7 @@ export class IntentResource extends StripeResource {
   ): Promise<Response<Intent>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/intents/${id}/commit`,
+      `/v2/billing/intents/${encodeURIComponent(id)}/commit`,
       params,
       options
     ) as any;
@@ -115,7 +115,7 @@ export class IntentResource extends StripeResource {
   ): Promise<Response<Intent>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/intents/${id}/release_reservation`,
+      `/v2/billing/intents/${encodeURIComponent(id)}/release_reservation`,
       params,
       options
     ) as any;
@@ -130,7 +130,7 @@ export class IntentResource extends StripeResource {
   ): Promise<Response<Intent>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/intents/${id}/reserve`,
+      `/v2/billing/intents/${encodeURIComponent(id)}/reserve`,
       params,
       options
     ) as any;

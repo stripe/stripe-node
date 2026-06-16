@@ -56,7 +56,7 @@ export class RateCardResource extends StripeResource {
   ): Promise<Response<RateCard>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/rate_cards/${id}`,
+      `/v2/billing/rate_cards/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -71,7 +71,7 @@ export class RateCardResource extends StripeResource {
   ): Promise<Response<RateCard>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/rate_cards/${id}`,
+      `/v2/billing/rate_cards/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -86,7 +86,7 @@ export class RateCardResource extends StripeResource {
   ): Promise<Response<RateCardVersion>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/rate_cards/${id}/modify_rates`,
+      `/v2/billing/rate_cards/${encodeURIComponent(id)}/modify_rates`,
       params,
       options,
       {

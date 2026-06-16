@@ -45,7 +45,7 @@ export class ProgramResource extends StripeResource {
   ): Promise<Response<Program>> {
     return this._makeRequest(
       'GET',
-      `/v1/issuing/programs/${id}`,
+      `/v1/issuing/programs/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -60,7 +60,7 @@ export class ProgramResource extends StripeResource {
   ): Promise<Response<Program>> {
     return this._makeRequest(
       'POST',
-      `/v1/issuing/programs/${id}`,
+      `/v1/issuing/programs/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

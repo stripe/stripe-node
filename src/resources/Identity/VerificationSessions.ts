@@ -63,7 +63,7 @@ export class VerificationSessionResource extends StripeResource {
   ): Promise<Response<VerificationSession>> {
     return this._makeRequest(
       'GET',
-      `/v1/identity/verification_sessions/${id}`,
+      `/v1/identity/verification_sessions/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -81,7 +81,7 @@ export class VerificationSessionResource extends StripeResource {
   ): Promise<Response<VerificationSession>> {
     return this._makeRequest(
       'POST',
-      `/v1/identity/verification_sessions/${id}`,
+      `/v1/identity/verification_sessions/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -98,7 +98,7 @@ export class VerificationSessionResource extends StripeResource {
   ): Promise<Response<VerificationSession>> {
     return this._makeRequest(
       'POST',
-      `/v1/identity/verification_sessions/${id}/cancel`,
+      `/v1/identity/verification_sessions/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;
@@ -131,7 +131,7 @@ export class VerificationSessionResource extends StripeResource {
   ): Promise<Response<VerificationSession>> {
     return this._makeRequest(
       'POST',
-      `/v1/identity/verification_sessions/${id}/redact`,
+      `/v1/identity/verification_sessions/${encodeURIComponent(id)}/redact`,
       params,
       options
     ) as any;

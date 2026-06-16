@@ -27,7 +27,7 @@ export class TaxFundResource extends StripeResource {
   ): Promise<Response<TaxFund>> {
     return this._makeRequest(
       'GET',
-      `/v1/tax_funds/${id}`,
+      `/v1/tax_funds/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

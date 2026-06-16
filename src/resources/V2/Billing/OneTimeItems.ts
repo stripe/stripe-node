@@ -46,7 +46,7 @@ export class OneTimeItemResource extends StripeResource {
   ): Promise<Response<OneTimeItem>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/one_time_items/${id}`,
+      `/v2/billing/one_time_items/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -61,7 +61,7 @@ export class OneTimeItemResource extends StripeResource {
   ): Promise<Response<OneTimeItem>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/one_time_items/${id}`,
+      `/v2/billing/one_time_items/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

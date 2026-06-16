@@ -46,7 +46,7 @@ export class LicensedItemResource extends StripeResource {
   ): Promise<Response<LicensedItem>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/licensed_items/${id}`,
+      `/v2/billing/licensed_items/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -61,7 +61,7 @@ export class LicensedItemResource extends StripeResource {
   ): Promise<Response<LicensedItem>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/licensed_items/${id}`,
+      `/v2/billing/licensed_items/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

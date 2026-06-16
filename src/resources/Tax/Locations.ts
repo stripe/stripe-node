@@ -44,7 +44,7 @@ export class LocationResource extends StripeResource {
   ): Promise<Response<Location>> {
     return this._makeRequest(
       'GET',
-      `/v1/tax/locations/${id}`,
+      `/v1/tax/locations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

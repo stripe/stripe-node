@@ -27,7 +27,7 @@ export class ReaderResource extends StripeResource {
   ): Promise<Response<Terminal.DeletedReader>> {
     return this._makeRequest(
       'DELETE',
-      `/v1/terminal/readers/${id}`,
+      `/v1/terminal/readers/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -42,7 +42,7 @@ export class ReaderResource extends StripeResource {
   ): Promise<Response<Reader | Terminal.DeletedReader>> {
     return this._makeRequest(
       'GET',
-      `/v1/terminal/readers/${id}`,
+      `/v1/terminal/readers/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -57,7 +57,7 @@ export class ReaderResource extends StripeResource {
   ): Promise<Response<Reader | Terminal.DeletedReader>> {
     return this._makeRequest(
       'POST',
-      `/v1/terminal/readers/${id}`,
+      `/v1/terminal/readers/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -97,7 +97,7 @@ export class ReaderResource extends StripeResource {
   ): Promise<Response<Reader>> {
     return this._makeRequest(
       'POST',
-      `/v1/terminal/readers/${id}/cancel_action`,
+      `/v1/terminal/readers/${encodeURIComponent(id)}/cancel_action`,
       params,
       options
     ) as any;
@@ -112,7 +112,7 @@ export class ReaderResource extends StripeResource {
   ): Promise<Response<Reader>> {
     return this._makeRequest(
       'POST',
-      `/v1/terminal/readers/${id}/collect_inputs`,
+      `/v1/terminal/readers/${encodeURIComponent(id)}/collect_inputs`,
       params,
       options
     ) as any;
@@ -127,7 +127,7 @@ export class ReaderResource extends StripeResource {
   ): Promise<Response<Reader>> {
     return this._makeRequest(
       'POST',
-      `/v1/terminal/readers/${id}/collect_payment_method`,
+      `/v1/terminal/readers/${encodeURIComponent(id)}/collect_payment_method`,
       params,
       options
     ) as any;
@@ -142,7 +142,7 @@ export class ReaderResource extends StripeResource {
   ): Promise<Response<Reader>> {
     return this._makeRequest(
       'POST',
-      `/v1/terminal/readers/${id}/confirm_payment_intent`,
+      `/v1/terminal/readers/${encodeURIComponent(id)}/confirm_payment_intent`,
       params,
       options
     ) as any;
@@ -157,7 +157,7 @@ export class ReaderResource extends StripeResource {
   ): Promise<Response<Reader>> {
     return this._makeRequest(
       'POST',
-      `/v1/terminal/readers/${id}/process_payment_intent`,
+      `/v1/terminal/readers/${encodeURIComponent(id)}/process_payment_intent`,
       params,
       options
     ) as any;
@@ -172,7 +172,7 @@ export class ReaderResource extends StripeResource {
   ): Promise<Response<Reader>> {
     return this._makeRequest(
       'POST',
-      `/v1/terminal/readers/${id}/process_setup_intent`,
+      `/v1/terminal/readers/${encodeURIComponent(id)}/process_setup_intent`,
       params,
       options
     ) as any;
@@ -187,7 +187,7 @@ export class ReaderResource extends StripeResource {
   ): Promise<Response<Reader>> {
     return this._makeRequest(
       'POST',
-      `/v1/terminal/readers/${id}/refund_payment`,
+      `/v1/terminal/readers/${encodeURIComponent(id)}/refund_payment`,
       params,
       options
     ) as any;
@@ -202,7 +202,7 @@ export class ReaderResource extends StripeResource {
   ): Promise<Response<Reader>> {
     return this._makeRequest(
       'POST',
-      `/v1/terminal/readers/${id}/set_reader_display`,
+      `/v1/terminal/readers/${encodeURIComponent(id)}/set_reader_display`,
       params,
       options
     ) as any;

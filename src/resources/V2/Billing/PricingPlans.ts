@@ -56,7 +56,7 @@ export class PricingPlanResource extends StripeResource {
   ): Promise<Response<PricingPlan>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/pricing_plans/${id}`,
+      `/v2/billing/pricing_plans/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -71,7 +71,7 @@ export class PricingPlanResource extends StripeResource {
   ): Promise<Response<PricingPlan>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/pricing_plans/${id}`,
+      `/v2/billing/pricing_plans/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

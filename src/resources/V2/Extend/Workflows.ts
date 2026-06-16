@@ -26,7 +26,7 @@ export class WorkflowResource extends StripeResource {
   ): Promise<Response<Workflow>> {
     return this._makeRequest(
       'GET',
-      `/v2/extend/workflows/${id}`,
+      `/v2/extend/workflows/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -42,7 +42,7 @@ export class WorkflowResource extends StripeResource {
   ): Promise<Response<WorkflowRun>> {
     return this._makeRequest(
       'POST',
-      `/v2/extend/workflows/${id}/invoke`,
+      `/v2/extend/workflows/${encodeURIComponent(id)}/invoke`,
       params,
       options
     ) as any;

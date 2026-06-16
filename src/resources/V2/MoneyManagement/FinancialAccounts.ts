@@ -56,7 +56,7 @@ export class FinancialAccountResource extends StripeResource {
   ): Promise<Response<FinancialAccount>> {
     return this._makeRequest(
       'GET',
-      `/v2/money_management/financial_accounts/${id}`,
+      `/v2/money_management/financial_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -71,7 +71,7 @@ export class FinancialAccountResource extends StripeResource {
   ): Promise<Response<FinancialAccount>> {
     return this._makeRequest(
       'POST',
-      `/v2/money_management/financial_accounts/${id}`,
+      `/v2/money_management/financial_accounts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -87,7 +87,7 @@ export class FinancialAccountResource extends StripeResource {
   ): Promise<Response<FinancialAccount>> {
     return this._makeRequest(
       'POST',
-      `/v2/money_management/financial_accounts/${id}/close`,
+      `/v2/money_management/financial_accounts/${encodeURIComponent(id)}/close`,
       params,
       options
     ) as any;

@@ -32,7 +32,7 @@ export class InstitutionResource extends StripeResource {
   ): Promise<Response<Institution>> {
     return this._makeRequest(
       'GET',
-      `/v1/financial_connections/institutions/${id}`,
+      `/v1/financial_connections/institutions/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

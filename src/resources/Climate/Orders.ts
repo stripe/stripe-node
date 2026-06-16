@@ -66,7 +66,7 @@ export class OrderResource extends StripeResource {
   ): Promise<Response<Order>> {
     return this._makeRequest(
       'GET',
-      `/v1/climate/orders/${id}`,
+      `/v1/climate/orders/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -87,7 +87,7 @@ export class OrderResource extends StripeResource {
   ): Promise<Response<Order>> {
     return this._makeRequest(
       'POST',
-      `/v1/climate/orders/${id}`,
+      `/v1/climate/orders/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -111,7 +111,7 @@ export class OrderResource extends StripeResource {
   ): Promise<Response<Order>> {
     return this._makeRequest(
       'POST',
-      `/v1/climate/orders/${id}/cancel`,
+      `/v1/climate/orders/${encodeURIComponent(id)}/cancel`,
       params,
       options,
       {

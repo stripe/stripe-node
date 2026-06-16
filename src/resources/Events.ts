@@ -24,7 +24,12 @@ export class EventResource extends StripeResource {
     params?: EventRetrieveParams,
     options?: RequestOptions
   ): Promise<Response<Event>> {
-    return this._makeRequest('GET', `/v1/events/${id}`, params, options) as any;
+    return this._makeRequest(
+      'GET',
+      `/v1/events/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
   }
 }
 export interface EventBase {

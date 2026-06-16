@@ -33,7 +33,7 @@ export class FraudLiabilityDebitResource extends StripeResource {
   ): Promise<Response<FraudLiabilityDebit>> {
     return this._makeRequest(
       'GET',
-      `/v1/issuing/fraud_liability_debits/${id}`,
+      `/v1/issuing/fraud_liability_debits/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

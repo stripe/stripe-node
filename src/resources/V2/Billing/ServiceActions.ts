@@ -99,7 +99,7 @@ export class ServiceActionResource extends StripeResource {
   ): Promise<Response<ServiceAction>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/service_actions/${id}`,
+      `/v2/billing/service_actions/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -149,7 +149,7 @@ export class ServiceActionResource extends StripeResource {
   ): Promise<Response<ServiceAction>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/service_actions/${id}`,
+      `/v2/billing/service_actions/${encodeURIComponent(id)}`,
       params,
       options,
       {

@@ -51,7 +51,7 @@ export class FeatureResource extends StripeResource {
   ): Promise<Response<Feature>> {
     return this._makeRequest(
       'GET',
-      `/v1/entitlements/features/${id}`,
+      `/v1/entitlements/features/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -66,7 +66,7 @@ export class FeatureResource extends StripeResource {
   ): Promise<Response<Feature>> {
     return this._makeRequest(
       'POST',
-      `/v1/entitlements/features/${id}`,
+      `/v1/entitlements/features/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

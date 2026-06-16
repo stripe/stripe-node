@@ -33,7 +33,7 @@ export class ApprovalRequestResource extends StripeResource {
   ): Promise<Response<ApprovalRequest>> {
     return this._makeRequest(
       'GET',
-      `/v2/core/approval_requests/${id}`,
+      `/v2/core/approval_requests/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -49,7 +49,7 @@ export class ApprovalRequestResource extends StripeResource {
   ): Promise<Response<ApprovalRequest>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/approval_requests/${id}/cancel`,
+      `/v2/core/approval_requests/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;
@@ -65,7 +65,7 @@ export class ApprovalRequestResource extends StripeResource {
   ): Promise<Response<ApprovalRequest>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/approval_requests/${id}/execute`,
+      `/v2/core/approval_requests/${encodeURIComponent(id)}/execute`,
       params,
       options
     ) as any;
@@ -81,7 +81,7 @@ export class ApprovalRequestResource extends StripeResource {
   ): Promise<Response<ApprovalRequest>> {
     return this._makeRequest(
       'POST',
-      `/v2/core/approval_requests/${id}/submit`,
+      `/v2/core/approval_requests/${encodeURIComponent(id)}/submit`,
       params,
       options
     ) as any;

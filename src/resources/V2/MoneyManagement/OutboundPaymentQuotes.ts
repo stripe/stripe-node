@@ -30,7 +30,7 @@ export class OutboundPaymentQuoteResource extends StripeResource {
   ): Promise<Response<OutboundPaymentQuote>> {
     return this._makeRequest(
       'GET',
-      `/v2/money_management/outbound_payment_quotes/${id}`,
+      `/v2/money_management/outbound_payment_quotes/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

@@ -15,7 +15,7 @@ export class VersionResource extends StripeResource {
   ): V2ListPromise<LicenseFeeVersion> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/license_fees/${licenseFeeId}/versions`,
+      `/v2/billing/license_fees/${encodeURIComponent(licenseFeeId)}/versions`,
       params,
       options,
       {
@@ -58,7 +58,9 @@ export class VersionResource extends StripeResource {
   ): Promise<Response<LicenseFeeVersion>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/license_fees/${licenseFeeId}/versions/${id}`,
+      `/v2/billing/license_fees/${encodeURIComponent(
+        licenseFeeId
+      )}/versions/${encodeURIComponent(id)}`,
       params,
       options,
       {

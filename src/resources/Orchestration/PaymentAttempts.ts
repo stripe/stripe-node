@@ -14,7 +14,7 @@ export class PaymentAttemptResource extends StripeResource {
   ): Promise<Response<PaymentAttempt>> {
     return this._makeRequest(
       'GET',
-      `/v1/orchestration/payment_attempts/${id}`,
+      `/v1/orchestration/payment_attempts/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

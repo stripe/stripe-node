@@ -61,7 +61,7 @@ export class BlocklistEntryResource extends StripeResource {
   ): Promise<Response<BlocklistEntry>> {
     return this._makeRequest(
       'GET',
-      `/v1/identity/blocklist_entries/${id}`,
+      `/v1/identity/blocklist_entries/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -82,7 +82,7 @@ export class BlocklistEntryResource extends StripeResource {
   ): Promise<Response<BlocklistEntry>> {
     return this._makeRequest(
       'POST',
-      `/v1/identity/blocklist_entries/${id}/disable`,
+      `/v1/identity/blocklist_entries/${encodeURIComponent(id)}/disable`,
       params,
       options
     ) as any;

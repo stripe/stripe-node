@@ -46,7 +46,7 @@ export class RateCardSubscriptionResource extends StripeResource {
   ): Promise<Response<RateCardSubscription>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/rate_card_subscriptions/${id}`,
+      `/v2/billing/rate_card_subscriptions/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -61,7 +61,7 @@ export class RateCardSubscriptionResource extends StripeResource {
   ): Promise<Response<RateCardSubscription>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/rate_card_subscriptions/${id}`,
+      `/v2/billing/rate_card_subscriptions/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -76,7 +76,7 @@ export class RateCardSubscriptionResource extends StripeResource {
   ): Promise<Response<RateCardSubscription>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/rate_card_subscriptions/${id}/cancel`,
+      `/v2/billing/rate_card_subscriptions/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;

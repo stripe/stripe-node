@@ -17,7 +17,9 @@ export class ComponentResource extends StripeResource {
   ): V2ListPromise<PricingPlanComponent> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/pricing_plans/${pricingPlanId}/components`,
+      `/v2/billing/pricing_plans/${encodeURIComponent(
+        pricingPlanId
+      )}/components`,
       params,
       options,
       {
@@ -35,7 +37,9 @@ export class ComponentResource extends StripeResource {
   ): Promise<Response<PricingPlanComponent>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/pricing_plans/${pricingPlanId}/components`,
+      `/v2/billing/pricing_plans/${encodeURIComponent(
+        pricingPlanId
+      )}/components`,
       params,
       options
     ) as any;
@@ -51,7 +55,9 @@ export class ComponentResource extends StripeResource {
   ): Promise<Response<DeletedObject>> {
     return this._makeRequest(
       'DELETE',
-      `/v2/billing/pricing_plans/${pricingPlanId}/components/${id}`,
+      `/v2/billing/pricing_plans/${encodeURIComponent(
+        pricingPlanId
+      )}/components/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -67,7 +73,9 @@ export class ComponentResource extends StripeResource {
   ): Promise<Response<PricingPlanComponent>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/pricing_plans/${pricingPlanId}/components/${id}`,
+      `/v2/billing/pricing_plans/${encodeURIComponent(
+        pricingPlanId
+      )}/components/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -83,7 +91,9 @@ export class ComponentResource extends StripeResource {
   ): Promise<Response<PricingPlanComponent>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/pricing_plans/${pricingPlanId}/components/${id}`,
+      `/v2/billing/pricing_plans/${encodeURIComponent(
+        pricingPlanId
+      )}/components/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

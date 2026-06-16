@@ -17,7 +17,7 @@ export class AuthorizationResource extends StripeResource {
   ): Promise<Response<Authorization>> {
     return this._makeRequest(
       'GET',
-      `/v1/financial_connections/authorizations/${id}`,
+      `/v1/financial_connections/authorizations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

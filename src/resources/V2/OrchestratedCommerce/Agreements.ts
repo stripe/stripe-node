@@ -45,7 +45,7 @@ export class AgreementResource extends StripeResource {
   ): Promise<Response<Agreement>> {
     return this._makeRequest(
       'GET',
-      `/v2/orchestrated_commerce/agreements/${id}`,
+      `/v2/orchestrated_commerce/agreements/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -60,7 +60,7 @@ export class AgreementResource extends StripeResource {
   ): Promise<Response<Agreement>> {
     return this._makeRequest(
       'POST',
-      `/v2/orchestrated_commerce/agreements/${id}/confirm`,
+      `/v2/orchestrated_commerce/agreements/${encodeURIComponent(id)}/confirm`,
       params,
       options
     ) as any;
@@ -75,7 +75,9 @@ export class AgreementResource extends StripeResource {
   ): Promise<Response<Agreement>> {
     return this._makeRequest(
       'POST',
-      `/v2/orchestrated_commerce/agreements/${id}/terminate`,
+      `/v2/orchestrated_commerce/agreements/${encodeURIComponent(
+        id
+      )}/terminate`,
       params,
       options
     ) as any;

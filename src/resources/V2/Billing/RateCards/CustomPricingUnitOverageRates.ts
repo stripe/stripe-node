@@ -17,7 +17,9 @@ export class CustomPricingUnitOverageRateResource extends StripeResource {
   ): V2ListPromise<RateCardCustomPricingUnitOverageRate> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/rate_cards/${rateCardId}/custom_pricing_unit_overage_rates`,
+      `/v2/billing/rate_cards/${encodeURIComponent(
+        rateCardId
+      )}/custom_pricing_unit_overage_rates`,
       params,
       options,
       {
@@ -35,7 +37,9 @@ export class CustomPricingUnitOverageRateResource extends StripeResource {
   ): Promise<Response<RateCardCustomPricingUnitOverageRate>> {
     return this._makeRequest(
       'POST',
-      `/v2/billing/rate_cards/${rateCardId}/custom_pricing_unit_overage_rates`,
+      `/v2/billing/rate_cards/${encodeURIComponent(
+        rateCardId
+      )}/custom_pricing_unit_overage_rates`,
       params,
       options
     ) as any;
@@ -51,7 +55,9 @@ export class CustomPricingUnitOverageRateResource extends StripeResource {
   ): Promise<Response<DeletedObject>> {
     return this._makeRequest(
       'DELETE',
-      `/v2/billing/rate_cards/${rateCardId}/custom_pricing_unit_overage_rates/${id}`,
+      `/v2/billing/rate_cards/${encodeURIComponent(
+        rateCardId
+      )}/custom_pricing_unit_overage_rates/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -67,7 +73,9 @@ export class CustomPricingUnitOverageRateResource extends StripeResource {
   ): Promise<Response<RateCardCustomPricingUnitOverageRate>> {
     return this._makeRequest(
       'GET',
-      `/v2/billing/rate_cards/${rateCardId}/custom_pricing_unit_overage_rates/${id}`,
+      `/v2/billing/rate_cards/${encodeURIComponent(
+        rateCardId
+      )}/custom_pricing_unit_overage_rates/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

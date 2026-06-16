@@ -28,7 +28,7 @@ export class BusinessProfileResource extends StripeResource {
   ): Promise<Response<BusinessProfile>> {
     return this._makeRequest(
       'GET',
-      `/v2/network/business_profiles/${id}`,
+      `/v2/network/business_profiles/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

@@ -31,7 +31,7 @@ export class WorkflowRunResource extends StripeResource {
   ): Promise<Response<WorkflowRun>> {
     return this._makeRequest(
       'GET',
-      `/v2/extend/workflow_runs/${id}`,
+      `/v2/extend/workflow_runs/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

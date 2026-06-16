@@ -47,7 +47,7 @@ export class ReportRunResource extends StripeResource {
   ): Promise<Response<ReportRun>> {
     return this._makeRequest(
       'GET',
-      `/v1/reporting/report_runs/${id}`,
+      `/v1/reporting/report_runs/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

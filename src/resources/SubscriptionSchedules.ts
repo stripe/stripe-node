@@ -110,7 +110,7 @@ export class SubscriptionScheduleResource extends StripeResource {
   ): Promise<Response<SubscriptionSchedule>> {
     return this._makeRequest(
       'GET',
-      `/v1/subscription_schedules/${id}`,
+      `/v1/subscription_schedules/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -125,7 +125,7 @@ export class SubscriptionScheduleResource extends StripeResource {
   ): Promise<Response<SubscriptionSchedule>> {
     return this._makeRequest(
       'POST',
-      `/v1/subscription_schedules/${id}`,
+      `/v1/subscription_schedules/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -183,7 +183,7 @@ export class SubscriptionScheduleResource extends StripeResource {
   ): Promise<Response<SubscriptionSchedule>> {
     return this._makeRequest(
       'POST',
-      `/v1/subscription_schedules/${id}/amend`,
+      `/v1/subscription_schedules/${encodeURIComponent(id)}/amend`,
       params,
       options
     ) as any;
@@ -198,7 +198,7 @@ export class SubscriptionScheduleResource extends StripeResource {
   ): Promise<Response<SubscriptionSchedule>> {
     return this._makeRequest(
       'POST',
-      `/v1/subscription_schedules/${id}/cancel`,
+      `/v1/subscription_schedules/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;
@@ -213,7 +213,7 @@ export class SubscriptionScheduleResource extends StripeResource {
   ): Promise<Response<SubscriptionSchedule>> {
     return this._makeRequest(
       'POST',
-      `/v1/subscription_schedules/${id}/release`,
+      `/v1/subscription_schedules/${encodeURIComponent(id)}/release`,
       params,
       options
     ) as any;

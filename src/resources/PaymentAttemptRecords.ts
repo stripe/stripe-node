@@ -40,7 +40,7 @@ export class PaymentAttemptRecordResource extends StripeResource {
   ): Promise<Response<PaymentAttemptRecord>> {
     return this._makeRequest(
       'GET',
-      `/v1/payment_attempt_records/${id}`,
+      `/v1/payment_attempt_records/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -55,7 +55,9 @@ export class PaymentAttemptRecordResource extends StripeResource {
   ): Promise<Response<PaymentAttemptRecord>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_attempt_records/${id}/report_authenticated`,
+      `/v1/payment_attempt_records/${encodeURIComponent(
+        id
+      )}/report_authenticated`,
       params,
       options
     ) as any;
@@ -70,7 +72,7 @@ export class PaymentAttemptRecordResource extends StripeResource {
   ): Promise<Response<PaymentAttemptRecord>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_attempt_records/${id}/report_authorized`,
+      `/v1/payment_attempt_records/${encodeURIComponent(id)}/report_authorized`,
       params,
       options
     ) as any;
@@ -85,7 +87,7 @@ export class PaymentAttemptRecordResource extends StripeResource {
   ): Promise<Response<PaymentAttemptRecord>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_attempt_records/${id}/report_canceled`,
+      `/v1/payment_attempt_records/${encodeURIComponent(id)}/report_canceled`,
       params,
       options
     ) as any;
@@ -100,7 +102,7 @@ export class PaymentAttemptRecordResource extends StripeResource {
   ): Promise<Response<PaymentAttemptRecord>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_attempt_records/${id}/report_failed`,
+      `/v1/payment_attempt_records/${encodeURIComponent(id)}/report_failed`,
       params,
       options
     ) as any;
@@ -115,7 +117,7 @@ export class PaymentAttemptRecordResource extends StripeResource {
   ): Promise<Response<PaymentAttemptRecord>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_attempt_records/${id}/report_guaranteed`,
+      `/v1/payment_attempt_records/${encodeURIComponent(id)}/report_guaranteed`,
       params,
       options
     ) as any;
@@ -130,7 +132,9 @@ export class PaymentAttemptRecordResource extends StripeResource {
   ): Promise<Response<PaymentAttemptRecord>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_attempt_records/${id}/report_informational`,
+      `/v1/payment_attempt_records/${encodeURIComponent(
+        id
+      )}/report_informational`,
       params,
       options
     ) as any;
@@ -145,7 +149,7 @@ export class PaymentAttemptRecordResource extends StripeResource {
   ): Promise<Response<PaymentAttemptRecord>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_attempt_records/${id}/report_refund`,
+      `/v1/payment_attempt_records/${encodeURIComponent(id)}/report_refund`,
       params,
       options
     ) as any;

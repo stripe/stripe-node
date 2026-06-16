@@ -32,7 +32,7 @@ export class FormResource extends StripeResource {
   ): Promise<Response<Form>> {
     return this._makeRequest(
       'GET',
-      `/v1/tax/forms/${id}`,
+      `/v1/tax/forms/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -47,7 +47,7 @@ export class FormResource extends StripeResource {
   ): Promise<StripeStreamResponse> {
     return this._makeRequest(
       'GET',
-      `/v1/tax/forms/${id}/pdf`,
+      `/v1/tax/forms/${encodeURIComponent(id)}/pdf`,
       params,
       options,
       {

@@ -16,7 +16,7 @@ export class TransactionResource extends StripeResource {
   ): Promise<Response<Transaction>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/issuing/transactions/${id}/refund`,
+      `/v1/test_helpers/issuing/transactions/${encodeURIComponent(id)}/refund`,
       params,
       options,
       {

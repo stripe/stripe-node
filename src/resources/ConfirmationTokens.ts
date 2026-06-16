@@ -19,7 +19,7 @@ export class ConfirmationTokenResource extends StripeResource {
   ): Promise<Response<ConfirmationToken>> {
     return this._makeRequest(
       'GET',
-      `/v1/confirmation_tokens/${id}`,
+      `/v1/confirmation_tokens/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

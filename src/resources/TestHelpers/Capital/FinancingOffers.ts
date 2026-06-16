@@ -29,7 +29,9 @@ export class FinancingOfferResource extends StripeResource {
   ): Promise<Response<FinancingOffer>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/capital/financing_offers/${id}/refill`,
+      `/v1/test_helpers/capital/financing_offers/${encodeURIComponent(
+        id
+      )}/refill`,
       params,
       options
     ) as any;

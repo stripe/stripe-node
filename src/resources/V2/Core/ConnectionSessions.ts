@@ -28,7 +28,7 @@ export class ConnectionSessionResource extends StripeResource {
   ): Promise<Response<ConnectionSession>> {
     return this._makeRequest(
       'GET',
-      `/v2/core/connection_sessions/${id}`,
+      `/v2/core/connection_sessions/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

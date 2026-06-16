@@ -15,7 +15,9 @@ export class StatementResource extends StripeResource {
   ): V2ListPromise<FinancialAccountStatement> {
     return this._makeRequest(
       'GET',
-      `/v2/money_management/financial_accounts/${financialAccountId}/statements`,
+      `/v2/money_management/financial_accounts/${encodeURIComponent(
+        financialAccountId
+      )}/statements`,
       params,
       options,
       {
@@ -54,7 +56,9 @@ export class StatementResource extends StripeResource {
   ): Promise<Response<FinancialAccountStatement>> {
     return this._makeRequest(
       'GET',
-      `/v2/money_management/financial_accounts/${financialAccountId}/statements/${id}`,
+      `/v2/money_management/financial_accounts/${encodeURIComponent(
+        financialAccountId
+      )}/statements/${encodeURIComponent(id)}`,
       params,
       options,
       {

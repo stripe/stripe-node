@@ -30,7 +30,9 @@ export class GrantedTokenResource extends StripeResource {
   ): Promise<Response<GrantedToken>> {
     return this._makeRequest(
       'POST',
-      `/v1/test_helpers/shared_payment/granted_tokens/${id}/revoke`,
+      `/v1/test_helpers/shared_payment/granted_tokens/${encodeURIComponent(
+        id
+      )}/revoke`,
       params,
       options
     ) as any;
