@@ -132,6 +132,11 @@ export interface GiftCard {
   exp_year: number | null;
 
   /**
+   * Uniquely identifies this particular gift card number. You can use this attribute to check whether two gift cards are the same.
+   */
+  fingerprint: string;
+
+  /**
    * The last operation performed on this gift card.
    */
   last_operation: string | GiftCardOperation | null;

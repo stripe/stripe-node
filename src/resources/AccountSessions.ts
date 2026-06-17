@@ -505,6 +505,11 @@ export namespace AccountSession {
         bill_management: boolean;
 
         /**
+         * Whether Stripe user authentication is disabled. This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account. This is `false` by default.
+         */
+        disable_stripe_user_authentication: boolean;
+
+        /**
          * Whether to enable the send money feature that grants access to bill creation and payment.
          */
         send_money: boolean;

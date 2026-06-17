@@ -115,6 +115,8 @@ export namespace Mandate {
 
     bacs_debit?: PaymentMethodDetails.BacsDebit;
 
+    blik?: PaymentMethodDetails.Blik;
+
     card?: PaymentMethodDetails.Card;
 
     cashapp?: PaymentMethodDetails.Cashapp;
@@ -249,6 +251,18 @@ export namespace Mandate {
        * The URL that will contain the mandate that the customer has signed.
        */
       url: string;
+    }
+
+    export interface Blik {
+      /**
+       * Date at which the mandate expires.
+       */
+      expires_after: number | null;
+
+      /**
+       * Type of the mandate.
+       */
+      type: Blik.Type;
     }
 
     export interface Card {}
@@ -425,6 +439,10 @@ export namespace Mandate {
         | 'bank_ownership_changed'
         | 'could_not_process'
         | 'debit_not_authorized';
+    }
+
+    export namespace Blik {
+      export type Type = 'off_session' | 'on_session';
     }
 
     export namespace Payto {

@@ -226,6 +226,8 @@ export namespace SharedPayment {
 
       swish?: PaymentMethodDetails.Swish;
 
+      tamara?: PaymentMethodDetails.Tamara;
+
       twint?: PaymentMethodDetails.Twint;
 
       /**
@@ -614,11 +616,6 @@ export namespace SharedPayment {
         fingerprint?: string;
 
         /**
-         * The first six digits of the gift card number.
-         */
-        first6: string;
-
-        /**
          * The last four digits of the gift card number.
          */
         last4: string | null;
@@ -945,6 +942,8 @@ export namespace SharedPayment {
 
       export interface Swish {}
 
+      export interface Tamara {}
+
       export interface Twint {}
 
       export type Type =
@@ -1008,6 +1007,7 @@ export namespace SharedPayment {
         | 'stripe_balance'
         | 'sunbit'
         | 'swish'
+        | 'tamara'
         | 'twint'
         | 'upi'
         | 'us_bank_account'

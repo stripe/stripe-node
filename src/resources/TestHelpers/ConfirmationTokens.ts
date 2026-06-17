@@ -374,6 +374,11 @@ export namespace TestHelpers {
       swish?: PaymentMethodData.Swish;
 
       /**
+       * If this is a `tamara` PaymentMethod, this hash contains details about the Tamara payment method.
+       */
+      tamara?: PaymentMethodData.Tamara;
+
+      /**
        * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
        */
       twint?: PaymentMethodData.Twint;
@@ -728,6 +733,8 @@ export namespace TestHelpers {
 
       export interface Swish {}
 
+      export interface Tamara {}
+
       export interface Twint {}
 
       export type Type =
@@ -787,6 +794,7 @@ export namespace TestHelpers {
         | 'stripe_balance'
         | 'sunbit'
         | 'swish'
+        | 'tamara'
         | 'twint'
         | 'upi'
         | 'us_bank_account'

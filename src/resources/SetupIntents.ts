@@ -374,6 +374,7 @@ export namespace SetupIntent {
     | 'stripe_balance'
     | 'sunbit'
     | 'swish'
+    | 'tamara'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -524,6 +525,8 @@ export namespace SetupIntent {
     use_stripe_sdk?: NextAction.UseStripeSdk;
 
     verify_with_microdeposits?: NextAction.VerifyWithMicrodeposits;
+
+    wechat_pay_handle_app_redirect?: NextAction.WechatPayHandleAppRedirect;
   }
 
   export interface PaymentMethodConfigurationDetails {
@@ -880,6 +883,13 @@ export namespace SetupIntent {
        * The type of the microdeposit sent to the customer. Used to distinguish between different verification methods.
        */
       microdeposit_type: VerifyWithMicrodeposits.MicrodepositType | null;
+    }
+
+    export interface WechatPayHandleAppRedirect {
+      /**
+       * Session ID of the WeChat Pay signing session
+       */
+      session_id: string;
     }
 
     export namespace CashappHandleRedirectOrDisplayQrCode {
@@ -1638,6 +1648,7 @@ export namespace SetupIntentCreateParams {
     | 'stripe_balance'
     | 'sunbit'
     | 'swish'
+    | 'tamara'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -1963,6 +1974,11 @@ export namespace SetupIntentCreateParams {
      * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
      */
     swish?: PaymentMethodData.Swish;
+
+    /**
+     * If this is a `tamara` PaymentMethod, this hash contains details about the Tamara payment method.
+     */
+    tamara?: PaymentMethodData.Tamara;
 
     /**
      * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
@@ -2442,6 +2458,8 @@ export namespace SetupIntentCreateParams {
 
     export interface Swish {}
 
+    export interface Tamara {}
+
     export interface Twint {}
 
     export type Type =
@@ -2501,6 +2519,7 @@ export namespace SetupIntentCreateParams {
       | 'stripe_balance'
       | 'sunbit'
       | 'swish'
+      | 'tamara'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -3701,6 +3720,7 @@ export namespace SetupIntentUpdateParams {
     | 'stripe_balance'
     | 'sunbit'
     | 'swish'
+    | 'tamara'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -4019,6 +4039,11 @@ export namespace SetupIntentUpdateParams {
      * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
      */
     swish?: PaymentMethodData.Swish;
+
+    /**
+     * If this is a `tamara` PaymentMethod, this hash contains details about the Tamara payment method.
+     */
+    tamara?: PaymentMethodData.Tamara;
 
     /**
      * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
@@ -4438,6 +4463,8 @@ export namespace SetupIntentUpdateParams {
 
     export interface Swish {}
 
+    export interface Tamara {}
+
     export interface Twint {}
 
     export type Type =
@@ -4497,6 +4524,7 @@ export namespace SetupIntentUpdateParams {
       | 'stripe_balance'
       | 'sunbit'
       | 'swish'
+      | 'tamara'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -5964,6 +5992,11 @@ export namespace SetupIntentConfirmParams {
     swish?: PaymentMethodData.Swish;
 
     /**
+     * If this is a `tamara` PaymentMethod, this hash contains details about the Tamara payment method.
+     */
+    tamara?: PaymentMethodData.Tamara;
+
+    /**
      * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
      */
     twint?: PaymentMethodData.Twint;
@@ -6423,6 +6456,8 @@ export namespace SetupIntentConfirmParams {
 
     export interface Swish {}
 
+    export interface Tamara {}
+
     export interface Twint {}
 
     export type Type =
@@ -6482,6 +6517,7 @@ export namespace SetupIntentConfirmParams {
       | 'stripe_balance'
       | 'sunbit'
       | 'swish'
+      | 'tamara'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
