@@ -2194,11 +2194,6 @@ export namespace Checkout {
 
         export interface Card {
           /**
-           * The brand of the card, accounting for customer's brand choice on dual-branded cards.
-           */
-          brand: Card.Brand;
-
-          /**
            * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
            */
           country: string | null;
@@ -2270,31 +2265,6 @@ export namespace Checkout {
         }
 
         export namespace Card {
-          export type Brand =
-            | 'accel'
-            | 'amex'
-            | 'carnet'
-            | 'cartes_bancaires'
-            | 'conecs'
-            | 'diners'
-            | 'discover'
-            | 'eftpos_au'
-            | 'elo'
-            | 'girocard'
-            | 'interac'
-            | 'jaywan'
-            | 'jcb'
-            | 'link'
-            | 'maestro'
-            | 'mastercard'
-            | 'nyce'
-            | 'pulse'
-            | 'rupay'
-            | 'star'
-            | 'unionpay'
-            | 'unknown'
-            | 'visa';
-
           export type Funding = 'credit' | 'debit' | 'prepaid' | 'unknown';
 
           export interface Wallet {
@@ -4461,6 +4431,11 @@ export namespace Checkout {
     invoice_creation?: SessionCreateParams.InvoiceCreation;
 
     /**
+     * A list of items the customer will purchase.
+     */
+    items?: Array<SessionCreateParams.Item>;
+
+    /**
      * A list of items the customer is purchasing. Use this parameter to pass one-time or recurring [Prices](https://docs.stripe.com/api/prices). The parameter is required for `payment` and `subscription` mode.
      *
      * For `payment` mode, there is a maximum of 100 line items, however it is recommended to consolidate line items if there are more than a few dozen.
@@ -4933,6 +4908,13 @@ export namespace Checkout {
        * Parameters passed when creating invoices for payment-mode Checkout Sessions.
        */
       invoice_data?: InvoiceCreation.InvoiceData;
+    }
+
+    export interface Item {
+      /**
+       * The type of item.
+       */
+      type: 'subscription';
     }
 
     export interface LineItem {

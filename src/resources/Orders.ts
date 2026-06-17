@@ -1177,6 +1177,11 @@ export namespace Order {
           app_id: string | null;
 
           /**
+           * The unique buyer ID for the app ID registered with WeChat Pay. Only required when client is mini_program.
+           */
+          buyer_id?: string;
+
+          /**
            * The client type that the end customer will pay from
            */
           client: WechatPay.Client | null;
@@ -1406,7 +1411,7 @@ export namespace Order {
         }
 
         export namespace WechatPay {
-          export type Client = 'android' | 'ios' | 'web';
+          export type Client = 'android' | 'ios' | 'mini_program' | 'web';
         }
       }
     }
@@ -2568,6 +2573,11 @@ export namespace OrderCreateParams {
            * The app ID registered with WeChat Pay. Only required when client is ios or android.
            */
           app_id?: string;
+
+          /**
+           * The unique buyer ID for the app ID registered with WeChat Pay. Only required when client is mini_program.
+           */
+          buyer_id?: string;
 
           /**
            * The client type that the end customer will pay from
@@ -4122,7 +4132,7 @@ export namespace OrderCreateParams {
         }
 
         export namespace WechatPay {
-          export type Client = 'android' | 'ios' | 'web';
+          export type Client = 'android' | 'ios' | 'mini_program' | 'web';
         }
       }
     }
@@ -5303,6 +5313,11 @@ export namespace OrderUpdateParams {
           app_id?: string;
 
           /**
+           * The unique buyer ID for the app ID registered with WeChat Pay. Only required when client is mini_program.
+           */
+          buyer_id?: string;
+
+          /**
            * The client type that the end customer will pay from
            */
           client?: WechatPay.Client;
@@ -6855,7 +6870,7 @@ export namespace OrderUpdateParams {
         }
 
         export namespace WechatPay {
-          export type Client = 'android' | 'ios' | 'web';
+          export type Client = 'android' | 'ios' | 'mini_program' | 'web';
         }
       }
     }

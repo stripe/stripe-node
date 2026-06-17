@@ -38,7 +38,7 @@ export namespace TestHelpers {
     /**
      * The token currency of the simulated crypto deposit.
      */
-    token_currency: 'usdc';
+    token_currency: PaymentIntentSimulateCryptoDepositParams.TokenCurrency;
 
     /**
      * A testmode transaction hash that determines the outcome of the simulated deposit.
@@ -52,6 +52,8 @@ export namespace TestHelpers {
   }
 
   export namespace PaymentIntentSimulateCryptoDepositParams {
-    export type Network = 'base' | 'solana' | 'tempo';
+    export type Network = 'base' | 'ethereum' | 'polygon' | 'solana' | 'tempo';
+
+    export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
   }
 }

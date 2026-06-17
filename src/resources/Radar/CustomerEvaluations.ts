@@ -5,6 +5,21 @@ import {RequestOptions, Response} from '../../lib.js';
 
 export class CustomerEvaluationResource extends StripeResource {
   /**
+   * Retrieves an CustomerEvaluation object.
+   */
+  retrieve(
+    id: string,
+    params?: Radar.CustomerEvaluationRetrieveParams,
+    options?: RequestOptions
+  ): Promise<Response<CustomerEvaluation>> {
+    return this._makeRequest(
+      'GET',
+      `/v1/radar/customer_evaluations/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
+  }
+  /**
    * Creates a new CustomerEvaluation object.
    */
   create(
@@ -288,6 +303,14 @@ export namespace Radar {
         }
       }
     }
+  }
+}
+export namespace Radar {
+  export interface CustomerEvaluationRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
   }
 }
 export namespace Radar {

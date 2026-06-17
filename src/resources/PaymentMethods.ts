@@ -327,6 +327,8 @@ export interface PaymentMethod {
 
   swish?: PaymentMethod.Swish;
 
+  tamara?: PaymentMethod.Tamara;
+
   twint?: PaymentMethod.Twint;
 
   /**
@@ -724,11 +726,6 @@ export namespace PaymentMethod {
     fingerprint?: string;
 
     /**
-     * The first six digits of the gift card number.
-     */
-    first6: string;
-
-    /**
      * The last four digits of the gift card number.
      */
     last4: string | null;
@@ -1062,6 +1059,8 @@ export namespace PaymentMethod {
 
   export interface Swish {}
 
+  export interface Tamara {}
+
   export interface Twint {}
 
   export type Type =
@@ -1125,6 +1124,7 @@ export namespace PaymentMethod {
     | 'stripe_balance'
     | 'sunbit'
     | 'swish'
+    | 'tamara'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -2336,6 +2336,11 @@ export interface PaymentMethodCreateParams {
   swish?: PaymentMethodCreateParams.Swish;
 
   /**
+   * If this is a `tamara` PaymentMethod, this hash contains details about the Tamara payment method.
+   */
+  tamara?: PaymentMethodCreateParams.Tamara;
+
+  /**
    * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
    */
   twint?: PaymentMethodCreateParams.Twint;
@@ -2702,6 +2707,8 @@ export namespace PaymentMethodCreateParams {
 
   export interface Swish {}
 
+  export interface Tamara {}
+
   export interface Twint {}
 
   export type Type =
@@ -2763,6 +2770,7 @@ export namespace PaymentMethodCreateParams {
     | 'stripe_balance'
     | 'sunbit'
     | 'swish'
+    | 'tamara'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -3260,6 +3268,7 @@ export namespace PaymentMethodListParams {
     | 'stripe_balance'
     | 'sunbit'
     | 'swish'
+    | 'tamara'
     | 'twint'
     | 'upi'
     | 'us_bank_account'

@@ -663,6 +663,11 @@ export interface RefundCreateParams {
   origin?: 'customer_balance';
 
   /**
+   * The identifier of the PaymentAttemptRecord to refund.
+   */
+  payment_attempt_record?: string;
+
+  /**
    * The identifier of the PaymentIntent to refund.
    */
   payment_intent?: string;
@@ -721,9 +726,19 @@ export interface RefundListParams extends PaginationParams {
   expand?: Array<string>;
 
   /**
+   * Only return refunds for the PaymentAttemptRecord specified by this ID.
+   */
+  payment_attempt_record?: string;
+
+  /**
    * Only return refunds for the PaymentIntent specified by this ID.
    */
   payment_intent?: string;
+
+  /**
+   * Only return refunds for the PaymentRecord specified by this ID.
+   */
+  payment_record?: string;
 }
 export interface RefundCancelParams {
   /**

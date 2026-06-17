@@ -41,6 +41,1670 @@ export class AccountResource extends StripeResource {
             element: {
               kind: 'object',
               fields: {
+                configuration: {
+                  kind: 'object',
+                  fields: {
+                    card_creator: {
+                      kind: 'object',
+                      fields: {
+                        capabilities: {
+                          kind: 'object',
+                          fields: {
+                            commercial: {
+                              kind: 'object',
+                              fields: {
+                                celtic: {
+                                  kind: 'object',
+                                  fields: {
+                                    charge_card: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    spend_card: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                cross_river_bank: {
+                                  kind: 'object',
+                                  fields: {
+                                    charge_card: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    prepaid_card: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    spend_card: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                fifth_third: {
+                                  kind: 'object',
+                                  fields: {
+                                    charge_card: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                lead: {
+                                  kind: 'object',
+                                  fields: {
+                                    prepaid_card: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                stripe: {
+                                  kind: 'object',
+                                  fields: {
+                                    charge_card: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    prepaid_card: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            consumer: {
+                              kind: 'object',
+                              fields: {
+                                celtic: {
+                                  kind: 'object',
+                                  fields: {
+                                    revolving_credit_card: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                cross_river_bank: {
+                                  kind: 'object',
+                                  fields: {
+                                    prepaid_card: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                lead: {
+                                  kind: 'object',
+                                  fields: {
+                                    debit_card: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    prepaid_card: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                    customer: {
+                      kind: 'object',
+                      fields: {
+                        capabilities: {
+                          kind: 'object',
+                          fields: {
+                            automatic_indirect_tax: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                    merchant: {
+                      kind: 'object',
+                      fields: {
+                        capabilities: {
+                          kind: 'object',
+                          fields: {
+                            ach_debit_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            acss_debit_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            affirm_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            afterpay_clearpay_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            alma_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            amazon_pay_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            au_becs_debit_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            bacs_debit_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            bancontact_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            blik_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            boleto_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            card_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            cartes_bancaires_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            cashapp_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            eps_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            fpx_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            gb_bank_transfer_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            grabpay_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            ideal_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            jcb_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            jp_bank_transfer_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            kakao_pay_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            klarna_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            konbini_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            kr_card_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            link_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            mobilepay_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            multibanco_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            mx_bank_transfer_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            naver_pay_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            oxxo_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            p24_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            pay_by_bank_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            payco_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            paynow_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            promptpay_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            revolut_pay_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            samsung_pay_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            sepa_bank_transfer_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            sepa_debit_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            stripe_balance: {
+                              kind: 'object',
+                              fields: {
+                                payouts: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            swish_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            twint_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            us_bank_transfer_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            zip_payments: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                    recipient: {
+                      kind: 'object',
+                      fields: {
+                        capabilities: {
+                          kind: 'object',
+                          fields: {
+                            bank_accounts: {
+                              kind: 'object',
+                              fields: {
+                                instant: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                local: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                wire: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            cards: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            crypto_wallets: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            paper_checks: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            stripe_balance: {
+                              kind: 'object',
+                              fields: {
+                                payouts: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                stripe_transfers: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                    storer: {
+                      kind: 'object',
+                      fields: {
+                        capabilities: {
+                          kind: 'object',
+                          fields: {
+                            consumer: {
+                              kind: 'object',
+                              fields: {
+                                holds_currencies: {
+                                  kind: 'object',
+                                  fields: {
+                                    usd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            financial_addresses: {
+                              kind: 'object',
+                              fields: {
+                                bank_accounts: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                crypto_wallets: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            holds_currencies: {
+                              kind: 'object',
+                              fields: {
+                                eur: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                gbp: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                usd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            inbound_transfers: {
+                              kind: 'object',
+                              fields: {
+                                bank_accounts: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            outbound_payments: {
+                              kind: 'object',
+                              fields: {
+                                bank_accounts: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                cards: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                crypto_wallets: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                financial_accounts: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                paper_checks: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            outbound_transfers: {
+                              kind: 'object',
+                              fields: {
+                                bank_accounts: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                crypto_wallets: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                financial_accounts: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
                 identity: {
                   kind: 'object',
                   fields: {
@@ -93,6 +1757,1572 @@ export class AccountResource extends StripeResource {
       responseSchema: {
         kind: 'object',
         fields: {
+          configuration: {
+            kind: 'object',
+            fields: {
+              card_creator: {
+                kind: 'object',
+                fields: {
+                  capabilities: {
+                    kind: 'object',
+                    fields: {
+                      commercial: {
+                        kind: 'object',
+                        fields: {
+                          celtic: {
+                            kind: 'object',
+                            fields: {
+                              charge_card: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                              spend_card: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          cross_river_bank: {
+                            kind: 'object',
+                            fields: {
+                              charge_card: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                              prepaid_card: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                              spend_card: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          fifth_third: {
+                            kind: 'object',
+                            fields: {
+                              charge_card: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          lead: {
+                            kind: 'object',
+                            fields: {
+                              prepaid_card: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          stripe: {
+                            kind: 'object',
+                            fields: {
+                              charge_card: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                              prepaid_card: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      consumer: {
+                        kind: 'object',
+                        fields: {
+                          celtic: {
+                            kind: 'object',
+                            fields: {
+                              revolving_credit_card: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          cross_river_bank: {
+                            kind: 'object',
+                            fields: {
+                              prepaid_card: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          lead: {
+                            kind: 'object',
+                            fields: {
+                              debit_card: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                              prepaid_card: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              customer: {
+                kind: 'object',
+                fields: {
+                  capabilities: {
+                    kind: 'object',
+                    fields: {
+                      automatic_indirect_tax: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              merchant: {
+                kind: 'object',
+                fields: {
+                  capabilities: {
+                    kind: 'object',
+                    fields: {
+                      ach_debit_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      acss_debit_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      affirm_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      afterpay_clearpay_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      alma_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      amazon_pay_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      au_becs_debit_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      bacs_debit_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      bancontact_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      blik_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      boleto_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      card_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      cartes_bancaires_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      cashapp_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      eps_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      fpx_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      gb_bank_transfer_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      grabpay_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      ideal_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      jcb_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      jp_bank_transfer_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      kakao_pay_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      klarna_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      konbini_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      kr_card_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      link_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      mobilepay_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      multibanco_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      mx_bank_transfer_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      naver_pay_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      oxxo_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      p24_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      pay_by_bank_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      payco_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      paynow_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      promptpay_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      revolut_pay_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      samsung_pay_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      sepa_bank_transfer_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      sepa_debit_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      stripe_balance: {
+                        kind: 'object',
+                        fields: {
+                          payouts: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      swish_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      twint_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      us_bank_transfer_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      zip_payments: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              recipient: {
+                kind: 'object',
+                fields: {
+                  capabilities: {
+                    kind: 'object',
+                    fields: {
+                      bank_accounts: {
+                        kind: 'object',
+                        fields: {
+                          instant: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          local: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          wire: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      cards: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      crypto_wallets: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      paper_checks: {
+                        kind: 'object',
+                        fields: {
+                          protections: {
+                            kind: 'object',
+                            fields: {
+                              psp_migration: {
+                                kind: 'object',
+                                fields: {
+                                  expires_at: {kind: 'int64_string'},
+                                  requested_at: {kind: 'int64_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      stripe_balance: {
+                        kind: 'object',
+                        fields: {
+                          payouts: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          stripe_transfers: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              storer: {
+                kind: 'object',
+                fields: {
+                  capabilities: {
+                    kind: 'object',
+                    fields: {
+                      consumer: {
+                        kind: 'object',
+                        fields: {
+                          holds_currencies: {
+                            kind: 'object',
+                            fields: {
+                              usd: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      financial_addresses: {
+                        kind: 'object',
+                        fields: {
+                          bank_accounts: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          crypto_wallets: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      holds_currencies: {
+                        kind: 'object',
+                        fields: {
+                          eur: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          gbp: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          usd: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          usdc: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      inbound_transfers: {
+                        kind: 'object',
+                        fields: {
+                          bank_accounts: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      outbound_payments: {
+                        kind: 'object',
+                        fields: {
+                          bank_accounts: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          cards: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          crypto_wallets: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          financial_accounts: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          paper_checks: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      outbound_transfers: {
+                        kind: 'object',
+                        fields: {
+                          bank_accounts: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          crypto_wallets: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          financial_accounts: {
+                            kind: 'object',
+                            fields: {
+                              protections: {
+                                kind: 'object',
+                                fields: {
+                                  psp_migration: {
+                                    kind: 'object',
+                                    fields: {
+                                      expires_at: {kind: 'int64_string'},
+                                      requested_at: {kind: 'int64_string'},
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
           identity: {
             kind: 'object',
             fields: {
@@ -129,6 +3359,1600 @@ export class AccountResource extends StripeResource {
         responseSchema: {
           kind: 'object',
           fields: {
+            configuration: {
+              kind: 'object',
+              fields: {
+                card_creator: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        commercial: {
+                          kind: 'object',
+                          fields: {
+                            celtic: {
+                              kind: 'object',
+                              fields: {
+                                charge_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                spend_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            cross_river_bank: {
+                              kind: 'object',
+                              fields: {
+                                charge_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                prepaid_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                spend_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            fifth_third: {
+                              kind: 'object',
+                              fields: {
+                                charge_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            lead: {
+                              kind: 'object',
+                              fields: {
+                                prepaid_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            stripe: {
+                              kind: 'object',
+                              fields: {
+                                charge_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                prepaid_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        consumer: {
+                          kind: 'object',
+                          fields: {
+                            celtic: {
+                              kind: 'object',
+                              fields: {
+                                revolving_credit_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            cross_river_bank: {
+                              kind: 'object',
+                              fields: {
+                                prepaid_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            lead: {
+                              kind: 'object',
+                              fields: {
+                                debit_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                prepaid_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                customer: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        automatic_indirect_tax: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                merchant: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        ach_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        acss_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        affirm_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        afterpay_clearpay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        alma_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        amazon_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        au_becs_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        bacs_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        bancontact_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        blik_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        boleto_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        card_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        cartes_bancaires_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        cashapp_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        eps_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        fpx_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        gb_bank_transfer_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        grabpay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        ideal_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        jcb_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        jp_bank_transfer_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        kakao_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        klarna_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        konbini_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        kr_card_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        link_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        mobilepay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        multibanco_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        mx_bank_transfer_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        naver_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        oxxo_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        p24_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        pay_by_bank_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        payco_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        paynow_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        promptpay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        revolut_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        samsung_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        sepa_bank_transfer_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        sepa_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        stripe_balance: {
+                          kind: 'object',
+                          fields: {
+                            payouts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        swish_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        twint_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        us_bank_transfer_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        zip_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                recipient: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        bank_accounts: {
+                          kind: 'object',
+                          fields: {
+                            instant: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            local: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            wire: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        cards: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        crypto_wallets: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        paper_checks: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        stripe_balance: {
+                          kind: 'object',
+                          fields: {
+                            payouts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            stripe_transfers: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                storer: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        consumer: {
+                          kind: 'object',
+                          fields: {
+                            holds_currencies: {
+                              kind: 'object',
+                              fields: {
+                                usd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        financial_addresses: {
+                          kind: 'object',
+                          fields: {
+                            bank_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            crypto_wallets: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        holds_currencies: {
+                          kind: 'object',
+                          fields: {
+                            eur: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            gbp: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            usd: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            usdc: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        inbound_transfers: {
+                          kind: 'object',
+                          fields: {
+                            bank_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        outbound_payments: {
+                          kind: 'object',
+                          fields: {
+                            bank_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            cards: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            crypto_wallets: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            financial_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            paper_checks: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        outbound_transfers: {
+                          kind: 'object',
+                          fields: {
+                            bank_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            crypto_wallets: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            financial_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
             identity: {
               kind: 'object',
               fields: {
@@ -185,6 +5009,1600 @@ export class AccountResource extends StripeResource {
         responseSchema: {
           kind: 'object',
           fields: {
+            configuration: {
+              kind: 'object',
+              fields: {
+                card_creator: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        commercial: {
+                          kind: 'object',
+                          fields: {
+                            celtic: {
+                              kind: 'object',
+                              fields: {
+                                charge_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                spend_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            cross_river_bank: {
+                              kind: 'object',
+                              fields: {
+                                charge_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                prepaid_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                spend_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            fifth_third: {
+                              kind: 'object',
+                              fields: {
+                                charge_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            lead: {
+                              kind: 'object',
+                              fields: {
+                                prepaid_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            stripe: {
+                              kind: 'object',
+                              fields: {
+                                charge_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                prepaid_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        consumer: {
+                          kind: 'object',
+                          fields: {
+                            celtic: {
+                              kind: 'object',
+                              fields: {
+                                revolving_credit_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            cross_river_bank: {
+                              kind: 'object',
+                              fields: {
+                                prepaid_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            lead: {
+                              kind: 'object',
+                              fields: {
+                                debit_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                prepaid_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                customer: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        automatic_indirect_tax: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                merchant: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        ach_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        acss_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        affirm_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        afterpay_clearpay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        alma_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        amazon_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        au_becs_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        bacs_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        bancontact_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        blik_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        boleto_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        card_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        cartes_bancaires_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        cashapp_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        eps_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        fpx_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        gb_bank_transfer_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        grabpay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        ideal_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        jcb_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        jp_bank_transfer_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        kakao_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        klarna_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        konbini_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        kr_card_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        link_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        mobilepay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        multibanco_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        mx_bank_transfer_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        naver_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        oxxo_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        p24_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        pay_by_bank_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        payco_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        paynow_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        promptpay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        revolut_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        samsung_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        sepa_bank_transfer_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        sepa_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        stripe_balance: {
+                          kind: 'object',
+                          fields: {
+                            payouts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        swish_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        twint_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        us_bank_transfer_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        zip_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                recipient: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        bank_accounts: {
+                          kind: 'object',
+                          fields: {
+                            instant: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            local: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            wire: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        cards: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        crypto_wallets: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        paper_checks: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        stripe_balance: {
+                          kind: 'object',
+                          fields: {
+                            payouts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            stripe_transfers: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                storer: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        consumer: {
+                          kind: 'object',
+                          fields: {
+                            holds_currencies: {
+                              kind: 'object',
+                              fields: {
+                                usd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        financial_addresses: {
+                          kind: 'object',
+                          fields: {
+                            bank_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            crypto_wallets: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        holds_currencies: {
+                          kind: 'object',
+                          fields: {
+                            eur: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            gbp: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            usd: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            usdc: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        inbound_transfers: {
+                          kind: 'object',
+                          fields: {
+                            bank_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        outbound_payments: {
+                          kind: 'object',
+                          fields: {
+                            bank_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            cards: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            crypto_wallets: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            financial_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            paper_checks: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        outbound_transfers: {
+                          kind: 'object',
+                          fields: {
+                            bank_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            crypto_wallets: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            financial_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
             identity: {
               kind: 'object',
               fields: {
@@ -222,6 +6640,1600 @@ export class AccountResource extends StripeResource {
         responseSchema: {
           kind: 'object',
           fields: {
+            configuration: {
+              kind: 'object',
+              fields: {
+                card_creator: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        commercial: {
+                          kind: 'object',
+                          fields: {
+                            celtic: {
+                              kind: 'object',
+                              fields: {
+                                charge_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                spend_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            cross_river_bank: {
+                              kind: 'object',
+                              fields: {
+                                charge_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                prepaid_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                spend_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            fifth_third: {
+                              kind: 'object',
+                              fields: {
+                                charge_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            lead: {
+                              kind: 'object',
+                              fields: {
+                                prepaid_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            stripe: {
+                              kind: 'object',
+                              fields: {
+                                charge_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                prepaid_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        consumer: {
+                          kind: 'object',
+                          fields: {
+                            celtic: {
+                              kind: 'object',
+                              fields: {
+                                revolving_credit_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            cross_river_bank: {
+                              kind: 'object',
+                              fields: {
+                                prepaid_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            lead: {
+                              kind: 'object',
+                              fields: {
+                                debit_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                prepaid_card: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                customer: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        automatic_indirect_tax: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                merchant: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        ach_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        acss_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        affirm_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        afterpay_clearpay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        alma_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        amazon_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        au_becs_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        bacs_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        bancontact_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        blik_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        boleto_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        card_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        cartes_bancaires_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        cashapp_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        eps_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        fpx_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        gb_bank_transfer_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        grabpay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        ideal_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        jcb_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        jp_bank_transfer_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        kakao_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        klarna_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        konbini_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        kr_card_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        link_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        mobilepay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        multibanco_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        mx_bank_transfer_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        naver_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        oxxo_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        p24_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        pay_by_bank_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        payco_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        paynow_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        promptpay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        revolut_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        samsung_pay_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        sepa_bank_transfer_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        sepa_debit_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        stripe_balance: {
+                          kind: 'object',
+                          fields: {
+                            payouts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        swish_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        twint_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        us_bank_transfer_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        zip_payments: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                recipient: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        bank_accounts: {
+                          kind: 'object',
+                          fields: {
+                            instant: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            local: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            wire: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        cards: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        crypto_wallets: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        paper_checks: {
+                          kind: 'object',
+                          fields: {
+                            protections: {
+                              kind: 'object',
+                              fields: {
+                                psp_migration: {
+                                  kind: 'object',
+                                  fields: {
+                                    expires_at: {kind: 'int64_string'},
+                                    requested_at: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        stripe_balance: {
+                          kind: 'object',
+                          fields: {
+                            payouts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            stripe_transfers: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                storer: {
+                  kind: 'object',
+                  fields: {
+                    capabilities: {
+                      kind: 'object',
+                      fields: {
+                        consumer: {
+                          kind: 'object',
+                          fields: {
+                            holds_currencies: {
+                              kind: 'object',
+                              fields: {
+                                usd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        financial_addresses: {
+                          kind: 'object',
+                          fields: {
+                            bank_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            crypto_wallets: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        holds_currencies: {
+                          kind: 'object',
+                          fields: {
+                            eur: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            gbp: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            usd: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            usdc: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        inbound_transfers: {
+                          kind: 'object',
+                          fields: {
+                            bank_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        outbound_payments: {
+                          kind: 'object',
+                          fields: {
+                            bank_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            cards: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            crypto_wallets: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            financial_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            paper_checks: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                        outbound_transfers: {
+                          kind: 'object',
+                          fields: {
+                            bank_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            crypto_wallets: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                            financial_accounts: {
+                              kind: 'object',
+                              fields: {
+                                protections: {
+                                  kind: 'object',
+                                  fields: {
+                                    psp_migration: {
+                                      kind: 'object',
+                                      fields: {
+                                        expires_at: {kind: 'int64_string'},
+                                        requested_at: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
             identity: {
               kind: 'object',
               fields: {
@@ -748,6 +8760,11 @@ export namespace V2 {
               export namespace Celtic {
                 export interface ChargeCard {
                   /**
+                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                   */
+                  protections: ChargeCard.Protections;
+
+                  /**
                    * The status of the Capability.
                    */
                   status: ChargeCard.Status;
@@ -760,6 +8777,11 @@ export namespace V2 {
 
                 export interface SpendCard {
                   /**
+                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                   */
+                  protections: SpendCard.Protections;
+
+                  /**
                    * The status of the Capability.
                    */
                   status: SpendCard.Status;
@@ -771,6 +8793,13 @@ export namespace V2 {
                 }
 
                 export namespace ChargeCard {
+                  export interface Protections {
+                    /**
+                     * Protection details for PSP migration.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
                   export type Status =
                     | 'active'
                     | 'pending'
@@ -787,6 +8816,33 @@ export namespace V2 {
                      * Machine-readable code explaining how to make the Capability active.
                      */
                     resolution: StatusDetail.Resolution;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * The time until which the protection will expire, as a Unix timestamp.
+                       */
+                      expires_at?: bigint;
+
+                      /**
+                       * The time at which the protection was requested, as a Unix timestamp.
+                       */
+                      requested_at: bigint;
+
+                      /**
+                       * The current status of the protection.
+                       */
+                      status: PspMigration.Status;
+                    }
+
+                    export namespace PspMigration {
+                      export type Status =
+                        | 'active'
+                        | 'disrupted'
+                        | 'expired'
+                        | 'inactive';
+                    }
                   }
 
                   export namespace StatusDetail {
@@ -807,6 +8863,13 @@ export namespace V2 {
                 }
 
                 export namespace SpendCard {
+                  export interface Protections {
+                    /**
+                     * Protection details for PSP migration.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
                   export type Status =
                     | 'active'
                     | 'pending'
@@ -823,6 +8886,33 @@ export namespace V2 {
                      * Machine-readable code explaining how to make the Capability active.
                      */
                     resolution: StatusDetail.Resolution;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * The time until which the protection will expire, as a Unix timestamp.
+                       */
+                      expires_at?: bigint;
+
+                      /**
+                       * The time at which the protection was requested, as a Unix timestamp.
+                       */
+                      requested_at: bigint;
+
+                      /**
+                       * The current status of the protection.
+                       */
+                      status: PspMigration.Status;
+                    }
+
+                    export namespace PspMigration {
+                      export type Status =
+                        | 'active'
+                        | 'disrupted'
+                        | 'expired'
+                        | 'inactive';
+                    }
                   }
 
                   export namespace StatusDetail {
@@ -846,6 +8936,11 @@ export namespace V2 {
               export namespace CrossRiverBank {
                 export interface ChargeCard {
                   /**
+                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                   */
+                  protections: ChargeCard.Protections;
+
+                  /**
                    * The status of the Capability.
                    */
                   status: ChargeCard.Status;
@@ -857,6 +8952,11 @@ export namespace V2 {
                 }
 
                 export interface PrepaidCard {
+                  /**
+                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                   */
+                  protections: PrepaidCard.Protections;
+
                   /**
                    * The status of the Capability.
                    */
@@ -870,6 +8970,11 @@ export namespace V2 {
 
                 export interface SpendCard {
                   /**
+                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                   */
+                  protections: SpendCard.Protections;
+
+                  /**
                    * The status of the Capability.
                    */
                   status: SpendCard.Status;
@@ -881,6 +8986,13 @@ export namespace V2 {
                 }
 
                 export namespace ChargeCard {
+                  export interface Protections {
+                    /**
+                     * Protection details for PSP migration.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
                   export type Status =
                     | 'active'
                     | 'pending'
@@ -897,6 +9009,33 @@ export namespace V2 {
                      * Machine-readable code explaining how to make the Capability active.
                      */
                     resolution: StatusDetail.Resolution;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * The time until which the protection will expire, as a Unix timestamp.
+                       */
+                      expires_at?: bigint;
+
+                      /**
+                       * The time at which the protection was requested, as a Unix timestamp.
+                       */
+                      requested_at: bigint;
+
+                      /**
+                       * The current status of the protection.
+                       */
+                      status: PspMigration.Status;
+                    }
+
+                    export namespace PspMigration {
+                      export type Status =
+                        | 'active'
+                        | 'disrupted'
+                        | 'expired'
+                        | 'inactive';
+                    }
                   }
 
                   export namespace StatusDetail {
@@ -917,6 +9056,13 @@ export namespace V2 {
                 }
 
                 export namespace PrepaidCard {
+                  export interface Protections {
+                    /**
+                     * Protection details for PSP migration.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
                   export type Status =
                     | 'active'
                     | 'pending'
@@ -933,6 +9079,33 @@ export namespace V2 {
                      * Machine-readable code explaining how to make the Capability active.
                      */
                     resolution: StatusDetail.Resolution;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * The time until which the protection will expire, as a Unix timestamp.
+                       */
+                      expires_at?: bigint;
+
+                      /**
+                       * The time at which the protection was requested, as a Unix timestamp.
+                       */
+                      requested_at: bigint;
+
+                      /**
+                       * The current status of the protection.
+                       */
+                      status: PspMigration.Status;
+                    }
+
+                    export namespace PspMigration {
+                      export type Status =
+                        | 'active'
+                        | 'disrupted'
+                        | 'expired'
+                        | 'inactive';
+                    }
                   }
 
                   export namespace StatusDetail {
@@ -953,6 +9126,13 @@ export namespace V2 {
                 }
 
                 export namespace SpendCard {
+                  export interface Protections {
+                    /**
+                     * Protection details for PSP migration.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
                   export type Status =
                     | 'active'
                     | 'pending'
@@ -969,6 +9149,33 @@ export namespace V2 {
                      * Machine-readable code explaining how to make the Capability active.
                      */
                     resolution: StatusDetail.Resolution;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * The time until which the protection will expire, as a Unix timestamp.
+                       */
+                      expires_at?: bigint;
+
+                      /**
+                       * The time at which the protection was requested, as a Unix timestamp.
+                       */
+                      requested_at: bigint;
+
+                      /**
+                       * The current status of the protection.
+                       */
+                      status: PspMigration.Status;
+                    }
+
+                    export namespace PspMigration {
+                      export type Status =
+                        | 'active'
+                        | 'disrupted'
+                        | 'expired'
+                        | 'inactive';
+                    }
                   }
 
                   export namespace StatusDetail {
@@ -992,6 +9199,11 @@ export namespace V2 {
               export namespace FifthThird {
                 export interface ChargeCard {
                   /**
+                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                   */
+                  protections: ChargeCard.Protections;
+
+                  /**
                    * The status of the Capability.
                    */
                   status: ChargeCard.Status;
@@ -1003,6 +9215,13 @@ export namespace V2 {
                 }
 
                 export namespace ChargeCard {
+                  export interface Protections {
+                    /**
+                     * Protection details for PSP migration.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
                   export type Status =
                     | 'active'
                     | 'pending'
@@ -1019,6 +9238,33 @@ export namespace V2 {
                      * Machine-readable code explaining how to make the Capability active.
                      */
                     resolution: StatusDetail.Resolution;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * The time until which the protection will expire, as a Unix timestamp.
+                       */
+                      expires_at?: bigint;
+
+                      /**
+                       * The time at which the protection was requested, as a Unix timestamp.
+                       */
+                      requested_at: bigint;
+
+                      /**
+                       * The current status of the protection.
+                       */
+                      status: PspMigration.Status;
+                    }
+
+                    export namespace PspMigration {
+                      export type Status =
+                        | 'active'
+                        | 'disrupted'
+                        | 'expired'
+                        | 'inactive';
+                    }
                   }
 
                   export namespace StatusDetail {
@@ -1042,6 +9288,11 @@ export namespace V2 {
               export namespace Lead {
                 export interface PrepaidCard {
                   /**
+                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                   */
+                  protections: PrepaidCard.Protections;
+
+                  /**
                    * The status of the Capability.
                    */
                   status: PrepaidCard.Status;
@@ -1053,6 +9304,13 @@ export namespace V2 {
                 }
 
                 export namespace PrepaidCard {
+                  export interface Protections {
+                    /**
+                     * Protection details for PSP migration.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
                   export type Status =
                     | 'active'
                     | 'pending'
@@ -1069,6 +9327,33 @@ export namespace V2 {
                      * Machine-readable code explaining how to make the Capability active.
                      */
                     resolution: StatusDetail.Resolution;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * The time until which the protection will expire, as a Unix timestamp.
+                       */
+                      expires_at?: bigint;
+
+                      /**
+                       * The time at which the protection was requested, as a Unix timestamp.
+                       */
+                      requested_at: bigint;
+
+                      /**
+                       * The current status of the protection.
+                       */
+                      status: PspMigration.Status;
+                    }
+
+                    export namespace PspMigration {
+                      export type Status =
+                        | 'active'
+                        | 'disrupted'
+                        | 'expired'
+                        | 'inactive';
+                    }
                   }
 
                   export namespace StatusDetail {
@@ -1092,6 +9377,11 @@ export namespace V2 {
               export namespace Stripe {
                 export interface ChargeCard {
                   /**
+                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                   */
+                  protections: ChargeCard.Protections;
+
+                  /**
                    * The status of the Capability.
                    */
                   status: ChargeCard.Status;
@@ -1104,6 +9394,11 @@ export namespace V2 {
 
                 export interface PrepaidCard {
                   /**
+                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                   */
+                  protections: PrepaidCard.Protections;
+
+                  /**
                    * The status of the Capability.
                    */
                   status: PrepaidCard.Status;
@@ -1115,6 +9410,13 @@ export namespace V2 {
                 }
 
                 export namespace ChargeCard {
+                  export interface Protections {
+                    /**
+                     * Protection details for PSP migration.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
                   export type Status =
                     | 'active'
                     | 'pending'
@@ -1131,6 +9433,33 @@ export namespace V2 {
                      * Machine-readable code explaining how to make the Capability active.
                      */
                     resolution: StatusDetail.Resolution;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * The time until which the protection will expire, as a Unix timestamp.
+                       */
+                      expires_at?: bigint;
+
+                      /**
+                       * The time at which the protection was requested, as a Unix timestamp.
+                       */
+                      requested_at: bigint;
+
+                      /**
+                       * The current status of the protection.
+                       */
+                      status: PspMigration.Status;
+                    }
+
+                    export namespace PspMigration {
+                      export type Status =
+                        | 'active'
+                        | 'disrupted'
+                        | 'expired'
+                        | 'inactive';
+                    }
                   }
 
                   export namespace StatusDetail {
@@ -1151,6 +9480,13 @@ export namespace V2 {
                 }
 
                 export namespace PrepaidCard {
+                  export interface Protections {
+                    /**
+                     * Protection details for PSP migration.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
                   export type Status =
                     | 'active'
                     | 'pending'
@@ -1167,6 +9503,33 @@ export namespace V2 {
                      * Machine-readable code explaining how to make the Capability active.
                      */
                     resolution: StatusDetail.Resolution;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * The time until which the protection will expire, as a Unix timestamp.
+                       */
+                      expires_at?: bigint;
+
+                      /**
+                       * The time at which the protection was requested, as a Unix timestamp.
+                       */
+                      requested_at: bigint;
+
+                      /**
+                       * The current status of the protection.
+                       */
+                      status: PspMigration.Status;
+                    }
+
+                    export namespace PspMigration {
+                      export type Status =
+                        | 'active'
+                        | 'disrupted'
+                        | 'expired'
+                        | 'inactive';
+                    }
                   }
 
                   export namespace StatusDetail {
@@ -1218,6 +9581,11 @@ export namespace V2 {
               export namespace Celtic {
                 export interface RevolvingCreditCard {
                   /**
+                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                   */
+                  protections: RevolvingCreditCard.Protections;
+
+                  /**
                    * The status of the Capability.
                    */
                   status: RevolvingCreditCard.Status;
@@ -1229,6 +9597,13 @@ export namespace V2 {
                 }
 
                 export namespace RevolvingCreditCard {
+                  export interface Protections {
+                    /**
+                     * Protection details for PSP migration.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
                   export type Status =
                     | 'active'
                     | 'pending'
@@ -1245,6 +9620,33 @@ export namespace V2 {
                      * Machine-readable code explaining how to make the Capability active.
                      */
                     resolution: StatusDetail.Resolution;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * The time until which the protection will expire, as a Unix timestamp.
+                       */
+                      expires_at?: bigint;
+
+                      /**
+                       * The time at which the protection was requested, as a Unix timestamp.
+                       */
+                      requested_at: bigint;
+
+                      /**
+                       * The current status of the protection.
+                       */
+                      status: PspMigration.Status;
+                    }
+
+                    export namespace PspMigration {
+                      export type Status =
+                        | 'active'
+                        | 'disrupted'
+                        | 'expired'
+                        | 'inactive';
+                    }
                   }
 
                   export namespace StatusDetail {
@@ -1268,6 +9670,11 @@ export namespace V2 {
               export namespace CrossRiverBank {
                 export interface PrepaidCard {
                   /**
+                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                   */
+                  protections: PrepaidCard.Protections;
+
+                  /**
                    * The status of the Capability.
                    */
                   status: PrepaidCard.Status;
@@ -1279,6 +9686,13 @@ export namespace V2 {
                 }
 
                 export namespace PrepaidCard {
+                  export interface Protections {
+                    /**
+                     * Protection details for PSP migration.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
                   export type Status =
                     | 'active'
                     | 'pending'
@@ -1295,6 +9709,33 @@ export namespace V2 {
                      * Machine-readable code explaining how to make the Capability active.
                      */
                     resolution: StatusDetail.Resolution;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * The time until which the protection will expire, as a Unix timestamp.
+                       */
+                      expires_at?: bigint;
+
+                      /**
+                       * The time at which the protection was requested, as a Unix timestamp.
+                       */
+                      requested_at: bigint;
+
+                      /**
+                       * The current status of the protection.
+                       */
+                      status: PspMigration.Status;
+                    }
+
+                    export namespace PspMigration {
+                      export type Status =
+                        | 'active'
+                        | 'disrupted'
+                        | 'expired'
+                        | 'inactive';
+                    }
                   }
 
                   export namespace StatusDetail {
@@ -1318,6 +9759,11 @@ export namespace V2 {
               export namespace Lead {
                 export interface DebitCard {
                   /**
+                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                   */
+                  protections: DebitCard.Protections;
+
+                  /**
                    * The status of the Capability.
                    */
                   status: DebitCard.Status;
@@ -1330,6 +9776,11 @@ export namespace V2 {
 
                 export interface PrepaidCard {
                   /**
+                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                   */
+                  protections: PrepaidCard.Protections;
+
+                  /**
                    * The status of the Capability.
                    */
                   status: PrepaidCard.Status;
@@ -1341,6 +9792,13 @@ export namespace V2 {
                 }
 
                 export namespace DebitCard {
+                  export interface Protections {
+                    /**
+                     * Protection details for PSP migration.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
                   export type Status =
                     | 'active'
                     | 'pending'
@@ -1357,6 +9815,33 @@ export namespace V2 {
                      * Machine-readable code explaining how to make the Capability active.
                      */
                     resolution: StatusDetail.Resolution;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * The time until which the protection will expire, as a Unix timestamp.
+                       */
+                      expires_at?: bigint;
+
+                      /**
+                       * The time at which the protection was requested, as a Unix timestamp.
+                       */
+                      requested_at: bigint;
+
+                      /**
+                       * The current status of the protection.
+                       */
+                      status: PspMigration.Status;
+                    }
+
+                    export namespace PspMigration {
+                      export type Status =
+                        | 'active'
+                        | 'disrupted'
+                        | 'expired'
+                        | 'inactive';
+                    }
                   }
 
                   export namespace StatusDetail {
@@ -1377,6 +9862,13 @@ export namespace V2 {
                 }
 
                 export namespace PrepaidCard {
+                  export interface Protections {
+                    /**
+                     * Protection details for PSP migration.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
                   export type Status =
                     | 'active'
                     | 'pending'
@@ -1393,6 +9885,33 @@ export namespace V2 {
                      * Machine-readable code explaining how to make the Capability active.
                      */
                     resolution: StatusDetail.Resolution;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * The time until which the protection will expire, as a Unix timestamp.
+                       */
+                      expires_at?: bigint;
+
+                      /**
+                       * The time at which the protection was requested, as a Unix timestamp.
+                       */
+                      requested_at: bigint;
+
+                      /**
+                       * The current status of the protection.
+                       */
+                      status: PspMigration.Status;
+                    }
+
+                    export namespace PspMigration {
+                      export type Status =
+                        | 'active'
+                        | 'disrupted'
+                        | 'expired'
+                        | 'inactive';
+                    }
                   }
 
                   export namespace StatusDetail {
@@ -1561,6 +10080,11 @@ export namespace V2 {
           export namespace Capabilities {
             export interface AutomaticIndirectTax {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: AutomaticIndirectTax.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: AutomaticIndirectTax.Status;
@@ -1572,6 +10096,13 @@ export namespace V2 {
             }
 
             export namespace AutomaticIndirectTax {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -1588,6 +10119,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -1982,6 +10540,11 @@ export namespace V2 {
           export namespace Capabilities {
             export interface AchDebitPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: AchDebitPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: AchDebitPayments.Status;
@@ -1993,6 +10556,11 @@ export namespace V2 {
             }
 
             export interface AcssDebitPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: AcssDebitPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2006,6 +10574,11 @@ export namespace V2 {
 
             export interface AffirmPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: AffirmPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: AffirmPayments.Status;
@@ -2017,6 +10590,11 @@ export namespace V2 {
             }
 
             export interface AfterpayClearpayPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: AfterpayClearpayPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2030,6 +10608,11 @@ export namespace V2 {
 
             export interface AlmaPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: AlmaPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: AlmaPayments.Status;
@@ -2041,6 +10624,11 @@ export namespace V2 {
             }
 
             export interface AmazonPayPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: AmazonPayPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2054,6 +10642,11 @@ export namespace V2 {
 
             export interface AuBecsDebitPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: AuBecsDebitPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: AuBecsDebitPayments.Status;
@@ -2065,6 +10658,11 @@ export namespace V2 {
             }
 
             export interface BacsDebitPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: BacsDebitPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2078,6 +10676,11 @@ export namespace V2 {
 
             export interface BancontactPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: BancontactPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: BancontactPayments.Status;
@@ -2089,6 +10692,11 @@ export namespace V2 {
             }
 
             export interface BlikPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: BlikPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2102,6 +10710,11 @@ export namespace V2 {
 
             export interface BoletoPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: BoletoPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: BoletoPayments.Status;
@@ -2113,6 +10726,11 @@ export namespace V2 {
             }
 
             export interface CardPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: CardPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2126,6 +10744,11 @@ export namespace V2 {
 
             export interface CartesBancairesPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: CartesBancairesPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: CartesBancairesPayments.Status;
@@ -2137,6 +10760,11 @@ export namespace V2 {
             }
 
             export interface CashappPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: CashappPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2150,6 +10778,11 @@ export namespace V2 {
 
             export interface EpsPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: EpsPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: EpsPayments.Status;
@@ -2161,6 +10794,11 @@ export namespace V2 {
             }
 
             export interface FpxPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: FpxPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2174,6 +10812,11 @@ export namespace V2 {
 
             export interface GbBankTransferPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: GbBankTransferPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: GbBankTransferPayments.Status;
@@ -2185,6 +10828,11 @@ export namespace V2 {
             }
 
             export interface GrabpayPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: GrabpayPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2198,6 +10846,11 @@ export namespace V2 {
 
             export interface IdealPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: IdealPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: IdealPayments.Status;
@@ -2209,6 +10862,11 @@ export namespace V2 {
             }
 
             export interface JcbPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: JcbPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2222,6 +10880,11 @@ export namespace V2 {
 
             export interface JpBankTransferPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: JpBankTransferPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: JpBankTransferPayments.Status;
@@ -2233,6 +10896,11 @@ export namespace V2 {
             }
 
             export interface KakaoPayPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: KakaoPayPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2246,6 +10914,11 @@ export namespace V2 {
 
             export interface KlarnaPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: KlarnaPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: KlarnaPayments.Status;
@@ -2257,6 +10930,11 @@ export namespace V2 {
             }
 
             export interface KonbiniPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: KonbiniPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2270,6 +10948,11 @@ export namespace V2 {
 
             export interface KrCardPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: KrCardPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: KrCardPayments.Status;
@@ -2281,6 +10964,11 @@ export namespace V2 {
             }
 
             export interface LinkPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: LinkPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2294,6 +10982,11 @@ export namespace V2 {
 
             export interface MobilepayPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: MobilepayPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: MobilepayPayments.Status;
@@ -2305,6 +10998,11 @@ export namespace V2 {
             }
 
             export interface MultibancoPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: MultibancoPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2318,6 +11016,11 @@ export namespace V2 {
 
             export interface MxBankTransferPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: MxBankTransferPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: MxBankTransferPayments.Status;
@@ -2329,6 +11032,11 @@ export namespace V2 {
             }
 
             export interface NaverPayPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: NaverPayPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2342,6 +11050,11 @@ export namespace V2 {
 
             export interface OxxoPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: OxxoPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: OxxoPayments.Status;
@@ -2353,6 +11066,11 @@ export namespace V2 {
             }
 
             export interface P24Payments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: P24Payments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2366,6 +11084,11 @@ export namespace V2 {
 
             export interface PayByBankPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: PayByBankPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: PayByBankPayments.Status;
@@ -2377,6 +11100,11 @@ export namespace V2 {
             }
 
             export interface PaycoPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: PaycoPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2390,6 +11118,11 @@ export namespace V2 {
 
             export interface PaynowPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: PaynowPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: PaynowPayments.Status;
@@ -2401,6 +11134,11 @@ export namespace V2 {
             }
 
             export interface PromptpayPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: PromptpayPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2414,6 +11152,11 @@ export namespace V2 {
 
             export interface RevolutPayPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: RevolutPayPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: RevolutPayPayments.Status;
@@ -2425,6 +11168,11 @@ export namespace V2 {
             }
 
             export interface SamsungPayPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: SamsungPayPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2438,6 +11186,11 @@ export namespace V2 {
 
             export interface SepaBankTransferPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: SepaBankTransferPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: SepaBankTransferPayments.Status;
@@ -2449,6 +11202,11 @@ export namespace V2 {
             }
 
             export interface SepaDebitPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: SepaDebitPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2469,6 +11227,11 @@ export namespace V2 {
 
             export interface SwishPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: SwishPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: SwishPayments.Status;
@@ -2480,6 +11243,11 @@ export namespace V2 {
             }
 
             export interface TwintPayments {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: TwintPayments.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -2493,6 +11261,11 @@ export namespace V2 {
 
             export interface UsBankTransferPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: UsBankTransferPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: UsBankTransferPayments.Status;
@@ -2505,6 +11278,11 @@ export namespace V2 {
 
             export interface ZipPayments {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: ZipPayments.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: ZipPayments.Status;
@@ -2516,6 +11294,13 @@ export namespace V2 {
             }
 
             export namespace AchDebitPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -2532,6 +11317,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -2552,6 +11364,13 @@ export namespace V2 {
             }
 
             export namespace AcssDebitPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -2568,6 +11387,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -2588,6 +11434,13 @@ export namespace V2 {
             }
 
             export namespace AffirmPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -2604,6 +11457,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -2624,6 +11504,13 @@ export namespace V2 {
             }
 
             export namespace AfterpayClearpayPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -2640,6 +11527,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -2660,6 +11574,13 @@ export namespace V2 {
             }
 
             export namespace AlmaPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -2676,6 +11597,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -2696,6 +11644,13 @@ export namespace V2 {
             }
 
             export namespace AmazonPayPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -2712,6 +11667,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -2732,6 +11714,13 @@ export namespace V2 {
             }
 
             export namespace AuBecsDebitPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -2748,6 +11737,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -2768,6 +11784,13 @@ export namespace V2 {
             }
 
             export namespace BacsDebitPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -2784,6 +11807,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -2804,6 +11854,13 @@ export namespace V2 {
             }
 
             export namespace BancontactPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -2820,6 +11877,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -2840,6 +11924,13 @@ export namespace V2 {
             }
 
             export namespace BlikPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -2856,6 +11947,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -2876,6 +11994,13 @@ export namespace V2 {
             }
 
             export namespace BoletoPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -2892,6 +12017,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -2912,6 +12064,13 @@ export namespace V2 {
             }
 
             export namespace CardPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -2928,6 +12087,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -2948,6 +12134,13 @@ export namespace V2 {
             }
 
             export namespace CartesBancairesPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -2964,6 +12157,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -2984,6 +12204,13 @@ export namespace V2 {
             }
 
             export namespace CashappPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3000,6 +12227,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3020,6 +12274,13 @@ export namespace V2 {
             }
 
             export namespace EpsPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3036,6 +12297,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3056,6 +12344,13 @@ export namespace V2 {
             }
 
             export namespace FpxPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3072,6 +12367,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3092,6 +12414,13 @@ export namespace V2 {
             }
 
             export namespace GbBankTransferPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3108,6 +12437,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3128,6 +12484,13 @@ export namespace V2 {
             }
 
             export namespace GrabpayPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3144,6 +12507,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3164,6 +12554,13 @@ export namespace V2 {
             }
 
             export namespace IdealPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3180,6 +12577,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3200,6 +12624,13 @@ export namespace V2 {
             }
 
             export namespace JcbPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3216,6 +12647,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3236,6 +12694,13 @@ export namespace V2 {
             }
 
             export namespace JpBankTransferPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3252,6 +12717,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3272,6 +12764,13 @@ export namespace V2 {
             }
 
             export namespace KakaoPayPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3288,6 +12787,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3308,6 +12834,13 @@ export namespace V2 {
             }
 
             export namespace KlarnaPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3324,6 +12857,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3344,6 +12904,13 @@ export namespace V2 {
             }
 
             export namespace KonbiniPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3360,6 +12927,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3380,6 +12974,13 @@ export namespace V2 {
             }
 
             export namespace KrCardPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3396,6 +12997,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3416,6 +13044,13 @@ export namespace V2 {
             }
 
             export namespace LinkPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3432,6 +13067,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3452,6 +13114,13 @@ export namespace V2 {
             }
 
             export namespace MobilepayPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3468,6 +13137,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3488,6 +13184,13 @@ export namespace V2 {
             }
 
             export namespace MultibancoPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3504,6 +13207,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3524,6 +13254,13 @@ export namespace V2 {
             }
 
             export namespace MxBankTransferPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3540,6 +13277,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3560,6 +13324,13 @@ export namespace V2 {
             }
 
             export namespace NaverPayPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3576,6 +13347,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3596,6 +13394,13 @@ export namespace V2 {
             }
 
             export namespace OxxoPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3612,6 +13417,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3632,6 +13464,13 @@ export namespace V2 {
             }
 
             export namespace P24Payments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3648,6 +13487,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3668,6 +13534,13 @@ export namespace V2 {
             }
 
             export namespace PayByBankPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3684,6 +13557,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3704,6 +13604,13 @@ export namespace V2 {
             }
 
             export namespace PaycoPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3720,6 +13627,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3740,6 +13674,13 @@ export namespace V2 {
             }
 
             export namespace PaynowPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3756,6 +13697,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3776,6 +13744,13 @@ export namespace V2 {
             }
 
             export namespace PromptpayPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3792,6 +13767,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3812,6 +13814,13 @@ export namespace V2 {
             }
 
             export namespace RevolutPayPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3828,6 +13837,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3848,6 +13884,13 @@ export namespace V2 {
             }
 
             export namespace SamsungPayPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3864,6 +13907,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3884,6 +13954,13 @@ export namespace V2 {
             }
 
             export namespace SepaBankTransferPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3900,6 +13977,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3920,6 +14024,13 @@ export namespace V2 {
             }
 
             export namespace SepaDebitPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -3936,6 +14047,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -3958,6 +14096,11 @@ export namespace V2 {
             export namespace StripeBalance {
               export interface Payouts {
                 /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Payouts.Protections;
+
+                /**
                  * The status of the Capability.
                  */
                 status: Payouts.Status;
@@ -3969,6 +14112,13 @@ export namespace V2 {
               }
 
               export namespace Payouts {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -3985,6 +14135,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -4006,6 +14183,13 @@ export namespace V2 {
             }
 
             export namespace SwishPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -4022,6 +14206,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -4042,6 +14253,13 @@ export namespace V2 {
             }
 
             export namespace TwintPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -4058,6 +14276,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -4078,6 +14323,13 @@ export namespace V2 {
             }
 
             export namespace UsBankTransferPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -4094,6 +14346,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -4114,6 +14393,13 @@ export namespace V2 {
             }
 
             export namespace ZipPayments {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -4130,6 +14416,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -4343,6 +14656,11 @@ export namespace V2 {
 
             export interface Cards {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Cards.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: Cards.Status;
@@ -4355,6 +14673,11 @@ export namespace V2 {
 
             export interface CryptoWallets {
               /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: CryptoWallets.Protections;
+
+              /**
                * The status of the Capability.
                */
               status: CryptoWallets.Status;
@@ -4366,6 +14689,11 @@ export namespace V2 {
             }
 
             export interface PaperChecks {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: PaperChecks.Protections;
+
               /**
                * The status of the Capability.
                */
@@ -4392,6 +14720,11 @@ export namespace V2 {
             export namespace BankAccounts {
               export interface Instant {
                 /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Instant.Protections;
+
+                /**
                  * The status of the Capability.
                  */
                 status: Instant.Status;
@@ -4403,6 +14736,11 @@ export namespace V2 {
               }
 
               export interface Local {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Local.Protections;
+
                 /**
                  * The status of the Capability.
                  */
@@ -4416,6 +14754,11 @@ export namespace V2 {
 
               export interface Wire {
                 /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Wire.Protections;
+
+                /**
                  * The status of the Capability.
                  */
                 status: Wire.Status;
@@ -4427,6 +14770,13 @@ export namespace V2 {
               }
 
               export namespace Instant {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -4443,6 +14793,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -4463,6 +14840,13 @@ export namespace V2 {
               }
 
               export namespace Local {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -4479,6 +14863,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -4499,6 +14910,13 @@ export namespace V2 {
               }
 
               export namespace Wire {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -4515,6 +14933,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -4536,6 +14981,13 @@ export namespace V2 {
             }
 
             export namespace Cards {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -4552,6 +15004,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -4572,6 +15051,13 @@ export namespace V2 {
             }
 
             export namespace CryptoWallets {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -4588,6 +15074,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -4608,6 +15121,13 @@ export namespace V2 {
             }
 
             export namespace PaperChecks {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
               export type Status =
                 | 'active'
                 | 'pending'
@@ -4624,6 +15144,33 @@ export namespace V2 {
                  * Machine-readable code explaining how to make the Capability active.
                  */
                 resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
               }
 
               export namespace StatusDetail {
@@ -4646,6 +15193,11 @@ export namespace V2 {
             export namespace StripeBalance {
               export interface Payouts {
                 /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Payouts.Protections;
+
+                /**
                  * The status of the Capability.
                  */
                 status: Payouts.Status;
@@ -4658,6 +15210,11 @@ export namespace V2 {
 
               export interface StripeTransfers {
                 /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: StripeTransfers.Protections;
+
+                /**
                  * The status of the Capability.
                  */
                 status: StripeTransfers.Status;
@@ -4669,6 +15226,13 @@ export namespace V2 {
               }
 
               export namespace Payouts {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -4685,6 +15249,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -4705,6 +15296,13 @@ export namespace V2 {
               }
 
               export namespace StripeTransfers {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -4721,6 +15319,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -5078,6 +15703,11 @@ export namespace V2 {
               export namespace HoldsCurrencies {
                 export interface Usd {
                   /**
+                   * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                   */
+                  protections: Usd.Protections;
+
+                  /**
                    * The status of the Capability.
                    */
                   status: Usd.Status;
@@ -5089,6 +15719,13 @@ export namespace V2 {
                 }
 
                 export namespace Usd {
+                  export interface Protections {
+                    /**
+                     * Protection details for PSP migration.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
                   export type Status =
                     | 'active'
                     | 'pending'
@@ -5105,6 +15742,33 @@ export namespace V2 {
                      * Machine-readable code explaining how to make the Capability active.
                      */
                     resolution: StatusDetail.Resolution;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * The time until which the protection will expire, as a Unix timestamp.
+                       */
+                      expires_at?: bigint;
+
+                      /**
+                       * The time at which the protection was requested, as a Unix timestamp.
+                       */
+                      requested_at: bigint;
+
+                      /**
+                       * The current status of the protection.
+                       */
+                      status: PspMigration.Status;
+                    }
+
+                    export namespace PspMigration {
+                      export type Status =
+                        | 'active'
+                        | 'disrupted'
+                        | 'expired'
+                        | 'inactive';
+                    }
                   }
 
                   export namespace StatusDetail {
@@ -5129,6 +15793,11 @@ export namespace V2 {
             export namespace FinancialAddresses {
               export interface BankAccounts {
                 /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: BankAccounts.Protections;
+
+                /**
                  * The status of the Capability.
                  */
                 status: BankAccounts.Status;
@@ -5141,6 +15810,11 @@ export namespace V2 {
 
               export interface CryptoWallets {
                 /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: CryptoWallets.Protections;
+
+                /**
                  * The status of the Capability.
                  */
                 status: CryptoWallets.Status;
@@ -5152,6 +15826,13 @@ export namespace V2 {
               }
 
               export namespace BankAccounts {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -5168,6 +15849,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -5188,6 +15896,13 @@ export namespace V2 {
               }
 
               export namespace CryptoWallets {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -5204,6 +15919,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -5227,6 +15969,11 @@ export namespace V2 {
             export namespace HoldsCurrencies {
               export interface Eur {
                 /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Eur.Protections;
+
+                /**
                  * The status of the Capability.
                  */
                 status: Eur.Status;
@@ -5238,6 +15985,11 @@ export namespace V2 {
               }
 
               export interface Gbp {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Gbp.Protections;
+
                 /**
                  * The status of the Capability.
                  */
@@ -5251,6 +16003,11 @@ export namespace V2 {
 
               export interface Usd {
                 /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Usd.Protections;
+
+                /**
                  * The status of the Capability.
                  */
                 status: Usd.Status;
@@ -5263,6 +16020,11 @@ export namespace V2 {
 
               export interface Usdc {
                 /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Usdc.Protections;
+
+                /**
                  * The status of the Capability.
                  */
                 status: Usdc.Status;
@@ -5274,6 +16036,13 @@ export namespace V2 {
               }
 
               export namespace Eur {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -5290,6 +16059,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -5310,6 +16106,13 @@ export namespace V2 {
               }
 
               export namespace Gbp {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -5326,6 +16129,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -5346,6 +16176,13 @@ export namespace V2 {
               }
 
               export namespace Usd {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -5362,6 +16199,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -5382,6 +16246,13 @@ export namespace V2 {
               }
 
               export namespace Usdc {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -5398,6 +16269,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -5421,6 +16319,11 @@ export namespace V2 {
             export namespace InboundTransfers {
               export interface BankAccounts {
                 /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: BankAccounts.Protections;
+
+                /**
                  * The status of the Capability.
                  */
                 status: BankAccounts.Status;
@@ -5432,6 +16335,13 @@ export namespace V2 {
               }
 
               export namespace BankAccounts {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -5448,6 +16358,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -5471,6 +16408,11 @@ export namespace V2 {
             export namespace OutboundPayments {
               export interface BankAccounts {
                 /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: BankAccounts.Protections;
+
+                /**
                  * The status of the Capability.
                  */
                 status: BankAccounts.Status;
@@ -5482,6 +16424,11 @@ export namespace V2 {
               }
 
               export interface Cards {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: Cards.Protections;
+
                 /**
                  * The status of the Capability.
                  */
@@ -5495,6 +16442,11 @@ export namespace V2 {
 
               export interface CryptoWallets {
                 /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: CryptoWallets.Protections;
+
+                /**
                  * The status of the Capability.
                  */
                 status: CryptoWallets.Status;
@@ -5506,6 +16458,11 @@ export namespace V2 {
               }
 
               export interface FinancialAccounts {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: FinancialAccounts.Protections;
+
                 /**
                  * The status of the Capability.
                  */
@@ -5519,6 +16476,11 @@ export namespace V2 {
 
               export interface PaperChecks {
                 /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: PaperChecks.Protections;
+
+                /**
                  * The status of the Capability.
                  */
                 status: PaperChecks.Status;
@@ -5530,6 +16492,13 @@ export namespace V2 {
               }
 
               export namespace BankAccounts {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -5546,6 +16515,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -5566,6 +16562,13 @@ export namespace V2 {
               }
 
               export namespace Cards {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -5582,6 +16585,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -5602,6 +16632,13 @@ export namespace V2 {
               }
 
               export namespace CryptoWallets {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -5618,6 +16655,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -5638,6 +16702,13 @@ export namespace V2 {
               }
 
               export namespace FinancialAccounts {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -5654,6 +16725,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -5674,6 +16772,13 @@ export namespace V2 {
               }
 
               export namespace PaperChecks {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -5690,6 +16795,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -5713,6 +16845,11 @@ export namespace V2 {
             export namespace OutboundTransfers {
               export interface BankAccounts {
                 /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: BankAccounts.Protections;
+
+                /**
                  * The status of the Capability.
                  */
                 status: BankAccounts.Status;
@@ -5724,6 +16861,11 @@ export namespace V2 {
               }
 
               export interface CryptoWallets {
+                /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: CryptoWallets.Protections;
+
                 /**
                  * The status of the Capability.
                  */
@@ -5737,6 +16879,11 @@ export namespace V2 {
 
               export interface FinancialAccounts {
                 /**
+                 * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+                 */
+                protections: FinancialAccounts.Protections;
+
+                /**
                  * The status of the Capability.
                  */
                 status: FinancialAccounts.Status;
@@ -5748,6 +16895,13 @@ export namespace V2 {
               }
 
               export namespace BankAccounts {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -5764,6 +16918,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -5784,6 +16965,13 @@ export namespace V2 {
               }
 
               export namespace CryptoWallets {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -5800,6 +16988,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -5820,6 +17035,13 @@ export namespace V2 {
               }
 
               export namespace FinancialAccounts {
+                export interface Protections {
+                  /**
+                   * Protection details for PSP migration.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
                 export type Status =
                   | 'active'
                   | 'pending'
@@ -5836,6 +17058,33 @@ export namespace V2 {
                    * Machine-readable code explaining how to make the Capability active.
                    */
                   resolution: StatusDetail.Resolution;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * The time until which the protection will expire, as a Unix timestamp.
+                     */
+                    expires_at?: bigint;
+
+                    /**
+                     * The time at which the protection was requested, as a Unix timestamp.
+                     */
+                    requested_at: bigint;
+
+                    /**
+                     * The current status of the protection.
+                     */
+                    status: PspMigration.Status;
+                  }
+
+                  export namespace PspMigration {
+                    export type Status =
+                      | 'active'
+                      | 'disrupted'
+                      | 'expired'
+                      | 'inactive';
+                  }
                 }
 
                 export namespace StatusDetail {
@@ -9862,6 +21111,11 @@ export namespace V2 {
               export namespace Celtic {
                 export interface ChargeCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: ChargeCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested: boolean;
@@ -9869,21 +21123,72 @@ export namespace V2 {
 
                 export interface SpendCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: SpendCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested: boolean;
+                }
+
+                export namespace ChargeCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace SpendCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
 
               export namespace CrossRiverBank {
                 export interface ChargeCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: ChargeCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested: boolean;
                 }
 
                 export interface PrepaidCard {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: PrepaidCard.Protections;
+
                   /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
@@ -9892,32 +21197,142 @@ export namespace V2 {
 
                 export interface SpendCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: SpendCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested: boolean;
+                }
+
+                export namespace ChargeCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace PrepaidCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace SpendCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
 
               export namespace FifthThird {
                 export interface ChargeCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: ChargeCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested: boolean;
+                }
+
+                export namespace ChargeCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
 
               export namespace Lead {
                 export interface PrepaidCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: PrepaidCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested: boolean;
+                }
+
+                export namespace PrepaidCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
 
               export namespace Stripe {
                 export interface ChargeCard {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: ChargeCard.Protections;
+
                   /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
@@ -9926,9 +21341,50 @@ export namespace V2 {
 
                 export interface PrepaidCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: PrepaidCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested: boolean;
+                }
+
+                export namespace ChargeCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace PrepaidCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
             }
@@ -9963,23 +21419,74 @@ export namespace V2 {
               export namespace Celtic {
                 export interface RevolvingCreditCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: RevolvingCreditCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested: boolean;
+                }
+
+                export namespace RevolvingCreditCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
 
               export namespace CrossRiverBank {
                 export interface PrepaidCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: PrepaidCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested: boolean;
+                }
+
+                export namespace PrepaidCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
 
               export namespace Lead {
                 export interface DebitCard {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: DebitCard.Protections;
+
                   /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
@@ -9988,9 +21495,50 @@ export namespace V2 {
 
                 export interface PrepaidCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: PrepaidCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested: boolean;
+                }
+
+                export namespace DebitCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace PrepaidCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
             }
@@ -10120,9 +21668,32 @@ export namespace V2 {
           export namespace Capabilities {
             export interface AutomaticIndirectTax {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: AutomaticIndirectTax.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
+            }
+
+            export namespace AutomaticIndirectTax {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
             }
           }
         }
@@ -10449,12 +22020,22 @@ export namespace V2 {
           export namespace Capabilities {
             export interface AchDebitPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: AchDebitPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface AcssDebitPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: AcssDebitPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10463,12 +22044,22 @@ export namespace V2 {
 
             export interface AffirmPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: AffirmPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface AfterpayClearpayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: AfterpayClearpayPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10477,12 +22068,22 @@ export namespace V2 {
 
             export interface AlmaPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: AlmaPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface AmazonPayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: AmazonPayPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10491,12 +22092,22 @@ export namespace V2 {
 
             export interface AuBecsDebitPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: AuBecsDebitPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface BacsDebitPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: BacsDebitPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10505,12 +22116,22 @@ export namespace V2 {
 
             export interface BancontactPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: BancontactPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface BlikPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: BlikPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10519,12 +22140,22 @@ export namespace V2 {
 
             export interface BoletoPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: BoletoPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface CardPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: CardPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10533,12 +22164,22 @@ export namespace V2 {
 
             export interface CartesBancairesPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: CartesBancairesPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface CashappPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: CashappPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10547,12 +22188,22 @@ export namespace V2 {
 
             export interface EpsPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: EpsPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface FpxPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: FpxPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10561,12 +22212,22 @@ export namespace V2 {
 
             export interface GbBankTransferPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: GbBankTransferPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface GrabpayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: GrabpayPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10575,12 +22236,22 @@ export namespace V2 {
 
             export interface IdealPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: IdealPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface JcbPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: JcbPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10589,12 +22260,22 @@ export namespace V2 {
 
             export interface JpBankTransferPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: JpBankTransferPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface KakaoPayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: KakaoPayPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10603,12 +22284,22 @@ export namespace V2 {
 
             export interface KlarnaPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: KlarnaPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface KonbiniPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: KonbiniPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10617,12 +22308,22 @@ export namespace V2 {
 
             export interface KrCardPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: KrCardPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface LinkPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: LinkPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10631,12 +22332,22 @@ export namespace V2 {
 
             export interface MobilepayPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: MobilepayPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface MultibancoPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: MultibancoPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10645,12 +22356,22 @@ export namespace V2 {
 
             export interface MxBankTransferPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: MxBankTransferPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface NaverPayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: NaverPayPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10659,12 +22380,22 @@ export namespace V2 {
 
             export interface OxxoPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: OxxoPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface P24Payments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: P24Payments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10673,12 +22404,22 @@ export namespace V2 {
 
             export interface PayByBankPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: PayByBankPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface PaycoPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: PaycoPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10687,12 +22428,22 @@ export namespace V2 {
 
             export interface PaynowPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: PaynowPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface PromptpayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: PromptpayPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10701,12 +22452,22 @@ export namespace V2 {
 
             export interface RevolutPayPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: RevolutPayPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface SamsungPayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: SamsungPayPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10715,12 +22476,22 @@ export namespace V2 {
 
             export interface SepaBankTransferPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: SepaBankTransferPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface SepaDebitPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: SepaDebitPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10729,12 +22500,22 @@ export namespace V2 {
 
             export interface SwishPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: SwishPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface TwintPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: TwintPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10743,6 +22524,11 @@ export namespace V2 {
 
             export interface UsBankTransferPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: UsBankTransferPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
@@ -10750,9 +22536,806 @@ export namespace V2 {
 
             export interface ZipPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: ZipPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
+            }
+
+            export namespace AchDebitPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace AcssDebitPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace AffirmPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace AfterpayClearpayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace AlmaPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace AmazonPayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace AuBecsDebitPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace BacsDebitPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace BancontactPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace BlikPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace BoletoPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace CardPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace CartesBancairesPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace CashappPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace EpsPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace FpxPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace GbBankTransferPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace GrabpayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace IdealPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace JcbPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace JpBankTransferPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace KakaoPayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace KlarnaPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace KonbiniPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace KrCardPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace LinkPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace MobilepayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace MultibancoPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace MxBankTransferPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace NaverPayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace OxxoPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace P24Payments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace PayByBankPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace PaycoPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace PaynowPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace PromptpayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace RevolutPayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace SamsungPayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace SepaBankTransferPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace SepaDebitPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace SwishPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace TwintPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace UsBankTransferPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace ZipPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
             }
           }
 
@@ -10930,6 +23513,11 @@ export namespace V2 {
 
             export interface Cards {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: Cards.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
@@ -10937,12 +23525,22 @@ export namespace V2 {
 
             export interface CryptoWallets {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: CryptoWallets.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested: boolean;
             }
 
             export interface PaperChecks {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: PaperChecks.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10959,12 +23557,22 @@ export namespace V2 {
             export namespace BankAccounts {
               export interface Instant {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Instant.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested: boolean;
               }
 
               export interface Local {
+                /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Local.Protections;
+
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
@@ -10973,18 +23581,154 @@ export namespace V2 {
 
               export interface Wire {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Wire.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested: boolean;
+              }
+
+              export namespace Instant {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace Local {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace Wire {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+            }
+
+            export namespace Cards {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace CryptoWallets {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace PaperChecks {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
               }
             }
 
             export namespace StripeBalance {
               export interface StripeTransfers {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: StripeTransfers.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested: boolean;
+              }
+
+              export namespace StripeTransfers {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
               }
             }
           }
@@ -11195,15 +23939,43 @@ export namespace V2 {
               export namespace HoldsCurrencies {
                 export interface Usd {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Usd.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested: boolean;
+                }
+
+                export namespace Usd {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
             }
 
             export namespace FinancialAddresses {
               export interface BankAccounts {
+                /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: BankAccounts.Protections;
+
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
@@ -11212,14 +23984,60 @@ export namespace V2 {
 
               export interface CryptoWallets {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: CryptoWallets.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested: boolean;
+              }
+
+              export namespace BankAccounts {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace CryptoWallets {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
               }
             }
 
             export namespace HoldsCurrencies {
               export interface Eur {
+                /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Eur.Protections;
+
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
@@ -11228,12 +24046,22 @@ export namespace V2 {
 
               export interface Gbp {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Gbp.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested: boolean;
               }
 
               export interface Usd {
+                /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Usd.Protections;
+
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
@@ -11242,23 +24070,128 @@ export namespace V2 {
 
               export interface Usdc {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Usdc.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested: boolean;
+              }
+
+              export namespace Eur {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace Gbp {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace Usd {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace Usdc {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
               }
             }
 
             export namespace InboundTransfers {
               export interface BankAccounts {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: BankAccounts.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested: boolean;
+              }
+
+              export namespace BankAccounts {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
               }
             }
 
             export namespace OutboundPayments {
               export interface BankAccounts {
+                /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: BankAccounts.Protections;
+
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
@@ -11267,6 +24200,11 @@ export namespace V2 {
 
               export interface Cards {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Cards.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested: boolean;
@@ -11274,12 +24212,22 @@ export namespace V2 {
 
               export interface CryptoWallets {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: CryptoWallets.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested: boolean;
               }
 
               export interface FinancialAccounts {
+                /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: FinancialAccounts.Protections;
+
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
@@ -11288,14 +24236,114 @@ export namespace V2 {
 
               export interface PaperChecks {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: PaperChecks.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested: boolean;
+              }
+
+              export namespace BankAccounts {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace Cards {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace CryptoWallets {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace FinancialAccounts {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace PaperChecks {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
               }
             }
 
             export namespace OutboundTransfers {
               export interface BankAccounts {
+                /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: BankAccounts.Protections;
+
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
@@ -11304,6 +24352,11 @@ export namespace V2 {
 
               export interface CryptoWallets {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: CryptoWallets.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested: boolean;
@@ -11311,9 +24364,68 @@ export namespace V2 {
 
               export interface FinancialAccounts {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: FinancialAccounts.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested: boolean;
+              }
+
+              export namespace BankAccounts {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace CryptoWallets {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace FinancialAccounts {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
               }
             }
           }
@@ -14443,6 +27555,11 @@ export namespace V2 {
               export namespace Celtic {
                 export interface ChargeCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: ChargeCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested?: boolean;
@@ -14450,21 +27567,72 @@ export namespace V2 {
 
                 export interface SpendCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: SpendCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested?: boolean;
+                }
+
+                export namespace ChargeCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace SpendCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
 
               export namespace CrossRiverBank {
                 export interface ChargeCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: ChargeCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested?: boolean;
                 }
 
                 export interface PrepaidCard {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: PrepaidCard.Protections;
+
                   /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
@@ -14473,32 +27641,142 @@ export namespace V2 {
 
                 export interface SpendCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: SpendCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested?: boolean;
+                }
+
+                export namespace ChargeCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace PrepaidCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace SpendCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
 
               export namespace FifthThird {
                 export interface ChargeCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: ChargeCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested?: boolean;
+                }
+
+                export namespace ChargeCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
 
               export namespace Lead {
                 export interface PrepaidCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: PrepaidCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested?: boolean;
+                }
+
+                export namespace PrepaidCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
 
               export namespace Stripe {
                 export interface ChargeCard {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: ChargeCard.Protections;
+
                   /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
@@ -14507,9 +27785,50 @@ export namespace V2 {
 
                 export interface PrepaidCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: PrepaidCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested?: boolean;
+                }
+
+                export namespace ChargeCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace PrepaidCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
             }
@@ -14544,23 +27863,74 @@ export namespace V2 {
               export namespace Celtic {
                 export interface RevolvingCreditCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: RevolvingCreditCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested?: boolean;
+                }
+
+                export namespace RevolvingCreditCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
 
               export namespace CrossRiverBank {
                 export interface PrepaidCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: PrepaidCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested?: boolean;
+                }
+
+                export namespace PrepaidCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
 
               export namespace Lead {
                 export interface DebitCard {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: DebitCard.Protections;
+
                   /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
@@ -14569,9 +27939,50 @@ export namespace V2 {
 
                 export interface PrepaidCard {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: PrepaidCard.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested?: boolean;
+                }
+
+                export namespace DebitCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace PrepaidCard {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
             }
@@ -14713,9 +28124,32 @@ export namespace V2 {
           export namespace Capabilities {
             export interface AutomaticIndirectTax {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: AutomaticIndirectTax.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
+            }
+
+            export namespace AutomaticIndirectTax {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
             }
           }
         }
@@ -15042,12 +28476,22 @@ export namespace V2 {
           export namespace Capabilities {
             export interface AchDebitPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: AchDebitPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface AcssDebitPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: AcssDebitPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15056,12 +28500,22 @@ export namespace V2 {
 
             export interface AffirmPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: AffirmPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface AfterpayClearpayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: AfterpayClearpayPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15070,12 +28524,22 @@ export namespace V2 {
 
             export interface AlmaPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: AlmaPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface AmazonPayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: AmazonPayPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15084,12 +28548,22 @@ export namespace V2 {
 
             export interface AuBecsDebitPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: AuBecsDebitPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface BacsDebitPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: BacsDebitPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15098,12 +28572,22 @@ export namespace V2 {
 
             export interface BancontactPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: BancontactPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface BlikPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: BlikPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15112,12 +28596,22 @@ export namespace V2 {
 
             export interface BoletoPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: BoletoPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface CardPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: CardPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15126,12 +28620,22 @@ export namespace V2 {
 
             export interface CartesBancairesPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: CartesBancairesPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface CashappPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: CashappPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15140,12 +28644,22 @@ export namespace V2 {
 
             export interface EpsPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: EpsPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface FpxPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: FpxPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15154,12 +28668,22 @@ export namespace V2 {
 
             export interface GbBankTransferPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: GbBankTransferPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface GrabpayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: GrabpayPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15168,12 +28692,22 @@ export namespace V2 {
 
             export interface IdealPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: IdealPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface JcbPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: JcbPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15182,12 +28716,22 @@ export namespace V2 {
 
             export interface JpBankTransferPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: JpBankTransferPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface KakaoPayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: KakaoPayPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15196,12 +28740,22 @@ export namespace V2 {
 
             export interface KlarnaPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: KlarnaPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface KonbiniPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: KonbiniPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15210,12 +28764,22 @@ export namespace V2 {
 
             export interface KrCardPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: KrCardPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface LinkPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: LinkPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15224,12 +28788,22 @@ export namespace V2 {
 
             export interface MobilepayPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: MobilepayPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface MultibancoPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: MultibancoPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15238,12 +28812,22 @@ export namespace V2 {
 
             export interface MxBankTransferPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: MxBankTransferPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface NaverPayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: NaverPayPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15252,12 +28836,22 @@ export namespace V2 {
 
             export interface OxxoPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: OxxoPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface P24Payments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: P24Payments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15266,12 +28860,22 @@ export namespace V2 {
 
             export interface PayByBankPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: PayByBankPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface PaycoPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: PaycoPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15280,12 +28884,22 @@ export namespace V2 {
 
             export interface PaynowPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: PaynowPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface PromptpayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: PromptpayPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15294,12 +28908,22 @@ export namespace V2 {
 
             export interface RevolutPayPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: RevolutPayPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface SamsungPayPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: SamsungPayPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15308,12 +28932,22 @@ export namespace V2 {
 
             export interface SepaBankTransferPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: SepaBankTransferPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface SepaDebitPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: SepaDebitPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15322,12 +28956,22 @@ export namespace V2 {
 
             export interface SwishPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: SwishPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface TwintPayments {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: TwintPayments.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15336,6 +28980,11 @@ export namespace V2 {
 
             export interface UsBankTransferPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: UsBankTransferPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
@@ -15343,9 +28992,806 @@ export namespace V2 {
 
             export interface ZipPayments {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: ZipPayments.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
+            }
+
+            export namespace AchDebitPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace AcssDebitPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace AffirmPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace AfterpayClearpayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace AlmaPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace AmazonPayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace AuBecsDebitPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace BacsDebitPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace BancontactPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace BlikPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace BoletoPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace CardPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace CartesBancairesPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace CashappPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace EpsPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace FpxPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace GbBankTransferPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace GrabpayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace IdealPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace JcbPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace JpBankTransferPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace KakaoPayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace KlarnaPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace KonbiniPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace KrCardPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace LinkPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace MobilepayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace MultibancoPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace MxBankTransferPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace NaverPayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace OxxoPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace P24Payments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace PayByBankPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace PaycoPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace PaynowPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace PromptpayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace RevolutPayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace SamsungPayPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace SepaBankTransferPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace SepaDebitPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace SwishPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace TwintPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace UsBankTransferPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace ZipPayments {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
             }
           }
 
@@ -15484,6 +29930,11 @@ export namespace V2 {
 
             export interface Cards {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: Cards.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
@@ -15491,12 +29942,22 @@ export namespace V2 {
 
             export interface CryptoWallets {
               /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: CryptoWallets.Protections;
+
+              /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
               requested?: boolean;
             }
 
             export interface PaperChecks {
+              /**
+               * Protection types to request for this capability (e.g. "psp_migration").
+               */
+              protections?: PaperChecks.Protections;
+
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -15513,12 +29974,22 @@ export namespace V2 {
             export namespace BankAccounts {
               export interface Instant {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Instant.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested?: boolean;
               }
 
               export interface Local {
+                /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Local.Protections;
+
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
@@ -15527,18 +29998,154 @@ export namespace V2 {
 
               export interface Wire {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Wire.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested?: boolean;
+              }
+
+              export namespace Instant {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace Local {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace Wire {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+            }
+
+            export namespace Cards {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace CryptoWallets {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace PaperChecks {
+              export interface Protections {
+                /**
+                 * Parameter to request psp_migration protection.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * To request a protection, pass true.
+                   */
+                  requested: boolean;
+                }
               }
             }
 
             export namespace StripeBalance {
               export interface StripeTransfers {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: StripeTransfers.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested?: boolean;
+              }
+
+              export namespace StripeTransfers {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
               }
             }
           }
@@ -15749,15 +30356,43 @@ export namespace V2 {
               export namespace HoldsCurrencies {
                 export interface Usd {
                   /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Usd.Protections;
+
+                  /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                    */
                   requested?: boolean;
+                }
+
+                export namespace Usd {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
                 }
               }
             }
 
             export namespace FinancialAddresses {
               export interface BankAccounts {
+                /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: BankAccounts.Protections;
+
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
@@ -15766,14 +30401,60 @@ export namespace V2 {
 
               export interface CryptoWallets {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: CryptoWallets.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested?: boolean;
+              }
+
+              export namespace BankAccounts {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace CryptoWallets {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
               }
             }
 
             export namespace HoldsCurrencies {
               export interface Eur {
+                /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Eur.Protections;
+
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
@@ -15782,12 +30463,22 @@ export namespace V2 {
 
               export interface Gbp {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Gbp.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested?: boolean;
               }
 
               export interface Usd {
+                /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Usd.Protections;
+
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
@@ -15796,23 +30487,128 @@ export namespace V2 {
 
               export interface Usdc {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Usdc.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested?: boolean;
+              }
+
+              export namespace Eur {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace Gbp {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace Usd {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace Usdc {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
               }
             }
 
             export namespace InboundTransfers {
               export interface BankAccounts {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: BankAccounts.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested?: boolean;
+              }
+
+              export namespace BankAccounts {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
               }
             }
 
             export namespace OutboundPayments {
               export interface BankAccounts {
+                /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: BankAccounts.Protections;
+
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
@@ -15821,6 +30617,11 @@ export namespace V2 {
 
               export interface Cards {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: Cards.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested?: boolean;
@@ -15828,12 +30629,22 @@ export namespace V2 {
 
               export interface CryptoWallets {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: CryptoWallets.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested?: boolean;
               }
 
               export interface FinancialAccounts {
+                /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: FinancialAccounts.Protections;
+
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
@@ -15842,14 +30653,114 @@ export namespace V2 {
 
               export interface PaperChecks {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: PaperChecks.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested?: boolean;
+              }
+
+              export namespace BankAccounts {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace Cards {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace CryptoWallets {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace FinancialAccounts {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace PaperChecks {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
               }
             }
 
             export namespace OutboundTransfers {
               export interface BankAccounts {
+                /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: BankAccounts.Protections;
+
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
@@ -15858,6 +30769,11 @@ export namespace V2 {
 
               export interface CryptoWallets {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: CryptoWallets.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested?: boolean;
@@ -15865,9 +30781,68 @@ export namespace V2 {
 
               export interface FinancialAccounts {
                 /**
+                 * Protection types to request for this capability (e.g. "psp_migration").
+                 */
+                protections?: FinancialAccounts.Protections;
+
+                /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
                 requested?: boolean;
+              }
+
+              export namespace BankAccounts {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace CryptoWallets {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+
+              export namespace FinancialAccounts {
+                export interface Protections {
+                  /**
+                   * Parameter to request psp_migration protection.
+                   */
+                  psp_migration: Protections.PspMigration;
+                }
+
+                export namespace Protections {
+                  export interface PspMigration {
+                    /**
+                     * To request a protection, pass true.
+                     */
+                    requested: boolean;
+                  }
+                }
               }
             }
           }

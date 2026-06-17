@@ -246,6 +246,8 @@ export namespace ConfirmationToken {
 
     swish?: PaymentMethodPreview.Swish;
 
+    tamara?: PaymentMethodPreview.Tamara;
+
     twint?: PaymentMethodPreview.Twint;
 
     /**
@@ -705,11 +707,6 @@ export namespace ConfirmationToken {
       fingerprint?: string;
 
       /**
-       * The first six digits of the gift card number.
-       */
-      first6: string;
-
-      /**
        * The last four digits of the gift card number.
        */
       last4: string | null;
@@ -1036,6 +1033,8 @@ export namespace ConfirmationToken {
 
     export interface Swish {}
 
+    export interface Tamara {}
+
     export interface Twint {}
 
     export type Type =
@@ -1099,6 +1098,7 @@ export namespace ConfirmationToken {
       | 'stripe_balance'
       | 'sunbit'
       | 'swish'
+      | 'tamara'
       | 'twint'
       | 'upi'
       | 'us_bank_account'

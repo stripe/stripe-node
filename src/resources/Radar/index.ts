@@ -72,6 +72,7 @@ export declare namespace Radar {
   export import AccountEvaluationCreateParams = RadarNamespace0.AccountEvaluationCreateParams;
   export import AccountEvaluationUpdateParams = RadarNamespace0.AccountEvaluationUpdateParams;
   export {AccountEvaluation};
+  export import CustomerEvaluationRetrieveParams = RadarNamespace1.CustomerEvaluationRetrieveParams;
   export import CustomerEvaluationCreateParams = RadarNamespace1.CustomerEvaluationCreateParams;
   export import CustomerEvaluationUpdateParams = RadarNamespace1.CustomerEvaluationUpdateParams;
   export {CustomerEvaluation};

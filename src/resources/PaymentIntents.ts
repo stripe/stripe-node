@@ -670,6 +670,8 @@ export namespace PaymentIntent {
 
     decremental_authorization?: AdvancedFeatureDetails.DecrementalAuthorization;
 
+    forced_capture?: AdvancedFeatureDetails.ForcedCapture;
+
     incremental_authorization?: AdvancedFeatureDetails.IncrementalAuthorization;
 
     multicapture?: AdvancedFeatureDetails.Multicapture;
@@ -809,6 +811,7 @@ export namespace PaymentIntent {
     | 'stripe_balance'
     | 'sunbit'
     | 'swish'
+    | 'tamara'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -987,6 +990,8 @@ export namespace PaymentIntent {
     verify_with_microdeposits?: NextAction.VerifyWithMicrodeposits;
 
     wechat_pay_display_qr_code?: NextAction.WechatPayDisplayQrCode;
+
+    wechat_pay_handle_app_redirect?: NextAction.WechatPayHandleAppRedirect;
 
     wechat_pay_redirect_to_android_app?: NextAction.WechatPayRedirectToAndroidApp;
 
@@ -1276,6 +1281,18 @@ export namespace PaymentIntent {
       status: DecrementalAuthorization.Status;
     }
 
+    export interface ForcedCapture {
+      /**
+       * Timestamp at which the forced capture window expires.
+       */
+      expires_at: number | null;
+
+      /**
+       * Indicates whether forced capture is supported.
+       */
+      status: ForcedCapture.Status;
+    }
+
     export interface IncrementalAuthorization {
       /**
        * Indicates whether the feature is supported.
@@ -1303,6 +1320,10 @@ export namespace PaymentIntent {
     }
 
     export namespace DecrementalAuthorization {
+      export type Status = 'available' | 'unavailable';
+    }
+
+    export namespace ForcedCapture {
       export type Status = 'available' | 'unavailable';
     }
 
@@ -1977,6 +1998,13 @@ export namespace PaymentIntent {
       image_url_svg: string;
     }
 
+    export interface WechatPayHandleAppRedirect {
+      /**
+       * Session ID of the WeChat Pay signing session
+       */
+      session_id: string;
+    }
+
     export interface WechatPayRedirectToAndroidApp {
       /**
        * app_id is the APP ID registered on WeChat open platform
@@ -2044,6 +2072,10 @@ export namespace PaymentIntent {
       export interface DepositAddresses {
         base?: DepositAddresses.Base;
 
+        ethereum?: DepositAddresses.Ethereum;
+
+        polygon?: DepositAddresses.Polygon;
+
         solana?: DepositAddresses.Solana;
 
         tempo?: DepositAddresses.Tempo;
@@ -2065,6 +2097,40 @@ export namespace PaymentIntent {
            * The token currencies supported on this network.
            */
           supported_tokens: Array<Base.SupportedToken>;
+        }
+
+        export interface Ethereum {
+          /**
+           * Address of the deposit address.
+           */
+          address: string;
+
+          /**
+           * The wallet address that should receive refunds for deposits on this network.
+           */
+          refund_address?: string;
+
+          /**
+           * The token currencies supported on this network.
+           */
+          supported_tokens: Array<Ethereum.SupportedToken>;
+        }
+
+        export interface Polygon {
+          /**
+           * Address of the deposit address.
+           */
+          address: string;
+
+          /**
+           * The wallet address that should receive refunds for deposits on this network.
+           */
+          refund_address?: string;
+
+          /**
+           * The token currencies supported on this network.
+           */
+          supported_tokens: Array<Polygon.SupportedToken>;
         }
 
         export interface Solana {
@@ -2109,9 +2175,49 @@ export namespace PaymentIntent {
             token_contract_address: string;
 
             /**
-             * The supported token currency. Supported token currencies include: `usdc`.
+             * The supported token currency.
              */
-            token_currency: 'usdc';
+            token_currency: SupportedToken.TokenCurrency;
+          }
+
+          export namespace SupportedToken {
+            export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
+          }
+        }
+
+        export namespace Ethereum {
+          export interface SupportedToken {
+            /**
+             * The on-chain contract address for the supported token currency on this specific network.
+             */
+            token_contract_address: string;
+
+            /**
+             * The supported token currency.
+             */
+            token_currency: SupportedToken.TokenCurrency;
+          }
+
+          export namespace SupportedToken {
+            export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
+          }
+        }
+
+        export namespace Polygon {
+          export interface SupportedToken {
+            /**
+             * The on-chain contract address for the supported token currency on this specific network.
+             */
+            token_contract_address: string;
+
+            /**
+             * The supported token currency.
+             */
+            token_currency: SupportedToken.TokenCurrency;
+          }
+
+          export namespace SupportedToken {
+            export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
           }
         }
 
@@ -2123,9 +2229,13 @@ export namespace PaymentIntent {
             token_contract_address: string;
 
             /**
-             * The supported token currency. Supported token currencies include: `usdc`.
+             * The supported token currency.
              */
-            token_currency: 'usdc';
+            token_currency: SupportedToken.TokenCurrency;
+          }
+
+          export namespace SupportedToken {
+            export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
           }
         }
 
@@ -2137,9 +2247,13 @@ export namespace PaymentIntent {
             token_contract_address: string;
 
             /**
-             * The supported token currency. Supported token currencies include: `usdc`.
+             * The supported token currency.
              */
-            token_currency: 'usdc';
+            token_currency: SupportedToken.TokenCurrency;
+          }
+
+          export namespace SupportedToken {
+            export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
           }
         }
       }
@@ -2829,6 +2943,13 @@ export namespace PaymentIntent {
 
     export interface MoneyServices {
       account_funding?: MoneyServices.AccountFunding;
+
+      /**
+       * ID of the Account representing the beneficiary in this account funding transaction.
+       */
+      beneficiary_account?: string;
+
+      beneficiary_details?: MoneyServices.BeneficiaryDetails;
 
       /**
        * The type of money services transaction.
@@ -3871,13 +3992,6 @@ export namespace PaymentIntent {
     export namespace MoneyServices {
       export interface AccountFunding {
         /**
-         * ID of the Account representing the beneficiary in this account funding transaction.
-         */
-        beneficiary_account?: string;
-
-        beneficiary_details?: AccountFunding.BeneficiaryDetails;
-
-        /**
          * ID of the Account representing the sender in this account funding transaction.
          */
         sender_account?: string;
@@ -3885,30 +3999,35 @@ export namespace PaymentIntent {
         sender_details?: AccountFunding.SenderDetails;
       }
 
+      export interface BeneficiaryDetails {
+        address?: BeneficiaryDetails.Address;
+
+        date_of_birth?: BeneficiaryDetails.DateOfBirth;
+
+        /**
+         * Email address.
+         */
+        email?: string;
+
+        /**
+         * Given name (first name).
+         */
+        given_name?: string;
+
+        /**
+         * Phone number.
+         */
+        phone?: string;
+
+        /**
+         * Surname (last name).
+         */
+        surname?: string;
+      }
+
       export type TransactionType = 'account_funding' | 'debt_repayment';
 
       export namespace AccountFunding {
-        export interface BeneficiaryDetails {
-          address?: BeneficiaryDetails.Address;
-
-          date_of_birth?: BeneficiaryDetails.DateOfBirth;
-
-          /**
-           * Email address.
-           */
-          email?: string;
-
-          /**
-           * Full name.
-           */
-          name?: string;
-
-          /**
-           * Phone number.
-           */
-          phone?: string;
-        }
-
         export interface SenderDetails {
           address?: SenderDetails.Address;
 
@@ -3920,65 +4039,19 @@ export namespace PaymentIntent {
           email?: string;
 
           /**
-           * Full name.
+           * Given name (first name).
            */
-          name?: string;
+          given_name?: string;
 
           /**
            * Phone number.
            */
           phone?: string;
-        }
 
-        export namespace BeneficiaryDetails {
-          export interface Address {
-            /**
-             * City, district, suburb, town, or village.
-             */
-            city?: string;
-
-            /**
-             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-             */
-            country?: string;
-
-            /**
-             * Address line 1 (e.g., street, PO Box, or company name).
-             */
-            line1?: string;
-
-            /**
-             * Address line 2 (e.g., apartment, suite, unit, or building).
-             */
-            line2?: string;
-
-            /**
-             * ZIP or postal code.
-             */
-            postal_code?: string;
-
-            /**
-             * State, county, province, or region.
-             */
-            state?: string;
-          }
-
-          export interface DateOfBirth {
-            /**
-             * Day of birth, between 1 and 31.
-             */
-            day: number;
-
-            /**
-             * Month of birth, between 1 and 12.
-             */
-            month: number;
-
-            /**
-             * Four-digit year of birth.
-             */
-            year: number;
-          }
+          /**
+           * Surname (last name).
+           */
+          surname?: string;
         }
 
         export namespace SenderDetails {
@@ -4030,6 +4103,57 @@ export namespace PaymentIntent {
              */
             year: number;
           }
+        }
+      }
+
+      export namespace BeneficiaryDetails {
+        export interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1?: string;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * State, county, province, or region.
+           */
+          state?: string;
+        }
+
+        export interface DateOfBirth {
+          /**
+           * Day of birth, between 1 and 31.
+           */
+          day: number;
+
+          /**
+           * Month of birth, between 1 and 12.
+           */
+          month: number;
+
+          /**
+           * Four-digit year of birth.
+           */
+          year: number;
         }
       }
     }
@@ -4280,7 +4404,7 @@ export namespace PaymentIntent {
       /**
        * Controls when the funds will be captured from the customer's account.
        */
-      capture_method?: 'manual';
+      capture_method?: Card.CaptureMethod;
 
       /**
        * Installment details for this payment.
@@ -4442,6 +4566,8 @@ export namespace PaymentIntent {
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
       setup_future_usage?: 'none';
+
+      transaction_verification_options?: Crypto.TransactionVerificationOptions;
     }
 
     export interface CustomerBalance {
@@ -5139,6 +5265,11 @@ export namespace PaymentIntent {
       app_id: string | null;
 
       /**
+       * The unique buyer ID for the app ID registered with WeChat Pay. Only required when client is mini_program.
+       */
+      buyer_id?: string;
+
+      /**
        * The client type that the end customer will pay from
        */
       client: WechatPay.Client | null;
@@ -5256,6 +5387,8 @@ export namespace PaymentIntent {
          */
         hours?: number;
       }
+
+      export type CaptureMethod = 'automatic_delayed' | 'manual';
 
       export interface Installments {
         /**
@@ -5469,7 +5602,10 @@ export namespace PaymentIntent {
         hours?: number;
       }
 
-      export type CaptureMethod = 'manual' | 'manual_preferred';
+      export type CaptureMethod =
+        | 'automatic_delayed'
+        | 'manual'
+        | 'manual_preferred';
 
       export type RequestMulticapture = 'if_available' | 'never';
 
@@ -5506,8 +5642,34 @@ export namespace PaymentIntent {
 
       export type Mode = 'default' | 'deposit' | 'transaction_verification';
 
+      export interface TransactionVerificationOptions {
+        /**
+         * The network on which the transaction was submitted.
+         */
+        network?: TransactionVerificationOptions.Network;
+
+        /**
+         * The hash of the onchain transaction to verify.
+         */
+        transaction_hash?: string;
+      }
+
       export namespace DepositOptions {
-        export type Network = 'base' | 'solana' | 'tempo';
+        export type Network =
+          | 'base'
+          | 'ethereum'
+          | 'polygon'
+          | 'solana'
+          | 'tempo';
+      }
+
+      export namespace TransactionVerificationOptions {
+        export type Network =
+          | 'base'
+          | 'ethereum'
+          | 'polygon'
+          | 'solana'
+          | 'tempo';
       }
     }
 
@@ -5913,7 +6075,7 @@ export namespace PaymentIntent {
     }
 
     export namespace WechatPay {
-      export type Client = 'android' | 'ios' | 'web';
+      export type Client = 'android' | 'ios' | 'mini_program' | 'web';
     }
   }
 
@@ -6257,6 +6419,7 @@ export namespace PaymentIntentCreateParams {
     | 'stripe_balance'
     | 'sunbit'
     | 'swish'
+    | 'tamara'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -6376,6 +6539,7 @@ export namespace PaymentIntentCreateParams {
     | 'stripe_balance'
     | 'sunbit'
     | 'swish'
+    | 'tamara'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -6784,6 +6948,11 @@ export namespace PaymentIntentCreateParams {
      * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
      */
     swish?: PaymentMethodData.Swish;
+
+    /**
+     * If this is a `tamara` PaymentMethod, this hash contains details about the Tamara payment method.
+     */
+    tamara?: PaymentMethodData.Tamara;
 
     /**
      * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
@@ -8084,9 +8253,14 @@ export namespace PaymentIntentCreateParams {
 
     export interface MoneyServices {
       /**
-       * Account funding transaction details including sender and beneficiary information.
+       * Account funding transaction details including sender information.
        */
       account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * Inline identity details for the beneficiary of this transaction.
+       */
+      beneficiary_details?: Emptyable<MoneyServices.BeneficiaryDetails>;
 
       /**
        * The type of money services transaction.
@@ -9590,56 +9764,51 @@ export namespace PaymentIntentCreateParams {
     export namespace MoneyServices {
       export interface AccountFunding {
         /**
-         * ID of the Account representing the beneficiary in this account funding transaction.
-         */
-        beneficiary_account?: string;
-
-        /**
-         * Inline identity details for the beneficiary of this account funding transaction.
-         */
-        beneficiary_details?: Emptyable<AccountFunding.BeneficiaryDetails>;
-
-        /**
-         * ID of the Account representing the sender in this account funding transaction.
-         */
-        sender_account?: string;
-
-        /**
          * Inline identity details for the sender of this account funding transaction.
          */
         sender_details?: Emptyable<AccountFunding.SenderDetails>;
       }
 
+      export interface BeneficiaryDetails {
+        /**
+         * An opaque identifier for the beneficiary's account (e.g. bank account number, card first6+last4, or other unique identifier).
+         */
+        account_reference?: string;
+
+        /**
+         * Address.
+         */
+        address?: AddressParam;
+
+        /**
+         * Date of birth.
+         */
+        date_of_birth?: BeneficiaryDetails.DateOfBirth;
+
+        /**
+         * Email address.
+         */
+        email?: string;
+
+        /**
+         * Given (first) name.
+         */
+        given_name?: string;
+
+        /**
+         * Phone number.
+         */
+        phone?: string;
+
+        /**
+         * Surname (family name).
+         */
+        surname?: string;
+      }
+
       export type TransactionType = 'account_funding' | 'debt_repayment';
 
       export namespace AccountFunding {
-        export interface BeneficiaryDetails {
-          /**
-           * Address.
-           */
-          address?: AddressParam;
-
-          /**
-           * Date of birth.
-           */
-          date_of_birth?: BeneficiaryDetails.DateOfBirth;
-
-          /**
-           * Email address.
-           */
-          email?: string;
-
-          /**
-           * Full name.
-           */
-          name?: string;
-
-          /**
-           * Phone number.
-           */
-          phone?: string;
-        }
-
         export interface SenderDetails {
           /**
            * Address.
@@ -9657,33 +9826,19 @@ export namespace PaymentIntentCreateParams {
           email?: string;
 
           /**
-           * Full name.
+           * Given (first) name.
            */
-          name?: string;
+          given_name?: string;
 
           /**
            * Phone number.
            */
           phone?: string;
-        }
 
-        export namespace BeneficiaryDetails {
-          export interface DateOfBirth {
-            /**
-             * Day of birth, between 1 and 31.
-             */
-            day: number;
-
-            /**
-             * Month of birth, between 1 and 12.
-             */
-            month: number;
-
-            /**
-             * Four-digit year of birth.
-             */
-            year: number;
-          }
+          /**
+           * Surname (family name).
+           */
+          surname?: string;
         }
 
         export namespace SenderDetails {
@@ -9703,6 +9858,25 @@ export namespace PaymentIntentCreateParams {
              */
             year: number;
           }
+        }
+      }
+
+      export namespace BeneficiaryDetails {
+        export interface DateOfBirth {
+          /**
+           * Day of birth, between 1 and 31.
+           */
+          day: number;
+
+          /**
+           * Month of birth, between 1 and 12.
+           */
+          month: number;
+
+          /**
+           * Four-digit year of birth.
+           */
+          year: number;
         }
       }
     }
@@ -10031,6 +10205,8 @@ export namespace PaymentIntentCreateParams {
 
     export interface Swish {}
 
+    export interface Tamara {}
+
     export interface Twint {}
 
     export type Type =
@@ -10090,6 +10266,7 @@ export namespace PaymentIntentCreateParams {
       | 'stripe_balance'
       | 'sunbit'
       | 'swish'
+      | 'tamara'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -10611,7 +10788,7 @@ export namespace PaymentIntentCreateParams {
        *
        * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
        */
-      capture_method?: Emptyable<'manual'>;
+      capture_method?: Emptyable<Card.CaptureMethod>;
 
       /**
        * A single-use `cvc_update` Token that represents a card CVC value. When provided, the CVC value will be verified during the card payment attempt. This parameter can only be provided during confirmation.
@@ -10829,6 +11006,11 @@ export namespace PaymentIntentCreateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: 'none';
+
+      /**
+       * Specific configuration for this PaymentIntent when the mode is `transaction_verification`.
+       */
+      transaction_verification_options?: Crypto.TransactionVerificationOptions;
     }
 
     export interface CustomerBalance {
@@ -11684,6 +11866,11 @@ export namespace PaymentIntentCreateParams {
       app_id?: string;
 
       /**
+       * The unique buyer ID for the app ID registered with WeChat Pay. Only required when client is mini_program.
+       */
+      buyer_id?: string;
+
+      /**
        * The client type that the end customer will pay from
        */
       client?: WechatPay.Client;
@@ -11797,6 +11984,8 @@ export namespace PaymentIntentCreateParams {
 
         hours?: number;
       }
+
+      export type CaptureMethod = 'automatic_delayed' | 'manual';
 
       export interface Installments {
         /**
@@ -12006,11 +12195,6 @@ export namespace PaymentIntentCreateParams {
              * The category of digital asset being acquired through this account funding transaction.
              */
             digital_asset_category?: AccountFunding.DigitalAssetCategory;
-
-            /**
-             * Details for a wallet funding transaction.
-             */
-            wallet?: AccountFunding.Wallet;
           }
 
           export namespace AccountFunding {
@@ -12019,36 +12203,6 @@ export namespace PaymentIntentCreateParams {
               | 'nft'
               | 'other_non_fiat'
               | 'stablecoin';
-
-            export interface Wallet {
-              /**
-               * Details for a staged purchase.
-               */
-              staged_purchase?: Emptyable<Wallet.StagedPurchase>;
-            }
-
-            export namespace Wallet {
-              export interface StagedPurchase {
-                /**
-                 * The merchant where the staged wallet purchase is made.
-                 */
-                merchant?: StagedPurchase.Merchant;
-              }
-
-              export namespace StagedPurchase {
-                export interface Merchant {
-                  /**
-                   * The merchant category code of the merchant.
-                   */
-                  mcc?: string;
-
-                  /**
-                   * The merchant's name.
-                   */
-                  name?: string;
-                }
-              }
-            }
           }
         }
       }
@@ -12114,7 +12268,10 @@ export namespace PaymentIntentCreateParams {
         hours?: number;
       }
 
-      export type CaptureMethod = 'manual' | 'manual_preferred';
+      export type CaptureMethod =
+        | 'automatic_delayed'
+        | 'manual'
+        | 'manual_preferred';
 
       export interface PaymentDetails {
         /**
@@ -12148,11 +12305,6 @@ export namespace PaymentIntentCreateParams {
              * The category of digital asset being acquired through this account funding transaction.
              */
             digital_asset_category?: AccountFunding.DigitalAssetCategory;
-
-            /**
-             * Details for a wallet funding transaction.
-             */
-            wallet?: AccountFunding.Wallet;
           }
 
           export namespace AccountFunding {
@@ -12161,36 +12313,6 @@ export namespace PaymentIntentCreateParams {
               | 'nft'
               | 'other_non_fiat'
               | 'stablecoin';
-
-            export interface Wallet {
-              /**
-               * Details for a staged purchase.
-               */
-              staged_purchase?: Emptyable<Wallet.StagedPurchase>;
-            }
-
-            export namespace Wallet {
-              export interface StagedPurchase {
-                /**
-                 * The merchant where the staged wallet purchase is made.
-                 */
-                merchant?: StagedPurchase.Merchant;
-              }
-
-              export namespace StagedPurchase {
-                export interface Merchant {
-                  /**
-                   * The merchant category code of the merchant.
-                   */
-                  mcc?: string;
-
-                  /**
-                   * The merchant's name.
-                   */
-                  name?: string;
-                }
-              }
-            }
           }
         }
       }
@@ -12219,8 +12341,34 @@ export namespace PaymentIntentCreateParams {
 
       export type Mode = 'default' | 'deposit' | 'transaction_verification';
 
+      export interface TransactionVerificationOptions {
+        /**
+         * The network on which the transaction was submitted.
+         */
+        network: TransactionVerificationOptions.Network;
+
+        /**
+         * The hash of the onchain transaction to verify.
+         */
+        transaction_hash: string;
+      }
+
       export namespace DepositOptions {
-        export type Network = 'base' | 'solana' | 'tempo';
+        export type Network =
+          | 'base'
+          | 'ethereum'
+          | 'polygon'
+          | 'solana'
+          | 'tempo';
+      }
+
+      export namespace TransactionVerificationOptions {
+        export type Network =
+          | 'base'
+          | 'ethereum'
+          | 'polygon'
+          | 'solana'
+          | 'tempo';
       }
     }
 
@@ -13988,7 +14136,7 @@ export namespace PaymentIntentCreateParams {
     }
 
     export namespace WechatPay {
-      export type Client = 'android' | 'ios' | 'web';
+      export type Client = 'android' | 'ios' | 'mini_program' | 'web';
     }
   }
 
@@ -14250,6 +14398,7 @@ export namespace PaymentIntentUpdateParams {
     | 'stripe_balance'
     | 'sunbit'
     | 'swish'
+    | 'tamara'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -14353,6 +14502,7 @@ export namespace PaymentIntentUpdateParams {
     | 'stripe_balance'
     | 'sunbit'
     | 'swish'
+    | 'tamara'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -14759,6 +14909,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
      */
     swish?: PaymentMethodData.Swish;
+
+    /**
+     * If this is a `tamara` PaymentMethod, this hash contains details about the Tamara payment method.
+     */
+    tamara?: PaymentMethodData.Tamara;
 
     /**
      * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
@@ -16006,9 +16161,14 @@ export namespace PaymentIntentUpdateParams {
 
     export interface MoneyServices {
       /**
-       * Account funding transaction details including sender and beneficiary information.
+       * Account funding transaction details including sender information.
        */
       account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * Inline identity details for the beneficiary of this transaction.
+       */
+      beneficiary_details?: Emptyable<MoneyServices.BeneficiaryDetails>;
 
       /**
        * The type of money services transaction.
@@ -17512,56 +17672,51 @@ export namespace PaymentIntentUpdateParams {
     export namespace MoneyServices {
       export interface AccountFunding {
         /**
-         * ID of the Account representing the beneficiary in this account funding transaction.
-         */
-        beneficiary_account?: string;
-
-        /**
-         * Inline identity details for the beneficiary of this account funding transaction.
-         */
-        beneficiary_details?: Emptyable<AccountFunding.BeneficiaryDetails>;
-
-        /**
-         * ID of the Account representing the sender in this account funding transaction.
-         */
-        sender_account?: string;
-
-        /**
          * Inline identity details for the sender of this account funding transaction.
          */
         sender_details?: Emptyable<AccountFunding.SenderDetails>;
       }
 
+      export interface BeneficiaryDetails {
+        /**
+         * An opaque identifier for the beneficiary's account (e.g. bank account number, card first6+last4, or other unique identifier).
+         */
+        account_reference?: string;
+
+        /**
+         * Address.
+         */
+        address?: AddressParam;
+
+        /**
+         * Date of birth.
+         */
+        date_of_birth?: BeneficiaryDetails.DateOfBirth;
+
+        /**
+         * Email address.
+         */
+        email?: string;
+
+        /**
+         * Given (first) name.
+         */
+        given_name?: string;
+
+        /**
+         * Phone number.
+         */
+        phone?: string;
+
+        /**
+         * Surname (family name).
+         */
+        surname?: string;
+      }
+
       export type TransactionType = 'account_funding' | 'debt_repayment';
 
       export namespace AccountFunding {
-        export interface BeneficiaryDetails {
-          /**
-           * Address.
-           */
-          address?: AddressParam;
-
-          /**
-           * Date of birth.
-           */
-          date_of_birth?: BeneficiaryDetails.DateOfBirth;
-
-          /**
-           * Email address.
-           */
-          email?: string;
-
-          /**
-           * Full name.
-           */
-          name?: string;
-
-          /**
-           * Phone number.
-           */
-          phone?: string;
-        }
-
         export interface SenderDetails {
           /**
            * Address.
@@ -17579,33 +17734,19 @@ export namespace PaymentIntentUpdateParams {
           email?: string;
 
           /**
-           * Full name.
+           * Given (first) name.
            */
-          name?: string;
+          given_name?: string;
 
           /**
            * Phone number.
            */
           phone?: string;
-        }
 
-        export namespace BeneficiaryDetails {
-          export interface DateOfBirth {
-            /**
-             * Day of birth, between 1 and 31.
-             */
-            day: number;
-
-            /**
-             * Month of birth, between 1 and 12.
-             */
-            month: number;
-
-            /**
-             * Four-digit year of birth.
-             */
-            year: number;
-          }
+          /**
+           * Surname (family name).
+           */
+          surname?: string;
         }
 
         export namespace SenderDetails {
@@ -17625,6 +17766,25 @@ export namespace PaymentIntentUpdateParams {
              */
             year: number;
           }
+        }
+      }
+
+      export namespace BeneficiaryDetails {
+        export interface DateOfBirth {
+          /**
+           * Day of birth, between 1 and 31.
+           */
+          day: number;
+
+          /**
+           * Month of birth, between 1 and 12.
+           */
+          month: number;
+
+          /**
+           * Four-digit year of birth.
+           */
+          year: number;
         }
       }
     }
@@ -17953,6 +18113,8 @@ export namespace PaymentIntentUpdateParams {
 
     export interface Swish {}
 
+    export interface Tamara {}
+
     export interface Twint {}
 
     export type Type =
@@ -18012,6 +18174,7 @@ export namespace PaymentIntentUpdateParams {
       | 'stripe_balance'
       | 'sunbit'
       | 'swish'
+      | 'tamara'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -18533,7 +18696,7 @@ export namespace PaymentIntentUpdateParams {
        *
        * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
        */
-      capture_method?: Emptyable<'manual'>;
+      capture_method?: Emptyable<Card.CaptureMethod>;
 
       /**
        * A single-use `cvc_update` Token that represents a card CVC value. When provided, the CVC value will be verified during the card payment attempt. This parameter can only be provided during confirmation.
@@ -18751,6 +18914,11 @@ export namespace PaymentIntentUpdateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: 'none';
+
+      /**
+       * Specific configuration for this PaymentIntent when the mode is `transaction_verification`.
+       */
+      transaction_verification_options?: Crypto.TransactionVerificationOptions;
     }
 
     export interface CustomerBalance {
@@ -19606,6 +19774,11 @@ export namespace PaymentIntentUpdateParams {
       app_id?: string;
 
       /**
+       * The unique buyer ID for the app ID registered with WeChat Pay. Only required when client is mini_program.
+       */
+      buyer_id?: string;
+
+      /**
        * The client type that the end customer will pay from
        */
       client?: WechatPay.Client;
@@ -19719,6 +19892,8 @@ export namespace PaymentIntentUpdateParams {
 
         hours?: number;
       }
+
+      export type CaptureMethod = 'automatic_delayed' | 'manual';
 
       export interface Installments {
         /**
@@ -19928,11 +20103,6 @@ export namespace PaymentIntentUpdateParams {
              * The category of digital asset being acquired through this account funding transaction.
              */
             digital_asset_category?: AccountFunding.DigitalAssetCategory;
-
-            /**
-             * Details for a wallet funding transaction.
-             */
-            wallet?: AccountFunding.Wallet;
           }
 
           export namespace AccountFunding {
@@ -19941,36 +20111,6 @@ export namespace PaymentIntentUpdateParams {
               | 'nft'
               | 'other_non_fiat'
               | 'stablecoin';
-
-            export interface Wallet {
-              /**
-               * Details for a staged purchase.
-               */
-              staged_purchase?: Emptyable<Wallet.StagedPurchase>;
-            }
-
-            export namespace Wallet {
-              export interface StagedPurchase {
-                /**
-                 * The merchant where the staged wallet purchase is made.
-                 */
-                merchant?: StagedPurchase.Merchant;
-              }
-
-              export namespace StagedPurchase {
-                export interface Merchant {
-                  /**
-                   * The merchant category code of the merchant.
-                   */
-                  mcc?: string;
-
-                  /**
-                   * The merchant's name.
-                   */
-                  name?: string;
-                }
-              }
-            }
           }
         }
       }
@@ -20036,7 +20176,10 @@ export namespace PaymentIntentUpdateParams {
         hours?: number;
       }
 
-      export type CaptureMethod = 'manual' | 'manual_preferred';
+      export type CaptureMethod =
+        | 'automatic_delayed'
+        | 'manual'
+        | 'manual_preferred';
 
       export interface PaymentDetails {
         /**
@@ -20070,11 +20213,6 @@ export namespace PaymentIntentUpdateParams {
              * The category of digital asset being acquired through this account funding transaction.
              */
             digital_asset_category?: AccountFunding.DigitalAssetCategory;
-
-            /**
-             * Details for a wallet funding transaction.
-             */
-            wallet?: AccountFunding.Wallet;
           }
 
           export namespace AccountFunding {
@@ -20083,36 +20221,6 @@ export namespace PaymentIntentUpdateParams {
               | 'nft'
               | 'other_non_fiat'
               | 'stablecoin';
-
-            export interface Wallet {
-              /**
-               * Details for a staged purchase.
-               */
-              staged_purchase?: Emptyable<Wallet.StagedPurchase>;
-            }
-
-            export namespace Wallet {
-              export interface StagedPurchase {
-                /**
-                 * The merchant where the staged wallet purchase is made.
-                 */
-                merchant?: StagedPurchase.Merchant;
-              }
-
-              export namespace StagedPurchase {
-                export interface Merchant {
-                  /**
-                   * The merchant category code of the merchant.
-                   */
-                  mcc?: string;
-
-                  /**
-                   * The merchant's name.
-                   */
-                  name?: string;
-                }
-              }
-            }
           }
         }
       }
@@ -20141,8 +20249,34 @@ export namespace PaymentIntentUpdateParams {
 
       export type Mode = 'default' | 'deposit' | 'transaction_verification';
 
+      export interface TransactionVerificationOptions {
+        /**
+         * The network on which the transaction was submitted.
+         */
+        network: TransactionVerificationOptions.Network;
+
+        /**
+         * The hash of the onchain transaction to verify.
+         */
+        transaction_hash: string;
+      }
+
       export namespace DepositOptions {
-        export type Network = 'base' | 'solana' | 'tempo';
+        export type Network =
+          | 'base'
+          | 'ethereum'
+          | 'polygon'
+          | 'solana'
+          | 'tempo';
+      }
+
+      export namespace TransactionVerificationOptions {
+        export type Network =
+          | 'base'
+          | 'ethereum'
+          | 'polygon'
+          | 'solana'
+          | 'tempo';
       }
     }
 
@@ -21910,7 +22044,7 @@ export namespace PaymentIntentUpdateParams {
     }
 
     export namespace WechatPay {
-      export type Client = 'android' | 'ios' | 'web';
+      export type Client = 'android' | 'ios' | 'mini_program' | 'web';
     }
   }
 
@@ -24684,6 +24818,7 @@ export namespace PaymentIntentConfirmParams {
     | 'stripe_balance'
     | 'sunbit'
     | 'swish'
+    | 'tamara'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -24787,6 +24922,7 @@ export namespace PaymentIntentConfirmParams {
     | 'stripe_balance'
     | 'sunbit'
     | 'swish'
+    | 'tamara'
     | 'twint'
     | 'upi'
     | 'us_bank_account'
@@ -25195,6 +25331,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
      */
     swish?: PaymentMethodData.Swish;
+
+    /**
+     * If this is a `tamara` PaymentMethod, this hash contains details about the Tamara payment method.
+     */
+    tamara?: PaymentMethodData.Tamara;
 
     /**
      * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
@@ -26441,9 +26582,14 @@ export namespace PaymentIntentConfirmParams {
 
     export interface MoneyServices {
       /**
-       * Account funding transaction details including sender and beneficiary information.
+       * Account funding transaction details including sender information.
        */
       account_funding?: Emptyable<MoneyServices.AccountFunding>;
+
+      /**
+       * Inline identity details for the beneficiary of this transaction.
+       */
+      beneficiary_details?: Emptyable<MoneyServices.BeneficiaryDetails>;
 
       /**
        * The type of money services transaction.
@@ -27947,56 +28093,51 @@ export namespace PaymentIntentConfirmParams {
     export namespace MoneyServices {
       export interface AccountFunding {
         /**
-         * ID of the Account representing the beneficiary in this account funding transaction.
-         */
-        beneficiary_account?: string;
-
-        /**
-         * Inline identity details for the beneficiary of this account funding transaction.
-         */
-        beneficiary_details?: Emptyable<AccountFunding.BeneficiaryDetails>;
-
-        /**
-         * ID of the Account representing the sender in this account funding transaction.
-         */
-        sender_account?: string;
-
-        /**
          * Inline identity details for the sender of this account funding transaction.
          */
         sender_details?: Emptyable<AccountFunding.SenderDetails>;
       }
 
+      export interface BeneficiaryDetails {
+        /**
+         * An opaque identifier for the beneficiary's account (e.g. bank account number, card first6+last4, or other unique identifier).
+         */
+        account_reference?: string;
+
+        /**
+         * Address.
+         */
+        address?: AddressParam;
+
+        /**
+         * Date of birth.
+         */
+        date_of_birth?: BeneficiaryDetails.DateOfBirth;
+
+        /**
+         * Email address.
+         */
+        email?: string;
+
+        /**
+         * Given (first) name.
+         */
+        given_name?: string;
+
+        /**
+         * Phone number.
+         */
+        phone?: string;
+
+        /**
+         * Surname (family name).
+         */
+        surname?: string;
+      }
+
       export type TransactionType = 'account_funding' | 'debt_repayment';
 
       export namespace AccountFunding {
-        export interface BeneficiaryDetails {
-          /**
-           * Address.
-           */
-          address?: AddressParam;
-
-          /**
-           * Date of birth.
-           */
-          date_of_birth?: BeneficiaryDetails.DateOfBirth;
-
-          /**
-           * Email address.
-           */
-          email?: string;
-
-          /**
-           * Full name.
-           */
-          name?: string;
-
-          /**
-           * Phone number.
-           */
-          phone?: string;
-        }
-
         export interface SenderDetails {
           /**
            * Address.
@@ -28014,33 +28155,19 @@ export namespace PaymentIntentConfirmParams {
           email?: string;
 
           /**
-           * Full name.
+           * Given (first) name.
            */
-          name?: string;
+          given_name?: string;
 
           /**
            * Phone number.
            */
           phone?: string;
-        }
 
-        export namespace BeneficiaryDetails {
-          export interface DateOfBirth {
-            /**
-             * Day of birth, between 1 and 31.
-             */
-            day: number;
-
-            /**
-             * Month of birth, between 1 and 12.
-             */
-            month: number;
-
-            /**
-             * Four-digit year of birth.
-             */
-            year: number;
-          }
+          /**
+           * Surname (family name).
+           */
+          surname?: string;
         }
 
         export namespace SenderDetails {
@@ -28060,6 +28187,25 @@ export namespace PaymentIntentConfirmParams {
              */
             year: number;
           }
+        }
+      }
+
+      export namespace BeneficiaryDetails {
+        export interface DateOfBirth {
+          /**
+           * Day of birth, between 1 and 31.
+           */
+          day: number;
+
+          /**
+           * Month of birth, between 1 and 12.
+           */
+          month: number;
+
+          /**
+           * Four-digit year of birth.
+           */
+          year: number;
         }
       }
     }
@@ -28388,6 +28534,8 @@ export namespace PaymentIntentConfirmParams {
 
     export interface Swish {}
 
+    export interface Tamara {}
+
     export interface Twint {}
 
     export type Type =
@@ -28447,6 +28595,7 @@ export namespace PaymentIntentConfirmParams {
       | 'stripe_balance'
       | 'sunbit'
       | 'swish'
+      | 'tamara'
       | 'twint'
       | 'upi'
       | 'us_bank_account'
@@ -28968,7 +29117,7 @@ export namespace PaymentIntentConfirmParams {
        *
        * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
        */
-      capture_method?: Emptyable<'manual'>;
+      capture_method?: Emptyable<Card.CaptureMethod>;
 
       /**
        * A single-use `cvc_update` Token that represents a card CVC value. When provided, the CVC value will be verified during the card payment attempt. This parameter can only be provided during confirmation.
@@ -29186,6 +29335,11 @@ export namespace PaymentIntentConfirmParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: 'none';
+
+      /**
+       * Specific configuration for this PaymentIntent when the mode is `transaction_verification`.
+       */
+      transaction_verification_options?: Crypto.TransactionVerificationOptions;
     }
 
     export interface CustomerBalance {
@@ -30041,6 +30195,11 @@ export namespace PaymentIntentConfirmParams {
       app_id?: string;
 
       /**
+       * The unique buyer ID for the app ID registered with WeChat Pay. Only required when client is mini_program.
+       */
+      buyer_id?: string;
+
+      /**
        * The client type that the end customer will pay from
        */
       client?: WechatPay.Client;
@@ -30154,6 +30313,8 @@ export namespace PaymentIntentConfirmParams {
 
         hours?: number;
       }
+
+      export type CaptureMethod = 'automatic_delayed' | 'manual';
 
       export interface Installments {
         /**
@@ -30363,11 +30524,6 @@ export namespace PaymentIntentConfirmParams {
              * The category of digital asset being acquired through this account funding transaction.
              */
             digital_asset_category?: AccountFunding.DigitalAssetCategory;
-
-            /**
-             * Details for a wallet funding transaction.
-             */
-            wallet?: AccountFunding.Wallet;
           }
 
           export namespace AccountFunding {
@@ -30376,36 +30532,6 @@ export namespace PaymentIntentConfirmParams {
               | 'nft'
               | 'other_non_fiat'
               | 'stablecoin';
-
-            export interface Wallet {
-              /**
-               * Details for a staged purchase.
-               */
-              staged_purchase?: Emptyable<Wallet.StagedPurchase>;
-            }
-
-            export namespace Wallet {
-              export interface StagedPurchase {
-                /**
-                 * The merchant where the staged wallet purchase is made.
-                 */
-                merchant?: StagedPurchase.Merchant;
-              }
-
-              export namespace StagedPurchase {
-                export interface Merchant {
-                  /**
-                   * The merchant category code of the merchant.
-                   */
-                  mcc?: string;
-
-                  /**
-                   * The merchant's name.
-                   */
-                  name?: string;
-                }
-              }
-            }
           }
         }
       }
@@ -30471,7 +30597,10 @@ export namespace PaymentIntentConfirmParams {
         hours?: number;
       }
 
-      export type CaptureMethod = 'manual' | 'manual_preferred';
+      export type CaptureMethod =
+        | 'automatic_delayed'
+        | 'manual'
+        | 'manual_preferred';
 
       export interface PaymentDetails {
         /**
@@ -30505,11 +30634,6 @@ export namespace PaymentIntentConfirmParams {
              * The category of digital asset being acquired through this account funding transaction.
              */
             digital_asset_category?: AccountFunding.DigitalAssetCategory;
-
-            /**
-             * Details for a wallet funding transaction.
-             */
-            wallet?: AccountFunding.Wallet;
           }
 
           export namespace AccountFunding {
@@ -30518,36 +30642,6 @@ export namespace PaymentIntentConfirmParams {
               | 'nft'
               | 'other_non_fiat'
               | 'stablecoin';
-
-            export interface Wallet {
-              /**
-               * Details for a staged purchase.
-               */
-              staged_purchase?: Emptyable<Wallet.StagedPurchase>;
-            }
-
-            export namespace Wallet {
-              export interface StagedPurchase {
-                /**
-                 * The merchant where the staged wallet purchase is made.
-                 */
-                merchant?: StagedPurchase.Merchant;
-              }
-
-              export namespace StagedPurchase {
-                export interface Merchant {
-                  /**
-                   * The merchant category code of the merchant.
-                   */
-                  mcc?: string;
-
-                  /**
-                   * The merchant's name.
-                   */
-                  name?: string;
-                }
-              }
-            }
           }
         }
       }
@@ -30576,8 +30670,34 @@ export namespace PaymentIntentConfirmParams {
 
       export type Mode = 'default' | 'deposit' | 'transaction_verification';
 
+      export interface TransactionVerificationOptions {
+        /**
+         * The network on which the transaction was submitted.
+         */
+        network: TransactionVerificationOptions.Network;
+
+        /**
+         * The hash of the onchain transaction to verify.
+         */
+        transaction_hash: string;
+      }
+
       export namespace DepositOptions {
-        export type Network = 'base' | 'solana' | 'tempo';
+        export type Network =
+          | 'base'
+          | 'ethereum'
+          | 'polygon'
+          | 'solana'
+          | 'tempo';
+      }
+
+      export namespace TransactionVerificationOptions {
+        export type Network =
+          | 'base'
+          | 'ethereum'
+          | 'polygon'
+          | 'solana'
+          | 'tempo';
       }
     }
 
@@ -32345,7 +32465,7 @@ export namespace PaymentIntentConfirmParams {
     }
 
     export namespace WechatPay {
-      export type Client = 'android' | 'ios' | 'web';
+      export type Client = 'android' | 'ios' | 'mini_program' | 'web';
     }
   }
 }

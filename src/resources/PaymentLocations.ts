@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {AddressParam, PaginationParams, Address} from '../shared.js';
+import {AddressParam, Emptyable, PaginationParams, Address} from '../shared.js';
 import {RequestOptions, Response, ApiListPromise} from '../lib.js';
 
 export class PaymentLocationResource extends StripeResource {
@@ -240,7 +240,7 @@ export namespace PaymentLocationUpdateParams {
     /**
      * 14-digit SIRET (Système d'identification du répertoire des établissements) number for the location.
      */
-    siret?: string;
+    siret?: Emptyable<string>;
   }
 }
 export interface PaymentLocationListParams extends PaginationParams {

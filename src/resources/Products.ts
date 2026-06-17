@@ -347,6 +347,8 @@ export interface Product {
    */
   livemode: boolean;
 
+  managed_payments?: Product.ManagedPayments;
+
   /**
    * A list of up to 15 marketing features for this product. These are displayed in [pricing tables](https://docs.stripe.com/payments/checkout/pricing-table).
    */
@@ -461,6 +463,18 @@ export namespace Product {
     upc?: string;
   }
 
+  export interface ManagedPayments {
+    /**
+     * Whether this product is eligible for use with Managed Payments. Possible values are `eligible` and `ineligible`.
+     */
+    eligibility?: ManagedPayments.Eligibility;
+
+    /**
+     * The reasons this product is ineligible for use with Managed Payments, if any. This field isn't present if the product is eligible.
+     */
+    ineligibility_reasons?: Array<ManagedPayments.IneligibilityReason>;
+  }
+
   export interface MarketingFeature {
     /**
      * The marketing feature name. Up to 80 characters long.
@@ -503,6 +517,26 @@ export namespace Product {
   }
 
   export type Type = 'good' | 'service';
+
+  export namespace ManagedPayments {
+    export type Eligibility = 'eligible' | 'ineligible';
+
+    export interface IneligibilityReason {
+      /**
+       * A code identifying the reason this product can't be used with Managed Payments. Additional values might be added as Managed Payments evolves its eligibility criteria.
+       */
+      code?: IneligibilityReason.Code;
+
+      /**
+       * A human-readable description of the reason this product can't be used with Managed Payments.
+       */
+      message?: string;
+    }
+
+    export namespace IneligibilityReason {
+      export type Code = 'ineligible_tax_code' | 'no_tax_code_specified';
+    }
+  }
 }
 export interface ProductCreateParams {
   /**
