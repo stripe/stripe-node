@@ -51,19 +51,18 @@ console.log(customer.id);
 ```
 
 Or using CJS:
+
 ```js
 const Stripe = require('stripe');
 const stripeClient = Stripe('sk_test_...');
 
-stripeClient.customers.create({
-  email: 'customer@example.com',
-})
-  .then(customer => console.log(customer.id))
-  .catch(error => console.error(error));
+stripeClient.customers
+  .create({
+    email: 'customer@example.com',
+  })
+  .then((customer) => console.log(customer.id))
+  .catch((error) => console.error(error));
 ```
-
-
-
 
 > [!WARNING]
 > If you're using `v17.x.x` or later and getting an error about a missing API key despite being sure it's available, it's likely you're importing the file that instantiates `Stripe` while the key isn't present (for instance, during a build step).
@@ -424,7 +423,11 @@ const header = stripeClient.webhooks.generateTestHeaderString({
   secret,
 });
 
-const event = stripeClient.webhooks.constructEvent(payloadString, header, secret);
+const event = stripeClient.webhooks.constructEvent(
+  payloadString,
+  header,
+  secret
+);
 
 // Do something with mocked signed event
 expect(event.id).to.equal(payload.id);
@@ -441,8 +444,9 @@ See [undocumented params and properties](https://docs.stripe.com/sdks/server-sid
 If you're writing a plugin that uses the library, we'd appreciate it if you instantiated your stripe client with `appInfo`, eg;
 
 With ES modules or TypeScript:
+
 ```js
-import Stripe from "stripe";
+import Stripe from 'stripe';
 const stripeClient = new Stripe(apiKey, {
   appInfo: {
     name: 'MyAwesomePlugin',
@@ -453,6 +457,7 @@ const stripeClient = new Stripe(apiKey, {
 ```
 
 Or using CJS:
+
 ```js
 const Stripe = require('stripe');
 const stripeClient = Stripe('sk_test_...', {
@@ -463,7 +468,6 @@ const stripeClient = Stripe('sk_test_...', {
   },
 });
 ```
-
 
 This information is passed along when the library makes calls to the Stripe API.
 
@@ -636,6 +640,9 @@ New features and bug fixes are released on the latest major version of the `stri
 - [Using Stripe Connect](https://github.com/stripe/stripe-node/wiki/Using-Stripe-Connect-with-node.js)
 
 ## Development
+
+> [!WARNING]
+> External contributions to this repo from first-time contributors are currently on hiatus. If you'd like to see a change made to the package, please open an issue.(
 
 [Contribution guidelines for this project](CONTRIBUTING.md)
 
