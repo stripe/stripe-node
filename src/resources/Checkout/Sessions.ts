@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {LineItem} from './../LineItems.js';
-import {Discount} from './../Discounts.js';
+import {Discount as _Discount} from './../Discounts.js';
 import {Subscription} from './../Subscriptions.js';
 import {Customer, DeletedCustomer} from './../Customers.js';
 import {Invoice} from './../Invoices.js';
@@ -3743,7 +3743,7 @@ export namespace Checkout {
            *
            * Related guide: [Applying discounts to subscriptions](https://docs.stripe.com/billing/subscriptions/discounts)
            */
-          discount: Discount;
+          discount: _Discount;
         }
 
         export interface Tax {

@@ -35,11 +35,11 @@ export declare namespace Climate {
   export import OrderRetrieveParams = ClimateNamespace0.OrderRetrieveParams;
   export import OrderUpdateParams = ClimateNamespace0.OrderUpdateParams;
   export import OrderCancelParams = ClimateNamespace0.OrderCancelParams;
-  export {Order};
+  export {Order, OrderResource};
   export import ProductListParams = ClimateNamespace1.ProductListParams;
   export import ProductRetrieveParams = ClimateNamespace1.ProductRetrieveParams;
-  export {Product};
+  export {Product, ProductResource};
   export import SupplierListParams = ClimateNamespace2.SupplierListParams;
   export import SupplierRetrieveParams = ClimateNamespace2.SupplierRetrieveParams;
-  export {Supplier};
+  export {Supplier, SupplierResource};
 }

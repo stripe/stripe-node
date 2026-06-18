@@ -53,7 +53,8 @@ export declare namespace TestHelpers {
   export import TestClockListParams = TestHelpersNamespace3.TestClockListParams;
   export import TestClockCreateParams = TestHelpersNamespace3.TestClockCreateParams;
   export import TestClockAdvanceParams = TestHelpersNamespace3.TestClockAdvanceParams;
-  export {TestClock};
+  export import DeletedTestClock = TestHelpersNamespace3.DeletedTestClock;
+  export {TestClock, TestClockResource};
   export {Issuing};
   export {SharedPayment};
   export {Terminal};

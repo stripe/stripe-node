@@ -23,6 +23,11 @@ This release changes the pinned API version to 2026-05-27.private.
   * Add support for new value `chaps` on enum `V2.FinancialAddressCreditSimulationCreditParams.network`
   * Add support for error codes `payment_method_microdeposit_processing_error` and `siret_invalid` on `QuotePreviewInvoice.last_finalization_error`
 
+## 22.2.2 - 2026-06-18
+* [#2725](https://github.com/stripe/stripe-node/pull/2725) Fixes CJS type exports for stripe package (reported in [#2683](https://github.com/stripe/stripe-node/issues/2683))
+* [#2758](https://github.com/stripe/stripe-node/pull/2758) Fix `Stripe.ErrorType.StripeError` incorrectly being usable as a runtime class (reported in [#2661](https://github.com/stripe/stripe-node/issues/2661))
+* [#2753](https://github.com/stripe/stripe-node/pull/2753) handle shadowed namespaces (reported in [#2691](https://github.com/stripe/stripe-node/issues/2691))
+
 ## 22.2.1 - 2026-06-12
 * [#2750](https://github.com/stripe/stripe-node/pull/2750) URI Encode path params
 * [#2747](https://github.com/stripe/stripe-node/pull/2747) Fix V2ListIterator: concurrency guard and empty page handling
