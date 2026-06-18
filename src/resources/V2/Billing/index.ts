@@ -41,9 +41,9 @@ export class Billing {
 
 export declare namespace Billing {
   export import MeterEventCreateParams = V2Namespace0.Billing.MeterEventCreateParams;
-  export {MeterEvent};
+  export {MeterEvent, MeterEventResource};
   export import MeterEventAdjustmentCreateParams = V2Namespace1.Billing.MeterEventAdjustmentCreateParams;
-  export {MeterEventAdjustment};
+  export {MeterEventAdjustment, MeterEventAdjustmentResource};
   export import MeterEventSessionCreateParams = V2Namespace2.Billing.MeterEventSessionCreateParams;
-  export {MeterEventSession};
+  export {MeterEventSession, MeterEventSessionResource};
 }

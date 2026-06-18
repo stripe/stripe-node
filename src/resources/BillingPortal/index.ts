@@ -30,7 +30,7 @@ export declare namespace BillingPortal {
   export import ConfigurationCreateParams = BillingPortalNamespace0.ConfigurationCreateParams;
   export import ConfigurationRetrieveParams = BillingPortalNamespace0.ConfigurationRetrieveParams;
   export import ConfigurationUpdateParams = BillingPortalNamespace0.ConfigurationUpdateParams;
-  export {Configuration};
+  export {Configuration, ConfigurationResource};
   export import SessionCreateParams = BillingPortalNamespace1.SessionCreateParams;
-  export {Session};
+  export {Session, SessionResource};
 }

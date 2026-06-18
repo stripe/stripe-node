@@ -51,24 +51,24 @@ export class Tax {
 
 export declare namespace Tax {
   export import AssociationFindParams = TaxNamespace0.AssociationFindParams;
-  export {Association};
+  export {Association, AssociationResource};
   export import CalculationRetrieveParams = TaxNamespace1.CalculationRetrieveParams;
   export import CalculationCreateParams = TaxNamespace1.CalculationCreateParams;
   export import CalculationListLineItemsParams = TaxNamespace1.CalculationListLineItemsParams;
-  export {Calculation};
+  export {Calculation, CalculationResource};
   export import RegistrationListParams = TaxNamespace2.RegistrationListParams;
   export import RegistrationCreateParams = TaxNamespace2.RegistrationCreateParams;
   export import RegistrationRetrieveParams = TaxNamespace2.RegistrationRetrieveParams;
   export import RegistrationUpdateParams = TaxNamespace2.RegistrationUpdateParams;
-  export {Registration};
+  export {Registration, RegistrationResource};
   export import SettingsRetrieveParams = TaxNamespace3.SettingsRetrieveParams;
   export import SettingsUpdateParams = TaxNamespace3.SettingsUpdateParams;
-  export {Settings};
+  export {Settings, SettingResource};
   export import TransactionRetrieveParams = TaxNamespace4.TransactionRetrieveParams;
   export import TransactionCreateFromCalculationParams = TaxNamespace4.TransactionCreateFromCalculationParams;
   export import TransactionCreateReversalParams = TaxNamespace4.TransactionCreateReversalParams;
   export import TransactionListLineItemsParams = TaxNamespace4.TransactionListLineItemsParams;
-  export {Transaction};
+  export {Transaction, TransactionResource};
   export {CalculationLineItem};
   export {TransactionLineItem};
 }
