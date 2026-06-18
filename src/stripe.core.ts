@@ -948,7 +948,7 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
   new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
 export class Stripe {
-  static PACKAGE_VERSION = '22.2.0';
+  static PACKAGE_VERSION = '22.2.1';
   static API_VERSION: typeof ApiVersion = ApiVersion;
   static aiAgent = '';
   static AI_AGENT = '';
@@ -957,6 +957,7 @@ export class Stripe {
     lang: 'node',
     typescript: false,
   };
+  static SOURCE_HASH: string | null = null;
   static StripeResource = StripeResource;
   static resources = resources;
   static HttpClient = HttpClient;
@@ -1100,6 +1101,8 @@ export class Stripe {
       ...(runtimeVersion ? {lang_version: runtimeVersion} : {}),
       ...(Stripe.aiAgent ? {ai_agent: Stripe.aiAgent} : {}),
     };
+
+    Stripe.SOURCE_HASH = platformFunctions.getSourceHash();
   }
 
   constructor(key: string, config: StripeConfig = {}) {
@@ -1444,6 +1447,10 @@ export class Stripe {
 
     if (this._appInfo) {
       userAgent.application = this._appInfo;
+    }
+
+    if (Stripe.SOURCE_HASH) {
+      userAgent.source = Stripe.SOURCE_HASH;
     }
 
     cb(JSON.stringify(userAgent));

@@ -46,7 +46,7 @@ export class PaymentMethodConfigurationResource extends StripeResource {
   ): Promise<Response<PaymentMethodConfiguration>> {
     return this._makeRequest(
       'GET',
-      `/v1/payment_method_configurations/${id}`,
+      `/v1/payment_method_configurations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -61,7 +61,7 @@ export class PaymentMethodConfigurationResource extends StripeResource {
   ): Promise<Response<PaymentMethodConfiguration>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_method_configurations/${id}`,
+      `/v1/payment_method_configurations/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

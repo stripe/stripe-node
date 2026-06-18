@@ -389,6 +389,32 @@ event = stripe.webhooks.constructEvent(
   'secret'
 );
 
+// Verify that nested types with names matching imported types resolve correctly.
+// e.g. Checkout.Session.TotalDetails.Breakdown.Discount.discount should be
+// Stripe.Discount, not a self-referential Breakdown.Discount. (DEVSDK-3139)
+{
+  const session = {} as Stripe.Checkout.Session;
+  for (const item of session.total_details?.breakdown?.discounts ?? []) {
+    const discount: Stripe.Discount = item.discount as Stripe.Discount;
+    const promoCode: string | Stripe.PromotionCode | null =
+      discount.promotion_code;
+    const customer: string | Stripe.Customer | Stripe.DeletedCustomer | null =
+      discount.customer;
+    const start: number = discount.start;
+  }
+
+  const schedule = {} as Stripe.SubscriptionSchedule;
+  for (const phase of schedule.phases) {
+    for (const d of phase.discounts) {
+      if (typeof d.discount !== 'string' && d.discount) {
+        const promoCode: string | Stripe.PromotionCode | null =
+          d.discount.promotion_code;
+        const start: number = d.discount.start;
+      }
+    }
+  }
+}
+
 const v2AccountCreateParamConfiguration: Stripe.V2.Core.AccountCreateParams.Configuration = {};
 const checkoutSessionParam: Stripe.Checkout.SessionCreateParams = {};
 const v2EventListParams: Stripe.V2.Core.EventListParams = {};

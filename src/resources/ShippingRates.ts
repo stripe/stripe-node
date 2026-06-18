@@ -47,7 +47,7 @@ export class ShippingRateResource extends StripeResource {
   ): Promise<Response<ShippingRate>> {
     return this._makeRequest(
       'GET',
-      `/v1/shipping_rates/${id}`,
+      `/v1/shipping_rates/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -62,7 +62,7 @@ export class ShippingRateResource extends StripeResource {
   ): Promise<Response<ShippingRate>> {
     return this._makeRequest(
       'POST',
-      `/v1/shipping_rates/${id}`,
+      `/v1/shipping_rates/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

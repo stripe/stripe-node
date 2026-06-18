@@ -76,7 +76,7 @@ export class PaymentIntentResource extends StripeResource {
   ): Promise<Response<PaymentIntent>> {
     return this._makeRequest(
       'GET',
-      `/v1/payment_intents/${id}`,
+      `/v1/payment_intents/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -97,7 +97,7 @@ export class PaymentIntentResource extends StripeResource {
   ): Promise<Response<PaymentIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_intents/${id}`,
+      `/v1/payment_intents/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -132,7 +132,7 @@ export class PaymentIntentResource extends StripeResource {
   ): Promise<Response<PaymentIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_intents/${id}/apply_customer_balance`,
+      `/v1/payment_intents/${encodeURIComponent(id)}/apply_customer_balance`,
       params,
       options
     ) as any;
@@ -151,7 +151,7 @@ export class PaymentIntentResource extends StripeResource {
   ): Promise<Response<PaymentIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_intents/${id}/cancel`,
+      `/v1/payment_intents/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;
@@ -170,7 +170,7 @@ export class PaymentIntentResource extends StripeResource {
   ): Promise<Response<PaymentIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_intents/${id}/capture`,
+      `/v1/payment_intents/${encodeURIComponent(id)}/capture`,
       params,
       options
     ) as any;
@@ -214,7 +214,7 @@ export class PaymentIntentResource extends StripeResource {
   ): Promise<Response<PaymentIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_intents/${id}/confirm`,
+      `/v1/payment_intents/${encodeURIComponent(id)}/confirm`,
       params,
       options
     ) as any;
@@ -254,7 +254,7 @@ export class PaymentIntentResource extends StripeResource {
   ): Promise<Response<PaymentIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_intents/${id}/increment_authorization`,
+      `/v1/payment_intents/${encodeURIComponent(id)}/increment_authorization`,
       params,
       options
     ) as any;
@@ -269,7 +269,7 @@ export class PaymentIntentResource extends StripeResource {
   ): Promise<Response<PaymentIntent>> {
     return this._makeRequest(
       'POST',
-      `/v1/payment_intents/${id}/verify_microdeposits`,
+      `/v1/payment_intents/${encodeURIComponent(id)}/verify_microdeposits`,
       params,
       options
     ) as any;
@@ -284,7 +284,7 @@ export class PaymentIntentResource extends StripeResource {
   ): ApiListPromise<PaymentIntentAmountDetailsLineItem> {
     return this._makeRequest(
       'GET',
-      `/v1/payment_intents/${id}/amount_details_line_items`,
+      `/v1/payment_intents/${encodeURIComponent(id)}/amount_details_line_items`,
       params,
       options,
       {

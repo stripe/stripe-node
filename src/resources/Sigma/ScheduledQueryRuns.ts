@@ -33,7 +33,7 @@ export class ScheduledQueryRunResource extends StripeResource {
   ): Promise<Response<ScheduledQueryRun>> {
     return this._makeRequest(
       'GET',
-      `/v1/sigma/scheduled_query_runs/${id}`,
+      `/v1/sigma/scheduled_query_runs/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

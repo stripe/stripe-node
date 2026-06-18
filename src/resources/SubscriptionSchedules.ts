@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {Discount} from './Discounts.js';
+import {Discount as _Discount} from './Discounts.js';
 import {Application, DeletedApplication} from './Applications.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {Subscription} from './Subscriptions.js';
@@ -109,7 +109,7 @@ export class SubscriptionScheduleResource extends StripeResource {
   ): Promise<Response<SubscriptionSchedule>> {
     return this._makeRequest(
       'GET',
-      `/v1/subscription_schedules/${id}`,
+      `/v1/subscription_schedules/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -124,7 +124,7 @@ export class SubscriptionScheduleResource extends StripeResource {
   ): Promise<Response<SubscriptionSchedule>> {
     return this._makeRequest(
       'POST',
-      `/v1/subscription_schedules/${id}`,
+      `/v1/subscription_schedules/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -182,7 +182,7 @@ export class SubscriptionScheduleResource extends StripeResource {
   ): Promise<Response<SubscriptionSchedule>> {
     return this._makeRequest(
       'POST',
-      `/v1/subscription_schedules/${id}/cancel`,
+      `/v1/subscription_schedules/${encodeURIComponent(id)}/cancel`,
       params,
       options
     ) as any;
@@ -197,7 +197,7 @@ export class SubscriptionScheduleResource extends StripeResource {
   ): Promise<Response<SubscriptionSchedule>> {
     return this._makeRequest(
       'POST',
-      `/v1/subscription_schedules/${id}/release`,
+      `/v1/subscription_schedules/${encodeURIComponent(id)}/release`,
       params,
       options
     ) as any;
@@ -674,7 +674,7 @@ export namespace SubscriptionSchedule {
       /**
        * ID of an existing discount on the object (or one of its ancestors) to reuse.
        */
-      discount: string | Discount | null;
+      discount: string | _Discount | null;
 
       /**
        * ID of the promotion code to create a new discount for.
@@ -763,7 +763,7 @@ export namespace SubscriptionSchedule {
         /**
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
-        discount: string | Discount | null;
+        discount: string | _Discount | null;
 
         /**
          * ID of the promotion code to create a new discount for.
@@ -868,7 +868,7 @@ export namespace SubscriptionSchedule {
         /**
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
-        discount: string | Discount | null;
+        discount: string | _Discount | null;
 
         /**
          * ID of the promotion code to create a new discount for.

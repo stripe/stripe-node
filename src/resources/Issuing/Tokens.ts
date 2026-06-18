@@ -27,7 +27,7 @@ export class TokenResource extends StripeResource {
   ): Promise<Response<Token>> {
     return this._makeRequest(
       'GET',
-      `/v1/issuing/tokens/${id}`,
+      `/v1/issuing/tokens/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;
@@ -42,7 +42,7 @@ export class TokenResource extends StripeResource {
   ): Promise<Response<Token>> {
     return this._makeRequest(
       'POST',
-      `/v1/issuing/tokens/${id}`,
+      `/v1/issuing/tokens/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

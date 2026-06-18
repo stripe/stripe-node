@@ -57,7 +57,7 @@ export class AccountTokenResource extends StripeResource {
   ): Promise<Response<AccountToken>> {
     return this._makeRequest(
       'GET',
-      `/v2/core/account_tokens/${id}`,
+      `/v2/core/account_tokens/${encodeURIComponent(id)}`,
       params,
       options
     ) as any;

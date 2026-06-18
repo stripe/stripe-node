@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../StripeResource.js';
 import {LineItem} from './../LineItems.js';
-import {Discount} from './../Discounts.js';
+import {Discount as _Discount} from './../Discounts.js';
 import {Subscription} from './../Subscriptions.js';
 import {Customer, DeletedCustomer} from './../Customers.js';
 import {Invoice} from './../Invoices.js';
@@ -246,7 +246,7 @@ export class SessionResource extends StripeResource {
   ): Promise<Response<Session>> {
     return this._makeRequest(
       'GET',
-      `/v1/checkout/sessions/${id}`,
+      `/v1/checkout/sessions/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -346,7 +346,7 @@ export class SessionResource extends StripeResource {
   ): Promise<Response<Session>> {
     return this._makeRequest(
       'POST',
-      `/v1/checkout/sessions/${id}`,
+      `/v1/checkout/sessions/${encodeURIComponent(id)}`,
       params,
       options,
       {
@@ -463,7 +463,7 @@ export class SessionResource extends StripeResource {
   ): Promise<Response<Session>> {
     return this._makeRequest(
       'POST',
-      `/v1/checkout/sessions/${id}/expire`,
+      `/v1/checkout/sessions/${encodeURIComponent(id)}/expire`,
       params,
       options,
       {
@@ -561,7 +561,7 @@ export class SessionResource extends StripeResource {
   ): ApiListPromise<LineItem> {
     return this._makeRequest(
       'GET',
-      `/v1/checkout/sessions/${id}/line_items`,
+      `/v1/checkout/sessions/${encodeURIComponent(id)}/line_items`,
       params,
       options,
       {
@@ -3519,7 +3519,7 @@ export namespace Checkout {
            *
            * Related guide: [Applying discounts to subscriptions](https://docs.stripe.com/billing/subscriptions/discounts)
            */
-          discount: Discount;
+          discount: _Discount;
         }
 
         export interface Tax {
