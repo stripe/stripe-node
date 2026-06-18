@@ -629,8 +629,7 @@ import {TestHelpers} from './resources/TestHelpers/index.js';
 import {Treasury} from './resources/Treasury/index.js';
 import {V2} from './resources/V2/index.js';
 import {Reserve} from './resources/Reserve/index.js';
-// StripeInstanceImports: The end of the section generated from our OpenAPI spec
-// V1EventImports: The beginning of the section generated from our OpenAPI spec
+
 import {
   AccountApplicationAuthorizedEvent,
   AccountApplicationDeauthorizedEvent,
@@ -2689,20 +2688,6 @@ export declare namespace Stripe {
   }
   // ErrorTypeNamespaces: The end of the section generated from our OpenAPI spec
   export import Events = V2.Core.Events;
-
-  export namespace errors {
-    export type StripeError = _Error.StripeError;
-    export type StripeCardError = _Error.StripeCardError;
-    export type StripeInvalidRequestError = _Error.StripeInvalidRequestError;
-    export type StripeAPIError = _Error.StripeAPIError;
-    export type StripeAuthenticationError = _Error.StripeAuthenticationError;
-    export type StripePermissionError = _Error.StripePermissionError;
-    export type StripeRateLimitError = _Error.StripeRateLimitError;
-    export type StripeConnectionError = _Error.StripeConnectionError;
-    export type StripeSignatureVerificationError = _Error.StripeSignatureVerificationError;
-    export type StripeIdempotencyError = _Error.StripeIdempotencyError;
-    export type StripeInvalidGrantError = _Error.StripeInvalidGrantError;
-  }
 }
 
 Stripe.initialize(new NodePlatformFunctions());
