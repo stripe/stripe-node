@@ -1,29 +1,6 @@
 import {NodePlatformFunctions} from './platform/NodePlatformFunctions.js';
 import {Stripe} from './stripe.core.js';
 import {StripeConfig} from './lib.js';
-import {V2 as V2AccountsNamespace} from './resources/V2/Core/Accounts.js';
-
-// StripeInstanceCJSNestedResourceImports: The beginning of the section generated from our OpenAPI spec
-import {Apps} from './resources/Apps/index.js';
-import {Billing} from './resources/Billing/index.js';
-import {BillingPortal} from './resources/BillingPortal/index.js';
-import {Checkout} from './resources/Checkout/index.js';
-import {Climate} from './resources/Climate/index.js';
-import {Entitlements} from './resources/Entitlements/index.js';
-import {FinancialConnections} from './resources/FinancialConnections/index.js';
-import {Forwarding} from './resources/Forwarding/index.js';
-import {Identity} from './resources/Identity/index.js';
-import {Issuing} from './resources/Issuing/index.js';
-import {Radar} from './resources/Radar/index.js';
-import {Reporting} from './resources/Reporting/index.js';
-import {Sigma} from './resources/Sigma/index.js';
-import {Tax} from './resources/Tax/index.js';
-import {Terminal} from './resources/Terminal/index.js';
-import {TestHelpers} from './resources/TestHelpers/index.js';
-import {Treasury} from './resources/Treasury/index.js';
-import {V2} from './resources/V2/index.js';
-import {Reserve} from './resources/Reserve/index.js';
-// StripeInstanceCJSNestedResourceImports: The end of the section generated from our OpenAPI spec
 
 // Initialize the Stripe class with Node platform functions
 Stripe.initialize(new NodePlatformFunctions());
