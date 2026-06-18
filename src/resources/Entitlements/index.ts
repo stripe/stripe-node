@@ -30,11 +30,11 @@ export class Entitlements {
 export declare namespace Entitlements {
   export import ActiveEntitlementListParams = EntitlementsNamespace0.ActiveEntitlementListParams;
   export import ActiveEntitlementRetrieveParams = EntitlementsNamespace0.ActiveEntitlementRetrieveParams;
-  export {ActiveEntitlement};
+  export {ActiveEntitlement, ActiveEntitlementResource};
   export import FeatureListParams = EntitlementsNamespace1.FeatureListParams;
   export import FeatureCreateParams = EntitlementsNamespace1.FeatureCreateParams;
   export import FeatureRetrieveParams = EntitlementsNamespace1.FeatureRetrieveParams;
   export import FeatureUpdateParams = EntitlementsNamespace1.FeatureUpdateParams;
-  export {Feature};
+  export {Feature, FeatureResource};
   export {ActiveEntitlementSummary};
 }

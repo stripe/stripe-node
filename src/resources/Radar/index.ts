@@ -44,18 +44,20 @@ export class Radar {
 export declare namespace Radar {
   export import EarlyFraudWarningListParams = RadarNamespace0.EarlyFraudWarningListParams;
   export import EarlyFraudWarningRetrieveParams = RadarNamespace0.EarlyFraudWarningRetrieveParams;
-  export {EarlyFraudWarning};
+  export {EarlyFraudWarning, EarlyFraudWarningResource};
   export import PaymentEvaluationCreateParams = RadarNamespace1.PaymentEvaluationCreateParams;
-  export {PaymentEvaluation};
+  export {PaymentEvaluation, PaymentEvaluationResource};
   export import ValueListDeleteParams = RadarNamespace2.ValueListDeleteParams;
   export import ValueListRetrieveParams = RadarNamespace2.ValueListRetrieveParams;
   export import ValueListUpdateParams = RadarNamespace2.ValueListUpdateParams;
   export import ValueListListParams = RadarNamespace2.ValueListListParams;
   export import ValueListCreateParams = RadarNamespace2.ValueListCreateParams;
-  export {ValueList};
+  export import DeletedValueList = RadarNamespace2.DeletedValueList;
+  export {ValueList, ValueListResource};
   export import ValueListItemDeleteParams = RadarNamespace3.ValueListItemDeleteParams;
   export import ValueListItemRetrieveParams = RadarNamespace3.ValueListItemRetrieveParams;
   export import ValueListItemListParams = RadarNamespace3.ValueListItemListParams;
   export import ValueListItemCreateParams = RadarNamespace3.ValueListItemCreateParams;
-  export {ValueListItem};
+  export import DeletedValueListItem = RadarNamespace3.DeletedValueListItem;
+  export {ValueListItem, ValueListItemResource};
 }

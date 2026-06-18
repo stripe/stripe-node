@@ -24,5 +24,5 @@ export declare namespace Checkout {
   export import SessionUpdateParams = CheckoutNamespace0.SessionUpdateParams;
   export import SessionExpireParams = CheckoutNamespace0.SessionExpireParams;
   export import SessionListLineItemsParams = CheckoutNamespace0.SessionListLineItemsParams;
-  export {Session};
+  export {Session, SessionResource};
 }
