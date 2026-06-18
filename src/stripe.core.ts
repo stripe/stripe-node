@@ -2593,6 +2593,105 @@ export declare namespace Stripe {
 
   export {StripeContext as StripeContextType};
   export {StripeRawError};
-  export import ErrorType = _Error;
+  // ErrorTypeNamespaces: The beginning of the section generated from our OpenAPI spec
+  export namespace ErrorType {
+    export type StripeError = InstanceType<typeof _Error.StripeError>;
+    export type StripeCardError = InstanceType<typeof _Error.StripeCardError>;
+    export type StripeInvalidRequestError = InstanceType<
+      typeof _Error.StripeInvalidRequestError
+    >;
+    export type StripeAPIError = InstanceType<typeof _Error.StripeAPIError>;
+    export type StripeAuthenticationError = InstanceType<
+      typeof _Error.StripeAuthenticationError
+    >;
+    export type StripePermissionError = InstanceType<
+      typeof _Error.StripePermissionError
+    >;
+    export type StripeRateLimitError = InstanceType<
+      typeof _Error.StripeRateLimitError
+    >;
+    export type StripeConnectionError = InstanceType<
+      typeof _Error.StripeConnectionError
+    >;
+    export type StripeSignatureVerificationError = InstanceType<
+      typeof _Error.StripeSignatureVerificationError
+    >;
+    export type StripeIdempotencyError = InstanceType<
+      typeof _Error.StripeIdempotencyError
+    >;
+    export type StripeOAuthError = InstanceType<typeof _Error.StripeOAuthError>;
+    export type StripeInvalidGrantError = InstanceType<
+      typeof _Error.StripeInvalidGrantError
+    >;
+    export type StripeInvalidClientError = InstanceType<
+      typeof _Error.StripeInvalidClientError
+    >;
+    export type StripeOAuthInvalidRequestError = InstanceType<
+      typeof _Error.StripeOAuthInvalidRequestError
+    >;
+    export type StripeInvalidScopeError = InstanceType<
+      typeof _Error.StripeInvalidScopeError
+    >;
+    export type StripeUnsupportedGrantTypeError = InstanceType<
+      typeof _Error.StripeUnsupportedGrantTypeError
+    >;
+    export type StripeUnsupportedResponseTypeError = InstanceType<
+      typeof _Error.StripeUnsupportedResponseTypeError
+    >;
+    export type RateLimitError = InstanceType<typeof _Error.RateLimitError>;
+    export type TemporarySessionExpiredError = InstanceType<
+      typeof _Error.TemporarySessionExpiredError
+    >;
+  }
+  export namespace errors {
+    export type StripeError = InstanceType<typeof _Error.StripeError>;
+    export type StripeCardError = InstanceType<typeof _Error.StripeCardError>;
+    export type StripeInvalidRequestError = InstanceType<
+      typeof _Error.StripeInvalidRequestError
+    >;
+    export type StripeAPIError = InstanceType<typeof _Error.StripeAPIError>;
+    export type StripeAuthenticationError = InstanceType<
+      typeof _Error.StripeAuthenticationError
+    >;
+    export type StripePermissionError = InstanceType<
+      typeof _Error.StripePermissionError
+    >;
+    export type StripeRateLimitError = InstanceType<
+      typeof _Error.StripeRateLimitError
+    >;
+    export type StripeConnectionError = InstanceType<
+      typeof _Error.StripeConnectionError
+    >;
+    export type StripeSignatureVerificationError = InstanceType<
+      typeof _Error.StripeSignatureVerificationError
+    >;
+    export type StripeIdempotencyError = InstanceType<
+      typeof _Error.StripeIdempotencyError
+    >;
+    export type StripeOAuthError = InstanceType<typeof _Error.StripeOAuthError>;
+    export type StripeInvalidGrantError = InstanceType<
+      typeof _Error.StripeInvalidGrantError
+    >;
+    export type StripeInvalidClientError = InstanceType<
+      typeof _Error.StripeInvalidClientError
+    >;
+    export type StripeOAuthInvalidRequestError = InstanceType<
+      typeof _Error.StripeOAuthInvalidRequestError
+    >;
+    export type StripeInvalidScopeError = InstanceType<
+      typeof _Error.StripeInvalidScopeError
+    >;
+    export type StripeUnsupportedGrantTypeError = InstanceType<
+      typeof _Error.StripeUnsupportedGrantTypeError
+    >;
+    export type StripeUnsupportedResponseTypeError = InstanceType<
+      typeof _Error.StripeUnsupportedResponseTypeError
+    >;
+    export type RateLimitError = InstanceType<typeof _Error.RateLimitError>;
+    export type TemporarySessionExpiredError = InstanceType<
+      typeof _Error.TemporarySessionExpiredError
+    >;
+  }
+  // ErrorTypeNamespaces: The end of the section generated from our OpenAPI spec
   export import Events = V2.Core.Events;
 }

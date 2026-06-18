@@ -271,6 +271,24 @@ const instanceofCheck2 = {} instanceof Stripe.errors.StripeAPIError;
 const instanceofCheck5 = {} instanceof stripe.errors.StripeError;
 const instanceofCheck6 = {} instanceof stripe.errors.StripeAPIError;
 
+// ErrorType namespace provides type-level access (DEVSDK-3141)
+let errorTypeCheck1: Stripe.ErrorType.StripeError;
+let errorTypeCheck2: Stripe.ErrorType.StripeCardError;
+let errorTypeCheck3: Stripe.ErrorType.StripeInvalidRequestError;
+
+// Stripe.errors and Stripe.ErrorType are interchangeable as types
+const errorTypeInterchangeable = (
+  e: Stripe.errors.StripeError
+): Stripe.ErrorType.StripeError => e;
+
+// instanceof narrows to the correct type
+const instanceofNarrowing = (e: unknown): Stripe.ErrorType.StripeError | null => {
+  if (e instanceof Stripe.errors.StripeError) {
+    return e;
+  }
+  return null;
+};
+
 stripe.files.create({
   purpose: 'dispute_evidence',
   file: {
