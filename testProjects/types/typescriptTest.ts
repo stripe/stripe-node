@@ -417,6 +417,7 @@ event = stripe.webhooks.constructEvent(
 
 const v2AccountCreateParamConfiguration: Stripe.V2.Core.AccountCreateParams.Configuration = {};
 const checkoutSessionParam: Stripe.Checkout.SessionCreateParams = {};
+const checkoutSessionParamLineItem: Stripe.Checkout.SessionCreateParams.LineItem = {};
 const v2EventListParams: Stripe.V2.Core.EventListParams = {};
 const v2AccountCreateParams: Stripe.V2.Core.AccountCreateParams = {};
 const oAuthToken: Stripe.OAuthToken = {};

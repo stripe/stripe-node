@@ -17,6 +17,7 @@ let customer: StripeType.Customer;
 let params: StripeType.CustomerCreateParams;
 let charge: StripeType.Charge;
 let checkout: StripeType.Checkout.SessionCreateParams;
+let checkoutLineItem: StripeType.Checkout.SessionCreateParams.LineItem;
 let rawError: StripeType.StripeRawError;
 
 // ——— Pattern 2: value import for construction + namespace access ———
