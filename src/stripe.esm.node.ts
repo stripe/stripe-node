@@ -629,7 +629,9 @@ import {TestHelpers} from './resources/TestHelpers/index.js';
 import {Treasury} from './resources/Treasury/index.js';
 import {V2} from './resources/V2/index.js';
 import {Reserve} from './resources/Reserve/index.js';
+// StripeInstanceImports: The end of the section generated from our OpenAPI spec
 
+// V1EventImports: The beginning of the section generated from our OpenAPI spec
 import {
   AccountApplicationAuthorizedEvent,
   AccountApplicationDeauthorizedEvent,
