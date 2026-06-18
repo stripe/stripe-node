@@ -81,9 +81,6 @@ import {
   AccountRetrieveCapabilityParams,
   AccountRetrieveExternalAccountParams,
   AccountRetrievePersonParams,
-  AccountRetrieveSignalsParams,
-  AccountSerializeBatchCreateParams,
-  AccountSerializeBatchDeleteParams,
   AccountSerializeBatchUpdateParams,
   AccountUpdateCapabilityParams,
   AccountUpdateExternalAccountParams,
@@ -144,11 +141,6 @@ import {
   BalanceTransactionResource,
 } from './resources/BalanceTransactions.js';
 import {
-  BalanceTransfer,
-  BalanceTransferCreateParams,
-  BalanceTransferResource,
-} from './resources/BalanceTransfers.js';
-import {
   Charge,
   ChargeCreateParams,
   ChargeRetrieveParams,
@@ -178,8 +170,6 @@ import {
   CouponListParams,
   CouponDeleteParams,
   CouponSerializeBatchCreateParams,
-  CouponSerializeBatchDeleteParams,
-  CouponSerializeBatchUpdateParams,
   CouponResource,
 } from './resources/Coupons.js';
 import {
@@ -191,7 +181,6 @@ import {
   CreditNoteListLineItemsParams,
   CreditNoteListPreviewLineItemsParams,
   CreditNotePreviewParams,
-  CreditNoteSerializeBatchCreateParams,
   CreditNoteVoidCreditNoteParams,
   CreditNoteResource,
 } from './resources/CreditNotes.js';
@@ -222,20 +211,7 @@ import {
   CustomerRetrieveSourceParams,
   CustomerRetrieveTaxIdParams,
   CustomerSearchParams,
-  CustomerSerializeBatchCreateParams,
-  CustomerSerializeBatchCreateBalanceTransactionParams,
-  CustomerSerializeBatchCreateForCustomerTaxIdParams,
-  CustomerSerializeBatchCreateFundingInstructionsFundingInstructionsParams,
-  CustomerSerializeBatchCreateSourceParams,
-  CustomerSerializeBatchDeleteParams,
-  CustomerSerializeBatchDeleteDiscountParams,
-  CustomerSerializeBatchDeleteSourceParams,
-  CustomerSerializeBatchDeleteTaxIdParams,
   CustomerSerializeBatchUpdateParams,
-  CustomerSerializeBatchUpdateBalanceTransactionParams,
-  CustomerSerializeBatchUpdateCashBalanceParams,
-  CustomerSerializeBatchUpdateSourceParams,
-  CustomerSerializeBatchVerifySourceParams,
   CustomerUpdateBalanceTransactionParams,
   CustomerUpdateCashBalanceParams,
   CustomerUpdateSourceParams,
@@ -245,7 +221,6 @@ import {
 import {
   CustomerSession,
   CustomerSessionCreateParams,
-  CustomerSessionSerializeBatchCreateParams,
   CustomerSessionResource,
 } from './resources/CustomerSessions.js';
 import {
@@ -254,7 +229,6 @@ import {
   DisputeUpdateParams,
   DisputeListParams,
   DisputeCloseParams,
-  DisputeSerializeBatchCloseParams,
   DisputeResource,
 } from './resources/Disputes.js';
 import {
@@ -295,14 +269,6 @@ import {
   FileLinkResource,
 } from './resources/FileLinks.js';
 import {
-  FrMealVouchersOnboarding,
-  FrMealVouchersOnboardingCreateParams,
-  FrMealVouchersOnboardingRetrieveParams,
-  FrMealVouchersOnboardingUpdateParams,
-  FrMealVouchersOnboardingListParams,
-  FrMealVouchersOnboardingResource,
-} from './resources/FrMealVouchersOnboardings.js';
-import {
   FxQuote,
   FxQuoteCreateParams,
   FxQuoteRetrieveParams,
@@ -328,19 +294,6 @@ import {
   InvoiceRemoveLinesParams,
   InvoiceSearchParams,
   InvoiceSendInvoiceParams,
-  InvoiceSerializeBatchAddLinesParams,
-  InvoiceSerializeBatchCreateParams,
-  InvoiceSerializeBatchCreatePreviewParams,
-  InvoiceSerializeBatchDeleteParams,
-  InvoiceSerializeBatchFinalizeInvoiceParams,
-  InvoiceSerializeBatchMarkUncollectibleParams,
-  InvoiceSerializeBatchPayParams,
-  InvoiceSerializeBatchRemoveLinesParams,
-  InvoiceSerializeBatchSendInvoiceParams,
-  InvoiceSerializeBatchUpdateParams,
-  InvoiceSerializeBatchUpdateLineItemParams,
-  InvoiceSerializeBatchUpdateLinesParams,
-  InvoiceSerializeBatchVoidInvoiceParams,
   InvoiceUpdateLinesParams,
   InvoiceUpdateLineItemParams,
   InvoiceVoidInvoiceParams,
@@ -354,9 +307,6 @@ import {
   InvoiceItemUpdateParams,
   InvoiceItemListParams,
   InvoiceItemDeleteParams,
-  InvoiceItemSerializeBatchCreateParams,
-  InvoiceItemSerializeBatchDeleteParams,
-  InvoiceItemSerializeBatchUpdateParams,
   InvoiceItemResource,
 } from './resources/InvoiceItems.js';
 import {
@@ -370,8 +320,6 @@ import {
   InvoiceRenderingTemplateRetrieveParams,
   InvoiceRenderingTemplateListParams,
   InvoiceRenderingTemplateArchiveParams,
-  InvoiceRenderingTemplateSerializeBatchArchiveParams,
-  InvoiceRenderingTemplateSerializeBatchUnarchiveParams,
   InvoiceRenderingTemplateUnarchiveParams,
   InvoiceRenderingTemplateResource,
 } from './resources/InvoiceRenderingTemplates.js';
@@ -402,13 +350,6 @@ import {
   PaymentAttemptRecord,
   PaymentAttemptRecordRetrieveParams,
   PaymentAttemptRecordListParams,
-  PaymentAttemptRecordReportAuthenticatedParams,
-  PaymentAttemptRecordReportAuthorizedParams,
-  PaymentAttemptRecordReportCanceledParams,
-  PaymentAttemptRecordReportFailedParams,
-  PaymentAttemptRecordReportGuaranteedParams,
-  PaymentAttemptRecordReportInformationalParams,
-  PaymentAttemptRecordReportRefundParams,
   PaymentAttemptRecordResource,
 } from './resources/PaymentAttemptRecords.js';
 import {
@@ -424,7 +365,6 @@ import {
   PaymentIntentDecrementAuthorizationParams,
   PaymentIntentIncrementAuthorizationParams,
   PaymentIntentListAmountDetailsLineItemsParams,
-  PaymentIntentReauthorizeParams,
   PaymentIntentSearchParams,
   PaymentIntentTriggerActionParams,
   PaymentIntentVerifyMicrodepositsParams,
@@ -440,32 +380,13 @@ import {
   PaymentLinkResource,
 } from './resources/PaymentLinks.js';
 import {
-  PaymentLocation,
-  DeletedPaymentLocation,
-  PaymentLocationCreateParams,
-  PaymentLocationRetrieveParams,
-  PaymentLocationUpdateParams,
-  PaymentLocationListParams,
-  PaymentLocationDeleteParams,
-  PaymentLocationResource,
-} from './resources/PaymentLocations.js';
-import {
-  PaymentLocationCapability,
-  PaymentLocationCapabilityRetrieveParams,
-  PaymentLocationCapabilityUpdateParams,
-  PaymentLocationCapabilityListParams,
-  PaymentLocationCapabilityResource,
-} from './resources/PaymentLocationCapabilities.js';
-import {
   PaymentMethod,
   PaymentMethodCreateParams,
   PaymentMethodRetrieveParams,
   PaymentMethodUpdateParams,
   PaymentMethodListParams,
   PaymentMethodAttachParams,
-  PaymentMethodCheckBalanceParams,
   PaymentMethodDetachParams,
-  PaymentMethodSerializeBatchAttachParams,
   PaymentMethodResource,
 } from './resources/PaymentMethods.js';
 import {
@@ -525,8 +446,6 @@ import {
   PriceUpdateParams,
   PriceListParams,
   PriceSearchParams,
-  PriceSerializeBatchCreateParams,
-  PriceSerializeBatchUpdateParams,
   PriceResource,
 } from './resources/Prices.js';
 import {
@@ -542,11 +461,6 @@ import {
   ProductListFeaturesParams,
   ProductRetrieveFeatureParams,
   ProductSearchParams,
-  ProductSerializeBatchCreateParams,
-  ProductSerializeBatchCreateFeatureParams,
-  ProductSerializeBatchDeleteParams,
-  ProductSerializeBatchDeleteFeatureParams,
-  ProductSerializeBatchUpdateParams,
   ProductResource,
 } from './resources/Products.js';
 import {
@@ -587,8 +501,6 @@ import {
   RefundUpdateParams,
   RefundListParams,
   RefundCancelParams,
-  RefundSerializeBatchCancelParams,
-  RefundSerializeBatchCreateParams,
   RefundResource,
 } from './resources/Refunds.js';
 import {
@@ -637,7 +549,6 @@ import {
   SubscriptionRetrieveParams,
   SubscriptionUpdateParams,
   SubscriptionListParams,
-  SubscriptionAttachCadenceParams,
   SubscriptionCancelParams,
   SubscriptionDeleteDiscountParams,
   SubscriptionMigrateParams,
@@ -645,10 +556,7 @@ import {
   SubscriptionResumeParams,
   SubscriptionSearchParams,
   SubscriptionSerializeBatchCancelParams,
-  SubscriptionSerializeBatchCreateParams,
   SubscriptionSerializeBatchMigrateParams,
-  SubscriptionSerializeBatchPauseParams,
-  SubscriptionSerializeBatchResumeParams,
   SubscriptionSerializeBatchUpdateParams,
   SubscriptionResource,
 } from './resources/Subscriptions.js';
@@ -660,9 +568,6 @@ import {
   SubscriptionItemUpdateParams,
   SubscriptionItemListParams,
   SubscriptionItemDeleteParams,
-  SubscriptionItemSerializeBatchCreateParams,
-  SubscriptionItemSerializeBatchDeleteParams,
-  SubscriptionItemSerializeBatchUpdateParams,
   SubscriptionItemResource,
 } from './resources/SubscriptionItems.js';
 import {
@@ -674,10 +579,6 @@ import {
   SubscriptionScheduleAmendParams,
   SubscriptionScheduleCancelParams,
   SubscriptionScheduleReleaseParams,
-  SubscriptionScheduleSerializeBatchCancelParams,
-  SubscriptionScheduleSerializeBatchCreateParams,
-  SubscriptionScheduleSerializeBatchReleaseParams,
-  SubscriptionScheduleSerializeBatchUpdateParams,
   SubscriptionScheduleResource,
 } from './resources/SubscriptionSchedules.js';
 import {
@@ -693,7 +594,6 @@ import {
   TaxIdRetrieveParams,
   TaxIdListParams,
   TaxIdDeleteParams,
-  TaxIdSerializeBatchCreateParams,
   TaxIdResource,
 } from './resources/TaxIds.js';
 import {
@@ -702,8 +602,6 @@ import {
   TaxRateRetrieveParams,
   TaxRateUpdateParams,
   TaxRateListParams,
-  TaxRateSerializeBatchCreateParams,
-  TaxRateSerializeBatchUpdateParams,
   TaxRateResource,
 } from './resources/TaxRates.js';
 import {
@@ -751,16 +649,11 @@ import {ConnectCollectionTransfer} from './resources/ConnectCollectionTransfers.
 import {Discount, DeletedDiscount} from './resources/Discounts.js';
 import {FundingInstructions} from './resources/FundingInstructions.js';
 import {LineItem} from './resources/LineItems.js';
-import {PaymentMethodBalance} from './resources/PaymentMethodBalances.js';
-import {Profile} from './resources/Profiles.js';
 import {QuoteLine} from './resources/QuoteLines.js';
 import {ReserveTransaction} from './resources/ReserveTransactions.js';
-import {RiskSignals} from './resources/RiskSignals.js';
 import {SourceMandateNotification} from './resources/SourceMandateNotifications.js';
 import {SourceTransaction} from './resources/SourceTransactions.js';
 import {TaxDeductedAtSource} from './resources/TaxDeductedAtSources.js';
-import {TransitBalance} from './resources/TransitBalances.js';
-import {AccountSignals} from './resources/AccountSignals.js';
 import {Capability} from './resources/Capabilities.js';
 import {LoginLink} from './resources/LoginLinks.js';
 import {Person, DeletedPerson} from './resources/Persons.js';
@@ -788,13 +681,11 @@ import {BillingPortal} from './resources/BillingPortal/index.js';
 import {Capital} from './resources/Capital/index.js';
 import {Checkout} from './resources/Checkout/index.js';
 import {Climate} from './resources/Climate/index.js';
-import {DelegatedCheckout} from './resources/DelegatedCheckout/index.js';
 import {Entitlements} from './resources/Entitlements/index.js';
 import {FinancialConnections} from './resources/FinancialConnections/index.js';
 import {Forwarding} from './resources/Forwarding/index.js';
 import {Identity} from './resources/Identity/index.js';
 import {Issuing} from './resources/Issuing/index.js';
-import {Orchestration} from './resources/Orchestration/index.js';
 import {Privacy} from './resources/Privacy/index.js';
 import {ProductCatalog} from './resources/ProductCatalog/index.js';
 import {Radar} from './resources/Radar/index.js';
@@ -824,7 +715,6 @@ import {
   ApplicationFeeRefundedEvent,
   BalanceAvailableEvent,
   BalanceSettingsUpdatedEvent,
-  BillingAlertRecoveredEvent,
   BillingAlertTriggeredEvent,
   BillingCreditBalanceTransactionCreatedEvent,
   BillingCreditGrantCreatedEvent,
@@ -976,7 +866,6 @@ import {
   PaymentIntentAmountCapturableUpdatedEvent,
   PaymentIntentCanceledEvent,
   PaymentIntentCreatedEvent,
-  PaymentIntentExpiredEvent,
   PaymentIntentPartiallyFundedEvent,
   PaymentIntentPaymentFailedEvent,
   PaymentIntentProcessingEvent,
@@ -1224,7 +1113,6 @@ export class Stripe {
   balance: BalanceResource;
   balanceSettings: BalanceSettingResource;
   balanceTransactions: BalanceTransactionResource;
-  balanceTransfers: BalanceTransferResource;
   charges: ChargeResource;
   confirmationTokens: ConfirmationTokenResource;
   countrySpecs: CountrySpecResource;
@@ -1239,7 +1127,6 @@ export class Stripe {
   externalAccounts: ExternalAccountResource;
   fileLinks: FileLinkResource;
   files: FileResource;
-  frMealVouchersOnboardings: FrMealVouchersOnboardingResource;
   fxQuotes: FxQuoteResource;
   invoiceItems: InvoiceItemResource;
   invoicePayments: InvoicePaymentResource;
@@ -1251,8 +1138,6 @@ export class Stripe {
   paymentAttemptRecords: PaymentAttemptRecordResource;
   paymentIntents: PaymentIntentResource;
   paymentLinks: PaymentLinkResource;
-  paymentLocationCapabilities: PaymentLocationCapabilityResource;
-  paymentLocations: PaymentLocationResource;
   paymentMethodConfigurations: PaymentMethodConfigurationResource;
   paymentMethodDomains: PaymentMethodDomainResource;
   paymentMethods: PaymentMethodResource;
@@ -1285,13 +1170,11 @@ export class Stripe {
   capital: Capital;
   checkout: Checkout;
   climate: Climate;
-  delegatedCheckout: DelegatedCheckout;
   entitlements: Entitlements;
   financialConnections: FinancialConnections;
   forwarding: Forwarding;
   identity: Identity;
   issuing: Issuing;
-  orchestration: Orchestration;
   privacy: Privacy;
   productCatalog: ProductCatalog;
   radar: Radar;
@@ -1416,7 +1299,6 @@ export class Stripe {
     this.balance = new BalanceResource(this);
     this.balanceSettings = new BalanceSettingResource(this);
     this.balanceTransactions = new BalanceTransactionResource(this);
-    this.balanceTransfers = new BalanceTransferResource(this);
     this.charges = new ChargeResource(this);
     this.confirmationTokens = new ConfirmationTokenResource(this);
     this.countrySpecs = new CountrySpecResource(this);
@@ -1431,7 +1313,6 @@ export class Stripe {
     this.externalAccounts = new ExternalAccountResource(this);
     this.fileLinks = new FileLinkResource(this);
     this.files = new FileResource(this);
-    this.frMealVouchersOnboardings = new FrMealVouchersOnboardingResource(this);
     this.fxQuotes = new FxQuoteResource(this);
     this.invoiceItems = new InvoiceItemResource(this);
     this.invoicePayments = new InvoicePaymentResource(this);
@@ -1443,10 +1324,6 @@ export class Stripe {
     this.paymentAttemptRecords = new PaymentAttemptRecordResource(this);
     this.paymentIntents = new PaymentIntentResource(this);
     this.paymentLinks = new PaymentLinkResource(this);
-    this.paymentLocationCapabilities = new PaymentLocationCapabilityResource(
-      this
-    );
-    this.paymentLocations = new PaymentLocationResource(this);
     this.paymentMethodConfigurations = new PaymentMethodConfigurationResource(
       this
     );
@@ -1481,13 +1358,11 @@ export class Stripe {
     this.capital = new Capital(this);
     this.checkout = new Checkout(this);
     this.climate = new Climate(this);
-    this.delegatedCheckout = new DelegatedCheckout(this);
     this.entitlements = new Entitlements(this);
     this.financialConnections = new FinancialConnections(this);
     this.forwarding = new Forwarding(this);
     this.identity = new Identity(this);
     this.issuing = new Issuing(this);
-    this.orchestration = new Orchestration(this);
     this.privacy = new Privacy(this);
     this.productCatalog = new ProductCatalog(this);
     this.radar = new Radar(this);
@@ -2025,9 +1900,6 @@ export declare namespace Stripe {
     AccountRetrieveCapabilityParams,
     AccountRetrieveExternalAccountParams,
     AccountRetrievePersonParams,
-    AccountRetrieveSignalsParams,
-    AccountSerializeBatchCreateParams,
-    AccountSerializeBatchDeleteParams,
     AccountSerializeBatchUpdateParams,
     AccountUpdateCapabilityParams,
     AccountUpdateExternalAccountParams,
@@ -2076,11 +1948,6 @@ export declare namespace Stripe {
     BalanceTransactionResource,
   };
   export {
-    BalanceTransfer,
-    BalanceTransferCreateParams,
-    BalanceTransferResource,
-  };
-  export {
     Charge,
     ChargeCreateParams,
     ChargeRetrieveParams,
@@ -2110,8 +1977,6 @@ export declare namespace Stripe {
     CouponListParams,
     CouponDeleteParams,
     CouponSerializeBatchCreateParams,
-    CouponSerializeBatchDeleteParams,
-    CouponSerializeBatchUpdateParams,
     CouponResource,
   };
   export {
@@ -2123,7 +1988,6 @@ export declare namespace Stripe {
     CreditNoteListLineItemsParams,
     CreditNoteListPreviewLineItemsParams,
     CreditNotePreviewParams,
-    CreditNoteSerializeBatchCreateParams,
     CreditNoteVoidCreditNoteParams,
     CreditNoteResource,
   };
@@ -2154,20 +2018,7 @@ export declare namespace Stripe {
     CustomerRetrieveSourceParams,
     CustomerRetrieveTaxIdParams,
     CustomerSearchParams,
-    CustomerSerializeBatchCreateParams,
-    CustomerSerializeBatchCreateBalanceTransactionParams,
-    CustomerSerializeBatchCreateForCustomerTaxIdParams,
-    CustomerSerializeBatchCreateFundingInstructionsFundingInstructionsParams,
-    CustomerSerializeBatchCreateSourceParams,
-    CustomerSerializeBatchDeleteParams,
-    CustomerSerializeBatchDeleteDiscountParams,
-    CustomerSerializeBatchDeleteSourceParams,
-    CustomerSerializeBatchDeleteTaxIdParams,
     CustomerSerializeBatchUpdateParams,
-    CustomerSerializeBatchUpdateBalanceTransactionParams,
-    CustomerSerializeBatchUpdateCashBalanceParams,
-    CustomerSerializeBatchUpdateSourceParams,
-    CustomerSerializeBatchVerifySourceParams,
     CustomerUpdateBalanceTransactionParams,
     CustomerUpdateCashBalanceParams,
     CustomerUpdateSourceParams,
@@ -2177,7 +2028,6 @@ export declare namespace Stripe {
   export {
     CustomerSession,
     CustomerSessionCreateParams,
-    CustomerSessionSerializeBatchCreateParams,
     CustomerSessionResource,
   };
   export {
@@ -2186,7 +2036,6 @@ export declare namespace Stripe {
     DisputeUpdateParams,
     DisputeListParams,
     DisputeCloseParams,
-    DisputeSerializeBatchCloseParams,
     DisputeResource,
   };
   export {
@@ -2234,14 +2083,6 @@ export declare namespace Stripe {
     FileLinkResource,
   };
   export {
-    FrMealVouchersOnboarding,
-    FrMealVouchersOnboardingCreateParams,
-    FrMealVouchersOnboardingRetrieveParams,
-    FrMealVouchersOnboardingUpdateParams,
-    FrMealVouchersOnboardingListParams,
-    FrMealVouchersOnboardingResource,
-  };
-  export {
     FxQuote,
     FxQuoteCreateParams,
     FxQuoteRetrieveParams,
@@ -2267,19 +2108,6 @@ export declare namespace Stripe {
     InvoiceRemoveLinesParams,
     InvoiceSearchParams,
     InvoiceSendInvoiceParams,
-    InvoiceSerializeBatchAddLinesParams,
-    InvoiceSerializeBatchCreateParams,
-    InvoiceSerializeBatchCreatePreviewParams,
-    InvoiceSerializeBatchDeleteParams,
-    InvoiceSerializeBatchFinalizeInvoiceParams,
-    InvoiceSerializeBatchMarkUncollectibleParams,
-    InvoiceSerializeBatchPayParams,
-    InvoiceSerializeBatchRemoveLinesParams,
-    InvoiceSerializeBatchSendInvoiceParams,
-    InvoiceSerializeBatchUpdateParams,
-    InvoiceSerializeBatchUpdateLineItemParams,
-    InvoiceSerializeBatchUpdateLinesParams,
-    InvoiceSerializeBatchVoidInvoiceParams,
     InvoiceUpdateLinesParams,
     InvoiceUpdateLineItemParams,
     InvoiceVoidInvoiceParams,
@@ -2293,9 +2121,6 @@ export declare namespace Stripe {
     InvoiceItemUpdateParams,
     InvoiceItemListParams,
     InvoiceItemDeleteParams,
-    InvoiceItemSerializeBatchCreateParams,
-    InvoiceItemSerializeBatchDeleteParams,
-    InvoiceItemSerializeBatchUpdateParams,
     InvoiceItemResource,
   };
   export {
@@ -2309,8 +2134,6 @@ export declare namespace Stripe {
     InvoiceRenderingTemplateRetrieveParams,
     InvoiceRenderingTemplateListParams,
     InvoiceRenderingTemplateArchiveParams,
-    InvoiceRenderingTemplateSerializeBatchArchiveParams,
-    InvoiceRenderingTemplateSerializeBatchUnarchiveParams,
     InvoiceRenderingTemplateUnarchiveParams,
     InvoiceRenderingTemplateResource,
   };
@@ -2336,13 +2159,6 @@ export declare namespace Stripe {
     PaymentAttemptRecord,
     PaymentAttemptRecordRetrieveParams,
     PaymentAttemptRecordListParams,
-    PaymentAttemptRecordReportAuthenticatedParams,
-    PaymentAttemptRecordReportAuthorizedParams,
-    PaymentAttemptRecordReportCanceledParams,
-    PaymentAttemptRecordReportFailedParams,
-    PaymentAttemptRecordReportGuaranteedParams,
-    PaymentAttemptRecordReportInformationalParams,
-    PaymentAttemptRecordReportRefundParams,
     PaymentAttemptRecordResource,
   };
   export {
@@ -2358,7 +2174,6 @@ export declare namespace Stripe {
     PaymentIntentDecrementAuthorizationParams,
     PaymentIntentIncrementAuthorizationParams,
     PaymentIntentListAmountDetailsLineItemsParams,
-    PaymentIntentReauthorizeParams,
     PaymentIntentSearchParams,
     PaymentIntentTriggerActionParams,
     PaymentIntentVerifyMicrodepositsParams,
@@ -2374,32 +2189,13 @@ export declare namespace Stripe {
     PaymentLinkResource,
   };
   export {
-    PaymentLocation,
-    DeletedPaymentLocation,
-    PaymentLocationCreateParams,
-    PaymentLocationRetrieveParams,
-    PaymentLocationUpdateParams,
-    PaymentLocationListParams,
-    PaymentLocationDeleteParams,
-    PaymentLocationResource,
-  };
-  export {
-    PaymentLocationCapability,
-    PaymentLocationCapabilityRetrieveParams,
-    PaymentLocationCapabilityUpdateParams,
-    PaymentLocationCapabilityListParams,
-    PaymentLocationCapabilityResource,
-  };
-  export {
     PaymentMethod,
     PaymentMethodCreateParams,
     PaymentMethodRetrieveParams,
     PaymentMethodUpdateParams,
     PaymentMethodListParams,
     PaymentMethodAttachParams,
-    PaymentMethodCheckBalanceParams,
     PaymentMethodDetachParams,
-    PaymentMethodSerializeBatchAttachParams,
     PaymentMethodResource,
   };
   export {
@@ -2459,8 +2255,6 @@ export declare namespace Stripe {
     PriceUpdateParams,
     PriceListParams,
     PriceSearchParams,
-    PriceSerializeBatchCreateParams,
-    PriceSerializeBatchUpdateParams,
     PriceResource,
   };
   export {
@@ -2476,11 +2270,6 @@ export declare namespace Stripe {
     ProductListFeaturesParams,
     ProductRetrieveFeatureParams,
     ProductSearchParams,
-    ProductSerializeBatchCreateParams,
-    ProductSerializeBatchCreateFeatureParams,
-    ProductSerializeBatchDeleteParams,
-    ProductSerializeBatchDeleteFeatureParams,
-    ProductSerializeBatchUpdateParams,
     ProductResource,
   };
   export {
@@ -2521,8 +2310,6 @@ export declare namespace Stripe {
     RefundUpdateParams,
     RefundListParams,
     RefundCancelParams,
-    RefundSerializeBatchCancelParams,
-    RefundSerializeBatchCreateParams,
     RefundResource,
   };
   export {
@@ -2567,7 +2354,6 @@ export declare namespace Stripe {
     SubscriptionRetrieveParams,
     SubscriptionUpdateParams,
     SubscriptionListParams,
-    SubscriptionAttachCadenceParams,
     SubscriptionCancelParams,
     SubscriptionDeleteDiscountParams,
     SubscriptionMigrateParams,
@@ -2575,10 +2361,7 @@ export declare namespace Stripe {
     SubscriptionResumeParams,
     SubscriptionSearchParams,
     SubscriptionSerializeBatchCancelParams,
-    SubscriptionSerializeBatchCreateParams,
     SubscriptionSerializeBatchMigrateParams,
-    SubscriptionSerializeBatchPauseParams,
-    SubscriptionSerializeBatchResumeParams,
     SubscriptionSerializeBatchUpdateParams,
     SubscriptionResource,
   };
@@ -2590,9 +2373,6 @@ export declare namespace Stripe {
     SubscriptionItemUpdateParams,
     SubscriptionItemListParams,
     SubscriptionItemDeleteParams,
-    SubscriptionItemSerializeBatchCreateParams,
-    SubscriptionItemSerializeBatchDeleteParams,
-    SubscriptionItemSerializeBatchUpdateParams,
     SubscriptionItemResource,
   };
   export {
@@ -2604,10 +2384,6 @@ export declare namespace Stripe {
     SubscriptionScheduleAmendParams,
     SubscriptionScheduleCancelParams,
     SubscriptionScheduleReleaseParams,
-    SubscriptionScheduleSerializeBatchCancelParams,
-    SubscriptionScheduleSerializeBatchCreateParams,
-    SubscriptionScheduleSerializeBatchReleaseParams,
-    SubscriptionScheduleSerializeBatchUpdateParams,
     SubscriptionScheduleResource,
   };
   export {TaxCode, TaxCodeRetrieveParams, TaxCodeListParams, TaxCodeResource};
@@ -2618,7 +2394,6 @@ export declare namespace Stripe {
     TaxIdRetrieveParams,
     TaxIdListParams,
     TaxIdDeleteParams,
-    TaxIdSerializeBatchCreateParams,
     TaxIdResource,
   };
   export {
@@ -2627,8 +2402,6 @@ export declare namespace Stripe {
     TaxRateRetrieveParams,
     TaxRateUpdateParams,
     TaxRateListParams,
-    TaxRateSerializeBatchCreateParams,
-    TaxRateSerializeBatchUpdateParams,
     TaxRateResource,
   };
   export {Token, TokenCreateParams, TokenRetrieveParams, TokenResource};
@@ -2671,16 +2444,11 @@ export declare namespace Stripe {
   export {Discount, DeletedDiscount};
   export {FundingInstructions};
   export {LineItem};
-  export {PaymentMethodBalance};
-  export {Profile};
   export {QuoteLine};
   export {ReserveTransaction};
-  export {RiskSignals};
   export {SourceMandateNotification};
   export {SourceTransaction};
   export {TaxDeductedAtSource};
-  export {TransitBalance};
-  export {AccountSignals};
   export {Capability};
   export {LoginLink};
   export {Person, DeletedPerson};
@@ -2702,13 +2470,11 @@ export declare namespace Stripe {
   export {Capital};
   export {Checkout};
   export {Climate};
-  export {DelegatedCheckout};
   export {Entitlements};
   export {FinancialConnections};
   export {Forwarding};
   export {Identity};
   export {Issuing};
-  export {Orchestration};
   export {Privacy};
   export {ProductCatalog};
   export {Radar};
@@ -2737,7 +2503,6 @@ export declare namespace Stripe {
     ApplicationFeeRefundedEvent,
     BalanceAvailableEvent,
     BalanceSettingsUpdatedEvent,
-    BillingAlertRecoveredEvent,
     BillingAlertTriggeredEvent,
     BillingCreditBalanceTransactionCreatedEvent,
     BillingCreditGrantCreatedEvent,
@@ -2889,7 +2654,6 @@ export declare namespace Stripe {
     PaymentIntentAmountCapturableUpdatedEvent,
     PaymentIntentCanceledEvent,
     PaymentIntentCreatedEvent,
-    PaymentIntentExpiredEvent,
     PaymentIntentPartiallyFundedEvent,
     PaymentIntentPaymentFailedEvent,
     PaymentIntentProcessingEvent,
@@ -3144,9 +2908,6 @@ export declare namespace Stripe {
     export type FinancialAccountNotOpenError = InstanceType<
       typeof _Error.FinancialAccountNotOpenError
     >;
-    export type FxQuoteExpiredError = InstanceType<
-      typeof _Error.FxQuoteExpiredError
-    >;
     export type InsufficientFundsError = InstanceType<
       typeof _Error.InsufficientFundsError
     >;
@@ -3240,9 +3001,6 @@ export declare namespace Stripe {
     >;
     export type FinancialAccountNotOpenError = InstanceType<
       typeof _Error.FinancialAccountNotOpenError
-    >;
-    export type FxQuoteExpiredError = InstanceType<
-      typeof _Error.FxQuoteExpiredError
     >;
     export type InsufficientFundsError = InstanceType<
       typeof _Error.InsufficientFundsError

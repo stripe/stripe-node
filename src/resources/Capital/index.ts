@@ -37,10 +37,10 @@ export declare namespace Capital {
   export import FinancingOfferListParams = CapitalNamespace0.FinancingOfferListParams;
   export import FinancingOfferRetrieveParams = CapitalNamespace0.FinancingOfferRetrieveParams;
   export import FinancingOfferMarkDeliveredParams = CapitalNamespace0.FinancingOfferMarkDeliveredParams;
-  export {FinancingOffer};
+  export {FinancingOffer, FinancingOfferResource};
   export import FinancingSummaryRetrieveParams = CapitalNamespace1.FinancingSummaryRetrieveParams;
-  export {FinancingSummary};
+  export {FinancingSummary, FinancingSummaryResource};
   export import FinancingTransactionListParams = CapitalNamespace2.FinancingTransactionListParams;
   export import FinancingTransactionRetrieveParams = CapitalNamespace2.FinancingTransactionRetrieveParams;
-  export {FinancingTransaction};
+  export {FinancingTransaction, FinancingTransactionResource};
 }

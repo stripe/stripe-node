@@ -7,7 +7,7 @@ import {PaymentMethod} from './PaymentMethods.js';
 import {Account} from './Accounts.js';
 import {TaxId, DeletedTaxId} from './TaxIds.js';
 import {TaxRate} from './TaxRates.js';
-import {Discount} from './Discounts.js';
+import {Discount as _Discount} from './Discounts.js';
 import {Price, DeletedPrice} from './Prices.js';
 import {Coupon} from './Coupons.js';
 import {PromotionCode} from './PromotionCodes.js';
@@ -595,7 +595,7 @@ export namespace QuotePreviewSubscriptionSchedule {
       /**
        * ID of an existing discount on the object (or one of its ancestors) to reuse.
        */
-      discount: string | Discount | null;
+      discount: string | _Discount | null;
 
       /**
        * Details to determine how long the discount should be applied for.
@@ -715,7 +715,7 @@ export namespace QuotePreviewSubscriptionSchedule {
         /**
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
-        discount: string | Discount | null;
+        discount: string | _Discount | null;
 
         /**
          * Details to determine how long the discount should be applied for.
@@ -853,7 +853,7 @@ export namespace QuotePreviewSubscriptionSchedule {
         /**
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
-        discount: string | Discount | null;
+        discount: string | _Discount | null;
 
         /**
          * Details to determine how long the discount should be applied for.

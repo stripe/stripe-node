@@ -23,5 +23,5 @@ export declare namespace OrchestratedCommerce {
   export import AgreementRetrieveParams = V2Namespace0.OrchestratedCommerce.AgreementRetrieveParams;
   export import AgreementConfirmParams = V2Namespace0.OrchestratedCommerce.AgreementConfirmParams;
   export import AgreementTerminateParams = V2Namespace0.OrchestratedCommerce.AgreementTerminateParams;
-  export {Agreement};
+  export {Agreement, AgreementResource};
 }

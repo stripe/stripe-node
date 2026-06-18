@@ -20,5 +20,5 @@ export class Network {
 export declare namespace Network {
   export import BusinessProfileMeParams = V2Namespace0.Network.BusinessProfileMeParams;
   export import BusinessProfileRetrieveParams = V2Namespace0.Network.BusinessProfileRetrieveParams;
-  export {BusinessProfile};
+  export {BusinessProfile, BusinessProfileResource};
 }

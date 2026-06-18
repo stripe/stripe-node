@@ -27,9 +27,9 @@ export class SharedPayment {
 
 export declare namespace SharedPayment {
   export import GrantedTokenRetrieveParams = SharedPaymentNamespace0.GrantedTokenRetrieveParams;
-  export {GrantedToken};
+  export {GrantedToken, GrantedTokenResource};
   export import IssuedTokenRetrieveParams = SharedPaymentNamespace1.IssuedTokenRetrieveParams;
   export import IssuedTokenCreateParams = SharedPaymentNamespace1.IssuedTokenCreateParams;
   export import IssuedTokenRevokeParams = SharedPaymentNamespace1.IssuedTokenRevokeParams;
-  export {IssuedToken};
+  export {IssuedToken, IssuedTokenResource};
 }

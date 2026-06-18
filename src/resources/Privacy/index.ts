@@ -28,6 +28,6 @@ export declare namespace Privacy {
   export import RedactionJobRunParams = PrivacyNamespace0.RedactionJobRunParams;
   export import RedactionJobValidateParams = PrivacyNamespace0.RedactionJobValidateParams;
   export import RedactionJobListValidationErrorsParams = PrivacyNamespace0.RedactionJobListValidationErrorsParams;
-  export {RedactionJob};
+  export {RedactionJob, RedactionJobResource};
   export {RedactionJobValidationError};
 }

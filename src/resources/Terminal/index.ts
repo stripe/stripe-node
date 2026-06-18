@@ -89,7 +89,8 @@ export declare namespace Terminal {
   export import ReaderProcessSetupIntentParams = TerminalNamespace4.ReaderProcessSetupIntentParams;
   export import ReaderRefundPaymentParams = TerminalNamespace4.ReaderRefundPaymentParams;
   export import ReaderSetReaderDisplayParams = TerminalNamespace4.ReaderSetReaderDisplayParams;
-  export {Reader};
+  export import DeletedReader = TerminalNamespace4.DeletedReader;
+  export {Reader, ReaderResource};
   export import ReaderCollectedDataRetrieveParams = TerminalNamespace5.ReaderCollectedDataRetrieveParams;
-  export {ReaderCollectedData};
+  export {ReaderCollectedData, ReaderCollectedDatumResource};
 }

@@ -70,14 +70,14 @@ export declare namespace Core {
   export {AccountLink, AccountLinkResource};
   export import AccountTokenCreateParams = V2Namespace2.Core.AccountTokenCreateParams;
   export import AccountTokenRetrieveParams = V2Namespace2.Core.AccountTokenRetrieveParams;
-  export {AccountToken};
+  export {AccountToken, AccountTokenResource};
   export import BatchJobCreateParams = V2Namespace3.Core.BatchJobCreateParams;
   export import BatchJobRetrieveParams = V2Namespace3.Core.BatchJobRetrieveParams;
   export import BatchJobCancelParams = V2Namespace3.Core.BatchJobCancelParams;
-  export {BatchJob};
+  export {BatchJob, BatchJobResource};
   export import EventListParams = V2EventsNamespace.Core.EventListParams;
   export import EventRetrieveParams = V2EventsNamespace.Core.EventRetrieveParams;
-  export {EventBase, Event, EventNotification, Events};
+  export {EventBase, Event, EventNotification, Events, EventResource};
   export import EventDestinationListParams = V2Namespace5.Core.EventDestinationListParams;
   export import EventDestinationCreateParams = V2Namespace5.Core.EventDestinationCreateParams;
   export import EventDestinationDeleteParams = V2Namespace5.Core.EventDestinationDeleteParams;
@@ -86,7 +86,7 @@ export declare namespace Core {
   export import EventDestinationDisableParams = V2Namespace5.Core.EventDestinationDisableParams;
   export import EventDestinationEnableParams = V2Namespace5.Core.EventDestinationEnableParams;
   export import EventDestinationPingParams = V2Namespace5.Core.EventDestinationPingParams;
-  export {EventDestination};
+  export {EventDestination, EventDestinationResource};
   export {AccountPersonToken};
   export {AccountPerson};
   export {Vault};
