@@ -76,6 +76,19 @@ describe('Account Resource', () => {
       });
     });
 
+    // GET /v1/accounts/:id uses an override instead of a normal generated method,
+    // so it gets its own test.
+    it('URL-encodes path separators in IDs', () => {
+      stripe.account.retrieve('acct_123/sources');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/accounts/acct_123%2Fsources',
+        headers: {},
+        data: null,
+        settings: {},
+      });
+    });
+
     it('Sends the correct request with secret key', () => {
       const key = 'sk_12345678901234567890123456789012';
       stripe.account.retrieve(null, undefined, {apiKey: key});
