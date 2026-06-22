@@ -1,5 +1,8 @@
 # Changelog
 
+## 22.2.3 - 2026-06-22
+* [#2761](https://github.com/stripe/stripe-node/pull/2761) Encode URI path params in `accounts.retrieve`
+
 ## 22.2.2 - 2026-06-18
 * [#2725](https://github.com/stripe/stripe-node/pull/2725) Fixes CJS type exports for stripe package (reported in [#2683](https://github.com/stripe/stripe-node/issues/2683))
 * [#2758](https://github.com/stripe/stripe-node/pull/2758) Fix `Stripe.ErrorType.StripeError` incorrectly being usable as a runtime class (reported in [#2661](https://github.com/stripe/stripe-node/issues/2661))
