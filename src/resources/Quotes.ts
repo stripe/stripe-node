@@ -2333,7 +2333,7 @@ export interface Quote {
   /**
    * The discounts applied to this quote.
    */
-  discounts: Array<string | Discount>;
+  discounts: Array<string | _Discount>;
 
   /**
    * The date on which the quote will be canceled if in `open` or `draft` status. Measured in seconds since the Unix epoch.
@@ -2844,7 +2844,7 @@ export namespace Quote {
              *
              * Related guide: [Applying discounts to subscriptions](https://docs.stripe.com/billing/subscriptions/discounts)
              */
-            discount: Discount;
+            discount: _Discount;
           }
 
           export interface Tax {
@@ -2939,7 +2939,7 @@ export namespace Quote {
              *
              * Related guide: [Applying discounts to subscriptions](https://docs.stripe.com/billing/subscriptions/discounts)
              */
-            discount: Discount;
+            discount: _Discount;
           }
 
           export interface Tax {
@@ -3746,7 +3746,7 @@ export namespace Quote {
          *
          * Related guide: [Applying discounts to subscriptions](https://docs.stripe.com/billing/subscriptions/discounts)
          */
-        discount: Discount;
+        discount: _Discount;
       }
 
       export interface Tax {

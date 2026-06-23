@@ -107,12 +107,12 @@ export declare namespace Issuing {
   export import AuthorizationUpdateParams = IssuingNamespace0.AuthorizationUpdateParams;
   export import AuthorizationApproveParams = IssuingNamespace0.AuthorizationApproveParams;
   export import AuthorizationDeclineParams = IssuingNamespace0.AuthorizationDeclineParams;
-  export {Authorization};
+  export {Authorization, AuthorizationResource};
   export import CardListParams = IssuingNamespace1.CardListParams;
   export import CardCreateParams = IssuingNamespace1.CardCreateParams;
   export import CardRetrieveParams = IssuingNamespace1.CardRetrieveParams;
   export import CardUpdateParams = IssuingNamespace1.CardUpdateParams;
-  export {Card};
+  export {Card, CardResource};
   export import CardholderListParams = IssuingNamespace2.CardholderListParams;
   export import CardholderCreateParams = IssuingNamespace2.CardholderCreateParams;
   export import CardholderRetrieveParams = IssuingNamespace2.CardholderRetrieveParams;

@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Discount} from './Discounts.js';
+import {Discount as _Discount} from './Discounts.js';
 import {Price} from './Prices.js';
 import {Product, DeletedProduct} from './Products.js';
 import {TaxRate} from './TaxRates.js';
@@ -109,7 +109,7 @@ export namespace LineItem {
      *
      * Related guide: [Applying discounts to subscriptions](https://docs.stripe.com/billing/subscriptions/discounts)
      */
-    discount: Discount;
+    discount: _Discount;
   }
 
   export interface Display {

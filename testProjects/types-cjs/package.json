@@ -1,0 +1,16 @@
+{
+  "name": "typescriptTestCjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "stripe": "file:../../"
+  },
+  "scripts": {
+    "runtestproject": "tsc && node typescriptTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "~22.19",
+    "typescript": "^5.9.3"
+  }
+}

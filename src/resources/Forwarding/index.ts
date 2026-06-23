@@ -21,5 +21,5 @@ export declare namespace Forwarding {
   export import RequestListParams = ForwardingNamespace0.RequestListParams;
   export import RequestCreateParams = ForwardingNamespace0.RequestCreateParams;
   export import RequestRetrieveParams = ForwardingNamespace0.RequestRetrieveParams;
-  export {Request};
+  export {Request, RequestResource};
 }
