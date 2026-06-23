@@ -1,0 +1,146 @@
+import {RequestData, RequestHeaders, ResponseHeaders} from '../Types.js';
+
+type TimeoutError = TypeError & {code?: string};
+
+export interface HttpClientInterface {
+  getClientName: () => string;
+  makeRequest: (
+    host: string,
+    port: string,
+    path: string,
+    method: string,
+    headers: RequestHeaders,
+    requestData: string,
+    protocol: string,
+    timeout: number
+  ) => Promise<HttpClientResponseInterface>;
+}
+
+export interface HttpClientResponseInterface {
+  getStatusCode: () => number;
+  getHeaders: () => ResponseHeaders;
+  getRawResponse: () => unknown;
+  toStream: (streamCompleteCallback: () => void) => unknown;
+  toJSON: () => Promise<any>;
+}
+
+/**
+ * Interface for Node HTTP client with Node-specific stream types.
+ */
+export interface NodeHttpClientInterface extends HttpClientInterface {
+  makeRequest: (
+    host: string,
+    port: string,
+    path: string,
+    method: string,
+    headers: RequestHeaders,
+    requestData: string,
+    protocol: string,
+    timeout: number
+  ) => Promise<NodeHttpClientResponseInterface>;
+}
+
+export interface NodeHttpClientResponseInterface
+  extends HttpClientResponseInterface {
+  // TODO(DEVSDK-3112): Replace with WHATWG ReadableStream in next major version.
+  // eslint-disable-next-line wintertc-compat
+  toStream: (streamCompleteCallback: () => void) => NodeJS.ReadableStream;
+}
+
+/**
+ * Interface for Fetch HTTP client with Web Streams API types.
+ */
+export interface FetchHttpClientInterface extends HttpClientInterface {
+  makeRequest: (
+    host: string,
+    port: string,
+    path: string,
+    method: string,
+    headers: RequestHeaders,
+    requestData: string,
+    protocol: string,
+    timeout: number
+  ) => Promise<FetchHttpClientResponseInterface>;
+}
+
+export interface FetchHttpClientResponseInterface
+  extends HttpClientResponseInterface {
+  toStream: (
+    streamCompleteCallback: () => void
+  ) => ReadableStream<Uint8Array> | null;
+}
+
+/**
+ * Encapsulates the logic for issuing a request to the Stripe API.
+ *
+ * A custom HTTP client should should implement:
+ * 1. A response class which extends HttpClientResponse and wraps around their
+ *    own internal representation of a response.
+ * 2. A client class which extends HttpClient and implements all methods,
+ *    returning their own response class when making requests.
+ */
+export class HttpClient implements HttpClientInterface {
+  static CONNECTION_CLOSED_ERROR_CODES: string[];
+  static TIMEOUT_ERROR_CODE: string;
+
+  /** The client name used for diagnostics. */
+  getClientName(): string {
+    throw new Error('getClientName not implemented.');
+  }
+
+  makeRequest(
+    host: string,
+    port: string,
+    path: string,
+    method: string,
+    headers: RequestHeaders,
+    requestData: string,
+    protocol: string,
+    timeout: number
+  ): Promise<HttpClientResponseInterface> {
+    throw new Error('makeRequest not implemented.');
+  }
+
+  /** Helper to make a consistent timeout error across implementations. */
+  static makeTimeoutError(): TimeoutError {
+    const timeoutErr: TimeoutError = new TypeError(
+      HttpClient.TIMEOUT_ERROR_CODE
+    );
+    timeoutErr.code = HttpClient.TIMEOUT_ERROR_CODE;
+    return timeoutErr;
+  }
+}
+
+// Public API accessible via Stripe.HttpClient
+HttpClient.CONNECTION_CLOSED_ERROR_CODES = ['ECONNRESET', 'EPIPE'];
+HttpClient.TIMEOUT_ERROR_CODE = 'ETIMEDOUT';
+
+export class HttpClientResponse implements HttpClientResponseInterface {
+  _statusCode: number;
+  _headers: ResponseHeaders;
+
+  constructor(statusCode: number, headers: ResponseHeaders) {
+    this._statusCode = statusCode;
+    this._headers = headers;
+  }
+
+  getStatusCode(): number {
+    return this._statusCode;
+  }
+
+  getHeaders(): ResponseHeaders {
+    return this._headers;
+  }
+
+  getRawResponse(): unknown {
+    throw new Error('getRawResponse not implemented.');
+  }
+
+  toStream(streamCompleteCallback: () => void): unknown {
+    throw new Error('toStream not implemented.');
+  }
+
+  toJSON(): any {
+    throw new Error('toJSON not implemented.');
+  }
+}

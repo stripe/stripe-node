@@ -1,0 +1,166 @@
+import * as crypto from 'crypto';
+import * as http from 'http';
+import * as os from 'os';
+import {CryptoProvider} from '../crypto/CryptoProvider.js';
+import {EventEmitter} from 'events';
+import {HttpClient, NodeHttpClientInterface} from '../net/HttpClient.js';
+import {NodeCryptoProvider} from '../crypto/NodeCryptoProvider.js';
+import {NodeHttpClient} from '../net/NodeHttpClient.js';
+import {PlatformFunctions} from './PlatformFunctions.js';
+import {StripeError} from '../Error.js';
+import {concat} from '../utils.js';
+import {MultipartRequestData, RequestData, BufferedFile} from '../Types.js';
+
+class StreamProcessingError extends StripeError {}
+
+/**
+ * Specializes WebPlatformFunctions using APIs available in Node.js.
+ */
+export class NodePlatformFunctions extends PlatformFunctions {
+  /** @override */
+  uuid4(): string {
+    // available in: v14.17.x+
+    if (crypto.randomUUID) {
+      return crypto.randomUUID();
+    }
+    return super.uuid4();
+  }
+
+  /** @override */
+  getPlatformInfo(): string {
+    return `${process.platform} ${os.release()} ${os.arch()}`;
+  }
+
+  /** @override */
+  emitWarning(warning: string): void {
+    if (typeof process.emitWarning === 'function') {
+      process.emitWarning(warning, 'Stripe');
+    } else {
+      super.emitWarning(warning);
+    }
+  }
+
+  /** @override */
+  getEnv(): Record<string, string | undefined> {
+    return process.env;
+  }
+
+  /** @override */
+  getRuntimeVersion(): string {
+    return process.version;
+  }
+
+  private getUname(): string | null {
+    try {
+      const parts = [os.type(), os.release(), os.arch()];
+      // os.version() returns detailed kernel version, available since Node 10.7.0
+      // It may not exist in older typings, so access carefully
+      const version = (os as any).version?.();
+      if (version) parts.push(version);
+      try {
+        parts.push(os.hostname());
+        // eslint-disable-next-line no-empty
+      } catch (_e) {}
+      return parts.join(' ');
+    } catch {
+      return null;
+    }
+  }
+
+  /** @override */
+  getSourceHash(): string | null {
+    try {
+      const uname = this.getUname();
+      return uname
+        ? crypto
+            .createHash('md5')
+            .update(uname)
+            .digest('hex')
+        : null;
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * @override
+   * Secure compare, from https://github.com/freewil/scmp
+   */
+  secureCompare(a: string, b: string): boolean {
+    if (!a || !b) {
+      throw new Error('secureCompare must receive two arguments');
+    }
+
+    // return early here if buffer lengths are not equal since timingSafeEqual
+    // will throw if buffer lengths are not equal
+    if (a.length !== b.length) {
+      return false;
+    }
+
+    // use crypto.timingSafeEqual if available (since Node.js v6.6.0),
+    // otherwise use our own scmp-internal function.
+    if (crypto.timingSafeEqual) {
+      const textEncoder = new TextEncoder();
+      const aEncoded: Uint8Array = textEncoder.encode(a);
+      const bEncoded: Uint8Array = textEncoder.encode(b);
+      return crypto.timingSafeEqual(aEncoded, bEncoded);
+    }
+
+    return super.secureCompare(a, b);
+  }
+
+  createEmitter(): EventEmitter {
+    return new EventEmitter();
+  }
+
+  /** @override */
+  tryBufferData(
+    data: MultipartRequestData
+  ): Promise<RequestData | BufferedFile> {
+    if (!(data.file.data instanceof EventEmitter)) {
+      return Promise.resolve(data);
+    }
+    const bufferArray: Array<Uint8Array> = [];
+    return new Promise<BufferedFile>((resolve, reject) => {
+      data.file.data
+        .on('data', (line: Uint8Array) => {
+          bufferArray.push(line);
+        })
+        .once('end', () => {
+          // @ts-ignore
+          const bufferData: BufferedFile = Object.assign({}, data);
+          bufferData.file.data = concat(bufferArray);
+          resolve(bufferData);
+        })
+        .on('error', (err: Error) => {
+          reject(
+            new StreamProcessingError({
+              message:
+                'An error occurred while attempting to process the file for upload.',
+              detail: err,
+            })
+          );
+        });
+    });
+  }
+
+  /** @override */
+  createNodeHttpClient(agent?: http.Agent): NodeHttpClientInterface {
+    return new NodeHttpClient(agent);
+  }
+
+  /** @override */
+  createDefaultHttpClient(): HttpClient {
+    return new NodeHttpClient();
+  }
+
+  /** @override */
+  createNodeCryptoProvider(): CryptoProvider {
+    return new NodeCryptoProvider();
+  }
+
+  /** @override */
+  createDefaultCryptoProvider(): CryptoProvider {
+    return this.createNodeCryptoProvider();
+  }
+}

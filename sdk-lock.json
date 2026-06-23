@@ -1,0 +1,38 @@
+{
+  "runtime": {
+    "minVersion": "18",
+    "commands": [
+      {
+        "name": "node",
+        "versionFlag": "--version",
+        "versionPattern": "v(\\d+\\.\\d+\\.\\d+)"
+      },
+      {
+        "name": "nodejs",
+        "versionFlag": "--version",
+        "versionPattern": "v(\\d+\\.\\d+\\.\\d+)"
+      }
+    ]
+  },
+  "recipes": {
+    "format": {
+      "commands": [
+        "yarn --silent",
+        "./node_modules/.bin/prettier \"{src,examples,scripts,test,types}/**/*.{ts,js}\" --write --loglevel silent"
+      ],
+      "sourceHash": "sha256:0c6e6cf98ed382994e04090477ccad31b3dd73b6a4d00fb503976b36c2696256"
+    },
+    "build": {
+      "commands": [
+        "yarn --silent",
+        "mkdir -p esm",
+        "./node_modules/.bin/tsc -p tsconfig.esm.json",
+        "echo '{\"type\":\"module\"}' > esm/package.json",
+        "mkdir -p cjs",
+        "./node_modules/.bin/tsc -p tsconfig.cjs.json",
+        "echo '{\"type\":\"commonjs\"}' > cjs/package.json"
+      ],
+      "sourceHash": "sha256:0c6e6cf98ed382994e04090477ccad31b3dd73b6a4d00fb503976b36c2696256"
+    }
+  }
+}
