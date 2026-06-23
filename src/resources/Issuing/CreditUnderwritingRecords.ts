@@ -72,6 +72,23 @@ export class CreditUnderwritingRecordResource extends StripeResource {
     ) as any;
   }
   /**
+   * Update a CreditUnderwritingRecord object to report that a credit offer has been accepted.
+   */
+  reportOfferAcceptance(
+    id: string,
+    params?: Issuing.CreditUnderwritingRecordReportOfferAcceptanceParams,
+    options?: RequestOptions
+  ): Promise<Response<CreditUnderwritingRecord>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/issuing/credit_underwriting_records/${encodeURIComponent(
+        id
+      )}/report_offer_acceptance`,
+      params,
+      options
+    ) as any;
+  }
+  /**
    * Creates a CreditUnderwritingRecord object with information about a credit application submission.
    */
   createFromApplication(
@@ -142,6 +159,11 @@ export interface CreditUnderwritingRecord {
    * For underwriting initiated by an application, a decision must be taken 30 days after the submission.
    */
   decision_deadline: number | null;
+
+  /**
+   * Time at which the decision deadline was last updated.
+   */
+  decision_deadline_updated_at?: number | null;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -1504,5 +1526,13 @@ export namespace Issuing {
         | 'no_changes'
         | 'withdrawn_by_applicant';
     }
+  }
+}
+export namespace Issuing {
+  export interface CreditUnderwritingRecordReportOfferAcceptanceParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
   }
 }

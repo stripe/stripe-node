@@ -437,6 +437,11 @@ export namespace TestHelpers {
       merchant_data?: TransactionCreateForceCaptureParams.MerchantData;
 
       /**
+       * Details about the transaction, such as processing dates, set by the card network.
+       */
+      network_data?: TransactionCreateForceCaptureParams.NetworkData;
+
+      /**
        * Additional purchase information that is optionally provided by the merchant.
        */
       purchase_details?: TransactionCreateForceCaptureParams.PurchaseDetails;
@@ -498,6 +503,13 @@ export namespace TestHelpers {
          * URL provided by the merchant on a 3DS request
          */
         url?: string;
+      }
+
+      export interface NetworkData {
+        /**
+         * Optional. A test value to populate network_data.acquirer_reference_number on the resulting Issuing Transaction. Must contain only digits and be at most 23 characters long. This value is intended only for integration validation in testmode and does not need to correspond to a real network-assigned acquirer reference number.
+         */
+        acquirer_reference_number?: string;
       }
 
       export interface PurchaseDetails {

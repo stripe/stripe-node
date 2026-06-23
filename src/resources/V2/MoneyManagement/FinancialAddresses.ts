@@ -293,6 +293,11 @@ export namespace V2 {
           bank_name?: string;
 
           /**
+           * The BIC of the bank or financial institution.
+           */
+          bic?: string;
+
+          /**
            * The last four digits of the US Bank Account number. This will always be returned.
            * To view the full account number when retrieving or listing FinancialAddresses, use the `include` request parameter.
            */
@@ -302,11 +307,6 @@ export namespace V2 {
            * The routing number of the US Bank Account.
            */
           routing_number: string;
-
-          /**
-           * The swift code of the bank or financial institution.
-           */
-          swift_code?: string;
         }
 
         export namespace CryptoWallet {

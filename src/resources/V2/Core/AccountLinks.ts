@@ -197,6 +197,7 @@ export namespace V2 {
           export type Configuration =
             | 'customer'
             | 'merchant'
+            | 'money_manager'
             | 'recipient'
             | 'storer';
 
@@ -223,6 +224,7 @@ export namespace V2 {
           export type Configuration =
             | 'customer'
             | 'merchant'
+            | 'money_manager'
             | 'recipient'
             | 'storer';
 
@@ -429,6 +431,7 @@ export namespace V2 {
           export type Configuration =
             | 'customer'
             | 'merchant'
+            | 'money_manager'
             | 'recipient'
             | 'storer';
 
@@ -455,6 +458,7 @@ export namespace V2 {
           export type Configuration =
             | 'customer'
             | 'merchant'
+            | 'money_manager'
             | 'recipient'
             | 'storer';
 

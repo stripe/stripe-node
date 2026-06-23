@@ -13,6 +13,7 @@ import {ActivityLogResource as V2IamActivityLogs} from './resources/V2/Iam/Activ
 import {AdjustmentResource as V2MoneyManagementAdjustments} from './resources/V2/MoneyManagement/Adjustments.js';
 import {AgreementResource as V2OrchestratedCommerceAgreements} from './resources/V2/OrchestratedCommerce/Agreements.js';
 import {AlertResource as BillingAlerts} from './resources/Billing/Alerts.js';
+import {AlertResource as V2CoreHealthAlerts} from './resources/V2/Core/Health/Alerts.js';
 import {ApiKeyResource as V2IamApiKeys} from './resources/V2/Iam/ApiKeys.js';
 import {ApprovalRequestResource as V2CoreApprovalRequests} from './resources/V2/Core/ApprovalRequests.js';
 import {AssociationResource as TaxAssociations} from './resources/Tax/Associations.js';
@@ -59,6 +60,7 @@ import {FeeEntryResource as V2CoreFeeEntries} from './resources/V2/Core/FeeEntri
 import {FinancialAccountResource as TreasuryFinancialAccounts} from './resources/Treasury/FinancialAccounts.js';
 import {FinancialAccountResource as V2MoneyManagementFinancialAccounts} from './resources/V2/MoneyManagement/FinancialAccounts.js';
 import {FinancialAddressResource as V2MoneyManagementFinancialAddresses} from './resources/V2/MoneyManagement/FinancialAddresses.js';
+import {FinancialAddressResource as V2MoneyManagementTestHelpersFinancialAddresses} from './resources/V2/MoneyManagement/TestHelpers/FinancialAddresses.js';
 import {FinancialAddressResource as V2TestHelpersFinancialAddresses} from './resources/V2/TestHelpers/FinancialAddresses.js';
 import {FinancingOfferResource as CapitalFinancingOffers} from './resources/Capital/FinancingOffers.js';
 import {FinancingOfferResource as TestHelpersCapitalFinancingOffers} from './resources/TestHelpers/Capital/FinancingOffers.js';
@@ -110,6 +112,7 @@ import {OutboundTransferResource as V2MoneyManagementOutboundTransfers} from './
 import {PaymentAttemptResource as OrchestrationPaymentAttempts} from './resources/Orchestration/PaymentAttempts.js';
 import {PaymentEvaluationResource as RadarPaymentEvaluations} from './resources/Radar/PaymentEvaluations.js';
 import {PaymentIntentResource as TestHelpersPaymentIntents} from './resources/TestHelpers/PaymentIntents.js';
+import {PayoutIntentResource as V2MoneyManagementPayoutIntents} from './resources/V2/MoneyManagement/PayoutIntents.js';
 import {PayoutMethodResource as V2MoneyManagementPayoutMethods} from './resources/V2/MoneyManagement/PayoutMethods.js';
 import {PayoutMethodsBankAccountSpecResource as V2MoneyManagementPayoutMethodsBankAccountSpec} from './resources/V2/MoneyManagement/PayoutMethodsBankAccountSpec.js';
 import {PersonalizationDesignResource as IssuingPersonalizationDesigns} from './resources/Issuing/PersonalizationDesigns.js';
@@ -442,6 +445,7 @@ export const V2 = resourceNamespace('v2', {
     Events: V2CoreEvents,
     FeeBatches: V2CoreFeeBatches,
     FeeEntries: V2CoreFeeEntries,
+    Health: resourceNamespace('health', {Alerts: V2CoreHealthAlerts}),
     Vault: resourceNamespace('vault', {
       GbBankAccounts: V2CoreVaultGbBankAccounts,
       UsBankAccounts: V2CoreVaultUsBankAccounts,
@@ -474,6 +478,7 @@ export const V2 = resourceNamespace('v2', {
     OutboundPayments: V2MoneyManagementOutboundPayments,
     OutboundSetupIntents: V2MoneyManagementOutboundSetupIntents,
     OutboundTransfers: V2MoneyManagementOutboundTransfers,
+    PayoutIntents: V2MoneyManagementPayoutIntents,
     PayoutMethods: V2MoneyManagementPayoutMethods,
     PayoutMethodsBankAccountSpec: V2MoneyManagementPayoutMethodsBankAccountSpec,
     ReceivedCredits: V2MoneyManagementReceivedCredits,
@@ -481,6 +486,9 @@ export const V2 = resourceNamespace('v2', {
     RecipientVerifications: V2MoneyManagementRecipientVerifications,
     TransactionEntries: V2MoneyManagementTransactionEntries,
     Transactions: V2MoneyManagementTransactions,
+    TestHelpers: resourceNamespace('testHelpers', {
+      FinancialAddresses: V2MoneyManagementTestHelpersFinancialAddresses,
+    }),
   }),
   Network: resourceNamespace('network', {
     BusinessProfiles: V2NetworkBusinessProfiles,

@@ -421,6 +421,7 @@ import {
   PaymentAttemptRecordReportAuthenticatedParams,
   PaymentAttemptRecordReportAuthorizedParams,
   PaymentAttemptRecordReportCanceledParams,
+  PaymentAttemptRecordReportEarlyFraudWarningParams,
   PaymentAttemptRecordReportFailedParams,
   PaymentAttemptRecordReportGuaranteedParams,
   PaymentAttemptRecordReportInformationalParams,
@@ -512,6 +513,7 @@ import {
   PaymentRecordReportPaymentAttemptGuaranteedParams,
   PaymentRecordReportPaymentAttemptInformationalParams,
   PaymentRecordReportRefundParams,
+  PaymentRecordSearchParams,
   PaymentRecordResource,
 } from './resources/PaymentRecords.js';
 import {
@@ -2387,6 +2389,7 @@ export declare namespace Stripe {
     PaymentAttemptRecordReportAuthenticatedParams,
     PaymentAttemptRecordReportAuthorizedParams,
     PaymentAttemptRecordReportCanceledParams,
+    PaymentAttemptRecordReportEarlyFraudWarningParams,
     PaymentAttemptRecordReportFailedParams,
     PaymentAttemptRecordReportGuaranteedParams,
     PaymentAttemptRecordReportInformationalParams,
@@ -2478,6 +2481,7 @@ export declare namespace Stripe {
     PaymentRecordReportPaymentAttemptGuaranteedParams,
     PaymentRecordReportPaymentAttemptInformationalParams,
     PaymentRecordReportRefundParams,
+    PaymentRecordSearchParams,
     PaymentRecordResource,
   };
   export {

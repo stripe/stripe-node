@@ -2221,12 +2221,24 @@ export namespace TestHelpers {
       expand?: Array<string>;
 
       /**
+       * Details about the transaction, such as processing dates, set by the card network.
+       */
+      network_data?: AuthorizationCaptureParams.NetworkData;
+
+      /**
        * Additional purchase information that is optionally provided by the merchant.
        */
       purchase_details?: AuthorizationCaptureParams.PurchaseDetails;
     }
 
     export namespace AuthorizationCaptureParams {
+      export interface NetworkData {
+        /**
+         * Optional. A test value to populate network_data.acquirer_reference_number on the resulting Issuing Transaction. Must contain only digits and be at most 23 characters long. This value is intended only for integration validation in testmode and does not need to correspond to a real network-assigned acquirer reference number.
+         */
+        acquirer_reference_number?: string;
+      }
+
       export interface PurchaseDetails {
         /**
          * Fleet-specific information for transactions using Fleet cards.

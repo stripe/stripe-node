@@ -543,6 +543,11 @@ export namespace Issuing {
 
     export interface NetworkData {
       /**
+       * The network-provided acquirer reference number for this transaction, if available. Use this value for downstream operational workflows such as filing disputes with the card network.
+       */
+      acquirer_reference_number?: string | null;
+
+      /**
        * A code created by Stripe which is shared with the merchant to validate the authorization. This field will be populated if the authorization message was approved. The code typically starts with the letter "S", followed by a six-digit number. For example, "S498162". Please note that the code is not guaranteed to be unique across authorizations.
        */
       authorization_code: string | null;

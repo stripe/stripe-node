@@ -214,6 +214,12 @@ export namespace V2 {
          * It is only present when the ReceivedDebit status is `failed`.
          */
         failed: StatusDetails.Failed;
+
+        /**
+         * Information that elaborates on the `returned` status of a ReceivedDebit.
+         * It is only present when the ReceivedDebit status is `returned`.
+         */
+        returned: StatusDetails.Returned;
       }
 
       export interface StatusTransitions {
@@ -228,6 +234,12 @@ export namespace V2 {
          * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
          */
         failed_at?: string;
+
+        /**
+         * The time when the ReceivedDebit was marked as `returned`.
+         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
+         */
+        returned_at?: string;
 
         /**
          * The time when the ReceivedDebit was marked as `succeeded`.
@@ -308,8 +320,16 @@ export namespace V2 {
           reason: Failed.Reason;
         }
 
+        export interface Returned {
+          /**
+           * Open Enum. The reason the ReceivedDebit was returned.
+           */
+          reason: 'originator_initiated';
+        }
+
         export namespace Failed {
           export type Reason =
+            | 'capability_inactive'
             | 'financial_address_inactive'
             | 'insufficient_funds'
             | 'stripe_rejected';

@@ -385,14 +385,14 @@ export namespace V2 {
             card_creator?: TermsOfService.CardCreator;
 
             /**
-             * Details on the Account's acceptance of Crypto-storer-specific terms of service; IP, date, and User Agent are expanded by Stripe.
+             * Details on the Account's acceptance of Crypto-specific terms of service; IP, date, and User Agent are expanded by Stripe.
              */
-            crypto_storer?: TermsOfService.CryptoStorer;
+            crypto_money_manager?: TermsOfService.CryptoMoneyManager;
 
             /**
              * Details on the Account's acceptance of Treasury-specific terms of service; IP, date, and User Agent are expanded by Stripe.
              */
-            storer?: TermsOfService.Storer;
+            money_manager?: TermsOfService.MoneyManager;
           }
 
           export namespace PersonsProvided {
@@ -416,14 +416,14 @@ export namespace V2 {
               commercial?: CardCreator.Commercial;
             }
 
-            export interface CryptoStorer {
+            export interface CryptoMoneyManager {
               /**
                * The boolean value indicating if the terms of service have been accepted.
                */
               shown_and_accepted?: boolean;
             }
 
-            export interface Storer {
+            export interface MoneyManager {
               /**
                * The boolean value indicating if the terms of service have been accepted.
                */

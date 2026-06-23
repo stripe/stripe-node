@@ -140,6 +140,33 @@ export class SessionResource extends StripeResource {
       requestSchema: {
         kind: 'object',
         fields: {
+          items: {
+            kind: 'array',
+            element: {
+              kind: 'object',
+              fields: {
+                subscription: {
+                  kind: 'object',
+                  fields: {
+                    items: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {
+                          price_data: {
+                            kind: 'object',
+                            fields: {
+                              unit_amount_decimal: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
           line_items: {
             kind: 'array',
             element: {
@@ -926,6 +953,11 @@ export interface Session {
   invoice_creation: Checkout.Session.InvoiceCreation | null;
 
   /**
+   * The items to be purchased by the customer.
+   */
+  items?: Array<Checkout.Session.Item>;
+
+  /**
    * The line items purchased by the customer.
    */
   line_items?: ApiList<LineItem>;
@@ -1451,6 +1483,18 @@ export namespace Checkout {
       enabled: boolean;
 
       invoice_data: InvoiceCreation.InvoiceData;
+    }
+
+    export interface Item {
+      /**
+       * The key of the item. Guaranteed to be a unique ID within this checkout session's items.
+       */
+      key: string;
+
+      /**
+       * The type of the item.
+       */
+      type: 'subscription';
     }
 
     export type Locale =
@@ -2193,6 +2237,11 @@ export namespace Checkout {
         }
 
         export interface Card {
+          /**
+           * The brand of the card, accounting for customer's brand choice on dual-branded cards.
+           */
+          brand: string;
+
           /**
            * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
            */
@@ -4912,6 +4961,11 @@ export namespace Checkout {
 
     export interface Item {
       /**
+       * Configuration for the subscription item.
+       */
+      subscription?: Item.Subscription;
+
+      /**
        * The type of item.
        */
       type: 'subscription';
@@ -6054,6 +6108,284 @@ export namespace Checkout {
           export type AmountTaxDisplay =
             | 'exclude_tax'
             | 'include_inclusive_tax';
+        }
+      }
+    }
+
+    export namespace Item {
+      export interface Subscription {
+        /**
+         * Configures when the subscription schedule's billing cycle anchors to a specific day of the week or month.
+         */
+        billing_cycle_anchor_config?: Subscription.BillingCycleAnchorConfig;
+
+        /**
+         * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
+         */
+        billing_mode?: Subscription.BillingMode;
+
+        /**
+         * The subscription's description, meant to be displayable to the customer.
+         */
+        description?: string;
+
+        /**
+         * The list of items for the subscription.
+         */
+        items: Array<Subscription.Item>;
+
+        /**
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: MetadataParam;
+
+        /**
+         * Specifies an interval for how often to bill for any pending invoice items.
+         */
+        pending_invoice_item_interval?: Subscription.PendingInvoiceItemInterval;
+
+        /**
+         * Determines how to handle prorations resulting from the `billing_cycle_anchor`. If no value is passed, the default is `create_prorations`.
+         */
+        proration_behavior?: Subscription.ProrationBehavior;
+
+        /**
+         * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. Has to be at least 48 hours in the future.
+         */
+        trial_end?: number;
+
+        /**
+         * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
+         */
+        trial_period_days?: number;
+
+        /**
+         * Settings related to subscription trials.
+         */
+        trial_settings?: Subscription.TrialSettings;
+      }
+
+      export namespace Subscription {
+        export interface BillingCycleAnchorConfig {
+          /**
+           * The day of the month the anchor should be. Ranges from 1 to 31.
+           */
+          day_of_month: number;
+
+          /**
+           * The hour of the day the anchor should be. Ranges from 0 to 23.
+           */
+          hour?: number;
+
+          /**
+           * The minute of the hour the anchor should be. Ranges from 0 to 59.
+           */
+          minute?: number;
+
+          /**
+           * The month to start full cycle periods. Ranges from 1 to 12.
+           */
+          month?: number;
+
+          /**
+           * The second of the minute the anchor should be. Ranges from 0 to 59.
+           */
+          second?: number;
+        }
+
+        export interface BillingMode {
+          /**
+           * Configure behavior for flexible billing mode.
+           */
+          flexible?: BillingMode.Flexible;
+
+          /**
+           * Controls the calculation and orchestration of prorations and invoices for subscriptions. If no value is passed, the default is `flexible`.
+           */
+          type: BillingMode.Type;
+        }
+
+        export interface Item {
+          /**
+           * The ID of the price for this subscription item.
+           */
+          price?: string;
+
+          /**
+           * Data used to generate a new Price object inline.
+           */
+          price_data?: Item.PriceData;
+
+          /**
+           * Quantity for this item.
+           */
+          quantity?: number;
+        }
+
+        export interface PendingInvoiceItemInterval {
+          /**
+           * Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
+           */
+          interval: PendingInvoiceItemInterval.Interval;
+
+          /**
+           * The number of intervals between invoices. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+           */
+          interval_count?: number;
+        }
+
+        export type ProrationBehavior = 'create_prorations' | 'none';
+
+        export interface TrialSettings {
+          /**
+           * Defines how the subscription should behave when the user's free trial ends.
+           */
+          end_behavior: TrialSettings.EndBehavior;
+        }
+
+        export namespace BillingMode {
+          export interface Flexible {
+            /**
+             * Controls how invoices and invoice items display proration amounts and discount amounts.
+             */
+            proration_discounts?: Flexible.ProrationDiscounts;
+          }
+
+          export type Type = 'classic' | 'flexible';
+
+          export namespace Flexible {
+            export type ProrationDiscounts = 'included' | 'itemized';
+          }
+        }
+
+        export namespace Item {
+          export interface PriceData {
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to. One of `product` or `product_data` is required.
+             */
+            product?: string;
+
+            /**
+             * Data used to generate a new [Product](https://docs.stripe.com/api/products) object inline. One of `product` or `product_data` is required.
+             */
+            product_data?: PriceData.ProductData;
+
+            /**
+             * The recurring components of a price such as `interval` and `interval_count`.
+             */
+            recurring?: PriceData.Recurring;
+
+            /**
+             * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             */
+            tax_behavior?: PriceData.TaxBehavior;
+
+            /**
+             * A non-negative integer in cents (or local equivalent) representing how much to charge. One of `unit_amount` or `unit_amount_decimal` is required.
+             */
+            unit_amount?: number;
+
+            /**
+             * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+             */
+            unit_amount_decimal?: Decimal;
+          }
+
+          export namespace PriceData {
+            export interface ProductData {
+              /**
+               * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
+               */
+              description?: string;
+
+              /**
+               * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
+               */
+              images?: Array<string>;
+
+              /**
+               * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+               */
+              metadata?: MetadataParam;
+
+              /**
+               * The product's name, meant to be displayable to the customer.
+               */
+              name: string;
+
+              /**
+               * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+               */
+              tax_code?: string;
+
+              /**
+               * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+               */
+              tax_details?: ProductData.TaxDetails;
+
+              /**
+               * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
+               */
+              unit_label?: string;
+            }
+
+            export interface Recurring {
+              /**
+               * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Recurring.Interval;
+
+              /**
+               * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
+               */
+              interval_count?: number;
+            }
+
+            export type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+
+            export namespace ProductData {
+              export interface TaxDetails {
+                /**
+                 * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+                 */
+                performance_location?: string;
+
+                /**
+                 * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+                 */
+                tax_code?: Emptyable<string>;
+              }
+            }
+
+            export namespace Recurring {
+              export type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+          }
+        }
+
+        export namespace PendingInvoiceItemInterval {
+          export type Interval = 'day' | 'month' | 'week' | 'year';
+        }
+
+        export namespace TrialSettings {
+          export interface EndBehavior {
+            /**
+             * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
+             */
+            missing_payment_method: EndBehavior.MissingPaymentMethod;
+          }
+
+          export namespace EndBehavior {
+            export type MissingPaymentMethod =
+              | 'cancel'
+              | 'create_invoice'
+              | 'pause';
+          }
         }
       }
     }

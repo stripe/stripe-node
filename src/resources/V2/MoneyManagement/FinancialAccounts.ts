@@ -508,9 +508,9 @@ export namespace V2 {
       limit?: number;
 
       /**
-       * The status of the FinancialAccount to filter by. By default, closed FinancialAccounts are not returned.
+       * Filter for FinancialAccount `status`. By default, closed FinancialAccounts are not returned.
        */
-      status?: FinancialAccountListParams.Status;
+      statuses?: Array<FinancialAccountListParams.Status>;
 
       /**
        * Filter for FinancialAccount `type`. By default, FinancialAccounts of any `type` are returned.

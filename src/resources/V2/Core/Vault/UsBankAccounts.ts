@@ -92,6 +92,7 @@ export class UsBankAccountResource extends StripeResource {
   }
   /**
    * Confirm microdeposits amounts or descriptor code that you have received from the Send Microdeposits request. Once you correctly confirm this, this US Bank Account will be verified and eligible to transfer funds with.
+   * @throws Stripe.ControlledByAlternateResourceError
    */
   confirmMicrodeposits(
     id: string,
@@ -109,6 +110,7 @@ export class UsBankAccountResource extends StripeResource {
   }
   /**
    * Send microdeposits in order to verify your US Bank Account so it is eligible to transfer funds. This will start the verification process and you must Confirm Microdeposits to successfully verify your US Bank Account.
+   * @throws Stripe.ControlledByAlternateResourceError
    */
   sendMicrodeposits(
     id: string,

@@ -122,6 +122,7 @@ export declare namespace Issuing {
   export import CreditUnderwritingRecordRetrieveParams = IssuingNamespace3.CreditUnderwritingRecordRetrieveParams;
   export import CreditUnderwritingRecordCorrectParams = IssuingNamespace3.CreditUnderwritingRecordCorrectParams;
   export import CreditUnderwritingRecordReportDecisionParams = IssuingNamespace3.CreditUnderwritingRecordReportDecisionParams;
+  export import CreditUnderwritingRecordReportOfferAcceptanceParams = IssuingNamespace3.CreditUnderwritingRecordReportOfferAcceptanceParams;
   export import CreditUnderwritingRecordCreateFromApplicationParams = IssuingNamespace3.CreditUnderwritingRecordCreateFromApplicationParams;
   export import CreditUnderwritingRecordCreateFromProactiveReviewParams = IssuingNamespace3.CreditUnderwritingRecordCreateFromProactiveReviewParams;
   export {CreditUnderwritingRecord, CreditUnderwritingRecordResource};

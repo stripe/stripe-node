@@ -1393,6 +1393,16 @@ export namespace Charge {
       last4: string | null;
 
       /**
+       * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
+       */
+      location?: string;
+
+      /**
+       * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
+       */
+      reader?: string;
+
+      /**
        * The transaction ID from the gift card processor.
        */
       transaction_id: string;

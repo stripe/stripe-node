@@ -12,6 +12,7 @@ import {
   PaginationParams,
   RangeQueryParam,
   Metadata,
+  Address,
   Decimal,
 } from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
@@ -1002,6 +1003,11 @@ export interface Authorization {
   currency: string;
 
   /**
+   * Enriched merchant data for this authorization.
+   */
+  enriched_merchant_data?: Issuing.Authorization.EnrichedMerchantData | null;
+
+  /**
    * Fleet-specific information for authorizations using Fleet cards.
    */
   fleet: Issuing.Authorization.Fleet | null;
@@ -1115,14 +1121,19 @@ export namespace Issuing {
       account_type: BalanceResponse.AccountType;
 
       /**
-       * The remaining balance in the cardholder's account after the authorization, in the smallest currency unit.
+       * The available balance or credit limit in the cardholder's account after the authorization, in the smallest currency unit.
        */
-      amount: number;
+      available_balance: number;
 
       /**
-       * The currency of the remaining balance in the cardholder's account after the authorization.
+       * The currency of the remaining balances in the cardholder's account after the authorization.
        */
       currency: string;
+
+      /**
+       * The current ledger balance or remaining credit amount in the cardholder's account after the authorization, in the smallest currency unit.
+       */
+      current_balance: number;
     }
 
     export type CardPresence = 'not_present' | 'present';
@@ -1142,6 +1153,18 @@ export namespace Issuing {
        * The crypto transaction variant for this array entry.
        */
       type: string;
+    }
+
+    export interface EnrichedMerchantData {
+      /**
+       * Additional details about the seller (grocery store, e-commerce website, and so on) where the card authorization happened.
+       */
+      merchant: EnrichedMerchantData.Merchant | null;
+
+      /**
+       * An array of third parties involved in the card authorization, when applicable.
+       */
+      third_parties: Array<EnrichedMerchantData.ThirdParty> | null;
     }
 
     export interface Fleet {
@@ -1634,6 +1657,415 @@ export namespace Issuing {
            */
           type: string;
         }
+      }
+    }
+
+    export namespace EnrichedMerchantData {
+      export interface Merchant {
+        data_sources: Array<'spade'>;
+
+        industry: Merchant.Industry;
+
+        /**
+         * Location data of the seller.
+         */
+        location: Merchant.Location | null;
+
+        /**
+         * Image link to the seller's logo.
+         */
+        logo: string | null;
+
+        /**
+         * The name of the seller.
+         */
+        name: string | null;
+
+        /**
+         * Phone number of the seller.
+         */
+        phone: string | null;
+
+        /**
+         * If `spade` is a data source, this hash contains details provided by Spade.
+         */
+        spade: Merchant.Spade | null;
+
+        /**
+         * URL of the seller's website.
+         */
+        url: string | null;
+      }
+
+      export interface ThirdParty {
+        data_sources: Array<'spade'>;
+
+        /**
+         * Image link to the third party's logo.
+         */
+        logo: string | null;
+
+        /**
+         * Name of the third party.
+         */
+        name: string | null;
+
+        /**
+         * If `spade` is a data source, this hash contains details provided by Spade.
+         */
+        spade: ThirdParty.Spade | null;
+
+        /**
+         * Category of the third party.
+         */
+        type: ThirdParty.Type;
+      }
+
+      export namespace Merchant {
+        export interface Industry {
+          /**
+           * Most specific value of the seller's category.
+           */
+          id: Industry.Id;
+
+          /**
+           * Increasingly specific textual representations of the seller's category.
+           */
+          names: Array<string>;
+        }
+
+        export interface Location {
+          /**
+           * Address details of the seller.
+           */
+          address: Address | null;
+
+          /**
+           * Coordinates of the seller.
+           */
+          coordinates: Location.Coordinates | null;
+        }
+
+        export interface Spade {
+          /**
+           * Unified identifier for the seller.
+           */
+          counterparty_id: string | null;
+
+          /**
+           * Unified identifier for the seller's location.
+           */
+          location_id: string | null;
+        }
+
+        export namespace Industry {
+          export type Id =
+            | 'accessories'
+            | 'accounting_and_bookkeeping'
+            | 'acupuncture'
+            | 'administrative_services'
+            | 'adult_entertainment'
+            | 'adult_retail'
+            | 'advertising_and_marketing'
+            | 'advertising_technology'
+            | 'agricultural_technology'
+            | 'agriculture_and_forestry'
+            | 'airlines_and_aviation'
+            | 'alternative_medicine'
+            | 'alternative_rentals'
+            | 'anesthesiologists'
+            | 'antiques'
+            | 'aquatic_transportation'
+            | 'arcades_and_amusement_parks'
+            | 'art_dealers_and_galleries'
+            | 'arts_and_hobbies'
+            | 'atms'
+            | 'auctions'
+            | 'auto_parts_and_supplies'
+            | 'auto_smog_checks'
+            | 'auto_tires'
+            | 'auto_transmission'
+            | 'automotive_dealerships'
+            | 'automotive_retail'
+            | 'automotive_services'
+            | 'bakeries'
+            | 'banking_and_finance'
+            | 'bars'
+            | 'beauty_spas_and_salons'
+            | 'beer_wine_and_spirits'
+            | 'benefits'
+            | 'bicycles'
+            | 'billiards_and_pool'
+            | 'biotechnology'
+            | 'blood_banks_and_centers'
+            | 'boat_dealers'
+            | 'bookstores'
+            | 'bowling'
+            | 'breweries_distilleries_and_wineries'
+            | 'business_brokers_and_franchises'
+            | 'business_services'
+            | 'butchers'
+            | 'buy_now_pay_later'
+            | 'cafes'
+            | 'candy_shops'
+            | 'cannabis_dispensary'
+            | 'car_appraisers'
+            | 'car_wash_and_detail'
+            | 'cardiologists'
+            | 'cards_and_stationery'
+            | 'casinos_and_gambling'
+            | 'catering'
+            | 'charity'
+            | 'childcare'
+            | 'children_s_clothing'
+            | 'children_s_retail'
+            | 'chiropractors'
+            | 'circuses_and_carnivals'
+            | 'cleaning'
+            | 'clothing_and_accessories'
+            | 'clothing_services'
+            | 'commercial_supplies'
+            | 'communication_software'
+            | 'computers_and_electronics'
+            | 'construction_and_home_improvement'
+            | 'construction_supplies'
+            | 'contractors'
+            | 'convenience_stores'
+            | 'cosmetics'
+            | 'costumes'
+            | 'counseling_and_therapy'
+            | 'couriers'
+            | 'coworking_spaces'
+            | 'creative'
+            | 'creative_software'
+            | 'credit_reporting'
+            | 'crm'
+            | 'crowdfunding'
+            | 'cryptocurrency'
+            | 'dance_halls_and_saloons'
+            | 'delivery_services'
+            | 'dentists'
+            | 'department_stores'
+            | 'dermatologists'
+            | 'design_technology'
+            | 'developer_tools'
+            | 'digital_money_movement'
+            | 'discount_stores'
+            | 'education'
+            | 'educational_technology'
+            | 'electric_vehicle_charging'
+            | 'emergency_services'
+            | 'employment_services'
+            | 'enterprise_software'
+            | 'entertainment'
+            | 'ents'
+            | 'environmental_technology'
+            | 'equipment_rentals'
+            | 'events_and_event_planning'
+            | 'eyewear'
+            | 'fairgrounds_and_rodeos'
+            | 'family_medicine'
+            | 'fast_food'
+            | 'fertility'
+            | 'financial_management_software'
+            | 'financial_planning_and_investments'
+            | 'financial_technology'
+            | 'fishmongers'
+            | 'flea_markets'
+            | 'fleet'
+            | 'florists'
+            | 'food_and_drink'
+            | 'food_delivery_services'
+            | 'food_trucks'
+            | 'fuel_dealers'
+            | 'funeral_services'
+            | 'furniture'
+            | 'gas_stations'
+            | 'gastroenterologists'
+            | 'general_goods'
+            | 'general_surgery'
+            | 'gift_and_novelty'
+            | 'government'
+            | 'grocery_delivery_services'
+            | 'gyms_health_and_fitness_centers'
+            | 'hair_removal'
+            | 'hair_salons_and_barbers'
+            | 'hardware'
+            | 'hardware_and_home_improvement'
+            | 'hospitals_clinics_and_medical_centers'
+            | 'household_services'
+            | 'hr_platform'
+            | 'immigration'
+            | 'import_and_export'
+            | 'industrial_and_energy'
+            | 'inflight_internet_and_entertainment'
+            | 'insurance'
+            | 'internal_medicine'
+            | 'internet'
+            | 'jewelry_and_watches'
+            | 'landmarks'
+            | 'laundry_and_garment_services'
+            | 'lawn_and_garden'
+            | 'legal_services'
+            | 'legal_technology'
+            | 'lending'
+            | 'lingerie'
+            | 'lodging'
+            | 'luggage'
+            | 'maintenance_and_repair'
+            | 'manicures_and_pedicures'
+            | 'manufacturing'
+            | 'marina'
+            | 'marine_supplies'
+            | 'marketing_software'
+            | 'massage_clinics_and_therapists'
+            | 'media'
+            | 'medical_and_healthcare_services'
+            | 'medical_supplies_and_labs'
+            | 'men_s_clothing'
+            | 'mental_health_professionals'
+            | 'mobile_applications'
+            | 'motorcycle_moped_and_scooter_repair'
+            | 'museums'
+            | 'musical_instruments'
+            | 'neurologists'
+            | 'news_and_magazines'
+            | 'newsstands'
+            | 'nutritionists'
+            | 'obstetricians_and_gynecologists'
+            | 'office_supplies'
+            | 'oil_and_gas'
+            | 'oncologists'
+            | 'online_marketplace'
+            | 'ophthalmologists'
+            | 'optometrists'
+            | 'organizations'
+            | 'orthopedic_surgeons'
+            | 'other'
+            | 'outlets'
+            | 'packaging'
+            | 'paper'
+            | 'parking'
+            | 'parks_and_outdoors'
+            | 'party_centers'
+            | 'pathologists'
+            | 'pawn_shops'
+            | 'pediatricians'
+            | 'pet_grooming'
+            | 'pet_services'
+            | 'pets'
+            | 'pharmacies'
+            | 'photography'
+            | 'physical_therapy'
+            | 'piercings'
+            | 'plastic_surgeons'
+            | 'podiatrists'
+            | 'pregnancy_and_sexual_health'
+            | 'professional_services'
+            | 'property_management'
+            | 'psychiatrists'
+            | 'psychics_and_astrologers'
+            | 'psychologists'
+            | 'public_services'
+            | 'public_transportation'
+            | 'publishing_software'
+            | 'radiologists'
+            | 'rails'
+            | 'real_estate'
+            | 'recreation'
+            | 'religious'
+            | 'renewable_energy'
+            | 'respiratory'
+            | 'restaurants'
+            | 'retail'
+            | 'ride_shares'
+            | 'sales_enablement_software'
+            | 'security_and_privacy'
+            | 'security_and_safety'
+            | 'services'
+            | 'shipping_and_freight'
+            | 'shoes'
+            | 'skin_care'
+            | 'social_clubs'
+            | 'software'
+            | 'software_engineering'
+            | 'spas'
+            | 'specialist_physicans'
+            | 'specialty_clothing_and_accessories'
+            | 'specialty_foods'
+            | 'specialty_groceries'
+            | 'specialty_retail'
+            | 'sporting_goods'
+            | 'storage'
+            | 'streaming_services'
+            | 'supermarkets_and_grocery_stores'
+            | 'swimwear'
+            | 'tailors'
+            | 'tanning_salons'
+            | 'tattoos'
+            | 'taxes'
+            | 'taxi_and_limousines'
+            | 'technology'
+            | 'telecommunications'
+            | 'television'
+            | 'textiles'
+            | 'theater_and_cinema'
+            | 'tickets_and_reservations'
+            | 'tobacco_smoke_and_vape_shops'
+            | 'tolls_and_fees'
+            | 'tourist_information_and_services'
+            | 'towing_and_roadside_assistance'
+            | 'toy_stores'
+            | 'transportation'
+            | 'travel'
+            | 'travel_services'
+            | 'travel_software'
+            | 'urologists'
+            | 'utilities'
+            | 'vehicle_rentals'
+            | 'vending_machine'
+            | 'venues'
+            | 'veterinarians'
+            | 'video_games'
+            | 'vintage_and_thrift'
+            | 'warehouses_and_wholesale_stores'
+            | 'water_and_waste_management_services'
+            | 'web_infrastructure'
+            | 'wedding_and_bridal'
+            | 'women_s_clothing'
+            | 'zoos_and_aquariums';
+        }
+
+        export namespace Location {
+          export interface Coordinates {
+            /**
+             * Latitude of the seller's location.
+             */
+            latitude: number | null;
+
+            /**
+             * Longitude of the seller's location.
+             */
+            longitude: number | null;
+          }
+        }
+      }
+
+      export namespace ThirdParty {
+        export interface Spade {
+          /**
+           * Unified identifier for the third party.
+           */
+          third_party_id: string | null;
+        }
+
+        export type Type =
+          | 'buy_now_pay_later'
+          | 'delivery_service'
+          | 'marketplace'
+          | 'other'
+          | 'payment_processor'
+          | 'platform';
       }
     }
 

@@ -156,7 +156,7 @@ export interface OutboundTransfer {
   status: V2.MoneyManagement.OutboundTransfer.Status;
 
   /**
-   * Status details for an OutboundTransfer in a `failed` or `returned` state.
+   * Status details for an OutboundTransfer in a `processing`, `failed`, or `returned` state.
    */
   status_details?: V2.MoneyManagement.OutboundTransfer.StatusDetails;
 
@@ -211,6 +211,11 @@ export namespace V2 {
         failed?: StatusDetails.Failed;
 
         /**
+         * The `processing` status details.
+         */
+        processing?: StatusDetails.Processing;
+
+        /**
          * The `returned` status reason.
          */
         returned?: StatusDetails.Returned;
@@ -252,6 +257,11 @@ export namespace V2 {
          * The payout method which the OutboundTransfer uses to send payout.
          */
         payout_method: string;
+
+        /**
+         * Payout method options for the OutboundTransfer.
+         */
+        payout_method_options?: To.PayoutMethodOptions;
       }
 
       export interface TraceId {
@@ -281,6 +291,13 @@ export namespace V2 {
           reason: Failed.Reason;
         }
 
+        export interface Processing {
+          /**
+           * Open Enum. The `processing` status reason.
+           */
+          reason: 'under_review';
+        }
+
         export interface Returned {
           /**
            * Open Enum. The `returned` status reason.
@@ -290,12 +307,14 @@ export namespace V2 {
 
         export namespace Failed {
           export type Reason =
+            | 'fx_rate_drift_exceeded_after_review'
             | 'payout_method_amount_limit_exceeded'
             | 'payout_method_declined'
             | 'payout_method_does_not_exist'
             | 'payout_method_expired'
             | 'payout_method_unsupported'
             | 'payout_method_usage_frequency_limit_exceeded'
+            | 'review_rejected'
             | 'unknown_failure';
         }
 
@@ -312,6 +331,38 @@ export namespace V2 {
             | 'payout_method_restricted'
             | 'recalled'
             | 'unknown_failure';
+        }
+      }
+
+      export namespace To {
+        export interface PayoutMethodOptions {
+          /**
+           * Options for bank account payout methods.
+           */
+          bank_account?: PayoutMethodOptions.BankAccount;
+        }
+
+        export namespace PayoutMethodOptions {
+          export interface BankAccount {
+            /**
+             * The preferred networks to use for this OutboundTransfer.
+             */
+            preferred_networks: Array<BankAccount.PreferredNetwork>;
+          }
+
+          export namespace BankAccount {
+            export type PreferredNetwork =
+              | 'ach'
+              | 'becs'
+              | 'eft'
+              | 'fedwire'
+              | 'fps'
+              | 'npp'
+              | 'rtp'
+              | 'sepa_credit'
+              | 'sepa_instant'
+              | 'swift';
+          }
         }
       }
 
@@ -394,6 +445,11 @@ export namespace V2 {
          * The payout method which the OutboundTransfer uses to send payout.
          */
         payout_method: string;
+
+        /**
+         * Payout method options for the OutboundTransfer.
+         */
+        payout_method_options?: To.PayoutMethodOptions;
       }
 
       export interface DeliveryOptions {
@@ -405,6 +461,38 @@ export namespace V2 {
 
       export namespace DeliveryOptions {
         export type BankAccount = 'automatic' | 'local' | 'wire';
+      }
+
+      export namespace To {
+        export interface PayoutMethodOptions {
+          /**
+           * Options for bank account payout methods.
+           */
+          bank_account?: PayoutMethodOptions.BankAccount;
+        }
+
+        export namespace PayoutMethodOptions {
+          export interface BankAccount {
+            /**
+             * The preferred networks to use for this OutboundTransfer.
+             */
+            preferred_networks: Array<BankAccount.PreferredNetwork>;
+          }
+
+          export namespace BankAccount {
+            export type PreferredNetwork =
+              | 'ach'
+              | 'becs'
+              | 'eft'
+              | 'fedwire'
+              | 'fps'
+              | 'npp'
+              | 'rtp'
+              | 'sepa_credit'
+              | 'sepa_instant'
+              | 'swift';
+          }
+        }
       }
     }
   }

@@ -2944,9 +2944,6 @@ export namespace PaymentIntent {
     export interface MoneyServices {
       account_funding?: MoneyServices.AccountFunding;
 
-      /**
-       * ID of the Account representing the beneficiary in this account funding transaction.
-       */
       beneficiary_account?: string;
 
       beneficiary_details?: MoneyServices.BeneficiaryDetails;
@@ -3991,9 +3988,6 @@ export namespace PaymentIntent {
 
     export namespace MoneyServices {
       export interface AccountFunding {
-        /**
-         * ID of the Account representing the sender in this account funding transaction.
-         */
         sender_account?: string;
 
         sender_details?: AccountFunding.SenderDetails;
@@ -6462,6 +6456,11 @@ export namespace PaymentIntentCreateParams {
      * Contains information about the tax portion of the amount.
      */
     tax?: Emptyable<AmountDetails.Tax>;
+
+    /**
+     * Contains information about the tip portion of the amount.
+     */
+    tip?: Emptyable<AmountDetails.Tip>;
   }
 
   export interface AutomaticPaymentMethods {
@@ -7476,6 +7475,13 @@ export namespace PaymentIntentCreateParams {
        * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
        */
       total_tax_amount: number;
+    }
+
+    export interface Tip {
+      /**
+       * Portion of the amount that corresponds to a tip.
+       */
+      amount?: Emptyable<number>;
     }
 
     export namespace LineItem {
@@ -14441,6 +14447,11 @@ export namespace PaymentIntentUpdateParams {
      * Contains information about the tax portion of the amount.
      */
     tax?: Emptyable<AmountDetails.Tax>;
+
+    /**
+     * Contains information about the tip portion of the amount.
+     */
+    tip?: Emptyable<AmountDetails.Tip>;
   }
 
   export type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
@@ -15402,6 +15413,13 @@ export namespace PaymentIntentUpdateParams {
        * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
        */
       total_tax_amount: number;
+    }
+
+    export interface Tip {
+      /**
+       * Portion of the amount that corresponds to a tip.
+       */
+      amount?: Emptyable<number>;
     }
 
     export namespace LineItem {
@@ -22217,6 +22235,11 @@ export namespace PaymentIntentCaptureParams {
      * Contains information about the tax portion of the amount.
      */
     tax?: Emptyable<AmountDetails.Tax>;
+
+    /**
+     * Contains information about the tip portion of the amount.
+     */
+    tip?: Emptyable<AmountDetails.Tip>;
   }
 
   export interface Hooks {
@@ -22382,6 +22405,13 @@ export namespace PaymentIntentCaptureParams {
        * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
        */
       total_tax_amount: number;
+    }
+
+    export interface Tip {
+      /**
+       * Portion of the amount that corresponds to a tip.
+       */
+      amount?: Emptyable<number>;
     }
 
     export namespace LineItem {
@@ -24861,6 +24891,11 @@ export namespace PaymentIntentConfirmParams {
      * Contains information about the tax portion of the amount.
      */
     tax?: Emptyable<AmountDetails.Tax>;
+
+    /**
+     * Contains information about the tip portion of the amount.
+     */
+    tip?: Emptyable<AmountDetails.Tip>;
   }
 
   export type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
@@ -25809,6 +25844,13 @@ export namespace PaymentIntentConfirmParams {
        * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
        */
       total_tax_amount: number;
+    }
+
+    export interface Tip {
+      /**
+       * Portion of the amount that corresponds to a tip.
+       */
+      amount?: Emptyable<number>;
     }
 
     export namespace LineItem {
@@ -32553,6 +32595,11 @@ export namespace PaymentIntentDecrementAuthorizationParams {
      * Contains information about the tax portion of the amount.
      */
     tax?: Emptyable<AmountDetails.Tax>;
+
+    /**
+     * Contains information about the tip portion of the amount.
+     */
+    tip?: Emptyable<AmountDetails.Tip>;
   }
 
   export interface Hooks {
@@ -32673,6 +32720,13 @@ export namespace PaymentIntentDecrementAuthorizationParams {
        * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
        */
       total_tax_amount: number;
+    }
+
+    export interface Tip {
+      /**
+       * Portion of the amount that corresponds to a tip.
+       */
+      amount?: Emptyable<number>;
     }
 
     export namespace LineItem {
@@ -32957,6 +33011,11 @@ export namespace PaymentIntentIncrementAuthorizationParams {
      * Contains information about the tax portion of the amount.
      */
     tax?: Emptyable<AmountDetails.Tax>;
+
+    /**
+     * Contains information about the tip portion of the amount.
+     */
+    tip?: Emptyable<AmountDetails.Tip>;
   }
 
   export interface Hooks {
@@ -33084,6 +33143,13 @@ export namespace PaymentIntentIncrementAuthorizationParams {
        * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
        */
       total_tax_amount: number;
+    }
+
+    export interface Tip {
+      /**
+       * Portion of the amount that corresponds to a tip.
+       */
+      amount?: Emptyable<number>;
     }
 
     export namespace LineItem {

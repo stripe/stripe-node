@@ -347,6 +347,7 @@ declare namespace StripeConstructor {
   export type PaymentAttemptRecordReportAuthenticatedParams = Stripe.PaymentAttemptRecordReportAuthenticatedParams;
   export type PaymentAttemptRecordReportAuthorizedParams = Stripe.PaymentAttemptRecordReportAuthorizedParams;
   export type PaymentAttemptRecordReportCanceledParams = Stripe.PaymentAttemptRecordReportCanceledParams;
+  export type PaymentAttemptRecordReportEarlyFraudWarningParams = Stripe.PaymentAttemptRecordReportEarlyFraudWarningParams;
   export type PaymentAttemptRecordReportFailedParams = Stripe.PaymentAttemptRecordReportFailedParams;
   export type PaymentAttemptRecordReportGuaranteedParams = Stripe.PaymentAttemptRecordReportGuaranteedParams;
   export type PaymentAttemptRecordReportInformationalParams = Stripe.PaymentAttemptRecordReportInformationalParams;
@@ -422,6 +423,7 @@ declare namespace StripeConstructor {
   export type PaymentRecordReportPaymentAttemptGuaranteedParams = Stripe.PaymentRecordReportPaymentAttemptGuaranteedParams;
   export type PaymentRecordReportPaymentAttemptInformationalParams = Stripe.PaymentRecordReportPaymentAttemptInformationalParams;
   export type PaymentRecordReportRefundParams = Stripe.PaymentRecordReportRefundParams;
+  export type PaymentRecordSearchParams = Stripe.PaymentRecordSearchParams;
   export type PaymentRecordResource = Stripe.PaymentRecordResource;
   export type Payout = Stripe.Payout;
   export type PayoutCreateParams = Stripe.PayoutCreateParams;
@@ -979,6 +981,9 @@ declare namespace StripeConstructor {
   export namespace PaymentAttemptRecordReportAuthorizedParams {
     export type ProcessorDetails = Stripe.PaymentAttemptRecordReportAuthorizedParams.ProcessorDetails;
   }
+  export namespace PaymentAttemptRecordReportEarlyFraudWarningParams {
+    export type FraudType = Stripe.PaymentAttemptRecordReportEarlyFraudWarningParams.FraudType;
+  }
   export namespace PaymentAttemptRecordReportFailedParams {
     export type FailureCode = Stripe.PaymentAttemptRecordReportFailedParams.FailureCode;
     export type ProcessorDetails = Stripe.PaymentAttemptRecordReportFailedParams.ProcessorDetails;
@@ -992,10 +997,10 @@ declare namespace StripeConstructor {
     export type ShippingDetails = Stripe.PaymentAttemptRecordReportInformationalParams.ShippingDetails;
   }
   export namespace PaymentAttemptRecordReportRefundParams {
-    export type Outcome = Stripe.PaymentAttemptRecordReportRefundParams.Outcome;
     export type ProcessorDetails = Stripe.PaymentAttemptRecordReportRefundParams.ProcessorDetails;
     export type Amount = Stripe.PaymentAttemptRecordReportRefundParams.Amount;
     export type Failed = Stripe.PaymentAttemptRecordReportRefundParams.Failed;
+    export type Outcome = Stripe.PaymentAttemptRecordReportRefundParams.Outcome;
     export type Refunded = Stripe.PaymentAttemptRecordReportRefundParams.Refunded;
   }
   export namespace PaymentIntentCreateParams {
@@ -1382,10 +1387,10 @@ declare namespace StripeConstructor {
     export type ShippingDetails = Stripe.PaymentRecordReportPaymentAttemptInformationalParams.ShippingDetails;
   }
   export namespace PaymentRecordReportRefundParams {
-    export type Outcome = Stripe.PaymentRecordReportRefundParams.Outcome;
     export type ProcessorDetails = Stripe.PaymentRecordReportRefundParams.ProcessorDetails;
     export type Amount = Stripe.PaymentRecordReportRefundParams.Amount;
     export type Failed = Stripe.PaymentRecordReportRefundParams.Failed;
+    export type Outcome = Stripe.PaymentRecordReportRefundParams.Outcome;
     export type Refunded = Stripe.PaymentRecordReportRefundParams.Refunded;
   }
   export namespace PayoutCreateParams {
@@ -2116,6 +2121,7 @@ declare namespace StripeConstructor {
     export type CreditUnderwritingRecordCreateFromApplicationParams = Stripe.Issuing.CreditUnderwritingRecordCreateFromApplicationParams;
     export type CreditUnderwritingRecordCreateFromProactiveReviewParams = Stripe.Issuing.CreditUnderwritingRecordCreateFromProactiveReviewParams;
     export type CreditUnderwritingRecordReportDecisionParams = Stripe.Issuing.CreditUnderwritingRecordReportDecisionParams;
+    export type CreditUnderwritingRecordReportOfferAcceptanceParams = Stripe.Issuing.CreditUnderwritingRecordReportOfferAcceptanceParams;
     export type CreditUnderwritingRecordResource = Stripe.Issuing.CreditUnderwritingRecordResource;
     export type Dispute = Stripe.Issuing.Dispute;
     export type DisputeCreateParams = Stripe.Issuing.DisputeCreateParams;
@@ -2760,6 +2766,7 @@ declare namespace StripeConstructor {
       export type ContractRetrieveParams = Stripe.V2.Billing.ContractRetrieveParams;
       export type ContractUpdateParams = Stripe.V2.Billing.ContractUpdateParams;
       export type ContractListParams = Stripe.V2.Billing.ContractListParams;
+      export type ContractDeleteParams = Stripe.V2.Billing.ContractDeleteParams;
       export type ContractActivateParams = Stripe.V2.Billing.ContractActivateParams;
       export type ContractCancelParams = Stripe.V2.Billing.ContractCancelParams;
       export type ContractResource = Stripe.V2.Billing.ContractResource;
@@ -2848,7 +2855,7 @@ declare namespace StripeConstructor {
       export type ServiceActionRetrieveParams = Stripe.V2.Billing.ServiceActionRetrieveParams;
       export type ServiceActionUpdateParams = Stripe.V2.Billing.ServiceActionUpdateParams;
       export type ServiceActionResource = Stripe.V2.Billing.ServiceActionResource;
-      export type ContractLicensePricingQuantityChange = Stripe.V2.Billing.ContractLicensePricingQuantityChange;
+      export type ContractPricingLineQuantityChange = Stripe.V2.Billing.ContractPricingLineQuantityChange;
       export type BillSettingVersion = Stripe.V2.Billing.BillSettingVersion;
       export type CadenceSpendModifier = Stripe.V2.Billing.CadenceSpendModifier;
       export type CollectionSettingVersion = Stripe.V2.Billing.CollectionSettingVersion;
@@ -2899,28 +2906,31 @@ declare namespace StripeConstructor {
         export type PaymentMethodOptions = Stripe.V2.Billing.CollectionSettingUpdateParams.PaymentMethodOptions;
       }
       export namespace ContractCreateParams {
-        export type ContractLine = Stripe.V2.Billing.ContractCreateParams.ContractLine;
-        export type LicenseQuantityAction = Stripe.V2.Billing.ContractCreateParams.LicenseQuantityAction;
         export type PricingLine = Stripe.V2.Billing.ContractCreateParams.PricingLine;
-        export type PricingOverride = Stripe.V2.Billing.ContractCreateParams.PricingOverride;
+        export type BillingCycleAnchor = Stripe.V2.Billing.ContractCreateParams.BillingCycleAnchor;
         export type BillingSettings = Stripe.V2.Billing.ContractCreateParams.BillingSettings;
         export type Include = Stripe.V2.Billing.ContractCreateParams.Include;
         export type OneTimeFee = Stripe.V2.Billing.ContractCreateParams.OneTimeFee;
+        export type PricingOverride = Stripe.V2.Billing.ContractCreateParams.PricingOverride;
       }
       export namespace ContractRetrieveParams {
         export type Include = Stripe.V2.Billing.ContractRetrieveParams.Include;
       }
       export namespace ContractUpdateParams {
         export type Include = Stripe.V2.Billing.ContractUpdateParams.Include;
-        export type LicenseQuantityAction = Stripe.V2.Billing.ContractUpdateParams.LicenseQuantityAction;
         export type PricingLineAction = Stripe.V2.Billing.ContractUpdateParams.PricingLineAction;
         export type PricingOverrideAction = Stripe.V2.Billing.ContractUpdateParams.PricingOverrideAction;
+      }
+      export namespace ContractListParams {
+        export type Include = Stripe.V2.Billing.ContractListParams.Include;
       }
       export namespace ContractActivateParams {
         export type Include = Stripe.V2.Billing.ContractActivateParams.Include;
       }
       export namespace ContractCancelParams {
+        export type CancelPricingLine = Stripe.V2.Billing.ContractCancelParams.CancelPricingLine;
         export type Include = Stripe.V2.Billing.ContractCancelParams.Include;
+        export type ProrationBehavior = Stripe.V2.Billing.ContractCancelParams.ProrationBehavior;
       }
       export namespace IntentCreateParams {
         export type Action = Stripe.V2.Billing.IntentCreateParams.Action;
@@ -3120,6 +3130,18 @@ declare namespace StripeConstructor {
       export namespace EventDestinationUpdateParams {
         export type WebhookEndpoint = Stripe.V2.Core.EventDestinationUpdateParams.WebhookEndpoint;
       }
+      export namespace Health {
+        export type Alert = Stripe.V2.Core.Health.Alert;
+        export type AlertRetrieveParams = Stripe.V2.Core.Health.AlertRetrieveParams;
+        export type AlertListParams = Stripe.V2.Core.Health.AlertListParams;
+        export type AlertResource = Stripe.V2.Core.Health.AlertResource;
+        export type AlertHistoryEntry = Stripe.V2.Core.Health.AlertHistoryEntry;
+        export namespace AlertListParams {
+          export type Severity = Stripe.V2.Core.Health.AlertListParams.Severity;
+          export type Status = Stripe.V2.Core.Health.AlertListParams.Status;
+          export type Type = Stripe.V2.Core.Health.AlertListParams.Type;
+        }
+      }
       export namespace Vault {
         export type GbBankAccount = Stripe.V2.Core.Vault.GbBankAccount;
         export type GbBankAccountCreateParams = Stripe.V2.Core.Vault.GbBankAccountCreateParams;
@@ -3264,6 +3286,13 @@ declare namespace StripeConstructor {
       export type OutboundTransferListParams = Stripe.V2.MoneyManagement.OutboundTransferListParams;
       export type OutboundTransferCancelParams = Stripe.V2.MoneyManagement.OutboundTransferCancelParams;
       export type OutboundTransferResource = Stripe.V2.MoneyManagement.OutboundTransferResource;
+      export type PayoutIntent = Stripe.V2.MoneyManagement.PayoutIntent;
+      export type PayoutIntentCreateParams = Stripe.V2.MoneyManagement.PayoutIntentCreateParams;
+      export type PayoutIntentRetrieveParams = Stripe.V2.MoneyManagement.PayoutIntentRetrieveParams;
+      export type PayoutIntentUpdateParams = Stripe.V2.MoneyManagement.PayoutIntentUpdateParams;
+      export type PayoutIntentListParams = Stripe.V2.MoneyManagement.PayoutIntentListParams;
+      export type PayoutIntentCancelParams = Stripe.V2.MoneyManagement.PayoutIntentCancelParams;
+      export type PayoutIntentResource = Stripe.V2.MoneyManagement.PayoutIntentResource;
       export type PayoutMethod = Stripe.V2.MoneyManagement.PayoutMethod;
       export type PayoutMethodRetrieveParams = Stripe.V2.MoneyManagement.PayoutMethodRetrieveParams;
       export type PayoutMethodListParams = Stripe.V2.MoneyManagement.PayoutMethodListParams;
@@ -3294,6 +3323,7 @@ declare namespace StripeConstructor {
       export type TransactionEntryRetrieveParams = Stripe.V2.MoneyManagement.TransactionEntryRetrieveParams;
       export type TransactionEntryListParams = Stripe.V2.MoneyManagement.TransactionEntryListParams;
       export type TransactionEntryResource = Stripe.V2.MoneyManagement.TransactionEntryResource;
+      export type FinancialAddressDebitSimulation = Stripe.V2.MoneyManagement.FinancialAddressDebitSimulation;
       export type FinancialAccountStatement = Stripe.V2.MoneyManagement.FinancialAccountStatement;
       export namespace CurrencyConversionCreateParams {
         export type From = Stripe.V2.MoneyManagement.CurrencyConversionCreateParams.From;
@@ -3361,6 +3391,18 @@ declare namespace StripeConstructor {
       }
       export namespace OutboundTransferListParams {
         export type Status = Stripe.V2.MoneyManagement.OutboundTransferListParams.Status;
+      }
+      export namespace PayoutIntentCreateParams {
+        export type From = Stripe.V2.MoneyManagement.PayoutIntentCreateParams.From;
+        export type To = Stripe.V2.MoneyManagement.PayoutIntentCreateParams.To;
+        export type RecipientNotification = Stripe.V2.MoneyManagement.PayoutIntentCreateParams.RecipientNotification;
+        export type ScheduleOptions = Stripe.V2.MoneyManagement.PayoutIntentCreateParams.ScheduleOptions;
+      }
+      export namespace PayoutIntentUpdateParams {
+        export type From = Stripe.V2.MoneyManagement.PayoutIntentUpdateParams.From;
+        export type RecipientNotification = Stripe.V2.MoneyManagement.PayoutIntentUpdateParams.RecipientNotification;
+        export type ScheduleOptions = Stripe.V2.MoneyManagement.PayoutIntentUpdateParams.ScheduleOptions;
+        export type To = Stripe.V2.MoneyManagement.PayoutIntentUpdateParams.To;
       }
       export namespace PayoutMethodListParams {
         export type UsageStatus = Stripe.V2.MoneyManagement.PayoutMethodListParams.UsageStatus;
@@ -3974,14 +4016,14 @@ declare namespace StripeConstructor {
     export type V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEventNotification = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEventNotification;
     export type V2CoreAccountIncludingConfigurationMerchantUpdatedEvent = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationMerchantUpdatedEvent;
     export type V2CoreAccountIncludingConfigurationMerchantUpdatedEventNotification = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationMerchantUpdatedEventNotification;
+    export type V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatusUpdatedEvent = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatusUpdatedEvent;
+    export type V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatusUpdatedEventNotification = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatusUpdatedEventNotification;
+    export type V2CoreAccountIncludingConfigurationMoneyManagerUpdatedEvent = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationMoneyManagerUpdatedEvent;
+    export type V2CoreAccountIncludingConfigurationMoneyManagerUpdatedEventNotification = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationMoneyManagerUpdatedEventNotification;
     export type V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent;
     export type V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEventNotification = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEventNotification;
     export type V2CoreAccountIncludingConfigurationRecipientUpdatedEvent = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationRecipientUpdatedEvent;
     export type V2CoreAccountIncludingConfigurationRecipientUpdatedEventNotification = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationRecipientUpdatedEventNotification;
-    export type V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent;
-    export type V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEventNotification = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEventNotification;
-    export type V2CoreAccountIncludingConfigurationStorerUpdatedEvent = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationStorerUpdatedEvent;
-    export type V2CoreAccountIncludingConfigurationStorerUpdatedEventNotification = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationStorerUpdatedEventNotification;
     export type V2CoreAccountIncludingDefaultsUpdatedEvent = Stripe.V2.Core.Events.V2CoreAccountIncludingDefaultsUpdatedEvent;
     export type V2CoreAccountIncludingDefaultsUpdatedEventNotification = Stripe.V2.Core.Events.V2CoreAccountIncludingDefaultsUpdatedEventNotification;
     export type V2CoreAccountIncludingFutureRequirementsUpdatedEvent = Stripe.V2.Core.Events.V2CoreAccountIncludingFutureRequirementsUpdatedEvent;
@@ -4140,6 +4182,12 @@ declare namespace StripeConstructor {
     export type V2IamStripeAccessGrantUpdatedEventNotification = Stripe.V2.Core.Events.V2IamStripeAccessGrantUpdatedEventNotification;
     export type V2MoneyManagementAdjustmentCreatedEvent = Stripe.V2.Core.Events.V2MoneyManagementAdjustmentCreatedEvent;
     export type V2MoneyManagementAdjustmentCreatedEventNotification = Stripe.V2.Core.Events.V2MoneyManagementAdjustmentCreatedEventNotification;
+    export type V2MoneyManagementDebitDisputeFailedEvent = Stripe.V2.Core.Events.V2MoneyManagementDebitDisputeFailedEvent;
+    export type V2MoneyManagementDebitDisputeFailedEventNotification = Stripe.V2.Core.Events.V2MoneyManagementDebitDisputeFailedEventNotification;
+    export type V2MoneyManagementDebitDisputeSubmittedEvent = Stripe.V2.Core.Events.V2MoneyManagementDebitDisputeSubmittedEvent;
+    export type V2MoneyManagementDebitDisputeSubmittedEventNotification = Stripe.V2.Core.Events.V2MoneyManagementDebitDisputeSubmittedEventNotification;
+    export type V2MoneyManagementDebitDisputeSucceededEvent = Stripe.V2.Core.Events.V2MoneyManagementDebitDisputeSucceededEvent;
+    export type V2MoneyManagementDebitDisputeSucceededEventNotification = Stripe.V2.Core.Events.V2MoneyManagementDebitDisputeSucceededEventNotification;
     export type V2MoneyManagementFinancialAccountCreatedEvent = Stripe.V2.Core.Events.V2MoneyManagementFinancialAccountCreatedEvent;
     export type V2MoneyManagementFinancialAccountCreatedEventNotification = Stripe.V2.Core.Events.V2MoneyManagementFinancialAccountCreatedEventNotification;
     export type V2MoneyManagementFinancialAccountUpdatedEvent = Stripe.V2.Core.Events.V2MoneyManagementFinancialAccountUpdatedEvent;
@@ -4174,6 +4222,8 @@ declare namespace StripeConstructor {
     export type V2MoneyManagementOutboundPaymentPostedEventNotification = Stripe.V2.Core.Events.V2MoneyManagementOutboundPaymentPostedEventNotification;
     export type V2MoneyManagementOutboundPaymentReturnedEvent = Stripe.V2.Core.Events.V2MoneyManagementOutboundPaymentReturnedEvent;
     export type V2MoneyManagementOutboundPaymentReturnedEventNotification = Stripe.V2.Core.Events.V2MoneyManagementOutboundPaymentReturnedEventNotification;
+    export type V2MoneyManagementOutboundPaymentUnderReviewEvent = Stripe.V2.Core.Events.V2MoneyManagementOutboundPaymentUnderReviewEvent;
+    export type V2MoneyManagementOutboundPaymentUnderReviewEventNotification = Stripe.V2.Core.Events.V2MoneyManagementOutboundPaymentUnderReviewEventNotification;
     export type V2MoneyManagementOutboundPaymentUpdatedEvent = Stripe.V2.Core.Events.V2MoneyManagementOutboundPaymentUpdatedEvent;
     export type V2MoneyManagementOutboundPaymentUpdatedEventNotification = Stripe.V2.Core.Events.V2MoneyManagementOutboundPaymentUpdatedEventNotification;
     export type V2MoneyManagementOutboundTransferCanceledEvent = Stripe.V2.Core.Events.V2MoneyManagementOutboundTransferCanceledEvent;
@@ -4186,6 +4236,8 @@ declare namespace StripeConstructor {
     export type V2MoneyManagementOutboundTransferPostedEventNotification = Stripe.V2.Core.Events.V2MoneyManagementOutboundTransferPostedEventNotification;
     export type V2MoneyManagementOutboundTransferReturnedEvent = Stripe.V2.Core.Events.V2MoneyManagementOutboundTransferReturnedEvent;
     export type V2MoneyManagementOutboundTransferReturnedEventNotification = Stripe.V2.Core.Events.V2MoneyManagementOutboundTransferReturnedEventNotification;
+    export type V2MoneyManagementOutboundTransferUnderReviewEvent = Stripe.V2.Core.Events.V2MoneyManagementOutboundTransferUnderReviewEvent;
+    export type V2MoneyManagementOutboundTransferUnderReviewEventNotification = Stripe.V2.Core.Events.V2MoneyManagementOutboundTransferUnderReviewEventNotification;
     export type V2MoneyManagementOutboundTransferUpdatedEvent = Stripe.V2.Core.Events.V2MoneyManagementOutboundTransferUpdatedEvent;
     export type V2MoneyManagementOutboundTransferUpdatedEventNotification = Stripe.V2.Core.Events.V2MoneyManagementOutboundTransferUpdatedEventNotification;
     export type V2MoneyManagementPayoutMethodCreatedEvent = Stripe.V2.Core.Events.V2MoneyManagementPayoutMethodCreatedEvent;
@@ -4330,11 +4382,11 @@ declare namespace StripeConstructor {
     export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent {
       export type Data = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent.Data;
     }
+    export namespace V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatusUpdatedEvent {
+      export type Data = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatusUpdatedEvent.Data;
+    }
     export namespace V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent {
       export type Data = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent.Data;
-    }
-    export namespace V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent {
-      export type Data = Stripe.V2.Core.Events.V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent.Data;
     }
     export namespace V2CoreAccountLinkReturnedEvent {
       export type Data = Stripe.V2.Core.Events.V2CoreAccountLinkReturnedEvent.Data;

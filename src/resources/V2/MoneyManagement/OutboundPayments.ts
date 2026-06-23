@@ -171,7 +171,7 @@ export interface OutboundPayment {
   status: V2.MoneyManagement.OutboundPayment.Status;
 
   /**
-   * Status details for an OutboundPayment in a `failed` or `returned` state.
+   * Status details for an OutboundPayment in a `processing`, `failed`, or `returned` state.
    */
   status_details?: V2.MoneyManagement.OutboundPayment.StatusDetails;
 
@@ -249,6 +249,11 @@ export namespace V2 {
         failed?: StatusDetails.Failed;
 
         /**
+         * The `processing` status details.
+         */
+        processing?: StatusDetails.Processing;
+
+        /**
          * The `returned` status reason.
          */
         returned?: StatusDetails.Returned;
@@ -292,6 +297,11 @@ export namespace V2 {
         payout_method: string;
 
         /**
+         * Payout method options for the OutboundPayment.
+         */
+        payout_method_options?: To.PayoutMethodOptions;
+
+        /**
          * To which account the OutboundPayment is sent.
          */
         recipient: string;
@@ -323,6 +333,11 @@ export namespace V2 {
         export type BankAccount = 'automatic' | 'local' | 'wire';
 
         export interface PaperCheck {
+          /**
+           * The ID of a file to include as an attachment with the paper check.
+           */
+          attachment?: string;
+
           /**
            * Memo printed on the memo field of the check.
            */
@@ -358,6 +373,13 @@ export namespace V2 {
           reason: Failed.Reason;
         }
 
+        export interface Processing {
+          /**
+           * Open Enum. The `processing` status reason.
+           */
+          reason: 'under_review';
+        }
+
         export interface Returned {
           /**
            * Open Enum. The `returned` status reason.
@@ -367,6 +389,7 @@ export namespace V2 {
 
         export namespace Failed {
           export type Reason =
+            | 'fx_rate_drift_exceeded_after_review'
             | 'paper_check_attachment_too_large'
             | 'paper_check_expired'
             | 'paper_check_undeliverable'
@@ -376,6 +399,7 @@ export namespace V2 {
             | 'payout_method_expired'
             | 'payout_method_unsupported'
             | 'payout_method_usage_frequency_limit_exceeded'
+            | 'review_rejected'
             | 'unknown_failure';
         }
 
@@ -392,6 +416,68 @@ export namespace V2 {
             | 'payout_method_restricted'
             | 'recalled'
             | 'unknown_failure';
+        }
+      }
+
+      export namespace To {
+        export interface PayoutMethodOptions {
+          /**
+           * Options for bank account payout methods.
+           */
+          bank_account?: PayoutMethodOptions.BankAccount;
+        }
+
+        export namespace PayoutMethodOptions {
+          export interface BankAccount {
+            /**
+             * Per-network configuration options.
+             */
+            preferred_network_options?: BankAccount.PreferredNetworkOptions;
+
+            /**
+             * The preferred networks to use for this OutboundPayment.
+             */
+            preferred_networks: Array<BankAccount.PreferredNetwork>;
+          }
+
+          export namespace BankAccount {
+            export interface PreferredNetworkOptions {
+              /**
+               * ACH-specific network options.
+               */
+              ach?: PreferredNetworkOptions.Ach;
+            }
+
+            export type PreferredNetwork =
+              | 'ach'
+              | 'becs'
+              | 'eft'
+              | 'fedwire'
+              | 'fps'
+              | 'npp'
+              | 'rtp'
+              | 'sepa_credit'
+              | 'sepa_instant'
+              | 'swift';
+
+            export namespace PreferredNetworkOptions {
+              export interface Ach {
+                /**
+                 * Open Enum. ACH submission timing.
+                 */
+                submission?: Ach.Submission;
+
+                /**
+                 * The transaction purpose for this ACH payment.
+                 */
+                transaction_purpose?: 'payroll';
+              }
+
+              export namespace Ach {
+                export type Submission = 'next_day' | 'same_day';
+              }
+            }
+          }
         }
       }
 
@@ -517,6 +603,11 @@ export namespace V2 {
       outbound_payment_quote?: string;
 
       /**
+       * The PayoutIntent ID that triggered this OutboundPayment.
+       */
+      payout_intent?: string;
+
+      /**
        * The purpose of the OutboundPayment.
        */
       purpose?: 'payroll';
@@ -568,6 +659,11 @@ export namespace V2 {
         payout_method?: string;
 
         /**
+         * Payout method options for the OutboundPayment.
+         */
+        payout_method_options?: To.PayoutMethodOptions;
+
+        /**
          * To which account the OutboundPayment is sent.
          */
         recipient: string;
@@ -603,6 +699,11 @@ export namespace V2 {
 
         export interface PaperCheck {
           /**
+           * The ID of a file to include as an attachment with the paper check.
+           */
+          attachment?: string;
+
+          /**
            * Memo printed on the memo field of the check.
            */
           memo?: string;
@@ -627,6 +728,68 @@ export namespace V2 {
 
       export namespace RecipientNotification {
         export type Setting = 'configured' | 'none';
+      }
+
+      export namespace To {
+        export interface PayoutMethodOptions {
+          /**
+           * Options for bank account payout methods.
+           */
+          bank_account?: PayoutMethodOptions.BankAccount;
+        }
+
+        export namespace PayoutMethodOptions {
+          export interface BankAccount {
+            /**
+             * Per-network configuration options.
+             */
+            preferred_network_options?: BankAccount.PreferredNetworkOptions;
+
+            /**
+             * The preferred networks to use for this OutboundPayment.
+             */
+            preferred_networks: Array<BankAccount.PreferredNetwork>;
+          }
+
+          export namespace BankAccount {
+            export interface PreferredNetworkOptions {
+              /**
+               * ACH-specific network options.
+               */
+              ach?: PreferredNetworkOptions.Ach;
+            }
+
+            export type PreferredNetwork =
+              | 'ach'
+              | 'becs'
+              | 'eft'
+              | 'fedwire'
+              | 'fps'
+              | 'npp'
+              | 'rtp'
+              | 'sepa_credit'
+              | 'sepa_instant'
+              | 'swift';
+
+            export namespace PreferredNetworkOptions {
+              export interface Ach {
+                /**
+                 * Open Enum. ACH submission timing.
+                 */
+                submission?: Ach.Submission;
+
+                /**
+                 * The transaction purpose for this ACH payment.
+                 */
+                transaction_purpose?: 'payroll';
+              }
+
+              export namespace Ach {
+                export type Submission = 'next_day' | 'same_day';
+              }
+            }
+          }
+        }
       }
     }
   }
