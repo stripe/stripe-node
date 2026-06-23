@@ -38,15 +38,15 @@ export declare namespace Identity {
   export import BlocklistEntryCreateParams = IdentityNamespace0.BlocklistEntryCreateParams;
   export import BlocklistEntryRetrieveParams = IdentityNamespace0.BlocklistEntryRetrieveParams;
   export import BlocklistEntryDisableParams = IdentityNamespace0.BlocklistEntryDisableParams;
-  export {BlocklistEntry};
+  export {BlocklistEntry, BlocklistEntryResource};
   export import VerificationReportListParams = IdentityNamespace1.VerificationReportListParams;
   export import VerificationReportRetrieveParams = IdentityNamespace1.VerificationReportRetrieveParams;
-  export {VerificationReport};
+  export {VerificationReport, VerificationReportResource};
   export import VerificationSessionListParams = IdentityNamespace2.VerificationSessionListParams;
   export import VerificationSessionCreateParams = IdentityNamespace2.VerificationSessionCreateParams;
   export import VerificationSessionRetrieveParams = IdentityNamespace2.VerificationSessionRetrieveParams;
   export import VerificationSessionUpdateParams = IdentityNamespace2.VerificationSessionUpdateParams;
   export import VerificationSessionCancelParams = IdentityNamespace2.VerificationSessionCancelParams;
   export import VerificationSessionRedactParams = IdentityNamespace2.VerificationSessionRedactParams;
-  export {VerificationSession};
+  export {VerificationSession, VerificationSessionResource};
 }

@@ -830,7 +830,6 @@ import {Terminal} from './resources/Terminal/index.js';
 import {TestHelpers} from './resources/TestHelpers/index.js';
 import {Treasury} from './resources/Treasury/index.js';
 import {V2} from './resources/V2/index.js';
-import {Reserve} from './resources/Reserve/index.js';
 // StripeInstanceImports: The end of the section generated from our OpenAPI spec
 // V1EventImports: The beginning of the section generated from our OpenAPI spec
 import {
@@ -2772,7 +2771,6 @@ export declare namespace Stripe {
   export {TestHelpers};
   export {Treasury};
   export {V2};
-  export {Reserve};
   // StripeInterfaceExports: The end of the section generated from our OpenAPI spec
   // V1EventExports: The beginning of the section generated from our OpenAPI spec
   export {
@@ -3169,7 +3167,55 @@ export declare namespace Stripe {
     export type StripeUnsupportedResponseTypeError = InstanceType<
       typeof _Error.StripeUnsupportedResponseTypeError
     >;
+    export type AlreadyCanceledError = InstanceType<
+      typeof _Error.AlreadyCanceledError
+    >;
+    export type AlreadyExistsError = InstanceType<
+      typeof _Error.AlreadyExistsError
+    >;
+    export type BlockedByStripeError = InstanceType<
+      typeof _Error.BlockedByStripeError
+    >;
+    export type CannotProceedError = InstanceType<
+      typeof _Error.CannotProceedError
+    >;
+    export type ControlledByAlternateResourceError = InstanceType<
+      typeof _Error.ControlledByAlternateResourceError
+    >;
+    export type ControlledByDashboardError = InstanceType<
+      typeof _Error.ControlledByDashboardError
+    >;
+    export type FeatureNotEnabledError = InstanceType<
+      typeof _Error.FeatureNotEnabledError
+    >;
+    export type FinancialAccountNotOpenError = InstanceType<
+      typeof _Error.FinancialAccountNotOpenError
+    >;
+    export type FxQuoteExpiredError = InstanceType<
+      typeof _Error.FxQuoteExpiredError
+    >;
+    export type InsufficientFundsError = InstanceType<
+      typeof _Error.InsufficientFundsError
+    >;
+    export type InvalidPaymentMethodError = InstanceType<
+      typeof _Error.InvalidPaymentMethodError
+    >;
+    export type InvalidPayoutMethodError = InstanceType<
+      typeof _Error.InvalidPayoutMethodError
+    >;
+    export type NonZeroBalanceError = InstanceType<
+      typeof _Error.NonZeroBalanceError
+    >;
+    export type NotCancelableError = InstanceType<
+      typeof _Error.NotCancelableError
+    >;
+    export type QuotaExceededError = InstanceType<
+      typeof _Error.QuotaExceededError
+    >;
     export type RateLimitError = InstanceType<typeof _Error.RateLimitError>;
+    export type RecipientNotNotifiableError = InstanceType<
+      typeof _Error.RecipientNotNotifiableError
+    >;
     export type TemporarySessionExpiredError = InstanceType<
       typeof _Error.TemporarySessionExpiredError
     >;
@@ -3218,7 +3264,55 @@ export declare namespace Stripe {
     export type StripeUnsupportedResponseTypeError = InstanceType<
       typeof _Error.StripeUnsupportedResponseTypeError
     >;
+    export type AlreadyCanceledError = InstanceType<
+      typeof _Error.AlreadyCanceledError
+    >;
+    export type AlreadyExistsError = InstanceType<
+      typeof _Error.AlreadyExistsError
+    >;
+    export type BlockedByStripeError = InstanceType<
+      typeof _Error.BlockedByStripeError
+    >;
+    export type CannotProceedError = InstanceType<
+      typeof _Error.CannotProceedError
+    >;
+    export type ControlledByAlternateResourceError = InstanceType<
+      typeof _Error.ControlledByAlternateResourceError
+    >;
+    export type ControlledByDashboardError = InstanceType<
+      typeof _Error.ControlledByDashboardError
+    >;
+    export type FeatureNotEnabledError = InstanceType<
+      typeof _Error.FeatureNotEnabledError
+    >;
+    export type FinancialAccountNotOpenError = InstanceType<
+      typeof _Error.FinancialAccountNotOpenError
+    >;
+    export type FxQuoteExpiredError = InstanceType<
+      typeof _Error.FxQuoteExpiredError
+    >;
+    export type InsufficientFundsError = InstanceType<
+      typeof _Error.InsufficientFundsError
+    >;
+    export type InvalidPaymentMethodError = InstanceType<
+      typeof _Error.InvalidPaymentMethodError
+    >;
+    export type InvalidPayoutMethodError = InstanceType<
+      typeof _Error.InvalidPayoutMethodError
+    >;
+    export type NonZeroBalanceError = InstanceType<
+      typeof _Error.NonZeroBalanceError
+    >;
+    export type NotCancelableError = InstanceType<
+      typeof _Error.NotCancelableError
+    >;
+    export type QuotaExceededError = InstanceType<
+      typeof _Error.QuotaExceededError
+    >;
     export type RateLimitError = InstanceType<typeof _Error.RateLimitError>;
+    export type RecipientNotNotifiableError = InstanceType<
+      typeof _Error.RecipientNotNotifiableError
+    >;
     export type TemporarySessionExpiredError = InstanceType<
       typeof _Error.TemporarySessionExpiredError
     >;

@@ -23,5 +23,5 @@ export declare namespace Tax {
   export import ManualRuleRetrieveParams = V2Namespace0.Tax.ManualRuleRetrieveParams;
   export import ManualRuleUpdateParams = V2Namespace0.Tax.ManualRuleUpdateParams;
   export import ManualRuleDeactivateParams = V2Namespace0.Tax.ManualRuleDeactivateParams;
-  export {ManualRule};
+  export {ManualRule, ManualRuleResource};
 }

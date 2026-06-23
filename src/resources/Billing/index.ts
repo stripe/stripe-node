@@ -99,7 +99,7 @@ export declare namespace Billing {
   export import MeterEventCreateParams = BillingNamespace5.MeterEventCreateParams;
   export {MeterEvent, MeterEventResource};
   export import MeterEventAdjustmentCreateParams = BillingNamespace6.MeterEventAdjustmentCreateParams;
-  export {MeterEventAdjustment};
+  export {MeterEventAdjustment, MeterEventAdjustmentResource};
   export {AlertRecovered};
   export {AlertTriggered};
   export {MeterEventSummary};

@@ -6,7 +6,7 @@ import {LineItem} from './LineItems.js';
 import {QuoteLine} from './QuoteLines.js';
 import {QuotePreviewInvoice} from './QuotePreviewInvoices.js';
 import {QuotePreviewSubscriptionSchedule} from './QuotePreviewSubscriptionSchedules.js';
-import {Discount} from './Discounts.js';
+import {Discount as _Discount} from './Discounts.js';
 import {Application, DeletedApplication} from './Applications.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {TaxRate} from './TaxRates.js';

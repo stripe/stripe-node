@@ -20,5 +20,5 @@ export class Signals {
 export declare namespace Signals {
   export import AccountSignalListParams = V2Namespace0.Signals.AccountSignalListParams;
   export import AccountSignalRetrieveParams = V2Namespace0.Signals.AccountSignalRetrieveParams;
-  export {AccountSignal};
+  export {AccountSignal, AccountSignalResource};
 }
