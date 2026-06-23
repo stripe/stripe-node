@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../StripeResource.js';
-import {Discount} from './Discounts.js';
+import {Discount as _Discount} from './Discounts.js';
 import {Application, DeletedApplication} from './Applications.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {Invoice} from './Invoices.js';
@@ -948,7 +948,7 @@ export namespace SubscriptionSchedule {
       /**
        * ID of an existing discount on the object (or one of its ancestors) to reuse.
        */
-      discount: string | Discount | null;
+      discount: string | _Discount | null;
 
       /**
        * Details to determine how long the discount should be applied for.
@@ -1072,7 +1072,7 @@ export namespace SubscriptionSchedule {
         /**
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
-        discount: string | Discount | null;
+        discount: string | _Discount | null;
 
         /**
          * Details to determine how long the discount should be applied for.
@@ -1266,7 +1266,7 @@ export namespace SubscriptionSchedule {
         /**
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
-        discount: string | Discount | null;
+        discount: string | _Discount | null;
 
         /**
          * Details to determine how long the discount should be applied for.

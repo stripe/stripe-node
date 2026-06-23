@@ -29,13 +29,13 @@ export class DelegatedCheckout {
 
 export declare namespace DelegatedCheckout {
   export import OrderRetrieveParams = DelegatedCheckoutNamespace0.OrderRetrieveParams;
-  export {Order};
+  export {Order, OrderResource};
   export import RequestedSessionRetrieveParams = DelegatedCheckoutNamespace1.RequestedSessionRetrieveParams;
   export import RequestedSessionUpdateParams = DelegatedCheckoutNamespace1.RequestedSessionUpdateParams;
   export import RequestedSessionCreateParams = DelegatedCheckoutNamespace1.RequestedSessionCreateParams;
   export import RequestedSessionConfirmParams = DelegatedCheckoutNamespace1.RequestedSessionConfirmParams;
   export import RequestedSessionExpireParams = DelegatedCheckoutNamespace1.RequestedSessionExpireParams;
   export import RequestedSessionListOrdersParams = DelegatedCheckoutNamespace1.RequestedSessionListOrdersParams;
-  export {RequestedSession};
+  export {RequestedSession, RequestedSessionResource};
   export {OrderEvent};
 }

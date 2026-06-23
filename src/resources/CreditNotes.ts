@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {CreditNoteLineItem} from './CreditNoteLineItems.js';
-import {Refund} from './Refunds.js';
+import {Refund as _Refund} from './Refunds.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {CustomerBalanceTransaction} from './CustomerBalanceTransactions.js';
 import {Invoice} from './Invoices.js';
@@ -611,7 +611,7 @@ export namespace CreditNote {
     /**
      * ID of the refund.
      */
-    refund: string | Refund;
+    refund: string | _Refund;
 
     /**
      * Type of the refund, one of `refund` or `payment_record_refund`.

@@ -71,27 +71,33 @@ export declare namespace Radar {
   export import AccountEvaluationRetrieveParams = RadarNamespace0.AccountEvaluationRetrieveParams;
   export import AccountEvaluationCreateParams = RadarNamespace0.AccountEvaluationCreateParams;
   export import AccountEvaluationUpdateParams = RadarNamespace0.AccountEvaluationUpdateParams;
-  export {AccountEvaluation};
+  export {AccountEvaluation, AccountEvaluationResource};
   export import CustomerEvaluationRetrieveParams = RadarNamespace1.CustomerEvaluationRetrieveParams;
   export import CustomerEvaluationCreateParams = RadarNamespace1.CustomerEvaluationCreateParams;
   export import CustomerEvaluationUpdateParams = RadarNamespace1.CustomerEvaluationUpdateParams;
-  export {CustomerEvaluation};
+  export {CustomerEvaluation, CustomerEvaluationResource};
   export import EarlyFraudWarningListParams = RadarNamespace2.EarlyFraudWarningListParams;
   export import EarlyFraudWarningRetrieveParams = RadarNamespace2.EarlyFraudWarningRetrieveParams;
-  export {EarlyFraudWarning};
+  export {EarlyFraudWarning, EarlyFraudWarningResource};
   export import IssuingAuthorizationEvaluationCreateParams = RadarNamespace3.IssuingAuthorizationEvaluationCreateParams;
-  export {IssuingAuthorizationEvaluation};
+  export {
+    IssuingAuthorizationEvaluation,
+    IssuingAuthorizationEvaluationResource,
+  };
   export import PaymentEvaluationCreateParams = RadarNamespace4.PaymentEvaluationCreateParams;
-  export {PaymentEvaluation};
+  export {PaymentEvaluation, PaymentEvaluationResource};
   export import ValueListDeleteParams = RadarNamespace5.ValueListDeleteParams;
   export import ValueListRetrieveParams = RadarNamespace5.ValueListRetrieveParams;
   export import ValueListUpdateParams = RadarNamespace5.ValueListUpdateParams;
   export import ValueListListParams = RadarNamespace5.ValueListListParams;
   export import ValueListCreateParams = RadarNamespace5.ValueListCreateParams;
-  export {ValueList};
+  export import DeletedValueList = RadarNamespace5.DeletedValueList;
+  export {ValueList, ValueListResource};
   export import ValueListItemDeleteParams = RadarNamespace6.ValueListItemDeleteParams;
   export import ValueListItemRetrieveParams = RadarNamespace6.ValueListItemRetrieveParams;
   export import ValueListItemListParams = RadarNamespace6.ValueListItemListParams;
   export import ValueListItemCreateParams = RadarNamespace6.ValueListItemCreateParams;
-  export {ValueListItem};
+  export import ValueListItemSerializeBatchCreateParams = RadarNamespace6.ValueListItemSerializeBatchCreateParams;
+  export import DeletedValueListItem = RadarNamespace6.DeletedValueListItem;
+  export {ValueListItem, ValueListItemResource};
 }

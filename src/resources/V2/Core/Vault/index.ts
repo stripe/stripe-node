@@ -32,7 +32,7 @@ export declare namespace Vault {
   export import GbBankAccountAcknowledgeConfirmationOfPayeeParams = V2Namespace0.Core.Vault.GbBankAccountAcknowledgeConfirmationOfPayeeParams;
   export import GbBankAccountArchiveParams = V2Namespace0.Core.Vault.GbBankAccountArchiveParams;
   export import GbBankAccountInitiateConfirmationOfPayeeParams = V2Namespace0.Core.Vault.GbBankAccountInitiateConfirmationOfPayeeParams;
-  export {GbBankAccount};
+  export {GbBankAccount, GbBankAccountResource};
   export import UsBankAccountListParams = V2Namespace1.Core.Vault.UsBankAccountListParams;
   export import UsBankAccountCreateParams = V2Namespace1.Core.Vault.UsBankAccountCreateParams;
   export import UsBankAccountRetrieveParams = V2Namespace1.Core.Vault.UsBankAccountRetrieveParams;
@@ -40,5 +40,5 @@ export declare namespace Vault {
   export import UsBankAccountArchiveParams = V2Namespace1.Core.Vault.UsBankAccountArchiveParams;
   export import UsBankAccountConfirmMicrodepositsParams = V2Namespace1.Core.Vault.UsBankAccountConfirmMicrodepositsParams;
   export import UsBankAccountSendMicrodepositsParams = V2Namespace1.Core.Vault.UsBankAccountSendMicrodepositsParams;
-  export {UsBankAccount};
+  export {UsBankAccount, UsBankAccountResource};
 }

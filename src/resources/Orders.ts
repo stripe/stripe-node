@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../StripeResource.js';
 import {LineItem} from './LineItems.js';
-import {Discount} from './Discounts.js';
+import {Discount as _Discount} from './Discounts.js';
 import {Application} from './Applications.js';
 import {Customer, DeletedCustomer} from './Customers.js';
 import {PaymentIntent} from './PaymentIntents.js';
@@ -571,7 +571,7 @@ export interface Order {
   /**
    * The discounts applied to the order. Use `expand[]=discounts` to expand each discount.
    */
-  discounts: Array<string | Discount> | null;
+  discounts: Array<string | _Discount> | null;
 
   /**
    * A recent IP address of the purchaser used for tax reporting and tax location inference.
@@ -1625,7 +1625,7 @@ export namespace Order {
          *
          * Related guide: [Applying discounts to subscriptions](https://docs.stripe.com/billing/subscriptions/discounts)
          */
-        discount: Discount;
+        discount: _Discount;
       }
 
       export interface Tax {

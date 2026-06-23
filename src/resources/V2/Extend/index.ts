@@ -25,8 +25,8 @@ export declare namespace Extend {
   export import WorkflowListParams = V2Namespace0.Extend.WorkflowListParams;
   export import WorkflowRetrieveParams = V2Namespace0.Extend.WorkflowRetrieveParams;
   export import WorkflowInvokeParams = V2Namespace0.Extend.WorkflowInvokeParams;
-  export {Workflow};
+  export {Workflow, WorkflowResource};
   export import WorkflowRunListParams = V2Namespace1.Extend.WorkflowRunListParams;
   export import WorkflowRunRetrieveParams = V2Namespace1.Extend.WorkflowRunRetrieveParams;
-  export {WorkflowRun};
+  export {WorkflowRun, WorkflowRunResource};
 }

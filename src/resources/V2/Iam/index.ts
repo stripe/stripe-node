@@ -24,12 +24,12 @@ export class Iam {
 export declare namespace Iam {
   export import ActivityLogListParams = V2Namespace0.Iam.ActivityLogListParams;
   export import ActivityLogRetrieveParams = V2Namespace0.Iam.ActivityLogRetrieveParams;
-  export {ActivityLog};
+  export {ActivityLog, ActivityLogResource};
   export import ApiKeyListParams = V2Namespace1.Iam.ApiKeyListParams;
   export import ApiKeyCreateParams = V2Namespace1.Iam.ApiKeyCreateParams;
   export import ApiKeyRetrieveParams = V2Namespace1.Iam.ApiKeyRetrieveParams;
   export import ApiKeyUpdateParams = V2Namespace1.Iam.ApiKeyUpdateParams;
   export import ApiKeyExpireParams = V2Namespace1.Iam.ApiKeyExpireParams;
   export import ApiKeyRotateParams = V2Namespace1.Iam.ApiKeyRotateParams;
-  export {ApiKey};
+  export {ApiKey, ApiKeyResource};
 }

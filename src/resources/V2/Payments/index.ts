@@ -37,13 +37,13 @@ export declare namespace Payments {
   export import OffSessionPaymentCaptureParams = V2Namespace0.Payments.OffSessionPaymentCaptureParams;
   export import OffSessionPaymentPauseParams = V2Namespace0.Payments.OffSessionPaymentPauseParams;
   export import OffSessionPaymentResumeParams = V2Namespace0.Payments.OffSessionPaymentResumeParams;
-  export {OffSessionPayment};
+  export {OffSessionPayment, OffSessionPaymentResource};
   export import SettlementAllocationIntentListParams = V2Namespace1.Payments.SettlementAllocationIntentListParams;
   export import SettlementAllocationIntentCreateParams = V2Namespace1.Payments.SettlementAllocationIntentCreateParams;
   export import SettlementAllocationIntentRetrieveParams = V2Namespace1.Payments.SettlementAllocationIntentRetrieveParams;
   export import SettlementAllocationIntentUpdateParams = V2Namespace1.Payments.SettlementAllocationIntentUpdateParams;
   export import SettlementAllocationIntentCancelParams = V2Namespace1.Payments.SettlementAllocationIntentCancelParams;
   export import SettlementAllocationIntentSubmitParams = V2Namespace1.Payments.SettlementAllocationIntentSubmitParams;
-  export {SettlementAllocationIntent};
+  export {SettlementAllocationIntent, SettlementAllocationIntentResource};
   export {SettlementAllocationIntentSplit};
 }

@@ -19,5 +19,5 @@ export class Orchestration {
 
 export declare namespace Orchestration {
   export import PaymentAttemptRetrieveParams = OrchestrationNamespace0.PaymentAttemptRetrieveParams;
-  export {PaymentAttempt};
+  export {PaymentAttempt, PaymentAttemptResource};
 }
