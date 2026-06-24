@@ -722,6 +722,11 @@ export namespace PaymentAttemptRecord {
 
     export interface Bizum {
       /**
+       * A unique identifier for the buyer as determined by the local payment processor.
+       */
+      buyer_id: string | null;
+
+      /**
        * The Bizum transaction ID associated with this payment.
        */
       transaction_id: string | null;
@@ -770,7 +775,7 @@ export namespace PaymentAttemptRecord {
       /**
        * A high-level description of the type of cards issued in this range.
        */
-      description: string | null;
+      description?: string | null;
 
       /**
        * Two-digit number representing the card's expiration month.
@@ -797,7 +802,7 @@ export namespace PaymentAttemptRecord {
       /**
        * Issuer identification number of the card.
        */
-      iin: string | null;
+      iin?: string | null;
 
       /**
        * Installment details for this payment.
@@ -807,7 +812,7 @@ export namespace PaymentAttemptRecord {
       /**
        * The name of the card's issuing bank.
        */
-      issuer: string | null;
+      issuer?: string | null;
 
       /**
        * The last four digits of the card.
@@ -843,11 +848,6 @@ export namespace PaymentAttemptRecord {
        * This is used by the financial networks to identify a transaction. Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data. This value will be present if it is returned by the financial network in the authorization response, and null otherwise.
        */
       network_transaction_id: string | null;
-
-      /**
-       * The transaction type that was passed for an off-session, Merchant-Initiated transaction, one of `recurring` or `unscheduled`.
-       */
-      stored_credential_usage: Card.StoredCredentialUsage | null;
 
       /**
        * Populated if this transaction used 3D Secure authentication.
@@ -1896,8 +1896,6 @@ export namespace PaymentAttemptRecord {
         used: boolean;
       }
 
-      export type StoredCredentialUsage = 'recurring' | 'unscheduled';
-
       export interface ThreeDSecure {
         /**
          * For authenticated transactions: Indicates how the issuing bank authenticated the customer.
@@ -2134,6 +2132,7 @@ export namespace PaymentAttemptRecord {
         | 'ethereum'
         | 'polygon'
         | 'solana'
+        | 'sui'
         | 'tempo';
 
       export type TokenCurrency =
@@ -2141,6 +2140,7 @@ export namespace PaymentAttemptRecord {
         | 'usdc'
         | 'usdg'
         | 'usdp'
+        | 'usdsui'
         | 'usdt';
     }
 

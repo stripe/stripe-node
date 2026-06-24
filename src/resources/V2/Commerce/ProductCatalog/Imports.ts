@@ -203,7 +203,11 @@ export namespace V2 {
       }
 
       export namespace ImportCreateParams {
-        export type FeedType = 'inventory' | 'pricing' | 'product';
+        export type FeedType =
+          | 'inventory'
+          | 'pricing'
+          | 'product'
+          | 'promotion';
 
         export type Mode = 'replace' | 'upsert';
       }
@@ -268,7 +272,11 @@ export namespace V2 {
       }
 
       export namespace ImportListParams {
-        export type FeedType = 'inventory' | 'pricing' | 'product';
+        export type FeedType =
+          | 'inventory'
+          | 'pricing'
+          | 'product'
+          | 'promotion';
 
         export type Status =
           | 'awaiting_upload'

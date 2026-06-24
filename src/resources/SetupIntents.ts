@@ -584,6 +584,7 @@ export namespace SetupIntent {
       | 'alipay_upgrade_required'
       | 'amount_too_large'
       | 'amount_too_small'
+      | 'anomalous_money_movement_request'
       | 'api_key_expired'
       | 'application_fees_not_allowed'
       | 'approval_required'
@@ -623,6 +624,10 @@ export namespace SetupIntent {
       | 'debit_not_authorized'
       | 'email_invalid'
       | 'expired_card'
+      | 'failed_tax_calculation'
+      | 'financial_account_balance_does_not_support_currency'
+      | 'financial_account_capability_not_enabled'
+      | 'financial_account_capability_restricted'
       | 'financial_connections_account_inactive'
       | 'financial_connections_account_pending_account_numbers'
       | 'financial_connections_account_unavailable_account_numbers'
@@ -1802,7 +1807,7 @@ export namespace SetupIntentCreateParams {
     sofort?: PaymentMethodData.Sofort;
 
     /**
-     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     * If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
      */
     sunbit?: PaymentMethodData.Sunbit;
 
@@ -3641,7 +3646,7 @@ export namespace SetupIntentUpdateParams {
     sofort?: PaymentMethodData.Sofort;
 
     /**
-     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     * If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
      */
     sunbit?: PaymentMethodData.Sunbit;
 
@@ -5375,7 +5380,7 @@ export namespace SetupIntentConfirmParams {
     sofort?: PaymentMethodData.Sofort;
 
     /**
-     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     * If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
      */
     sunbit?: PaymentMethodData.Sunbit;
 

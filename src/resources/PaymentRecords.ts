@@ -830,6 +830,11 @@ export namespace PaymentRecord {
 
     export interface Bizum {
       /**
+       * A unique identifier for the buyer as determined by the local payment processor.
+       */
+      buyer_id: string | null;
+
+      /**
        * The Bizum transaction ID associated with this payment.
        */
       transaction_id: string | null;
@@ -878,7 +883,7 @@ export namespace PaymentRecord {
       /**
        * A high-level description of the type of cards issued in this range.
        */
-      description: string | null;
+      description?: string | null;
 
       /**
        * Two-digit number representing the card's expiration month.
@@ -905,7 +910,7 @@ export namespace PaymentRecord {
       /**
        * Issuer identification number of the card.
        */
-      iin: string | null;
+      iin?: string | null;
 
       /**
        * Installment details for this payment.
@@ -915,7 +920,7 @@ export namespace PaymentRecord {
       /**
        * The name of the card's issuing bank.
        */
-      issuer: string | null;
+      issuer?: string | null;
 
       /**
        * The last four digits of the card.
@@ -951,11 +956,6 @@ export namespace PaymentRecord {
        * This is used by the financial networks to identify a transaction. Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data. This value will be present if it is returned by the financial network in the authorization response, and null otherwise.
        */
       network_transaction_id: string | null;
-
-      /**
-       * The transaction type that was passed for an off-session, Merchant-Initiated transaction, one of `recurring` or `unscheduled`.
-       */
-      stored_credential_usage: Card.StoredCredentialUsage | null;
 
       /**
        * Populated if this transaction used 3D Secure authentication.
@@ -2004,8 +2004,6 @@ export namespace PaymentRecord {
         used: boolean;
       }
 
-      export type StoredCredentialUsage = 'recurring' | 'unscheduled';
-
       export interface ThreeDSecure {
         /**
          * For authenticated transactions: Indicates how the issuing bank authenticated the customer.
@@ -2242,6 +2240,7 @@ export namespace PaymentRecord {
         | 'ethereum'
         | 'polygon'
         | 'solana'
+        | 'sui'
         | 'tempo';
 
       export type TokenCurrency =
@@ -2249,6 +2248,7 @@ export namespace PaymentRecord {
         | 'usdc'
         | 'usdg'
         | 'usdp'
+        | 'usdsui'
         | 'usdt';
     }
 
@@ -3114,11 +3114,6 @@ export interface PaymentRecordReportRefundParams {
   processor_details: PaymentRecordReportRefundParams.ProcessorDetails;
 
   /**
-   * Information about the payment attempt refund.
-   */
-  refunded: PaymentRecordReportRefundParams.Refunded;
-
-  /**
    * A positive integer in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) representing how much of this payment to refund. Can refund only up to the remaining, unrefunded amount of the payment.
    */
   amount?: PaymentRecordReportRefundParams.Amount;
@@ -3137,6 +3132,11 @@ export interface PaymentRecordReportRefundParams {
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
    */
   metadata?: Emptyable<MetadataParam>;
+
+  /**
+   * Information about the payment attempt refund.
+   */
+  refunded?: PaymentRecordReportRefundParams.Refunded;
 }
 export namespace PaymentRecordReportRefundParams {
   export interface ProcessorDetails {
@@ -3151,13 +3151,6 @@ export namespace PaymentRecordReportRefundParams {
     type: 'custom';
   }
 
-  export interface Refunded {
-    /**
-     * When the reported refund completed. Measured in seconds since the Unix epoch.
-     */
-    refunded_at: number;
-  }
-
   export interface Amount {
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -3168,6 +3161,13 @@ export namespace PaymentRecordReportRefundParams {
      * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
      */
     value: number;
+  }
+
+  export interface Refunded {
+    /**
+     * When the reported refund completed. Measured in seconds since the Unix epoch.
+     */
+    refunded_at: number;
   }
 
   export namespace ProcessorDetails {

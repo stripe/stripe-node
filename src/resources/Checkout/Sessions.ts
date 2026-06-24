@@ -1401,6 +1401,8 @@ export namespace Session {
 
     sofort?: PaymentMethodOptions.Sofort;
 
+    sunbit?: PaymentMethodOptions.Sunbit;
+
     swish?: PaymentMethodOptions.Swish;
 
     twint?: PaymentMethodOptions.Twint;
@@ -1408,6 +1410,8 @@ export namespace Session {
     upi?: PaymentMethodOptions.Upi;
 
     us_bank_account?: PaymentMethodOptions.UsBankAccount;
+
+    wechat_pay?: PaymentMethodOptions.WechatPay;
   }
 
   export type PaymentStatus = 'no_payment_required' | 'paid' | 'unpaid';
@@ -2732,6 +2736,24 @@ export namespace Session {
       setup_future_usage?: 'none';
     }
 
+    export interface Sunbit {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
     export interface Swish {
       /**
        * The order reference that will be displayed to customers in the Swish application. Defaults to the `id` of the Payment Intent.
@@ -2790,6 +2812,29 @@ export namespace Session {
        * Bank account verification method. The default value is `automatic`.
        */
       verification_method?: UsBankAccount.VerificationMethod;
+    }
+
+    export interface WechatPay {
+      /**
+       * The app ID registered with WeChat Pay. Only required when client is iOS or Android.
+       */
+      app_id: string | null;
+
+      /**
+       * The client type that the end customer will pay from
+       */
+      client: WechatPay.Client | null;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
     }
 
     export namespace AcssDebit {
@@ -3186,6 +3231,10 @@ export namespace Session {
           export type AccountSubcategory = 'checking' | 'savings';
         }
       }
+    }
+
+    export namespace WechatPay {
+      export type Client = 'android' | 'ios' | 'web';
     }
   }
 
@@ -3757,8 +3806,6 @@ export namespace Checkout {
      * You can configure Checkout to collect your customers' business names, individual names, or both. Each name field can be either required or optional.
      *
      * If a [Customer](https://docs.stripe.com/api/customers) is created or provided, the names can be saved to the Customer object as well.
-     *
-     * You can't set this parameter if `ui_mode` is `custom`.
      */
     name_collection?: SessionCreateParams.NameCollection;
 
@@ -4592,6 +4639,11 @@ export namespace Checkout {
       sofort?: PaymentMethodOptions.Sofort;
 
       /**
+       * contains details about the Sunbit payment method options.
+       */
+      sunbit?: PaymentMethodOptions.Sunbit;
+
+      /**
        * contains details about the Swish payment method options.
        */
       swish?: PaymentMethodOptions.Swish;
@@ -4763,6 +4815,11 @@ export namespace Checkout {
        * A future timestamp to anchor the subscription's billing cycle for new subscriptions. You can't set this parameter if `ui_mode` is `elements`.
        */
       billing_cycle_anchor?: number;
+
+      /**
+       * Configures when the subscription schedule's billing cycle anchors to a specific day of the week or month.
+       */
+      billing_cycle_anchor_config?: SubscriptionData.BillingCycleAnchorConfig;
 
       /**
        * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
@@ -6122,6 +6179,24 @@ export namespace Checkout {
         setup_future_usage?: 'none';
       }
 
+      export interface Sunbit {
+        /**
+         * Controls when the funds will be captured from the customer's account.
+         */
+        capture_method?: 'manual';
+
+        /**
+         * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+         *
+         * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+         *
+         * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+         *
+         * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+         */
+        setup_future_usage?: 'none';
+      }
+
       export interface Swish {
         /**
          * The order reference that will be displayed to customers in the Swish application. Defaults to the `id` of the Payment Intent.
@@ -7050,6 +7125,33 @@ export namespace Checkout {
     }
 
     export namespace SubscriptionData {
+      export interface BillingCycleAnchorConfig {
+        /**
+         * The day of the month the anchor should be. Ranges from 1 to 31.
+         */
+        day_of_month: number;
+
+        /**
+         * The hour of the day the anchor should be. Ranges from 0 to 23.
+         */
+        hour?: number;
+
+        /**
+         * The minute of the hour the anchor should be. Ranges from 0 to 59.
+         */
+        minute?: number;
+
+        /**
+         * The month to start full cycle periods. Ranges from 1 to 12.
+         */
+        month?: number;
+
+        /**
+         * The second of the minute the anchor should be. Ranges from 0 to 59.
+         */
+        second?: number;
+      }
+
       export interface BillingMode {
         /**
          * Configure behavior for flexible billing mode.

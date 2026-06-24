@@ -994,6 +994,11 @@ export namespace Account {
         stripe_balance?: Capabilities.StripeBalance;
 
         /**
+         * Allow the merchant to process Sunbit payments.
+         */
+        sunbit_payments?: Capabilities.SunbitPayments;
+
+        /**
          * Allow the merchant to process Swish payments.
          */
         swish_payments?: Capabilities.SwishPayments;
@@ -1567,6 +1572,18 @@ export namespace Account {
            * Enables this Account to complete payouts from their Stripe Balance (/v1/balance).
            */
           payouts?: StripeBalance.Payouts;
+        }
+
+        export interface SunbitPayments {
+          /**
+           * The status of the Capability.
+           */
+          status: SunbitPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<SunbitPayments.StatusDetail>;
         }
 
         export interface SwishPayments {
@@ -3107,6 +3124,42 @@ export namespace Account {
           }
         }
 
+        export namespace SunbitPayments {
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
         export namespace SwishPayments {
           export type Status =
             | 'active'
@@ -3598,7 +3651,7 @@ export namespace Account {
       fees_collector?: Responsibilities.FeesCollector;
 
       /**
-       * A value indicating responsibility for collecting requirements on this account.
+       * A value indicating the responsibility for losses on this account.
        */
       losses_collector?: Responsibilities.LossesCollector;
 
@@ -6241,6 +6294,11 @@ export namespace V2 {
             sepa_debit_payments?: Capabilities.SepaDebitPayments;
 
             /**
+             * Allow the merchant to process Sunbit payments.
+             */
+            sunbit_payments?: Capabilities.SunbitPayments;
+
+            /**
              * Allow the merchant to process Swish payments.
              */
             swish_payments?: Capabilities.SwishPayments;
@@ -6596,6 +6654,13 @@ export namespace V2 {
             }
 
             export interface SepaDebitPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface SunbitPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -8868,6 +8933,11 @@ export namespace V2 {
             sepa_debit_payments?: Capabilities.SepaDebitPayments;
 
             /**
+             * Allow the merchant to process Sunbit payments.
+             */
+            sunbit_payments?: Capabilities.SunbitPayments;
+
+            /**
              * Allow the merchant to process Swish payments.
              */
             swish_payments?: Capabilities.SwishPayments;
@@ -9223,6 +9293,13 @@ export namespace V2 {
             }
 
             export interface SepaDebitPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface SunbitPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -9751,14 +9828,14 @@ export namespace V2 {
             account?: TermsOfService.Account;
 
             /**
-             * Details on the Account's acceptance of Crypto-storer-specific terms of service.
+             * Details on the Account's acceptance of Crypto-specific terms of service.
              */
-            crypto_storer?: TermsOfService.CryptoStorer;
+            crypto_money_manager?: TermsOfService.CryptoMoneyManager;
 
             /**
              * Details on the Account's acceptance of Treasury-specific terms of service.
              */
-            storer?: TermsOfService.Storer;
+            money_manager?: TermsOfService.MoneyManager;
           }
 
           export namespace PersonsProvided {
@@ -9785,7 +9862,7 @@ export namespace V2 {
               user_agent?: string;
             }
 
-            export interface CryptoStorer {
+            export interface CryptoMoneyManager {
               /**
                * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
                */
@@ -9802,7 +9879,7 @@ export namespace V2 {
               user_agent?: string;
             }
 
-            export interface Storer {
+            export interface MoneyManager {
               /**
                * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
                */

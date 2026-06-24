@@ -35,7 +35,7 @@ export class SubscriptionResource extends StripeResource {
   /**
    * Cancels a customer's subscription immediately. The customer won't be charged again for the subscription. After it's canceled, the subscription is largely immutable. You can still update its [metadata](https://docs.stripe.com/metadata) and cancellation_details.
    *
-   * Any pending invoice items that you've created are still charged at the end of the period, unless manually [deleted](https://docs.stripe.com/api/invoiceitems/delete). If you've set the subscription to cancel at the end of the period, any pending prorations are also left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations are removed if invoice_now and prorate are both set to true.
+   * Any pending invoice items that you've created are still charged at the end of the period, unless manually [deleted](https://docs.stripe.com/api/invoiceitems/delete). If you've set the subscription to cancel at the end of the period, any pending prorations are also left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations are removed if invoice_now and prorate are both set to false.
    *
    * By default, upon subscription cancellation, Stripe stops automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
    */
@@ -1404,6 +1404,21 @@ export namespace Subscription {
      */
     account_tax_ids: Array<string | TaxId | DeletedTaxId> | null;
 
+    /**
+     * A list of up to 4 custom fields to be displayed on the invoice.
+     */
+    custom_fields: Array<InvoiceSettings.CustomField> | null;
+
+    /**
+     * An arbitrary string attached to the object. Often useful for displaying to users.
+     */
+    description: string | null;
+
+    /**
+     * Footer to be displayed on the invoice.
+     */
+    footer: string | null;
+
     issuer: InvoiceSettings.Issuer;
   }
 
@@ -1641,6 +1656,18 @@ export namespace Subscription {
   }
 
   export namespace InvoiceSettings {
+    export interface CustomField {
+      /**
+       * The name of the custom field.
+       */
+      name: string;
+
+      /**
+       * The value of the custom field.
+       */
+      value: string;
+    }
+
     export interface Issuer {
       /**
        * The connected account being referenced when `type` is `account`.
@@ -1753,6 +1780,7 @@ export namespace Subscription {
       | 'pix'
       | 'promptpay'
       | 'revolut_pay'
+      | 'satispay'
       | 'sepa_credit_transfer'
       | 'sepa_debit'
       | 'sofort'
@@ -2417,6 +2445,21 @@ export namespace SubscriptionCreateParams {
     account_tax_ids?: Emptyable<Array<string>>;
 
     /**
+     * A list of up to 4 custom fields to be displayed on the invoice.
+     */
+    custom_fields?: Emptyable<Array<InvoiceSettings.CustomField>>;
+
+    /**
+     * An arbitrary string attached to the object. Often useful for displaying to users.
+     */
+    description?: string;
+
+    /**
+     * Footer to be displayed on the invoice.
+     */
+    footer?: string;
+
+    /**
      * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
      */
     issuer?: InvoiceSettings.Issuer;
@@ -2704,6 +2747,18 @@ export namespace SubscriptionCreateParams {
   }
 
   export namespace InvoiceSettings {
+    export interface CustomField {
+      /**
+       * The name of the custom field. This may be up to 40 characters.
+       */
+      name: string;
+
+      /**
+       * The value of the custom field. This may be up to 140 characters.
+       */
+      value: string;
+    }
+
     export interface Issuer {
       /**
        * The connected account being referenced when `type` is `account`.
@@ -2890,6 +2945,7 @@ export namespace SubscriptionCreateParams {
       | 'pix'
       | 'promptpay'
       | 'revolut_pay'
+      | 'satispay'
       | 'sepa_credit_transfer'
       | 'sepa_debit'
       | 'sofort'
@@ -3533,6 +3589,21 @@ export namespace SubscriptionUpdateParams {
     account_tax_ids?: Emptyable<Array<string>>;
 
     /**
+     * A list of up to 4 custom fields to be displayed on the invoice.
+     */
+    custom_fields?: Emptyable<Array<InvoiceSettings.CustomField>>;
+
+    /**
+     * An arbitrary string attached to the object. Often useful for displaying to users.
+     */
+    description?: Emptyable<string>;
+
+    /**
+     * Footer to be displayed on the invoice.
+     */
+    footer?: Emptyable<string>;
+
+    /**
      * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
      */
     issuer?: InvoiceSettings.Issuer;
@@ -3560,7 +3631,7 @@ export namespace SubscriptionUpdateParams {
     discounts?: Emptyable<Array<Item.Discount>>;
 
     /**
-     * Subscription item to update.
+     * Subscription item to update. If you omit `id`, the API adds a new subscription item rather than updating the existing one. See [Changing a subscription's price](https://docs.stripe.com/billing/subscriptions/change-price#changing).
      */
     id?: string;
 
@@ -3844,6 +3915,18 @@ export namespace SubscriptionUpdateParams {
   }
 
   export namespace InvoiceSettings {
+    export interface CustomField {
+      /**
+       * The name of the custom field. This may be up to 40 characters.
+       */
+      name: string;
+
+      /**
+       * The value of the custom field. This may be up to 140 characters.
+       */
+      value: string;
+    }
+
     export interface Issuer {
       /**
        * The connected account being referenced when `type` is `account`.
@@ -4034,6 +4117,7 @@ export namespace SubscriptionUpdateParams {
       | 'pix'
       | 'promptpay'
       | 'revolut_pay'
+      | 'satispay'
       | 'sepa_credit_transfer'
       | 'sepa_debit'
       | 'sofort'
