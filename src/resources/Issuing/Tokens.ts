@@ -87,9 +87,9 @@ export interface Token {
   /**
    * The token service provider / card network associated with the token.
    */
-  network: Issuing.Token.Network;
+  network: Token.Network;
 
-  network_data?: Issuing.Token.NetworkData;
+  network_data?: Token.NetworkData;
 
   /**
    * Time at which the token was last updated by the card network. Measured in seconds since the Unix epoch.
@@ -99,215 +99,213 @@ export interface Token {
   /**
    * The usage state of the token.
    */
-  status: Issuing.Token.Status;
+  status: Token.Status;
 
   /**
    * The digital wallet for this token, if one was used.
    */
-  wallet_provider?: Issuing.Token.WalletProvider;
+  wallet_provider?: Token.WalletProvider;
 }
-export namespace Issuing {
-  export namespace Token {
-    export type Network = 'mastercard' | 'visa';
+export namespace Token {
+  export type Network = 'mastercard' | 'visa';
 
-    export interface NetworkData {
-      device?: NetworkData.Device;
+  export interface NetworkData {
+    device?: NetworkData.Device;
 
-      mastercard?: NetworkData.Mastercard;
+    mastercard?: NetworkData.Mastercard;
+
+    /**
+     * The network that the token is associated with. An additional hash is included with a name matching this value, containing tokenization data specific to the card network.
+     */
+    type: NetworkData.Type;
+
+    visa?: NetworkData.Visa;
+
+    wallet_provider?: NetworkData.WalletProvider;
+  }
+
+  export type Status = 'active' | 'deleted' | 'requested' | 'suspended';
+
+  export type WalletProvider = 'apple_pay' | 'google_pay' | 'samsung_pay';
+
+  export namespace NetworkData {
+    export interface Device {
+      /**
+       * An obfuscated ID derived from the device ID.
+       */
+      device_fingerprint?: string;
 
       /**
-       * The network that the token is associated with. An additional hash is included with a name matching this value, containing tokenization data specific to the card network.
+       * The IP address of the device at provisioning time.
        */
-      type: NetworkData.Type;
+      ip_address?: string;
 
-      visa?: NetworkData.Visa;
+      /**
+       * The geographic latitude/longitude coordinates of the device at provisioning time. The format is [+-]decimal/[+-]decimal.
+       */
+      location?: string;
 
-      wallet_provider?: NetworkData.WalletProvider;
+      /**
+       * The name of the device used for tokenization.
+       */
+      name?: string;
+
+      /**
+       * The phone number of the device used for tokenization.
+       */
+      phone_number?: string;
+
+      /**
+       * The type of device used for tokenization.
+       */
+      type?: Device.Type;
     }
 
-    export type Status = 'active' | 'deleted' | 'requested' | 'suspended';
+    export interface Mastercard {
+      /**
+       * A unique reference ID from MasterCard to represent the card account number.
+       */
+      card_reference_id?: string;
 
-    export type WalletProvider = 'apple_pay' | 'google_pay' | 'samsung_pay';
+      /**
+       * The network-unique identifier for the token.
+       */
+      token_reference_id: string;
 
-    export namespace NetworkData {
-      export interface Device {
+      /**
+       * The ID of the entity requesting tokenization, specific to MasterCard.
+       */
+      token_requestor_id: string;
+
+      /**
+       * The name of the entity requesting tokenization, if known. This is directly provided from MasterCard.
+       */
+      token_requestor_name?: string;
+    }
+
+    export type Type = 'mastercard' | 'visa';
+
+    export interface Visa {
+      /**
+       * A unique reference ID from Visa to represent the card account number.
+       */
+      card_reference_id: string | null;
+
+      /**
+       * The network-unique identifier for the token.
+       */
+      token_reference_id: string;
+
+      /**
+       * The ID of the entity requesting tokenization, specific to Visa.
+       */
+      token_requestor_id: string;
+
+      /**
+       * Degree of risk associated with the token between `01` and `99`, with higher number indicating higher risk. A `00` value indicates the token was not scored by Visa.
+       */
+      token_risk_score?: string;
+    }
+
+    export interface WalletProvider {
+      /**
+       * The wallet provider-given account ID of the digital wallet the token belongs to.
+       */
+      account_id?: string;
+
+      /**
+       * An evaluation on the trustworthiness of the wallet account between 1 and 5. A higher score indicates more trustworthy.
+       */
+      account_trust_score?: number;
+
+      /**
+       * The method used for tokenizing a card.
+       */
+      card_number_source?: WalletProvider.CardNumberSource;
+
+      cardholder_address?: WalletProvider.CardholderAddress;
+
+      /**
+       * The name of the cardholder tokenizing the card.
+       */
+      cardholder_name?: string;
+
+      /**
+       * An evaluation on the trustworthiness of the device. A higher score indicates more trustworthy.
+       */
+      device_trust_score?: number;
+
+      /**
+       * The hashed email address of the cardholder's account with the wallet provider.
+       */
+      hashed_account_email_address?: string;
+
+      /**
+       * The reasons for suggested tokenization given by the card network.
+       */
+      reason_codes?: Array<WalletProvider.ReasonCode>;
+
+      /**
+       * The recommendation on responding to the tokenization request.
+       */
+      suggested_decision?: WalletProvider.SuggestedDecision;
+
+      /**
+       * The version of the standard for mapping reason codes followed by the wallet provider.
+       */
+      suggested_decision_version?: string;
+    }
+
+    export namespace Device {
+      export type Type = 'other' | 'phone' | 'watch';
+    }
+
+    export namespace WalletProvider {
+      export type CardNumberSource = 'app' | 'manual' | 'on_file' | 'other';
+
+      export interface CardholderAddress {
         /**
-         * An obfuscated ID derived from the device ID.
+         * The street address of the cardholder tokenizing the card.
          */
-        device_fingerprint?: string;
+        line1: string;
 
         /**
-         * The IP address of the device at provisioning time.
+         * The postal code of the cardholder tokenizing the card.
          */
-        ip_address?: string;
-
-        /**
-         * The geographic latitude/longitude coordinates of the device at provisioning time. The format is [+-]decimal/[+-]decimal.
-         */
-        location?: string;
-
-        /**
-         * The name of the device used for tokenization.
-         */
-        name?: string;
-
-        /**
-         * The phone number of the device used for tokenization.
-         */
-        phone_number?: string;
-
-        /**
-         * The type of device used for tokenization.
-         */
-        type?: Device.Type;
+        postal_code: string;
       }
 
-      export interface Mastercard {
-        /**
-         * A unique reference ID from MasterCard to represent the card account number.
-         */
-        card_reference_id?: string;
+      export type ReasonCode =
+        | 'account_card_too_new'
+        | 'account_recently_changed'
+        | 'account_too_new'
+        | 'account_too_new_since_launch'
+        | 'additional_device'
+        | 'data_expired'
+        | 'defer_id_v_decision'
+        | 'device_recently_lost'
+        | 'good_activity_history'
+        | 'has_suspended_tokens'
+        | 'high_risk'
+        | 'inactive_account'
+        | 'long_account_tenure'
+        | 'low_account_score'
+        | 'low_device_score'
+        | 'low_phone_number_score'
+        | 'network_service_error'
+        | 'outside_home_territory'
+        | 'provisioning_cardholder_mismatch'
+        | 'provisioning_device_and_cardholder_mismatch'
+        | 'provisioning_device_mismatch'
+        | 'same_device_no_prior_authentication'
+        | 'same_device_successful_prior_authentication'
+        | 'software_update'
+        | 'suspicious_activity'
+        | 'too_many_different_cardholders'
+        | 'too_many_recent_attempts'
+        | 'too_many_recent_tokens';
 
-        /**
-         * The network-unique identifier for the token.
-         */
-        token_reference_id: string;
-
-        /**
-         * The ID of the entity requesting tokenization, specific to MasterCard.
-         */
-        token_requestor_id: string;
-
-        /**
-         * The name of the entity requesting tokenization, if known. This is directly provided from MasterCard.
-         */
-        token_requestor_name?: string;
-      }
-
-      export type Type = 'mastercard' | 'visa';
-
-      export interface Visa {
-        /**
-         * A unique reference ID from Visa to represent the card account number.
-         */
-        card_reference_id: string | null;
-
-        /**
-         * The network-unique identifier for the token.
-         */
-        token_reference_id: string;
-
-        /**
-         * The ID of the entity requesting tokenization, specific to Visa.
-         */
-        token_requestor_id: string;
-
-        /**
-         * Degree of risk associated with the token between `01` and `99`, with higher number indicating higher risk. A `00` value indicates the token was not scored by Visa.
-         */
-        token_risk_score?: string;
-      }
-
-      export interface WalletProvider {
-        /**
-         * The wallet provider-given account ID of the digital wallet the token belongs to.
-         */
-        account_id?: string;
-
-        /**
-         * An evaluation on the trustworthiness of the wallet account between 1 and 5. A higher score indicates more trustworthy.
-         */
-        account_trust_score?: number;
-
-        /**
-         * The method used for tokenizing a card.
-         */
-        card_number_source?: WalletProvider.CardNumberSource;
-
-        cardholder_address?: WalletProvider.CardholderAddress;
-
-        /**
-         * The name of the cardholder tokenizing the card.
-         */
-        cardholder_name?: string;
-
-        /**
-         * An evaluation on the trustworthiness of the device. A higher score indicates more trustworthy.
-         */
-        device_trust_score?: number;
-
-        /**
-         * The hashed email address of the cardholder's account with the wallet provider.
-         */
-        hashed_account_email_address?: string;
-
-        /**
-         * The reasons for suggested tokenization given by the card network.
-         */
-        reason_codes?: Array<WalletProvider.ReasonCode>;
-
-        /**
-         * The recommendation on responding to the tokenization request.
-         */
-        suggested_decision?: WalletProvider.SuggestedDecision;
-
-        /**
-         * The version of the standard for mapping reason codes followed by the wallet provider.
-         */
-        suggested_decision_version?: string;
-      }
-
-      export namespace Device {
-        export type Type = 'other' | 'phone' | 'watch';
-      }
-
-      export namespace WalletProvider {
-        export type CardNumberSource = 'app' | 'manual' | 'on_file' | 'other';
-
-        export interface CardholderAddress {
-          /**
-           * The street address of the cardholder tokenizing the card.
-           */
-          line1: string;
-
-          /**
-           * The postal code of the cardholder tokenizing the card.
-           */
-          postal_code: string;
-        }
-
-        export type ReasonCode =
-          | 'account_card_too_new'
-          | 'account_recently_changed'
-          | 'account_too_new'
-          | 'account_too_new_since_launch'
-          | 'additional_device'
-          | 'data_expired'
-          | 'defer_id_v_decision'
-          | 'device_recently_lost'
-          | 'good_activity_history'
-          | 'has_suspended_tokens'
-          | 'high_risk'
-          | 'inactive_account'
-          | 'long_account_tenure'
-          | 'low_account_score'
-          | 'low_device_score'
-          | 'low_phone_number_score'
-          | 'network_service_error'
-          | 'outside_home_territory'
-          | 'provisioning_cardholder_mismatch'
-          | 'provisioning_device_and_cardholder_mismatch'
-          | 'provisioning_device_mismatch'
-          | 'same_device_no_prior_authentication'
-          | 'same_device_successful_prior_authentication'
-          | 'software_update'
-          | 'suspicious_activity'
-          | 'too_many_different_cardholders'
-          | 'too_many_recent_attempts'
-          | 'too_many_recent_tokens';
-
-        export type SuggestedDecision = 'approve' | 'decline' | 'require_auth';
-      }
+      export type SuggestedDecision = 'approve' | 'decline' | 'require_auth';
     }
   }
 }

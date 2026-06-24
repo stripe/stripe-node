@@ -126,9 +126,9 @@ export interface Meter {
    */
   created: number;
 
-  customer_mapping: Billing.Meter.CustomerMapping;
+  customer_mapping: Meter.CustomerMapping;
 
-  default_aggregation: Billing.Meter.DefaultAggregation;
+  default_aggregation: Meter.DefaultAggregation;
 
   /**
    * The meter's name.
@@ -143,7 +143,7 @@ export interface Meter {
   /**
    * The time window which meter events have been pre-aggregated for, if any.
    */
-  event_time_window: Billing.Meter.EventTimeWindow | null;
+  event_time_window: Meter.EventTimeWindow | null;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -153,59 +153,57 @@ export interface Meter {
   /**
    * The meter's status.
    */
-  status: Billing.Meter.Status;
+  status: Meter.Status;
 
-  status_transitions: Billing.Meter.StatusTransitions;
+  status_transitions: Meter.StatusTransitions;
 
   /**
    * Time at which the object was last updated. Measured in seconds since the Unix epoch.
    */
   updated: number;
 
-  value_settings: Billing.Meter.ValueSettings;
+  value_settings: Meter.ValueSettings;
 }
-export namespace Billing {
-  export namespace Meter {
-    export interface CustomerMapping {
-      /**
-       * The key in the meter event payload to use for mapping the event to a customer.
-       */
-      event_payload_key: string;
+export namespace Meter {
+  export interface CustomerMapping {
+    /**
+     * The key in the meter event payload to use for mapping the event to a customer.
+     */
+    event_payload_key: string;
 
-      /**
-       * The method for mapping a meter event to a customer.
-       */
-      type: 'by_id';
-    }
+    /**
+     * The method for mapping a meter event to a customer.
+     */
+    type: 'by_id';
+  }
 
-    export interface DefaultAggregation {
-      /**
-       * Specifies how events are aggregated.
-       */
-      formula: DefaultAggregation.Formula;
-    }
+  export interface DefaultAggregation {
+    /**
+     * Specifies how events are aggregated.
+     */
+    formula: DefaultAggregation.Formula;
+  }
 
-    export type EventTimeWindow = 'day' | 'hour';
+  export type EventTimeWindow = 'day' | 'hour';
 
-    export type Status = 'active' | 'inactive';
+  export type Status = 'active' | 'inactive';
 
-    export interface StatusTransitions {
-      /**
-       * The time the meter was deactivated, if any. Measured in seconds since Unix epoch.
-       */
-      deactivated_at: number | null;
-    }
+  export interface StatusTransitions {
+    /**
+     * The time the meter was deactivated, if any. Measured in seconds since Unix epoch.
+     */
+    deactivated_at: number | null;
+  }
 
-    export interface ValueSettings {
-      /**
-       * The key in the meter event payload to use as the value for this meter.
-       */
-      event_payload_key: string;
-    }
+  export interface ValueSettings {
+    /**
+     * The key in the meter event payload to use as the value for this meter.
+     */
+    event_payload_key: string;
+  }
 
-    export namespace DefaultAggregation {
-      export type Formula = 'count' | 'last' | 'sum';
-    }
+  export namespace DefaultAggregation {
+    export type Formula = 'count' | 'last' | 'sum';
   }
 }
 export namespace Billing {

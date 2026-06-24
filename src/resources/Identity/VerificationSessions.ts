@@ -166,7 +166,7 @@ export interface VerificationSession {
   /**
    * If present, this property tells you the last error encountered when processing the verification.
    */
-  last_error: Identity.VerificationSession.LastError | null;
+  last_error: VerificationSession.LastError | null;
 
   /**
    * ID of the most recent VerificationReport. [Learn more about accessing detailed verification results.](https://docs.stripe.com/identity/verification-sessions#results)
@@ -186,17 +186,17 @@ export interface VerificationSession {
   /**
    * A set of options for the session's verification checks.
    */
-  options: Identity.VerificationSession.Options | null;
+  options: VerificationSession.Options | null;
 
   /**
    * Details provided about the user being verified. These details may be shown to the user.
    */
-  provided_details?: Identity.VerificationSession.ProvidedDetails | null;
+  provided_details?: VerificationSession.ProvidedDetails | null;
 
   /**
    * Redaction status of this VerificationSession. If the VerificationSession is not redacted, this field will be null.
    */
-  redaction: Identity.VerificationSession.Redaction | null;
+  redaction: VerificationSession.Redaction | null;
 
   /**
    * Customer ID
@@ -208,17 +208,17 @@ export interface VerificationSession {
    */
   related_customer_account: string | null;
 
-  related_person?: Identity.VerificationSession.RelatedPerson;
+  related_person?: VerificationSession.RelatedPerson;
 
   /**
    * Status of this VerificationSession. [Learn more about the lifecycle of sessions](https://docs.stripe.com/identity/how-sessions-work).
    */
-  status: Identity.VerificationSession.Status;
+  status: VerificationSession.Status;
 
   /**
    * The type of [verification check](https://docs.stripe.com/identity/verification-checks) to be performed.
    */
-  type: Identity.VerificationSession.Type;
+  type: VerificationSession.Type;
 
   /**
    * The short-lived URL that you use to redirect a user to Stripe to submit their identity information. This URL expires after 48 hours and can only be used once. Don't store it, log it, send it in emails or expose it to anyone other than the user. Refer to our docs on [verifying identity documents](https://docs.stripe.com/identity/verify-identity-documents?platform=web&type=redirect) to learn how to redirect users to Stripe.
@@ -233,241 +233,239 @@ export interface VerificationSession {
   /**
    * The user's verified data.
    */
-  verified_outputs?: Identity.VerificationSession.VerifiedOutputs | null;
+  verified_outputs?: VerificationSession.VerifiedOutputs | null;
 }
-export namespace Identity {
-  export namespace VerificationSession {
-    export interface LastError {
+export namespace VerificationSession {
+  export interface LastError {
+    /**
+     * A short machine-readable string giving the reason for the verification or user-session failure.
+     */
+    code: LastError.Code | null;
+
+    /**
+     * A message that explains the reason for verification or user-session failure.
+     */
+    reason: string | null;
+  }
+
+  export interface Options {
+    document?: Options.Document;
+
+    email?: Options.Email;
+
+    id_number?: Options.IdNumber;
+
+    matching?: Options.Matching;
+
+    phone?: Options.Phone;
+  }
+
+  export interface ProvidedDetails {
+    /**
+     * Email of user being verified
+     */
+    email?: string;
+
+    /**
+     * Phone number of user being verified
+     */
+    phone?: string;
+  }
+
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
+  }
+
+  export interface RelatedPerson {
+    /**
+     * Token referencing the associated Account of the related Person resource.
+     */
+    account: string;
+
+    /**
+     * Token referencing the related Person resource.
+     */
+    person: string;
+  }
+
+  export type Status =
+    | 'canceled'
+    | 'processing'
+    | 'requires_input'
+    | 'verified';
+
+  export type Type = 'document' | 'id_number' | 'verification_flow';
+
+  export interface VerifiedOutputs {
+    /**
+     * The user's verified address.
+     */
+    address: Address | null;
+
+    /**
+     * The user's verified date of birth.
+     */
+    dob?: VerifiedOutputs.Dob | null;
+
+    /**
+     * The user's verified email address
+     */
+    email: string | null;
+
+    /**
+     * The user's verified first name.
+     */
+    first_name: string | null;
+
+    /**
+     * The user's verified id number.
+     */
+    id_number?: string | null;
+
+    /**
+     * The user's verified id number type.
+     */
+    id_number_type: VerifiedOutputs.IdNumberType | null;
+
+    /**
+     * The user's verified last name.
+     */
+    last_name: string | null;
+
+    /**
+     * The user's verified phone number
+     */
+    phone: string | null;
+
+    /**
+     * The user's verified sex.
+     */
+    sex?: VerifiedOutputs.Sex | null;
+
+    /**
+     * The user's verified place of birth as it appears in the document.
+     */
+    unparsed_place_of_birth?: string | null;
+
+    /**
+     * The user's verified sex as it appears in the document.
+     */
+    unparsed_sex?: string | null;
+  }
+
+  export namespace LastError {
+    export type Code =
+      | 'abandoned'
+      | 'consent_declined'
+      | 'country_not_supported'
+      | 'device_not_supported'
+      | 'document_expired'
+      | 'document_type_not_supported'
+      | 'document_unverified_other'
+      | 'email_unverified_other'
+      | 'email_verification_declined'
+      | 'id_number_insufficient_document_data'
+      | 'id_number_mismatch'
+      | 'id_number_unverified_other'
+      | 'phone_unverified_other'
+      | 'phone_verification_declined'
+      | 'selfie_document_missing_photo'
+      | 'selfie_face_mismatch'
+      | 'selfie_manipulated'
+      | 'selfie_unverified_other'
+      | 'under_supported_age';
+  }
+
+  export namespace Options {
+    export interface Document {
       /**
-       * A short machine-readable string giving the reason for the verification or user-session failure.
+       * Array of strings of allowed identity document types. If the provided identity document isn't one of the allowed types, the verification check will fail with a document_type_not_allowed error code.
        */
-      code: LastError.Code | null;
+      allowed_types?: Array<Document.AllowedType>;
 
       /**
-       * A message that explains the reason for verification or user-session failure.
+       * Collect an ID number and perform an [ID number check](https://docs.stripe.com/identity/verification-checks?type=id-number) with the document's extracted name and date of birth.
        */
-      reason: string | null;
+      require_id_number?: boolean;
+
+      /**
+       * Disable image uploads, identity document images have to be captured using the device's camera.
+       */
+      require_live_capture?: boolean;
+
+      /**
+       * Capture a face image and perform a [selfie check](https://docs.stripe.com/identity/verification-checks?type=selfie) comparing a photo ID and a picture of your user's face. [Learn more](https://docs.stripe.com/identity/selfie).
+       */
+      require_matching_selfie?: boolean;
     }
 
-    export interface Options {
-      document?: Options.Document;
-
-      email?: Options.Email;
-
-      id_number?: Options.IdNumber;
-
-      matching?: Options.Matching;
-
-      phone?: Options.Phone;
+    export interface Email {
+      /**
+       * Request one time password verification of `provided_details.email`.
+       */
+      require_verification?: boolean;
     }
 
-    export interface ProvidedDetails {
+    export interface IdNumber {}
+
+    export interface Matching {
       /**
-       * Email of user being verified
+       * Strictness of the DOB matching policy to apply.
        */
-      email?: string;
+      dob?: Matching.Dob;
 
       /**
-       * Phone number of user being verified
+       * Strictness of the name matching policy to apply.
        */
-      phone?: string;
+      name?: Matching.Name;
     }
 
-    export interface Redaction {
+    export interface Phone {
       /**
-       * Indicates whether this object and its related objects have been redacted or not.
+       * Request one time password verification of `provided_details.phone`.
        */
-      status: Redaction.Status;
+      require_verification?: boolean;
     }
 
-    export interface RelatedPerson {
-      /**
-       * Token referencing the associated Account of the related Person resource.
-       */
-      account: string;
-
-      /**
-       * Token referencing the related Person resource.
-       */
-      person: string;
+    export namespace Document {
+      export type AllowedType = 'driving_license' | 'id_card' | 'passport';
     }
 
-    export type Status =
-      | 'canceled'
-      | 'processing'
-      | 'requires_input'
-      | 'verified';
+    export namespace Matching {
+      export type Dob = 'none' | 'similar';
 
-    export type Type = 'document' | 'id_number' | 'verification_flow';
+      export type Name = 'none' | 'similar';
+    }
+  }
 
-    export interface VerifiedOutputs {
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted';
+  }
+
+  export namespace VerifiedOutputs {
+    export interface Dob {
       /**
-       * The user's verified address.
+       * Numerical day between 1 and 31.
        */
-      address: Address | null;
-
-      /**
-       * The user's verified date of birth.
-       */
-      dob?: VerifiedOutputs.Dob | null;
-
-      /**
-       * The user's verified email address
-       */
-      email: string | null;
+      day: number | null;
 
       /**
-       * The user's verified first name.
+       * Numerical month between 1 and 12.
        */
-      first_name: string | null;
+      month: number | null;
 
       /**
-       * The user's verified id number.
+       * The four-digit year.
        */
-      id_number?: string | null;
-
-      /**
-       * The user's verified id number type.
-       */
-      id_number_type: VerifiedOutputs.IdNumberType | null;
-
-      /**
-       * The user's verified last name.
-       */
-      last_name: string | null;
-
-      /**
-       * The user's verified phone number
-       */
-      phone: string | null;
-
-      /**
-       * The user's verified sex.
-       */
-      sex?: VerifiedOutputs.Sex | null;
-
-      /**
-       * The user's verified place of birth as it appears in the document.
-       */
-      unparsed_place_of_birth?: string | null;
-
-      /**
-       * The user's verified sex as it appears in the document.
-       */
-      unparsed_sex?: string | null;
+      year: number | null;
     }
 
-    export namespace LastError {
-      export type Code =
-        | 'abandoned'
-        | 'consent_declined'
-        | 'country_not_supported'
-        | 'device_not_supported'
-        | 'document_expired'
-        | 'document_type_not_supported'
-        | 'document_unverified_other'
-        | 'email_unverified_other'
-        | 'email_verification_declined'
-        | 'id_number_insufficient_document_data'
-        | 'id_number_mismatch'
-        | 'id_number_unverified_other'
-        | 'phone_unverified_other'
-        | 'phone_verification_declined'
-        | 'selfie_document_missing_photo'
-        | 'selfie_face_mismatch'
-        | 'selfie_manipulated'
-        | 'selfie_unverified_other'
-        | 'under_supported_age';
-    }
+    export type IdNumberType = 'br_cpf' | 'sg_nric' | 'us_ssn';
 
-    export namespace Options {
-      export interface Document {
-        /**
-         * Array of strings of allowed identity document types. If the provided identity document isn't one of the allowed types, the verification check will fail with a document_type_not_allowed error code.
-         */
-        allowed_types?: Array<Document.AllowedType>;
-
-        /**
-         * Collect an ID number and perform an [ID number check](https://docs.stripe.com/identity/verification-checks?type=id-number) with the document's extracted name and date of birth.
-         */
-        require_id_number?: boolean;
-
-        /**
-         * Disable image uploads, identity document images have to be captured using the device's camera.
-         */
-        require_live_capture?: boolean;
-
-        /**
-         * Capture a face image and perform a [selfie check](https://docs.stripe.com/identity/verification-checks?type=selfie) comparing a photo ID and a picture of your user's face. [Learn more](https://docs.stripe.com/identity/selfie).
-         */
-        require_matching_selfie?: boolean;
-      }
-
-      export interface Email {
-        /**
-         * Request one time password verification of `provided_details.email`.
-         */
-        require_verification?: boolean;
-      }
-
-      export interface IdNumber {}
-
-      export interface Matching {
-        /**
-         * Strictness of the DOB matching policy to apply.
-         */
-        dob?: Matching.Dob;
-
-        /**
-         * Strictness of the name matching policy to apply.
-         */
-        name?: Matching.Name;
-      }
-
-      export interface Phone {
-        /**
-         * Request one time password verification of `provided_details.phone`.
-         */
-        require_verification?: boolean;
-      }
-
-      export namespace Document {
-        export type AllowedType = 'driving_license' | 'id_card' | 'passport';
-      }
-
-      export namespace Matching {
-        export type Dob = 'none' | 'similar';
-
-        export type Name = 'none' | 'similar';
-      }
-    }
-
-    export namespace Redaction {
-      export type Status = 'processing' | 'redacted';
-    }
-
-    export namespace VerifiedOutputs {
-      export interface Dob {
-        /**
-         * Numerical day between 1 and 31.
-         */
-        day: number | null;
-
-        /**
-         * Numerical month between 1 and 12.
-         */
-        month: number | null;
-
-        /**
-         * The four-digit year.
-         */
-        year: number | null;
-      }
-
-      export type IdNumberType = 'br_cpf' | 'sg_nric' | 'us_ssn';
-
-      export type Sex = '[redacted]' | 'female' | 'male' | 'unknown';
-    }
+    export type Sex = '[redacted]' | 'female' | 'male' | 'unknown';
   }
 }
 export namespace Identity {

@@ -33,7 +33,7 @@ export interface Hold {
   /**
    * Indicates which party created this ReserveHold.
    */
-  created_by: Reserve.Hold.CreatedBy;
+  created_by: Hold.CreatedBy;
 
   /**
    * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -58,9 +58,9 @@ export interface Hold {
   /**
    * The reason for the ReserveHold.
    */
-  reason: Reserve.Hold.Reason;
+  reason: Hold.Reason;
 
-  release_schedule: Reserve.Hold.ReleaseSchedule;
+  release_schedule: Hold.ReleaseSchedule;
 
   /**
    * The ReservePlan which produced this ReserveHold (i.e., resplan_123)
@@ -75,26 +75,24 @@ export interface Hold {
   /**
    * Which source balance type this ReserveHold reserves funds from. One of `bank_account`, `card`, or `fpx`.
    */
-  source_type: Reserve.Hold.SourceType;
+  source_type: Hold.SourceType;
 }
-export namespace Reserve {
-  export namespace Hold {
-    export type CreatedBy = 'application' | 'stripe';
+export namespace Hold {
+  export type CreatedBy = 'application' | 'stripe';
 
-    export type Reason = 'charge' | 'standalone';
+  export type Reason = 'charge' | 'standalone';
 
-    export interface ReleaseSchedule {
-      /**
-       * The time after which the ReserveHold is requested to be released.
-       */
-      release_after: number | null;
+  export interface ReleaseSchedule {
+    /**
+     * The time after which the ReserveHold is requested to be released.
+     */
+    release_after: number | null;
 
-      /**
-       * The time at which the ReserveHold is scheduled to be released, automatically set to midnight UTC of the day after `release_after`.
-       */
-      scheduled_release: number | null;
-    }
-
-    export type SourceType = 'bank_account' | 'card' | 'fpx';
+    /**
+     * The time at which the ReserveHold is scheduled to be released, automatically set to midnight UTC of the day after `release_after`.
+     */
+    scheduled_release: number | null;
   }
+
+  export type SourceType = 'bank_account' | 'card' | 'fpx';
 }

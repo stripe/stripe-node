@@ -84,7 +84,7 @@ export interface Registration {
    */
   country: string;
 
-  country_options: Tax.Registration.CountryOptions;
+  country_options: Registration.CountryOptions;
 
   /**
    * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -104,1656 +104,1654 @@ export interface Registration {
   /**
    * The status of the registration. This field is present for convenience and can be deduced from `active_from` and `expires_at`.
    */
-  status: Tax.Registration.Status;
+  status: Registration.Status;
 }
-export namespace Tax {
-  export namespace Registration {
-    export interface CountryOptions {
-      ae?: CountryOptions.Ae;
+export namespace Registration {
+  export interface CountryOptions {
+    ae?: CountryOptions.Ae;
 
-      al?: CountryOptions.Al;
+    al?: CountryOptions.Al;
 
-      am?: CountryOptions.Am;
+    am?: CountryOptions.Am;
 
-      ao?: CountryOptions.Ao;
+    ao?: CountryOptions.Ao;
 
-      at?: CountryOptions.At;
+    at?: CountryOptions.At;
 
-      au?: CountryOptions.Au;
+    au?: CountryOptions.Au;
 
-      aw?: CountryOptions.Aw;
+    aw?: CountryOptions.Aw;
 
-      az?: CountryOptions.Az;
+    az?: CountryOptions.Az;
 
-      ba?: CountryOptions.Ba;
+    ba?: CountryOptions.Ba;
 
-      bb?: CountryOptions.Bb;
+    bb?: CountryOptions.Bb;
 
-      bd?: CountryOptions.Bd;
+    bd?: CountryOptions.Bd;
 
-      be?: CountryOptions.Be;
+    be?: CountryOptions.Be;
 
-      bf?: CountryOptions.Bf;
+    bf?: CountryOptions.Bf;
 
-      bg?: CountryOptions.Bg;
+    bg?: CountryOptions.Bg;
 
-      bh?: CountryOptions.Bh;
+    bh?: CountryOptions.Bh;
 
-      bj?: CountryOptions.Bj;
+    bj?: CountryOptions.Bj;
 
-      bs?: CountryOptions.Bs;
+    bs?: CountryOptions.Bs;
 
-      by?: CountryOptions.By;
+    by?: CountryOptions.By;
 
-      ca?: CountryOptions.Ca;
+    ca?: CountryOptions.Ca;
 
-      cd?: CountryOptions.Cd;
+    cd?: CountryOptions.Cd;
 
-      ch?: CountryOptions.Ch;
+    ch?: CountryOptions.Ch;
 
-      cl?: CountryOptions.Cl;
+    cl?: CountryOptions.Cl;
 
-      cm?: CountryOptions.Cm;
+    cm?: CountryOptions.Cm;
 
-      co?: CountryOptions.Co;
+    co?: CountryOptions.Co;
 
-      cr?: CountryOptions.Cr;
+    cr?: CountryOptions.Cr;
 
-      cv?: CountryOptions.Cv;
+    cv?: CountryOptions.Cv;
 
-      cy?: CountryOptions.Cy;
+    cy?: CountryOptions.Cy;
 
-      cz?: CountryOptions.Cz;
+    cz?: CountryOptions.Cz;
 
-      de?: CountryOptions.De;
+    de?: CountryOptions.De;
 
-      dk?: CountryOptions.Dk;
+    dk?: CountryOptions.Dk;
 
-      ec?: CountryOptions.Ec;
+    ec?: CountryOptions.Ec;
 
-      ee?: CountryOptions.Ee;
+    ee?: CountryOptions.Ee;
 
-      eg?: CountryOptions.Eg;
+    eg?: CountryOptions.Eg;
 
-      es?: CountryOptions.Es;
+    es?: CountryOptions.Es;
 
-      et?: CountryOptions.Et;
+    et?: CountryOptions.Et;
 
-      fi?: CountryOptions.Fi;
+    fi?: CountryOptions.Fi;
 
-      fr?: CountryOptions.Fr;
+    fr?: CountryOptions.Fr;
 
-      gb?: CountryOptions.Gb;
+    gb?: CountryOptions.Gb;
 
-      ge?: CountryOptions.Ge;
+    ge?: CountryOptions.Ge;
 
-      gn?: CountryOptions.Gn;
+    gn?: CountryOptions.Gn;
 
-      gr?: CountryOptions.Gr;
+    gr?: CountryOptions.Gr;
 
-      hr?: CountryOptions.Hr;
+    hr?: CountryOptions.Hr;
 
-      hu?: CountryOptions.Hu;
+    hu?: CountryOptions.Hu;
 
-      id?: CountryOptions.Id;
+    id?: CountryOptions.Id;
 
-      ie?: CountryOptions.Ie;
+    ie?: CountryOptions.Ie;
 
-      in?: CountryOptions.In;
+    in?: CountryOptions.In;
 
-      is?: CountryOptions.Is;
+    is?: CountryOptions.Is;
 
-      it?: CountryOptions.It;
+    it?: CountryOptions.It;
 
-      jp?: CountryOptions.Jp;
+    jp?: CountryOptions.Jp;
 
-      ke?: CountryOptions.Ke;
+    ke?: CountryOptions.Ke;
 
-      kg?: CountryOptions.Kg;
+    kg?: CountryOptions.Kg;
 
-      kh?: CountryOptions.Kh;
+    kh?: CountryOptions.Kh;
 
-      kr?: CountryOptions.Kr;
+    kr?: CountryOptions.Kr;
 
-      kz?: CountryOptions.Kz;
+    kz?: CountryOptions.Kz;
 
-      la?: CountryOptions.La;
+    la?: CountryOptions.La;
 
-      lk?: CountryOptions.Lk;
+    lk?: CountryOptions.Lk;
 
-      lt?: CountryOptions.Lt;
+    lt?: CountryOptions.Lt;
 
-      lu?: CountryOptions.Lu;
+    lu?: CountryOptions.Lu;
 
-      lv?: CountryOptions.Lv;
+    lv?: CountryOptions.Lv;
 
-      ma?: CountryOptions.Ma;
+    ma?: CountryOptions.Ma;
 
-      md?: CountryOptions.Md;
+    md?: CountryOptions.Md;
 
-      me?: CountryOptions.Me;
+    me?: CountryOptions.Me;
 
-      mk?: CountryOptions.Mk;
+    mk?: CountryOptions.Mk;
 
-      mr?: CountryOptions.Mr;
+    mr?: CountryOptions.Mr;
 
-      mt?: CountryOptions.Mt;
+    mt?: CountryOptions.Mt;
 
-      mx?: CountryOptions.Mx;
+    mx?: CountryOptions.Mx;
 
-      my?: CountryOptions.My;
+    my?: CountryOptions.My;
 
-      ng?: CountryOptions.Ng;
+    ng?: CountryOptions.Ng;
 
-      nl?: CountryOptions.Nl;
+    nl?: CountryOptions.Nl;
 
-      no?: CountryOptions.No;
+    no?: CountryOptions.No;
 
-      np?: CountryOptions.Np;
+    np?: CountryOptions.Np;
 
-      nz?: CountryOptions.Nz;
+    nz?: CountryOptions.Nz;
 
-      om?: CountryOptions.Om;
+    om?: CountryOptions.Om;
 
-      pe?: CountryOptions.Pe;
+    pe?: CountryOptions.Pe;
 
-      ph?: CountryOptions.Ph;
+    ph?: CountryOptions.Ph;
 
-      pl?: CountryOptions.Pl;
+    pl?: CountryOptions.Pl;
 
-      pt?: CountryOptions.Pt;
+    pt?: CountryOptions.Pt;
 
-      ro?: CountryOptions.Ro;
+    ro?: CountryOptions.Ro;
 
-      rs?: CountryOptions.Rs;
+    rs?: CountryOptions.Rs;
 
-      ru?: CountryOptions.Ru;
+    ru?: CountryOptions.Ru;
 
-      sa?: CountryOptions.Sa;
+    sa?: CountryOptions.Sa;
 
-      se?: CountryOptions.Se;
+    se?: CountryOptions.Se;
 
-      sg?: CountryOptions.Sg;
+    sg?: CountryOptions.Sg;
 
-      si?: CountryOptions.Si;
+    si?: CountryOptions.Si;
 
-      sk?: CountryOptions.Sk;
+    sk?: CountryOptions.Sk;
 
-      sn?: CountryOptions.Sn;
+    sn?: CountryOptions.Sn;
 
-      sr?: CountryOptions.Sr;
+    sr?: CountryOptions.Sr;
 
-      th?: CountryOptions.Th;
+    th?: CountryOptions.Th;
 
-      tj?: CountryOptions.Tj;
+    tj?: CountryOptions.Tj;
 
-      tr?: CountryOptions.Tr;
+    tr?: CountryOptions.Tr;
 
-      tw?: CountryOptions.Tw;
+    tw?: CountryOptions.Tw;
 
-      tz?: CountryOptions.Tz;
+    tz?: CountryOptions.Tz;
 
-      ua?: CountryOptions.Ua;
+    ua?: CountryOptions.Ua;
 
-      ug?: CountryOptions.Ug;
+    ug?: CountryOptions.Ug;
 
-      us?: CountryOptions.Us;
+    us?: CountryOptions.Us;
 
-      uy?: CountryOptions.Uy;
+    uy?: CountryOptions.Uy;
 
-      uz?: CountryOptions.Uz;
+    uz?: CountryOptions.Uz;
 
-      vn?: CountryOptions.Vn;
+    vn?: CountryOptions.Vn;
 
-      za?: CountryOptions.Za;
+    za?: CountryOptions.Za;
 
-      zm?: CountryOptions.Zm;
+    zm?: CountryOptions.Zm;
 
-      zw?: CountryOptions.Zw;
+    zw?: CountryOptions.Zw;
+  }
+
+  export type Status = 'active' | 'expired' | 'scheduled';
+
+  export namespace CountryOptions {
+    export interface Ae {
+      standard?: Ae.Standard;
+
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
     }
 
-    export type Status = 'active' | 'expired' | 'scheduled';
-
-    export namespace CountryOptions {
-      export interface Ae {
-        standard?: Ae.Standard;
-
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
-
-      export interface Al {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
-
-      export interface Am {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
-
-      export interface Ao {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
-
-      export interface At {
-        standard?: At.Standard;
-
-        /**
-         * Type of registration in an EU country.
-         */
-        type: At.Type;
-      }
-
-      export interface Au {
-        standard?: Au.Standard;
-
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
-
-      export interface Aw {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
-
-      export interface Az {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
-
-      export interface Ba {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
-
-      export interface Bb {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
-
-      export interface Bd {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
-
-      export interface Be {
-        standard?: Be.Standard;
-
-        /**
-         * Type of registration in an EU country.
-         */
-        type: Be.Type;
-      }
-
-      export interface Bf {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
-
-      export interface Bg {
-        standard?: Bg.Standard;
-
-        /**
-         * Type of registration in an EU country.
-         */
-        type: Bg.Type;
-      }
-
-      export interface Bh {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
-
-      export interface Bj {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
-
-      export interface Bs {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
-
-      export interface By {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
-
-      export interface Ca {
-        province_standard?: Ca.ProvinceStandard;
-
-        /**
-         * Type of registration in Canada.
-         */
-        type: Ca.Type;
-      }
-
-      export interface Cd {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
-
-      export interface Ch {
-        standard?: Ch.Standard;
-
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
-
-      export interface Cl {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
-
-      export interface Cm {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
-
-      export interface Co {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
-
-      export interface Cr {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
-
-      export interface Cv {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
-
-      export interface Cy {
-        standard?: Cy.Standard;
-
-        /**
-         * Type of registration in an EU country.
-         */
-        type: Cy.Type;
-      }
-
-      export interface Cz {
-        standard?: Cz.Standard;
-
-        /**
-         * Type of registration in an EU country.
-         */
-        type: Cz.Type;
-      }
-
-      export interface De {
-        standard?: De.Standard;
-
-        /**
-         * Type of registration in an EU country.
-         */
-        type: De.Type;
-      }
-
-      export interface Dk {
-        standard?: Dk.Standard;
-
-        /**
-         * Type of registration in an EU country.
-         */
-        type: Dk.Type;
-      }
-
-      export interface Ec {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
-
-      export interface Ee {
-        standard?: Ee.Standard;
-
-        /**
-         * Type of registration in an EU country.
-         */
-        type: Ee.Type;
-      }
-
-      export interface Eg {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
-
-      export interface Es {
-        standard?: Es.Standard;
-
-        /**
-         * Type of registration in an EU country.
-         */
-        type: Es.Type;
-      }
-
-      export interface Et {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
-
-      export interface Fi {
-        standard?: Fi.Standard;
-
-        /**
-         * Type of registration in an EU country.
-         */
-        type: Fi.Type;
-      }
-
-      export interface Fr {
-        standard?: Fr.Standard;
-
-        /**
-         * Type of registration in an EU country.
-         */
-        type: Fr.Type;
-      }
-
-      export interface Gb {
-        standard?: Gb.Standard;
-
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
-
-      export interface Ge {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
-
-      export interface Gn {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
-
-      export interface Gr {
-        standard?: Gr.Standard;
-
-        /**
-         * Type of registration in an EU country.
-         */
-        type: Gr.Type;
-      }
-
-      export interface Hr {
-        standard?: Hr.Standard;
-
-        /**
-         * Type of registration in an EU country.
-         */
-        type: Hr.Type;
+    export interface Al {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Am {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Ao {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface At {
+      standard?: At.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: At.Type;
+    }
+
+    export interface Au {
+      standard?: Au.Standard;
+
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Aw {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Az {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Ba {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Bb {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Bd {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Be {
+      standard?: Be.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Be.Type;
+    }
+
+    export interface Bf {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Bg {
+      standard?: Bg.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Bg.Type;
+    }
+
+    export interface Bh {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Bj {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Bs {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface By {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Ca {
+      province_standard?: Ca.ProvinceStandard;
+
+      /**
+       * Type of registration in Canada.
+       */
+      type: Ca.Type;
+    }
+
+    export interface Cd {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Ch {
+      standard?: Ch.Standard;
+
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Cl {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Cm {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Co {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Cr {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Cv {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Cy {
+      standard?: Cy.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Cy.Type;
+    }
+
+    export interface Cz {
+      standard?: Cz.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Cz.Type;
+    }
+
+    export interface De {
+      standard?: De.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: De.Type;
+    }
+
+    export interface Dk {
+      standard?: Dk.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Dk.Type;
+    }
+
+    export interface Ec {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Ee {
+      standard?: Ee.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Ee.Type;
+    }
+
+    export interface Eg {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Es {
+      standard?: Es.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Es.Type;
+    }
+
+    export interface Et {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Fi {
+      standard?: Fi.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Fi.Type;
+    }
+
+    export interface Fr {
+      standard?: Fr.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Fr.Type;
+    }
+
+    export interface Gb {
+      standard?: Gb.Standard;
+
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Ge {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Gn {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Gr {
+      standard?: Gr.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Gr.Type;
+    }
+
+    export interface Hr {
+      standard?: Hr.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Hr.Type;
+    }
+
+    export interface Hu {
+      standard?: Hu.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Hu.Type;
+    }
+
+    export interface Id {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Ie {
+      standard?: Ie.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Ie.Type;
+    }
+
+    export interface In {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Is {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface It {
+      standard?: It.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: It.Type;
+    }
+
+    export interface Jp {
+      standard?: Jp.Standard;
+
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Ke {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Kg {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Kh {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Kr {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Kz {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface La {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Lk {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Lt {
+      standard?: Lt.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Lt.Type;
+    }
+
+    export interface Lu {
+      standard?: Lu.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Lu.Type;
+    }
+
+    export interface Lv {
+      standard?: Lv.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Lv.Type;
+    }
+
+    export interface Ma {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Md {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Me {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Mk {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Mr {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Mt {
+      standard?: Mt.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Mt.Type;
+    }
+
+    export interface Mx {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface My {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Ng {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Nl {
+      standard?: Nl.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Nl.Type;
+    }
+
+    export interface No {
+      standard?: No.Standard;
+
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Np {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Nz {
+      standard?: Nz.Standard;
+
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Om {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Pe {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Ph {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Pl {
+      standard?: Pl.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Pl.Type;
+    }
+
+    export interface Pt {
+      standard?: Pt.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Pt.Type;
+    }
+
+    export interface Ro {
+      standard?: Ro.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Ro.Type;
+    }
+
+    export interface Rs {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Ru {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Sa {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Se {
+      standard?: Se.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Se.Type;
+    }
+
+    export interface Sg {
+      standard?: Sg.Standard;
+
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Si {
+      standard?: Si.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Si.Type;
+    }
+
+    export interface Sk {
+      standard?: Sk.Standard;
+
+      /**
+       * Type of registration in an EU country.
+       */
+      type: Sk.Type;
+    }
+
+    export interface Sn {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Sr {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Th {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Tj {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Tr {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Tw {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Tz {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Ua {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Ug {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Us {
+      local_amusement_tax?: Us.LocalAmusementTax;
+
+      local_lease_tax?: Us.LocalLeaseTax;
+
+      /**
+       * Two-letter US state code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+       */
+      state: string;
+
+      state_sales_tax?: Us.StateSalesTax;
+
+      /**
+       * Type of registration in the US.
+       */
+      type: Us.Type;
+    }
+
+    export interface Uy {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Uz {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Vn {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Za {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export interface Zm {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'simplified';
+    }
+
+    export interface Zw {
+      /**
+       * Type of registration in `country`.
+       */
+      type: 'standard';
+    }
+
+    export namespace Ae {
+      export interface Standard {
+        /**
+         * Place of supply scheme used in an Default standard registration.
+         */
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+      }
+
+      export namespace Standard {
+        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+      }
+    }
+
+    export namespace At {
+      export interface Standard {
+        /**
+         * Place of supply scheme used in an EU standard registration.
+         */
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+      }
+
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
+      }
+    }
+
+    export namespace Au {
+      export interface Standard {
+        /**
+         * Place of supply scheme used in an Default standard registration.
+         */
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+      }
+
+      export namespace Standard {
+        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+      }
+    }
+
+    export namespace Be {
+      export interface Standard {
+        /**
+         * Place of supply scheme used in an EU standard registration.
+         */
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+      }
+
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
+      }
+    }
+
+    export namespace Bg {
+      export interface Standard {
+        /**
+         * Place of supply scheme used in an EU standard registration.
+         */
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+      }
+
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
+      }
+    }
+
+    export namespace Ca {
+      export interface ProvinceStandard {
+        /**
+         * Two-letter CA province code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+         */
+        province: string;
+      }
+
+      export type Type = 'province_standard' | 'simplified' | 'standard';
+    }
+
+    export namespace Ch {
+      export interface Standard {
+        /**
+         * Place of supply scheme used in an Default standard registration.
+         */
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+      }
+
+      export namespace Standard {
+        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+      }
+    }
+
+    export namespace Cy {
+      export interface Standard {
+        /**
+         * Place of supply scheme used in an EU standard registration.
+         */
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+      }
+
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
+      }
+    }
+
+    export namespace Cz {
+      export interface Standard {
+        /**
+         * Place of supply scheme used in an EU standard registration.
+         */
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+      }
+
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
+      }
+    }
+
+    export namespace De {
+      export interface Standard {
+        /**
+         * Place of supply scheme used in an EU standard registration.
+         */
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+      }
+
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
+      }
+    }
+
+    export namespace Dk {
+      export interface Standard {
+        /**
+         * Place of supply scheme used in an EU standard registration.
+         */
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+      }
+
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
+      }
+    }
+
+    export namespace Ee {
+      export interface Standard {
+        /**
+         * Place of supply scheme used in an EU standard registration.
+         */
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+      }
+
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
+      }
+    }
+
+    export namespace Es {
+      export interface Standard {
+        /**
+         * Place of supply scheme used in an EU standard registration.
+         */
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+      }
+
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
+      }
+    }
+
+    export namespace Fi {
+      export interface Standard {
+        /**
+         * Place of supply scheme used in an EU standard registration.
+         */
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Hu {
-        standard?: Hu.Standard;
-
-        /**
-         * Type of registration in an EU country.
-         */
-        type: Hu.Type;
-      }
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-      export interface Id {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
-
-      export interface Ie {
-        standard?: Ie.Standard;
+    }
 
+    export namespace Fr {
+      export interface Standard {
         /**
-         * Type of registration in an EU country.
+         * Place of supply scheme used in an EU standard registration.
          */
-        type: Ie.Type;
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface In {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-      export interface Is {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
+    }
 
-      export interface It {
-        standard?: It.Standard;
-
+    export namespace Gb {
+      export interface Standard {
         /**
-         * Type of registration in an EU country.
+         * Place of supply scheme used in an Default standard registration.
          */
-        type: It.Type;
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Jp {
-        standard?: Jp.Standard;
-
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
       }
+    }
 
-      export interface Ke {
+    export namespace Gr {
+      export interface Standard {
         /**
-         * Type of registration in `country`.
+         * Place of supply scheme used in an EU standard registration.
          */
-        type: 'simplified';
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Kg {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-      export interface Kh {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
+    }
 
-      export interface Kr {
+    export namespace Hr {
+      export interface Standard {
         /**
-         * Type of registration in `country`.
+         * Place of supply scheme used in an EU standard registration.
          */
-        type: 'simplified';
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Kz {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-      export interface La {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
+    }
 
-      export interface Lk {
+    export namespace Hu {
+      export interface Standard {
         /**
-         * Type of registration in `country`.
+         * Place of supply scheme used in an EU standard registration.
          */
-        type: 'simplified';
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Lt {
-        standard?: Lt.Standard;
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-        /**
-         * Type of registration in an EU country.
-         */
-        type: Lt.Type;
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
+    }
 
-      export interface Lu {
-        standard?: Lu.Standard;
-
+    export namespace Ie {
+      export interface Standard {
         /**
-         * Type of registration in an EU country.
+         * Place of supply scheme used in an EU standard registration.
          */
-        type: Lu.Type;
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Lv {
-        standard?: Lv.Standard;
-
-        /**
-         * Type of registration in an EU country.
-         */
-        type: Lv.Type;
-      }
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-      export interface Ma {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
+    }
 
-      export interface Md {
+    export namespace It {
+      export interface Standard {
         /**
-         * Type of registration in `country`.
+         * Place of supply scheme used in an EU standard registration.
          */
-        type: 'simplified';
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Me {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-      export interface Mk {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
+    }
 
-      export interface Mr {
+    export namespace Jp {
+      export interface Standard {
         /**
-         * Type of registration in `country`.
+         * Place of supply scheme used in an Default standard registration.
          */
-        type: 'standard';
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
-
-      export interface Mt {
-        standard?: Mt.Standard;
 
-        /**
-         * Type of registration in an EU country.
-         */
-        type: Mt.Type;
+      export namespace Standard {
+        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
       }
+    }
 
-      export interface Mx {
+    export namespace Lt {
+      export interface Standard {
         /**
-         * Type of registration in `country`.
+         * Place of supply scheme used in an EU standard registration.
          */
-        type: 'simplified';
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface My {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-      export interface Ng {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
+    }
 
-      export interface Nl {
-        standard?: Nl.Standard;
-
+    export namespace Lu {
+      export interface Standard {
         /**
-         * Type of registration in an EU country.
+         * Place of supply scheme used in an EU standard registration.
          */
-        type: Nl.Type;
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface No {
-        standard?: No.Standard;
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
+    }
 
-      export interface Np {
+    export namespace Lv {
+      export interface Standard {
         /**
-         * Type of registration in `country`.
+         * Place of supply scheme used in an EU standard registration.
          */
-        type: 'simplified';
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Nz {
-        standard?: Nz.Standard;
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
+    }
 
-      export interface Om {
+    export namespace Mt {
+      export interface Standard {
         /**
-         * Type of registration in `country`.
+         * Place of supply scheme used in an EU standard registration.
          */
-        type: 'standard';
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Pe {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-      export interface Ph {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
-
-      export interface Pl {
-        standard?: Pl.Standard;
+    }
 
+    export namespace Nl {
+      export interface Standard {
         /**
-         * Type of registration in an EU country.
+         * Place of supply scheme used in an EU standard registration.
          */
-        type: Pl.Type;
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Pt {
-        standard?: Pt.Standard;
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-        /**
-         * Type of registration in an EU country.
-         */
-        type: Pt.Type;
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
+    }
 
-      export interface Ro {
-        standard?: Ro.Standard;
-
+    export namespace No {
+      export interface Standard {
         /**
-         * Type of registration in an EU country.
+         * Place of supply scheme used in an Default standard registration.
          */
-        type: Ro.Type;
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Rs {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
       }
+    }
 
-      export interface Ru {
+    export namespace Nz {
+      export interface Standard {
         /**
-         * Type of registration in `country`.
+         * Place of supply scheme used in an Default standard registration.
          */
-        type: 'simplified';
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Sa {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
       }
-
-      export interface Se {
-        standard?: Se.Standard;
+    }
 
+    export namespace Pl {
+      export interface Standard {
         /**
-         * Type of registration in an EU country.
+         * Place of supply scheme used in an EU standard registration.
          */
-        type: Se.Type;
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Sg {
-        standard?: Sg.Standard;
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
-
-      export interface Si {
-        standard?: Si.Standard;
+    }
 
+    export namespace Pt {
+      export interface Standard {
         /**
-         * Type of registration in an EU country.
+         * Place of supply scheme used in an EU standard registration.
          */
-        type: Si.Type;
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Sk {
-        standard?: Sk.Standard;
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-        /**
-         * Type of registration in an EU country.
-         */
-        type: Sk.Type;
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
+    }
 
-      export interface Sn {
+    export namespace Ro {
+      export interface Standard {
         /**
-         * Type of registration in `country`.
+         * Place of supply scheme used in an EU standard registration.
          */
-        type: 'simplified';
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Sr {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'standard';
-      }
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-      export interface Th {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
+    }
 
-      export interface Tj {
+    export namespace Se {
+      export interface Standard {
         /**
-         * Type of registration in `country`.
+         * Place of supply scheme used in an EU standard registration.
          */
-        type: 'simplified';
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Tr {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-      export interface Tw {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
+    }
 
-      export interface Tz {
+    export namespace Sg {
+      export interface Standard {
         /**
-         * Type of registration in `country`.
+         * Place of supply scheme used in an Default standard registration.
          */
-        type: 'simplified';
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Ua {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
       }
+    }
 
-      export interface Ug {
+    export namespace Si {
+      export interface Standard {
         /**
-         * Type of registration in `country`.
+         * Place of supply scheme used in an EU standard registration.
          */
-        type: 'simplified';
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
-
-      export interface Us {
-        local_amusement_tax?: Us.LocalAmusementTax;
-
-        local_lease_tax?: Us.LocalLeaseTax;
-
-        /**
-         * Two-letter US state code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-         */
-        state: string;
 
-        state_sales_tax?: Us.StateSalesTax;
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-        /**
-         * Type of registration in the US.
-         */
-        type: Us.Type;
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
+    }
 
-      export interface Uy {
+    export namespace Sk {
+      export interface Standard {
         /**
-         * Type of registration in `country`.
+         * Place of supply scheme used in an EU standard registration.
          */
-        type: 'standard';
+        place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
       }
 
-      export interface Uz {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
-      }
+      export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
 
-      export interface Vn {
-        /**
-         * Type of registration in `country`.
-         */
-        type: 'simplified';
+      export namespace Standard {
+        export type PlaceOfSupplyScheme =
+          | 'inbound_goods'
+          | 'small_seller'
+          | 'standard';
       }
+    }
 
-      export interface Za {
+    export namespace Us {
+      export interface LocalAmusementTax {
         /**
-         * Type of registration in `country`.
+         * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
          */
-        type: 'standard';
+        jurisdiction: string;
       }
 
-      export interface Zm {
+      export interface LocalLeaseTax {
         /**
-         * Type of registration in `country`.
+         * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
          */
-        type: 'simplified';
+        jurisdiction: string;
       }
 
-      export interface Zw {
+      export interface StateSalesTax {
         /**
-         * Type of registration in `country`.
+         * Elections for the state sales tax registration.
          */
-        type: 'standard';
-      }
-
-      export namespace Ae {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an Default standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-        }
-      }
-
-      export namespace At {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Au {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an Default standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-        }
-      }
-
-      export namespace Be {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Bg {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Ca {
-        export interface ProvinceStandard {
-          /**
-           * Two-letter CA province code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
-           */
-          province: string;
-        }
-
-        export type Type = 'province_standard' | 'simplified' | 'standard';
-      }
-
-      export namespace Ch {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an Default standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-        }
-      }
-
-      export namespace Cy {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Cz {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace De {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Dk {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Ee {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Es {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Fi {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Fr {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Gb {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an Default standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-        }
-      }
-
-      export namespace Gr {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Hr {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Hu {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Ie {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace It {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Jp {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an Default standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-        }
+        elections?: Array<StateSalesTax.Election>;
       }
 
-      export namespace Lt {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Lu {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Lv {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Mt {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Nl {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace No {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an Default standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-        }
-      }
-
-      export namespace Nz {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an Default standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-        }
-      }
-
-      export namespace Pl {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Pt {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Ro {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Se {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Sg {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an Default standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
-        }
-      }
-
-      export namespace Si {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
-
-      export namespace Sk {
-        export interface Standard {
-          /**
-           * Place of supply scheme used in an EU standard registration.
-           */
-          place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
-        }
-
-        export type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-
-        export namespace Standard {
-          export type PlaceOfSupplyScheme =
-            | 'inbound_goods'
-            | 'small_seller'
-            | 'standard';
-        }
-      }
+      export type Type =
+        | 'local_amusement_tax'
+        | 'local_lease_tax'
+        | 'state_communications_tax'
+        | 'state_retail_delivery_fee'
+        | 'state_sales_tax';
 
-      export namespace Us {
-        export interface LocalAmusementTax {
+      export namespace StateSalesTax {
+        export interface Election {
           /**
            * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
            */
-          jurisdiction: string;
-        }
+          jurisdiction?: string;
 
-        export interface LocalLeaseTax {
           /**
-           * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
+           * The type of the election for the state sales tax registration.
            */
-          jurisdiction: string;
+          type: Election.Type;
         }
 
-        export interface StateSalesTax {
-          /**
-           * Elections for the state sales tax registration.
-           */
-          elections?: Array<StateSalesTax.Election>;
-        }
-
-        export type Type =
-          | 'local_amusement_tax'
-          | 'local_lease_tax'
-          | 'state_communications_tax'
-          | 'state_retail_delivery_fee'
-          | 'state_sales_tax';
-
-        export namespace StateSalesTax {
-          export interface Election {
-            /**
-             * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
-             */
-            jurisdiction?: string;
-
-            /**
-             * The type of the election for the state sales tax registration.
-             */
-            type: Election.Type;
-          }
-
-          export namespace Election {
-            export type Type =
-              | 'local_use_tax'
-              | 'simplified_sellers_use_tax'
-              | 'single_local_use_tax';
-          }
+        export namespace Election {
+          export type Type =
+            | 'local_use_tax'
+            | 'simplified_sellers_use_tax'
+            | 'single_local_use_tax';
         }
       }
     }
