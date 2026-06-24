@@ -62,39 +62,39 @@ export interface VerificationReport {
   /**
    * Result from a document check
    */
-  document?: Identity.VerificationReport.Document;
+  document?: VerificationReport.Document;
 
   /**
    * Result from a email check
    */
-  email?: Identity.VerificationReport.Email;
+  email?: VerificationReport.Email;
 
   /**
    * Result from an id_number check
    */
-  id_number?: Identity.VerificationReport.IdNumber;
+  id_number?: VerificationReport.IdNumber;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
    */
   livemode: boolean;
 
-  options?: Identity.VerificationReport.Options;
+  options?: VerificationReport.Options;
 
   /**
    * Result from a phone check
    */
-  phone?: Identity.VerificationReport.Phone;
+  phone?: VerificationReport.Phone;
 
   /**
    * Result from a selfie check
    */
-  selfie?: Identity.VerificationReport.Selfie;
+  selfie?: VerificationReport.Selfie;
 
   /**
    * Type of report.
    */
-  type: Identity.VerificationReport.Type;
+  type: VerificationReport.Type;
 
   /**
    * The configuration token of a verification flow from the dashboard.
@@ -106,402 +106,400 @@ export interface VerificationReport {
    */
   verification_session: string | null;
 }
-export namespace Identity {
-  export namespace VerificationReport {
+export namespace VerificationReport {
+  export interface Document {
+    /**
+     * Address as it appears in the document.
+     */
+    address: Address | null;
+
+    /**
+     * Date of birth as it appears in the document.
+     */
+    dob?: Document.Dob | null;
+
+    /**
+     * Details on the verification error. Present when status is `unverified`.
+     */
+    error: Document.Error | null;
+
+    /**
+     * Expiration date of the document.
+     */
+    expiration_date?: Document.ExpirationDate | null;
+
+    /**
+     * Array of [File](https://docs.stripe.com/api/files) ids containing images for this document.
+     */
+    files: Array<string> | null;
+
+    /**
+     * First name as it appears in the document.
+     */
+    first_name: string | null;
+
+    /**
+     * Issued date of the document.
+     */
+    issued_date: Document.IssuedDate | null;
+
+    /**
+     * Issuing country of the document.
+     */
+    issuing_country: string | null;
+
+    /**
+     * Last name as it appears in the document.
+     */
+    last_name: string | null;
+
+    /**
+     * Document ID number.
+     */
+    number?: string | null;
+
+    /**
+     * Sex of the person in the document.
+     */
+    sex?: Document.Sex | null;
+
+    /**
+     * Status of this `document` check.
+     */
+    status: Document.Status;
+
+    /**
+     * Type of the document.
+     */
+    type: Document.Type | null;
+
+    /**
+     * Place of birth as it appears in the document.
+     */
+    unparsed_place_of_birth?: string | null;
+
+    /**
+     * Sex as it appears in the document.
+     */
+    unparsed_sex?: string | null;
+  }
+
+  export interface Email {
+    /**
+     * Email to be verified.
+     */
+    email: string | null;
+
+    /**
+     * Details on the verification error. Present when status is `unverified`.
+     */
+    error: Email.Error | null;
+
+    /**
+     * Status of this `email` check.
+     */
+    status: Email.Status;
+  }
+
+  export interface IdNumber {
+    /**
+     * Date of birth.
+     */
+    dob?: IdNumber.Dob | null;
+
+    /**
+     * Details on the verification error. Present when status is `unverified`.
+     */
+    error: IdNumber.Error | null;
+
+    /**
+     * First name.
+     */
+    first_name: string | null;
+
+    /**
+     * ID number. When `id_number_type` is `us_ssn`, only the last 4 digits are present.
+     */
+    id_number?: string | null;
+
+    /**
+     * Type of ID number.
+     */
+    id_number_type: IdNumber.IdNumberType | null;
+
+    /**
+     * Last name.
+     */
+    last_name: string | null;
+
+    /**
+     * Status of this `id_number` check.
+     */
+    status: IdNumber.Status;
+  }
+
+  export interface Options {
+    document?: Options.Document;
+
+    id_number?: Options.IdNumber;
+  }
+
+  export interface Phone {
+    /**
+     * Details on the verification error. Present when status is `unverified`.
+     */
+    error: Phone.Error | null;
+
+    /**
+     * Phone to be verified.
+     */
+    phone: string | null;
+
+    /**
+     * Status of this `phone` check.
+     */
+    status: Phone.Status;
+  }
+
+  export interface Selfie {
+    /**
+     * ID of the [File](https://docs.stripe.com/api/files) holding the image of the identity document used in this check.
+     */
+    document: string | null;
+
+    /**
+     * Details on the verification error. Present when status is `unverified`.
+     */
+    error: Selfie.Error | null;
+
+    /**
+     * ID of the [File](https://docs.stripe.com/api/files) holding the image of the selfie used in this check.
+     */
+    selfie: string | null;
+
+    /**
+     * Status of this `selfie` check.
+     */
+    status: Selfie.Status;
+  }
+
+  export type Type = 'document' | 'id_number' | 'verification_flow';
+
+  export namespace Document {
+    export interface Dob {
+      /**
+       * Numerical day between 1 and 31.
+       */
+      day: number | null;
+
+      /**
+       * Numerical month between 1 and 12.
+       */
+      month: number | null;
+
+      /**
+       * The four-digit year.
+       */
+      year: number | null;
+    }
+
+    export interface Error {
+      /**
+       * A short machine-readable string giving the reason for the verification failure.
+       */
+      code: Error.Code | null;
+
+      /**
+       * A human-readable message giving the reason for the failure. These messages can be shown to your users.
+       */
+      reason: string | null;
+    }
+
+    export interface ExpirationDate {
+      /**
+       * Numerical day between 1 and 31.
+       */
+      day: number | null;
+
+      /**
+       * Numerical month between 1 and 12.
+       */
+      month: number | null;
+
+      /**
+       * The four-digit year.
+       */
+      year: number | null;
+    }
+
+    export interface IssuedDate {
+      /**
+       * Numerical day between 1 and 31.
+       */
+      day: number | null;
+
+      /**
+       * Numerical month between 1 and 12.
+       */
+      month: number | null;
+
+      /**
+       * The four-digit year.
+       */
+      year: number | null;
+    }
+
+    export type Sex = '[redacted]' | 'female' | 'male' | 'unknown';
+
+    export type Status = 'unverified' | 'verified';
+
+    export type Type = 'driving_license' | 'id_card' | 'passport';
+
+    export namespace Error {
+      export type Code =
+        | 'document_expired'
+        | 'document_type_not_supported'
+        | 'document_unverified_other';
+    }
+  }
+
+  export namespace Email {
+    export interface Error {
+      /**
+       * A short machine-readable string giving the reason for the verification failure.
+       */
+      code: Error.Code | null;
+
+      /**
+       * A human-readable message giving the reason for the failure. These messages can be shown to your users.
+       */
+      reason: string | null;
+    }
+
+    export type Status = 'unverified' | 'verified';
+
+    export namespace Error {
+      export type Code =
+        | 'email_unverified_other'
+        | 'email_verification_declined';
+    }
+  }
+
+  export namespace IdNumber {
+    export interface Dob {
+      /**
+       * Numerical day between 1 and 31.
+       */
+      day: number | null;
+
+      /**
+       * Numerical month between 1 and 12.
+       */
+      month: number | null;
+
+      /**
+       * The four-digit year.
+       */
+      year: number | null;
+    }
+
+    export interface Error {
+      /**
+       * A short machine-readable string giving the reason for the verification failure.
+       */
+      code: Error.Code | null;
+
+      /**
+       * A human-readable message giving the reason for the failure. These messages can be shown to your users.
+       */
+      reason: string | null;
+    }
+
+    export type IdNumberType = 'br_cpf' | 'sg_nric' | 'us_ssn';
+
+    export type Status = 'unverified' | 'verified';
+
+    export namespace Error {
+      export type Code =
+        | 'id_number_insufficient_document_data'
+        | 'id_number_mismatch'
+        | 'id_number_unverified_other';
+    }
+  }
+
+  export namespace Options {
     export interface Document {
       /**
-       * Address as it appears in the document.
+       * Array of strings of allowed identity document types. If the provided identity document isn't one of the allowed types, the verification check will fail with a document_type_not_allowed error code.
        */
-      address: Address | null;
+      allowed_types?: Array<Document.AllowedType>;
 
       /**
-       * Date of birth as it appears in the document.
+       * Collect an ID number and perform an [ID number check](https://docs.stripe.com/identity/verification-checks?type=id-number) with the document's extracted name and date of birth.
        */
-      dob?: Document.Dob | null;
+      require_id_number?: boolean;
 
       /**
-       * Details on the verification error. Present when status is `unverified`.
+       * Disable image uploads, identity document images have to be captured using the device's camera.
        */
-      error: Document.Error | null;
+      require_live_capture?: boolean;
 
       /**
-       * Expiration date of the document.
+       * Capture a face image and perform a [selfie check](https://docs.stripe.com/identity/verification-checks?type=selfie) comparing a photo ID and a picture of your user's face. [Learn more](https://docs.stripe.com/identity/selfie).
        */
-      expiration_date?: Document.ExpirationDate | null;
-
-      /**
-       * Array of [File](https://docs.stripe.com/api/files) ids containing images for this document.
-       */
-      files: Array<string> | null;
-
-      /**
-       * First name as it appears in the document.
-       */
-      first_name: string | null;
-
-      /**
-       * Issued date of the document.
-       */
-      issued_date: Document.IssuedDate | null;
-
-      /**
-       * Issuing country of the document.
-       */
-      issuing_country: string | null;
-
-      /**
-       * Last name as it appears in the document.
-       */
-      last_name: string | null;
-
-      /**
-       * Document ID number.
-       */
-      number?: string | null;
-
-      /**
-       * Sex of the person in the document.
-       */
-      sex?: Document.Sex | null;
-
-      /**
-       * Status of this `document` check.
-       */
-      status: Document.Status;
-
-      /**
-       * Type of the document.
-       */
-      type: Document.Type | null;
-
-      /**
-       * Place of birth as it appears in the document.
-       */
-      unparsed_place_of_birth?: string | null;
-
-      /**
-       * Sex as it appears in the document.
-       */
-      unparsed_sex?: string | null;
+      require_matching_selfie?: boolean;
     }
 
-    export interface Email {
-      /**
-       * Email to be verified.
-       */
-      email: string | null;
-
-      /**
-       * Details on the verification error. Present when status is `unverified`.
-       */
-      error: Email.Error | null;
-
-      /**
-       * Status of this `email` check.
-       */
-      status: Email.Status;
-    }
-
-    export interface IdNumber {
-      /**
-       * Date of birth.
-       */
-      dob?: IdNumber.Dob | null;
-
-      /**
-       * Details on the verification error. Present when status is `unverified`.
-       */
-      error: IdNumber.Error | null;
-
-      /**
-       * First name.
-       */
-      first_name: string | null;
-
-      /**
-       * ID number. When `id_number_type` is `us_ssn`, only the last 4 digits are present.
-       */
-      id_number?: string | null;
-
-      /**
-       * Type of ID number.
-       */
-      id_number_type: IdNumber.IdNumberType | null;
-
-      /**
-       * Last name.
-       */
-      last_name: string | null;
-
-      /**
-       * Status of this `id_number` check.
-       */
-      status: IdNumber.Status;
-    }
-
-    export interface Options {
-      document?: Options.Document;
-
-      id_number?: Options.IdNumber;
-    }
-
-    export interface Phone {
-      /**
-       * Details on the verification error. Present when status is `unverified`.
-       */
-      error: Phone.Error | null;
-
-      /**
-       * Phone to be verified.
-       */
-      phone: string | null;
-
-      /**
-       * Status of this `phone` check.
-       */
-      status: Phone.Status;
-    }
-
-    export interface Selfie {
-      /**
-       * ID of the [File](https://docs.stripe.com/api/files) holding the image of the identity document used in this check.
-       */
-      document: string | null;
-
-      /**
-       * Details on the verification error. Present when status is `unverified`.
-       */
-      error: Selfie.Error | null;
-
-      /**
-       * ID of the [File](https://docs.stripe.com/api/files) holding the image of the selfie used in this check.
-       */
-      selfie: string | null;
-
-      /**
-       * Status of this `selfie` check.
-       */
-      status: Selfie.Status;
-    }
-
-    export type Type = 'document' | 'id_number' | 'verification_flow';
+    export interface IdNumber {}
 
     export namespace Document {
-      export interface Dob {
-        /**
-         * Numerical day between 1 and 31.
-         */
-        day: number | null;
+      export type AllowedType = 'driving_license' | 'id_card' | 'passport';
+    }
+  }
 
-        /**
-         * Numerical month between 1 and 12.
-         */
-        month: number | null;
+  export namespace Phone {
+    export interface Error {
+      /**
+       * A short machine-readable string giving the reason for the verification failure.
+       */
+      code: Error.Code | null;
 
-        /**
-         * The four-digit year.
-         */
-        year: number | null;
-      }
-
-      export interface Error {
-        /**
-         * A short machine-readable string giving the reason for the verification failure.
-         */
-        code: Error.Code | null;
-
-        /**
-         * A human-readable message giving the reason for the failure. These messages can be shown to your users.
-         */
-        reason: string | null;
-      }
-
-      export interface ExpirationDate {
-        /**
-         * Numerical day between 1 and 31.
-         */
-        day: number | null;
-
-        /**
-         * Numerical month between 1 and 12.
-         */
-        month: number | null;
-
-        /**
-         * The four-digit year.
-         */
-        year: number | null;
-      }
-
-      export interface IssuedDate {
-        /**
-         * Numerical day between 1 and 31.
-         */
-        day: number | null;
-
-        /**
-         * Numerical month between 1 and 12.
-         */
-        month: number | null;
-
-        /**
-         * The four-digit year.
-         */
-        year: number | null;
-      }
-
-      export type Sex = '[redacted]' | 'female' | 'male' | 'unknown';
-
-      export type Status = 'unverified' | 'verified';
-
-      export type Type = 'driving_license' | 'id_card' | 'passport';
-
-      export namespace Error {
-        export type Code =
-          | 'document_expired'
-          | 'document_type_not_supported'
-          | 'document_unverified_other';
-      }
+      /**
+       * A human-readable message giving the reason for the failure. These messages can be shown to your users.
+       */
+      reason: string | null;
     }
 
-    export namespace Email {
-      export interface Error {
-        /**
-         * A short machine-readable string giving the reason for the verification failure.
-         */
-        code: Error.Code | null;
+    export type Status = 'unverified' | 'verified';
 
-        /**
-         * A human-readable message giving the reason for the failure. These messages can be shown to your users.
-         */
-        reason: string | null;
-      }
+    export namespace Error {
+      export type Code =
+        | 'phone_unverified_other'
+        | 'phone_verification_declined';
+    }
+  }
 
-      export type Status = 'unverified' | 'verified';
+  export namespace Selfie {
+    export interface Error {
+      /**
+       * A short machine-readable string giving the reason for the verification failure.
+       */
+      code: Error.Code | null;
 
-      export namespace Error {
-        export type Code =
-          | 'email_unverified_other'
-          | 'email_verification_declined';
-      }
+      /**
+       * A human-readable message giving the reason for the failure. These messages can be shown to your users.
+       */
+      reason: string | null;
     }
 
-    export namespace IdNumber {
-      export interface Dob {
-        /**
-         * Numerical day between 1 and 31.
-         */
-        day: number | null;
+    export type Status = 'unverified' | 'verified';
 
-        /**
-         * Numerical month between 1 and 12.
-         */
-        month: number | null;
-
-        /**
-         * The four-digit year.
-         */
-        year: number | null;
-      }
-
-      export interface Error {
-        /**
-         * A short machine-readable string giving the reason for the verification failure.
-         */
-        code: Error.Code | null;
-
-        /**
-         * A human-readable message giving the reason for the failure. These messages can be shown to your users.
-         */
-        reason: string | null;
-      }
-
-      export type IdNumberType = 'br_cpf' | 'sg_nric' | 'us_ssn';
-
-      export type Status = 'unverified' | 'verified';
-
-      export namespace Error {
-        export type Code =
-          | 'id_number_insufficient_document_data'
-          | 'id_number_mismatch'
-          | 'id_number_unverified_other';
-      }
-    }
-
-    export namespace Options {
-      export interface Document {
-        /**
-         * Array of strings of allowed identity document types. If the provided identity document isn't one of the allowed types, the verification check will fail with a document_type_not_allowed error code.
-         */
-        allowed_types?: Array<Document.AllowedType>;
-
-        /**
-         * Collect an ID number and perform an [ID number check](https://docs.stripe.com/identity/verification-checks?type=id-number) with the document's extracted name and date of birth.
-         */
-        require_id_number?: boolean;
-
-        /**
-         * Disable image uploads, identity document images have to be captured using the device's camera.
-         */
-        require_live_capture?: boolean;
-
-        /**
-         * Capture a face image and perform a [selfie check](https://docs.stripe.com/identity/verification-checks?type=selfie) comparing a photo ID and a picture of your user's face. [Learn more](https://docs.stripe.com/identity/selfie).
-         */
-        require_matching_selfie?: boolean;
-      }
-
-      export interface IdNumber {}
-
-      export namespace Document {
-        export type AllowedType = 'driving_license' | 'id_card' | 'passport';
-      }
-    }
-
-    export namespace Phone {
-      export interface Error {
-        /**
-         * A short machine-readable string giving the reason for the verification failure.
-         */
-        code: Error.Code | null;
-
-        /**
-         * A human-readable message giving the reason for the failure. These messages can be shown to your users.
-         */
-        reason: string | null;
-      }
-
-      export type Status = 'unverified' | 'verified';
-
-      export namespace Error {
-        export type Code =
-          | 'phone_unverified_other'
-          | 'phone_verification_declined';
-      }
-    }
-
-    export namespace Selfie {
-      export interface Error {
-        /**
-         * A short machine-readable string giving the reason for the verification failure.
-         */
-        code: Error.Code | null;
-
-        /**
-         * A human-readable message giving the reason for the failure. These messages can be shown to your users.
-         */
-        reason: string | null;
-      }
-
-      export type Status = 'unverified' | 'verified';
-
-      export namespace Error {
-        export type Code =
-          | 'selfie_document_missing_photo'
-          | 'selfie_face_mismatch'
-          | 'selfie_manipulated'
-          | 'selfie_unverified_other';
-      }
+    export namespace Error {
+      export type Code =
+        | 'selfie_document_missing_photo'
+        | 'selfie_face_mismatch'
+        | 'selfie_manipulated'
+        | 'selfie_unverified_other';
     }
   }
 }

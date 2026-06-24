@@ -58,17 +58,17 @@ export interface Transaction {
    * The delta to the FinancialAccount's balance. The balance_impact for the Transaction is equal to sum of its
    * TransactionEntries that have `effective_at`s in the past.
    */
-  balance_impact: V2.MoneyManagement.Transaction.BalanceImpact;
+  balance_impact: Transaction.BalanceImpact;
 
   /**
    * Open Enum. A descriptive category used to classify the Transaction.
    */
-  category: V2.MoneyManagement.Transaction.Category;
+  category: Transaction.Category;
 
   /**
    * Counterparty to this Transaction.
    */
-  counterparty?: V2.MoneyManagement.Transaction.Counterparty;
+  counterparty?: Transaction.Counterparty;
 
   /**
    * Time at which the object was created. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
@@ -89,7 +89,7 @@ export interface Transaction {
   /**
    * Details about the Flow object that created the Transaction.
    */
-  flow?: V2.MoneyManagement.Transaction.Flow;
+  flow?: Transaction.Flow;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -103,129 +103,125 @@ export interface Transaction {
    * A Transaction is `void` if there is no balance impact.
    * `posted` and `void` are terminal states, and no additional entries will be added to the Transaction.
    */
-  status: V2.MoneyManagement.Transaction.Status;
+  status: Transaction.Status;
 
   /**
    * Timestamps for when the Transaction transitioned to a particular status.
    */
-  status_transitions: V2.MoneyManagement.Transaction.StatusTransitions;
+  status_transitions: Transaction.StatusTransitions;
 }
-export namespace V2 {
-  export namespace MoneyManagement {
-    export namespace Transaction {
-      export interface BalanceImpact {
-        /**
-         * Impact to the available balance.
-         */
-        available: V2Amount;
+export namespace Transaction {
+  export interface BalanceImpact {
+    /**
+     * Impact to the available balance.
+     */
+    available: V2Amount;
 
-        /**
-         * Impact to the inbound_pending balance.
-         */
-        inbound_pending: V2Amount;
+    /**
+     * Impact to the inbound_pending balance.
+     */
+    inbound_pending: V2Amount;
 
-        /**
-         * Impact to the outbound_pending balance.
-         */
-        outbound_pending: V2Amount;
-      }
+    /**
+     * Impact to the outbound_pending balance.
+     */
+    outbound_pending: V2Amount;
+  }
 
-      export type Category =
-        | 'adjustment'
-        | 'currency_conversion'
-        | 'inbound_transfer'
-        | 'inbound_transfer_reversal'
-        | 'outbound_payment'
-        | 'outbound_payment_reversal'
-        | 'outbound_transfer'
-        | 'outbound_transfer_reversal'
-        | 'received_credit'
-        | 'received_credit_reversal'
-        | 'received_debit'
-        | 'received_debit_reversal'
-        | 'stripe_fee'
-        | 'stripe_fee_tax';
+  export type Category =
+    | 'adjustment'
+    | 'currency_conversion'
+    | 'inbound_transfer'
+    | 'inbound_transfer_reversal'
+    | 'outbound_payment'
+    | 'outbound_payment_reversal'
+    | 'outbound_transfer'
+    | 'outbound_transfer_reversal'
+    | 'received_credit'
+    | 'received_credit_reversal'
+    | 'received_debit'
+    | 'received_debit_reversal'
+    | 'stripe_fee'
+    | 'stripe_fee_tax';
 
-      export interface Counterparty {
-        /**
-         * Name of the counterparty.
-         */
-        name?: string;
-      }
+  export interface Counterparty {
+    /**
+     * Name of the counterparty.
+     */
+    name?: string;
+  }
 
-      export interface Flow {
-        /**
-         * If applicable, the ID of the Adjustment that created this Transaction.
-         */
-        adjustment?: string;
+  export interface Flow {
+    /**
+     * If applicable, the ID of the Adjustment that created this Transaction.
+     */
+    adjustment?: string;
 
-        /**
-         * In the future, this will be the ID of the currency conversion that created this Transaction. For now, this field is always null.
-         */
-        currency_conversion?: string;
+    /**
+     * In the future, this will be the ID of the currency conversion that created this Transaction. For now, this field is always null.
+     */
+    currency_conversion?: string;
 
-        /**
-         * If applicable, the ID of the FeeTransaction that created this Transaction.
-         */
-        fee_transaction?: string;
+    /**
+     * If applicable, the ID of the FeeTransaction that created this Transaction.
+     */
+    fee_transaction?: string;
 
-        /**
-         * If applicable, the ID of the InboundTransfer that created this Transaction.
-         */
-        inbound_transfer?: string;
+    /**
+     * If applicable, the ID of the InboundTransfer that created this Transaction.
+     */
+    inbound_transfer?: string;
 
-        /**
-         * If applicable, the ID of the OutboundPayment that created this Transaction.
-         */
-        outbound_payment?: string;
+    /**
+     * If applicable, the ID of the OutboundPayment that created this Transaction.
+     */
+    outbound_payment?: string;
 
-        /**
-         * If applicable, the ID of the OutboundTransfer that created this Transaction.
-         */
-        outbound_transfer?: string;
+    /**
+     * If applicable, the ID of the OutboundTransfer that created this Transaction.
+     */
+    outbound_transfer?: string;
 
-        /**
-         * If applicable, the ID of the ReceivedCredit that created this Transaction.
-         */
-        received_credit?: string;
+    /**
+     * If applicable, the ID of the ReceivedCredit that created this Transaction.
+     */
+    received_credit?: string;
 
-        /**
-         * If applicable, the ID of the ReceivedDebit that created this Transaction.
-         */
-        received_debit?: string;
+    /**
+     * If applicable, the ID of the ReceivedDebit that created this Transaction.
+     */
+    received_debit?: string;
 
-        /**
-         * Open Enum. Type of the flow that created the Transaction. The field matching this value will contain the ID of the flow.
-         */
-        type: Flow.Type;
-      }
+    /**
+     * Open Enum. Type of the flow that created the Transaction. The field matching this value will contain the ID of the flow.
+     */
+    type: Flow.Type;
+  }
 
-      export type Status = 'pending' | 'posted' | 'void';
+  export type Status = 'pending' | 'posted' | 'void';
 
-      export interface StatusTransitions {
-        /**
-         * The time at which the Transaction became posted. Only present if status == posted.
-         */
-        posted_at?: string;
+  export interface StatusTransitions {
+    /**
+     * The time at which the Transaction became posted. Only present if status == posted.
+     */
+    posted_at?: string;
 
-        /**
-         * The time at which the Transaction became void. Only present if status == void.
-         */
-        void_at?: string;
-      }
+    /**
+     * The time at which the Transaction became void. Only present if status == void.
+     */
+    void_at?: string;
+  }
 
-      export namespace Flow {
-        export type Type =
-          | 'adjustment'
-          | 'currency_conversion'
-          | 'fee_transaction'
-          | 'inbound_transfer'
-          | 'outbound_payment'
-          | 'outbound_transfer'
-          | 'received_credit'
-          | 'received_debit';
-      }
-    }
+  export namespace Flow {
+    export type Type =
+      | 'adjustment'
+      | 'currency_conversion'
+      | 'fee_transaction'
+      | 'inbound_transfer'
+      | 'outbound_payment'
+      | 'outbound_transfer'
+      | 'received_credit'
+      | 'received_debit';
   }
 }
 export namespace V2 {

@@ -57,7 +57,7 @@ export interface ReceivedDebit {
   /**
    * This object stores details about the originating banking transaction that resulted in the ReceivedDebit. Present if `type` field value is `bank_transfer`.
    */
-  bank_transfer?: V2.MoneyManagement.ReceivedDebit.BankTransfer;
+  bank_transfer?: ReceivedDebit.BankTransfer;
 
   /**
    * The time at which the ReceivedDebit was created.
@@ -88,119 +88,115 @@ export interface ReceivedDebit {
   /**
    * Open Enum. The status of the ReceivedDebit.
    */
-  status: V2.MoneyManagement.ReceivedDebit.Status;
+  status: ReceivedDebit.Status;
 
   /**
    * Detailed information about the status of the ReceivedDebit.
    */
-  status_details?: V2.MoneyManagement.ReceivedDebit.StatusDetails;
+  status_details?: ReceivedDebit.StatusDetails;
 
   /**
    * The time at which the ReceivedDebit transitioned to a particular status.
    */
-  status_transitions?: V2.MoneyManagement.ReceivedDebit.StatusTransitions;
+  status_transitions?: ReceivedDebit.StatusTransitions;
 
   /**
    * Open Enum. The type of the ReceivedDebit.
    */
-  type: V2.MoneyManagement.ReceivedDebit.Type;
+  type: ReceivedDebit.Type;
 }
-export namespace V2 {
-  export namespace MoneyManagement {
-    export namespace ReceivedDebit {
-      export interface BankTransfer {
-        /**
-         * The Financial Address that was debited.
-         */
-        financial_address: string;
+export namespace ReceivedDebit {
+  export interface BankTransfer {
+    /**
+     * The Financial Address that was debited.
+     */
+    financial_address: string;
 
-        /**
-         * Open Enum. The type of the payment method used to originate the debit.
-         */
-        payment_method_type: 'us_bank_account';
+    /**
+     * Open Enum. The type of the payment method used to originate the debit.
+     */
+    payment_method_type: 'us_bank_account';
 
-        /**
-         * The statement descriptor set by the originator of the debit.
-         */
-        statement_descriptor?: string;
+    /**
+     * The statement descriptor set by the originator of the debit.
+     */
+    statement_descriptor?: string;
 
-        /**
-         * The payment method used to originate the debit.
-         */
-        us_bank_account: BankTransfer.UsBankAccount;
-      }
+    /**
+     * The payment method used to originate the debit.
+     */
+    us_bank_account: BankTransfer.UsBankAccount;
+  }
 
-      export type Status =
-        | 'canceled'
-        | 'failed'
-        | 'pending'
-        | 'returned'
-        | 'succeeded';
+  export type Status =
+    | 'canceled'
+    | 'failed'
+    | 'pending'
+    | 'returned'
+    | 'succeeded';
 
-      export interface StatusDetails {
-        /**
-         * Information that elaborates on the `failed` status of a ReceivedDebit.
-         * It is only present when the ReceivedDebit status is `failed`.
-         */
-        failed: StatusDetails.Failed;
-      }
+  export interface StatusDetails {
+    /**
+     * Information that elaborates on the `failed` status of a ReceivedDebit.
+     * It is only present when the ReceivedDebit status is `failed`.
+     */
+    failed: StatusDetails.Failed;
+  }
 
-      export interface StatusTransitions {
-        /**
-         * The time when the ReceivedDebit was marked as `canceled`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
-         */
-        canceled_at?: string;
+  export interface StatusTransitions {
+    /**
+     * The time when the ReceivedDebit was marked as `canceled`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
+     */
+    canceled_at?: string;
 
-        /**
-         * The time when the ReceivedDebit was marked as `failed`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
-         */
-        failed_at?: string;
+    /**
+     * The time when the ReceivedDebit was marked as `failed`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
+     */
+    failed_at?: string;
 
-        /**
-         * The time when the ReceivedDebit was marked as `succeeded`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
-         */
-        succeeded_at?: string;
-      }
+    /**
+     * The time when the ReceivedDebit was marked as `succeeded`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
+     */
+    succeeded_at?: string;
+  }
 
-      export type Type = 'bank_transfer' | 'external_debit';
+  export type Type = 'bank_transfer' | 'external_debit';
 
-      export namespace BankTransfer {
-        export interface UsBankAccount {
-          /**
-           * The name of the bank the debit originated from.
-           */
-          bank_name?: string;
+  export namespace BankTransfer {
+    export interface UsBankAccount {
+      /**
+       * The name of the bank the debit originated from.
+       */
+      bank_name?: string;
 
-          /**
-           * Open Enum. The bank network the debit was originated on.
-           */
-          network: 'ach';
+      /**
+       * Open Enum. The bank network the debit was originated on.
+       */
+      network: 'ach';
 
-          /**
-           * The routing number of the bank that originated the debit.
-           */
-          routing_number?: string;
-        }
-      }
+      /**
+       * The routing number of the bank that originated the debit.
+       */
+      routing_number?: string;
+    }
+  }
 
-      export namespace StatusDetails {
-        export interface Failed {
-          /**
-           * Open Enum. The reason for the failure of the ReceivedDebit.
-           */
-          reason: Failed.Reason;
-        }
+  export namespace StatusDetails {
+    export interface Failed {
+      /**
+       * Open Enum. The reason for the failure of the ReceivedDebit.
+       */
+      reason: Failed.Reason;
+    }
 
-        export namespace Failed {
-          export type Reason =
-            | 'financial_address_inactive'
-            | 'insufficient_funds'
-            | 'stripe_rejected';
-        }
-      }
+    export namespace Failed {
+      export type Reason =
+        | 'financial_address_inactive'
+        | 'insufficient_funds'
+        | 'stripe_rejected';
     }
   }
 }

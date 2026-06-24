@@ -56,144 +56,137 @@ export interface CalculationLineItem {
   /**
    * Specifies whether the `amount` includes taxes. If `tax_behavior=inclusive`, then the amount includes taxes.
    */
-  tax_behavior: Tax.CalculationLineItem.TaxBehavior;
+  tax_behavior: CalculationLineItem.TaxBehavior;
 
   /**
    * Detailed account of taxes relevant to this line item.
    */
-  tax_breakdown?: Array<Tax.CalculationLineItem.TaxBreakdown> | null;
+  tax_breakdown?: Array<CalculationLineItem.TaxBreakdown> | null;
 
   /**
    * The [tax code](https://docs.stripe.com/tax/tax-categories) ID used for this resource.
    */
   tax_code: string;
 }
-export namespace Tax {
-  export namespace CalculationLineItem {
-    export type TaxBehavior = 'exclusive' | 'inclusive';
+export namespace CalculationLineItem {
+  export type TaxBehavior = 'exclusive' | 'inclusive';
 
-    export interface TaxBreakdown {
+  export interface TaxBreakdown {
+    /**
+     * The amount of tax, in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+     */
+    amount: number;
+
+    jurisdiction: TaxBreakdown.Jurisdiction;
+
+    /**
+     * Indicates whether the jurisdiction was determined by the origin (merchant's address) or destination (customer's address).
+     */
+    sourcing: TaxBreakdown.Sourcing;
+
+    /**
+     * Details regarding the rate for this tax. This field will be `null` when the tax is not imposed, for example if the product is exempt from tax.
+     */
+    tax_rate_details: TaxBreakdown.TaxRateDetails | null;
+
+    /**
+     * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+     */
+    taxability_reason: TaxBreakdown.TaxabilityReason;
+
+    /**
+     * The amount on which tax is calculated, in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+     */
+    taxable_amount: number;
+  }
+
+  export namespace TaxBreakdown {
+    export interface Jurisdiction {
       /**
-       * The amount of tax, in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
        */
-      amount: number;
-
-      jurisdiction: TaxBreakdown.Jurisdiction;
+      country: string;
 
       /**
-       * Indicates whether the jurisdiction was determined by the origin (merchant's address) or destination (customer's address).
+       * A human-readable name for the jurisdiction imposing the tax.
        */
-      sourcing: TaxBreakdown.Sourcing;
+      display_name: string;
 
       /**
-       * Details regarding the rate for this tax. This field will be `null` when the tax is not imposed, for example if the product is exempt from tax.
+       * Indicates the level of the jurisdiction imposing the tax.
        */
-      tax_rate_details: TaxBreakdown.TaxRateDetails | null;
+      level: Jurisdiction.Level;
 
       /**
-       * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+       * [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2), without country prefix. For example, "NY" for New York, United States.
        */
-      taxability_reason: TaxBreakdown.TaxabilityReason;
-
-      /**
-       * The amount on which tax is calculated, in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
-       */
-      taxable_amount: number;
+      state: string | null;
     }
 
-    export namespace TaxBreakdown {
-      export interface Jurisdiction {
-        /**
-         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-         */
-        country: string;
+    export type Sourcing = 'destination' | 'origin' | 'performance';
 
-        /**
-         * A human-readable name for the jurisdiction imposing the tax.
-         */
-        display_name: string;
+    export interface TaxRateDetails {
+      /**
+       * A localized display name for tax type, intended to be human-readable. For example, "Local Sales and Use Tax", "Value-added tax (VAT)", or "Umsatzsteuer (USt.)".
+       */
+      display_name: string;
 
-        /**
-         * Indicates the level of the jurisdiction imposing the tax.
-         */
-        level: Jurisdiction.Level;
+      /**
+       * The tax rate percentage as a string. For example, 8.5% is represented as "8.5".
+       */
+      percentage_decimal: string;
 
-        /**
-         * [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2), without country prefix. For example, "NY" for New York, United States.
-         */
-        state: string | null;
-      }
+      /**
+       * The tax type, such as `vat` or `sales_tax`.
+       */
+      tax_type: TaxRateDetails.TaxType;
+    }
 
-      export type Sourcing = 'destination' | 'origin' | 'performance';
+    export type TaxabilityReason =
+      | 'customer_exempt'
+      | 'not_collecting'
+      | 'not_subject_to_tax'
+      | 'not_supported'
+      | 'portion_product_exempt'
+      | 'portion_reduced_rated'
+      | 'portion_standard_rated'
+      | 'product_exempt'
+      | 'product_exempt_holiday'
+      | 'proportionally_rated'
+      | 'reduced_rated'
+      | 'reverse_charge'
+      | 'standard_rated'
+      | 'taxable_basis_reduced'
+      | 'zero_rated';
 
-      export interface TaxRateDetails {
-        /**
-         * A localized display name for tax type, intended to be human-readable. For example, "Local Sales and Use Tax", "Value-added tax (VAT)", or "Umsatzsteuer (USt.)".
-         */
-        display_name: string;
+    export namespace Jurisdiction {
+      export type Level = 'city' | 'country' | 'county' | 'district' | 'state';
+    }
 
-        /**
-         * The tax rate percentage as a string. For example, 8.5% is represented as "8.5".
-         */
-        percentage_decimal: string;
-
-        /**
-         * The tax type, such as `vat` or `sales_tax`.
-         */
-        tax_type: TaxRateDetails.TaxType;
-      }
-
-      export type TaxabilityReason =
-        | 'customer_exempt'
-        | 'not_collecting'
-        | 'not_subject_to_tax'
-        | 'not_supported'
-        | 'portion_product_exempt'
-        | 'portion_reduced_rated'
-        | 'portion_standard_rated'
-        | 'product_exempt'
-        | 'product_exempt_holiday'
-        | 'proportionally_rated'
-        | 'reduced_rated'
-        | 'reverse_charge'
-        | 'standard_rated'
-        | 'taxable_basis_reduced'
-        | 'zero_rated';
-
-      export namespace Jurisdiction {
-        export type Level =
-          | 'city'
-          | 'country'
-          | 'county'
-          | 'district'
-          | 'state';
-      }
-
-      export namespace TaxRateDetails {
-        export type TaxType =
-          | 'admissions_tax'
-          | 'amusement_tax'
-          | 'attendance_tax'
-          | 'communications_tax'
-          | 'entertainment_tax'
-          | 'gross_receipts_tax'
-          | 'gst'
-          | 'hospitality_tax'
-          | 'hst'
-          | 'igst'
-          | 'jct'
-          | 'lease_tax'
-          | 'luxury_tax'
-          | 'pst'
-          | 'qst'
-          | 'resort_tax'
-          | 'retail_delivery_fee'
-          | 'rst'
-          | 'sales_tax'
-          | 'service_tax'
-          | 'tourism_tax'
-          | 'vat';
-      }
+    export namespace TaxRateDetails {
+      export type TaxType =
+        | 'admissions_tax'
+        | 'amusement_tax'
+        | 'attendance_tax'
+        | 'communications_tax'
+        | 'entertainment_tax'
+        | 'gross_receipts_tax'
+        | 'gst'
+        | 'hospitality_tax'
+        | 'hst'
+        | 'igst'
+        | 'jct'
+        | 'lease_tax'
+        | 'luxury_tax'
+        | 'pst'
+        | 'qst'
+        | 'resort_tax'
+        | 'retail_delivery_fee'
+        | 'rst'
+        | 'sales_tax'
+        | 'service_tax'
+        | 'tourism_tax'
+        | 'vat';
     }
   }
 }

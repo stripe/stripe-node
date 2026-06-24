@@ -39,6 +39,23 @@ async (): Promise<void> => {
 let opts: Stripe.RequestOptions;
 let apiList: Stripe.ApiList<Stripe.Customer>;
 
+// Resource sub-types (companion namespace access)
+let priceRecurring: Stripe.Price.Recurring;
+let customerInvoiceSettings: Stripe.Customer.InvoiceSettings;
+let subscriptionBillingMode: Stripe.Subscription.BillingMode;
+
+// Deep resource sub-types (2+ levels)
+const billingModeType: Stripe.Subscription.BillingMode.Type = 'classic';
+
+// Nested resource sub-types (product namespace → resource → sub-type)
+let alertStatus: Stripe.Billing.Alert.Status;
+let terminalTipping: Stripe.Terminal.Configuration.Tipping;
+let appsSecretScope: Stripe.Apps.Secret.Scope;
+
+// Deep params sub-namespaces (2+ levels)
+let accountBizProfile: Stripe.AccountCreateParams.BusinessProfile;
+let accountBizRevenue: Stripe.AccountCreateParams.BusinessProfile.AnnualRevenue;
+
 // Config strictness
 // @ts-expect-error - unknown config properties should be rejected
 const bad = new Stripe('sk_test_123', {unknownProperty: true});
