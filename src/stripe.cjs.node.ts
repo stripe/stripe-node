@@ -14328,69 +14328,69 @@ declare namespace StripeConstructor {
   export type V2ListPromise<T> = Stripe_.V2ListPromise<T>;
   // StripeInterfaceCJSExports: The end of the section generated from our OpenAPI spec
 
-  export type Response<T> = Stripe.Response<T>;
-  export type RequestOptions = Stripe.RequestOptions;
-  export type RawRequestOptions = Stripe.RawRequestOptions;
-  export type ApiList<T> = Stripe.ApiList<T>;
-  export type ApiListPromise<T> = Stripe.ApiListPromise<T>;
-  export type ApiSearchResultPromise<T> = Stripe.ApiSearchResultPromise<T>;
-  export type ApiSearchResult<T> = Stripe.ApiSearchResult<T>;
-  export type StripeStreamResponse = Stripe.StripeStreamResponse;
-  export type RequestEvent = Stripe.RequestEvent;
-  export type ResponseEvent = Stripe.ResponseEvent;
-  export type AppInfo = Stripe.AppInfo;
-  export type FileData = Stripe.FileData;
-  export type Metadata = Stripe.Metadata;
-  export type MetadataParam = Stripe.MetadataParam;
-  export type Address = Stripe.Address;
-  export type JapanAddress = Stripe.JapanAddress;
-  export type AddressParam = Stripe.AddressParam;
-  export type ShippingAddressParam = Stripe.ShippingAddressParam;
-  export type JapanAddressParam = Stripe.JapanAddressParam;
-  export type RangeQueryParam = Stripe.RangeQueryParam;
-  export type PaginationParams = Stripe.PaginationParams;
-  export type Emptyable<T> = Stripe.Emptyable<T>;
-  export type OAuthResource = Stripe.OAuthResource;
-  export type OAuthToken = Stripe.OAuthToken;
-  export type OAuthTokenParams = Stripe.OAuthTokenParams;
-  export type OAuthAuthorizeUrlOptions = Stripe.OAuthAuthorizeUrlOptions;
-  export type OAuthAuthorizeUrlParams = Stripe.OAuthAuthorizeUrlParams;
-  export type OAuthDeauthorization = Stripe.OAuthDeauthorization;
-  export type OAuthDeauthorizeParams = Stripe.OAuthDeauthorizeParams;
-  export type StripeContextType = Stripe.StripeContextType;
-  export type StripeRawError = Stripe.StripeRawError;
-  export type Decimal = Stripe.Decimal;
+  export type Response<T> = Stripe_.Response<T>;
+  export type RequestOptions = Stripe_.RequestOptions;
+  export type RawRequestOptions = Stripe_.RawRequestOptions;
+  export type ApiList<T> = Stripe_.ApiList<T>;
+  export type ApiListPromise<T> = Stripe_.ApiListPromise<T>;
+  export type ApiSearchResultPromise<T> = Stripe_.ApiSearchResultPromise<T>;
+  export type ApiSearchResult<T> = Stripe_.ApiSearchResult<T>;
+  export type StripeStreamResponse = Stripe_.StripeStreamResponse;
+  export type RequestEvent = Stripe_.RequestEvent;
+  export type ResponseEvent = Stripe_.ResponseEvent;
+  export type AppInfo = Stripe_.AppInfo;
+  export type FileData = Stripe_.FileData;
+  export type Metadata = Stripe_.Metadata;
+  export type MetadataParam = Stripe_.MetadataParam;
+  export type Address = Stripe_.Address;
+  export type JapanAddress = Stripe_.JapanAddress;
+  export type AddressParam = Stripe_.AddressParam;
+  export type ShippingAddressParam = Stripe_.ShippingAddressParam;
+  export type JapanAddressParam = Stripe_.JapanAddressParam;
+  export type RangeQueryParam = Stripe_.RangeQueryParam;
+  export type PaginationParams = Stripe_.PaginationParams;
+  export type Emptyable<T> = Stripe_.Emptyable<T>;
+  export type OAuthResource = Stripe_.OAuthResource;
+  export type OAuthToken = Stripe_.OAuthToken;
+  export type OAuthTokenParams = Stripe_.OAuthTokenParams;
+  export type OAuthAuthorizeUrlOptions = Stripe_.OAuthAuthorizeUrlOptions;
+  export type OAuthAuthorizeUrlParams = Stripe_.OAuthAuthorizeUrlParams;
+  export type OAuthDeauthorization = Stripe_.OAuthDeauthorization;
+  export type OAuthDeauthorizeParams = Stripe_.OAuthDeauthorizeParams;
+  export type StripeContextType = Stripe_.StripeContextType;
+  export type StripeRawError = Stripe_.StripeRawError;
+  export type Decimal = Stripe_.Decimal;
   export namespace errors {
-    export type StripeError = InstanceType<typeof Stripe.errors.StripeError>;
+    export type StripeError = InstanceType<typeof Stripe_.errors.StripeError>;
     export type StripeCardError = InstanceType<
-      typeof Stripe.errors.StripeCardError
+      typeof Stripe_.errors.StripeCardError
     >;
     export type StripeInvalidRequestError = InstanceType<
-      typeof Stripe.errors.StripeInvalidRequestError
+      typeof Stripe_.errors.StripeInvalidRequestError
     >;
     export type StripeAPIError = InstanceType<
-      typeof Stripe.errors.StripeAPIError
+      typeof Stripe_.errors.StripeAPIError
     >;
     export type StripeAuthenticationError = InstanceType<
-      typeof Stripe.errors.StripeAuthenticationError
+      typeof Stripe_.errors.StripeAuthenticationError
     >;
     export type StripePermissionError = InstanceType<
-      typeof Stripe.errors.StripePermissionError
+      typeof Stripe_.errors.StripePermissionError
     >;
     export type StripeRateLimitError = InstanceType<
-      typeof Stripe.errors.StripeRateLimitError
+      typeof Stripe_.errors.StripeRateLimitError
     >;
     export type StripeConnectionError = InstanceType<
-      typeof Stripe.errors.StripeConnectionError
+      typeof Stripe_.errors.StripeConnectionError
     >;
     export type StripeSignatureVerificationError = InstanceType<
-      typeof Stripe.errors.StripeSignatureVerificationError
+      typeof Stripe_.errors.StripeSignatureVerificationError
     >;
     export type StripeIdempotencyError = InstanceType<
-      typeof Stripe.errors.StripeIdempotencyError
+      typeof Stripe_.errors.StripeIdempotencyError
     >;
     export type StripeInvalidGrantError = InstanceType<
-      typeof Stripe.errors.StripeInvalidGrantError
+      typeof Stripe_.errors.StripeInvalidGrantError
     >;
   }
 }
