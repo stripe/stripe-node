@@ -250,14 +250,14 @@ export interface CreditGrant {
    */
   object: 'billing.credit_grant';
 
-  amount: Billing.CreditGrant.Amount;
+  amount: CreditGrant.Amount;
 
-  applicability_config: Billing.CreditGrant.ApplicabilityConfig;
+  applicability_config: CreditGrant.ApplicabilityConfig;
 
   /**
    * The category of this credit grant. This is for tracking purposes and isn't displayed to the customer.
    */
-  category: Billing.CreditGrant.Category;
+  category: CreditGrant.Category;
 
   /**
    * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -319,9 +319,27 @@ export interface CreditGrant {
    */
   voided_at: number | null;
 }
-export namespace Billing {
-  export namespace CreditGrant {
-    export interface Amount {
+export namespace CreditGrant {
+  export interface Amount {
+    /**
+     * The monetary amount.
+     */
+    monetary: Amount.Monetary | null;
+
+    /**
+     * The type of this amount. We currently only support `monetary` billing credits.
+     */
+    type: 'monetary';
+  }
+
+  export interface ApplicabilityConfig {
+    scope: ApplicabilityConfig.Scope;
+  }
+
+  export type Category = 'paid' | 'promotional';
+
+  export namespace Amount {
+    export interface Monetary {
       /**
        * The custom pricing unit amount.
        */
@@ -330,10 +348,10 @@ export namespace Billing {
       /**
        * The monetary amount.
        */
-      monetary: Amount.Monetary | null;
+      currency: string;
 
       /**
-       * The type of this amount. We currently only support `monetary` billing credits.
+       * A positive integer representing the amount.
        */
       type: Amount.Type;
     }
@@ -364,7 +382,7 @@ export namespace Billing {
 
       export interface Monetary {
         /**
-         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         * Unique identifier for the object.
          */
         currency: string;
 

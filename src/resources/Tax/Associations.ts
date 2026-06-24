@@ -43,49 +43,47 @@ export interface Association {
   /**
    * Information about the tax transactions linked to this payment intent
    */
-  tax_transaction_attempts: Array<Tax.Association.TaxTransactionAttempt> | null;
+  tax_transaction_attempts: Array<Association.TaxTransactionAttempt> | null;
 }
-export namespace Tax {
-  export namespace Association {
-    export interface TaxTransactionAttempt {
-      committed?: TaxTransactionAttempt.Committed;
+export namespace Association {
+  export interface TaxTransactionAttempt {
+    committed?: TaxTransactionAttempt.Committed;
 
-      errored?: TaxTransactionAttempt.Errored;
+    errored?: TaxTransactionAttempt.Errored;
 
+    /**
+     * The source of the tax transaction attempt. This is either a refund or a payment intent.
+     */
+    source: string;
+
+    /**
+     * The status of the transaction attempt. This can be `errored` or `committed`.
+     */
+    status: string;
+  }
+
+  export namespace TaxTransactionAttempt {
+    export interface Committed {
       /**
-       * The source of the tax transaction attempt. This is either a refund or a payment intent.
+       * The [Tax Transaction](https://docs.stripe.com/api/tax/transaction/object)
        */
-      source: string;
-
-      /**
-       * The status of the transaction attempt. This can be `errored` or `committed`.
-       */
-      status: string;
+      transaction: string;
     }
 
-    export namespace TaxTransactionAttempt {
-      export interface Committed {
-        /**
-         * The [Tax Transaction](https://docs.stripe.com/api/tax/transaction/object)
-         */
-        transaction: string;
-      }
+    export interface Errored {
+      /**
+       * Details on why we couldn't commit the tax transaction.
+       */
+      reason: Errored.Reason;
+    }
 
-      export interface Errored {
-        /**
-         * Details on why we couldn't commit the tax transaction.
-         */
-        reason: Errored.Reason;
-      }
-
-      export namespace Errored {
-        export type Reason =
-          | 'another_payment_associated_with_calculation'
-          | 'calculation_expired'
-          | 'currency_mismatch'
-          | 'original_transaction_voided'
-          | 'unique_reference_violation';
-      }
+    export namespace Errored {
+      export type Reason =
+        | 'another_payment_associated_with_calculation'
+        | 'calculation_expired'
+        | 'currency_mismatch'
+        | 'original_transaction_voided'
+        | 'unique_reference_violation';
     }
   }
 }

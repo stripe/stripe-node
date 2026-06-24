@@ -84,7 +84,7 @@ export interface EventBase {
   /**
    * Before and after changes for the primary related object.
    */
-  changes?: V2.Core.Event.Changes;
+  changes?: Event.Changes;
 
   /**
    * Authentication context needed to fetch the event or related object.
@@ -104,7 +104,7 @@ export interface EventBase {
   /**
    * Reason for the event.
    */
-  reason?: V2.Core.Event.Reason;
+  reason?: Event.Reason;
 
   /**
    * For interop events, this is the snapshot event ID.
@@ -116,24 +116,22 @@ export interface EventBase {
    */
   type: string;
 }
-export namespace V2 {
-  export namespace Core {
-    export namespace Event {
-      export type Changes = {
-        [key: string]: unknown;
-      };
+export namespace Event {
+  export type Changes = {
+    [key: string]: unknown;
+  };
 
-      export interface Reason {
-        /**
-         * Information on the API request that instigated the event.
-         */
-        request?: Reason.Request;
+  export interface Reason {
+    /**
+     * Information on the API request that instigated the event.
+     */
+    request?: Reason.Request;
 
-        /**
-         * Event reason type.
-         */
-        type: 'request';
-      }
+    /**
+     * Event reason type.
+     */
+    type: 'request';
+  }
 
       export namespace Reason {
         export interface Request {

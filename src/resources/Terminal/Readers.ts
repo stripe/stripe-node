@@ -24,7 +24,7 @@ export class ReaderResource extends StripeResource {
     id: string,
     params?: Terminal.ReaderDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<Terminal.DeletedReader>> {
+  ): Promise<Response<DeletedReader>> {
     return this._makeRequest(
       'DELETE',
       `/v1/terminal/readers/${encodeURIComponent(id)}`,
@@ -39,7 +39,7 @@ export class ReaderResource extends StripeResource {
     id: string,
     params?: Terminal.ReaderRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Reader | Terminal.DeletedReader>> {
+  ): Promise<Response<Reader | DeletedReader>> {
     return this._makeRequest(
       'GET',
       `/v1/terminal/readers/${encodeURIComponent(id)}`,
@@ -54,7 +54,7 @@ export class ReaderResource extends StripeResource {
     id: string,
     params?: Terminal.ReaderUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Reader | Terminal.DeletedReader>> {
+  ): Promise<Response<Reader | DeletedReader>> {
     return this._makeRequest(
       'POST',
       `/v1/terminal/readers/${encodeURIComponent(id)}`,
@@ -222,7 +222,7 @@ export interface Reader {
   /**
    * The most recent action performed by the reader.
    */
-  action: Terminal.Reader.Action | null;
+  action: Reader.Action | null;
 
   /**
    * Always true for a deleted object
@@ -237,7 +237,7 @@ export interface Reader {
   /**
    * Device type of the reader.
    */
-  device_type: Terminal.Reader.DeviceType;
+  device_type: Reader.DeviceType;
 
   /**
    * The local IP address of the reader.
@@ -277,275 +277,377 @@ export interface Reader {
   /**
    * The networking status of the reader. We do not recommend using this field in flows that may block taking payments.
    */
-  status: Terminal.Reader.Status | null;
+  status: Reader.Status | null;
 }
-export namespace Terminal {
-  export interface DeletedReader {
+export interface DeletedReader {
+  /**
+   * Unique identifier for the object.
+   */
+  id: string;
+
+  /**
+   * String representing the object's type. Objects of the same type share the same value.
+   */
+  object: 'terminal.reader';
+
+  /**
+   * Always true for a deleted object
+   */
+  deleted: true;
+
+  /**
+   * Device type of the reader.
+   */
+  device_type: DeletedReader.DeviceType;
+
+  /**
+   * Serial number of the reader.
+   */
+  serial_number: string;
+}
+export namespace DeletedReader {
+  export type DeviceType =
+    | 'bbpos_chipper2x'
+    | 'bbpos_wisepad3'
+    | 'bbpos_wisepos_e'
+    | 'mobile_phone_reader'
+    | 'simulated_stripe_s700'
+    | 'simulated_stripe_s710'
+    | 'simulated_verifone_m425'
+    | 'simulated_verifone_p630'
+    | 'simulated_verifone_ux700'
+    | 'simulated_verifone_v660p'
+    | 'simulated_wisepos_e'
+    | 'stripe_m2'
+    | 'stripe_s700'
+    | 'stripe_s710'
+    | 'verifone_P400'
+    | 'verifone_m425'
+    | 'verifone_p630'
+    | 'verifone_ux700'
+    | 'verifone_v660p';
+}
+export namespace Reader {
+  export interface Action {
     /**
-     * Unique identifier for the object.
+     * The reader action failed due to an [API error](https://docs.stripe.com/api/errors). Only present when `status` is `failed` and the underlying failure was an API error. Avoid parsing the `message` field for programmatic logic; use `type` or `code` instead. The `message` field is for display to humans only and may be updated at anytime. Requires [reader version](https://docs.stripe.com/terminal/readers/stripe-reader-s700-s710#reader-software-version) 2.42 or later. Readers on older versions always return null.
      */
-    id: string;
+    api_error: Action.ApiError | null;
 
     /**
-     * String representing the object's type. Objects of the same type share the same value.
+     * Represents a reader action to collect customer inputs
      */
-    object: 'terminal.reader';
+    collect_inputs?: Action.CollectInputs;
 
     /**
-     * Always true for a deleted object
+     * Represents a reader action to collect a payment method
      */
-    deleted: true;
+    collect_payment_method?: Action.CollectPaymentMethod;
 
     /**
-     * Device type of the reader.
+     * Represents a reader action to confirm a payment
      */
-    device_type: DeletedReader.DeviceType;
+    confirm_payment_intent?: Action.ConfirmPaymentIntent;
 
     /**
-     * Serial number of the reader.
+     * Failure code, only set if status is `failed`.
      */
-    serial_number: string;
+    failure_code: string | null;
+
+    /**
+     * Detailed failure message, only set if status is `failed`.
+     */
+    failure_message: string | null;
+
+    /**
+     * Represents a reader action to print content
+     */
+    print_content?: Action.PrintContent;
+
+    /**
+     * Represents a reader action to process a payment intent
+     */
+    process_payment_intent?: Action.ProcessPaymentIntent;
+
+    /**
+     * Represents a reader action to process a setup intent
+     */
+    process_setup_intent?: Action.ProcessSetupIntent;
+
+    /**
+     * Represents a reader action to refund a payment
+     */
+    refund_payment?: Action.RefundPayment;
+
+    /**
+     * Represents a reader action to set the reader display
+     */
+    set_reader_display?: Action.SetReaderDisplay;
+
+    /**
+     * Status of the action performed by the reader.
+     */
+    status: Action.Status;
+
+    /**
+     * Type of action performed by the reader.
+     */
+    type: Action.Type;
   }
 
-  export namespace DeletedReader {
-    export type DeviceType =
-      | 'bbpos_chipper2x'
-      | 'bbpos_wisepad3'
-      | 'bbpos_wisepos_e'
-      | 'mobile_phone_reader'
-      | 'simulated_stripe_s700'
-      | 'simulated_stripe_s710'
-      | 'simulated_verifone_m425'
-      | 'simulated_verifone_p630'
-      | 'simulated_verifone_ux700'
-      | 'simulated_verifone_v660p'
-      | 'simulated_wisepos_e'
-      | 'stripe_m2'
-      | 'stripe_s700'
-      | 'stripe_s710'
-      | 'verifone_P400'
-      | 'verifone_m425'
-      | 'verifone_p630'
-      | 'verifone_ux700'
-      | 'verifone_v660p';
-  }
+  export type DeviceType =
+    | 'bbpos_chipper2x'
+    | 'bbpos_wisepad3'
+    | 'bbpos_wisepos_e'
+    | 'mobile_phone_reader'
+    | 'simulated_stripe_s700'
+    | 'simulated_stripe_s710'
+    | 'simulated_verifone_m425'
+    | 'simulated_verifone_p630'
+    | 'simulated_verifone_ux700'
+    | 'simulated_verifone_v660p'
+    | 'simulated_wisepos_e'
+    | 'stripe_m2'
+    | 'stripe_s700'
+    | 'stripe_s710'
+    | 'verifone_P400'
+    | 'verifone_m425'
+    | 'verifone_p630'
+    | 'verifone_ux700'
+    | 'verifone_v660p';
 
-  export namespace Reader {
-    export interface Action {
-      /**
-       * The reader action failed due to an [API error](https://docs.stripe.com/api/errors). Only present when `status` is `failed` and the underlying failure was an API error. Avoid parsing the `message` field for programmatic logic; use `type` or `code` instead. The `message` field is for display to humans only and may be updated at anytime. Requires [reader version](https://docs.stripe.com/terminal/readers/stripe-reader-s700-s710#reader-software-version) 2.42 or later. Readers on older versions always return null.
-       */
-      api_error: Action.ApiError | null;
+  export type Status = 'offline' | 'online';
 
+  export namespace Action {
+    export interface ApiError {
       /**
-       * Represents a reader action to collect customer inputs
+       * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://docs.stripe.com/declines#retrying-issuer-declines) if they provide one.
        */
-      collect_inputs?: Action.CollectInputs;
+      advice_code?: string;
 
       /**
-       * Represents a reader action to collect a payment method
+       * For card errors, the ID of the failed charge.
        */
-      collect_payment_method?: Action.CollectPaymentMethod;
+      charge?: string;
 
       /**
-       * Represents a reader action to confirm a payment
+       * For some errors that could be handled programmatically, a short string indicating the [error code](https://docs.stripe.com/error-codes) reported.
        */
-      confirm_payment_intent?: Action.ConfirmPaymentIntent;
+      code?: ApiError.Code;
 
       /**
-       * Failure code, only set if status is `failed`.
+       * For card errors resulting from a card issuer decline, a short string indicating the [card issuer's reason for the decline](https://docs.stripe.com/declines#issuer-declines) if they provide one.
        */
-      failure_code: string | null;
+      decline_code?: string;
 
       /**
-       * Detailed failure message, only set if status is `failed`.
+       * A URL to more information about the [error code](https://docs.stripe.com/error-codes) reported.
        */
-      failure_message: string | null;
+      doc_url?: string;
 
       /**
-       * Represents a reader action to print content
+       * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
        */
-      print_content?: Action.PrintContent;
+      message?: string;
 
       /**
-       * Represents a reader action to process a payment intent
+       * For card errors resulting from a card issuer decline, a 2 digit code which indicates the advice given to merchant by the card network on how to proceed with an error.
        */
-      process_payment_intent?: Action.ProcessPaymentIntent;
+      network_advice_code?: string;
 
       /**
-       * Represents a reader action to process a setup intent
+       * For payments declined by the network, an alphanumeric code which indicates the reason the payment failed.
        */
-      process_setup_intent?: Action.ProcessSetupIntent;
+      network_decline_code?: string;
 
       /**
-       * Represents a reader action to refund a payment
+       * If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
        */
-      refund_payment?: Action.RefundPayment;
+      param?: string;
 
       /**
-       * Represents a reader action to set the reader display
+       * A PaymentIntent guides you through the process of collecting a payment from your customer.
+       * We recommend that you create exactly one PaymentIntent for each order or
+       * customer session in your system. You can reference the PaymentIntent later to
+       * see the history of payment attempts for a particular session.
+       *
+       * A PaymentIntent transitions through
+       * [multiple statuses](https://docs.stripe.com/payments/paymentintents/lifecycle)
+       * throughout its lifetime as it interfaces with Stripe.js to perform
+       * authentication flows and ultimately creates at most one successful charge.
+       *
+       * Related guide: [Payment Intents API](https://docs.stripe.com/payments/payment-intents)
        */
-      set_reader_display?: Action.SetReaderDisplay;
+      payment_intent?: PaymentIntent;
 
       /**
-       * Status of the action performed by the reader.
+       * PaymentMethod objects represent your customer's payment instruments.
+       * You can use them with [PaymentIntents](https://docs.stripe.com/payments/payment-intents) to collect payments or save them to
+       * Customer objects to store instrument details for future payments.
+       *
+       * Related guides: [Payment Methods](https://docs.stripe.com/payments/payment-methods) and [More Payment Scenarios](https://docs.stripe.com/payments/more-payment-scenarios).
        */
-      status: Action.Status;
+      payment_method?: PaymentMethod;
 
       /**
-       * Type of action performed by the reader.
+       * If the error is specific to the type of payment method, the payment method type that had a problem. This field is only populated for invoice-related errors.
        */
-      type: Action.Type;
+      payment_method_type?: string;
+
+      /**
+       * A URL to the request log entry in your dashboard.
+       */
+      request_log_url?: string;
+
+      /**
+       * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
+       * For example, you can use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
+       * Later, you can use [PaymentIntents](https://api.stripe.com#payment_intents) to drive the payment flow.
+       *
+       * Create a SetupIntent when you're ready to collect your customer's payment credentials.
+       * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
+       * The SetupIntent transitions through multiple [statuses](https://docs.stripe.com/payments/intents#intent-statuses) as it guides
+       * you through the setup process.
+       *
+       * Successful SetupIntents result in payment credentials that are optimized for future payments.
+       * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
+       * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
+       * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
+       * If you use the SetupIntent with a [Customer](https://api.stripe.com#setup_intent_object-customer),
+       * it automatically attaches the resulting payment method to that Customer after successful setup.
+       * We recommend using SetupIntents or [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) on
+       * PaymentIntents to save payment methods to prevent saving invalid or unoptimized payment methods.
+       *
+       * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
+       *
+       * Related guide: [Setup Intents API](https://docs.stripe.com/payments/setup-intents)
+       */
+      setup_intent?: SetupIntent;
+
+      source?: CustomerSource;
+
+      /**
+       * The type of error returned. One of `api_error`, `card_error`, `idempotency_error`, or `invalid_request_error`
+       */
+      type: ApiError.Type;
     }
 
-    export type DeviceType =
-      | 'bbpos_chipper2x'
-      | 'bbpos_wisepad3'
-      | 'bbpos_wisepos_e'
-      | 'mobile_phone_reader'
-      | 'simulated_stripe_s700'
-      | 'simulated_stripe_s710'
-      | 'simulated_verifone_m425'
-      | 'simulated_verifone_p630'
-      | 'simulated_verifone_ux700'
-      | 'simulated_verifone_v660p'
-      | 'simulated_wisepos_e'
-      | 'stripe_m2'
-      | 'stripe_s700'
-      | 'stripe_s710'
-      | 'verifone_P400'
-      | 'verifone_m425'
-      | 'verifone_p630'
-      | 'verifone_ux700'
-      | 'verifone_v660p';
+    export interface CollectInputs {
+      /**
+       * List of inputs to be collected.
+       */
+      inputs: Array<CollectInputs.Input>;
 
-    export type Status = 'offline' | 'online';
+      /**
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata: Metadata | null;
+    }
 
-    export namespace Action {
-      export interface ApiError {
-        /**
-         * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://docs.stripe.com/declines#retrying-issuer-declines) if they provide one.
-         */
-        advice_code?: string;
+    export interface CollectPaymentMethod {
+      /**
+       * Represents a per-transaction override of a reader configuration
+       */
+      collect_config?: CollectPaymentMethod.CollectConfig;
 
-        /**
-         * For card errors, the ID of the failed charge.
-         */
-        charge?: string;
+      /**
+       * Most recent PaymentIntent processed by the reader.
+       */
+      payment_intent: string | PaymentIntent;
 
-        /**
-         * For some errors that could be handled programmatically, a short string indicating the [error code](https://docs.stripe.com/error-codes) reported.
-         */
-        code?: ApiError.Code;
+      /**
+       * PaymentMethod objects represent your customer's payment instruments.
+       * You can use them with [PaymentIntents](https://docs.stripe.com/payments/payment-intents) to collect payments or save them to
+       * Customer objects to store instrument details for future payments.
+       *
+       * Related guides: [Payment Methods](https://docs.stripe.com/payments/payment-methods) and [More Payment Scenarios](https://docs.stripe.com/payments/more-payment-scenarios).
+       */
+      payment_method?: PaymentMethod;
+    }
 
-        /**
-         * For card errors resulting from a card issuer decline, a short string indicating the [card issuer's reason for the decline](https://docs.stripe.com/declines#issuer-declines) if they provide one.
-         */
-        decline_code?: string;
+    export interface ConfirmPaymentIntent {
+      /**
+       * Represents a per-transaction override of a reader configuration
+       */
+      confirm_config?: ConfirmPaymentIntent.ConfirmConfig;
 
-        /**
-         * A URL to more information about the [error code](https://docs.stripe.com/error-codes) reported.
-         */
-        doc_url?: string;
+      /**
+       * Most recent PaymentIntent processed by the reader.
+       */
+      payment_intent: string | PaymentIntent;
+    }
 
-        /**
-         * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
-         */
-        message?: string;
+    export interface PrintContent {
+      /**
+       * Metadata of an uploaded file
+       */
+      image?: PrintContent.Image;
 
-        /**
-         * For card errors resulting from a card issuer decline, a 2 digit code which indicates the advice given to merchant by the card network on how to proceed with an error.
-         */
-        network_advice_code?: string;
+      /**
+       * The type of content to print. Currently supports `image`.
+       */
+      type: 'image';
+    }
 
-        /**
-         * For payments declined by the network, an alphanumeric code which indicates the reason the payment failed.
-         */
-        network_decline_code?: string;
+    export interface ProcessPaymentIntent {
+      /**
+       * Most recent PaymentIntent processed by the reader.
+       */
+      payment_intent: string | PaymentIntent;
 
-        /**
-         * If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
-         */
-        param?: string;
+      /**
+       * Represents a per-transaction override of a reader configuration
+       */
+      process_config?: ProcessPaymentIntent.ProcessConfig;
+    }
 
-        /**
-         * A PaymentIntent guides you through the process of collecting a payment from your customer.
-         * We recommend that you create exactly one PaymentIntent for each order or
-         * customer session in your system. You can reference the PaymentIntent later to
-         * see the history of payment attempts for a particular session.
-         *
-         * A PaymentIntent transitions through
-         * [multiple statuses](https://docs.stripe.com/payments/paymentintents/lifecycle)
-         * throughout its lifetime as it interfaces with Stripe.js to perform
-         * authentication flows and ultimately creates at most one successful charge.
-         *
-         * Related guide: [Payment Intents API](https://docs.stripe.com/payments/payment-intents)
-         */
-        payment_intent?: PaymentIntent;
+    export interface ProcessSetupIntent {
+      /**
+       * ID of a card PaymentMethod generated from the card_present PaymentMethod that may be attached to a Customer for future transactions. Only present if it was possible to generate a card PaymentMethod.
+       */
+      generated_card?: string;
 
-        /**
-         * PaymentMethod objects represent your customer's payment instruments.
-         * You can use them with [PaymentIntents](https://docs.stripe.com/payments/payment-intents) to collect payments or save them to
-         * Customer objects to store instrument details for future payments.
-         *
-         * Related guides: [Payment Methods](https://docs.stripe.com/payments/payment-methods) and [More Payment Scenarios](https://docs.stripe.com/payments/more-payment-scenarios).
-         */
-        payment_method?: PaymentMethod;
+      /**
+       * Represents a per-setup override of a reader configuration
+       */
+      process_config?: ProcessSetupIntent.ProcessConfig;
 
-        /**
-         * If the error is specific to the type of payment method, the payment method type that had a problem. This field is only populated for invoice-related errors.
-         */
-        payment_method_type?: string;
+      /**
+       * Most recent SetupIntent processed by the reader.
+       */
+      setup_intent: string | SetupIntent;
+    }
 
-        /**
-         * A URL to the request log entry in your dashboard.
-         */
-        request_log_url?: string;
+    export interface RefundPayment {
+      /**
+       * The amount being refunded.
+       */
+      amount?: number;
 
-        /**
-         * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
-         * For example, you can use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
-         * Later, you can use [PaymentIntents](https://api.stripe.com#payment_intents) to drive the payment flow.
-         *
-         * Create a SetupIntent when you're ready to collect your customer's payment credentials.
-         * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
-         * The SetupIntent transitions through multiple [statuses](https://docs.stripe.com/payments/intents#intent-statuses) as it guides
-         * you through the setup process.
-         *
-         * Successful SetupIntents result in payment credentials that are optimized for future payments.
-         * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
-         * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
-         * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
-         * If you use the SetupIntent with a [Customer](https://api.stripe.com#setup_intent_object-customer),
-         * it automatically attaches the resulting payment method to that Customer after successful setup.
-         * We recommend using SetupIntents or [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) on
-         * PaymentIntents to save payment methods to prevent saving invalid or unoptimized payment methods.
-         *
-         * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
-         *
-         * Related guide: [Setup Intents API](https://docs.stripe.com/payments/setup-intents)
-         */
-        setup_intent?: SetupIntent;
+      /**
+       * Charge that is being refunded.
+       */
+      charge?: string | Charge;
 
-        source?: CustomerSource;
+      /**
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: Metadata;
 
-        /**
-         * The type of error returned. One of `api_error`, `card_error`, `idempotency_error`, or `invalid_request_error`
-         */
-        type: ApiError.Type;
-      }
+      /**
+       * Payment intent that is being refunded.
+       */
+      payment_intent?: string | PaymentIntent;
 
-      export interface CollectInputs {
-        /**
-         * List of inputs to be collected.
-         */
-        inputs: Array<CollectInputs.Input>;
+      /**
+       * The reason for the refund.
+       */
+      reason?: RefundPayment.Reason;
 
-        /**
-         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-         */
-        metadata: Metadata | null;
-      }
+      /**
+       * Unique identifier for the refund object.
+       */
+      refund?: string | Refund;
 
       export interface CollectPaymentMethod {
         /**
@@ -558,20 +660,16 @@ export namespace Terminal {
          */
         collect_config?: CollectPaymentMethod.CollectConfig;
 
-        /**
-         * Most recent PaymentIntent processed by the reader.
-         */
-        payment_intent: string | PaymentIntent;
+      /**
+       * Represents a per-transaction override of a reader configuration
+       */
+      refund_payment_config?: RefundPayment.RefundPaymentConfig;
 
-        /**
-         * PaymentMethod objects represent your customer's payment instruments.
-         * You can use them with [PaymentIntents](https://docs.stripe.com/payments/payment-intents) to collect payments or save them to
-         * Customer objects to store instrument details for future payments.
-         *
-         * Related guides: [Payment Methods](https://docs.stripe.com/payments/payment-methods) and [More Payment Scenarios](https://docs.stripe.com/payments/more-payment-scenarios).
-         */
-        payment_method?: PaymentMethod;
-      }
+      /**
+       * Boolean indicating whether the transfer should be reversed when refunding this charge. The transfer will be reversed proportionally to the amount being refunded (either the entire or partial amount). A transfer can be reversed only by the application that created the charge.
+       */
+      reverse_transfer?: boolean;
+    }
 
       export interface ConfirmPaymentIntent {
         /**
@@ -584,23 +682,23 @@ export namespace Terminal {
          */
         confirm_config?: ConfirmPaymentIntent.ConfirmConfig;
 
-        /**
-         * Most recent PaymentIntent processed by the reader.
-         */
-        payment_intent: string | PaymentIntent;
-      }
+      /**
+       * Type of information to be displayed by the reader. Only `cart` is currently supported.
+       */
+      type: 'cart';
+    }
 
-      export interface PrintContent {
-        /**
-         * Metadata of an uploaded file
-         */
-        image?: PrintContent.Image;
+    export type Status = 'failed' | 'in_progress' | 'succeeded';
 
-        /**
-         * The type of content to print. Currently supports `image`.
-         */
-        type: 'image';
-      }
+    export type Type =
+      | 'collect_inputs'
+      | 'collect_payment_method'
+      | 'confirm_payment_intent'
+      | 'print_content'
+      | 'process_payment_intent'
+      | 'process_setup_intent'
+      | 'refund_payment'
+      | 'set_reader_display';
 
       export interface ProcessPaymentIntent {
         /**
@@ -703,14 +801,11 @@ export namespace Terminal {
       export type Status = 'failed' | 'in_progress' | 'succeeded';
 
       export type Type =
-        | 'collect_inputs'
-        | 'collect_payment_method'
-        | 'confirm_payment_intent'
-        | 'print_content'
-        | 'process_payment_intent'
-        | 'process_setup_intent'
-        | 'refund_payment'
-        | 'set_reader_display';
+        | 'api_error'
+        | 'card_error'
+        | 'idempotency_error'
+        | 'invalid_request_error';
+    }
 
       export namespace ApiError {
         export type Code =
@@ -910,364 +1005,346 @@ export namespace Terminal {
           | 'v2_account_disconnection_unsupported'
           | 'v2_account_missing_configuration';
 
-        export type Type =
-          | 'api_error'
-          | 'card_error'
-          | 'idempotency_error'
-          | 'invalid_request_error';
+        /**
+         * Information about a email being collected using a reader
+         */
+        email?: Input.Email;
+
+        /**
+         * Information about a number being collected using a reader
+         */
+        numeric?: Input.Numeric;
+
+        /**
+         * Information about a phone number being collected using a reader
+         */
+        phone?: Input.Phone;
+
+        /**
+         * Indicate that this input is required, disabling the skip button.
+         */
+        required: boolean | null;
+
+        /**
+         * Information about a selection being collected using a reader
+         */
+        selection?: Input.Selection;
+
+        /**
+         * Information about a signature being collected using a reader
+         */
+        signature?: Input.Signature;
+
+        /**
+         * Indicate that this input was skipped by the user.
+         */
+        skipped?: boolean;
+
+        /**
+         * Information about text being collected using a reader
+         */
+        text?: Input.Text;
+
+        /**
+         * List of toggles being collected. Values are present if collection is complete.
+         */
+        toggles: Array<Input.Toggle> | null;
+
+        /**
+         * Type of input being collected.
+         */
+        type: Input.Type;
       }
 
-      export namespace CollectInputs {
-        export interface Input {
+      export namespace Input {
+        export interface CustomText {
           /**
-           * Default text of input being collected.
+           * Customize the default description for this input
            */
-          custom_text: Input.CustomText | null;
+          description: string | null;
 
           /**
-           * Information about a email being collected using a reader
+           * Customize the default label for this input's skip button
            */
-          email?: Input.Email;
+          skip_button: string | null;
 
           /**
-           * Information about a number being collected using a reader
+           * Customize the default label for this input's submit button
            */
-          numeric?: Input.Numeric;
+          submit_button: string | null;
 
           /**
-           * Information about a phone number being collected using a reader
+           * Customize the default title for this input
            */
-          phone?: Input.Phone;
-
-          /**
-           * Indicate that this input is required, disabling the skip button.
-           */
-          required: boolean | null;
-
-          /**
-           * Information about a selection being collected using a reader
-           */
-          selection?: Input.Selection;
-
-          /**
-           * Information about a signature being collected using a reader
-           */
-          signature?: Input.Signature;
-
-          /**
-           * Indicate that this input was skipped by the user.
-           */
-          skipped?: boolean;
-
-          /**
-           * Information about text being collected using a reader
-           */
-          text?: Input.Text;
-
-          /**
-           * List of toggles being collected. Values are present if collection is complete.
-           */
-          toggles: Array<Input.Toggle> | null;
-
-          /**
-           * Type of input being collected.
-           */
-          type: Input.Type;
+          title: string | null;
         }
 
-        export namespace Input {
-          export interface CustomText {
-            /**
-             * Customize the default description for this input
-             */
-            description: string | null;
+        export interface Email {
+          /**
+           * The collected email address
+           */
+          value: string | null;
+        }
 
-            /**
-             * Customize the default label for this input's skip button
-             */
-            skip_button: string | null;
+        export interface Numeric {
+          /**
+           * The collected number
+           */
+          value: string | null;
+        }
 
-            /**
-             * Customize the default label for this input's submit button
-             */
-            submit_button: string | null;
+        export interface Phone {
+          /**
+           * The collected phone number
+           */
+          value: string | null;
+        }
 
-            /**
-             * Customize the default title for this input
-             */
-            title: string | null;
-          }
+        export interface Selection {
+          /**
+           * List of possible choices to be selected
+           */
+          choices: Array<Selection.Choice>;
 
-          export interface Email {
-            /**
-             * The collected email address
-             */
-            value: string | null;
-          }
+          /**
+           * The id of the selected choice
+           */
+          id: string | null;
 
-          export interface Numeric {
-            /**
-             * The collected number
-             */
-            value: string | null;
-          }
+          /**
+           * The text of the selected choice
+           */
+          text: string | null;
+        }
 
-          export interface Phone {
-            /**
-             * The collected phone number
-             */
-            value: string | null;
-          }
+        export interface Signature {
+          /**
+           * The File ID of a collected signature image
+           */
+          value: string | null;
+        }
 
-          export interface Selection {
-            /**
-             * List of possible choices to be selected
-             */
-            choices: Array<Selection.Choice>;
+        export interface Text {
+          /**
+           * The collected text value
+           */
+          value: string | null;
+        }
 
+        export interface Toggle {
+          /**
+           * The toggle's default value. Can be `enabled` or `disabled`.
+           */
+          default_value: Toggle.DefaultValue | null;
+
+          /**
+           * The toggle's description text. Maximum 50 characters.
+           */
+          description: string | null;
+
+          /**
+           * The toggle's title text. Maximum 50 characters.
+           */
+          title: string | null;
+
+          /**
+           * The toggle's collected value. Can be `enabled` or `disabled`.
+           */
+          value: Toggle.Value | null;
+        }
+
+        export type Type =
+          | 'email'
+          | 'numeric'
+          | 'phone'
+          | 'selection'
+          | 'signature'
+          | 'text';
+
+        export namespace Selection {
+          export interface Choice {
             /**
-             * The id of the selected choice
+             * The identifier for the selected choice. Maximum 50 characters.
              */
             id: string | null;
 
             /**
-             * The text of the selected choice
+             * The button style for the choice. Can be `primary` or `secondary`.
              */
-            text: string | null;
-          }
-
-          export interface Signature {
-            /**
-             * The File ID of a collected signature image
-             */
-            value: string | null;
-          }
-
-          export interface Text {
-            /**
-             * The collected text value
-             */
-            value: string | null;
-          }
-
-          export interface Toggle {
-            /**
-             * The toggle's default value. Can be `enabled` or `disabled`.
-             */
-            default_value: Toggle.DefaultValue | null;
+            style: Choice.Style | null;
 
             /**
-             * The toggle's description text. Maximum 50 characters.
+             * The text to be selected. Maximum 30 characters.
              */
-            description: string | null;
-
-            /**
-             * The toggle's title text. Maximum 50 characters.
-             */
-            title: string | null;
-
-            /**
-             * The toggle's collected value. Can be `enabled` or `disabled`.
-             */
-            value: Toggle.Value | null;
+            text: string;
           }
 
-          export type Type =
-            | 'email'
-            | 'numeric'
-            | 'phone'
-            | 'selection'
-            | 'signature'
-            | 'text';
-
-          export namespace Selection {
-            export interface Choice {
-              /**
-               * The identifier for the selected choice. Maximum 50 characters.
-               */
-              id: string | null;
-
-              /**
-               * The button style for the choice. Can be `primary` or `secondary`.
-               */
-              style: Choice.Style | null;
-
-              /**
-               * The text to be selected. Maximum 30 characters.
-               */
-              text: string;
-            }
-
-            export namespace Choice {
-              export type Style = 'primary' | 'secondary';
-            }
+          export namespace Choice {
+            export type Style = 'primary' | 'secondary';
           }
+        }
 
-          export namespace Toggle {
-            export type DefaultValue = 'disabled' | 'enabled';
+        export namespace Toggle {
+          export type DefaultValue = 'disabled' | 'enabled';
 
-            export type Value = 'disabled' | 'enabled';
-          }
+          export type Value = 'disabled' | 'enabled';
         }
       }
+    }
 
-      export namespace CollectPaymentMethod {
-        export interface CollectConfig {
-          /**
-           * Enable customer-initiated cancellation when processing this payment.
-           */
-          enable_customer_cancellation?: boolean;
+    export namespace CollectPaymentMethod {
+      export interface CollectConfig {
+        /**
+         * Enable customer-initiated cancellation when processing this payment.
+         */
+        enable_customer_cancellation?: boolean;
 
-          /**
-           * Override showing a tipping selection screen on this transaction.
-           */
-          skip_tipping?: boolean;
+        /**
+         * Override showing a tipping selection screen on this transaction.
+         */
+        skip_tipping?: boolean;
 
-          /**
-           * Represents a per-transaction tipping configuration
-           */
-          tipping?: CollectConfig.Tipping;
-        }
-
-        export namespace CollectConfig {
-          export interface Tipping {
-            /**
-             * Amount used to calculate tip suggestions on tipping selection screen for this transaction. Must be a positive integer in the smallest currency unit (e.g., 100 cents to represent $1.00 or 100 to represent ¥100, a zero-decimal currency).
-             */
-            amount_eligible?: number;
-          }
-        }
+        /**
+         * Represents a per-transaction tipping configuration
+         */
+        tipping?: CollectConfig.Tipping;
       }
 
-      export namespace ConfirmPaymentIntent {
-        export interface ConfirmConfig {
+      export namespace CollectConfig {
+        export interface Tipping {
           /**
-           * If the customer doesn't abandon authenticating the payment, they're redirected to this URL after completion.
+           * Amount used to calculate tip suggestions on tipping selection screen for this transaction. Must be a positive integer in the smallest currency unit (e.g., 100 cents to represent $1.00 or 100 to represent ¥100, a zero-decimal currency).
            */
-          return_url?: string;
+          amount_eligible?: number;
         }
       }
+    }
 
-      export namespace PrintContent {
-        export interface Image {
-          /**
-           * Creation time of the object (in seconds since the Unix epoch).
-           */
-          created_at: number;
+    export namespace ConfirmPaymentIntent {
+      export interface ConfirmConfig {
+        /**
+         * If the customer doesn't abandon authenticating the payment, they're redirected to this URL after completion.
+         */
+        return_url?: string;
+      }
+    }
 
-          /**
-           * The original name of the uploaded file (e.g. `receipt.png`).
-           */
-          filename: string;
+    export namespace PrintContent {
+      export interface Image {
+        /**
+         * Creation time of the object (in seconds since the Unix epoch).
+         */
+        created_at: number;
 
-          /**
-           * The size (in bytes) of the uploaded file.
-           */
-          size: number;
+        /**
+         * The original name of the uploaded file (e.g. `receipt.png`).
+         */
+        filename: string;
 
-          /**
-           * The format of the uploaded file.
-           */
-          type: string;
-        }
+        /**
+         * The size (in bytes) of the uploaded file.
+         */
+        size: number;
+
+        /**
+         * The format of the uploaded file.
+         */
+        type: string;
+      }
+    }
+
+    export namespace ProcessPaymentIntent {
+      export interface ProcessConfig {
+        /**
+         * Enable customer-initiated cancellation when processing this payment.
+         */
+        enable_customer_cancellation?: boolean;
+
+        /**
+         * If the customer doesn't abandon authenticating the payment, they're redirected to this URL after completion.
+         */
+        return_url?: string;
+
+        /**
+         * Override showing a tipping selection screen on this transaction.
+         */
+        skip_tipping?: boolean;
+
+        /**
+         * Represents a per-transaction tipping configuration
+         */
+        tipping?: ProcessConfig.Tipping;
       }
 
-      export namespace ProcessPaymentIntent {
-        export interface ProcessConfig {
+      export namespace ProcessConfig {
+        export interface Tipping {
           /**
-           * Enable customer-initiated cancellation when processing this payment.
+           * Amount used to calculate tip suggestions on tipping selection screen for this transaction. Must be a positive integer in the smallest currency unit (e.g., 100 cents to represent $1.00 or 100 to represent ¥100, a zero-decimal currency).
            */
-          enable_customer_cancellation?: boolean;
-
-          /**
-           * If the customer doesn't abandon authenticating the payment, they're redirected to this URL after completion.
-           */
-          return_url?: string;
-
-          /**
-           * Override showing a tipping selection screen on this transaction.
-           */
-          skip_tipping?: boolean;
-
-          /**
-           * Represents a per-transaction tipping configuration
-           */
-          tipping?: ProcessConfig.Tipping;
-        }
-
-        export namespace ProcessConfig {
-          export interface Tipping {
-            /**
-             * Amount used to calculate tip suggestions on tipping selection screen for this transaction. Must be a positive integer in the smallest currency unit (e.g., 100 cents to represent $1.00 or 100 to represent ¥100, a zero-decimal currency).
-             */
-            amount_eligible?: number;
-          }
+          amount_eligible?: number;
         }
       }
+    }
 
-      export namespace ProcessSetupIntent {
-        export interface ProcessConfig {
-          /**
-           * Enable customer-initiated cancellation when processing this SetupIntent.
-           */
-          enable_customer_cancellation?: boolean;
-        }
+    export namespace ProcessSetupIntent {
+      export interface ProcessConfig {
+        /**
+         * Enable customer-initiated cancellation when processing this SetupIntent.
+         */
+        enable_customer_cancellation?: boolean;
+      }
+    }
+
+    export namespace RefundPayment {
+      export type Reason = 'duplicate' | 'fraudulent' | 'requested_by_customer';
+
+      export interface RefundPaymentConfig {
+        /**
+         * Enable customer-initiated cancellation when refunding this payment.
+         */
+        enable_customer_cancellation?: boolean;
+      }
+    }
+
+    export namespace SetReaderDisplay {
+      export interface Cart {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * List of line items in the cart.
+         */
+        line_items: Array<Cart.LineItem>;
+
+        /**
+         * Tax amount for the entire cart. A positive integer in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+         */
+        tax: number | null;
+
+        /**
+         * Total amount for the entire cart, including tax. A positive integer in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+         */
+        total: number;
       }
 
-      export namespace RefundPayment {
-        export type Reason =
-          | 'duplicate'
-          | 'fraudulent'
-          | 'requested_by_customer';
-
-        export interface RefundPaymentConfig {
+      export namespace Cart {
+        export interface LineItem {
           /**
-           * Enable customer-initiated cancellation when refunding this payment.
+           * The amount of the line item. A positive integer in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
-          enable_customer_cancellation?: boolean;
-        }
-      }
-
-      export namespace SetReaderDisplay {
-        export interface Cart {
-          /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-           */
-          currency: string;
+          amount: number;
 
           /**
-           * List of line items in the cart.
+           * Description of the line item.
            */
-          line_items: Array<Cart.LineItem>;
+          description: string;
 
           /**
-           * Tax amount for the entire cart. A positive integer in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+           * The quantity of the line item.
            */
-          tax: number | null;
-
-          /**
-           * Total amount for the entire cart, including tax. A positive integer in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
-           */
-          total: number;
-        }
-
-        export namespace Cart {
-          export interface LineItem {
-            /**
-             * The amount of the line item. A positive integer in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
-             */
-            amount: number;
-
-            /**
-             * Description of the line item.
-             */
-            description: string;
-
-            /**
-             * The quantity of the line item.
-             */
-            quantity: number;
-          }
+          quantity: number;
         }
       }
     }

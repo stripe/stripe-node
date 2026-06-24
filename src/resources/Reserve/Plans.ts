@@ -40,7 +40,7 @@ export interface Plan {
   /**
    * Indicates which party created this ReservePlan.
    */
-  created_by: Reserve.Plan.CreatedBy;
+  created_by: Plan.CreatedBy;
 
   /**
    * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). An unset currency indicates that the plan applies to all currencies.
@@ -52,7 +52,7 @@ export interface Plan {
    */
   disabled_at: number | null;
 
-  fixed_release?: Reserve.Plan.FixedRelease;
+  fixed_release?: Plan.FixedRelease;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -69,50 +69,48 @@ export interface Plan {
    */
   percent: number;
 
-  rolling_release?: Reserve.Plan.RollingRelease;
+  rolling_release?: Plan.RollingRelease;
 
   /**
    * The current status of the ReservePlan. The ReservePlan only affects charges if it is `active`.
    */
-  status: Reserve.Plan.Status;
+  status: Plan.Status;
 
   /**
    * The type of the ReservePlan.
    */
-  type: Reserve.Plan.Type;
+  type: Plan.Type;
 }
-export namespace Reserve {
-  export namespace Plan {
-    export type CreatedBy = 'application' | 'stripe';
+export namespace Plan {
+  export type CreatedBy = 'application' | 'stripe';
 
-    export interface FixedRelease {
-      /**
-       * The time after which all reserved funds are requested for release.
-       */
-      release_after: number;
+  export interface FixedRelease {
+    /**
+     * The time after which all reserved funds are requested for release.
+     */
+    release_after: number;
 
-      /**
-       * The time at which reserved funds are scheduled for release, automatically set to midnight UTC of the day after `release_after`.
-       */
-      scheduled_release: number;
-    }
-
-    export interface RollingRelease {
-      /**
-       * The number of days to reserve funds before releasing.
-       */
-      days_after_charge: number;
-
-      /**
-       * The time at which the ReservePlan expires.
-       */
-      expires_on: number | null;
-    }
-
-    export type Status = 'active' | 'disabled' | 'expired';
-
-    export type Type = 'fixed_release' | 'rolling_release';
+    /**
+     * The time at which reserved funds are scheduled for release, automatically set to midnight UTC of the day after `release_after`.
+     */
+    scheduled_release: number;
   }
+
+  export interface RollingRelease {
+    /**
+     * The number of days to reserve funds before releasing.
+     */
+    days_after_charge: number;
+
+    /**
+     * The time at which the ReservePlan expires.
+     */
+    expires_on: number | null;
+  }
+
+  export type Status = 'active' | 'disabled' | 'expired';
+
+  export type Type = 'fixed_release' | 'rolling_release';
 }
 export namespace Reserve {
   export interface PlanRetrieveParams {

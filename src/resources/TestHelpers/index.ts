@@ -20,6 +20,7 @@ import {
 import {
   TestHelpers as TestHelpersNamespace4,
   TestClock,
+  DeletedTestClock,
   TestClockResource,
 } from './TestClocks.js';
 import {Capital} from './Capital/index.js';

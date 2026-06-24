@@ -29,11 +29,13 @@ import {
 import {
   Radar as RadarNamespace5,
   ValueList,
+  DeletedValueList,
   ValueListResource,
 } from './ValueLists.js';
 import {
   Radar as RadarNamespace6,
   ValueListItem,
+  DeletedValueListItem,
   ValueListItemResource,
 } from './ValueListItems.js';
 

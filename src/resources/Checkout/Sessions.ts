@@ -752,12 +752,12 @@ export interface Session {
   /**
    * Settings for price localization with [Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing).
    */
-  adaptive_pricing: Checkout.Session.AdaptivePricing | null;
+  adaptive_pricing: Session.AdaptivePricing | null;
 
   /**
    * When set, provides configuration for actions to take if this Checkout Session expires.
    */
-  after_expiration: Checkout.Session.AfterExpiration | null;
+  after_expiration: Session.AfterExpiration | null;
 
   /**
    * Enables user redeemable promotion codes.
@@ -790,9 +790,9 @@ export interface Session {
   /**
    * Describes whether Checkout should collect the customer's billing address. Defaults to `auto`.
    */
-  billing_address_collection: Checkout.Session.BillingAddressCollection | null;
+  billing_address_collection: Session.BillingAddressCollection | null;
 
-  branding_settings?: Checkout.Session.BrandingSettings;
+  branding_settings?: Session.BrandingSettings;
 
   /**
    * If set, Checkout displays a back button and customers will be directed to this URL if they decide to cancel payment and return to your website.
@@ -817,17 +817,17 @@ export interface Session {
   /**
    * Information about the customer collected within the Checkout Session.
    */
-  collected_information: Checkout.Session.CollectedInformation | null;
+  collected_information: Session.CollectedInformation | null;
 
   /**
    * Results of `consent_collection` for this session.
    */
-  consent: Checkout.Session.Consent | null;
+  consent: Session.Consent | null;
 
   /**
    * When set, provides configuration for the Checkout Session to gather active consent from customers.
    */
-  consent_collection: Checkout.Session.ConsentCollection | null;
+  consent_collection: Session.ConsentCollection | null;
 
   /**
    * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -842,7 +842,7 @@ export interface Session {
   /**
    * Currency conversion details for [Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing) sessions created before 2025-03-31.
    */
-  currency_conversion: Checkout.Session.CurrencyConversion | null;
+  currency_conversion: Session.CurrencyConversion | null;
 
   /**
    * The customer's pending attempt to pay that requires your approval. Contains information about the customer and their payment details.
@@ -852,7 +852,7 @@ export interface Session {
   /**
    * Collect additional information from your customer using custom fields. Up to 3 fields are supported. You can't set this parameter if `ui_mode` is `custom`.
    */
-  custom_fields: Array<Checkout.Session.CustomField>;
+  custom_fields: Array<Session.CustomField>;
 
   /**
    * A list of the types of [custom payment methods](https://docs.stripe.com/payments/payment-methods/custom-payment-methods) (e.g. cpmt_123) this Checkout
@@ -879,12 +879,12 @@ export interface Session {
   /**
    * Configure whether a Checkout Session creates a Customer when the Checkout Session completes.
    */
-  customer_creation: Checkout.Session.CustomerCreation | null;
+  customer_creation: Session.CustomerCreation | null;
 
   /**
    * The customer details including the customer's tax exempt status and the customer's tax IDs. Customer's address details are not present on Sessions in `setup` mode.
    */
-  customer_details: Checkout.Session.CustomerDetails | null;
+  customer_details: Session.CustomerDetails | null;
 
   /**
    * If provided, this value will be used when the Customer object is created.
@@ -898,7 +898,7 @@ export interface Session {
   /**
    * List of coupons and promotion codes attached to the Checkout Session.
    */
-  discounts: Array<Checkout.Session.Discount> | null;
+  discounts: Array<Session.Discount> | null;
 
   /**
    * A list of the types of payment methods (e.g., `card`) that should be excluded from this Checkout Session. This should only be used when payment methods for this Checkout Session are managed through the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
@@ -923,7 +923,7 @@ export interface Session {
   /**
    * Details on the state of invoice creation for the Checkout Session.
    */
-  invoice_creation: Checkout.Session.InvoiceCreation | null;
+  invoice_creation: Session.InvoiceCreation | null;
 
   /**
    * The line items purchased by the customer.
@@ -938,12 +938,12 @@ export interface Session {
   /**
    * The IETF language tag of the locale Checkout is displayed in. If blank or `auto`, the browser's locale is used.
    */
-  locale: Checkout.Session.Locale | null;
+  locale: Session.Locale | null;
 
   /**
    * Settings for Managed Payments for this Checkout Session and resulting [PaymentIntents](https://docs.stripe.com/api/payment_intents/object), [Invoices](https://docs.stripe.com/api/invoices/object), and [Subscriptions](https://docs.stripe.com/api/subscriptions/object).
    */
-  managed_payments: Checkout.Session.ManagedPayments | null;
+  managed_payments: Session.ManagedPayments | null;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -953,19 +953,19 @@ export interface Session {
   /**
    * The mode of the Checkout Session.
    */
-  mode: Checkout.Session.Mode;
+  mode: Session.Mode;
 
-  name_collection?: Checkout.Session.NameCollection;
+  name_collection?: Session.NameCollection;
 
   /**
    * The optional items presented to the customer at checkout.
    */
-  optional_items?: Array<Checkout.Session.OptionalItem> | null;
+  optional_items?: Array<Session.OptionalItem> | null;
 
   /**
    * Where the user is coming from. This informs the optimizations that are applied to the session.
    */
-  origin_context: Checkout.Session.OriginContext | null;
+  origin_context: Session.OriginContext | null;
 
   /**
    * The ID of the PaymentIntent for Checkout Sessions in `payment` mode. You can't confirm or cancel the PaymentIntent for a Checkout Session. To cancel, [expire the Checkout Session](https://docs.stripe.com/api/checkout/sessions/expire) instead.
@@ -980,17 +980,17 @@ export interface Session {
   /**
    * Configure whether a Checkout Session should collect a payment method. Defaults to `always`.
    */
-  payment_method_collection: Checkout.Session.PaymentMethodCollection | null;
+  payment_method_collection: Session.PaymentMethodCollection | null;
 
   /**
    * Information about the payment method configuration used for this Checkout session if using dynamic payment methods.
    */
-  payment_method_configuration_details: Checkout.Session.PaymentMethodConfigurationDetails | null;
+  payment_method_configuration_details: Session.PaymentMethodConfigurationDetails | null;
 
   /**
    * Payment-method-specific configuration for the PaymentIntent or SetupIntent of this CheckoutSession.
    */
-  payment_method_options: Checkout.Session.PaymentMethodOptions | null;
+  payment_method_options: Session.PaymentMethodOptions | null;
 
   /**
    * A list of the types of payment methods (e.g. card) this Checkout
@@ -1007,18 +1007,18 @@ export interface Session {
    * The payment status of the Checkout Session, one of `paid`, `unpaid`, or `no_payment_required`.
    * You can use this value to decide when to fulfill your customer's order.
    */
-  payment_status: Checkout.Session.PaymentStatus;
+  payment_status: Session.PaymentStatus;
 
   /**
    * This property is used to set up permissions for various actions (e.g., update) on the CheckoutSession object.
    *
    * For specific permissions, please refer to their dedicated subsections, such as `permissions.update_shipping_details`.
    */
-  permissions: Checkout.Session.Permissions | null;
+  permissions: Session.Permissions | null;
 
-  phone_number_collection?: Checkout.Session.PhoneNumberCollection;
+  phone_number_collection?: Session.PhoneNumberCollection;
 
-  presentment_details?: Checkout.Session.PresentmentDetails;
+  presentment_details?: Session.PresentmentDetails;
 
   /**
    * The ID of the original expired Checkout Session that triggered the recovery flow.
@@ -1028,7 +1028,7 @@ export interface Session {
   /**
    * This parameter applies to `ui_mode: embedded_page`. Learn more about the [redirect behavior](https://docs.stripe.com/payments/checkout/custom-success-page?payment-ui=embedded-form) of embedded sessions. Defaults to `always`.
    */
-  redirect_on_completion?: Checkout.Session.RedirectOnCompletion;
+  redirect_on_completion?: Session.RedirectOnCompletion;
 
   /**
    * Applies to Checkout Sessions with `ui_mode: embedded_page` or `ui_mode: elements`. The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site.
@@ -1038,7 +1038,7 @@ export interface Session {
   /**
    * Controls saved payment method settings for the session. Only available in `payment` and `subscription` mode.
    */
-  saved_payment_method_options: Checkout.Session.SavedPaymentMethodOptions | null;
+  saved_payment_method_options: Session.SavedPaymentMethodOptions | null;
 
   /**
    * The ID of the SetupIntent for Checkout Sessions in `setup` mode. You can't confirm or cancel the SetupIntent for a Checkout Session. To cancel, [expire the Checkout Session](https://docs.stripe.com/api/checkout/sessions/expire) instead.
@@ -1048,29 +1048,29 @@ export interface Session {
   /**
    * When set, provides configuration for Checkout to collect a shipping address from a customer.
    */
-  shipping_address_collection: Checkout.Session.ShippingAddressCollection | null;
+  shipping_address_collection: Session.ShippingAddressCollection | null;
 
   /**
    * The details of the customer cost of shipping, including the customer chosen ShippingRate.
    */
-  shipping_cost: Checkout.Session.ShippingCost | null;
+  shipping_cost: Session.ShippingCost | null;
 
   /**
    * The shipping rate options applied to this Session.
    */
-  shipping_options: Array<Checkout.Session.ShippingOption>;
+  shipping_options: Array<Session.ShippingOption>;
 
   /**
    * The status of the Checkout Session, one of `open`, `complete`, or `expired`.
    */
-  status: Checkout.Session.Status | null;
+  status: Session.Status | null;
 
   /**
    * Describes the type of transaction being performed by Checkout in order to customize
    * relevant text on the page, such as the submit button. `submit_type` can only be
    * specified on Checkout Sessions in `payment` mode. If blank or `auto`, `pay` is used.
    */
-  submit_type: Checkout.Session.SubmitType | null;
+  submit_type: Session.SubmitType | null;
 
   /**
    * The ID of the [Subscription](https://docs.stripe.com/api/subscriptions) for Checkout Sessions in `subscription` mode.
@@ -1090,12 +1090,12 @@ export interface Session {
   /**
    * Tax and discount details for the computed total amount.
    */
-  total_details: Checkout.Session.TotalDetails | null;
+  total_details: Session.TotalDetails | null;
 
   /**
    * The UI mode of the Session. Defaults to `hosted_page`.
    */
-  ui_mode: Checkout.Session.UiMode | null;
+  ui_mode: Session.UiMode | null;
 
   /**
    * The URL to the Checkout Session. Applies to Checkout Sessions with `ui_mode: hosted_page`. Redirect customers to this URL to take them to Checkout. If you're using [Custom Domains](https://docs.stripe.com/payments/checkout/custom-domains), the URL will use your subdomain. Otherwise, it'll use `checkout.stripe.com.`
@@ -1106,23 +1106,22 @@ export interface Session {
   /**
    * Wallet-specific configuration for this Checkout Session.
    */
-  wallet_options: Checkout.Session.WalletOptions | null;
+  wallet_options: Session.WalletOptions | null;
 }
-export namespace Checkout {
-  export namespace Session {
-    export interface AdaptivePricing {
-      /**
-       * If enabled, Adaptive Pricing is available on [eligible sessions](https://docs.stripe.com/payments/currencies/localize-prices/adaptive-pricing?payment-ui=stripe-hosted#restrictions).
-       */
-      enabled: boolean;
-    }
+export namespace Session {
+  export interface AdaptivePricing {
+    /**
+     * If enabled, Adaptive Pricing is available on [eligible sessions](https://docs.stripe.com/payments/currencies/localize-prices/adaptive-pricing?payment-ui=stripe-hosted#restrictions).
+     */
+    enabled: boolean;
+  }
 
-    export interface AfterExpiration {
-      /**
-       * When set, configuration used to recover the Checkout Session on expiry.
-       */
-      recovery: AfterExpiration.Recovery | null;
-    }
+  export interface AfterExpiration {
+    /**
+     * When set, configuration used to recover the Checkout Session on expiry.
+     */
+    recovery: AfterExpiration.Recovery | null;
+  }
 
     export type ApprovalMethod = 'auto' | 'manual';
 
@@ -1155,63 +1154,67 @@ export namespace Checkout {
 
     export interface AutomaticTax {
       /**
-       * Indicates whether automatic tax is enabled for the session
+       * Enables user redeemable promotion codes on the recovered Checkout Sessions. Defaults to `false`
+       */
+      allow_promotion_codes: boolean;
+
+      /**
+       * If `true`, a recovery url will be generated to recover this Checkout Session if it
+       * expires before a transaction is completed. It will be attached to the
+       * Checkout Session object upon expiration.
        */
       enabled: boolean;
 
       /**
-       * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
+       * The timestamp at which the recovery URL will expire.
        */
-      liability: AutomaticTax.Liability | null;
+      expires_at: number | null;
 
       /**
-       * The tax provider powering automatic tax.
+       * URL that creates a new Checkout Session when clicked that is a copy of this expired Checkout Session
        */
-      provider: string | null;
+      url: string | null;
+    }
+  }
+
+  export namespace AutomaticTax {
+    export interface Liability {
+      /**
+       * The connected account being referenced when `type` is `account`.
+       */
+      account?: string | Account;
 
       /**
-       * The status of the most recent automated tax calculation for this session.
+       * Type of the account referenced.
        */
-      status: AutomaticTax.Status | null;
+      type: Liability.Type;
     }
 
-    export type BillingAddressCollection = 'auto' | 'required';
+    export type Status = 'complete' | 'failed' | 'requires_location_inputs';
 
-    export interface BrandingSettings {
-      /**
-       * A hex color value starting with `#` representing the background color for the Checkout Session.
-       */
-      background_color: string;
+    export namespace Liability {
+      export type Type = 'account' | 'self';
+    }
+  }
 
-      /**
-       * The border style for the Checkout Session. Must be one of `rounded`, `rectangular`, or `pill`.
-       */
-      border_style: BrandingSettings.BorderStyle;
+  export namespace BrandingSettings {
+    export type BorderStyle = 'pill' | 'rectangular' | 'rounded';
 
+    export interface Icon {
       /**
-       * A hex color value starting with `#` representing the button color for the Checkout Session.
+       * The ID of a [File upload](https://stripe.com/docs/api/files) representing the icon. Purpose must be `business_icon`. Required if `type` is `file` and disallowed otherwise.
        */
-      button_color: string;
+      file?: string;
 
       /**
-       * The display name shown on the Checkout Session.
+       * The type of image for the icon. Must be one of `file` or `url`.
        */
-      display_name: string;
+      type: Icon.Type;
 
       /**
-       * The font family for the Checkout Session. Must be one of the [supported font families](https://docs.stripe.com/payments/checkout/customization/appearance?payment-ui=stripe-hosted#font-compatibility).
+       * The URL of the image. Present when `type` is `url`.
        */
-      font_family: string;
-
-      /**
-       * The icon for the Checkout Session. You cannot set both `logo` and `icon`.
-       */
-      icon: BrandingSettings.Icon | null;
-
-      /**
-       * The logo for the Checkout Session. You cannot set both `logo` and `icon`.
-       */
-      logo: BrandingSettings.Logo | null;
+      url?: string;
     }
 
     export interface CheckoutItem {
@@ -1224,9 +1227,9 @@ export namespace Checkout {
 
     export interface CollectedInformation {
       /**
-       * Customer's business name for this Checkout Session
+       * The ID of a [File upload](https://stripe.com/docs/api/files) representing the logo. Purpose must be `business_logo`. Required if `type` is `file` and disallowed otherwise.
        */
-      business_name: string | null;
+      file?: string;
 
       /**
        * Customer's email for this Checkout Session
@@ -1236,7 +1239,7 @@ export namespace Checkout {
       /**
        * Customer's individual name for this Checkout Session
        */
-      individual_name: string | null;
+      type: Logo.Type;
 
       /**
        * Customer's phone number for this Checkout Session
@@ -1254,59 +1257,25 @@ export namespace Checkout {
       tax_ids?: Array<CollectedInformation.TaxId> | null;
     }
 
-    export interface Consent {
-      /**
-       * If `opt_in`, the customer consents to receiving promotional communications
-       * from the merchant about this Checkout Session.
-       */
-      promotions: Consent.Promotions | null;
-
-      /**
-       * If `accepted`, the customer in this Checkout Session has agreed to the merchant's terms of service.
-       */
-      terms_of_service: 'accepted' | null;
+    export namespace Icon {
+      export type Type = 'file' | 'url';
     }
 
-    export interface ConsentCollection {
-      /**
-       * If set to `hidden`, it will hide legal text related to the reuse of a payment method.
-       */
-      payment_method_reuse_agreement: ConsentCollection.PaymentMethodReuseAgreement | null;
-
-      /**
-       * If set to `auto`, enables the collection of customer consent for promotional communications. The Checkout
-       * Session will determine whether to display an option to opt into promotional communication
-       * from the merchant depending on the customer's locale. Only available to US merchants and US customers.
-       */
-      promotions: ConsentCollection.Promotions | null;
-
-      /**
-       * If set to `required`, it requires customers to accept the terms of service before being able to pay.
-       */
-      terms_of_service: ConsentCollection.TermsOfService | null;
+    export namespace Logo {
+      export type Type = 'file' | 'url';
     }
+  }
 
-    export interface CurrencyConversion {
-      /**
-       * Total of all items in source currency before discounts or taxes are applied.
-       */
-      amount_subtotal: number;
-
-      /**
-       * Total of all items in source currency after discounts and taxes are applied.
-       */
-      amount_total: number;
+  export namespace CollectedInformation {
+    export interface ShippingDetails {
+      address: Address;
 
       /**
-       * Exchange rate used to convert source currency amounts to customer currency amounts
+       * Customer name.
        */
-      fx_rate: Decimal;
-
-      /**
-       * Creation currency of the CheckoutSession before localization
-       */
-      source_currency: string;
+      name: string;
     }
+  }
 
     export interface CurrentAttempt {
       /**
@@ -1343,6 +1312,8 @@ export namespace Checkout {
     export interface CustomField {
       dropdown?: CustomField.Dropdown;
 
+  export namespace ConsentCollection {
+    export interface PaymentMethodReuseAgreement {
       /**
        * String of your choice that your integration can use to reconcile this field. Must be unique to this field, alphanumeric, and up to 200 characters.
        */
@@ -1647,93 +1618,232 @@ export namespace Checkout {
       /**
        * Determines which entity is allowed to update the shipping details.
        *
-       * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
-       *
-       * When set to `server_only`, you must add the onShippingDetailsChange event handler when initializing the Stripe Checkout client and manually update the shipping details from your server using the Stripe API.
+       * When set to `hidden`, the payment method reuse agreement text will always be hidden in the UI.
        */
-      update_shipping_details: Permissions.UpdateShippingDetails | null;
+      position: PaymentMethodReuseAgreement.Position;
     }
 
-    export interface PhoneNumberCollection {
+    export type Promotions = 'auto' | 'none';
+
+    export type TermsOfService = 'none' | 'required';
+
+    export namespace PaymentMethodReuseAgreement {
+      export type Position = 'auto' | 'hidden';
+    }
+  }
+
+  export namespace CustomerDetails {
+    export type TaxExempt = 'exempt' | 'none' | 'reverse';
+
+    export interface TaxId {
       /**
-       * Indicates whether phone number collection is enabled for the session
+       * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `pl_nip`, `it_cf`, `fo_vat`, `gi_tin`, `py_ruc`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `lk_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, or `unknown`
        */
-      enabled: boolean;
+      type: TaxId.Type;
+
+      /**
+       * The value of the tax ID.
+       */
+      value: string | null;
     }
 
-    export interface PresentmentDetails {
+    export namespace TaxId {
+      export type Type =
+        | 'ad_nrt'
+        | 'ae_trn'
+        | 'al_tin'
+        | 'am_tin'
+        | 'ao_tin'
+        | 'ar_cuit'
+        | 'au_abn'
+        | 'au_arn'
+        | 'aw_tin'
+        | 'az_tin'
+        | 'ba_tin'
+        | 'bb_tin'
+        | 'bd_bin'
+        | 'bf_ifu'
+        | 'bg_uic'
+        | 'bh_vat'
+        | 'bj_ifu'
+        | 'bo_tin'
+        | 'br_cnpj'
+        | 'br_cpf'
+        | 'bs_tin'
+        | 'by_tin'
+        | 'ca_bn'
+        | 'ca_gst_hst'
+        | 'ca_pst_bc'
+        | 'ca_pst_mb'
+        | 'ca_pst_sk'
+        | 'ca_qst'
+        | 'cd_nif'
+        | 'ch_uid'
+        | 'ch_vat'
+        | 'cl_tin'
+        | 'cm_niu'
+        | 'cn_tin'
+        | 'co_nit'
+        | 'cr_tin'
+        | 'cv_nif'
+        | 'de_stn'
+        | 'do_rcn'
+        | 'ec_ruc'
+        | 'eg_tin'
+        | 'es_cif'
+        | 'et_tin'
+        | 'eu_oss_vat'
+        | 'eu_vat'
+        | 'fo_vat'
+        | 'gb_vat'
+        | 'ge_vat'
+        | 'gi_tin'
+        | 'gn_nif'
+        | 'hk_br'
+        | 'hr_oib'
+        | 'hu_tin'
+        | 'id_npwp'
+        | 'il_vat'
+        | 'in_gst'
+        | 'is_vat'
+        | 'it_cf'
+        | 'jp_cn'
+        | 'jp_rn'
+        | 'jp_trn'
+        | 'ke_pin'
+        | 'kg_tin'
+        | 'kh_tin'
+        | 'kr_brn'
+        | 'kz_bin'
+        | 'la_tin'
+        | 'li_uid'
+        | 'li_vat'
+        | 'lk_vat'
+        | 'ma_vat'
+        | 'md_vat'
+        | 'me_pib'
+        | 'mk_vat'
+        | 'mr_nif'
+        | 'mx_rfc'
+        | 'my_frp'
+        | 'my_itn'
+        | 'my_sst'
+        | 'ng_tin'
+        | 'no_vat'
+        | 'no_voec'
+        | 'np_pan'
+        | 'nz_gst'
+        | 'om_vat'
+        | 'pe_ruc'
+        | 'ph_tin'
+        | 'pl_nip'
+        | 'py_ruc'
+        | 'ro_tin'
+        | 'rs_pib'
+        | 'ru_inn'
+        | 'ru_kpp'
+        | 'sa_vat'
+        | 'sg_gst'
+        | 'sg_uen'
+        | 'si_tin'
+        | 'sn_ninea'
+        | 'sr_fin'
+        | 'sv_nit'
+        | 'th_vat'
+        | 'tj_tin'
+        | 'tr_tin'
+        | 'tw_vat'
+        | 'tz_vat'
+        | 'ua_vat'
+        | 'ug_tin'
+        | 'unknown'
+        | 'us_ein'
+        | 'uy_ruc'
+        | 'uz_tin'
+        | 'uz_vat'
+        | 've_rif'
+        | 'vn_tin'
+        | 'za_vat'
+        | 'zm_tin'
+        | 'zw_tin';
+    }
+  }
+
+  export namespace CustomField {
+    export interface Dropdown {
       /**
-       * Amount intended to be collected by this payment, denominated in `presentment_currency`.
+       * The value that pre-fills on the payment page.
        */
-      presentment_amount: number;
+      default_value: string | null;
 
       /**
-       * Currency presented to the customer during payment.
+       * The options available for the customer to select. Up to 200 options allowed.
        */
-      presentment_currency: string;
+      options: Array<Dropdown.Option>;
+
+      /**
+       * The option selected by the customer. This will be the `value` for the option.
+       */
+      value: string | null;
     }
 
-    export type RedirectOnCompletion = 'always' | 'if_required' | 'never';
-
-    export interface SavedPaymentMethodOptions {
+    export interface Label {
       /**
-       * Uses the `allow_redisplay` value of each saved payment method to filter the set presented to a returning customer. By default, only saved payment methods with 'allow_redisplay: ‘always' are shown in Checkout.
+       * Custom text for the label, displayed to the customer. Up to 50 characters.
        */
-      allow_redisplay_filters: Array<
-        SavedPaymentMethodOptions.AllowRedisplayFilter
-      > | null;
+      custom: string | null;
 
       /**
-       * Enable customers to choose if they wish to remove their saved payment methods. Disabled by default.
+       * The type of the label.
        */
-      payment_method_remove: SavedPaymentMethodOptions.PaymentMethodRemove | null;
-
-      /**
-       * Enable customers to choose if they wish to save their payment method for future use. Disabled by default.
-       */
-      payment_method_save: SavedPaymentMethodOptions.PaymentMethodSave | null;
+      type: 'custom';
     }
 
-    export interface ShippingAddressCollection {
+    export interface Numeric {
       /**
-       * An array of two-letter ISO country codes representing which countries Checkout should provide as options for
-       * shipping locations. Unsupported country codes: `AS, CX, CC, CU, HM, IR, KP, MH, FM, NF, MP, PW, SY, UM, VI`.
+       * The value that pre-fills the field on the payment page.
        */
-      allowed_countries: Array<ShippingAddressCollection.AllowedCountry>;
+      default_value: string | null;
+
+      /**
+       * The maximum character length constraint for the customer's input.
+       */
+      maximum_length: number | null;
+
+      /**
+       * The minimum character length requirement for the customer's input.
+       */
+      minimum_length: number | null;
+
+      /**
+       * The value entered by the customer, containing only digits.
+       */
+      value: string | null;
     }
 
-    export interface ShippingCost {
+    export interface Text {
       /**
-       * Total shipping cost before any discounts or taxes are applied.
+       * The value that pre-fills the field on the payment page.
        */
-      amount_subtotal: number;
+      default_value: string | null;
 
       /**
-       * Total tax amount applied due to shipping costs. If no tax was applied, defaults to 0.
+       * The maximum character length constraint for the customer's input.
        */
-      amount_tax: number;
+      maximum_length: number | null;
 
       /**
-       * Total shipping cost after discounts and taxes are applied.
+       * The minimum character length requirement for the customer's input.
        */
-      amount_total: number;
+      minimum_length: number | null;
 
       /**
-       * The ID of the ShippingRate for this order.
+       * The value entered by the customer.
        */
-      shipping_rate: string | ShippingRate | null;
-
-      /**
-       * The taxes applied to the shipping rate.
-       */
-      taxes?: Array<ShippingCost.Tax>;
+      value: string | null;
     }
 
-    export interface ShippingOption {
-      /**
-       * A non-negative integer in cents representing how much to charge.
-       */
-      shipping_amount: number;
+    export type Type = 'dropdown' | 'numeric' | 'text';
 
       /**
        * The shipping rate.
@@ -1807,28 +1917,17 @@ export namespace Checkout {
     export namespace AfterExpiration {
       export interface Recovery {
         /**
-         * Enables user redeemable promotion codes on the recovered Checkout Sessions. Defaults to `false`
+         * The label for the option, displayed to the customer. Up to 100 characters.
          */
-        allow_promotion_codes: boolean;
+        label: string;
 
         /**
-         * If `true`, a recovery url will be generated to recover this Checkout Session if it
-         * expires before a transaction is completed. It will be attached to the
-         * Checkout Session object upon expiration.
+         * The value for this option, not displayed to the customer, used by your integration to reconcile the option selected by the customer. Must be unique to this option, alphanumeric, and up to 100 characters.
          */
-        enabled: boolean;
-
-        /**
-         * The timestamp at which the recovery URL will expire.
-         */
-        expires_at: number | null;
-
-        /**
-         * URL that creates a new Checkout Session when clicked that is a copy of this expired Checkout Session
-         */
-        url: string | null;
+        value: string;
       }
     }
+  }
 
     export namespace AutomaticSurcharge {
       export type CalculationBasis = 'total_after_tax' | 'total_before_tax';
@@ -1850,59 +1949,840 @@ export namespace Checkout {
         /**
          * Type of the account referenced.
          */
-        type: Liability.Type;
+        type: Issuer.Type;
       }
 
-      export type Status = 'complete' | 'failed' | 'requires_location_inputs';
+      export interface RenderingOptions {
+        /**
+         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
+         */
+        amount_tax_display: string | null;
 
       export namespace Liability {
         export type Type = 'account' | 'application' | 'self';
       }
     }
+  }
 
-    export namespace BrandingSettings {
-      export type BorderStyle = 'pill' | 'rectangular' | 'rounded';
+  export namespace NameCollection {
+    export interface Business {
+      /**
+       * Indicates whether business name collection is enabled for the session
+       */
+      enabled: boolean;
 
-      export interface Icon {
+      /**
+       * Whether the customer is required to complete the field before completing the Checkout Session. Defaults to `false`.
+       */
+      optional: boolean;
+    }
+
+    export interface Individual {
+      /**
+       * Indicates whether individual name collection is enabled for the session
+       */
+      enabled: boolean;
+
+      /**
+       * Whether the customer is required to complete the field before completing the Checkout Session. Defaults to `false`.
+       */
+      optional: boolean;
+    }
+  }
+
+  export namespace OptionalItem {
+    export interface AdjustableQuantity {
+      /**
+       * Set to true if the quantity can be adjusted to any non-negative integer.
+       */
+      enabled: boolean;
+
+      /**
+       * The maximum quantity of this item the customer can purchase. By default this value is 99. You can specify a value up to 999999.
+       */
+      maximum: number | null;
+
+      /**
+       * The minimum quantity of this item the customer must purchase, if they choose to purchase it. Because this item is optional, the customer will always be able to remove it from their order, even if the `minimum` configured here is greater than 0. By default this value is 0.
+       */
+      minimum: number | null;
+    }
+  }
+
+  export namespace PaymentMethodOptions {
+    export interface AcssDebit {
+      /**
+       * Currency supported by the bank account. Returned when the Session is in `setup` mode.
+       */
+      currency?: AcssDebit.Currency;
+
+      mandate_options?: AcssDebit.MandateOptions;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: AcssDebit.SetupFutureUsage;
+
+      /**
+       * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+       */
+      target_date?: string;
+
+      /**
+       * Bank account verification method. The default value is `automatic`.
+       */
+      verification_method?: AcssDebit.VerificationMethod;
+    }
+
+    export interface Affirm {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface AfterpayClearpay {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Alipay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Alma {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+    }
+
+    export interface AmazonPay {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: AmazonPay.SetupFutureUsage;
+    }
+
+    export interface AuBecsDebit {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+
+      /**
+       * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+       */
+      target_date?: string;
+    }
+
+    export interface BacsDebit {
+      mandate_options?: BacsDebit.MandateOptions;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: BacsDebit.SetupFutureUsage;
+
+      /**
+       * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+       */
+      target_date?: string;
+    }
+
+    export interface Bancontact {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Billie {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+    }
+
+    export interface Boleto {
+      /**
+       * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto voucher will expire on Wednesday at 23:59 America/Sao_Paulo time.
+       */
+      expires_after_days: number;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Boleto.SetupFutureUsage;
+    }
+
+    export interface Card {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      installments?: Card.Installments;
+
+      /**
+       * Request ability to [capture beyond the standard authorization validity window](https://docs.stripe.com/payments/extended-authorization) for this CheckoutSession.
+       */
+      request_extended_authorization?: Card.RequestExtendedAuthorization;
+
+      /**
+       * Request ability to [increment the authorization](https://docs.stripe.com/payments/incremental-authorization) for this CheckoutSession.
+       */
+      request_incremental_authorization?: Card.RequestIncrementalAuthorization;
+
+      /**
+       * Request ability to make [multiple captures](https://docs.stripe.com/payments/multicapture) for this CheckoutSession.
+       */
+      request_multicapture?: Card.RequestMulticapture;
+
+      /**
+       * Request ability to [overcapture](https://docs.stripe.com/payments/overcapture) for this CheckoutSession.
+       */
+      request_overcapture?: Card.RequestOvercapture;
+
+      /**
+       * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+       */
+      request_three_d_secure: Card.RequestThreeDSecure;
+
+      restrictions?: Card.Restrictions;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Card.SetupFutureUsage;
+
+      /**
+       * Provides information about a card payment that customers see on their statements. Concatenated with the Kana prefix (shortened Kana descriptor) or Kana statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 22 characters.
+       */
+      statement_descriptor_suffix_kana?: string;
+
+      /**
+       * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
+       */
+      statement_descriptor_suffix_kanji?: string;
+    }
+
+    export interface Cashapp {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface CustomerBalance {
+      bank_transfer?: CustomerBalance.BankTransfer;
+
+      /**
+       * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+       */
+      funding_type: 'bank_transfer' | null;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Eps {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Fpx {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Giropay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Grabpay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Ideal {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface KakaoPay {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: KakaoPay.SetupFutureUsage;
+    }
+
+    export interface Klarna {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Klarna.SetupFutureUsage;
+    }
+
+    export interface Konbini {
+      /**
+       * The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and `expires_after_days` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST.
+       */
+      expires_after_days: number | null;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface KrCard {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: KrCard.SetupFutureUsage;
+    }
+
+    export interface Link {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Link.SetupFutureUsage;
+    }
+
+    export interface Mobilepay {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Multibanco {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface NaverPay {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: NaverPay.SetupFutureUsage;
+    }
+
+    export interface Oxxo {
+      /**
+       * The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
+       */
+      expires_after_days: number;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface P24 {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Payco {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+    }
+
+    export interface Paynow {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Paypal {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Preferred locale of the PayPal checkout page that the customer is redirected to.
+       */
+      preferred_locale: string | null;
+
+      /**
+       * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+       */
+      reference: string | null;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Paypal.SetupFutureUsage;
+    }
+
+    export interface Payto {
+      mandate_options?: Payto.MandateOptions;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Payto.SetupFutureUsage;
+    }
+
+    export interface Pix {
+      /**
+       * Determines if the amount includes the IOF tax.
+       */
+      amount_includes_iof?: Pix.AmountIncludesIof;
+
+      /**
+       * The number of seconds after which Pix payment will expire.
+       */
+      expires_after_seconds: number | null;
+
+      mandate_options?: Pix.MandateOptions;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Pix.SetupFutureUsage;
+    }
+
+    export interface RevolutPay {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: RevolutPay.SetupFutureUsage;
+    }
+
+    export interface SamsungPay {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+    }
+
+    export interface Satispay {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+    }
+
+    export interface Scalapay {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+    }
+
+    export interface SepaDebit {
+      mandate_options?: SepaDebit.MandateOptions;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: SepaDebit.SetupFutureUsage;
+
+      /**
+       * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+       */
+      target_date?: string;
+    }
+
+    export interface Sofort {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
+    }
+
+    export interface Swish {
+      /**
+       * The order reference that will be displayed to customers in the Swish application. Defaults to the `id` of the Payment Intent.
+       */
+      reference: string | null;
+    }
+
+    export interface Twint {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Twint.SetupFutureUsage;
+    }
+
+    export interface Upi {
+      mandate_options?: Upi.MandateOptions;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Upi.SetupFutureUsage;
+    }
+
+    export interface UsBankAccount {
+      financial_connections?: UsBankAccount.FinancialConnections;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: UsBankAccount.SetupFutureUsage;
+
+      /**
+       * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+       */
+      target_date?: string;
+
+      /**
+       * Bank account verification method. The default value is `automatic`.
+       */
+      verification_method?: UsBankAccount.VerificationMethod;
+    }
+
+    export namespace AcssDebit {
+      export type Currency = 'cad' | 'usd';
+
+      export interface MandateOptions {
         /**
-         * The ID of a [File upload](https://stripe.com/docs/api/files) representing the icon. Purpose must be `business_icon`. Required if `type` is `file` and disallowed otherwise.
+         * A URL for custom mandate text
          */
-        file?: string;
+        custom_mandate_url?: string;
 
         /**
-         * The type of image for the icon. Must be one of `file` or `url`.
+         * List of Stripe products where this mandate can be selected automatically. Returned when the Session is in `setup` mode.
          */
-        type: Icon.Type;
+        default_for?: Array<MandateOptions.DefaultFor>;
 
         /**
-         * The URL of the image. Present when `type` is `url`.
+         * Description of the interval. Only required if the 'payment_schedule' parameter is 'interval' or 'combined'.
          */
-        url?: string;
+        interval_description: string | null;
+
+        /**
+         * Payment schedule for the mandate.
+         */
+        payment_schedule: MandateOptions.PaymentSchedule | null;
+
+        /**
+         * Transaction type of the mandate.
+         */
+        transaction_type: MandateOptions.TransactionType | null;
       }
 
-      export interface Logo {
-        /**
-         * The ID of a [File upload](https://stripe.com/docs/api/files) representing the logo. Purpose must be `business_logo`. Required if `type` is `file` and disallowed otherwise.
-         */
-        file?: string;
+      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
-        /**
-         * The type of image for the logo. Must be one of `file` or `url`.
-         */
-        type: Logo.Type;
+      export type VerificationMethod =
+        | 'automatic'
+        | 'instant'
+        | 'microdeposits';
 
-        /**
-         * The URL of the image. Present when `type` is `url`.
-         */
-        url?: string;
-      }
+      export namespace MandateOptions {
+        export type DefaultFor = 'invoice' | 'subscription';
 
-      export namespace Icon {
-        export type Type = 'file' | 'url';
-      }
+        export type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
 
-      export namespace Logo {
-        export type Type = 'file' | 'url';
+        export type TransactionType = 'business' | 'personal';
       }
     }
 
@@ -1958,10 +2838,54 @@ export namespace Checkout {
       export interface ShippingDetails {
         address: Address;
 
+    export namespace BacsDebit {
+      export interface MandateOptions {
         /**
-         * Customer name.
+         * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
          */
-        name: string;
+        reference_prefix?: string;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+    }
+
+    export namespace Boleto {
+      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+    }
+
+    export namespace Card {
+      export interface Installments {
+        /**
+         * Indicates if installments are enabled
+         */
+        enabled?: boolean;
+      }
+
+      export type RequestExtendedAuthorization = 'if_available' | 'never';
+
+      export type RequestIncrementalAuthorization = 'if_available' | 'never';
+
+      export type RequestMulticapture = 'if_available' | 'never';
+
+      export type RequestOvercapture = 'if_available' | 'never';
+
+      export type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+
+      export interface Restrictions {
+        /**
+         * The card brands to block. If a customer enters or selects a card belonging to a blocked brand, they can't complete the payment.
+         */
+        brands_blocked?: Array<Restrictions.BrandsBlocked>;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+      export namespace Restrictions {
+        export type BrandsBlocked =
+          | 'american_express'
+          | 'discover_global_network'
+          | 'mastercard'
+          | 'visa';
       }
 
       export interface TaxId {
@@ -2098,16 +3022,14 @@ export namespace Checkout {
       }
     }
 
-    export namespace Consent {
-      export type Promotions = 'opt_in' | 'opt_out';
-    }
+    export namespace CustomerBalance {
+      export interface BankTransfer {
+        eu_bank_transfer?: BankTransfer.EuBankTransfer;
 
-    export namespace ConsentCollection {
-      export interface PaymentMethodReuseAgreement {
         /**
-         * Determines the position and visibility of the payment method reuse agreement in the UI. When set to `auto`, Stripe's defaults will be used.
+         * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
          *
-         * When set to `hidden`, the payment method reuse agreement text will always be hidden in the UI.
+         * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
          */
         position: PaymentMethodReuseAgreement.Position;
       }
@@ -2299,298 +3221,237 @@ export namespace Checkout {
         type: TaxId.Type;
 
         /**
-         * The value of the tax ID.
+         * The bank transfer type that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
          */
-        value: string | null;
+        type: BankTransfer.Type | null;
       }
 
-      export namespace TaxId {
+      export namespace BankTransfer {
+        export interface EuBankTransfer {
+          /**
+           * The desired country code of the bank account information. Permitted values include: `DE`, `FR`, `IE`, or `NL`.
+           */
+          country: EuBankTransfer.Country;
+        }
+
+        export type RequestedAddressType =
+          | 'aba'
+          | 'iban'
+          | 'sepa'
+          | 'sort_code'
+          | 'spei'
+          | 'swift'
+          | 'zengin';
+
         export type Type =
-          | 'ad_nrt'
-          | 'ae_trn'
-          | 'al_tin'
-          | 'am_tin'
-          | 'ao_tin'
-          | 'ar_cuit'
-          | 'au_abn'
-          | 'au_arn'
-          | 'aw_tin'
-          | 'az_tin'
-          | 'ba_tin'
-          | 'bb_tin'
-          | 'bd_bin'
-          | 'bf_ifu'
-          | 'bg_uic'
-          | 'bh_vat'
-          | 'bj_ifu'
-          | 'bo_tin'
-          | 'br_cnpj'
-          | 'br_cpf'
-          | 'bs_tin'
-          | 'by_tin'
-          | 'ca_bn'
-          | 'ca_gst_hst'
-          | 'ca_pst_bc'
-          | 'ca_pst_mb'
-          | 'ca_pst_sk'
-          | 'ca_qst'
-          | 'cd_nif'
-          | 'ch_uid'
-          | 'ch_vat'
-          | 'cl_tin'
-          | 'cm_niu'
-          | 'cn_tin'
-          | 'co_nit'
-          | 'cr_tin'
-          | 'cv_nif'
-          | 'de_stn'
-          | 'do_rcn'
-          | 'ec_ruc'
-          | 'eg_tin'
-          | 'es_cif'
-          | 'et_tin'
-          | 'eu_oss_vat'
-          | 'eu_vat'
-          | 'fo_vat'
-          | 'gb_vat'
-          | 'ge_vat'
-          | 'gi_tin'
-          | 'gn_nif'
-          | 'hk_br'
-          | 'hr_oib'
-          | 'hu_tin'
-          | 'id_npwp'
-          | 'il_vat'
-          | 'in_gst'
-          | 'is_vat'
-          | 'it_cf'
-          | 'jp_cn'
-          | 'jp_rn'
-          | 'jp_trn'
-          | 'ke_pin'
-          | 'kg_tin'
-          | 'kh_tin'
-          | 'kr_brn'
-          | 'kz_bin'
-          | 'la_tin'
-          | 'li_uid'
-          | 'li_vat'
-          | 'lk_vat'
-          | 'ma_vat'
-          | 'md_vat'
-          | 'me_pib'
-          | 'mk_vat'
-          | 'mr_nif'
-          | 'mx_rfc'
-          | 'my_frp'
-          | 'my_itn'
-          | 'my_sst'
-          | 'ng_tin'
-          | 'no_vat'
-          | 'no_voec'
-          | 'np_pan'
-          | 'nz_gst'
-          | 'om_vat'
-          | 'pe_ruc'
-          | 'ph_tin'
-          | 'pl_nip'
-          | 'py_ruc'
-          | 'ro_tin'
-          | 'rs_pib'
-          | 'ru_inn'
-          | 'ru_kpp'
-          | 'sa_vat'
-          | 'sg_gst'
-          | 'sg_uen'
-          | 'si_tin'
-          | 'sn_ninea'
-          | 'sr_fin'
-          | 'sv_nit'
-          | 'th_vat'
-          | 'tj_tin'
-          | 'tr_tin'
-          | 'tw_vat'
-          | 'tz_vat'
-          | 'ua_vat'
-          | 'ug_tin'
-          | 'unknown'
-          | 'us_ein'
-          | 'uy_ruc'
-          | 'uz_tin'
-          | 'uz_vat'
-          | 've_rif'
-          | 'vn_tin'
-          | 'za_vat'
-          | 'zm_tin'
-          | 'zw_tin';
-      }
-    }
+          | 'eu_bank_transfer'
+          | 'gb_bank_transfer'
+          | 'jp_bank_transfer'
+          | 'mx_bank_transfer'
+          | 'us_bank_transfer';
 
-    export namespace CustomField {
-      export interface Dropdown {
-        /**
-         * The value that pre-fills on the payment page.
-         */
-        default_value: string | null;
-
-        /**
-         * The options available for the customer to select. Up to 200 options allowed.
-         */
-        options: Array<Dropdown.Option>;
-
-        /**
-         * The option selected by the customer. This will be the `value` for the option.
-         */
-        value: string | null;
-      }
-
-      export interface Label {
-        /**
-         * Custom text for the label, displayed to the customer. Up to 50 characters.
-         */
-        custom: string | null;
-
-        /**
-         * The type of the label.
-         */
-        type: 'custom';
-      }
-
-      export interface Numeric {
-        /**
-         * The value that pre-fills the field on the payment page.
-         */
-        default_value: string | null;
-
-        /**
-         * The maximum character length constraint for the customer's input.
-         */
-        maximum_length: number | null;
-
-        /**
-         * The minimum character length requirement for the customer's input.
-         */
-        minimum_length: number | null;
-
-        /**
-         * The value entered by the customer, containing only digits.
-         */
-        value: string | null;
-      }
-
-      export interface Text {
-        /**
-         * The value that pre-fills the field on the payment page.
-         */
-        default_value: string | null;
-
-        /**
-         * The maximum character length constraint for the customer's input.
-         */
-        maximum_length: number | null;
-
-        /**
-         * The minimum character length requirement for the customer's input.
-         */
-        minimum_length: number | null;
-
-        /**
-         * The value entered by the customer.
-         */
-        value: string | null;
-      }
-
-      export type Type = 'dropdown' | 'numeric' | 'text';
-
-      export namespace Dropdown {
-        export interface Option {
-          /**
-           * The label for the option, displayed to the customer. Up to 100 characters.
-           */
-          label: string;
-
-          /**
-           * The value for this option, not displayed to the customer, used by your integration to reconcile the option selected by the customer. Must be unique to this option, alphanumeric, and up to 100 characters.
-           */
-          value: string;
+        export namespace EuBankTransfer {
+          export type Country = 'BE' | 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
         }
       }
     }
 
-    export namespace CustomText {
-      export interface AfterSubmit {
+    export namespace KakaoPay {
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
+    export namespace Klarna {
+      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+    }
+
+    export namespace KrCard {
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
+    export namespace Link {
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
+    export namespace NaverPay {
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
+    export namespace Paypal {
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
+    export namespace Payto {
+      export interface MandateOptions {
         /**
-         * Text can be up to 1200 characters in length.
+         * Amount that will be collected. It is required when `amount_type` is `fixed`.
          */
-        message: string;
+        amount: number | null;
+
+        /**
+         * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
+         */
+        amount_type: MandateOptions.AmountType | null;
+
+        /**
+         * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+         */
+        end_date: string | null;
+
+        /**
+         * The periodicity at which payments will be collected. Defaults to `adhoc`.
+         */
+        payment_schedule: MandateOptions.PaymentSchedule | null;
+
+        /**
+         * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+         */
+        payments_per_period: number | null;
+
+        /**
+         * The purpose for which payments are made. Has a default value based on your merchant category code.
+         */
+        purpose: MandateOptions.Purpose | null;
+
+        /**
+         * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+         */
+        start_date: string | null;
       }
 
-      export interface ShippingAddress {
-        /**
-         * Text can be up to 1200 characters in length.
-         */
-        message: string;
-      }
+      export type SetupFutureUsage = 'none' | 'off_session';
 
-      export interface Submit {
-        /**
-         * Text can be up to 1200 characters in length.
-         */
-        message: string;
-      }
+      export namespace MandateOptions {
+        export type AmountType = 'fixed' | 'maximum';
 
-      export interface TermsOfServiceAcceptance {
-        /**
-         * Text can be up to 1200 characters in length.
-         */
-        message: string;
+        export type PaymentSchedule =
+          | 'adhoc'
+          | 'annual'
+          | 'daily'
+          | 'fortnightly'
+          | 'monthly'
+          | 'quarterly'
+          | 'semi_annual'
+          | 'weekly';
+
+        export type Purpose =
+          | 'dependant_support'
+          | 'government'
+          | 'loan'
+          | 'mortgage'
+          | 'other'
+          | 'pension'
+          | 'personal'
+          | 'retail'
+          | 'salary'
+          | 'tax'
+          | 'utility';
       }
     }
 
-    export namespace InvoiceCreation {
-      export interface InvoiceData {
+    export namespace Pix {
+      export type AmountIncludesIof = 'always' | 'never';
+
+      export interface MandateOptions {
         /**
-         * The account tax IDs associated with the invoice.
+         * Amount to be charged for future payments.
          */
-        account_tax_ids: Array<string | TaxId | DeletedTaxId> | null;
+        amount?: number;
 
         /**
-         * Custom fields displayed on the invoice.
+         * Determines if the amount includes the IOF tax.
          */
-        custom_fields: Array<InvoiceData.CustomField> | null;
+        amount_includes_iof?: MandateOptions.AmountIncludesIof;
 
         /**
-         * An arbitrary string attached to the object. Often useful for displaying to users.
+         * Type of amount.
+         */
+        amount_type?: MandateOptions.AmountType;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
+         */
+        currency?: string;
+
+        /**
+         * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`.
+         */
+        end_date?: string;
+
+        /**
+         * Schedule at which the future payments will be charged.
+         */
+        payment_schedule?: MandateOptions.PaymentSchedule;
+
+        /**
+         * Subscription name displayed to buyers in their bank app.
+         */
+        reference?: string;
+
+        /**
+         * Start date of the mandate, in `YYYY-MM-DD`.
+         */
+        start_date?: string;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session';
+
+      export namespace MandateOptions {
+        export type AmountIncludesIof = 'always' | 'never';
+
+        export type AmountType = 'fixed' | 'maximum';
+
+        export type PaymentSchedule =
+          | 'halfyearly'
+          | 'monthly'
+          | 'quarterly'
+          | 'weekly'
+          | 'yearly';
+      }
+    }
+
+    export namespace RevolutPay {
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
+    export namespace SepaDebit {
+      export interface MandateOptions {
+        /**
+         * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'STRIPE'.
+         */
+        reference_prefix?: string;
+      }
+
+      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+    }
+
+    export namespace Twint {
+      export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
+    export namespace Upi {
+      export interface MandateOptions {
+        /**
+         * Amount to be charged for future payments.
+         */
+        amount: number | null;
+
+        /**
+         * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+         */
+        amount_type: MandateOptions.AmountType | null;
+
+        /**
+         * A description of the mandate or subscription that is meant to be displayed to the customer.
          */
         description: string | null;
 
         /**
-         * Footer displayed on the invoice.
+         * End date of the mandate or subscription.
          */
-        footer: string | null;
-
-        /**
-         * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
-         */
-        issuer: InvoiceData.Issuer | null;
-
-        /**
-         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-         */
-        metadata: Metadata | null;
-
-        /**
-         * Options for invoice PDF rendering.
-         */
-        rendering_options: InvoiceData.RenderingOptions | null;
+        end_date: number | null;
       }
 
-      export namespace InvoiceData {
-        export interface CustomField {
-          /**
-           * The name of the custom field.
-           */
-          name: string;
+      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
           /**
            * The value of the custom field.
@@ -2628,31 +3489,29 @@ export namespace Checkout {
       }
     }
 
-    export namespace NameCollection {
-      export interface Business {
-        /**
-         * Indicates whether business name collection is enabled for the session
-         */
-        enabled: boolean;
+    export namespace UsBankAccount {
+      export interface FinancialConnections {
+        filters?: FinancialConnections.Filters;
 
         /**
-         * Whether the customer is required to complete the field before completing the Checkout Session. Defaults to `false`.
+         * The list of permissions to request. The `payment_method` permission must be included.
          */
-        optional: boolean;
+        permissions?: Array<FinancialConnections.Permission>;
+
+        /**
+         * Data features requested to be retrieved upon account creation.
+         */
+        prefetch: Array<FinancialConnections.Prefetch> | null;
+
+        /**
+         * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+         */
+        return_url?: string;
       }
 
-      export interface Individual {
-        /**
-         * Indicates whether individual name collection is enabled for the session
-         */
-        enabled: boolean;
+      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
-        /**
-         * Whether the customer is required to complete the field before completing the Checkout Session. Defaults to `false`.
-         */
-        optional: boolean;
-      }
-    }
+      export type VerificationMethod = 'automatic' | 'instant';
 
     export namespace OptionalItem {
       export interface AdjustableQuantity {
@@ -3423,37 +4282,18 @@ export namespace Checkout {
 
         export interface MandateOptions {
           /**
-           * A URL for custom mandate text
+           * The account subcategories to use to filter for possible accounts to link. Valid subcategories are `checking` and `savings`.
            */
-          custom_mandate_url?: string;
-
-          /**
-           * List of Stripe products where this mandate can be selected automatically. Returned when the Session is in `setup` mode.
-           */
-          default_for?: Array<MandateOptions.DefaultFor>;
-
-          /**
-           * Description of the interval. Only required if the 'payment_schedule' parameter is 'interval' or 'combined'.
-           */
-          interval_description: string | null;
-
-          /**
-           * Payment schedule for the mandate.
-           */
-          payment_schedule: MandateOptions.PaymentSchedule | null;
-
-          /**
-           * Transaction type of the mandate.
-           */
-          transaction_type: MandateOptions.TransactionType | null;
+          account_subcategories?: Array<Filters.AccountSubcategory>;
         }
 
-        export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+        export type Permission =
+          | 'balances'
+          | 'ownership'
+          | 'payment_method'
+          | 'transactions';
 
-        export type VerificationMethod =
-          | 'automatic'
-          | 'instant'
-          | 'microdeposits';
+        export type Prefetch = 'balances' | 'ownership' | 'transactions';
 
         export namespace MandateOptions {
           export type DefaultFor = 'invoice' | 'subscription';
@@ -3842,6 +4682,7 @@ export namespace Checkout {
         }
       }
     }
+  }
 
     export namespace Permissions {
       export interface Update {
@@ -3875,257 +4716,59 @@ export namespace Checkout {
       }
     }
 
-    export namespace SavedPaymentMethodOptions {
-      export type AllowRedisplayFilter = 'always' | 'limited' | 'unspecified';
+    export namespace Tax {
+      export type TaxabilityReason =
+        | 'customer_exempt'
+        | 'not_collecting'
+        | 'not_subject_to_tax'
+        | 'not_supported'
+        | 'portion_product_exempt'
+        | 'portion_reduced_rated'
+        | 'portion_standard_rated'
+        | 'product_exempt'
+        | 'product_exempt_holiday'
+        | 'proportionally_rated'
+        | 'reduced_rated'
+        | 'reverse_charge'
+        | 'standard_rated'
+        | 'taxable_basis_reduced'
+        | 'zero_rated';
+    }
+  }
 
-      export type PaymentMethodRemove = 'disabled' | 'enabled';
+  export namespace TaxIdCollection {
+    export type Required = 'if_supported' | 'never';
+  }
 
-      export type PaymentMethodSave = 'disabled' | 'enabled';
+  export namespace TotalDetails {
+    export interface Breakdown {
+      /**
+       * The aggregated discounts.
+       */
+      discounts: Array<Breakdown.Discount>;
+
+      /**
+       * The aggregated tax amounts by rate.
+       */
+      taxes: Array<Breakdown.Tax>;
     }
 
-    export namespace ShippingAddressCollection {
-      export type AllowedCountry =
-        | 'AC'
-        | 'AD'
-        | 'AE'
-        | 'AF'
-        | 'AG'
-        | 'AI'
-        | 'AL'
-        | 'AM'
-        | 'AO'
-        | 'AQ'
-        | 'AR'
-        | 'AT'
-        | 'AU'
-        | 'AW'
-        | 'AX'
-        | 'AZ'
-        | 'BA'
-        | 'BB'
-        | 'BD'
-        | 'BE'
-        | 'BF'
-        | 'BG'
-        | 'BH'
-        | 'BI'
-        | 'BJ'
-        | 'BL'
-        | 'BM'
-        | 'BN'
-        | 'BO'
-        | 'BQ'
-        | 'BR'
-        | 'BS'
-        | 'BT'
-        | 'BV'
-        | 'BW'
-        | 'BY'
-        | 'BZ'
-        | 'CA'
-        | 'CD'
-        | 'CF'
-        | 'CG'
-        | 'CH'
-        | 'CI'
-        | 'CK'
-        | 'CL'
-        | 'CM'
-        | 'CN'
-        | 'CO'
-        | 'CR'
-        | 'CV'
-        | 'CW'
-        | 'CY'
-        | 'CZ'
-        | 'DE'
-        | 'DJ'
-        | 'DK'
-        | 'DM'
-        | 'DO'
-        | 'DZ'
-        | 'EC'
-        | 'EE'
-        | 'EG'
-        | 'EH'
-        | 'ER'
-        | 'ES'
-        | 'ET'
-        | 'FI'
-        | 'FJ'
-        | 'FK'
-        | 'FO'
-        | 'FR'
-        | 'GA'
-        | 'GB'
-        | 'GD'
-        | 'GE'
-        | 'GF'
-        | 'GG'
-        | 'GH'
-        | 'GI'
-        | 'GL'
-        | 'GM'
-        | 'GN'
-        | 'GP'
-        | 'GQ'
-        | 'GR'
-        | 'GS'
-        | 'GT'
-        | 'GU'
-        | 'GW'
-        | 'GY'
-        | 'HK'
-        | 'HN'
-        | 'HR'
-        | 'HT'
-        | 'HU'
-        | 'ID'
-        | 'IE'
-        | 'IL'
-        | 'IM'
-        | 'IN'
-        | 'IO'
-        | 'IQ'
-        | 'IS'
-        | 'IT'
-        | 'JE'
-        | 'JM'
-        | 'JO'
-        | 'JP'
-        | 'KE'
-        | 'KG'
-        | 'KH'
-        | 'KI'
-        | 'KM'
-        | 'KN'
-        | 'KR'
-        | 'KW'
-        | 'KY'
-        | 'KZ'
-        | 'LA'
-        | 'LB'
-        | 'LC'
-        | 'LI'
-        | 'LK'
-        | 'LR'
-        | 'LS'
-        | 'LT'
-        | 'LU'
-        | 'LV'
-        | 'LY'
-        | 'MA'
-        | 'MC'
-        | 'MD'
-        | 'ME'
-        | 'MF'
-        | 'MG'
-        | 'MK'
-        | 'ML'
-        | 'MM'
-        | 'MN'
-        | 'MO'
-        | 'MQ'
-        | 'MR'
-        | 'MS'
-        | 'MT'
-        | 'MU'
-        | 'MV'
-        | 'MW'
-        | 'MX'
-        | 'MY'
-        | 'MZ'
-        | 'NA'
-        | 'NC'
-        | 'NE'
-        | 'NG'
-        | 'NI'
-        | 'NL'
-        | 'NO'
-        | 'NP'
-        | 'NR'
-        | 'NU'
-        | 'NZ'
-        | 'OM'
-        | 'PA'
-        | 'PE'
-        | 'PF'
-        | 'PG'
-        | 'PH'
-        | 'PK'
-        | 'PL'
-        | 'PM'
-        | 'PN'
-        | 'PR'
-        | 'PS'
-        | 'PT'
-        | 'PY'
-        | 'QA'
-        | 'RE'
-        | 'RO'
-        | 'RS'
-        | 'RU'
-        | 'RW'
-        | 'SA'
-        | 'SB'
-        | 'SC'
-        | 'SD'
-        | 'SE'
-        | 'SG'
-        | 'SH'
-        | 'SI'
-        | 'SJ'
-        | 'SK'
-        | 'SL'
-        | 'SM'
-        | 'SN'
-        | 'SO'
-        | 'SR'
-        | 'SS'
-        | 'ST'
-        | 'SV'
-        | 'SX'
-        | 'SZ'
-        | 'TA'
-        | 'TC'
-        | 'TD'
-        | 'TF'
-        | 'TG'
-        | 'TH'
-        | 'TJ'
-        | 'TK'
-        | 'TL'
-        | 'TM'
-        | 'TN'
-        | 'TO'
-        | 'TR'
-        | 'TT'
-        | 'TV'
-        | 'TW'
-        | 'TZ'
-        | 'UA'
-        | 'UG'
-        | 'US'
-        | 'UY'
-        | 'UZ'
-        | 'VA'
-        | 'VC'
-        | 'VE'
-        | 'VG'
-        | 'VN'
-        | 'VU'
-        | 'WF'
-        | 'WS'
-        | 'XK'
-        | 'YE'
-        | 'YT'
-        | 'ZA'
-        | 'ZM'
-        | 'ZW'
-        | 'ZZ';
-    }
+    export namespace Breakdown {
+      export interface Discount {
+        /**
+         * The amount discounted.
+         */
+        amount: number;
 
-    export namespace ShippingCost {
+        /**
+         * A discount represents the actual application of a [coupon](https://api.stripe.com#coupons) or [promotion code](https://api.stripe.com#promotion_codes).
+         * It contains information about when the discount began, when it will end, and what it is applied to.
+         *
+         * Related guide: [Applying discounts to subscriptions](https://docs.stripe.com/billing/subscriptions/discounts)
+         */
+        discount: _Discount;
+      }
+
       export interface Tax {
         /**
          * Amount of tax applied for this rate.
@@ -4169,96 +4812,18 @@ export namespace Checkout {
           | 'zero_rated';
       }
     }
+  }
 
-    export namespace TaxIdCollection {
-      export type Required = 'if_supported' | 'never';
+  export namespace WalletOptions {
+    export interface Link {
+      /**
+       * Describes whether Checkout should display Link. Defaults to `auto`.
+       */
+      display?: Link.Display;
     }
 
-    export namespace TotalDetails {
-      export interface Breakdown {
-        /**
-         * The aggregated discounts.
-         */
-        discounts: Array<Breakdown.Discount>;
-
-        /**
-         * The aggregated tax amounts by rate.
-         */
-        taxes: Array<Breakdown.Tax>;
-      }
-
-      export namespace Breakdown {
-        export interface Discount {
-          /**
-           * The amount discounted.
-           */
-          amount: number;
-
-          /**
-           * A discount represents the actual application of a [coupon](https://api.stripe.com#coupons) or [promotion code](https://api.stripe.com#promotion_codes).
-           * It contains information about when the discount began, when it will end, and what it is applied to.
-           *
-           * Related guide: [Applying discounts to subscriptions](https://docs.stripe.com/billing/subscriptions/discounts)
-           */
-          discount: _Discount;
-        }
-
-        export interface Tax {
-          /**
-           * Amount of tax applied for this rate.
-           */
-          amount: number;
-
-          /**
-           * Tax rates can be applied to [invoices](https://docs.stripe.com/invoicing/taxes/tax-rates), [subscriptions](https://docs.stripe.com/billing/taxes/tax-rates) and [Checkout Sessions](https://docs.stripe.com/payments/checkout/use-manual-tax-rates) to collect tax.
-           *
-           * Related guide: [Tax rates](https://docs.stripe.com/billing/taxes/tax-rates)
-           */
-          rate: TaxRate;
-
-          /**
-           * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
-           */
-          taxability_reason: Tax.TaxabilityReason | null;
-
-          /**
-           * The amount on which tax is calculated, in cents (or local equivalent).
-           */
-          taxable_amount: number | null;
-        }
-
-        export namespace Tax {
-          export type TaxabilityReason =
-            | 'customer_exempt'
-            | 'not_collecting'
-            | 'not_subject_to_tax'
-            | 'not_supported'
-            | 'portion_product_exempt'
-            | 'portion_reduced_rated'
-            | 'portion_standard_rated'
-            | 'product_exempt'
-            | 'product_exempt_holiday'
-            | 'proportionally_rated'
-            | 'reduced_rated'
-            | 'reverse_charge'
-            | 'standard_rated'
-            | 'taxable_basis_reduced'
-            | 'zero_rated';
-        }
-      }
-    }
-
-    export namespace WalletOptions {
-      export interface Link {
-        /**
-         * Describes whether Checkout should display Link. Defaults to `auto`.
-         */
-        display?: Link.Display;
-      }
-
-      export namespace Link {
-        export type Display = 'auto' | 'never';
-      }
+    export namespace Link {
+      export type Display = 'auto' | 'never';
     }
   }
 }
