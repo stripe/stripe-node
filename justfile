@@ -68,7 +68,7 @@ prettier *args: install
     prettier "{src,examples,scripts,test,types}/**/*.{ts,js}" {{ args }}
 
 # ⭐ format all files
-format: (prettier "--write --loglevel silent")
+format: (prettier "--write --loglevel error")
 
 # verify formatting of files (without changes)
 format-check: (prettier "--check")
