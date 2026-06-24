@@ -10,7 +10,7 @@
     "runtestproject": "tsc && node typescriptTest.js"
   },
   "devDependencies": {
-    "@types/node": "~22.19",
+    "@types/node": "~22",
     "typescript": "^5.9.3"
   }
 }

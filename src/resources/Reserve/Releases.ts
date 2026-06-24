@@ -60,7 +60,7 @@ export interface Release {
   /**
    * Indicates which party created this ReserveRelease.
    */
-  created_by: Release.CreatedBy;
+  created_by: Reserve.Release.CreatedBy;
 
   /**
    * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -80,7 +80,7 @@ export interface Release {
   /**
    * The reason for the ReserveRelease, indicating why the funds were released.
    */
-  reason: Release.Reason;
+  reason: Reserve.Release.Reason;
 
   /**
    * The release timestamp of the funds.
@@ -97,36 +97,38 @@ export interface Release {
    */
   reserve_plan: string | Plan | null;
 
-  source_transaction?: Release.SourceTransaction;
+  source_transaction?: Reserve.Release.SourceTransaction;
 }
-export namespace Release {
-  export type CreatedBy = 'application' | 'stripe';
+export namespace Reserve {
+  export namespace Release {
+    export type CreatedBy = 'application' | 'stripe';
 
-  export type Reason =
-    | 'bulk_hold_expiry'
-    | 'hold_released_early'
-    | 'hold_reversed'
-    | 'plan_disabled';
+    export type Reason =
+      | 'bulk_hold_expiry'
+      | 'hold_released_early'
+      | 'hold_reversed'
+      | 'plan_disabled';
 
-  export interface SourceTransaction {
-    /**
-     * The ID of the dispute.
-     */
-    dispute?: string | Dispute;
+    export interface SourceTransaction {
+      /**
+       * The ID of the dispute.
+       */
+      dispute?: string | Dispute;
 
-    /**
-     * The ID of the refund.
-     */
-    refund?: string | Refund;
+      /**
+       * The ID of the refund.
+       */
+      refund?: string | Refund;
 
-    /**
-     * The type of source transaction.
-     */
-    type: SourceTransaction.Type;
-  }
+      /**
+       * The type of source transaction.
+       */
+      type: SourceTransaction.Type;
+    }
 
-  export namespace SourceTransaction {
-    export type Type = 'dispute' | 'refund';
+    export namespace SourceTransaction {
+      export type Type = 'dispute' | 'refund';
+    }
   }
 }
 export namespace Reserve {

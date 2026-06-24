@@ -121,7 +121,7 @@ export interface GbBankAccount {
   /**
    * The alternative reference for this payout method, if it's a projected payout method.
    */
-  alternative_reference?: GbBankAccount.AlternativeReference;
+  alternative_reference?: V2.Core.Vault.GbBankAccount.AlternativeReference;
 
   /**
    * Whether this bank account object was archived. Bank account objects can be archived through
@@ -133,7 +133,7 @@ export interface GbBankAccount {
   /**
    * Closed Enum. The type of the bank account (checking or savings).
    */
-  bank_account_type: GbBankAccount.BankAccountType;
+  bank_account_type: V2.Core.Vault.GbBankAccount.BankAccountType;
 
   /**
    * The name of the bank.
@@ -144,7 +144,7 @@ export interface GbBankAccount {
    * Information around the status of Confirmation of Payee matching done on this bank account.
    * Confirmation of Payee is a name matching service that must be done before making OutboundPayments in the UK.
    */
-  confirmation_of_payee: GbBankAccount.ConfirmationOfPayee;
+  confirmation_of_payee: V2.Core.Vault.GbBankAccount.ConfirmationOfPayee;
 
   /**
    * Creation time.
@@ -171,108 +171,114 @@ export interface GbBankAccount {
    */
   supported_currencies: Array<string>;
 }
-export namespace GbBankAccount {
-  export interface AlternativeReference {
-    /**
-     * The ID of the alternative resource being referenced.
-     */
-    id: string;
+export namespace V2 {
+  export namespace Core {
+    export namespace Vault {
+      export namespace GbBankAccount {
+        export interface AlternativeReference {
+          /**
+           * The ID of the alternative resource being referenced.
+           */
+          id: string;
 
-    /**
-     * The type of the alternative reference (e.g., external_account for V1 external accounts).
-     */
-    type: AlternativeReference.Type;
-  }
+          /**
+           * The type of the alternative reference (e.g., external_account for V1 external accounts).
+           */
+          type: AlternativeReference.Type;
+        }
 
-  export type BankAccountType = 'checking' | 'futsu' | 'savings' | 'toza';
+        export type BankAccountType = 'checking' | 'futsu' | 'savings' | 'toza';
 
-  export interface ConfirmationOfPayee {
-    /**
-     * The result of the Confirmation of Payee check, once the check has been initiated. Closed enum.
-     */
-    result: ConfirmationOfPayee.Result;
+        export interface ConfirmationOfPayee {
+          /**
+           * The result of the Confirmation of Payee check, once the check has been initiated. Closed enum.
+           */
+          result: ConfirmationOfPayee.Result;
 
-    /**
-     * The current state of Confirmation of Payee on this bank account. Closed enum.
-     */
-    status: ConfirmationOfPayee.Status;
-  }
+          /**
+           * The current state of Confirmation of Payee on this bank account. Closed enum.
+           */
+          status: ConfirmationOfPayee.Status;
+        }
 
-  export namespace AlternativeReference {
-    export type Type = 'external_account' | 'payment_method';
-  }
+        export namespace AlternativeReference {
+          export type Type = 'external_account' | 'payment_method';
+        }
 
-  export namespace ConfirmationOfPayee {
-    export interface Result {
-      /**
-       * When the CoP result was created.
-       */
-      created: string;
+        export namespace ConfirmationOfPayee {
+          export interface Result {
+            /**
+             * When the CoP result was created.
+             */
+            created: string;
 
-      /**
-       * Whether or not the information of the bank account matches what you have provided. Closed enum.
-       */
-      match_result: Result.MatchResult;
+            /**
+             * Whether or not the information of the bank account matches what you have provided. Closed enum.
+             */
+            match_result: Result.MatchResult;
 
-      /**
-       * The fields that CoP service matched against. Only has value if MATCH or PARTIAL_MATCH, empty otherwise.
-       */
-      matched: Result.Matched;
+            /**
+             * The fields that CoP service matched against. Only has value if MATCH or PARTIAL_MATCH, empty otherwise.
+             */
+            matched: Result.Matched;
 
-      /**
-       * Human-readable message describing the match result.
-       */
-      message: string;
+            /**
+             * Human-readable message describing the match result.
+             */
+            message: string;
 
-      /**
-       * The fields that are matched against what the network has on file.
-       */
-      provided: Result.Provided;
-    }
+            /**
+             * The fields that are matched against what the network has on file.
+             */
+            provided: Result.Provided;
+          }
 
-    export type Status =
-      | 'awaiting_acknowledgement'
-      | 'confirmed'
-      | 'uninitiated';
+          export type Status =
+            | 'awaiting_acknowledgement'
+            | 'confirmed'
+            | 'uninitiated';
 
-    export namespace Result {
-      export type MatchResult =
-        | 'match'
-        | 'mismatch'
-        | 'partial_match'
-        | 'unavailable';
+          export namespace Result {
+            export type MatchResult =
+              | 'match'
+              | 'mismatch'
+              | 'partial_match'
+              | 'unavailable';
 
-      export interface Matched {
-        /**
-         * The business type given by the bank for this account, in case of a MATCH or PARTIAL_MATCH.
-         * Closed enum.
-         */
-        business_type?: Matched.BusinessType;
+            export interface Matched {
+              /**
+               * The business type given by the bank for this account, in case of a MATCH or PARTIAL_MATCH.
+               * Closed enum.
+               */
+              business_type?: Matched.BusinessType;
 
-        /**
-         * The name given by the bank for this account, in case of a MATCH or PARTIAL_MATCH.
-         */
-        name?: string;
-      }
+              /**
+               * The name given by the bank for this account, in case of a MATCH or PARTIAL_MATCH.
+               */
+              name?: string;
+            }
 
-      export interface Provided {
-        /**
-         * The provided or Legal Entity business type to match against the CoP service. Closed enum.
-         */
-        business_type: Provided.BusinessType;
+            export interface Provided {
+              /**
+               * The provided or Legal Entity business type to match against the CoP service. Closed enum.
+               */
+              business_type: Provided.BusinessType;
 
-        /**
-         * The provided or Legal Entity name to match against the CoP service.
-         */
-        name: string;
-      }
+              /**
+               * The provided or Legal Entity name to match against the CoP service.
+               */
+              name: string;
+            }
 
-      export namespace Matched {
-        export type BusinessType = 'business' | 'personal';
-      }
+            export namespace Matched {
+              export type BusinessType = 'business' | 'personal';
+            }
 
-      export namespace Provided {
-        export type BusinessType = 'business' | 'personal';
+            export namespace Provided {
+              export type BusinessType = 'business' | 'personal';
+            }
+          }
+        }
       }
     }
   }

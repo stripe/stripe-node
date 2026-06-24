@@ -75,7 +75,7 @@ export interface FinancialAddress {
    * It contains all necessary banking details with which to perform money movements with the FinancialAddress.
    * This field is only available for FinancialAddresses with an active status.
    */
-  credentials?: FinancialAddress.Credentials;
+  credentials?: V2.MoneyManagement.FinancialAddress.Credentials;
 
   /**
    * Open Enum. The currency the FinancialAddress supports.
@@ -100,128 +100,132 @@ export interface FinancialAddress {
   /**
    * Closed Enum. An enum representing the status of the FinancialAddress. This indicates whether or not the FinancialAddress can be used for any money movement flows.
    */
-  status: FinancialAddress.Status;
+  status: V2.MoneyManagement.FinancialAddress.Status;
 }
-export namespace FinancialAddress {
-  export interface Credentials {
-    /**
-     * The credentials of the UK Bank Account for the FinancialAddress. This contains unique banking details such as the sort code, account number, etc. of a UK bank account.
-     */
-    gb_bank_account?: Credentials.GbBankAccount;
+export namespace V2 {
+  export namespace MoneyManagement {
+    export namespace FinancialAddress {
+      export interface Credentials {
+        /**
+         * The credentials of the UK Bank Account for the FinancialAddress. This contains unique banking details such as the sort code, account number, etc. of a UK bank account.
+         */
+        gb_bank_account?: Credentials.GbBankAccount;
 
-    /**
-     * The credentials of the SEPA Bank Account for the FinancialAddress. This contains unique banking details such as the IBAN, BIC, etc. of a SEPA bank account.
-     */
-    sepa_bank_account?: Credentials.SepaBankAccount;
+        /**
+         * The credentials of the SEPA Bank Account for the FinancialAddress. This contains unique banking details such as the IBAN, BIC, etc. of a SEPA bank account.
+         */
+        sepa_bank_account?: Credentials.SepaBankAccount;
 
-    /**
-     * Open Enum. The type of Credentials that are provisioned for the FinancialAddress.
-     */
-    type: Credentials.Type;
+        /**
+         * Open Enum. The type of Credentials that are provisioned for the FinancialAddress.
+         */
+        type: Credentials.Type;
 
-    /**
-     * The credentials of the US Bank Account for the FinancialAddress. This contains unique banking details such as the routing number, account number, etc. of a US bank account.
-     */
-    us_bank_account?: Credentials.UsBankAccount;
-  }
+        /**
+         * The credentials of the US Bank Account for the FinancialAddress. This contains unique banking details such as the routing number, account number, etc. of a US bank account.
+         */
+        us_bank_account?: Credentials.UsBankAccount;
+      }
 
-  export type Status = 'active' | 'archived' | 'failed' | 'pending';
+      export type Status = 'active' | 'archived' | 'failed' | 'pending';
 
-  export namespace Credentials {
-    export interface GbBankAccount {
-      /**
-       * The account holder name to be used during bank transference.
-       */
-      account_holder_name: string;
+      export namespace Credentials {
+        export interface GbBankAccount {
+          /**
+           * The account holder name to be used during bank transference.
+           */
+          account_holder_name: string;
 
-      /**
-       * The account number of the UK Bank Account.
-       */
-      account_number?: string;
+          /**
+           * The account number of the UK Bank Account.
+           */
+          account_number?: string;
 
-      /**
-       * The last four digits of the UK Bank Account number. This will always be returned.
-       * To view the full account number when retrieving or listing FinancialAddresses, use the `include` request parameter.
-       */
-      last4: string;
+          /**
+           * The last four digits of the UK Bank Account number. This will always be returned.
+           * To view the full account number when retrieving or listing FinancialAddresses, use the `include` request parameter.
+           */
+          last4: string;
 
-      /**
-       * The sort code of the UK Bank Account.
-       */
-      sort_code: string;
-    }
+          /**
+           * The sort code of the UK Bank Account.
+           */
+          sort_code: string;
+        }
 
-    export interface SepaBankAccount {
-      /**
-       * The account holder name to be used during bank transfers.
-       */
-      account_holder_name: string;
+        export interface SepaBankAccount {
+          /**
+           * The account holder name to be used during bank transfers.
+           */
+          account_holder_name: string;
 
-      /**
-       * The name of the Bank.
-       */
-      bank_name: string;
+          /**
+           * The name of the Bank.
+           */
+          bank_name: string;
 
-      /**
-       * The BIC of the SEPA Bank Account.
-       */
-      bic: string;
+          /**
+           * The BIC of the SEPA Bank Account.
+           */
+          bic: string;
 
-      /**
-       * The originating country of the SEPA Bank account.
-       */
-      country: string;
+          /**
+           * The originating country of the SEPA Bank account.
+           */
+          country: string;
 
-      /**
-       * The IBAN of the SEPA Bank Account.
-       */
-      iban: string;
+          /**
+           * The IBAN of the SEPA Bank Account.
+           */
+          iban: string;
 
-      /**
-       * The last four digits of the SEPA Bank Account number. This will always be returned.
-       * To view the full account number when retrieving or listing FinancialAddresses, use the `include` request parameter.
-       */
-      last4: string;
-    }
+          /**
+           * The last four digits of the SEPA Bank Account number. This will always be returned.
+           * To view the full account number when retrieving or listing FinancialAddresses, use the `include` request parameter.
+           */
+          last4: string;
+        }
 
-    export type Type = 'gb_bank_account' | 'us_bank_account';
+        export type Type = 'gb_bank_account' | 'us_bank_account';
 
-    export interface UsBankAccount {
-      /**
-       * The address of the account holder.
-       */
-      account_holder_address?: JapanAddress;
+        export interface UsBankAccount {
+          /**
+           * The address of the account holder.
+           */
+          account_holder_address?: JapanAddress;
 
-      /**
-       * The name of the account holder.
-       */
-      account_holder_name?: string;
+          /**
+           * The name of the account holder.
+           */
+          account_holder_name?: string;
 
-      /**
-       * The account number of the US Bank Account.
-       */
-      account_number?: string;
+          /**
+           * The account number of the US Bank Account.
+           */
+          account_number?: string;
 
-      /**
-       * The name of the Bank.
-       */
-      bank_name?: string;
+          /**
+           * The name of the Bank.
+           */
+          bank_name?: string;
 
-      /**
-       * The last four digits of the US Bank Account number. This will always be returned.
-       * To view the full account number when retrieving or listing FinancialAddresses, use the `include` request parameter.
-       */
-      last4: string;
+          /**
+           * The last four digits of the US Bank Account number. This will always be returned.
+           * To view the full account number when retrieving or listing FinancialAddresses, use the `include` request parameter.
+           */
+          last4: string;
 
-      /**
-       * The routing number of the US Bank Account.
-       */
-      routing_number: string;
+          /**
+           * The routing number of the US Bank Account.
+           */
+          routing_number: string;
 
-      /**
-       * The swift code of the bank or financial institution.
-       */
-      swift_code?: string;
+          /**
+           * The swift code of the bank or financial institution.
+           */
+          swift_code?: string;
+        }
+      }
     }
   }
 }

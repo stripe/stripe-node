@@ -117,7 +117,7 @@ export interface Alert {
   /**
    * Status of the alert. This can be active, inactive or archived.
    */
-  status: Alert.Status | null;
+  status: Billing.Alert.Status | null;
 
   /**
    * Title of the alert.
@@ -127,41 +127,43 @@ export interface Alert {
   /**
    * Encapsulates configuration of the alert to monitor usage on a specific [Billing Meter](https://docs.stripe.com/api/billing/meter).
    */
-  usage_threshold: Alert.UsageThreshold | null;
+  usage_threshold: Billing.Alert.UsageThreshold | null;
 }
-export namespace Alert {
-  export type Status = 'active' | 'archived' | 'inactive';
+export namespace Billing {
+  export namespace Alert {
+    export type Status = 'active' | 'archived' | 'inactive';
 
-  export interface UsageThreshold {
-    /**
-     * The filters allow limiting the scope of this usage alert. You can only specify up to one filter at this time.
-     */
-    filters: Array<UsageThreshold.Filter> | null;
-
-    /**
-     * The value at which this alert will trigger.
-     */
-    gte: number;
-
-    /**
-     * The [Billing Meter](https://docs.stripe.com/api/billing/meter) ID whose usage is monitored.
-     */
-    meter: string | Meter;
-
-    /**
-     * Defines how the alert will behave.
-     */
-    recurrence: 'one_time';
-  }
-
-  export namespace UsageThreshold {
-    export interface Filter {
+    export interface UsageThreshold {
       /**
-       * Limit the scope of the alert to this customer ID
+       * The filters allow limiting the scope of this usage alert. You can only specify up to one filter at this time.
        */
-      customer: string | Customer | null;
+      filters: Array<UsageThreshold.Filter> | null;
 
-      type: 'customer';
+      /**
+       * The value at which this alert will trigger.
+       */
+      gte: number;
+
+      /**
+       * The [Billing Meter](https://docs.stripe.com/api/billing/meter) ID whose usage is monitored.
+       */
+      meter: string | Meter;
+
+      /**
+       * Defines how the alert will behave.
+       */
+      recurrence: 'one_time';
+    }
+
+    export namespace UsageThreshold {
+      export interface Filter {
+        /**
+         * Limit the scope of the alert to this customer ID
+         */
+        customer: string | Customer | null;
+
+        type: 'customer';
+      }
     }
   }
 }

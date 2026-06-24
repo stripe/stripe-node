@@ -20,7 +20,7 @@ export class LocationResource extends StripeResource {
     id: string,
     params?: Terminal.LocationDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<DeletedLocation>> {
+  ): Promise<Response<Terminal.DeletedLocation>> {
     return this._makeRequest(
       'DELETE',
       `/v1/terminal/locations/${encodeURIComponent(id)}`,
@@ -35,7 +35,7 @@ export class LocationResource extends StripeResource {
     id: string,
     params?: Terminal.LocationRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Location | DeletedLocation>> {
+  ): Promise<Response<Location | Terminal.DeletedLocation>> {
     return this._makeRequest(
       'GET',
       `/v1/terminal/locations/${encodeURIComponent(id)}`,
@@ -50,7 +50,7 @@ export class LocationResource extends StripeResource {
     id: string,
     params?: Terminal.LocationUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Location | DeletedLocation>> {
+  ): Promise<Response<Location | Terminal.DeletedLocation>> {
     return this._makeRequest(
       'POST',
       `/v1/terminal/locations/${encodeURIComponent(id)}`,
@@ -98,9 +98,9 @@ export interface Location {
 
   address: Address;
 
-  address_kana?: Location.AddressKana;
+  address_kana?: Terminal.Location.AddressKana;
 
-  address_kanji?: Location.AddressKanji;
+  address_kanji?: Terminal.Location.AddressKanji;
 
   /**
    * The ID of a configuration that will be used to customize all readers in this location.
@@ -142,95 +142,98 @@ export interface Location {
    */
   phone?: string;
 }
-export interface DeletedLocation {
-  /**
-   * Unique identifier for the object.
-   */
-  id: string;
-
-  /**
-   * String representing the object's type. Objects of the same type share the same value.
-   */
-  object: 'terminal.location';
-
-  /**
-   * Always true for a deleted object
-   */
-  deleted: true;
-}
-export namespace Location {
-  export interface AddressKana {
+export namespace Terminal {
+  export interface DeletedLocation {
     /**
-     * City/Ward.
+     * Unique identifier for the object.
      */
-    city: string | null;
+    id: string;
 
     /**
-     * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+     * String representing the object's type. Objects of the same type share the same value.
      */
-    country: string | null;
+    object: 'terminal.location';
 
     /**
-     * Block/Building number.
+     * Always true for a deleted object
      */
-    line1: string | null;
-
-    /**
-     * Building details.
-     */
-    line2: string | null;
-
-    /**
-     * ZIP or postal code.
-     */
-    postal_code: string | null;
-
-    /**
-     * Prefecture.
-     */
-    state: string | null;
-
-    /**
-     * Town/cho-me.
-     */
-    town: string | null;
+    deleted: true;
   }
 
-  export interface AddressKanji {
-    /**
-     * City/Ward.
-     */
-    city: string | null;
+  export namespace Location {
+    export interface AddressKana {
+      /**
+       * City/Ward.
+       */
+      city: string | null;
 
-    /**
-     * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-     */
-    country: string | null;
+      /**
+       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+       */
+      country: string | null;
 
-    /**
-     * Block/Building number.
-     */
-    line1: string | null;
+      /**
+       * Block/Building number.
+       */
+      line1: string | null;
 
-    /**
-     * Building details.
-     */
-    line2: string | null;
+      /**
+       * Building details.
+       */
+      line2: string | null;
 
-    /**
-     * ZIP or postal code.
-     */
-    postal_code: string | null;
+      /**
+       * ZIP or postal code.
+       */
+      postal_code: string | null;
 
-    /**
-     * Prefecture.
-     */
-    state: string | null;
+      /**
+       * Prefecture.
+       */
+      state: string | null;
 
-    /**
-     * Town/cho-me.
-     */
-    town: string | null;
+      /**
+       * Town/cho-me.
+       */
+      town: string | null;
+    }
+
+    export interface AddressKanji {
+      /**
+       * City/Ward.
+       */
+      city: string | null;
+
+      /**
+       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+       */
+      country: string | null;
+
+      /**
+       * Block/Building number.
+       */
+      line1: string | null;
+
+      /**
+       * Building details.
+       */
+      line2: string | null;
+
+      /**
+       * ZIP or postal code.
+       */
+      postal_code: string | null;
+
+      /**
+       * Prefecture.
+       */
+      state: string | null;
+
+      /**
+       * Town/cho-me.
+       */
+      town: string | null;
+    }
   }
 }
 export namespace Terminal {

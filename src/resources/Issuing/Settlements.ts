@@ -56,7 +56,7 @@ export interface Settlement {
   /**
    * The card network for this settlement report. One of ["visa", "maestro", "mastercard"]
    */
-  network: Settlement.Network;
+  network: Issuing.Settlement.Network;
 
   /**
    * The total amount of fees owed to the network.
@@ -86,7 +86,7 @@ export interface Settlement {
   /**
    * The current processing status of this settlement.
    */
-  status: Settlement.Status;
+  status: Issuing.Settlement.Status;
 
   /**
    * The total transaction amount reflected in this settlement.
@@ -98,8 +98,10 @@ export interface Settlement {
    */
   transaction_count: number;
 }
-export namespace Settlement {
-  export type Network = 'maestro' | 'mastercard' | 'visa';
+export namespace Issuing {
+  export namespace Settlement {
+    export type Network = 'maestro' | 'mastercard' | 'visa';
 
-  export type Status = 'complete' | 'pending';
+    export type Status = 'complete' | 'pending';
+  }
 }

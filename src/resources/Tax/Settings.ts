@@ -35,12 +35,12 @@ export interface Settings {
    */
   object: 'tax.settings';
 
-  defaults: Settings.Defaults;
+  defaults: Tax.Settings.Defaults;
 
   /**
    * The place where your business is located.
    */
-  head_office: Settings.HeadOffice | null;
+  head_office: Tax.Settings.HeadOffice | null;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -50,57 +50,59 @@ export interface Settings {
   /**
    * The status of the Tax `Settings`.
    */
-  status: Settings.Status;
+  status: Tax.Settings.Status;
 
-  status_details: Settings.StatusDetails;
+  status_details: Tax.Settings.StatusDetails;
 }
-export namespace Settings {
-  export interface Defaults {
-    /**
-     * The tax calculation provider this account uses. Defaults to `stripe` when not using a [third-party provider](https://docs.stripe.com/tax/third-party-apps).
-     */
-    provider: Defaults.Provider;
-
-    /**
-     * Default [tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#tax-behavior) used to specify whether the price is considered inclusive of taxes or exclusive of taxes. If the item's price has a tax behavior set, it will take precedence over the default tax behavior.
-     */
-    tax_behavior: Defaults.TaxBehavior | null;
-
-    /**
-     * Default [tax code](https://stripe.com/docs/tax/tax-categories) used to classify your products and prices.
-     */
-    tax_code: string | null;
-  }
-
-  export interface HeadOffice {
-    address: Address;
-  }
-
-  export type Status = 'active' | 'pending';
-
-  export interface StatusDetails {
-    active?: StatusDetails.Active;
-
-    pending?: StatusDetails.Pending;
-  }
-
-  export namespace Defaults {
-    export type Provider = 'anrok' | 'avalara' | 'sphere' | 'stripe';
-
-    export type TaxBehavior =
-      | 'exclusive'
-      | 'inclusive'
-      | 'inferred_by_currency';
-  }
-
-  export namespace StatusDetails {
-    export interface Active {}
-
-    export interface Pending {
+export namespace Tax {
+  export namespace Settings {
+    export interface Defaults {
       /**
-       * The list of missing fields that are required to perform calculations. It includes the entry `head_office` when the status is `pending`. It is recommended to set the optional values even if they aren't listed as required for calculating taxes. Calculations can fail if missing fields aren't explicitly provided on every call.
+       * The tax calculation provider this account uses. Defaults to `stripe` when not using a [third-party provider](https://docs.stripe.com/tax/third-party-apps).
        */
-      missing_fields: Array<string> | null;
+      provider: Defaults.Provider;
+
+      /**
+       * Default [tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#tax-behavior) used to specify whether the price is considered inclusive of taxes or exclusive of taxes. If the item's price has a tax behavior set, it will take precedence over the default tax behavior.
+       */
+      tax_behavior: Defaults.TaxBehavior | null;
+
+      /**
+       * Default [tax code](https://stripe.com/docs/tax/tax-categories) used to classify your products and prices.
+       */
+      tax_code: string | null;
+    }
+
+    export interface HeadOffice {
+      address: Address;
+    }
+
+    export type Status = 'active' | 'pending';
+
+    export interface StatusDetails {
+      active?: StatusDetails.Active;
+
+      pending?: StatusDetails.Pending;
+    }
+
+    export namespace Defaults {
+      export type Provider = 'anrok' | 'avalara' | 'sphere' | 'stripe';
+
+      export type TaxBehavior =
+        | 'exclusive'
+        | 'inclusive'
+        | 'inferred_by_currency';
+    }
+
+    export namespace StatusDetails {
+      export interface Active {}
+
+      export interface Pending {
+        /**
+         * The list of missing fields that are required to perform calculations. It includes the entry `head_office` when the status is `pending`. It is recommended to set the optional values even if they aren't listed as required for calculating taxes. Calculations can fail if missing fields aren't explicitly provided on every call.
+         */
+        missing_fields: Array<string> | null;
+      }
     }
   }
 }

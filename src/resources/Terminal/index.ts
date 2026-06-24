@@ -4,7 +4,6 @@ import {Stripe} from '../../stripe.core.js';
 import {
   Terminal as TerminalNamespace0,
   Configuration,
-  DeletedConfiguration,
   ConfigurationResource,
 } from './Configurations.js';
 import {
@@ -15,7 +14,6 @@ import {
 import {
   Terminal as TerminalNamespace2,
   Location,
-  DeletedLocation,
   LocationResource,
 } from './Locations.js';
 import {
@@ -26,7 +24,6 @@ import {
 import {
   Terminal as TerminalNamespace4,
   Reader,
-  DeletedReader,
   ReaderResource,
 } from './Readers.js';
 import {
@@ -66,7 +63,7 @@ export declare namespace Terminal {
   export import ConfigurationUpdateParams = TerminalNamespace0.ConfigurationUpdateParams;
   export import ConfigurationListParams = TerminalNamespace0.ConfigurationListParams;
   export import ConfigurationCreateParams = TerminalNamespace0.ConfigurationCreateParams;
-  export {DeletedConfiguration};
+  export import DeletedConfiguration = TerminalNamespace0.DeletedConfiguration;
   export {Configuration, ConfigurationResource};
   export import ConnectionTokenCreateParams = TerminalNamespace1.ConnectionTokenCreateParams;
   export {ConnectionToken, ConnectionTokenResource};
@@ -75,7 +72,7 @@ export declare namespace Terminal {
   export import LocationUpdateParams = TerminalNamespace2.LocationUpdateParams;
   export import LocationListParams = TerminalNamespace2.LocationListParams;
   export import LocationCreateParams = TerminalNamespace2.LocationCreateParams;
-  export {DeletedLocation};
+  export import DeletedLocation = TerminalNamespace2.DeletedLocation;
   export {Location, LocationResource};
   export import OnboardingLinkCreateParams = TerminalNamespace3.OnboardingLinkCreateParams;
   export {OnboardingLink, OnboardingLinkResource};
@@ -92,7 +89,7 @@ export declare namespace Terminal {
   export import ReaderProcessSetupIntentParams = TerminalNamespace4.ReaderProcessSetupIntentParams;
   export import ReaderRefundPaymentParams = TerminalNamespace4.ReaderRefundPaymentParams;
   export import ReaderSetReaderDisplayParams = TerminalNamespace4.ReaderSetReaderDisplayParams;
-  export {DeletedReader};
+  export import DeletedReader = TerminalNamespace4.DeletedReader;
   export {Reader, ReaderResource};
   export import ReaderCollectedDataRetrieveParams = TerminalNamespace5.ReaderCollectedDataRetrieveParams;
   export {ReaderCollectedData, ReaderCollectedDatumResource};

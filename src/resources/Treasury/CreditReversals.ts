@@ -102,7 +102,7 @@ export interface CreditReversal {
   /**
    * The rails used to reverse the funds.
    */
-  network: CreditReversal.Network;
+  network: Treasury.CreditReversal.Network;
 
   /**
    * The ReceivedCredit being reversed.
@@ -112,25 +112,27 @@ export interface CreditReversal {
   /**
    * Status of the CreditReversal
    */
-  status: CreditReversal.Status;
+  status: Treasury.CreditReversal.Status;
 
-  status_transitions: CreditReversal.StatusTransitions;
+  status_transitions: Treasury.CreditReversal.StatusTransitions;
 
   /**
    * The Transaction associated with this object.
    */
   transaction: string | Transaction | null;
 }
-export namespace CreditReversal {
-  export type Network = 'ach' | 'stripe';
+export namespace Treasury {
+  export namespace CreditReversal {
+    export type Network = 'ach' | 'stripe';
 
-  export type Status = 'canceled' | 'posted' | 'processing';
+    export type Status = 'canceled' | 'posted' | 'processing';
 
-  export interface StatusTransitions {
-    /**
-     * Timestamp describing when the CreditReversal changed status to `posted`
-     */
-    posted_at: number | null;
+    export interface StatusTransitions {
+      /**
+       * Timestamp describing when the CreditReversal changed status to `posted`
+       */
+      posted_at: number | null;
+    }
   }
 }
 export namespace Treasury {

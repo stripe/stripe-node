@@ -85,12 +85,12 @@ export interface QueryRun {
   /**
    * Details how to retrieve the results of a successfully completed `QueryRun`.
    */
-  result?: QueryRun.Result;
+  result?: V2.Data.Reporting.QueryRun.Result;
 
   /**
    * The options specified for customizing the output of the `QueryRun`.
    */
-  result_options?: QueryRun.ResultOptions;
+  result_options?: V2.Data.Reporting.QueryRun.ResultOptions;
 
   /**
    * The SQL that was executed.
@@ -100,89 +100,95 @@ export interface QueryRun {
   /**
    * The current status of the `QueryRun`.
    */
-  status: QueryRun.Status;
+  status: V2.Data.Reporting.QueryRun.Status;
 
   /**
    * Additional details about the current state of the `QueryRun`. Populated when the `QueryRun`
    * is in the `failed` state, providing more information about why the query failed.
    */
   status_details: {
-    [key: string]: QueryRun.StatusDetails;
+    [key: string]: V2.Data.Reporting.QueryRun.StatusDetails;
   };
 }
-export namespace QueryRun {
-  export interface Result {
-    /**
-     * Contains metadata about the file produced by the `ReportRun` or `QueryRun`, including
-     * its content type, size, and a URL to download its contents.
-     */
-    file?: Result.File;
+export namespace V2 {
+  export namespace Data {
+    export namespace Reporting {
+      export namespace QueryRun {
+        export interface Result {
+          /**
+           * Contains metadata about the file produced by the `ReportRun` or `QueryRun`, including
+           * its content type, size, and a URL to download its contents.
+           */
+          file?: Result.File;
 
-    /**
-     * The type of the `ReportRun` or `QueryRun` result.
-     */
-    type: 'file';
-  }
+          /**
+           * The type of the `ReportRun` or `QueryRun` result.
+           */
+          type: 'file';
+        }
 
-  export interface ResultOptions {
-    /**
-     * If set, the generated results file will be compressed into a ZIP folder.
-     * This is useful for reducing file size and download time for large results.
-     */
-    compress_file?: boolean;
-  }
+        export interface ResultOptions {
+          /**
+           * If set, the generated results file will be compressed into a ZIP folder.
+           * This is useful for reducing file size and download time for large results.
+           */
+          compress_file?: boolean;
+        }
 
-  export type Status = 'failed' | 'running' | 'succeeded';
+        export type Status = 'failed' | 'running' | 'succeeded';
 
-  export interface StatusDetails {
-    /**
-     * Error code categorizing the reason the `QueryRun` failed.
-     */
-    error_code?: StatusDetails.ErrorCode;
+        export interface StatusDetails {
+          /**
+           * Error code categorizing the reason the `QueryRun` failed.
+           */
+          error_code?: StatusDetails.ErrorCode;
 
-    /**
-     * Error message with additional details about the failure.
-     */
-    error_message?: string;
-  }
+          /**
+           * Error message with additional details about the failure.
+           */
+          error_message?: string;
+        }
 
-  export namespace Result {
-    export interface File {
-      /**
-       * The content type of the file.
-       */
-      content_type: File.ContentType;
+        export namespace Result {
+          export interface File {
+            /**
+             * The content type of the file.
+             */
+            content_type: File.ContentType;
 
-      /**
-       * A pre-signed URL that allows secure, time-limited access to download the file.
-       */
-      download_url: File.DownloadUrl;
+            /**
+             * A pre-signed URL that allows secure, time-limited access to download the file.
+             */
+            download_url: File.DownloadUrl;
 
-      /**
-       * The total size of the file in bytes.
-       */
-      size: bigint;
-    }
+            /**
+             * The total size of the file in bytes.
+             */
+            size: bigint;
+          }
 
-    export namespace File {
-      export type ContentType = 'csv' | 'zip';
+          export namespace File {
+            export type ContentType = 'csv' | 'zip';
 
-      export interface DownloadUrl {
-        /**
-         * The time that the URL expires.
-         */
-        expires_at?: string;
+            export interface DownloadUrl {
+              /**
+               * The time that the URL expires.
+               */
+              expires_at?: string;
 
-        /**
-         * The URL that can be used for accessing the file.
-         */
-        url: string;
+              /**
+               * The URL that can be used for accessing the file.
+               */
+              url: string;
+            }
+          }
+        }
+
+        export namespace StatusDetails {
+          export type ErrorCode = 'file_size_above_limit' | 'internal_error';
+        }
       }
     }
-  }
-
-  export namespace StatusDetails {
-    export type ErrorCode = 'file_size_above_limit' | 'internal_error';
   }
 }
 export namespace V2 {

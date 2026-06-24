@@ -113,7 +113,7 @@ export interface InboundTransfer {
   /**
    * Details about this InboundTransfer's failure. Only set when status is `failed`.
    */
-  failure_details: InboundTransfer.FailureDetails | null;
+  failure_details: Treasury.InboundTransfer.FailureDetails | null;
 
   /**
    * The FinancialAccount that received the funds.
@@ -125,7 +125,7 @@ export interface InboundTransfer {
    */
   hosted_regulatory_receipt_url: string | null;
 
-  linked_flows: InboundTransfer.LinkedFlows;
+  linked_flows: Treasury.InboundTransfer.LinkedFlows;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -145,7 +145,7 @@ export interface InboundTransfer {
   /**
    * Details about the PaymentMethod for an InboundTransfer.
    */
-  origin_payment_method_details: InboundTransfer.OriginPaymentMethodDetails | null;
+  origin_payment_method_details: Treasury.InboundTransfer.OriginPaymentMethodDetails | null;
 
   /**
    * Returns `true` if the funds for an InboundTransfer were returned after the InboundTransfer went to the `succeeded` state.
@@ -160,138 +160,140 @@ export interface InboundTransfer {
   /**
    * Status of the InboundTransfer: `processing`, `succeeded`, `failed`, and `canceled`. An InboundTransfer is `processing` if it is created and pending. The status changes to `succeeded` once the funds have been "confirmed" and a `transaction` is created and posted. The status changes to `failed` if the transfer fails.
    */
-  status: InboundTransfer.Status;
+  status: Treasury.InboundTransfer.Status;
 
-  status_transitions: InboundTransfer.StatusTransitions;
+  status_transitions: Treasury.InboundTransfer.StatusTransitions;
 
   /**
    * The Transaction associated with this object.
    */
   transaction: string | Transaction | null;
 }
-export namespace InboundTransfer {
-  export interface FailureDetails {
-    /**
-     * Reason for the failure.
-     */
-    code: FailureDetails.Code;
-  }
-
-  export interface LinkedFlows {
-    /**
-     * If funds for this flow were returned after the flow went to the `succeeded` state, this field contains a reference to the ReceivedDebit return.
-     */
-    received_debit: string | null;
-  }
-
-  export interface OriginPaymentMethodDetails {
-    billing_details: OriginPaymentMethodDetails.BillingDetails;
-
-    /**
-     * The type of the payment method used in the InboundTransfer.
-     */
-    type: 'us_bank_account';
-
-    us_bank_account?: OriginPaymentMethodDetails.UsBankAccount;
-  }
-
-  export type Status = 'canceled' | 'failed' | 'processing' | 'succeeded';
-
-  export interface StatusTransitions {
-    /**
-     * Timestamp describing when an InboundTransfer changed status to `canceled`.
-     */
-    canceled_at?: number | null;
-
-    /**
-     * Timestamp describing when an InboundTransfer changed status to `failed`.
-     */
-    failed_at: number | null;
-
-    /**
-     * Timestamp describing when an InboundTransfer changed status to `succeeded`.
-     */
-    succeeded_at: number | null;
-  }
-
-  export namespace FailureDetails {
-    export type Code =
-      | 'account_closed'
-      | 'account_frozen'
-      | 'bank_account_restricted'
-      | 'bank_ownership_changed'
-      | 'debit_not_authorized'
-      | 'incorrect_account_holder_address'
-      | 'incorrect_account_holder_name'
-      | 'incorrect_account_holder_tax_id'
-      | 'insufficient_funds'
-      | 'invalid_account_number'
-      | 'invalid_currency'
-      | 'no_account'
-      | 'other';
-  }
-
-  export namespace OriginPaymentMethodDetails {
-    export interface BillingDetails {
-      address: Address;
-
+export namespace Treasury {
+  export namespace InboundTransfer {
+    export interface FailureDetails {
       /**
-       * Email address.
+       * Reason for the failure.
        */
-      email: string | null;
-
-      /**
-       * Full name.
-       */
-      name: string | null;
+      code: FailureDetails.Code;
     }
 
-    export interface UsBankAccount {
+    export interface LinkedFlows {
       /**
-       * Account holder type: individual or company.
+       * If funds for this flow were returned after the flow went to the `succeeded` state, this field contains a reference to the ReceivedDebit return.
        */
-      account_holder_type: UsBankAccount.AccountHolderType | null;
-
-      /**
-       * Account type: checkings or savings. Defaults to checking if omitted.
-       */
-      account_type: UsBankAccount.AccountType | null;
-
-      /**
-       * Name of the bank associated with the bank account.
-       */
-      bank_name: string | null;
-
-      /**
-       * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
-       */
-      fingerprint: string | null;
-
-      /**
-       * Last four digits of the bank account number.
-       */
-      last4: string | null;
-
-      /**
-       * ID of the mandate used to make this payment.
-       */
-      mandate?: string | Mandate;
-
-      /**
-       * The network rails used. See the [docs](https://docs.stripe.com/treasury/money-movement/timelines) to learn more about money movement timelines for each network type.
-       */
-      network: 'ach';
-
-      /**
-       * Routing number of the bank account.
-       */
-      routing_number: string | null;
+      received_debit: string | null;
     }
 
-    export namespace UsBankAccount {
-      export type AccountHolderType = 'company' | 'individual';
+    export interface OriginPaymentMethodDetails {
+      billing_details: OriginPaymentMethodDetails.BillingDetails;
 
-      export type AccountType = 'checking' | 'savings';
+      /**
+       * The type of the payment method used in the InboundTransfer.
+       */
+      type: 'us_bank_account';
+
+      us_bank_account?: OriginPaymentMethodDetails.UsBankAccount;
+    }
+
+    export type Status = 'canceled' | 'failed' | 'processing' | 'succeeded';
+
+    export interface StatusTransitions {
+      /**
+       * Timestamp describing when an InboundTransfer changed status to `canceled`.
+       */
+      canceled_at?: number | null;
+
+      /**
+       * Timestamp describing when an InboundTransfer changed status to `failed`.
+       */
+      failed_at: number | null;
+
+      /**
+       * Timestamp describing when an InboundTransfer changed status to `succeeded`.
+       */
+      succeeded_at: number | null;
+    }
+
+    export namespace FailureDetails {
+      export type Code =
+        | 'account_closed'
+        | 'account_frozen'
+        | 'bank_account_restricted'
+        | 'bank_ownership_changed'
+        | 'debit_not_authorized'
+        | 'incorrect_account_holder_address'
+        | 'incorrect_account_holder_name'
+        | 'incorrect_account_holder_tax_id'
+        | 'insufficient_funds'
+        | 'invalid_account_number'
+        | 'invalid_currency'
+        | 'no_account'
+        | 'other';
+    }
+
+    export namespace OriginPaymentMethodDetails {
+      export interface BillingDetails {
+        address: Address;
+
+        /**
+         * Email address.
+         */
+        email: string | null;
+
+        /**
+         * Full name.
+         */
+        name: string | null;
+      }
+
+      export interface UsBankAccount {
+        /**
+         * Account holder type: individual or company.
+         */
+        account_holder_type: UsBankAccount.AccountHolderType | null;
+
+        /**
+         * Account type: checkings or savings. Defaults to checking if omitted.
+         */
+        account_type: UsBankAccount.AccountType | null;
+
+        /**
+         * Name of the bank associated with the bank account.
+         */
+        bank_name: string | null;
+
+        /**
+         * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+         */
+        fingerprint: string | null;
+
+        /**
+         * Last four digits of the bank account number.
+         */
+        last4: string | null;
+
+        /**
+         * ID of the mandate used to make this payment.
+         */
+        mandate?: string | Mandate;
+
+        /**
+         * The network rails used. See the [docs](https://docs.stripe.com/treasury/money-movement/timelines) to learn more about money movement timelines for each network type.
+         */
+        network: 'ach';
+
+        /**
+         * Routing number of the bank account.
+         */
+        routing_number: string | null;
+      }
+
+      export namespace UsBankAccount {
+        export type AccountHolderType = 'company' | 'individual';
+
+        export type AccountType = 'checking' | 'savings';
+      }
     }
   }
 }

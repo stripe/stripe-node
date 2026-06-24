@@ -16,7 +16,6 @@ import {
 import {
   TestHelpers as TestHelpersNamespace3,
   TestClock,
-  DeletedTestClock,
   TestClockResource,
 } from './TestClocks.js';
 import {Issuing} from './Issuing/index.js';
@@ -54,7 +53,7 @@ export declare namespace TestHelpers {
   export import TestClockListParams = TestHelpersNamespace3.TestClockListParams;
   export import TestClockCreateParams = TestHelpersNamespace3.TestClockCreateParams;
   export import TestClockAdvanceParams = TestHelpersNamespace3.TestClockAdvanceParams;
-  export {DeletedTestClock};
+  export import DeletedTestClock = TestHelpersNamespace3.DeletedTestClock;
   export {TestClock, TestClockResource};
   export {Issuing};
   export {SharedPayment};

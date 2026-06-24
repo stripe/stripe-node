@@ -284,313 +284,317 @@ export interface BatchJob {
   /**
    * The current status of the `batch_job`.
    */
-  status: BatchJob.Status;
+  status: V2.Core.BatchJob.Status;
 
   /**
    * Additional details about the current state of the `batch_job`.
    */
-  status_details?: BatchJob.StatusDetails;
+  status_details?: V2.Core.BatchJob.StatusDetails;
 }
-export namespace BatchJob {
-  export type Status =
-    | 'batch_failed'
-    | 'canceled'
-    | 'cancelling'
-    | 'complete'
-    | 'in_progress'
-    | 'ready_for_upload'
-    | 'timeout'
-    | 'upload_timeout'
-    | 'validating'
-    | 'validation_failed';
+export namespace V2 {
+  export namespace Core {
+    export namespace BatchJob {
+      export type Status =
+        | 'batch_failed'
+        | 'canceled'
+        | 'cancelling'
+        | 'complete'
+        | 'in_progress'
+        | 'ready_for_upload'
+        | 'timeout'
+        | 'upload_timeout'
+        | 'validating'
+        | 'validation_failed';
 
-  export interface StatusDetails {
-    /**
-     * Additional details for the `BATCH_FAILED` status of the `batch_job`.
-     */
-    batch_failed?: StatusDetails.BatchFailed;
-
-    /**
-     * Additional details for the `CANCELED` status of the `batch_job`.
-     */
-    canceled?: StatusDetails.Canceled;
-
-    /**
-     * Additional details for the `COMPLETE` status of the `batch_job`.
-     */
-    complete?: StatusDetails.Complete;
-
-    /**
-     * Additional details for the `IN_PROGRESS` status of the `batch_job`.
-     */
-    in_progress?: StatusDetails.InProgress;
-
-    /**
-     * Additional details for the `READY_FOR_UPLOAD` status of the `batch_job`.
-     */
-    ready_for_upload?: StatusDetails.ReadyForUpload;
-
-    /**
-     * Additional details for the `TIMEOUT` status of the `batch_job`.
-     */
-    timeout?: StatusDetails.Timeout;
-
-    /**
-     * Additional details for the `VALIDATING` status of the `batch_job`.
-     */
-    validating?: StatusDetails.Validating;
-
-    /**
-     * Additional details for the `VALIDATION_FAILED` status of the `batch_job`.
-     */
-    validation_failed?: StatusDetails.ValidationFailed;
-  }
-
-  export namespace StatusDetails {
-    export interface BatchFailed {
-      /**
-       * Details about the `batch_job` failure.
-       */
-      error: string;
-    }
-
-    export interface Canceled {
-      /**
-       * The total number of records that failed processing.
-       */
-      failure_count: bigint;
-
-      /**
-       * The output file details. If the `batch_job` is canceled, this is provided only if there is already output at this point.
-       */
-      output_file: Canceled.OutputFile;
-
-      /**
-       * The total number of records that were successfully processed.
-       */
-      success_count: bigint;
-    }
-
-    export interface Complete {
-      /**
-       * The total number of records that failed processing.
-       */
-      failure_count: bigint;
-
-      /**
-       * The output file details. If the `batch_job` is canceled, this is provided only if there is already output at this point.
-       */
-      output_file: Complete.OutputFile;
-
-      /**
-       * The total number of records that were successfully processed.
-       */
-      success_count: bigint;
-    }
-
-    export interface InProgress {
-      /**
-       * The number of records that failed processing so far.
-       */
-      failure_count: bigint;
-
-      /**
-       * The number of records that were successfully processed so far.
-       */
-      success_count: bigint;
-    }
-
-    export interface ReadyForUpload {
-      /**
-       * The upload file details.
-       */
-      upload_url: ReadyForUpload.UploadUrl;
-    }
-
-    export interface Timeout {
-      /**
-       * The total number of records that failed processing.
-       */
-      failure_count: bigint;
-
-      /**
-       * The output file details. If the `batch_job` is canceled, this is provided only if there is already output at this point.
-       */
-      output_file: Timeout.OutputFile;
-
-      /**
-       * The total number of records that were successfully processed.
-       */
-      success_count: bigint;
-    }
-
-    export interface Validating {
-      /**
-       * The number of records that were validated. Note that there is no failure counter here;
-       * once we have any validation failures we give up.
-       */
-      validated_count: bigint;
-    }
-
-    export interface ValidationFailed {
-      /**
-       * The total number of records that failed processing.
-       */
-      failure_count: bigint;
-
-      /**
-       * The output file details. If the `batch_job` is canceled, this is provided only if there is already output at this point.
-       */
-      output_file: ValidationFailed.OutputFile;
-
-      /**
-       * The total number of records that were successfully processed.
-       */
-      success_count: bigint;
-    }
-
-    export namespace Canceled {
-      export interface OutputFile {
+      export interface StatusDetails {
         /**
-         * The content type of the file.
+         * Additional details for the `BATCH_FAILED` status of the `batch_job`.
          */
-        content_type: string;
+        batch_failed?: StatusDetails.BatchFailed;
 
         /**
-         * A pre-signed URL that allows secure, time-limited access to download the file.
+         * Additional details for the `CANCELED` status of the `batch_job`.
          */
-        download_url: OutputFile.DownloadUrl;
+        canceled?: StatusDetails.Canceled;
 
         /**
-         * The total size of the file in bytes.
+         * Additional details for the `COMPLETE` status of the `batch_job`.
          */
-        size: bigint;
+        complete?: StatusDetails.Complete;
+
+        /**
+         * Additional details for the `IN_PROGRESS` status of the `batch_job`.
+         */
+        in_progress?: StatusDetails.InProgress;
+
+        /**
+         * Additional details for the `READY_FOR_UPLOAD` status of the `batch_job`.
+         */
+        ready_for_upload?: StatusDetails.ReadyForUpload;
+
+        /**
+         * Additional details for the `TIMEOUT` status of the `batch_job`.
+         */
+        timeout?: StatusDetails.Timeout;
+
+        /**
+         * Additional details for the `VALIDATING` status of the `batch_job`.
+         */
+        validating?: StatusDetails.Validating;
+
+        /**
+         * Additional details for the `VALIDATION_FAILED` status of the `batch_job`.
+         */
+        validation_failed?: StatusDetails.ValidationFailed;
       }
 
-      export namespace OutputFile {
-        export interface DownloadUrl {
+      export namespace StatusDetails {
+        export interface BatchFailed {
           /**
-           * The time that the URL expires.
+           * Details about the `batch_job` failure.
            */
-          expires_at?: string;
-
-          /**
-           * The URL that can be used for accessing the file.
-           */
-          url: string;
+          error: string;
         }
-      }
-    }
 
-    export namespace Complete {
-      export interface OutputFile {
-        /**
-         * The content type of the file.
-         */
-        content_type: string;
-
-        /**
-         * A pre-signed URL that allows secure, time-limited access to download the file.
-         */
-        download_url: OutputFile.DownloadUrl;
-
-        /**
-         * The total size of the file in bytes.
-         */
-        size: bigint;
-      }
-
-      export namespace OutputFile {
-        export interface DownloadUrl {
+        export interface Canceled {
           /**
-           * The time that the URL expires.
+           * The total number of records that failed processing.
            */
-          expires_at?: string;
+          failure_count: bigint;
 
           /**
-           * The URL that can be used for accessing the file.
+           * The output file details. If the `batch_job` is canceled, this is provided only if there is already output at this point.
            */
-          url: string;
+          output_file: Canceled.OutputFile;
+
+          /**
+           * The total number of records that were successfully processed.
+           */
+          success_count: bigint;
         }
-      }
-    }
 
-    export namespace ReadyForUpload {
-      export interface UploadUrl {
-        /**
-         * The time that the URL expires.
-         */
-        expires_at?: string;
-
-        /**
-         * The URL that can be used for accessing the file.
-         */
-        url: string;
-      }
-    }
-
-    export namespace Timeout {
-      export interface OutputFile {
-        /**
-         * The content type of the file.
-         */
-        content_type: string;
-
-        /**
-         * A pre-signed URL that allows secure, time-limited access to download the file.
-         */
-        download_url: OutputFile.DownloadUrl;
-
-        /**
-         * The total size of the file in bytes.
-         */
-        size: bigint;
-      }
-
-      export namespace OutputFile {
-        export interface DownloadUrl {
+        export interface Complete {
           /**
-           * The time that the URL expires.
+           * The total number of records that failed processing.
            */
-          expires_at?: string;
+          failure_count: bigint;
 
           /**
-           * The URL that can be used for accessing the file.
+           * The output file details. If the `batch_job` is canceled, this is provided only if there is already output at this point.
            */
-          url: string;
+          output_file: Complete.OutputFile;
+
+          /**
+           * The total number of records that were successfully processed.
+           */
+          success_count: bigint;
         }
-      }
-    }
 
-    export namespace ValidationFailed {
-      export interface OutputFile {
-        /**
-         * The content type of the file.
-         */
-        content_type: string;
-
-        /**
-         * A pre-signed URL that allows secure, time-limited access to download the file.
-         */
-        download_url: OutputFile.DownloadUrl;
-
-        /**
-         * The total size of the file in bytes.
-         */
-        size: bigint;
-      }
-
-      export namespace OutputFile {
-        export interface DownloadUrl {
+        export interface InProgress {
           /**
-           * The time that the URL expires.
+           * The number of records that failed processing so far.
            */
-          expires_at?: string;
+          failure_count: bigint;
 
           /**
-           * The URL that can be used for accessing the file.
+           * The number of records that were successfully processed so far.
            */
-          url: string;
+          success_count: bigint;
+        }
+
+        export interface ReadyForUpload {
+          /**
+           * The upload file details.
+           */
+          upload_url: ReadyForUpload.UploadUrl;
+        }
+
+        export interface Timeout {
+          /**
+           * The total number of records that failed processing.
+           */
+          failure_count: bigint;
+
+          /**
+           * The output file details. If the `batch_job` is canceled, this is provided only if there is already output at this point.
+           */
+          output_file: Timeout.OutputFile;
+
+          /**
+           * The total number of records that were successfully processed.
+           */
+          success_count: bigint;
+        }
+
+        export interface Validating {
+          /**
+           * The number of records that were validated. Note that there is no failure counter here;
+           * once we have any validation failures we give up.
+           */
+          validated_count: bigint;
+        }
+
+        export interface ValidationFailed {
+          /**
+           * The total number of records that failed processing.
+           */
+          failure_count: bigint;
+
+          /**
+           * The output file details. If the `batch_job` is canceled, this is provided only if there is already output at this point.
+           */
+          output_file: ValidationFailed.OutputFile;
+
+          /**
+           * The total number of records that were successfully processed.
+           */
+          success_count: bigint;
+        }
+
+        export namespace Canceled {
+          export interface OutputFile {
+            /**
+             * The content type of the file.
+             */
+            content_type: string;
+
+            /**
+             * A pre-signed URL that allows secure, time-limited access to download the file.
+             */
+            download_url: OutputFile.DownloadUrl;
+
+            /**
+             * The total size of the file in bytes.
+             */
+            size: bigint;
+          }
+
+          export namespace OutputFile {
+            export interface DownloadUrl {
+              /**
+               * The time that the URL expires.
+               */
+              expires_at?: string;
+
+              /**
+               * The URL that can be used for accessing the file.
+               */
+              url: string;
+            }
+          }
+        }
+
+        export namespace Complete {
+          export interface OutputFile {
+            /**
+             * The content type of the file.
+             */
+            content_type: string;
+
+            /**
+             * A pre-signed URL that allows secure, time-limited access to download the file.
+             */
+            download_url: OutputFile.DownloadUrl;
+
+            /**
+             * The total size of the file in bytes.
+             */
+            size: bigint;
+          }
+
+          export namespace OutputFile {
+            export interface DownloadUrl {
+              /**
+               * The time that the URL expires.
+               */
+              expires_at?: string;
+
+              /**
+               * The URL that can be used for accessing the file.
+               */
+              url: string;
+            }
+          }
+        }
+
+        export namespace ReadyForUpload {
+          export interface UploadUrl {
+            /**
+             * The time that the URL expires.
+             */
+            expires_at?: string;
+
+            /**
+             * The URL that can be used for accessing the file.
+             */
+            url: string;
+          }
+        }
+
+        export namespace Timeout {
+          export interface OutputFile {
+            /**
+             * The content type of the file.
+             */
+            content_type: string;
+
+            /**
+             * A pre-signed URL that allows secure, time-limited access to download the file.
+             */
+            download_url: OutputFile.DownloadUrl;
+
+            /**
+             * The total size of the file in bytes.
+             */
+            size: bigint;
+          }
+
+          export namespace OutputFile {
+            export interface DownloadUrl {
+              /**
+               * The time that the URL expires.
+               */
+              expires_at?: string;
+
+              /**
+               * The URL that can be used for accessing the file.
+               */
+              url: string;
+            }
+          }
+        }
+
+        export namespace ValidationFailed {
+          export interface OutputFile {
+            /**
+             * The content type of the file.
+             */
+            content_type: string;
+
+            /**
+             * A pre-signed URL that allows secure, time-limited access to download the file.
+             */
+            download_url: OutputFile.DownloadUrl;
+
+            /**
+             * The total size of the file in bytes.
+             */
+            size: bigint;
+          }
+
+          export namespace OutputFile {
+            export interface DownloadUrl {
+              /**
+               * The time that the URL expires.
+               */
+              expires_at?: string;
+
+              /**
+               * The URL that can be used for accessing the file.
+               */
+              url: string;
+            }
+          }
         }
       }
     }

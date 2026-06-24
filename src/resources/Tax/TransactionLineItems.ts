@@ -51,12 +51,12 @@ export interface TransactionLineItem {
   /**
    * If `type=reversal`, contains information about what was reversed.
    */
-  reversal: TransactionLineItem.Reversal | null;
+  reversal: Tax.TransactionLineItem.Reversal | null;
 
   /**
    * Specifies whether the `amount` includes taxes. If `tax_behavior=inclusive`, then the amount includes taxes.
    */
-  tax_behavior: TransactionLineItem.TaxBehavior;
+  tax_behavior: Tax.TransactionLineItem.TaxBehavior;
 
   /**
    * The [tax code](https://docs.stripe.com/tax/tax-categories) ID used for this resource.
@@ -66,17 +66,19 @@ export interface TransactionLineItem {
   /**
    * If `reversal`, this line item reverses an earlier transaction.
    */
-  type: TransactionLineItem.Type;
+  type: Tax.TransactionLineItem.Type;
 }
-export namespace TransactionLineItem {
-  export interface Reversal {
-    /**
-     * The `id` of the line item to reverse in the original transaction.
-     */
-    original_line_item: string;
+export namespace Tax {
+  export namespace TransactionLineItem {
+    export interface Reversal {
+      /**
+       * The `id` of the line item to reverse in the original transaction.
+       */
+      original_line_item: string;
+    }
+
+    export type TaxBehavior = 'exclusive' | 'inclusive';
+
+    export type Type = 'reversal' | 'transaction';
   }
-
-  export type TaxBehavior = 'exclusive' | 'inclusive';
-
-  export type Type = 'reversal' | 'transaction';
 }

@@ -100,7 +100,7 @@ export interface FinancialAccount {
   /**
    * Multi-currency balance of this FinancialAccount, split by availability state. Each balance is represented as a hash where the key is the three-letter ISO currency code, in lowercase, and the value is the amount for that currency.
    */
-  balance: FinancialAccount.Balance;
+  balance: V2.MoneyManagement.FinancialAccount.Balance;
 
   /**
    * Open Enum. Two-letter country code that represents the country where the LegalEntity associated with the FinancialAccount is based in.
@@ -130,105 +130,112 @@ export interface FinancialAccount {
   /**
    * If this is a `other` FinancialAccount, this hash indicates what the actual type is. Upgrade your API version to see it reflected in `type`.
    */
-  other?: FinancialAccount.Other;
+  other?: V2.MoneyManagement.FinancialAccount.Other;
 
   /**
    * Closed Enum. An enum representing the status of the FinancialAccount. This indicates whether or not the FinancialAccount can be used for any money movement flows.
    */
-  status: FinancialAccount.Status;
+  status: V2.MoneyManagement.FinancialAccount.Status;
 
   /**
    * Additional details related to the status of the FinancialAccount.
    */
-  status_details?: FinancialAccount.StatusDetails;
+  status_details?: V2.MoneyManagement.FinancialAccount.StatusDetails;
 
   /**
    * If this is a `storage` FinancialAccount, this hash includes details specific to `storage` FinancialAccounts.
    */
-  storage?: FinancialAccount.Storage;
+  storage?: V2.MoneyManagement.FinancialAccount.Storage;
 
   /**
    * Type of the FinancialAccount. An additional hash is included on the FinancialAccount with a name matching this value.
    * It contains additional information specific to the FinancialAccount type.
    */
-  type: FinancialAccount.Type;
+  type: V2.MoneyManagement.FinancialAccount.Type;
 }
-export namespace FinancialAccount {
-  export interface Balance {
-    /**
-     * Balance that can be used for money movement.
-     */
-    available: {
-      [key: string]: V2Amount;
-    };
-
-    /**
-     * Balance of inbound funds that will later transition to the `available` balance.
-     */
-    inbound_pending: {
-      [key: string]: V2Amount;
-    };
-
-    /**
-     * Balance of funds that are being used for a pending outbound money movement.
-     */
-    outbound_pending: {
-      [key: string]: V2Amount;
-    };
-  }
-
-  export interface Other {
-    /**
-     * The type of the FinancialAccount, represented as a string. Upgrade your API version to see the type reflected in `financial_account.type`.
-     */
-    type: string;
-  }
-
-  export type Status = 'closed' | 'open' | 'pending';
-
-  export interface StatusDetails {
-    /**
-     * Details related to the closed state of the FinancialAccount.
-     */
-    closed?: StatusDetails.Closed;
-  }
-
-  export interface Storage {
-    /**
-     * The currencies that this FinancialAccount can hold.
-     */
-    holds_currencies: Array<string>;
-  }
-
-  export type Type = 'other' | 'storage';
-
-  export namespace StatusDetails {
-    export interface Closed {
-      /**
-       * The forwarding settings for the closed FinancialAccount.
-       */
-      forwarding_settings?: Closed.ForwardingSettings;
-
-      /**
-       * The reason the FinancialAccount was closed.
-       */
-      reason: Closed.Reason;
-    }
-
-    export namespace Closed {
-      export interface ForwardingSettings {
+export namespace V2 {
+  export namespace MoneyManagement {
+    export namespace FinancialAccount {
+      export interface Balance {
         /**
-         * The address to send forwarded payments to.
+         * Balance that can be used for money movement.
          */
-        payment_method?: string;
+        available: {
+          [key: string]: V2Amount;
+        };
 
         /**
-         * The address to send forwarded payouts to.
+         * Balance of inbound funds that will later transition to the `available` balance.
          */
-        payout_method?: string;
+        inbound_pending: {
+          [key: string]: V2Amount;
+        };
+
+        /**
+         * Balance of funds that are being used for a pending outbound money movement.
+         */
+        outbound_pending: {
+          [key: string]: V2Amount;
+        };
       }
 
-      export type Reason = 'account_closed' | 'closed_by_platform' | 'other';
+      export interface Other {
+        /**
+         * The type of the FinancialAccount, represented as a string. Upgrade your API version to see the type reflected in `financial_account.type`.
+         */
+        type: string;
+      }
+
+      export type Status = 'closed' | 'open' | 'pending';
+
+      export interface StatusDetails {
+        /**
+         * Details related to the closed state of the FinancialAccount.
+         */
+        closed?: StatusDetails.Closed;
+      }
+
+      export interface Storage {
+        /**
+         * The currencies that this FinancialAccount can hold.
+         */
+        holds_currencies: Array<string>;
+      }
+
+      export type Type = 'other' | 'storage';
+
+      export namespace StatusDetails {
+        export interface Closed {
+          /**
+           * The forwarding settings for the closed FinancialAccount.
+           */
+          forwarding_settings?: Closed.ForwardingSettings;
+
+          /**
+           * The reason the FinancialAccount was closed.
+           */
+          reason: Closed.Reason;
+        }
+
+        export namespace Closed {
+          export interface ForwardingSettings {
+            /**
+             * The address to send forwarded payments to.
+             */
+            payment_method?: string;
+
+            /**
+             * The address to send forwarded payouts to.
+             */
+            payout_method?: string;
+          }
+
+          export type Reason =
+            | 'account_closed'
+            | 'closed_by_platform'
+            | 'other';
+        }
+      }
     }
   }
 }

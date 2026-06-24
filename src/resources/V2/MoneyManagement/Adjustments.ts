@@ -52,7 +52,7 @@ export interface Adjustment {
   /**
    * If applicable, contains information about the original flow linked to this Adjustment.
    */
-  adjusted_flow?: Adjustment.AdjustedFlow;
+  adjusted_flow?: V2.MoneyManagement.Adjustment.AdjustedFlow;
 
   /**
    * The amount of the Adjustment.
@@ -84,54 +84,58 @@ export interface Adjustment {
    */
   receipt_url?: string;
 }
-export namespace Adjustment {
-  export interface AdjustedFlow {
-    /**
-     * If applicable, the ID of the Adjustment linked to this Adjustment.
-     */
-    adjustment?: string;
+export namespace V2 {
+  export namespace MoneyManagement {
+    export namespace Adjustment {
+      export interface AdjustedFlow {
+        /**
+         * If applicable, the ID of the Adjustment linked to this Adjustment.
+         */
+        adjustment?: string;
 
-    /**
-     * If applicable, the ID of the InboundTransfer linked to this Adjustment.
-     */
-    inbound_transfer?: string;
+        /**
+         * If applicable, the ID of the InboundTransfer linked to this Adjustment.
+         */
+        inbound_transfer?: string;
 
-    /**
-     * If applicable, the ID of the OutboundPayment linked to this Adjustment.
-     */
-    outbound_payment?: string;
+        /**
+         * If applicable, the ID of the OutboundPayment linked to this Adjustment.
+         */
+        outbound_payment?: string;
 
-    /**
-     * If applicable, the ID of the OutboundTransfer linked to this Adjustment.
-     */
-    outbound_transfer?: string;
+        /**
+         * If applicable, the ID of the OutboundTransfer linked to this Adjustment.
+         */
+        outbound_transfer?: string;
 
-    /**
-     * If applicable, the ID of the ReceivedCredit linked to this Adjustment.
-     */
-    received_credit?: string;
+        /**
+         * If applicable, the ID of the ReceivedCredit linked to this Adjustment.
+         */
+        received_credit?: string;
 
-    /**
-     * If applicable, the ID of the ReceivedDebit linked to this Adjustment.
-     */
-    received_debit?: string;
+        /**
+         * If applicable, the ID of the ReceivedDebit linked to this Adjustment.
+         */
+        received_debit?: string;
 
-    /**
-     * Closed Enum. If applicable, the type of flow linked to this Adjustment. The field matching this value will contain the ID of the flow.
-     */
-    type: AdjustedFlow.Type;
-  }
+        /**
+         * Closed Enum. If applicable, the type of flow linked to this Adjustment. The field matching this value will contain the ID of the flow.
+         */
+        type: AdjustedFlow.Type;
+      }
 
-  export namespace AdjustedFlow {
-    export type Type =
-      | 'adjustment'
-      | 'balance_exchange'
-      | 'inbound_payment'
-      | 'inbound_transfer'
-      | 'outbound_payment'
-      | 'outbound_transfer'
-      | 'received_credit'
-      | 'received_debit';
+      export namespace AdjustedFlow {
+        export type Type =
+          | 'adjustment'
+          | 'balance_exchange'
+          | 'inbound_payment'
+          | 'inbound_transfer'
+          | 'outbound_payment'
+          | 'outbound_transfer'
+          | 'received_credit'
+          | 'received_debit';
+      }
+    }
   }
 }
 export namespace V2 {

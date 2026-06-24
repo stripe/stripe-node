@@ -37,7 +37,7 @@ export interface Authorization {
   /**
    * The account holder that this authorization belongs to.
    */
-  account_holder?: Authorization.AccountHolder | null;
+  account_holder?: FinancialConnections.Authorization.AccountHolder | null;
 
   /**
    * The ID of the Financial Connections Institution this account belongs to. Note that this relationship may sometimes change in rare circumstances (e.g. institution mergers).
@@ -57,50 +57,52 @@ export interface Authorization {
   /**
    * The status of the connection to the Authorization.
    */
-  status: Authorization.Status;
+  status: FinancialConnections.Authorization.Status;
 
-  status_details: Authorization.StatusDetails;
+  status_details: FinancialConnections.Authorization.StatusDetails;
 }
-export namespace Authorization {
-  export interface AccountHolder {
-    /**
-     * The ID of the Stripe account that this account belongs to. Only available when `account_holder.type` is `account`.
-     */
-    account?: string | Account;
-
-    /**
-     * The ID for an Account representing a customer that this account belongs to. Only available when `account_holder.type` is `customer`.
-     */
-    customer?: string | Customer;
-
-    customer_account?: string;
-
-    /**
-     * Type of account holder that this account belongs to.
-     */
-    type: AccountHolder.Type;
-  }
-
-  export type Status = 'active' | 'disconnected' | 'inactive';
-
-  export interface StatusDetails {
-    inactive?: StatusDetails.Inactive;
-  }
-
-  export namespace AccountHolder {
-    export type Type = 'account' | 'customer';
-  }
-
-  export namespace StatusDetails {
-    export interface Inactive {
+export namespace FinancialConnections {
+  export namespace Authorization {
+    export interface AccountHolder {
       /**
-       * The action (if any) to relink the inactive Authorization.
+       * The ID of the Stripe account that this account belongs to. Only available when `account_holder.type` is `account`.
        */
-      action: Inactive.Action;
+      account?: string | Account;
+
+      /**
+       * The ID for an Account representing a customer that this account belongs to. Only available when `account_holder.type` is `customer`.
+       */
+      customer?: string | Customer;
+
+      customer_account?: string;
+
+      /**
+       * Type of account holder that this account belongs to.
+       */
+      type: AccountHolder.Type;
     }
 
-    export namespace Inactive {
-      export type Action = 'none' | 'relink_required';
+    export type Status = 'active' | 'disconnected' | 'inactive';
+
+    export interface StatusDetails {
+      inactive?: StatusDetails.Inactive;
+    }
+
+    export namespace AccountHolder {
+      export type Type = 'account' | 'customer';
+    }
+
+    export namespace StatusDetails {
+      export interface Inactive {
+        /**
+         * The action (if any) to relink the inactive Authorization.
+         */
+        action: Inactive.Action;
+      }
+
+      export namespace Inactive {
+        export type Action = 'none' | 'relink_required';
+      }
     }
   }
 }

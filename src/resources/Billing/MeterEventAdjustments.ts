@@ -28,7 +28,7 @@ export interface MeterEventAdjustment {
   /**
    * Specifies which event to cancel.
    */
-  cancel: MeterEventAdjustment.Cancel | null;
+  cancel: Billing.MeterEventAdjustment.Cancel | null;
 
   /**
    * The name of the meter event. Corresponds with the `event_name` field on a meter.
@@ -43,22 +43,24 @@ export interface MeterEventAdjustment {
   /**
    * The meter event adjustment's status.
    */
-  status: MeterEventAdjustment.Status;
+  status: Billing.MeterEventAdjustment.Status;
 
   /**
    * Specifies whether to cancel a single event or a range of events for a time period. Time period cancellation is not supported yet.
    */
   type: 'cancel';
 }
-export namespace MeterEventAdjustment {
-  export interface Cancel {
-    /**
-     * Unique identifier for the event.
-     */
-    identifier: string | null;
-  }
+export namespace Billing {
+  export namespace MeterEventAdjustment {
+    export interface Cancel {
+      /**
+       * Unique identifier for the event.
+       */
+      identifier: string | null;
+    }
 
-  export type Status = 'complete' | 'pending';
+    export type Status = 'complete' | 'pending';
+  }
 }
 export namespace Billing {
   export interface MeterEventAdjustmentCreateParams {

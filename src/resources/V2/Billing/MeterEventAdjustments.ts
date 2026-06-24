@@ -33,7 +33,7 @@ export interface MeterEventAdjustment {
   /**
    * Specifies which event to cancel.
    */
-  cancel: MeterEventAdjustment.Cancel;
+  cancel: V2.Billing.MeterEventAdjustment.Cancel;
 
   /**
    * The time the adjustment was created.
@@ -53,22 +53,26 @@ export interface MeterEventAdjustment {
   /**
    * Open Enum. The meter event adjustment's status.
    */
-  status: MeterEventAdjustment.Status;
+  status: V2.Billing.MeterEventAdjustment.Status;
 
   /**
    * Open Enum. Specifies the type of cancellation. Currently supports canceling a single event.
    */
   type: 'cancel';
 }
-export namespace MeterEventAdjustment {
-  export interface Cancel {
-    /**
-     * The identifier that was originally assigned to the meter event. You can only cancel events within 24 hours of Stripe receiving them.
-     */
-    identifier: string;
-  }
+export namespace V2 {
+  export namespace Billing {
+    export namespace MeterEventAdjustment {
+      export interface Cancel {
+        /**
+         * The identifier that was originally assigned to the meter event. You can only cancel events within 24 hours of Stripe receiving them.
+         */
+        identifier: string;
+      }
 
-  export type Status = 'complete' | 'pending';
+      export type Status = 'complete' | 'pending';
+    }
+  }
 }
 export namespace V2 {
   export namespace Billing {

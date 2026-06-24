@@ -100,23 +100,25 @@ export interface Secret {
    */
   payload?: string | null;
 
-  scope: Secret.Scope;
+  scope: Apps.Secret.Scope;
 }
-export namespace Secret {
-  export interface Scope {
-    /**
-     * The secret scope type.
-     */
-    type: Scope.Type;
+export namespace Apps {
+  export namespace Secret {
+    export interface Scope {
+      /**
+       * The secret scope type.
+       */
+      type: Scope.Type;
 
-    /**
-     * The user ID, if type is set to "user"
-     */
-    user?: string;
-  }
+      /**
+       * The user ID, if type is set to "user"
+       */
+      user?: string;
+    }
 
-  export namespace Scope {
-    export type Type = 'account' | 'user';
+    export namespace Scope {
+      export type Type = 'account' | 'user';
+    }
   }
 }
 export namespace Apps {

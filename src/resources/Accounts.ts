@@ -52,7 +52,7 @@ export class AccountResource extends StripeResource {
     if (typeof id === 'string') {
       return this._makeRequest(
         'GET',
-        `/v1/accounts/${encodeURIComponent(id)}`,
+        `/v1/accounts/${id}`,
         params,
         options
       ) as any;

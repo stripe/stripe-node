@@ -56,7 +56,7 @@ export interface Supplier {
   /**
    * The locations in which this supplier operates.
    */
-  locations: Array<Supplier.Location>;
+  locations: Array<Climate.Supplier.Location>;
 
   /**
    * Name of this carbon removal supplier.
@@ -66,41 +66,43 @@ export interface Supplier {
   /**
    * The scientific pathway used for carbon removal.
    */
-  removal_pathway: Supplier.RemovalPathway;
+  removal_pathway: Climate.Supplier.RemovalPathway;
 }
-export namespace Supplier {
-  export interface Location {
-    /**
-     * The city where the supplier is located.
-     */
-    city: string | null;
+export namespace Climate {
+  export namespace Supplier {
+    export interface Location {
+      /**
+       * The city where the supplier is located.
+       */
+      city: string | null;
 
-    /**
-     * Two-letter ISO code representing the country where the supplier is located.
-     */
-    country: string;
+      /**
+       * Two-letter ISO code representing the country where the supplier is located.
+       */
+      country: string;
 
-    /**
-     * The geographic latitude where the supplier is located.
-     */
-    latitude: number | null;
+      /**
+       * The geographic latitude where the supplier is located.
+       */
+      latitude: number | null;
 
-    /**
-     * The geographic longitude where the supplier is located.
-     */
-    longitude: number | null;
+      /**
+       * The geographic longitude where the supplier is located.
+       */
+      longitude: number | null;
 
-    /**
-     * The state/county/province/region where the supplier is located.
-     */
-    region: string | null;
+      /**
+       * The state/county/province/region where the supplier is located.
+       */
+      region: string | null;
+    }
+
+    export type RemovalPathway =
+      | 'biomass_carbon_removal_and_storage'
+      | 'direct_air_capture'
+      | 'enhanced_weathering'
+      | 'marine_carbon_removal';
   }
-
-  export type RemovalPathway =
-    | 'biomass_carbon_removal_and_storage'
-    | 'direct_air_capture'
-    | 'enhanced_weathering'
-    | 'marine_carbon_removal';
 }
 export namespace Climate {
   export interface SupplierRetrieveParams {

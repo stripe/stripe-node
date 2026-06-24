@@ -73,7 +73,7 @@ export interface Product {
    * Current prices for a metric ton of carbon removal in a currency's smallest unit.
    */
   current_prices_per_metric_ton: {
-    [key: string]: Product.CurrentPricesPerMetricTon;
+    [key: string]: Climate.Product.CurrentPricesPerMetricTon;
   };
 
   /**
@@ -101,22 +101,24 @@ export interface Product {
    */
   suppliers: Array<Supplier>;
 }
-export namespace Product {
-  export interface CurrentPricesPerMetricTon {
-    /**
-     * Fees for one metric ton of carbon removal in the currency's smallest unit.
-     */
-    amount_fees: number;
+export namespace Climate {
+  export namespace Product {
+    export interface CurrentPricesPerMetricTon {
+      /**
+       * Fees for one metric ton of carbon removal in the currency's smallest unit.
+       */
+      amount_fees: number;
 
-    /**
-     * Subtotal for one metric ton of carbon removal (excluding fees) in the currency's smallest unit.
-     */
-    amount_subtotal: number;
+      /**
+       * Subtotal for one metric ton of carbon removal (excluding fees) in the currency's smallest unit.
+       */
+      amount_subtotal: number;
 
-    /**
-     * Total for one metric ton of carbon removal (including fees) in the currency's smallest unit.
-     */
-    amount_total: number;
+      /**
+       * Total for one metric ton of carbon removal (including fees) in the currency's smallest unit.
+       */
+      amount_total: number;
+    }
   }
 }
 export namespace Climate {

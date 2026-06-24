@@ -44,19 +44,21 @@ export interface ReaderCollectedData {
   /**
    * The magstripe data collected by the reader.
    */
-  magstripe: ReaderCollectedData.Magstripe | null;
+  magstripe: Terminal.ReaderCollectedData.Magstripe | null;
 
   /**
    * The type of data collected by the reader.
    */
   type: 'magstripe';
 }
-export namespace ReaderCollectedData {
-  export interface Magstripe {
-    /**
-     * The raw magstripe data collected by the reader.
-     */
-    data: string | null;
+export namespace Terminal {
+  export namespace ReaderCollectedData {
+    export interface Magstripe {
+      /**
+       * The raw magstripe data collected by the reader.
+       */
+      data: string | null;
+    }
   }
 }
 export namespace Terminal {

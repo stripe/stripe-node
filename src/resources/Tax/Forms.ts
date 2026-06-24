@@ -68,9 +68,9 @@ export interface Form {
    */
   object: 'tax.form';
 
-  au_serr?: Form.AuSerr;
+  au_serr?: Tax.Form.AuSerr;
 
-  ca_mrdp?: Form.CaMrdp;
+  ca_mrdp?: Tax.Form.CaMrdp;
 
   /**
    * The form that corrects this form, if any.
@@ -82,185 +82,187 @@ export interface Form {
    */
   created: number;
 
-  eu_dac7?: Form.EuDac7;
+  eu_dac7?: Tax.Form.EuDac7;
 
   /**
    * A list of tax filing statuses. Note that a filing status will only be included if the form has been filed directly with the jurisdiction's tax authority.
    */
-  filing_statuses: Array<Form.FilingStatus>;
+  filing_statuses: Array<Tax.Form.FilingStatus>;
 
-  gb_mrdp?: Form.GbMrdp;
+  gb_mrdp?: Tax.Form.GbMrdp;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
    */
   livemode: boolean;
 
-  nz_mrdp?: Form.NzMrdp;
+  nz_mrdp?: Tax.Form.NzMrdp;
 
-  payee: Form.Payee;
+  payee: Tax.Form.Payee;
 
   /**
    * The type of the tax form. An additional hash is included on the tax form with a name matching this value. It contains additional information specific to the tax form type.
    */
-  type: Form.Type;
+  type: Tax.Form.Type;
 
-  us_1099_k?: Form.Us1099K;
+  us_1099_k?: Tax.Form.Us1099K;
 
-  us_1099_misc?: Form.Us1099Misc;
+  us_1099_misc?: Tax.Form.Us1099Misc;
 
-  us_1099_nec?: Form.Us1099Nec;
+  us_1099_nec?: Tax.Form.Us1099Nec;
 }
-export namespace Form {
-  export interface AuSerr {
-    /**
-     * End date of the period represented by the information reported on the tax form.
-     */
-    reporting_period_end_date: string;
-
-    /**
-     * Start date of the period represented by the information reported on the tax form.
-     */
-    reporting_period_start_date: string;
-  }
-
-  export interface CaMrdp {
-    /**
-     * End date of the period represented by the information reported on the tax form.
-     */
-    reporting_period_end_date: string;
-
-    /**
-     * Start date of the period represented by the information reported on the tax form.
-     */
-    reporting_period_start_date: string;
-  }
-
-  export interface EuDac7 {
-    /**
-     * End date of the period represented by the information reported on the tax form.
-     */
-    reporting_period_end_date: string;
-
-    /**
-     * Start date of the period represented by the information reported on the tax form.
-     */
-    reporting_period_start_date: string;
-  }
-
-  export interface FilingStatus {
-    /**
-     * Time when the filing status was updated.
-     */
-    effective_at: number;
-
-    jurisdiction: FilingStatus.Jurisdiction;
-
-    /**
-     * The current status of the filed form.
-     */
-    value: FilingStatus.Value;
-  }
-
-  export interface GbMrdp {
-    /**
-     * End date of the period represented by the information reported on the tax form.
-     */
-    reporting_period_end_date: string;
-
-    /**
-     * Start date of the period represented by the information reported on the tax form.
-     */
-    reporting_period_start_date: string;
-  }
-
-  export interface NzMrdp {
-    /**
-     * End date of the period represented by the information reported on the tax form.
-     */
-    reporting_period_end_date: string;
-
-    /**
-     * Start date of the period represented by the information reported on the tax form.
-     */
-    reporting_period_start_date: string;
-  }
-
-  export interface Payee {
-    /**
-     * The ID of the payee's Stripe account.
-     */
-    account: string | Account | null;
-
-    /**
-     * The external reference to this payee.
-     */
-    external_reference: string | null;
-
-    /**
-     * Either `account` or `external_reference`.
-     */
-    type: Payee.Type;
-  }
-
-  export type Type =
-    | 'au_serr'
-    | 'ca_mrdp'
-    | 'eu_dac7'
-    | 'gb_mrdp'
-    | 'nz_mrdp'
-    | 'us_1099_k'
-    | 'us_1099_misc'
-    | 'us_1099_nec';
-
-  export interface Us1099K {
-    /**
-     * Year represented by the information reported on the tax form.
-     */
-    reporting_year: number;
-  }
-
-  export interface Us1099Misc {
-    /**
-     * Year represented by the information reported on the tax form.
-     */
-    reporting_year: number;
-  }
-
-  export interface Us1099Nec {
-    /**
-     * Year represented by the information reported on the tax form.
-     */
-    reporting_year: number;
-  }
-
-  export namespace FilingStatus {
-    export interface Jurisdiction {
+export namespace Tax {
+  export namespace Form {
+    export interface AuSerr {
       /**
-       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+       * End date of the period represented by the information reported on the tax form.
        */
-      country: string;
+      reporting_period_end_date: string;
 
       /**
-       * Indicates the level of the jurisdiction where the form was filed.
+       * Start date of the period represented by the information reported on the tax form.
        */
-      level: Jurisdiction.Level;
-
-      /**
-       * [ISO 3166-2 U.S. state code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix, if any. For example, "NY" for New York, United States. Null for non-U.S. forms.
-       */
-      state: string | null;
+      reporting_period_start_date: string;
     }
 
-    export type Value = 'accepted' | 'filed' | 'rejected';
+    export interface CaMrdp {
+      /**
+       * End date of the period represented by the information reported on the tax form.
+       */
+      reporting_period_end_date: string;
 
-    export namespace Jurisdiction {
-      export type Level = 'country' | 'state';
+      /**
+       * Start date of the period represented by the information reported on the tax form.
+       */
+      reporting_period_start_date: string;
     }
-  }
 
-  export namespace Payee {
-    export type Type = 'account' | 'external_reference';
+    export interface EuDac7 {
+      /**
+       * End date of the period represented by the information reported on the tax form.
+       */
+      reporting_period_end_date: string;
+
+      /**
+       * Start date of the period represented by the information reported on the tax form.
+       */
+      reporting_period_start_date: string;
+    }
+
+    export interface FilingStatus {
+      /**
+       * Time when the filing status was updated.
+       */
+      effective_at: number;
+
+      jurisdiction: FilingStatus.Jurisdiction;
+
+      /**
+       * The current status of the filed form.
+       */
+      value: FilingStatus.Value;
+    }
+
+    export interface GbMrdp {
+      /**
+       * End date of the period represented by the information reported on the tax form.
+       */
+      reporting_period_end_date: string;
+
+      /**
+       * Start date of the period represented by the information reported on the tax form.
+       */
+      reporting_period_start_date: string;
+    }
+
+    export interface NzMrdp {
+      /**
+       * End date of the period represented by the information reported on the tax form.
+       */
+      reporting_period_end_date: string;
+
+      /**
+       * Start date of the period represented by the information reported on the tax form.
+       */
+      reporting_period_start_date: string;
+    }
+
+    export interface Payee {
+      /**
+       * The ID of the payee's Stripe account.
+       */
+      account: string | Account | null;
+
+      /**
+       * The external reference to this payee.
+       */
+      external_reference: string | null;
+
+      /**
+       * Either `account` or `external_reference`.
+       */
+      type: Payee.Type;
+    }
+
+    export type Type =
+      | 'au_serr'
+      | 'ca_mrdp'
+      | 'eu_dac7'
+      | 'gb_mrdp'
+      | 'nz_mrdp'
+      | 'us_1099_k'
+      | 'us_1099_misc'
+      | 'us_1099_nec';
+
+    export interface Us1099K {
+      /**
+       * Year represented by the information reported on the tax form.
+       */
+      reporting_year: number;
+    }
+
+    export interface Us1099Misc {
+      /**
+       * Year represented by the information reported on the tax form.
+       */
+      reporting_year: number;
+    }
+
+    export interface Us1099Nec {
+      /**
+       * Year represented by the information reported on the tax form.
+       */
+      reporting_year: number;
+    }
+
+    export namespace FilingStatus {
+      export interface Jurisdiction {
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country: string;
+
+        /**
+         * Indicates the level of the jurisdiction where the form was filed.
+         */
+        level: Jurisdiction.Level;
+
+        /**
+         * [ISO 3166-2 U.S. state code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix, if any. For example, "NY" for New York, United States. Null for non-U.S. forms.
+         */
+        state: string | null;
+      }
+
+      export type Value = 'accepted' | 'filed' | 'rejected';
+
+      export namespace Jurisdiction {
+        export type Level = 'country' | 'state';
+      }
+    }
+
+    export namespace Payee {
+      export type Type = 'account' | 'external_reference';
+    }
   }
 }
 export namespace Tax {

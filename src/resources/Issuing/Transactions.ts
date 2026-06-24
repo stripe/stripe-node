@@ -344,7 +344,7 @@ export interface Transaction {
   /**
    * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
    */
-  amount_details: Transaction.AmountDetails | null;
+  amount_details: Issuing.Transaction.AmountDetails | null;
 
   /**
    * The `Authorization` object that led to this transaction.
@@ -396,7 +396,7 @@ export interface Transaction {
    */
   merchant_currency: string;
 
-  merchant_data: Transaction.MerchantData;
+  merchant_data: Issuing.Transaction.MerchantData;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -406,12 +406,12 @@ export interface Transaction {
   /**
    * Details about the transaction, such as processing dates, set by the card network.
    */
-  network_data: Transaction.NetworkData | null;
+  network_data: Issuing.Transaction.NetworkData | null;
 
   /**
    * Additional purchase information that is optionally provided by the merchant.
    */
-  purchase_details?: Transaction.PurchaseDetails | null;
+  purchase_details?: Issuing.Transaction.PurchaseDetails | null;
 
   /**
    * The ID of the [settlement](https://docs.stripe.com/api/issuing/settlements) to which this transaction belongs.
@@ -426,369 +426,371 @@ export interface Transaction {
   /**
    * [Treasury](https://docs.stripe.com/api/treasury) details related to this transaction if it was created on a [FinancialAccount](/docs/api/treasury/financial_accounts
    */
-  treasury?: Transaction.Treasury | null;
+  treasury?: Issuing.Transaction.Treasury | null;
 
   /**
    * The nature of the transaction.
    */
-  type: Transaction.Type;
+  type: Issuing.Transaction.Type;
 
   /**
    * The digital wallet used for this transaction. One of `apple_pay`, `google_pay`, or `samsung_pay`.
    */
-  wallet: Transaction.Wallet | null;
+  wallet: Issuing.Transaction.Wallet | null;
 }
-export namespace Transaction {
-  export interface AmountDetails {
-    /**
-     * The fee charged by the ATM for the cash withdrawal.
-     */
-    atm_fee: number | null;
-
-    /**
-     * The amount of cash requested by the cardholder.
-     */
-    cashback_amount: number | null;
-  }
-
-  export interface MerchantData {
-    /**
-     * A categorization of the seller's type of business. See our [merchant categories guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
-     */
-    category: string;
-
-    /**
-     * The merchant category code for the seller's business
-     */
-    category_code: string;
-
-    /**
-     * City where the seller is located
-     */
-    city: string | null;
-
-    /**
-     * Country where the seller is located
-     */
-    country: string | null;
-
-    /**
-     * Name of the seller
-     */
-    name: string | null;
-
-    /**
-     * Identifier assigned to the seller by the card network. Different card networks may assign different network_id fields to the same merchant.
-     */
-    network_id: string;
-
-    /**
-     * Postal code where the seller is located
-     */
-    postal_code: string | null;
-
-    /**
-     * State where the seller is located
-     */
-    state: string | null;
-
-    /**
-     * The seller's tax identification number. Currently populated for French merchants only.
-     */
-    tax_id: string | null;
-
-    /**
-     * An ID assigned by the seller to the location of the sale.
-     */
-    terminal_id: string | null;
-
-    /**
-     * URL provided by the merchant on a 3DS request
-     */
-    url: string | null;
-  }
-
-  export interface NetworkData {
-    /**
-     * A code created by Stripe which is shared with the merchant to validate the authorization. This field will be populated if the authorization message was approved. The code typically starts with the letter "S", followed by a six-digit number. For example, "S498162". Please note that the code is not guaranteed to be unique across authorizations.
-     */
-    authorization_code: string | null;
-
-    /**
-     * The date the transaction was processed by the card network. This can be different from the date the seller recorded the transaction depending on when the acquirer submits the transaction to the network.
-     */
-    processing_date: string | null;
-
-    /**
-     * Unique identifier for the authorization assigned by the card network used to match subsequent messages, disputes, and transactions.
-     */
-    transaction_id: string | null;
-  }
-
-  export interface PurchaseDetails {
-    /**
-     * Fleet-specific information for transactions using Fleet cards.
-     */
-    fleet: PurchaseDetails.Fleet | null;
-
-    /**
-     * Information about the flight that was purchased with this transaction.
-     */
-    flight: PurchaseDetails.Flight | null;
-
-    /**
-     * Information about fuel that was purchased with this transaction.
-     */
-    fuel: PurchaseDetails.Fuel | null;
-
-    /**
-     * Information about lodging that was purchased with this transaction.
-     */
-    lodging: PurchaseDetails.Lodging | null;
-
-    /**
-     * The line items in the purchase.
-     */
-    receipt: Array<PurchaseDetails.Receipt> | null;
-
-    /**
-     * A merchant-specific order number.
-     */
-    reference: string | null;
-  }
-
-  export interface Treasury {
-    /**
-     * The Treasury [ReceivedCredit](https://docs.stripe.com/api/treasury/received_credits) representing this Issuing transaction if it is a refund
-     */
-    received_credit: string | null;
-
-    /**
-     * The Treasury [ReceivedDebit](https://docs.stripe.com/api/treasury/received_debits) representing this Issuing transaction if it is a capture
-     */
-    received_debit: string | null;
-  }
-
-  export type Type = 'capture' | 'refund';
-
-  export type Wallet = 'apple_pay' | 'google_pay' | 'samsung_pay';
-
-  export namespace PurchaseDetails {
-    export interface Fleet {
+export namespace Issuing {
+  export namespace Transaction {
+    export interface AmountDetails {
       /**
-       * Answers to prompts presented to cardholder at point of sale.
+       * The fee charged by the ATM for the cash withdrawal.
        */
-      cardholder_prompt_data: Fleet.CardholderPromptData | null;
+      atm_fee: number | null;
 
       /**
-       * The type of purchase. One of `fuel_purchase`, `non_fuel_purchase`, or `fuel_and_non_fuel_purchase`.
+       * The amount of cash requested by the cardholder.
        */
-      purchase_type: string | null;
-
-      /**
-       * More information about the total amount. This information is not guaranteed to be accurate as some merchants may provide unreliable data.
-       */
-      reported_breakdown: Fleet.ReportedBreakdown | null;
-
-      /**
-       * The type of fuel service. One of `non_fuel_transaction`, `full_service`, or `self_service`.
-       */
-      service_type: string | null;
+      cashback_amount: number | null;
     }
 
-    export interface Flight {
+    export interface MerchantData {
       /**
-       * The time that the flight departed.
+       * A categorization of the seller's type of business. See our [merchant categories guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
        */
-      departure_at: number | null;
+      category: string;
 
       /**
-       * The name of the passenger.
+       * The merchant category code for the seller's business
        */
-      passenger_name: string | null;
+      category_code: string;
 
       /**
-       * Whether the ticket is refundable.
+       * City where the seller is located
        */
-      refundable: boolean | null;
+      city: string | null;
 
       /**
-       * The legs of the trip.
+       * Country where the seller is located
        */
-      segments: Array<Flight.Segment> | null;
+      country: string | null;
 
       /**
-       * The travel agency that issued the ticket.
+       * Name of the seller
        */
-      travel_agency: string | null;
+      name: string | null;
+
+      /**
+       * Identifier assigned to the seller by the card network. Different card networks may assign different network_id fields to the same merchant.
+       */
+      network_id: string;
+
+      /**
+       * Postal code where the seller is located
+       */
+      postal_code: string | null;
+
+      /**
+       * State where the seller is located
+       */
+      state: string | null;
+
+      /**
+       * The seller's tax identification number. Currently populated for French merchants only.
+       */
+      tax_id: string | null;
+
+      /**
+       * An ID assigned by the seller to the location of the sale.
+       */
+      terminal_id: string | null;
+
+      /**
+       * URL provided by the merchant on a 3DS request
+       */
+      url: string | null;
     }
 
-    export interface Fuel {
+    export interface NetworkData {
       /**
-       * [Conexxus Payment System Product Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel product purchased.
+       * A code created by Stripe which is shared with the merchant to validate the authorization. This field will be populated if the authorization message was approved. The code typically starts with the letter "S", followed by a six-digit number. For example, "S498162". Please note that the code is not guaranteed to be unique across authorizations.
        */
-      industry_product_code: string | null;
+      authorization_code: string | null;
 
       /**
-       * The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12 decimal places.
+       * The date the transaction was processed by the card network. This can be different from the date the seller recorded the transaction depending on when the acquirer submits the transaction to the network.
        */
-      quantity_decimal: Decimal | null;
+      processing_date: string | null;
 
       /**
-       * The type of fuel that was purchased. One of `diesel`, `unleaded_plus`, `unleaded_regular`, `unleaded_super`, or `other`.
+       * Unique identifier for the authorization assigned by the card network used to match subsequent messages, disputes, and transactions.
        */
-      type: string;
-
-      /**
-       * The units for `quantity_decimal`. One of `charging_minute`, `imperial_gallon`, `kilogram`, `kilowatt_hour`, `liter`, `pound`, `us_gallon`, or `other`.
-       */
-      unit: string;
-
-      /**
-       * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
-       */
-      unit_cost_decimal: Decimal;
+      transaction_id: string | null;
     }
 
-    export interface Lodging {
+    export interface PurchaseDetails {
       /**
-       * The time of checking into the lodging.
+       * Fleet-specific information for transactions using Fleet cards.
        */
-      check_in_at: number | null;
+      fleet: PurchaseDetails.Fleet | null;
 
       /**
-       * The number of nights stayed at the lodging.
+       * Information about the flight that was purchased with this transaction.
        */
-      nights: number | null;
+      flight: PurchaseDetails.Flight | null;
+
+      /**
+       * Information about fuel that was purchased with this transaction.
+       */
+      fuel: PurchaseDetails.Fuel | null;
+
+      /**
+       * Information about lodging that was purchased with this transaction.
+       */
+      lodging: PurchaseDetails.Lodging | null;
+
+      /**
+       * The line items in the purchase.
+       */
+      receipt: Array<PurchaseDetails.Receipt> | null;
+
+      /**
+       * A merchant-specific order number.
+       */
+      reference: string | null;
     }
 
-    export interface Receipt {
+    export interface Treasury {
       /**
-       * The description of the item. The maximum length of this field is 26 characters.
+       * The Treasury [ReceivedCredit](https://docs.stripe.com/api/treasury/received_credits) representing this Issuing transaction if it is a refund
        */
-      description: string | null;
+      received_credit: string | null;
 
       /**
-       * The quantity of the item.
+       * The Treasury [ReceivedDebit](https://docs.stripe.com/api/treasury/received_debits) representing this Issuing transaction if it is a capture
        */
-      quantity: number | null;
-
-      /**
-       * The total for this line item in cents.
-       */
-      total: number | null;
-
-      /**
-       * The unit cost of the item in cents.
-       */
-      unit_cost: number | null;
+      received_debit: string | null;
     }
 
-    export namespace Fleet {
-      export interface CardholderPromptData {
+    export type Type = 'capture' | 'refund';
+
+    export type Wallet = 'apple_pay' | 'google_pay' | 'samsung_pay';
+
+    export namespace PurchaseDetails {
+      export interface Fleet {
         /**
-         * Driver ID.
+         * Answers to prompts presented to cardholder at point of sale.
          */
-        driver_id: string | null;
+        cardholder_prompt_data: Fleet.CardholderPromptData | null;
 
         /**
-         * Odometer reading.
+         * The type of purchase. One of `fuel_purchase`, `non_fuel_purchase`, or `fuel_and_non_fuel_purchase`.
          */
-        odometer: number | null;
+        purchase_type: string | null;
 
         /**
-         * An alphanumeric ID. This field is used when a vehicle ID, driver ID, or generic ID is entered by the cardholder, but the merchant or card network did not specify the prompt type.
+         * More information about the total amount. This information is not guaranteed to be accurate as some merchants may provide unreliable data.
          */
-        unspecified_id: string | null;
+        reported_breakdown: Fleet.ReportedBreakdown | null;
 
         /**
-         * User ID.
+         * The type of fuel service. One of `non_fuel_transaction`, `full_service`, or `self_service`.
          */
-        user_id: string | null;
-
-        /**
-         * Vehicle number.
-         */
-        vehicle_number: string | null;
+        service_type: string | null;
       }
 
-      export interface ReportedBreakdown {
+      export interface Flight {
         /**
-         * Breakdown of fuel portion of the purchase.
+         * The time that the flight departed.
          */
-        fuel: ReportedBreakdown.Fuel | null;
+        departure_at: number | null;
 
         /**
-         * Breakdown of non-fuel portion of the purchase.
+         * The name of the passenger.
          */
-        non_fuel: ReportedBreakdown.NonFuel | null;
+        passenger_name: string | null;
 
         /**
-         * Information about tax included in this transaction.
+         * Whether the ticket is refundable.
          */
-        tax: ReportedBreakdown.Tax | null;
+        refundable: boolean | null;
+
+        /**
+         * The legs of the trip.
+         */
+        segments: Array<Flight.Segment> | null;
+
+        /**
+         * The travel agency that issued the ticket.
+         */
+        travel_agency: string | null;
       }
 
-      export namespace ReportedBreakdown {
-        export interface Fuel {
+      export interface Fuel {
+        /**
+         * [Conexxus Payment System Product Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel product purchased.
+         */
+        industry_product_code: string | null;
+
+        /**
+         * The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12 decimal places.
+         */
+        quantity_decimal: Decimal | null;
+
+        /**
+         * The type of fuel that was purchased. One of `diesel`, `unleaded_plus`, `unleaded_regular`, `unleaded_super`, or `other`.
+         */
+        type: string;
+
+        /**
+         * The units for `quantity_decimal`. One of `charging_minute`, `imperial_gallon`, `kilogram`, `kilowatt_hour`, `liter`, `pound`, `us_gallon`, or `other`.
+         */
+        unit: string;
+
+        /**
+         * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
+         */
+        unit_cost_decimal: Decimal;
+      }
+
+      export interface Lodging {
+        /**
+         * The time of checking into the lodging.
+         */
+        check_in_at: number | null;
+
+        /**
+         * The number of nights stayed at the lodging.
+         */
+        nights: number | null;
+      }
+
+      export interface Receipt {
+        /**
+         * The description of the item. The maximum length of this field is 26 characters.
+         */
+        description: string | null;
+
+        /**
+         * The quantity of the item.
+         */
+        quantity: number | null;
+
+        /**
+         * The total for this line item in cents.
+         */
+        total: number | null;
+
+        /**
+         * The unit cost of the item in cents.
+         */
+        unit_cost: number | null;
+      }
+
+      export namespace Fleet {
+        export interface CardholderPromptData {
           /**
-           * Gross fuel amount that should equal Fuel Volume multipled by Fuel Unit Cost, inclusive of taxes.
+           * Driver ID.
            */
-          gross_amount_decimal: Decimal | null;
+          driver_id: string | null;
+
+          /**
+           * Odometer reading.
+           */
+          odometer: number | null;
+
+          /**
+           * An alphanumeric ID. This field is used when a vehicle ID, driver ID, or generic ID is entered by the cardholder, but the merchant or card network did not specify the prompt type.
+           */
+          unspecified_id: string | null;
+
+          /**
+           * User ID.
+           */
+          user_id: string | null;
+
+          /**
+           * Vehicle number.
+           */
+          vehicle_number: string | null;
         }
 
-        export interface NonFuel {
+        export interface ReportedBreakdown {
           /**
-           * Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
+           * Breakdown of fuel portion of the purchase.
            */
-          gross_amount_decimal: Decimal | null;
+          fuel: ReportedBreakdown.Fuel | null;
+
+          /**
+           * Breakdown of non-fuel portion of the purchase.
+           */
+          non_fuel: ReportedBreakdown.NonFuel | null;
+
+          /**
+           * Information about tax included in this transaction.
+           */
+          tax: ReportedBreakdown.Tax | null;
         }
 
-        export interface Tax {
-          /**
-           * Amount of state or provincial Sales Tax included in the transaction amount. Null if not reported by merchant or not subject to tax.
-           */
-          local_amount_decimal: Decimal | null;
+        export namespace ReportedBreakdown {
+          export interface Fuel {
+            /**
+             * Gross fuel amount that should equal Fuel Volume multipled by Fuel Unit Cost, inclusive of taxes.
+             */
+            gross_amount_decimal: Decimal | null;
+          }
 
-          /**
-           * Amount of national Sales Tax or VAT included in the transaction amount. Null if not reported by merchant or not subject to tax.
-           */
-          national_amount_decimal: Decimal | null;
+          export interface NonFuel {
+            /**
+             * Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
+             */
+            gross_amount_decimal: Decimal | null;
+          }
+
+          export interface Tax {
+            /**
+             * Amount of state or provincial Sales Tax included in the transaction amount. Null if not reported by merchant or not subject to tax.
+             */
+            local_amount_decimal: Decimal | null;
+
+            /**
+             * Amount of national Sales Tax or VAT included in the transaction amount. Null if not reported by merchant or not subject to tax.
+             */
+            national_amount_decimal: Decimal | null;
+          }
         }
       }
-    }
 
-    export namespace Flight {
-      export interface Segment {
-        /**
-         * The three-letter IATA airport code of the flight's destination.
-         */
-        arrival_airport_code: string | null;
+      export namespace Flight {
+        export interface Segment {
+          /**
+           * The three-letter IATA airport code of the flight's destination.
+           */
+          arrival_airport_code: string | null;
 
-        /**
-         * The airline carrier code.
-         */
-        carrier: string | null;
+          /**
+           * The airline carrier code.
+           */
+          carrier: string | null;
 
-        /**
-         * The three-letter IATA airport code that the flight departed from.
-         */
-        departure_airport_code: string | null;
+          /**
+           * The three-letter IATA airport code that the flight departed from.
+           */
+          departure_airport_code: string | null;
 
-        /**
-         * The flight number.
-         */
-        flight_number: string | null;
+          /**
+           * The flight number.
+           */
+          flight_number: string | null;
 
-        /**
-         * The flight's service class.
-         */
-        service_class: string | null;
+          /**
+           * The flight's service class.
+           */
+          service_class: string | null;
 
-        /**
-         * Whether a stopover is allowed on this flight.
-         */
-        stopover_allowed: boolean | null;
+          /**
+           * Whether a stopover is allowed on this flight.
+           */
+          stopover_allowed: boolean | null;
+        }
       }
     }
   }

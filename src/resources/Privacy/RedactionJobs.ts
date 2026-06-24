@@ -167,82 +167,84 @@ export interface RedactionJob {
   /**
    * The objects to redact in this job.
    */
-  objects?: RedactionJob.Objects | null;
+  objects?: Privacy.RedactionJob.Objects | null;
 
   /**
    * The status of the job.
    */
-  status: RedactionJob.Status;
+  status: Privacy.RedactionJob.Status;
 
   /**
    * Validation behavior determines how a job validates objects for redaction eligibility. Default is `error`.
    */
-  validation_behavior: RedactionJob.ValidationBehavior | null;
+  validation_behavior: Privacy.RedactionJob.ValidationBehavior | null;
 
   /**
    * The first 10 validation errors for the current validation attempt. Use the validation errors list endpoint to paginate through the full list.
    */
   validation_errors?: ApiList<RedactionJobValidationError>;
 }
-export namespace RedactionJob {
-  export interface Objects {
-    /**
-     * Charge object identifiers usually starting with `ch_`
-     */
-    charges: Array<string> | null;
+export namespace Privacy {
+  export namespace RedactionJob {
+    export interface Objects {
+      /**
+       * Charge object identifiers usually starting with `ch_`
+       */
+      charges: Array<string> | null;
 
-    /**
-     * CheckoutSession object identifiers starting with `cs_`
-     */
-    checkout_sessions: Array<string> | null;
+      /**
+       * CheckoutSession object identifiers starting with `cs_`
+       */
+      checkout_sessions: Array<string> | null;
 
-    /**
-     * Customer object identifiers starting with `cus_`
-     */
-    customers: Array<string> | null;
+      /**
+       * Customer object identifiers starting with `cus_`
+       */
+      customers: Array<string> | null;
 
-    /**
-     * Identity VerificationSessions object identifiers starting with `vs_`
-     */
-    identity_verification_sessions: Array<string> | null;
+      /**
+       * Identity VerificationSessions object identifiers starting with `vs_`
+       */
+      identity_verification_sessions: Array<string> | null;
 
-    /**
-     * Invoice object identifiers starting with `in_`
-     */
-    invoices: Array<string> | null;
+      /**
+       * Invoice object identifiers starting with `in_`
+       */
+      invoices: Array<string> | null;
 
-    /**
-     * Issuing Cardholder object identifiers starting with `ich_`
-     */
-    issuing_cardholders: Array<string> | null;
+      /**
+       * Issuing Cardholder object identifiers starting with `ich_`
+       */
+      issuing_cardholders: Array<string> | null;
 
-    /**
-     * PaymentIntent object identifiers starting with `pi_`
-     */
-    payment_intents: Array<string> | null;
+      /**
+       * PaymentIntent object identifiers starting with `pi_`
+       */
+      payment_intents: Array<string> | null;
 
-    /**
-     * Fraud ValueListItem object identifiers starting with `rsli_`
-     */
-    radar_value_list_items: Array<string> | null;
+      /**
+       * Fraud ValueListItem object identifiers starting with `rsli_`
+       */
+      radar_value_list_items: Array<string> | null;
 
-    /**
-     * SetupIntent object identifiers starting with `seti_`
-     */
-    setup_intents: Array<string> | null;
+      /**
+       * SetupIntent object identifiers starting with `seti_`
+       */
+      setup_intents: Array<string> | null;
+    }
+
+    export type Status =
+      | 'canceled'
+      | 'canceling'
+      | 'created'
+      | 'failed'
+      | 'ready'
+      | 'redacting'
+      | 'succeeded'
+      | 'validating';
+
+    export type ValidationBehavior = 'error' | 'fix';
   }
-
-  export type Status =
-    | 'canceled'
-    | 'canceling'
-    | 'created'
-    | 'failed'
-    | 'ready'
-    | 'redacting'
-    | 'succeeded'
-    | 'validating';
-
-  export type ValidationBehavior = 'error' | 'fix';
 }
 export namespace Privacy {
   export interface RedactionJobCreateParams {

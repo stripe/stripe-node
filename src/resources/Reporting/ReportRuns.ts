@@ -80,7 +80,7 @@ export interface ReportRun {
    */
   livemode: boolean;
 
-  parameters: ReportRun.Parameters;
+  parameters: Reporting.ReportRun.Parameters;
 
   /**
    * The ID of the [report type](https://docs.stripe.com/reports/report-types) to run, such as `"balance.summary.1"`.
@@ -106,47 +106,49 @@ export interface ReportRun {
    */
   succeeded_at: number | null;
 }
-export namespace ReportRun {
-  export interface Parameters {
-    /**
-     * The set of output columns requested for inclusion in the report run.
-     */
-    columns?: Array<string>;
+export namespace Reporting {
+  export namespace ReportRun {
+    export interface Parameters {
+      /**
+       * The set of output columns requested for inclusion in the report run.
+       */
+      columns?: Array<string>;
 
-    /**
-     * Connected account ID by which to filter the report run.
-     */
-    connected_account?: string;
+      /**
+       * Connected account ID by which to filter the report run.
+       */
+      connected_account?: string;
 
-    /**
-     * Currency of objects to be included in the report run.
-     */
-    currency?: string;
+      /**
+       * Currency of objects to be included in the report run.
+       */
+      currency?: string;
 
-    /**
-     * Ending timestamp of data to be included in the report run. Can be any UTC timestamp between 1 second after the user specified `interval_start` and 1 second before this report's last `data_available_end` value.
-     */
-    interval_end?: number;
+      /**
+       * Ending timestamp of data to be included in the report run. Can be any UTC timestamp between 1 second after the user specified `interval_start` and 1 second before this report's last `data_available_end` value.
+       */
+      interval_end?: number;
 
-    /**
-     * Starting timestamp of data to be included in the report run. Can be any UTC timestamp between 1 second after this report's `data_available_start` and 1 second before the user specified `interval_end` value.
-     */
-    interval_start?: number;
+      /**
+       * Starting timestamp of data to be included in the report run. Can be any UTC timestamp between 1 second after this report's `data_available_start` and 1 second before the user specified `interval_end` value.
+       */
+      interval_start?: number;
 
-    /**
-     * Payout ID by which to filter the report run.
-     */
-    payout?: string;
+      /**
+       * Payout ID by which to filter the report run.
+       */
+      payout?: string;
 
-    /**
-     * Category of balance transactions to be included in the report run.
-     */
-    reporting_category?: string;
+      /**
+       * Category of balance transactions to be included in the report run.
+       */
+      reporting_category?: string;
 
-    /**
-     * Defaults to `Etc/UTC`. The output timezone for all timestamps in the report. A list of possible time zone values is maintained at the [IANA Time Zone Database](http://www.iana.org/time-zones). Has no effect on `interval_start` or `interval_end`.
-     */
-    timezone?: string;
+      /**
+       * Defaults to `Etc/UTC`. The output timezone for all timestamps in the report. A list of possible time zone values is maintained at the [IANA Time Zone Database](http://www.iana.org/time-zones). Has no effect on `interval_start` or `interval_end`.
+       */
+      timezone?: string;
+    }
   }
 }
 export namespace Reporting {

@@ -143,12 +143,12 @@ export interface EventDestination {
   /**
    * Amazon EventBridge configuration.
    */
-  amazon_eventbridge?: EventDestination.AmazonEventbridge;
+  amazon_eventbridge?: V2.Core.EventDestination.AmazonEventbridge;
 
   /**
    * Azure Event Grid configuration.
    */
-  azure_event_grid?: EventDestination.AzureEventGrid;
+  azure_event_grid?: V2.Core.EventDestination.AzureEventGrid;
 
   /**
    * Time at which the object was created.
@@ -168,7 +168,7 @@ export interface EventDestination {
   /**
    * Payload type of events being subscribed to.
    */
-  event_payload: EventDestination.EventPayload;
+  event_payload: V2.Core.EventDestination.EventPayload;
 
   /**
    * Specifies which accounts' events route to this destination.
@@ -202,17 +202,17 @@ export interface EventDestination {
   /**
    * Status. It can be set to either enabled or disabled.
    */
-  status: EventDestination.Status;
+  status: V2.Core.EventDestination.Status;
 
   /**
    * Additional information about event destination status.
    */
-  status_details?: EventDestination.StatusDetails;
+  status_details?: V2.Core.EventDestination.StatusDetails;
 
   /**
    * Event destination type.
    */
-  type: EventDestination.Type;
+  type: V2.Core.EventDestination.Type;
 
   /**
    * Time at which the object was last updated.
@@ -222,110 +222,114 @@ export interface EventDestination {
   /**
    * Webhook endpoint configuration.
    */
-  webhook_endpoint?: EventDestination.WebhookEndpoint;
+  webhook_endpoint?: V2.Core.EventDestination.WebhookEndpoint;
 }
-export namespace EventDestination {
-  export interface AmazonEventbridge {
-    /**
-     * The AWS account ID.
-     */
-    aws_account_id: string;
+export namespace V2 {
+  export namespace Core {
+    export namespace EventDestination {
+      export interface AmazonEventbridge {
+        /**
+         * The AWS account ID.
+         */
+        aws_account_id: string;
 
-    /**
-     * The ARN of the AWS event source.
-     */
-    aws_event_source_arn: string;
+        /**
+         * The ARN of the AWS event source.
+         */
+        aws_event_source_arn: string;
 
-    /**
-     * The state of the AWS event source.
-     */
-    aws_event_source_status: AmazonEventbridge.AwsEventSourceStatus;
-  }
+        /**
+         * The state of the AWS event source.
+         */
+        aws_event_source_status: AmazonEventbridge.AwsEventSourceStatus;
+      }
 
-  export interface AzureEventGrid {
-    /**
-     * The name of the Azure partner topic.
-     */
-    azure_partner_topic_name: string;
+      export interface AzureEventGrid {
+        /**
+         * The name of the Azure partner topic.
+         */
+        azure_partner_topic_name: string;
 
-    /**
-     * The status of the Azure partner topic.
-     */
-    azure_partner_topic_status: AzureEventGrid.AzurePartnerTopicStatus;
+        /**
+         * The status of the Azure partner topic.
+         */
+        azure_partner_topic_status: AzureEventGrid.AzurePartnerTopicStatus;
 
-    /**
-     * The Azure region.
-     */
-    azure_region: string;
+        /**
+         * The Azure region.
+         */
+        azure_region: string;
 
-    /**
-     * The name of the Azure resource group.
-     */
-    azure_resource_group_name: string;
+        /**
+         * The name of the Azure resource group.
+         */
+        azure_resource_group_name: string;
 
-    /**
-     * The Azure subscription ID.
-     */
-    azure_subscription_id: string;
-  }
+        /**
+         * The Azure subscription ID.
+         */
+        azure_subscription_id: string;
+      }
 
-  export type EventPayload = 'snapshot' | 'thin';
+      export type EventPayload = 'snapshot' | 'thin';
 
-  export type Status = 'disabled' | 'enabled';
+      export type Status = 'disabled' | 'enabled';
 
-  export interface StatusDetails {
-    /**
-     * Details about why the event destination has been disabled.
-     */
-    disabled?: StatusDetails.Disabled;
-  }
+      export interface StatusDetails {
+        /**
+         * Details about why the event destination has been disabled.
+         */
+        disabled?: StatusDetails.Disabled;
+      }
 
-  export type Type =
-    | 'amazon_eventbridge'
-    | 'azure_event_grid'
-    | 'webhook_endpoint';
+      export type Type =
+        | 'amazon_eventbridge'
+        | 'azure_event_grid'
+        | 'webhook_endpoint';
 
-  export interface WebhookEndpoint {
-    /**
-     * The signing secret of the webhook endpoint, only includable on creation.
-     */
-    signing_secret?: string;
+      export interface WebhookEndpoint {
+        /**
+         * The signing secret of the webhook endpoint, only includable on creation.
+         */
+        signing_secret?: string;
 
-    /**
-     * The URL of the webhook endpoint, includable.
-     */
-    url?: string;
-  }
+        /**
+         * The URL of the webhook endpoint, includable.
+         */
+        url?: string;
+      }
 
-  export namespace AmazonEventbridge {
-    export type AwsEventSourceStatus =
-      | 'active'
-      | 'deleted'
-      | 'pending'
-      | 'unknown';
-  }
+      export namespace AmazonEventbridge {
+        export type AwsEventSourceStatus =
+          | 'active'
+          | 'deleted'
+          | 'pending'
+          | 'unknown';
+      }
 
-  export namespace AzureEventGrid {
-    export type AzurePartnerTopicStatus =
-      | 'activated'
-      | 'deleted'
-      | 'never_activated'
-      | 'unknown';
-  }
+      export namespace AzureEventGrid {
+        export type AzurePartnerTopicStatus =
+          | 'activated'
+          | 'deleted'
+          | 'never_activated'
+          | 'unknown';
+      }
 
-  export namespace StatusDetails {
-    export interface Disabled {
-      /**
-       * Reason event destination has been disabled.
-       */
-      reason: Disabled.Reason;
-    }
+      export namespace StatusDetails {
+        export interface Disabled {
+          /**
+           * Reason event destination has been disabled.
+           */
+          reason: Disabled.Reason;
+        }
 
-    export namespace Disabled {
-      export type Reason =
-        | 'no_aws_event_source_exists'
-        | 'no_azure_partner_topic_exists'
-        | 'user';
+        export namespace Disabled {
+          export type Reason =
+            | 'no_aws_event_source_exists'
+            | 'no_azure_partner_topic_exists'
+            | 'user';
+        }
+      }
     }
   }
 }

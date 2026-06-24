@@ -94,7 +94,7 @@ export interface Configuration {
    */
   application: string | Application | DeletedApplication | null;
 
-  business_profile: Configuration.BusinessProfile;
+  business_profile: BillingPortal.Configuration.BusinessProfile;
 
   /**
    * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -106,7 +106,7 @@ export interface Configuration {
    */
   default_return_url: string | null;
 
-  features: Configuration.Features;
+  features: BillingPortal.Configuration.Features;
 
   /**
    * Whether the configuration is the default. If `true`, this configuration can be managed in the Dashboard and portal sessions will use this configuration unless it is overriden when creating the session.
@@ -118,7 +118,7 @@ export interface Configuration {
    */
   livemode: boolean;
 
-  login_page: Configuration.LoginPage;
+  login_page: BillingPortal.Configuration.LoginPage;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -135,243 +135,245 @@ export interface Configuration {
    */
   updated: number;
 }
-export namespace Configuration {
-  export interface BusinessProfile {
-    /**
-     * The messaging shown to customers in the portal.
-     */
-    headline: string | null;
-
-    /**
-     * A link to the business's publicly available privacy policy.
-     */
-    privacy_policy_url: string | null;
-
-    /**
-     * A link to the business's publicly available terms of service.
-     */
-    terms_of_service_url: string | null;
-  }
-
-  export interface Features {
-    customer_update: Features.CustomerUpdate;
-
-    invoice_history: Features.InvoiceHistory;
-
-    payment_method_update: Features.PaymentMethodUpdate;
-
-    subscription_cancel: Features.SubscriptionCancel;
-
-    subscription_update: Features.SubscriptionUpdate;
-  }
-
-  export interface LoginPage {
-    /**
-     * If `true`, a shareable `url` will be generated that will take your customers to a hosted login page for the customer portal.
-     *
-     * If `false`, the previously generated `url`, if any, will be deactivated.
-     */
-    enabled: boolean;
-
-    /**
-     * A shareable URL to the hosted portal login page. Your customers will be able to log in with their [email](https://docs.stripe.com/api/customers/object#customer_object-email) and receive a link to their customer portal.
-     */
-    url: string | null;
-  }
-
-  export namespace Features {
-    export interface CustomerUpdate {
+export namespace BillingPortal {
+  export namespace Configuration {
+    export interface BusinessProfile {
       /**
-       * The types of customer updates that are supported. When empty, customers are not updateable.
+       * The messaging shown to customers in the portal.
        */
-      allowed_updates: Array<CustomerUpdate.AllowedUpdate>;
+      headline: string | null;
 
       /**
-       * Whether the feature is enabled.
+       * A link to the business's publicly available privacy policy.
        */
-      enabled: boolean;
+      privacy_policy_url: string | null;
+
+      /**
+       * A link to the business's publicly available terms of service.
+       */
+      terms_of_service_url: string | null;
     }
 
-    export interface InvoiceHistory {
-      /**
-       * Whether the feature is enabled.
-       */
-      enabled: boolean;
+    export interface Features {
+      customer_update: Features.CustomerUpdate;
+
+      invoice_history: Features.InvoiceHistory;
+
+      payment_method_update: Features.PaymentMethodUpdate;
+
+      subscription_cancel: Features.SubscriptionCancel;
+
+      subscription_update: Features.SubscriptionUpdate;
     }
 
-    export interface PaymentMethodUpdate {
+    export interface LoginPage {
       /**
-       * Whether the feature is enabled.
+       * If `true`, a shareable `url` will be generated that will take your customers to a hosted login page for the customer portal.
+       *
+       * If `false`, the previously generated `url`, if any, will be deactivated.
        */
       enabled: boolean;
 
       /**
-       * The [Payment Method Configuration](https://docs.stripe.com/api/payment_method_configurations) to use for this portal session. When specified, customers will be able to update their payment method to one of the options specified by the payment method configuration. If not set, the default payment method configuration is used.
+       * A shareable URL to the hosted portal login page. Your customers will be able to log in with their [email](https://docs.stripe.com/api/customers/object#customer_object-email) and receive a link to their customer portal.
        */
-      payment_method_configuration: string | null;
+      url: string | null;
     }
 
-    export interface SubscriptionCancel {
-      cancellation_reason: SubscriptionCancel.CancellationReason;
+    export namespace Features {
+      export interface CustomerUpdate {
+        /**
+         * The types of customer updates that are supported. When empty, customers are not updateable.
+         */
+        allowed_updates: Array<CustomerUpdate.AllowedUpdate>;
 
-      /**
-       * Whether the feature is enabled.
-       */
-      enabled: boolean;
+        /**
+         * Whether the feature is enabled.
+         */
+        enabled: boolean;
+      }
 
-      /**
-       * Whether to cancel subscriptions immediately or at the end of the billing period.
-       */
-      mode: SubscriptionCancel.Mode;
+      export interface InvoiceHistory {
+        /**
+         * Whether the feature is enabled.
+         */
+        enabled: boolean;
+      }
 
-      /**
-       * Whether to create prorations when canceling subscriptions. Possible values are `none` and `create_prorations`.
-       */
-      proration_behavior: SubscriptionCancel.ProrationBehavior;
-    }
-
-    export interface SubscriptionUpdate {
-      /**
-       * Determines the value to use for the billing cycle anchor on subscription updates. Valid values are `now` or `unchanged`, and the default value is `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time (in UTC). For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
-       */
-      billing_cycle_anchor: SubscriptionUpdate.BillingCycleAnchor | null;
-
-      /**
-       * The types of subscription updates that are supported for items listed in the `products` attribute. When empty, subscriptions are not updateable.
-       */
-      default_allowed_updates: Array<SubscriptionUpdate.DefaultAllowedUpdate>;
-
-      /**
-       * Whether the feature is enabled.
-       */
-      enabled: boolean;
-
-      /**
-       * The list of up to 10 products that support subscription updates.
-       */
-      products?: Array<SubscriptionUpdate.Product> | null;
-
-      /**
-       * Determines how to handle prorations resulting from subscription updates. Valid values are `none`, `create_prorations`, and `always_invoice`. Defaults to a value of `none` if you don't set it during creation.
-       */
-      proration_behavior: SubscriptionUpdate.ProrationBehavior;
-
-      schedule_at_period_end: SubscriptionUpdate.ScheduleAtPeriodEnd;
-
-      /**
-       * Determines how handle updates to trialing subscriptions. Valid values are `end_trial` and `continue_trial`. Defaults to a value of `end_trial` if you don't set it during creation.
-       */
-      trial_update_behavior: SubscriptionUpdate.TrialUpdateBehavior;
-    }
-
-    export namespace CustomerUpdate {
-      export type AllowedUpdate =
-        | 'address'
-        | 'email'
-        | 'name'
-        | 'phone'
-        | 'shipping'
-        | 'tax_id';
-    }
-
-    export namespace SubscriptionCancel {
-      export interface CancellationReason {
+      export interface PaymentMethodUpdate {
         /**
          * Whether the feature is enabled.
          */
         enabled: boolean;
 
         /**
-         * Which cancellation reasons will be given as options to the customer.
+         * The [Payment Method Configuration](https://docs.stripe.com/api/payment_method_configurations) to use for this portal session. When specified, customers will be able to update their payment method to one of the options specified by the payment method configuration. If not set, the default payment method configuration is used.
          */
-        options: Array<CancellationReason.Option>;
+        payment_method_configuration: string | null;
       }
 
-      export type Mode = 'at_period_end' | 'immediately';
-
-      export type ProrationBehavior =
-        | 'always_invoice'
-        | 'create_prorations'
-        | 'none';
-
-      export namespace CancellationReason {
-        export type Option =
-          | 'customer_service'
-          | 'low_quality'
-          | 'missing_features'
-          | 'other'
-          | 'switched_service'
-          | 'too_complex'
-          | 'too_expensive'
-          | 'unused';
-      }
-    }
-
-    export namespace SubscriptionUpdate {
-      export type BillingCycleAnchor = 'now' | 'unchanged';
-
-      export type DefaultAllowedUpdate =
-        | 'price'
-        | 'promotion_code'
-        | 'quantity';
-
-      export interface Product {
-        adjustable_quantity: Product.AdjustableQuantity;
+      export interface SubscriptionCancel {
+        cancellation_reason: SubscriptionCancel.CancellationReason;
 
         /**
-         * The list of price IDs which, when subscribed to, a subscription can be updated.
+         * Whether the feature is enabled.
          */
-        prices: Array<string>;
+        enabled: boolean;
 
         /**
-         * The product ID.
+         * Whether to cancel subscriptions immediately or at the end of the billing period.
          */
-        product: string;
-      }
+        mode: SubscriptionCancel.Mode;
 
-      export type ProrationBehavior =
-        | 'always_invoice'
-        | 'create_prorations'
-        | 'none';
-
-      export interface ScheduleAtPeriodEnd {
         /**
-         * List of conditions. When any condition is true, an update will be scheduled at the end of the current period.
+         * Whether to create prorations when canceling subscriptions. Possible values are `none` and `create_prorations`.
          */
-        conditions: Array<ScheduleAtPeriodEnd.Condition>;
+        proration_behavior: SubscriptionCancel.ProrationBehavior;
       }
 
-      export type TrialUpdateBehavior = 'continue_trial' | 'end_trial';
+      export interface SubscriptionUpdate {
+        /**
+         * Determines the value to use for the billing cycle anchor on subscription updates. Valid values are `now` or `unchanged`, and the default value is `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time (in UTC). For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
+         */
+        billing_cycle_anchor: SubscriptionUpdate.BillingCycleAnchor | null;
 
-      export namespace Product {
-        export interface AdjustableQuantity {
+        /**
+         * The types of subscription updates that are supported for items listed in the `products` attribute. When empty, subscriptions are not updateable.
+         */
+        default_allowed_updates: Array<SubscriptionUpdate.DefaultAllowedUpdate>;
+
+        /**
+         * Whether the feature is enabled.
+         */
+        enabled: boolean;
+
+        /**
+         * The list of up to 10 products that support subscription updates.
+         */
+        products?: Array<SubscriptionUpdate.Product> | null;
+
+        /**
+         * Determines how to handle prorations resulting from subscription updates. Valid values are `none`, `create_prorations`, and `always_invoice`. Defaults to a value of `none` if you don't set it during creation.
+         */
+        proration_behavior: SubscriptionUpdate.ProrationBehavior;
+
+        schedule_at_period_end: SubscriptionUpdate.ScheduleAtPeriodEnd;
+
+        /**
+         * Determines how handle updates to trialing subscriptions. Valid values are `end_trial` and `continue_trial`. Defaults to a value of `end_trial` if you don't set it during creation.
+         */
+        trial_update_behavior: SubscriptionUpdate.TrialUpdateBehavior;
+      }
+
+      export namespace CustomerUpdate {
+        export type AllowedUpdate =
+          | 'address'
+          | 'email'
+          | 'name'
+          | 'phone'
+          | 'shipping'
+          | 'tax_id';
+      }
+
+      export namespace SubscriptionCancel {
+        export interface CancellationReason {
           /**
-           * If true, the quantity can be adjusted to any non-negative integer.
+           * Whether the feature is enabled.
            */
           enabled: boolean;
 
           /**
-           * The maximum quantity that can be set for the product.
+           * Which cancellation reasons will be given as options to the customer.
            */
-          maximum: number | null;
+          options: Array<CancellationReason.Option>;
+        }
 
-          /**
-           * The minimum quantity that can be set for the product.
-           */
-          minimum: number;
+        export type Mode = 'at_period_end' | 'immediately';
+
+        export type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
+
+        export namespace CancellationReason {
+          export type Option =
+            | 'customer_service'
+            | 'low_quality'
+            | 'missing_features'
+            | 'other'
+            | 'switched_service'
+            | 'too_complex'
+            | 'too_expensive'
+            | 'unused';
         }
       }
 
-      export namespace ScheduleAtPeriodEnd {
-        export interface Condition {
+      export namespace SubscriptionUpdate {
+        export type BillingCycleAnchor = 'now' | 'unchanged';
+
+        export type DefaultAllowedUpdate =
+          | 'price'
+          | 'promotion_code'
+          | 'quantity';
+
+        export interface Product {
+          adjustable_quantity: Product.AdjustableQuantity;
+
           /**
-           * The type of condition.
+           * The list of price IDs which, when subscribed to, a subscription can be updated.
            */
-          type: Condition.Type;
+          prices: Array<string>;
+
+          /**
+           * The product ID.
+           */
+          product: string;
         }
 
-        export namespace Condition {
-          export type Type = 'decreasing_item_amount' | 'shortening_interval';
+        export type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
+
+        export interface ScheduleAtPeriodEnd {
+          /**
+           * List of conditions. When any condition is true, an update will be scheduled at the end of the current period.
+           */
+          conditions: Array<ScheduleAtPeriodEnd.Condition>;
+        }
+
+        export type TrialUpdateBehavior = 'continue_trial' | 'end_trial';
+
+        export namespace Product {
+          export interface AdjustableQuantity {
+            /**
+             * If true, the quantity can be adjusted to any non-negative integer.
+             */
+            enabled: boolean;
+
+            /**
+             * The maximum quantity that can be set for the product.
+             */
+            maximum: number | null;
+
+            /**
+             * The minimum quantity that can be set for the product.
+             */
+            minimum: number;
+          }
+        }
+
+        export namespace ScheduleAtPeriodEnd {
+          export interface Condition {
+            /**
+             * The type of condition.
+             */
+            type: Condition.Type;
+          }
+
+          export namespace Condition {
+            export type Type = 'decreasing_item_amount' | 'shortening_interval';
+          }
         }
       }
     }

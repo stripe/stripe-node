@@ -61,126 +61,130 @@ export interface WorkflowRun {
   /**
    * The current Workflow Run execution status.
    */
-  status: WorkflowRun.Status;
+  status: V2.Extend.WorkflowRun.Status;
 
   /**
    * Details about the Workflow Run's status transitions.
    */
-  status_details?: WorkflowRun.StatusDetails;
+  status_details?: V2.Extend.WorkflowRun.StatusDetails;
 
   /**
    * Summary information about the Workflow Run's status transitions.
    */
-  status_transitions: WorkflowRun.StatusTransitions;
+  status_transitions: V2.Extend.WorkflowRun.StatusTransitions;
 
   /**
    * A record of the trigger that launched this Workflow Run.
    */
-  trigger: WorkflowRun.Trigger;
+  trigger: V2.Extend.WorkflowRun.Trigger;
 
   /**
    * The Workflow this Run belongs to.
    */
   workflow: string;
 }
-export namespace WorkflowRun {
-  export type Status = 'failed' | 'started' | 'succeeded';
+export namespace V2 {
+  export namespace Extend {
+    export namespace WorkflowRun {
+      export type Status = 'failed' | 'started' | 'succeeded';
 
-  export interface StatusDetails {
-    /**
-     * Details about the Workflow Run's transition into the FAILED state.
-     */
-    failed?: StatusDetails.Failed;
+      export interface StatusDetails {
+        /**
+         * Details about the Workflow Run's transition into the FAILED state.
+         */
+        failed?: StatusDetails.Failed;
 
-    /**
-     * Details about the Workflow Run's transition in to the STARTED state.
-     */
-    started?: StatusDetails.Started;
+        /**
+         * Details about the Workflow Run's transition in to the STARTED state.
+         */
+        started?: StatusDetails.Started;
 
-    /**
-     * Details about the Workflow Run's transition into the SUCCEEDED state.
-     */
-    succeeded?: StatusDetails.Succeeded;
-  }
+        /**
+         * Details about the Workflow Run's transition into the SUCCEEDED state.
+         */
+        succeeded?: StatusDetails.Succeeded;
+      }
 
-  export interface StatusTransitions {
-    /**
-     * When the Workflow Run failed.
-     */
-    failed_at?: string;
+      export interface StatusTransitions {
+        /**
+         * When the Workflow Run failed.
+         */
+        failed_at?: string;
 
-    /**
-     * When the Workflow Run was started.
-     */
-    started_at?: string;
+        /**
+         * When the Workflow Run was started.
+         */
+        started_at?: string;
 
-    /**
-     * When the Workflow Run succeeded.
-     */
-    succeeded_at?: string;
-  }
+        /**
+         * When the Workflow Run succeeded.
+         */
+        succeeded_at?: string;
+      }
 
-  export interface Trigger {
-    /**
-     * The Workflow Run was launched when Stripe emitted a certain event.
-     */
-    event_trigger?: Trigger.EventTrigger;
+      export interface Trigger {
+        /**
+         * The Workflow Run was launched when Stripe emitted a certain event.
+         */
+        event_trigger?: Trigger.EventTrigger;
 
-    /**
-     * The Workflow Run was launched through a direct call, using either the Dashboard or the Stripe API.
-     */
-    manual?: Trigger.Manual;
+        /**
+         * The Workflow Run was launched through a direct call, using either the Dashboard or the Stripe API.
+         */
+        manual?: Trigger.Manual;
 
-    /**
-     * Which type of trigger this is.
-     */
-    type: Trigger.Type;
-  }
+        /**
+         * Which type of trigger this is.
+         */
+        type: Trigger.Type;
+      }
 
-  export namespace StatusDetails {
-    export interface Failed {
-      /**
-       * Optional details about the failure result.
-       */
-      error_message?: string;
-    }
+      export namespace StatusDetails {
+        export interface Failed {
+          /**
+           * Optional details about the failure result.
+           */
+          error_message?: string;
+        }
 
-    export interface Started {}
+        export interface Started {}
 
-    export interface Succeeded {}
-  }
+        export interface Succeeded {}
+      }
 
-  export namespace Trigger {
-    export interface EventTrigger {
-      /**
-       * The account that generated the triggering event.
-       */
-      context: string;
+      export namespace Trigger {
+        export interface EventTrigger {
+          /**
+           * The account that generated the triggering event.
+           */
+          context: string;
 
-      /**
-       * The Stripe event that triggered this Run.
-       */
-      id: string;
+          /**
+           * The Stripe event that triggered this Run.
+           */
+          id: string;
 
-      /**
-       * The Stripe event type triggered this Run.
-       */
-      type: string;
-    }
+          /**
+           * The Stripe event type triggered this Run.
+           */
+          type: string;
+        }
 
-    export interface Manual {
-      /**
-       * The input parameters used when launching the Run.
-       */
-      input_parameters: Manual.InputParameters;
-    }
+        export interface Manual {
+          /**
+           * The input parameters used when launching the Run.
+           */
+          input_parameters: Manual.InputParameters;
+        }
 
-    export type Type = 'event_trigger' | 'manual';
+        export type Type = 'event_trigger' | 'manual';
 
-    export namespace Manual {
-      export type InputParameters = {
-        [key: string]: unknown;
-      };
+        export namespace Manual {
+          export type InputParameters = {
+            [key: string]: unknown;
+          };
+        }
+      }
     }
   }
 }

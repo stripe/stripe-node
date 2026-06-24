@@ -71,7 +71,7 @@ export interface FinancingOffer {
    * the terms accepted by the Connected account, which may differ from those
    * offered.
    */
-  accepted_terms?: FinancingOffer.AcceptedTerms;
+  accepted_terms?: Capital.FinancingOffer.AcceptedTerms;
 
   /**
    * The ID of the merchant associated with this financing object.
@@ -96,7 +96,7 @@ export interface FinancingOffer {
   /**
    * The type of financing being offered.
    */
-  financing_type?: FinancingOffer.FinancingType;
+  financing_type?: Capital.FinancingOffer.FinancingType;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -113,12 +113,12 @@ export interface FinancingOffer {
    * Stripe Capital to a Connected account. This resource represents
    * both the terms offered to the Connected account.
    */
-  offered_terms?: FinancingOffer.OfferedTerms;
+  offered_terms?: Capital.FinancingOffer.OfferedTerms;
 
   /**
    * Financing product identifier.
    */
-  product_type?: FinancingOffer.ProductType;
+  product_type?: Capital.FinancingOffer.ProductType;
 
   /**
    * The ID of the financing offer that replaced this offer.
@@ -133,100 +133,102 @@ export interface FinancingOffer {
   /**
    * The current status of the offer.
    */
-  status: FinancingOffer.Status;
+  status: Capital.FinancingOffer.Status;
 
   /**
    * See [financing_type](https://docs.stripe.com/api/capital/connect_financing_object#financing_offer_object-financing_type).
    */
-  type?: FinancingOffer.Type;
+  type?: Capital.FinancingOffer.Type;
 }
-export namespace FinancingOffer {
-  export interface AcceptedTerms {
-    /**
-     * Amount of financing offered, in minor units. For example, 1,000 USD is represented as 100000.
-     */
-    advance_amount: number;
+export namespace Capital {
+  export namespace FinancingOffer {
+    export interface AcceptedTerms {
+      /**
+       * Amount of financing offered, in minor units. For example, 1,000 USD is represented as 100000.
+       */
+      advance_amount: number;
 
-    /**
-     * Currency that the financing offer is transacted in. For example, `usd`.
-     */
-    currency: string;
+      /**
+       * Currency that the financing offer is transacted in. For example, `usd`.
+       */
+      currency: string;
 
-    /**
-     * Fixed fee amount, in minor units. For example, 100 USD is represented as 10000.
-     */
-    fee_amount: number;
+      /**
+       * Fixed fee amount, in minor units. For example, 100 USD is represented as 10000.
+       */
+      fee_amount: number;
 
-    /**
-     * Populated when the `product_type` of the `financingoffer` is `refill`.
-     * Represents the discount amount on remaining premium for the existing loan at payout time.
-     */
-    previous_financing_fee_discount_amount: number | null;
+      /**
+       * Populated when the `product_type` of the `financingoffer` is `refill`.
+       * Represents the discount amount on remaining premium for the existing loan at payout time.
+       */
+      previous_financing_fee_discount_amount: number | null;
 
-    /**
-     * Per-transaction rate at which Stripe withholds funds to repay the financing.
-     */
-    withhold_rate: number;
-  }
+      /**
+       * Per-transaction rate at which Stripe withholds funds to repay the financing.
+       */
+      withhold_rate: number;
+    }
 
-  export type FinancingType = 'cash_advance' | 'flex_loan';
+    export type FinancingType = 'cash_advance' | 'flex_loan';
 
-  export interface OfferedTerms {
-    /**
-     * Amount of financing offered, in minor units. For example, 1,000 USD is represented as 100000.
-     */
-    advance_amount: number;
+    export interface OfferedTerms {
+      /**
+       * Amount of financing offered, in minor units. For example, 1,000 USD is represented as 100000.
+       */
+      advance_amount: number;
 
-    /**
-     * Describes the type of user the offer is being extended to.
-     */
-    campaign_type: OfferedTerms.CampaignType;
+      /**
+       * Describes the type of user the offer is being extended to.
+       */
+      campaign_type: OfferedTerms.CampaignType;
 
-    /**
-     * Currency that the financing offer is transacted in. For example, `usd`.
-     */
-    currency: string;
+      /**
+       * Currency that the financing offer is transacted in. For example, `usd`.
+       */
+      currency: string;
 
-    /**
-     * Fixed fee amount, in minor units. For example, 100 USD is represented as 10000.
-     */
-    fee_amount: number;
+      /**
+       * Fixed fee amount, in minor units. For example, 100 USD is represented as 10000.
+       */
+      fee_amount: number;
 
-    /**
-     * Populated when the `product_type` of the `financingoffer` is `refill`.
-     * Represents the discount rate percentage on remaining fee on the existing loan. When the `financing_offer`
-     * is paid out, the `previous_financing_fee_discount_amount` will be computed as the multiple of this rate
-     * and the remaining fee.
-     */
-    previous_financing_fee_discount_rate: number | null;
+      /**
+       * Populated when the `product_type` of the `financingoffer` is `refill`.
+       * Represents the discount rate percentage on remaining fee on the existing loan. When the `financing_offer`
+       * is paid out, the `previous_financing_fee_discount_amount` will be computed as the multiple of this rate
+       * and the remaining fee.
+       */
+      previous_financing_fee_discount_rate: number | null;
 
-    /**
-     * Per-transaction rate at which Stripe withholds funds to repay the financing.
-     */
-    withhold_rate: number;
-  }
+      /**
+       * Per-transaction rate at which Stripe withholds funds to repay the financing.
+       */
+      withhold_rate: number;
+    }
 
-  export type ProductType = 'refill' | 'standard';
+    export type ProductType = 'refill' | 'standard';
 
-  export type Status =
-    | 'accepted'
-    | 'canceled'
-    | 'completed'
-    | 'delivered'
-    | 'expired'
-    | 'fully_repaid'
-    | 'paid_out'
-    | 'rejected'
-    | 'replaced'
-    | 'undelivered';
+    export type Status =
+      | 'accepted'
+      | 'canceled'
+      | 'completed'
+      | 'delivered'
+      | 'expired'
+      | 'fully_repaid'
+      | 'paid_out'
+      | 'rejected'
+      | 'replaced'
+      | 'undelivered';
 
-  export type Type = 'cash_advance' | 'fixed_term_loan' | 'flex_loan';
+    export type Type = 'cash_advance' | 'fixed_term_loan' | 'flex_loan';
 
-  export namespace OfferedTerms {
-    export type CampaignType =
-      | 'newly_eligible_user'
-      | 'previously_eligible_user'
-      | 'repeat_user';
+    export namespace OfferedTerms {
+      export type CampaignType =
+        | 'newly_eligible_user'
+        | 'previously_eligible_user'
+        | 'repeat_user';
+    }
   }
 }
 export namespace Capital {

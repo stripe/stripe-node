@@ -114,7 +114,7 @@ export interface CreditUnderwritingRecord {
   /**
    * For decisions triggered by an application, details about the submission.
    */
-  application: CreditUnderwritingRecord.Application | null;
+  application: Issuing.CreditUnderwritingRecord.Application | null;
 
   /**
    * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -124,9 +124,9 @@ export interface CreditUnderwritingRecord {
   /**
    * The event that triggered the underwriting.
    */
-  created_from: CreditUnderwritingRecord.CreatedFrom;
+  created_from: Issuing.CreditUnderwritingRecord.CreatedFrom;
 
-  credit_user: CreditUnderwritingRecord.CreditUser;
+  credit_user: Issuing.CreditUnderwritingRecord.CreditUser;
 
   /**
    * Date when a decision was made.
@@ -136,7 +136,7 @@ export interface CreditUnderwritingRecord {
   /**
    * Details about the decision.
    */
-  decision: CreditUnderwritingRecord.Decision | null;
+  decision: Issuing.CreditUnderwritingRecord.Decision | null;
 
   /**
    * For underwriting initiated by an application, a decision must be taken 30 days after the submission.
@@ -161,380 +161,382 @@ export interface CreditUnderwritingRecord {
   /**
    * If an exception to the usual underwriting criteria was made for this application, details about the exception must be provided. Exceptions should only be granted in rare circumstances, in consultation with Stripe Compliance.
    */
-  underwriting_exception: CreditUnderwritingRecord.UnderwritingException | null;
+  underwriting_exception: Issuing.CreditUnderwritingRecord.UnderwritingException | null;
 }
-export namespace CreditUnderwritingRecord {
-  export interface Application {
-    /**
-     * The channel through which the applicant has submitted their application.
-     */
-    application_method: Application.ApplicationMethod;
-
-    /**
-     * Scope of demand made by the applicant.
-     */
-    purpose: Application.Purpose;
-
-    /**
-     * Date when the applicant submitted their application.
-     */
-    submitted_at: number;
-  }
-
-  export type CreatedFrom = 'application' | 'proactive_review';
-
-  export interface CreditUser {
-    /**
-     * Email of the applicant or accountholder.
-     */
-    email: string;
-
-    /**
-     * Full name of the company or person.
-     */
-    name: string;
-  }
-
-  export interface Decision {
-    /**
-     * Details about a decision application_rejected.
-     */
-    application_rejected: Decision.ApplicationRejected | null;
-
-    /**
-     * Details about a decision credit_limit_approved.
-     */
-    credit_limit_approved: Decision.CreditLimitApproved | null;
-
-    /**
-     * Details about a decision credit_limit_decreased.
-     */
-    credit_limit_decreased: Decision.CreditLimitDecreased | null;
-
-    /**
-     * Details about a decision credit_line_closed.
-     */
-    credit_line_closed: Decision.CreditLineClosed | null;
-
-    /**
-     * Outcome of the decision.
-     */
-    type: Decision.Type;
-  }
-
-  export interface UnderwritingException {
-    /**
-     * Written explanation for the exception.
-     */
-    explanation: string;
-
-    /**
-     * The decision before the exception was applied.
-     */
-    original_decision_type: UnderwritingException.OriginalDecisionType;
-  }
-
-  export namespace Application {
-    export type ApplicationMethod = 'in_person' | 'mail' | 'online' | 'phone';
-
-    export type Purpose = 'credit_limit_increase' | 'credit_line_opening';
-  }
-
-  export namespace Decision {
-    export interface ApplicationRejected {
+export namespace Issuing {
+  export namespace CreditUnderwritingRecord {
+    export interface Application {
       /**
-       * Details about the `reasons.other` when present.
+       * The channel through which the applicant has submitted their application.
        */
-      reason_other_explanation: string | null;
+      application_method: Application.ApplicationMethod;
 
       /**
-       * List of reasons why the application was rejected up to 4 reasons, in order of importance.
+       * Scope of demand made by the applicant.
        */
-      reasons: Array<ApplicationRejected.Reason>;
+      purpose: Application.Purpose;
+
+      /**
+       * Date when the applicant submitted their application.
+       */
+      submitted_at: number;
     }
 
-    export interface CreditLimitApproved {
+    export type CreatedFrom = 'application' | 'proactive_review';
+
+    export interface CreditUser {
       /**
-       * Credit amount approved. An approved credit limit is required before you can set a amount in the [CreditPolicy API](https://docs.stripe.com/api/issuing/credit_policy).
+       * Email of the applicant or accountholder.
        */
-      amount: number;
+      email: string;
 
       /**
-       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       * Full name of the company or person.
        */
-      currency: string;
+      name: string;
     }
 
-    export interface CreditLimitDecreased {
+    export interface Decision {
       /**
-       * Credit amount approved after decrease. An approved credit limit is required before you can set a amount in the [CreditPolicy API](https://docs.stripe.com/api/issuing/credit_policy).
+       * Details about a decision application_rejected.
        */
-      amount: number;
+      application_rejected: Decision.ApplicationRejected | null;
 
       /**
-       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       * Details about a decision credit_limit_approved.
        */
-      currency: string;
+      credit_limit_approved: Decision.CreditLimitApproved | null;
 
       /**
-       * Details about the `reasons.other` when present.
+       * Details about a decision credit_limit_decreased.
        */
-      reason_other_explanation: string | null;
+      credit_limit_decreased: Decision.CreditLimitDecreased | null;
 
       /**
-       * List of reasons why the existing credit was decreased, up to 4 reasons, in order of importance.
+       * Details about a decision credit_line_closed.
        */
-      reasons: Array<CreditLimitDecreased.Reason>;
+      credit_line_closed: Decision.CreditLineClosed | null;
+
+      /**
+       * Outcome of the decision.
+       */
+      type: Decision.Type;
     }
 
-    export interface CreditLineClosed {
+    export interface UnderwritingException {
       /**
-       * Details about the `reasons.other` when present.
+       * Written explanation for the exception.
        */
-      reason_other_explanation: string | null;
+      explanation: string;
 
       /**
-       * List of reasons why the existing account was closed, up to 4 reasons, in order of importance.
+       * The decision before the exception was applied.
        */
-      reasons: Array<CreditLineClosed.Reason>;
+      original_decision_type: UnderwritingException.OriginalDecisionType;
     }
 
-    export type Type =
-      | 'additional_information_requested'
-      | 'application_rejected'
-      | 'credit_limit_approved'
-      | 'credit_limit_decreased'
-      | 'credit_line_closed'
-      | 'no_changes'
-      | 'withdrawn_by_applicant';
+    export namespace Application {
+      export type ApplicationMethod = 'in_person' | 'mail' | 'online' | 'phone';
 
-    export namespace ApplicationRejected {
-      export type Reason =
-        | 'applicant_is_not_beneficial_owner'
-        | 'applicant_too_young'
-        | 'application_is_not_beneficial_owner'
-        | 'bankruptcy'
-        | 'business_size_too_small'
-        | 'current_account_tier_ineligible'
-        | 'customer_already_exists'
-        | 'customer_requested_account_closure'
-        | 'debt_to_cash_balance_ratio_too_high'
-        | 'debt_to_equity_ratio_too_high'
-        | 'delinquent_credit_obligations'
-        | 'dispute_rate_too_high'
-        | 'duration_of_residence'
-        | 'excessive_income_or_revenue_obligations'
-        | 'expenses_to_cash_balance_ratio_too_high'
-        | 'foreclosure_or_repossession'
-        | 'frozen_file_at_credit_bureau'
-        | 'garnishment_or_attachment'
-        | 'government_loan_program_criteria'
-        | 'high_concentration_of_clients'
-        | 'high_risk_industry'
-        | 'incomplete_application'
-        | 'inconsistent_monthly_revenues'
-        | 'insufficient_account_history_with_platform'
-        | 'insufficient_bank_account_history'
-        | 'insufficient_cash_balance'
-        | 'insufficient_cash_flow'
-        | 'insufficient_collateral'
-        | 'insufficient_credit_experience'
-        | 'insufficient_deposits'
-        | 'insufficient_income'
-        | 'insufficient_margin_ratio'
-        | 'insufficient_operating_profit'
-        | 'insufficient_period_in_operation'
-        | 'insufficient_reserves'
-        | 'insufficient_revenue'
-        | 'insufficient_social_media_performance'
-        | 'insufficient_time_in_network'
-        | 'insufficient_trade_credit_insurance'
-        | 'invalid_business_license'
-        | 'lacking_cash_account'
-        | 'late_payment_history_reported_to_bureau'
-        | 'lien_collection_action_or_judgement'
-        | 'negative_public_information'
-        | 'no_credit_file'
-        | 'other'
-        | 'outside_supported_country'
-        | 'outside_supported_state'
-        | 'poor_payment_history_with_platform'
-        | 'prior_or_current_legal_action'
-        | 'prohibited_industry'
-        | 'rate_of_cash_balance_fluctuation_too_high'
-        | 'recent_inquiries_on_business_credit_report'
-        | 'removal_of_bank_account_connection'
-        | 'revenue_discrepancy'
-        | 'runway_too_short'
-        | 'suspected_fraud'
-        | 'too_many_non_sufficient_funds_or_overdrafts'
-        | 'unable_to_verify_address'
-        | 'unable_to_verify_identity'
-        | 'unable_to_verify_income_or_revenue'
-        | 'unprofitable'
-        | 'unsupportable_business_type';
+      export type Purpose = 'credit_limit_increase' | 'credit_line_opening';
     }
 
-    export namespace CreditLimitDecreased {
-      export type Reason =
-        | 'applicant_is_not_beneficial_owner'
-        | 'applicant_too_young'
-        | 'application_is_not_beneficial_owner'
-        | 'bankruptcy'
-        | 'business_size_too_small'
-        | 'change_in_financial_state'
-        | 'change_in_utilization_of_credit_line'
-        | 'current_account_tier_ineligible'
-        | 'customer_already_exists'
-        | 'customer_requested_account_closure'
-        | 'debt_to_cash_balance_ratio_too_high'
-        | 'debt_to_equity_ratio_too_high'
-        | 'decrease_in_income_to_expense_ratio'
-        | 'decrease_in_social_media_performance'
-        | 'delinquent_credit_obligations'
-        | 'dispute_rate_too_high'
-        | 'duration_of_residence'
-        | 'exceeds_acceptable_platform_exposure'
-        | 'excessive_income_or_revenue_obligations'
-        | 'expenses_to_cash_balance_ratio_too_high'
-        | 'foreclosure_or_repossession'
-        | 'frozen_file_at_credit_bureau'
-        | 'garnishment_or_attachment'
-        | 'government_loan_program_criteria'
-        | 'has_recent_credit_limit_increase'
-        | 'high_concentration_of_clients'
-        | 'high_risk_industry'
-        | 'incomplete_application'
-        | 'inconsistent_monthly_revenues'
-        | 'insufficient_account_history_with_platform'
-        | 'insufficient_bank_account_history'
-        | 'insufficient_cash_balance'
-        | 'insufficient_cash_flow'
-        | 'insufficient_collateral'
-        | 'insufficient_credit_experience'
-        | 'insufficient_credit_utilization'
-        | 'insufficient_deposits'
-        | 'insufficient_income'
-        | 'insufficient_margin_ratio'
-        | 'insufficient_operating_profit'
-        | 'insufficient_period_in_operation'
-        | 'insufficient_reserves'
-        | 'insufficient_revenue'
-        | 'insufficient_social_media_performance'
-        | 'insufficient_time_in_network'
-        | 'insufficient_trade_credit_insurance'
-        | 'insufficient_usage_as_qualified_expenses'
-        | 'invalid_business_license'
-        | 'lacking_cash_account'
-        | 'late_payment_history_reported_to_bureau'
-        | 'lien_collection_action_or_judgement'
-        | 'negative_public_information'
-        | 'no_credit_file'
-        | 'other'
-        | 'outside_supported_country'
-        | 'outside_supported_state'
-        | 'poor_payment_history_with_platform'
-        | 'prior_or_current_legal_action'
-        | 'prohibited_industry'
-        | 'rate_of_cash_balance_fluctuation_too_high'
-        | 'recent_inquiries_on_business_credit_report'
-        | 'removal_of_bank_account_connection'
-        | 'revenue_discrepancy'
-        | 'runway_too_short'
-        | 'suspected_fraud'
-        | 'too_many_non_sufficient_funds_or_overdrafts'
-        | 'unable_to_verify_address'
-        | 'unable_to_verify_identity'
-        | 'unable_to_verify_income_or_revenue'
-        | 'unprofitable'
-        | 'unsupportable_business_type';
+    export namespace Decision {
+      export interface ApplicationRejected {
+        /**
+         * Details about the `reasons.other` when present.
+         */
+        reason_other_explanation: string | null;
+
+        /**
+         * List of reasons why the application was rejected up to 4 reasons, in order of importance.
+         */
+        reasons: Array<ApplicationRejected.Reason>;
+      }
+
+      export interface CreditLimitApproved {
+        /**
+         * Credit amount approved. An approved credit limit is required before you can set a amount in the [CreditPolicy API](https://docs.stripe.com/api/issuing/credit_policy).
+         */
+        amount: number;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+      }
+
+      export interface CreditLimitDecreased {
+        /**
+         * Credit amount approved after decrease. An approved credit limit is required before you can set a amount in the [CreditPolicy API](https://docs.stripe.com/api/issuing/credit_policy).
+         */
+        amount: number;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * Details about the `reasons.other` when present.
+         */
+        reason_other_explanation: string | null;
+
+        /**
+         * List of reasons why the existing credit was decreased, up to 4 reasons, in order of importance.
+         */
+        reasons: Array<CreditLimitDecreased.Reason>;
+      }
+
+      export interface CreditLineClosed {
+        /**
+         * Details about the `reasons.other` when present.
+         */
+        reason_other_explanation: string | null;
+
+        /**
+         * List of reasons why the existing account was closed, up to 4 reasons, in order of importance.
+         */
+        reasons: Array<CreditLineClosed.Reason>;
+      }
+
+      export type Type =
+        | 'additional_information_requested'
+        | 'application_rejected'
+        | 'credit_limit_approved'
+        | 'credit_limit_decreased'
+        | 'credit_line_closed'
+        | 'no_changes'
+        | 'withdrawn_by_applicant';
+
+      export namespace ApplicationRejected {
+        export type Reason =
+          | 'applicant_is_not_beneficial_owner'
+          | 'applicant_too_young'
+          | 'application_is_not_beneficial_owner'
+          | 'bankruptcy'
+          | 'business_size_too_small'
+          | 'current_account_tier_ineligible'
+          | 'customer_already_exists'
+          | 'customer_requested_account_closure'
+          | 'debt_to_cash_balance_ratio_too_high'
+          | 'debt_to_equity_ratio_too_high'
+          | 'delinquent_credit_obligations'
+          | 'dispute_rate_too_high'
+          | 'duration_of_residence'
+          | 'excessive_income_or_revenue_obligations'
+          | 'expenses_to_cash_balance_ratio_too_high'
+          | 'foreclosure_or_repossession'
+          | 'frozen_file_at_credit_bureau'
+          | 'garnishment_or_attachment'
+          | 'government_loan_program_criteria'
+          | 'high_concentration_of_clients'
+          | 'high_risk_industry'
+          | 'incomplete_application'
+          | 'inconsistent_monthly_revenues'
+          | 'insufficient_account_history_with_platform'
+          | 'insufficient_bank_account_history'
+          | 'insufficient_cash_balance'
+          | 'insufficient_cash_flow'
+          | 'insufficient_collateral'
+          | 'insufficient_credit_experience'
+          | 'insufficient_deposits'
+          | 'insufficient_income'
+          | 'insufficient_margin_ratio'
+          | 'insufficient_operating_profit'
+          | 'insufficient_period_in_operation'
+          | 'insufficient_reserves'
+          | 'insufficient_revenue'
+          | 'insufficient_social_media_performance'
+          | 'insufficient_time_in_network'
+          | 'insufficient_trade_credit_insurance'
+          | 'invalid_business_license'
+          | 'lacking_cash_account'
+          | 'late_payment_history_reported_to_bureau'
+          | 'lien_collection_action_or_judgement'
+          | 'negative_public_information'
+          | 'no_credit_file'
+          | 'other'
+          | 'outside_supported_country'
+          | 'outside_supported_state'
+          | 'poor_payment_history_with_platform'
+          | 'prior_or_current_legal_action'
+          | 'prohibited_industry'
+          | 'rate_of_cash_balance_fluctuation_too_high'
+          | 'recent_inquiries_on_business_credit_report'
+          | 'removal_of_bank_account_connection'
+          | 'revenue_discrepancy'
+          | 'runway_too_short'
+          | 'suspected_fraud'
+          | 'too_many_non_sufficient_funds_or_overdrafts'
+          | 'unable_to_verify_address'
+          | 'unable_to_verify_identity'
+          | 'unable_to_verify_income_or_revenue'
+          | 'unprofitable'
+          | 'unsupportable_business_type';
+      }
+
+      export namespace CreditLimitDecreased {
+        export type Reason =
+          | 'applicant_is_not_beneficial_owner'
+          | 'applicant_too_young'
+          | 'application_is_not_beneficial_owner'
+          | 'bankruptcy'
+          | 'business_size_too_small'
+          | 'change_in_financial_state'
+          | 'change_in_utilization_of_credit_line'
+          | 'current_account_tier_ineligible'
+          | 'customer_already_exists'
+          | 'customer_requested_account_closure'
+          | 'debt_to_cash_balance_ratio_too_high'
+          | 'debt_to_equity_ratio_too_high'
+          | 'decrease_in_income_to_expense_ratio'
+          | 'decrease_in_social_media_performance'
+          | 'delinquent_credit_obligations'
+          | 'dispute_rate_too_high'
+          | 'duration_of_residence'
+          | 'exceeds_acceptable_platform_exposure'
+          | 'excessive_income_or_revenue_obligations'
+          | 'expenses_to_cash_balance_ratio_too_high'
+          | 'foreclosure_or_repossession'
+          | 'frozen_file_at_credit_bureau'
+          | 'garnishment_or_attachment'
+          | 'government_loan_program_criteria'
+          | 'has_recent_credit_limit_increase'
+          | 'high_concentration_of_clients'
+          | 'high_risk_industry'
+          | 'incomplete_application'
+          | 'inconsistent_monthly_revenues'
+          | 'insufficient_account_history_with_platform'
+          | 'insufficient_bank_account_history'
+          | 'insufficient_cash_balance'
+          | 'insufficient_cash_flow'
+          | 'insufficient_collateral'
+          | 'insufficient_credit_experience'
+          | 'insufficient_credit_utilization'
+          | 'insufficient_deposits'
+          | 'insufficient_income'
+          | 'insufficient_margin_ratio'
+          | 'insufficient_operating_profit'
+          | 'insufficient_period_in_operation'
+          | 'insufficient_reserves'
+          | 'insufficient_revenue'
+          | 'insufficient_social_media_performance'
+          | 'insufficient_time_in_network'
+          | 'insufficient_trade_credit_insurance'
+          | 'insufficient_usage_as_qualified_expenses'
+          | 'invalid_business_license'
+          | 'lacking_cash_account'
+          | 'late_payment_history_reported_to_bureau'
+          | 'lien_collection_action_or_judgement'
+          | 'negative_public_information'
+          | 'no_credit_file'
+          | 'other'
+          | 'outside_supported_country'
+          | 'outside_supported_state'
+          | 'poor_payment_history_with_platform'
+          | 'prior_or_current_legal_action'
+          | 'prohibited_industry'
+          | 'rate_of_cash_balance_fluctuation_too_high'
+          | 'recent_inquiries_on_business_credit_report'
+          | 'removal_of_bank_account_connection'
+          | 'revenue_discrepancy'
+          | 'runway_too_short'
+          | 'suspected_fraud'
+          | 'too_many_non_sufficient_funds_or_overdrafts'
+          | 'unable_to_verify_address'
+          | 'unable_to_verify_identity'
+          | 'unable_to_verify_income_or_revenue'
+          | 'unprofitable'
+          | 'unsupportable_business_type';
+      }
+
+      export namespace CreditLineClosed {
+        export type Reason =
+          | 'applicant_is_not_beneficial_owner'
+          | 'applicant_too_young'
+          | 'application_is_not_beneficial_owner'
+          | 'bankruptcy'
+          | 'business_size_too_small'
+          | 'change_in_financial_state'
+          | 'change_in_utilization_of_credit_line'
+          | 'current_account_tier_ineligible'
+          | 'customer_already_exists'
+          | 'customer_requested_account_closure'
+          | 'debt_to_cash_balance_ratio_too_high'
+          | 'debt_to_equity_ratio_too_high'
+          | 'decrease_in_income_to_expense_ratio'
+          | 'decrease_in_social_media_performance'
+          | 'delinquent_credit_obligations'
+          | 'dispute_rate_too_high'
+          | 'duration_of_residence'
+          | 'exceeds_acceptable_platform_exposure'
+          | 'excessive_income_or_revenue_obligations'
+          | 'expenses_to_cash_balance_ratio_too_high'
+          | 'foreclosure_or_repossession'
+          | 'frozen_file_at_credit_bureau'
+          | 'garnishment_or_attachment'
+          | 'government_loan_program_criteria'
+          | 'has_recent_credit_limit_increase'
+          | 'high_concentration_of_clients'
+          | 'high_risk_industry'
+          | 'incomplete_application'
+          | 'inconsistent_monthly_revenues'
+          | 'insufficient_account_history_with_platform'
+          | 'insufficient_bank_account_history'
+          | 'insufficient_cash_balance'
+          | 'insufficient_cash_flow'
+          | 'insufficient_collateral'
+          | 'insufficient_credit_experience'
+          | 'insufficient_credit_utilization'
+          | 'insufficient_deposits'
+          | 'insufficient_income'
+          | 'insufficient_margin_ratio'
+          | 'insufficient_operating_profit'
+          | 'insufficient_period_in_operation'
+          | 'insufficient_reserves'
+          | 'insufficient_revenue'
+          | 'insufficient_social_media_performance'
+          | 'insufficient_time_in_network'
+          | 'insufficient_trade_credit_insurance'
+          | 'insufficient_usage_as_qualified_expenses'
+          | 'invalid_business_license'
+          | 'lacking_cash_account'
+          | 'late_payment_history_reported_to_bureau'
+          | 'lien_collection_action_or_judgement'
+          | 'negative_public_information'
+          | 'no_credit_file'
+          | 'other'
+          | 'outside_supported_country'
+          | 'outside_supported_state'
+          | 'poor_payment_history_with_platform'
+          | 'prior_or_current_legal_action'
+          | 'prohibited_industry'
+          | 'rate_of_cash_balance_fluctuation_too_high'
+          | 'recent_inquiries_on_business_credit_report'
+          | 'removal_of_bank_account_connection'
+          | 'revenue_discrepancy'
+          | 'runway_too_short'
+          | 'suspected_fraud'
+          | 'too_many_non_sufficient_funds_or_overdrafts'
+          | 'unable_to_verify_address'
+          | 'unable_to_verify_identity'
+          | 'unable_to_verify_income_or_revenue'
+          | 'unprofitable'
+          | 'unsupportable_business_type';
+      }
     }
 
-    export namespace CreditLineClosed {
-      export type Reason =
-        | 'applicant_is_not_beneficial_owner'
-        | 'applicant_too_young'
-        | 'application_is_not_beneficial_owner'
-        | 'bankruptcy'
-        | 'business_size_too_small'
-        | 'change_in_financial_state'
-        | 'change_in_utilization_of_credit_line'
-        | 'current_account_tier_ineligible'
-        | 'customer_already_exists'
-        | 'customer_requested_account_closure'
-        | 'debt_to_cash_balance_ratio_too_high'
-        | 'debt_to_equity_ratio_too_high'
-        | 'decrease_in_income_to_expense_ratio'
-        | 'decrease_in_social_media_performance'
-        | 'delinquent_credit_obligations'
-        | 'dispute_rate_too_high'
-        | 'duration_of_residence'
-        | 'exceeds_acceptable_platform_exposure'
-        | 'excessive_income_or_revenue_obligations'
-        | 'expenses_to_cash_balance_ratio_too_high'
-        | 'foreclosure_or_repossession'
-        | 'frozen_file_at_credit_bureau'
-        | 'garnishment_or_attachment'
-        | 'government_loan_program_criteria'
-        | 'has_recent_credit_limit_increase'
-        | 'high_concentration_of_clients'
-        | 'high_risk_industry'
-        | 'incomplete_application'
-        | 'inconsistent_monthly_revenues'
-        | 'insufficient_account_history_with_platform'
-        | 'insufficient_bank_account_history'
-        | 'insufficient_cash_balance'
-        | 'insufficient_cash_flow'
-        | 'insufficient_collateral'
-        | 'insufficient_credit_experience'
-        | 'insufficient_credit_utilization'
-        | 'insufficient_deposits'
-        | 'insufficient_income'
-        | 'insufficient_margin_ratio'
-        | 'insufficient_operating_profit'
-        | 'insufficient_period_in_operation'
-        | 'insufficient_reserves'
-        | 'insufficient_revenue'
-        | 'insufficient_social_media_performance'
-        | 'insufficient_time_in_network'
-        | 'insufficient_trade_credit_insurance'
-        | 'insufficient_usage_as_qualified_expenses'
-        | 'invalid_business_license'
-        | 'lacking_cash_account'
-        | 'late_payment_history_reported_to_bureau'
-        | 'lien_collection_action_or_judgement'
-        | 'negative_public_information'
-        | 'no_credit_file'
-        | 'other'
-        | 'outside_supported_country'
-        | 'outside_supported_state'
-        | 'poor_payment_history_with_platform'
-        | 'prior_or_current_legal_action'
-        | 'prohibited_industry'
-        | 'rate_of_cash_balance_fluctuation_too_high'
-        | 'recent_inquiries_on_business_credit_report'
-        | 'removal_of_bank_account_connection'
-        | 'revenue_discrepancy'
-        | 'runway_too_short'
-        | 'suspected_fraud'
-        | 'too_many_non_sufficient_funds_or_overdrafts'
-        | 'unable_to_verify_address'
-        | 'unable_to_verify_identity'
-        | 'unable_to_verify_income_or_revenue'
-        | 'unprofitable'
-        | 'unsupportable_business_type';
+    export namespace UnderwritingException {
+      export type OriginalDecisionType =
+        | 'additional_information_requested'
+        | 'application_rejected'
+        | 'credit_limit_approved'
+        | 'credit_limit_decreased'
+        | 'credit_line_closed'
+        | 'no_changes'
+        | 'withdrawn_by_applicant';
     }
-  }
-
-  export namespace UnderwritingException {
-    export type OriginalDecisionType =
-      | 'additional_information_requested'
-      | 'application_rejected'
-      | 'credit_limit_approved'
-      | 'credit_limit_decreased'
-      | 'credit_line_closed'
-      | 'no_changes'
-      | 'withdrawn_by_applicant';
   }
 }
 export namespace Issuing {

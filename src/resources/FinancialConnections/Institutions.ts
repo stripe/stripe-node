@@ -54,7 +54,7 @@ export interface Institution {
    */
   countries: Array<string>;
 
-  features: Institution.Features;
+  features: FinancialConnections.Institution.Features;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -74,53 +74,55 @@ export interface Institution {
   /**
    * The status of this institution in the Financial Connections authentication flow.
    */
-  status: Institution.Status;
+  status: FinancialConnections.Institution.Status;
 
   /**
    * A URL corresponding to this institution. This URL is also displayed in the authentication flow to help end users confirm that they are authenticating with the right institution.
    */
   url: string | null;
 }
-export namespace Institution {
-  export interface Features {
-    balances: Features.Balances;
+export namespace FinancialConnections {
+  export namespace Institution {
+    export interface Features {
+      balances: Features.Balances;
 
-    ownership: Features.Ownership;
+      ownership: Features.Ownership;
 
-    payment_method: Features.PaymentMethod;
+      payment_method: Features.PaymentMethod;
 
-    transactions: Features.Transactions;
-  }
-
-  export type Status = 'active' | 'degraded' | 'inactive';
-
-  export namespace Features {
-    export interface Balances {
-      /**
-       * Whether the given feature is supported by this institution.
-       */
-      supported: boolean;
+      transactions: Features.Transactions;
     }
 
-    export interface Ownership {
-      /**
-       * Whether the given feature is supported by this institution.
-       */
-      supported: boolean;
-    }
+    export type Status = 'active' | 'degraded' | 'inactive';
 
-    export interface PaymentMethod {
-      /**
-       * Whether the given feature is supported by this institution.
-       */
-      supported: boolean;
-    }
+    export namespace Features {
+      export interface Balances {
+        /**
+         * Whether the given feature is supported by this institution.
+         */
+        supported: boolean;
+      }
 
-    export interface Transactions {
-      /**
-       * Whether the given feature is supported by this institution.
-       */
-      supported: boolean;
+      export interface Ownership {
+        /**
+         * Whether the given feature is supported by this institution.
+         */
+        supported: boolean;
+      }
+
+      export interface PaymentMethod {
+        /**
+         * Whether the given feature is supported by this institution.
+         */
+        supported: boolean;
+      }
+
+      export interface Transactions {
+        /**
+         * Whether the given feature is supported by this institution.
+         */
+        supported: boolean;
+      }
     }
   }
 }

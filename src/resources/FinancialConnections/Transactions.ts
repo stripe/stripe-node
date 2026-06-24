@@ -77,9 +77,9 @@ export interface Transaction {
   /**
    * The status of the transaction.
    */
-  status: Transaction.Status;
+  status: FinancialConnections.Transaction.Status;
 
-  status_transitions: Transaction.StatusTransitions;
+  status_transitions: FinancialConnections.Transaction.StatusTransitions;
 
   /**
    * Time at which the transaction was transacted. Measured in seconds since the Unix epoch.
@@ -96,19 +96,21 @@ export interface Transaction {
    */
   updated: number;
 }
-export namespace Transaction {
-  export type Status = 'pending' | 'posted' | 'void';
+export namespace FinancialConnections {
+  export namespace Transaction {
+    export type Status = 'pending' | 'posted' | 'void';
 
-  export interface StatusTransitions {
-    /**
-     * Time at which this transaction posted. Measured in seconds since the Unix epoch.
-     */
-    posted_at: number | null;
+    export interface StatusTransitions {
+      /**
+       * Time at which this transaction posted. Measured in seconds since the Unix epoch.
+       */
+      posted_at: number | null;
 
-    /**
-     * Time at which this transaction was voided. Measured in seconds since the Unix epoch.
-     */
-    void_at: number | null;
+      /**
+       * Time at which this transaction was voided. Measured in seconds since the Unix epoch.
+       */
+      void_at: number | null;
+    }
   }
 }
 export namespace FinancialConnections {

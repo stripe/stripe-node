@@ -104,7 +104,7 @@ export interface OutboundPayment {
   /**
    * Delivery options to be used to send the OutboundPayment.
    */
-  delivery_options?: OutboundPayment.DeliveryOptions;
+  delivery_options?: V2.MoneyManagement.OutboundPayment.DeliveryOptions;
 
   /**
    * An arbitrary string attached to the OutboundPayment. Often useful for displaying to users.
@@ -120,7 +120,7 @@ export interface OutboundPayment {
   /**
    * The FinancialAccount that funds were pulled from.
    */
-  from: OutboundPayment.From;
+  from: V2.MoneyManagement.OutboundPayment.From;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -150,7 +150,7 @@ export interface OutboundPayment {
   /**
    * Details about the OutboundPayment notification settings for recipient.
    */
-  recipient_notification: OutboundPayment.RecipientNotification;
+  recipient_notification: V2.MoneyManagement.OutboundPayment.RecipientNotification;
 
   /**
    * The description that appears on the receiving end for an OutboundPayment (for example, bank statement for external bank transfer). It will default to `STRIPE` if not set on the account settings.
@@ -163,184 +163,188 @@ export interface OutboundPayment {
    * The status changes to `posted` once the OutboundPayment has been "confirmed" and funds have left the account, or to `failed` or `canceled`.
    * If an OutboundPayment fails to arrive at its payout method, its status will change to `returned`.
    */
-  status: OutboundPayment.Status;
+  status: V2.MoneyManagement.OutboundPayment.Status;
 
   /**
    * Status details for an OutboundPayment in a `failed` or `returned` state.
    */
-  status_details?: OutboundPayment.StatusDetails;
+  status_details?: V2.MoneyManagement.OutboundPayment.StatusDetails;
 
   /**
    * Hash containing timestamps of when the object transitioned to a particular status.
    */
-  status_transitions?: OutboundPayment.StatusTransitions;
+  status_transitions?: V2.MoneyManagement.OutboundPayment.StatusTransitions;
 
   /**
    * To which payout method the OutboundPayment was sent.
    */
-  to: OutboundPayment.To;
+  to: V2.MoneyManagement.OutboundPayment.To;
 
   /**
    * A unique identifier that can be used to track this OutboundPayment with recipient bank. Banks might call this a "reference number" or something similar.
    */
-  trace_id: OutboundPayment.TraceId;
+  trace_id: V2.MoneyManagement.OutboundPayment.TraceId;
 }
-export namespace OutboundPayment {
-  export interface DeliveryOptions {
-    /**
-     * Open Enum. Method for bank account.
-     */
-    bank_account?: DeliveryOptions.BankAccount;
-  }
+export namespace V2 {
+  export namespace MoneyManagement {
+    export namespace OutboundPayment {
+      export interface DeliveryOptions {
+        /**
+         * Open Enum. Method for bank account.
+         */
+        bank_account?: DeliveryOptions.BankAccount;
+      }
 
-  export interface From {
-    /**
-     * The monetary amount debited from the sender, only set on responses.
-     */
-    debited: V2Amount;
+      export interface From {
+        /**
+         * The monetary amount debited from the sender, only set on responses.
+         */
+        debited: V2Amount;
 
-    /**
-     * The FinancialAccount that funds were pulled from.
-     */
-    financial_account: string;
-  }
+        /**
+         * The FinancialAccount that funds were pulled from.
+         */
+        financial_account: string;
+      }
 
-  export interface RecipientNotification {
-    /**
-     * Closed Enum. Configuration option to enable or disable notifications to recipients.
-     * Do not send notifications when setting is NONE. Default to account setting when setting is CONFIGURED or not set.
-     */
-    setting: RecipientNotification.Setting;
-  }
+      export interface RecipientNotification {
+        /**
+         * Closed Enum. Configuration option to enable or disable notifications to recipients.
+         * Do not send notifications when setting is NONE. Default to account setting when setting is CONFIGURED or not set.
+         */
+        setting: RecipientNotification.Setting;
+      }
 
-  export type Status =
-    | 'canceled'
-    | 'failed'
-    | 'posted'
-    | 'processing'
-    | 'returned';
+      export type Status =
+        | 'canceled'
+        | 'failed'
+        | 'posted'
+        | 'processing'
+        | 'returned';
 
-  export interface StatusDetails {
-    /**
-     * The `failed` status reason.
-     */
-    failed?: StatusDetails.Failed;
+      export interface StatusDetails {
+        /**
+         * The `failed` status reason.
+         */
+        failed?: StatusDetails.Failed;
 
-    /**
-     * The `returned` status reason.
-     */
-    returned?: StatusDetails.Returned;
-  }
+        /**
+         * The `returned` status reason.
+         */
+        returned?: StatusDetails.Returned;
+      }
 
-  export interface StatusTransitions {
-    /**
-     * Timestamp describing when an OutboundPayment changed status to `canceled`.
-     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-     */
-    canceled_at?: string;
+      export interface StatusTransitions {
+        /**
+         * Timestamp describing when an OutboundPayment changed status to `canceled`.
+         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+         */
+        canceled_at?: string;
 
-    /**
-     * Timestamp describing when an OutboundPayment changed status to `failed`.
-     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-     */
-    failed_at?: string;
+        /**
+         * Timestamp describing when an OutboundPayment changed status to `failed`.
+         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+         */
+        failed_at?: string;
 
-    /**
-     * Timestamp describing when an OutboundPayment changed status to `posted`.
-     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-     */
-    posted_at?: string;
+        /**
+         * Timestamp describing when an OutboundPayment changed status to `posted`.
+         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+         */
+        posted_at?: string;
 
-    /**
-     * Timestamp describing when an OutboundPayment changed status to `returned`.
-     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-     */
-    returned_at?: string;
-  }
+        /**
+         * Timestamp describing when an OutboundPayment changed status to `returned`.
+         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+         */
+        returned_at?: string;
+      }
 
-  export interface To {
-    /**
-     * The monetary amount being credited to the destination.
-     */
-    credited: V2Amount;
+      export interface To {
+        /**
+         * The monetary amount being credited to the destination.
+         */
+        credited: V2Amount;
 
-    /**
-     * The payout method which the OutboundPayment uses to send payout.
-     */
-    payout_method: string;
+        /**
+         * The payout method which the OutboundPayment uses to send payout.
+         */
+        payout_method: string;
 
-    /**
-     * To which account the OutboundPayment is sent.
-     */
-    recipient: string;
-  }
+        /**
+         * To which account the OutboundPayment is sent.
+         */
+        recipient: string;
+      }
 
-  export interface TraceId {
-    /**
-     * Possible values are `pending`, `supported`, and `unsupported`. Initially set to `pending`, it changes to
-     * `supported` when the recipient bank provides a trace ID, or `unsupported` if the recipient bank doesn't support it.
-     * Note that this status may not align with the OutboundPayment or OutboundTransfer status and can remain `pending`
-     * even after the payment or transfer is posted.
-     */
-    status: TraceId.Status;
+      export interface TraceId {
+        /**
+         * Possible values are `pending`, `supported`, and `unsupported`. Initially set to `pending`, it changes to
+         * `supported` when the recipient bank provides a trace ID, or `unsupported` if the recipient bank doesn't support it.
+         * Note that this status may not align with the OutboundPayment or OutboundTransfer status and can remain `pending`
+         * even after the payment or transfer is posted.
+         */
+        status: TraceId.Status;
 
-    /**
-     * The trace ID value if `trace_id.status` is `supported`, otherwise empty.
-     */
-    value?: string;
-  }
+        /**
+         * The trace ID value if `trace_id.status` is `supported`, otherwise empty.
+         */
+        value?: string;
+      }
 
-  export namespace DeliveryOptions {
-    export type BankAccount = 'automatic' | 'local' | 'wire';
-  }
+      export namespace DeliveryOptions {
+        export type BankAccount = 'automatic' | 'local' | 'wire';
+      }
 
-  export namespace RecipientNotification {
-    export type Setting = 'configured' | 'none';
-  }
+      export namespace RecipientNotification {
+        export type Setting = 'configured' | 'none';
+      }
 
-  export namespace StatusDetails {
-    export interface Failed {
-      /**
-       * Open Enum. The `failed` status reason.
-       */
-      reason: Failed.Reason;
+      export namespace StatusDetails {
+        export interface Failed {
+          /**
+           * Open Enum. The `failed` status reason.
+           */
+          reason: Failed.Reason;
+        }
+
+        export interface Returned {
+          /**
+           * Open Enum. The `returned` status reason.
+           */
+          reason: Returned.Reason;
+        }
+
+        export namespace Failed {
+          export type Reason =
+            | 'payout_method_declined'
+            | 'payout_method_does_not_exist'
+            | 'payout_method_expired'
+            | 'payout_method_unsupported'
+            | 'payout_method_usage_frequency_limit_exceeded'
+            | 'unknown_failure';
+        }
+
+        export namespace Returned {
+          export type Reason =
+            | 'payout_method_canceled_by_customer'
+            | 'payout_method_closed'
+            | 'payout_method_currency_unsupported'
+            | 'payout_method_does_not_exist'
+            | 'payout_method_holder_address_incorrect'
+            | 'payout_method_holder_details_incorrect'
+            | 'payout_method_holder_name_incorrect'
+            | 'payout_method_invalid_account_number'
+            | 'payout_method_restricted'
+            | 'recalled'
+            | 'unknown_failure';
+        }
+      }
+
+      export namespace TraceId {
+        export type Status = 'pending' | 'supported' | 'unsupported';
+      }
     }
-
-    export interface Returned {
-      /**
-       * Open Enum. The `returned` status reason.
-       */
-      reason: Returned.Reason;
-    }
-
-    export namespace Failed {
-      export type Reason =
-        | 'payout_method_declined'
-        | 'payout_method_does_not_exist'
-        | 'payout_method_expired'
-        | 'payout_method_unsupported'
-        | 'payout_method_usage_frequency_limit_exceeded'
-        | 'unknown_failure';
-    }
-
-    export namespace Returned {
-      export type Reason =
-        | 'payout_method_canceled_by_customer'
-        | 'payout_method_closed'
-        | 'payout_method_currency_unsupported'
-        | 'payout_method_does_not_exist'
-        | 'payout_method_holder_address_incorrect'
-        | 'payout_method_holder_details_incorrect'
-        | 'payout_method_holder_name_incorrect'
-        | 'payout_method_invalid_account_number'
-        | 'payout_method_restricted'
-        | 'recalled'
-        | 'unknown_failure';
-    }
-  }
-
-  export namespace TraceId {
-    export type Status = 'pending' | 'supported' | 'unsupported';
   }
 }
 export namespace V2 {

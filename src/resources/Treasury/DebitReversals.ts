@@ -92,7 +92,7 @@ export interface DebitReversal {
   /**
    * Other flows linked to a DebitReversal.
    */
-  linked_flows: DebitReversal.LinkedFlows | null;
+  linked_flows: Treasury.DebitReversal.LinkedFlows | null;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -107,7 +107,7 @@ export interface DebitReversal {
   /**
    * The rails used to reverse the funds.
    */
-  network: DebitReversal.Network;
+  network: Treasury.DebitReversal.Network;
 
   /**
    * The ReceivedDebit being reversed.
@@ -117,32 +117,34 @@ export interface DebitReversal {
   /**
    * Status of the DebitReversal
    */
-  status: DebitReversal.Status;
+  status: Treasury.DebitReversal.Status;
 
-  status_transitions: DebitReversal.StatusTransitions;
+  status_transitions: Treasury.DebitReversal.StatusTransitions;
 
   /**
    * The Transaction associated with this object.
    */
   transaction: string | Transaction | null;
 }
-export namespace DebitReversal {
-  export interface LinkedFlows {
-    /**
-     * Set if there is an Issuing dispute associated with the DebitReversal.
-     */
-    issuing_dispute: string | null;
-  }
+export namespace Treasury {
+  export namespace DebitReversal {
+    export interface LinkedFlows {
+      /**
+       * Set if there is an Issuing dispute associated with the DebitReversal.
+       */
+      issuing_dispute: string | null;
+    }
 
-  export type Network = 'ach' | 'card';
+    export type Network = 'ach' | 'card';
 
-  export type Status = 'failed' | 'processing' | 'succeeded';
+    export type Status = 'failed' | 'processing' | 'succeeded';
 
-  export interface StatusTransitions {
-    /**
-     * Timestamp describing when the DebitReversal changed status to `completed`.
-     */
-    completed_at: number | null;
+    export interface StatusTransitions {
+      /**
+       * Timestamp describing when the DebitReversal changed status to `completed`.
+       */
+      completed_at: number | null;
+    }
   }
 }
 export namespace Treasury {

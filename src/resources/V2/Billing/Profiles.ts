@@ -112,10 +112,14 @@ export interface Profile {
   /**
    * The current status of the billing profile.
    */
-  status: Profile.Status;
+  status: V2.Billing.Profile.Status;
 }
-export namespace Profile {
-  export type Status = 'active' | 'inactive';
+export namespace V2 {
+  export namespace Billing {
+    export namespace Profile {
+      export type Status = 'active' | 'inactive';
+    }
+  }
 }
 export namespace V2 {
   export namespace Billing {

@@ -60,7 +60,7 @@ export interface ScheduledQueryRun {
    */
   data_load_time: number;
 
-  error?: ScheduledQueryRun.Error;
+  error?: Sigma.ScheduledQueryRun.Error;
 
   /**
    * The file object representing the results of the query.
@@ -92,12 +92,14 @@ export interface ScheduledQueryRun {
    */
   title: string;
 }
-export namespace ScheduledQueryRun {
-  export interface Error {
-    /**
-     * Information about the run failure.
-     */
-    message: string;
+export namespace Sigma {
+  export namespace ScheduledQueryRun {
+    export interface Error {
+      /**
+       * Information about the run failure.
+       */
+      message: string;
+    }
   }
 }
 export namespace Sigma {
