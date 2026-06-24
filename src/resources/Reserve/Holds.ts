@@ -90,6 +90,11 @@ export interface Hold {
    */
   reason: Hold.Reason;
 
+  /**
+   * List of ReserveReleases and the amounts released from this ReserveHold.
+   */
+  release_details?: Array<Hold.ReleaseDetail>;
+
   release_schedule: Hold.ReleaseSchedule;
 
   /**
@@ -111,6 +116,18 @@ export namespace Hold {
   export type CreatedBy = 'application' | 'stripe';
 
   export type Reason = 'charge' | 'standalone';
+
+  export interface ReleaseDetail {
+    /**
+     * The amount released by the ReserveRelease from this ReserveHold. A positive integer representing how much is released in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+     */
+    amount: number;
+
+    /**
+     * The ReserveRelease which released funds from this ReserveHold (e.g., resrel_123).
+     */
+    reserve_release: string;
+  }
 
   export interface ReleaseSchedule {
     /**

@@ -184,6 +184,11 @@ export interface Source {
 
   receiver?: Source.Receiver;
 
+  /**
+   * Redaction status of this source. If not null, this source is associated to a redaction job.
+   */
+  redaction?: Source.Redaction | null;
+
   redirect?: Source.Redirect;
 
   sepa_credit_transfer?: Source.SepaCreditTransfer;
@@ -611,6 +616,13 @@ export namespace Source {
     refund_attributes_status: string;
   }
 
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
+  }
+
   export interface Redirect {
     /**
      * The failure reason for the redirect, either `user_abort` (the customer aborted or dropped out of the redirect flow), `declined` (the authentication failed or the transaction was declined), or `processing_error` (the redirect failed due to a technical error). Present only if the redirect status is `failed`.
@@ -785,6 +797,10 @@ export namespace Source {
     qr_code_url?: string | null;
 
     statement_descriptor?: string;
+  }
+
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
   }
 
   export namespace SourceOrder {

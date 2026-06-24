@@ -530,6 +530,11 @@ export interface PaymentIntent {
   receipt_email: string | null;
 
   /**
+   * Redaction status of this PaymentIntent. If the PaymentIntent isn't redacted, this field is null.
+   */
+  redaction?: PaymentIntent.Redaction | null;
+
+  /**
    * ID of the review associated with this PaymentIntent, if any.
    */
   review: string | Review | null;
@@ -1035,6 +1040,8 @@ export namespace PaymentIntent {
 
     stripe_balance?: PaymentMethodOptions.StripeBalance;
 
+    sunbit?: PaymentMethodOptions.Sunbit;
+
     swish?: PaymentMethodOptions.Swish;
 
     twint?: PaymentMethodOptions.Twint;
@@ -1067,6 +1074,13 @@ export namespace PaymentIntent {
      * Type of the payment method for which payment is in `processing` state, one of `card`.
      */
     type: 'card';
+  }
+
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
   }
 
   export type SecretKeyConfirmation = 'optional' | 'required';
@@ -1259,6 +1273,7 @@ export namespace PaymentIntent {
       | 'alipay_upgrade_required'
       | 'amount_too_large'
       | 'amount_too_small'
+      | 'anomalous_money_movement_request'
       | 'api_key_expired'
       | 'application_fees_not_allowed'
       | 'approval_required'
@@ -1298,6 +1313,10 @@ export namespace PaymentIntent {
       | 'debit_not_authorized'
       | 'email_invalid'
       | 'expired_card'
+      | 'failed_tax_calculation'
+      | 'financial_account_balance_does_not_support_currency'
+      | 'financial_account_capability_not_enabled'
+      | 'financial_account_capability_restricted'
       | 'financial_connections_account_inactive'
       | 'financial_connections_account_pending_account_numbers'
       | 'financial_connections_account_unavailable_account_numbers'
@@ -4378,6 +4397,17 @@ export namespace PaymentIntent {
        * Controls when the funds will be captured from the customer's account.
        */
       capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Satispay.SetupFutureUsage;
     }
 
     export interface Scalapay {
@@ -4449,6 +4479,24 @@ export namespace PaymentIntent {
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
       setup_future_usage?: StripeBalance.SetupFutureUsage;
+    }
+
+    export interface Sunbit {
+      /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: 'manual';
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
     }
 
     export interface Swish {
@@ -4529,7 +4577,7 @@ export namespace PaymentIntent {
 
     export interface WechatPay {
       /**
-       * The app ID registered with WeChat Pay. Only required when client is ios or android.
+       * The app ID registered with WeChat Pay. Only required when client is ios, android, or mini_program.
        */
       app_id: string | null;
 
@@ -5114,6 +5162,10 @@ export namespace PaymentIntent {
       export type SetupFutureUsage = 'none' | 'off_session';
     }
 
+    export namespace Satispay {
+      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+    }
+
     export namespace SepaDebit {
       export interface MandateOptions {
         /**
@@ -5257,6 +5309,10 @@ export namespace PaymentIntent {
         completes_at: number | null;
       }
     }
+  }
+
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
   }
 
   export namespace TransferData {
@@ -5984,7 +6040,7 @@ export namespace PaymentIntentCreateParams {
     stripe_balance?: PaymentMethodData.StripeBalance;
 
     /**
-     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     * If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
      */
     sunbit?: PaymentMethodData.Sunbit;
 
@@ -6304,6 +6360,11 @@ export namespace PaymentIntentCreateParams {
      * If this is a `stripe_balance` PaymentMethod, this sub-hash contains details about the Stripe Balance payment method options.
      */
     stripe_balance?: Emptyable<PaymentMethodOptions.StripeBalance>;
+
+    /**
+     * If this is a `sunbit` PaymentMethod, this sub-hash contains details about the Sunbit payment method options.
+     */
+    sunbit?: Emptyable<PaymentMethodOptions.Sunbit>;
 
     /**
      * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
@@ -10158,6 +10219,17 @@ export namespace PaymentIntentCreateParams {
        * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
        */
       capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Satispay.SetupFutureUsage>;
     }
 
     export interface Scalapay {
@@ -10244,6 +10316,28 @@ export namespace PaymentIntentCreateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Emptyable<StripeBalance.SetupFutureUsage>;
+    }
+
+    export interface Sunbit {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
     }
 
     export interface Swish {
@@ -10337,7 +10431,7 @@ export namespace PaymentIntentCreateParams {
 
     export interface WechatPay {
       /**
-       * The app ID registered with WeChat Pay. Only required when client is ios or android.
+       * The app ID registered with WeChat Pay. Only required when client is ios, android, or mini_program.
        */
       app_id?: string;
 
@@ -12293,6 +12387,10 @@ export namespace PaymentIntentCreateParams {
       export type SetupFutureUsage = 'none' | 'off_session';
     }
 
+    export namespace Satispay {
+      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+    }
+
     export namespace SepaDebit {
       export interface MandateOptions {
         /**
@@ -13111,7 +13209,7 @@ export namespace PaymentIntentUpdateParams {
     stripe_balance?: PaymentMethodData.StripeBalance;
 
     /**
-     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     * If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
      */
     sunbit?: PaymentMethodData.Sunbit;
 
@@ -13431,6 +13529,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is a `stripe_balance` PaymentMethod, this sub-hash contains details about the Stripe Balance payment method options.
      */
     stripe_balance?: Emptyable<PaymentMethodOptions.StripeBalance>;
+
+    /**
+     * If this is a `sunbit` PaymentMethod, this sub-hash contains details about the Sunbit payment method options.
+     */
+    sunbit?: Emptyable<PaymentMethodOptions.Sunbit>;
 
     /**
      * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
@@ -17244,6 +17347,17 @@ export namespace PaymentIntentUpdateParams {
        * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
        */
       capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Satispay.SetupFutureUsage>;
     }
 
     export interface Scalapay {
@@ -17330,6 +17444,28 @@ export namespace PaymentIntentUpdateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Emptyable<StripeBalance.SetupFutureUsage>;
+    }
+
+    export interface Sunbit {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
     }
 
     export interface Swish {
@@ -17423,7 +17559,7 @@ export namespace PaymentIntentUpdateParams {
 
     export interface WechatPay {
       /**
-       * The app ID registered with WeChat Pay. Only required when client is ios or android.
+       * The app ID registered with WeChat Pay. Only required when client is ios, android, or mini_program.
        */
       app_id?: string;
 
@@ -19377,6 +19513,10 @@ export namespace PaymentIntentUpdateParams {
 
     export namespace RevolutPay {
       export type SetupFutureUsage = 'none' | 'off_session';
+    }
+
+    export namespace Satispay {
+      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
     }
 
     export namespace SepaDebit {
@@ -22423,7 +22563,7 @@ export namespace PaymentIntentConfirmParams {
     stripe_balance?: PaymentMethodData.StripeBalance;
 
     /**
-     * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+     * If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
      */
     sunbit?: PaymentMethodData.Sunbit;
 
@@ -22743,6 +22883,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `stripe_balance` PaymentMethod, this sub-hash contains details about the Stripe Balance payment method options.
      */
     stripe_balance?: Emptyable<PaymentMethodOptions.StripeBalance>;
+
+    /**
+     * If this is a `sunbit` PaymentMethod, this sub-hash contains details about the Sunbit payment method options.
+     */
+    sunbit?: Emptyable<PaymentMethodOptions.Sunbit>;
 
     /**
      * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
@@ -26555,6 +26700,17 @@ export namespace PaymentIntentConfirmParams {
        * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
        */
       capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Satispay.SetupFutureUsage>;
     }
 
     export interface Scalapay {
@@ -26641,6 +26797,28 @@ export namespace PaymentIntentConfirmParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: Emptyable<StripeBalance.SetupFutureUsage>;
+    }
+
+    export interface Sunbit {
+      /**
+       * Controls when the funds are captured from the customer's account.
+       *
+       * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+       *
+       * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+       */
+      capture_method?: Emptyable<'manual'>;
+
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: 'none';
     }
 
     export interface Swish {
@@ -26734,7 +26912,7 @@ export namespace PaymentIntentConfirmParams {
 
     export interface WechatPay {
       /**
-       * The app ID registered with WeChat Pay. Only required when client is ios or android.
+       * The app ID registered with WeChat Pay. Only required when client is ios, android, or mini_program.
        */
       app_id?: string;
 
@@ -28690,6 +28868,10 @@ export namespace PaymentIntentConfirmParams {
       export type SetupFutureUsage = 'none' | 'off_session';
     }
 
+    export namespace Satispay {
+      export type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+    }
+
     export namespace SepaDebit {
       export interface MandateOptions {
         /**
@@ -29535,7 +29717,7 @@ export interface PaymentIntentListAmountDetailsLineItemsParams
 }
 export interface PaymentIntentSearchParams {
   /**
-   * The search query string. See [search query language](https://docs.stripe.com/search#search-query-language) and the list of supported [query fields for payment intents](https://docs.stripe.com/search#query-fields-for-payment-intents).
+   * The search query string. See [search query language](https://docs.stripe.com/search#search-query-language) and the list of supported [query fields for payment intents](https://docs.stripe.com/search#query-fields-for-paymentintents).
    */
   query: string;
 

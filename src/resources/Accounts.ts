@@ -3172,7 +3172,7 @@ export namespace AccountCreateParams {
     company_license?: Documents.CompanyLicense;
 
     /**
-     * One or more documents showing the company's Memorandum of Association.
+     * One or more documents showing the company's governing document (for example, a memorandum of association, constitution, or articles of association).
      */
     company_memorandum_of_association?: Documents.CompanyMemorandumOfAssociation;
 
@@ -5492,7 +5492,7 @@ export namespace AccountUpdateParams {
     company_license?: Documents.CompanyLicense;
 
     /**
-     * One or more documents showing the company's Memorandum of Association.
+     * One or more documents showing the company's governing document (for example, a memorandum of association, constitution, or articles of association).
      */
     company_memorandum_of_association?: Documents.CompanyMemorandumOfAssociation;
 

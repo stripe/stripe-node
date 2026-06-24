@@ -264,6 +264,11 @@ export interface PaymentMethod {
 
   rechnung?: PaymentMethod.Rechnung;
 
+  /**
+   * Redaction status of this PaymentMethod. If the PaymentMethod is not redacted, this field will be null.
+   */
+  redaction?: PaymentMethod.Redaction | null;
+
   revolut_pay?: PaymentMethod.RevolutPay;
 
   samsung_pay?: PaymentMethod.SamsungPay;
@@ -414,9 +419,19 @@ export namespace PaymentMethod {
     tax_id: string | null;
   }
 
-  export interface Bizum {}
+  export interface Bizum {
+    /**
+     * A unique identifier for the buyer as determined by the local payment processor.
+     */
+    buyer_id?: string | null;
+  }
 
-  export interface Blik {}
+  export interface Blik {
+    /**
+     * A unique and immutable identifier assigned by BLIK to every buyer.
+     */
+    buyer_id?: string | null;
+  }
 
   export interface Boleto {
     /**
@@ -903,7 +918,12 @@ export namespace PaymentMethod {
     pay_id: string | null;
   }
 
-  export interface Pix {}
+  export interface Pix {
+    /**
+     * Uniquely identifies this particular Pix account. You can use this attribute to check whether two Pix accounts are the same.
+     */
+    fingerprint?: string | null;
+  }
 
   export interface Promptpay {}
 
@@ -918,6 +938,13 @@ export namespace PaymentMethod {
 
   export interface Rechnung {
     dob?: Rechnung.Dob;
+  }
+
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
   }
 
   export interface RevolutPay {}
@@ -1787,6 +1814,10 @@ export namespace PaymentMethod {
     }
   }
 
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
+  }
+
   export namespace SepaDebit {
     export interface GeneratedFrom {
       /**
@@ -2183,7 +2214,7 @@ export interface PaymentMethodCreateParams {
   stripe_balance?: PaymentMethodCreateParams.StripeBalance;
 
   /**
-   * If this is a Sunbit PaymentMethod, this hash contains details about the Sunbit payment method.
+   * If this is a `sunbit` PaymentMethod, this hash contains details about the Sunbit payment method.
    */
   sunbit?: PaymentMethodCreateParams.Sunbit;
 

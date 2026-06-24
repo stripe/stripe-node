@@ -414,6 +414,11 @@ export interface Transaction {
   purchase_details?: Transaction.PurchaseDetails | null;
 
   /**
+   * Redaction status of this transaction. If the transaction is not redacted, this field will be null.
+   */
+  redaction?: Transaction.Redaction | null;
+
+  /**
    * The ID of the [settlement](https://docs.stripe.com/api/issuing/settlements) to which this transaction belongs.
    */
   settlement?: string | Settlement | null;
@@ -555,6 +560,13 @@ export namespace Transaction {
      * A merchant-specific order number.
      */
     reference: string | null;
+  }
+
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
   }
 
   export interface Treasury {
@@ -791,6 +803,10 @@ export namespace Transaction {
         stopover_allowed: boolean | null;
       }
     }
+  }
+
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
   }
 }
 export namespace Issuing {

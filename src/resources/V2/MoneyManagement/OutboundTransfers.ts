@@ -151,7 +151,7 @@ export interface OutboundTransfer {
   status: OutboundTransfer.Status;
 
   /**
-   * Status details for an OutboundTransfer in a `failed` or `returned` state.
+   * Status details for an OutboundTransfer in a `processing`, `failed`, or `returned` state.
    */
   status_details?: OutboundTransfer.StatusDetails;
 
@@ -202,6 +202,11 @@ export namespace OutboundTransfer {
      * The `failed` status reason.
      */
     failed?: StatusDetails.Failed;
+
+    /**
+     * The `processing` status details.
+     */
+    processing?: StatusDetails.Processing;
 
     /**
      * The `returned` status reason.
@@ -274,6 +279,13 @@ export namespace OutboundTransfer {
       reason: Failed.Reason;
     }
 
+    export interface Processing {
+      /**
+       * Open Enum. The `processing` status reason.
+       */
+      reason: 'under_review';
+    }
+
     export interface Returned {
       /**
        * Open Enum. The `returned` status reason.
@@ -283,12 +295,14 @@ export namespace OutboundTransfer {
 
     export namespace Failed {
       export type Reason =
+        | 'fx_rate_drift_exceeded_after_review'
         | 'payout_method_amount_limit_exceeded'
         | 'payout_method_declined'
         | 'payout_method_does_not_exist'
         | 'payout_method_expired'
         | 'payout_method_unsupported'
         | 'payout_method_usage_frequency_limit_exceeded'
+        | 'review_rejected'
         | 'unknown_failure';
     }
 

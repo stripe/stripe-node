@@ -328,7 +328,7 @@ export namespace Account {
     | 'customer'
     | 'merchant'
     | 'recipient'
-    | 'storer';
+    | 'money_manager';
 
   export interface Configuration {
     /**
@@ -342,14 +342,14 @@ export namespace Account {
     merchant?: Configuration.Merchant;
 
     /**
+     * The Money Manager Configuration allows the Account to store and move funds using FinancialAccounts.
+     */
+    money_manager?: Configuration.MoneyManager;
+
+    /**
      * The Recipient Configuration allows the Account to receive funds. Utilize this configuration if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
      */
     recipient?: Configuration.Recipient;
-
-    /**
-     * The Storer Configuration allows the Account to store and move funds using stored-value FinancialAccounts.
-     */
-    storer?: Configuration.Storer;
   }
 
   export type Dashboard = 'express' | 'full' | 'none';
@@ -532,6 +532,18 @@ export namespace Account {
       support?: Merchant.Support;
     }
 
+    export interface MoneyManager {
+      /**
+       * Indicates whether the money manager configuration is active. You cannot deactivate (or reactivate) the money manager configuration by updating this property.
+       */
+      applied: boolean;
+
+      /**
+       * Capabilities that have been requested on the Money Manager Configuration.
+       */
+      capabilities?: MoneyManager.Capabilities;
+    }
+
     export interface Recipient {
       /**
        * Indicates whether the recipient configuration is active. You can deactivate or reactivate the recipient configuration by updating this property. Deactivating the configuration by setting this value to false  unrequest all capabilities within the configuration. It will not delete any of the configuration's other properties.
@@ -547,18 +559,6 @@ export namespace Account {
        * The payout method to be used as a default outbound destination. This will allow the PayoutMethod to be omitted on OutboundPayments made through the dashboard or APIs.
        */
       default_outbound_destination?: Recipient.DefaultOutboundDestination;
-    }
-
-    export interface Storer {
-      /**
-       * Indicates whether the storer configuration is active. You cannot deactivate (or reactivate) the storer configuration by updating this property.
-       */
-      applied: boolean;
-
-      /**
-       * Capabilities that have been requested on the Storer Configuration.
-       */
-      capabilities?: Storer.Capabilities;
     }
 
     export namespace Customer {
@@ -1028,6 +1028,11 @@ export namespace Account {
          * Capabilities that enable the merchant to manage their Stripe Balance (/v1/balance).
          */
         stripe_balance?: Capabilities.StripeBalance;
+
+        /**
+         * Allow the merchant to process Sunbit payments.
+         */
+        sunbit_payments?: Capabilities.SunbitPayments;
 
         /**
          * Allow the merchant to process Swish payments.
@@ -1610,6 +1615,18 @@ export namespace Account {
            * Enables this Account to complete payouts from their Stripe Balance (/v1/balance).
            */
           payouts?: StripeBalance.Payouts;
+        }
+
+        export interface SunbitPayments {
+          /**
+           * The status of the Capability.
+           */
+          status: SunbitPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<SunbitPayments.StatusDetail>;
         }
 
         export interface SwishPayments {
@@ -3150,6 +3167,42 @@ export namespace Account {
           }
         }
 
+        export namespace SunbitPayments {
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
         export namespace SwishPayments {
           export type Status =
             | 'active'
@@ -3424,6 +3477,1038 @@ export namespace Account {
            * Town or district.
            */
           town?: string;
+        }
+      }
+    }
+
+    export namespace MoneyManager {
+      export interface Capabilities {
+        /**
+         * Can send or receive business storage-type funds on Stripe.
+         */
+        business_storage?: Capabilities.BusinessStorage;
+
+        /**
+         * Hash containing capabilities related to InboundTransfers.
+         */
+        inbound_transfers?: Capabilities.InboundTransfers;
+
+        /**
+         * Hash containing capabilities related to [OutboundPayments](https://docs.stripe.com/api/treasury/outbound_payments?api-version=preview).
+         */
+        outbound_payments?: Capabilities.OutboundPayments;
+
+        /**
+         * Hash containing capabilities related to [OutboundTransfers](https://docs.stripe.com/api/treasury/outbound_transfers?api-version=preview).
+         */
+        outbound_transfers?: Capabilities.OutboundTransfers;
+
+        /**
+         * Hash containing capabilities related to ReceivedCredits.
+         */
+        received_credits?: Capabilities.ReceivedCredits;
+
+        /**
+         * Hash containing capabilities related to ReceivedDebits.
+         */
+        received_debits?: Capabilities.ReceivedDebits;
+      }
+
+      export namespace Capabilities {
+        export interface BusinessStorage {
+          /**
+           * Can receive business storage-type funds on Stripe.
+           */
+          inbound?: BusinessStorage.Inbound;
+
+          /**
+           * Can send business storage-type funds on Stripe.
+           */
+          outbound?: BusinessStorage.Outbound;
+        }
+
+        export interface InboundTransfers {
+          /**
+           * Can pull funds into a FinancialAccount from an external bank account owned by the user.
+           */
+          bank_accounts?: InboundTransfers.BankAccounts;
+        }
+
+        export interface OutboundPayments {
+          /**
+           * Can send funds from a FinancialAccount to a bank account owned by a different entity.
+           */
+          bank_accounts?: OutboundPayments.BankAccounts;
+
+          /**
+           * Can send funds from a FinancialAccount to a debit card owned by a different entity.
+           */
+          cards?: OutboundPayments.Cards;
+
+          /**
+           * Can send funds from a FinancialAccount to a FinancialAccount owned by a different entity.
+           */
+          financial_accounts?: OutboundPayments.FinancialAccounts;
+        }
+
+        export interface OutboundTransfers {
+          /**
+           * Can send funds from a FinancialAccount to a bank account belonging to the same user.
+           */
+          bank_accounts?: OutboundTransfers.BankAccounts;
+
+          /**
+           * Can send funds from a FinancialAccount to another FinancialAccount belonging to the same user.
+           */
+          financial_accounts?: OutboundTransfers.FinancialAccounts;
+        }
+
+        export interface ReceivedCredits {
+          /**
+           * Can receive credits to a bank-account like financial address to credit a FinancialAccount.
+           */
+          bank_accounts?: ReceivedCredits.BankAccounts;
+        }
+
+        export interface ReceivedDebits {
+          /**
+           * Can receive debits to a FinancialAccount from a bank account.
+           */
+          bank_accounts?: ReceivedDebits.BankAccounts;
+        }
+
+        export namespace BusinessStorage {
+          export interface Inbound {
+            /**
+             * Can receive business storage-type funds on Stripe in AUD.
+             */
+            aud?: Inbound.Aud;
+
+            /**
+             * Can receive business storage-type funds on Stripe in CAD.
+             */
+            cad?: Inbound.Cad;
+
+            /**
+             * Can receive business storage-type funds on Stripe in EUR.
+             */
+            eur?: Inbound.Eur;
+
+            /**
+             * Can receive business storage-type funds on Stripe in GBP.
+             */
+            gbp?: Inbound.Gbp;
+
+            /**
+             * Can receive business storage-type funds on Stripe in USD.
+             */
+            usd?: Inbound.Usd;
+          }
+
+          export interface Outbound {
+            /**
+             * Can send business storage-type funds on Stripe in AUD.
+             */
+            aud?: Outbound.Aud;
+
+            /**
+             * Can send business storage-type funds on Stripe in CAD.
+             */
+            cad?: Outbound.Cad;
+
+            /**
+             * Can send business storage-type funds on Stripe in EUR.
+             */
+            eur?: Outbound.Eur;
+
+            /**
+             * Can send business storage-type funds on Stripe in GBP.
+             */
+            gbp?: Outbound.Gbp;
+
+            /**
+             * Can send business storage-type funds on Stripe in USD.
+             */
+            usd?: Outbound.Usd;
+          }
+
+          export namespace Inbound {
+            export interface Aud {
+              /**
+               * The status of the Capability.
+               */
+              status: Aud.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Aud.StatusDetail>;
+            }
+
+            export interface Cad {
+              /**
+               * The status of the Capability.
+               */
+              status: Cad.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Cad.StatusDetail>;
+            }
+
+            export interface Eur {
+              /**
+               * The status of the Capability.
+               */
+              status: Eur.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Eur.StatusDetail>;
+            }
+
+            export interface Gbp {
+              /**
+               * The status of the Capability.
+               */
+              status: Gbp.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Gbp.StatusDetail>;
+            }
+
+            export interface Usd {
+              /**
+               * The status of the Capability.
+               */
+              status: Usd.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Usd.StatusDetail>;
+            }
+
+            export namespace Aud {
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Cad {
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Eur {
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Gbp {
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Usd {
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+          }
+
+          export namespace Outbound {
+            export interface Aud {
+              /**
+               * The status of the Capability.
+               */
+              status: Aud.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Aud.StatusDetail>;
+            }
+
+            export interface Cad {
+              /**
+               * The status of the Capability.
+               */
+              status: Cad.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Cad.StatusDetail>;
+            }
+
+            export interface Eur {
+              /**
+               * The status of the Capability.
+               */
+              status: Eur.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Eur.StatusDetail>;
+            }
+
+            export interface Gbp {
+              /**
+               * The status of the Capability.
+               */
+              status: Gbp.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Gbp.StatusDetail>;
+            }
+
+            export interface Usd {
+              /**
+               * The status of the Capability.
+               */
+              status: Usd.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Usd.StatusDetail>;
+            }
+
+            export namespace Aud {
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Cad {
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Eur {
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Gbp {
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Usd {
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+          }
+        }
+
+        export namespace InboundTransfers {
+          export interface BankAccounts {
+            /**
+             * The status of the Capability.
+             */
+            status: BankAccounts.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<BankAccounts.StatusDetail>;
+          }
+
+          export namespace BankAccounts {
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+        }
+
+        export namespace OutboundPayments {
+          export interface BankAccounts {
+            /**
+             * The status of the Capability.
+             */
+            status: BankAccounts.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<BankAccounts.StatusDetail>;
+          }
+
+          export interface Cards {
+            /**
+             * The status of the Capability.
+             */
+            status: Cards.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<Cards.StatusDetail>;
+          }
+
+          export interface FinancialAccounts {
+            /**
+             * The status of the Capability.
+             */
+            status: FinancialAccounts.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<FinancialAccounts.StatusDetail>;
+          }
+
+          export namespace BankAccounts {
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace Cards {
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace FinancialAccounts {
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+        }
+
+        export namespace OutboundTransfers {
+          export interface BankAccounts {
+            /**
+             * The status of the Capability.
+             */
+            status: BankAccounts.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<BankAccounts.StatusDetail>;
+          }
+
+          export interface FinancialAccounts {
+            /**
+             * The status of the Capability.
+             */
+            status: FinancialAccounts.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<FinancialAccounts.StatusDetail>;
+          }
+
+          export namespace BankAccounts {
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+
+          export namespace FinancialAccounts {
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+        }
+
+        export namespace ReceivedCredits {
+          export interface BankAccounts {
+            /**
+             * The status of the Capability.
+             */
+            status: BankAccounts.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<BankAccounts.StatusDetail>;
+          }
+
+          export namespace BankAccounts {
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
+        }
+
+        export namespace ReceivedDebits {
+          export interface BankAccounts {
+            /**
+             * The status of the Capability.
+             */
+            status: BankAccounts.Status;
+
+            /**
+             * Additional details about the capability's status. This value is empty when `status` is `active`.
+             */
+            status_details: Array<BankAccounts.StatusDetail>;
+          }
+
+          export namespace BankAccounts {
+            export type Status =
+              | 'active'
+              | 'pending'
+              | 'restricted'
+              | 'unsupported';
+
+            export interface StatusDetail {
+              /**
+               * Machine-readable code explaining the reason for the Capability to be in its current status.
+               */
+              code: StatusDetail.Code;
+
+              /**
+               * Machine-readable code explaining how to make the Capability active.
+               */
+              resolution: StatusDetail.Resolution;
+            }
+
+            export namespace StatusDetail {
+              export type Code =
+                | 'determining_status'
+                | 'requirements_past_due'
+                | 'requirements_pending_verification'
+                | 'restricted_other'
+                | 'unsupported_business'
+                | 'unsupported_country'
+                | 'unsupported_entity_type';
+
+              export type Resolution =
+                | 'contact_stripe'
+                | 'no_resolution'
+                | 'provide_info';
+            }
+          }
         }
       }
     }
@@ -3858,587 +4943,6 @@ export namespace Account {
           | 'za_bank_account';
       }
     }
-
-    export namespace Storer {
-      export interface Capabilities {
-        /**
-         * Can provision a financial address to credit/debit a FinancialAccount.
-         */
-        financial_addresses?: Capabilities.FinancialAddresses;
-
-        /**
-         * Can hold storage-type funds on Stripe.
-         */
-        holds_currencies?: Capabilities.HoldsCurrencies;
-
-        /**
-         * Hash containing capabilities related to InboundTransfers.
-         */
-        inbound_transfers?: Capabilities.InboundTransfers;
-
-        /**
-         * Hash containing capabilities related to [OutboundPayments](https://docs.stripe.com/api/treasury/outbound_payments?api-version=preview).
-         */
-        outbound_payments?: Capabilities.OutboundPayments;
-
-        /**
-         * Hash containing capabilities related to [OutboundTransfers](https://docs.stripe.com/api/treasury/outbound_transfers?api-version=preview).
-         */
-        outbound_transfers?: Capabilities.OutboundTransfers;
-      }
-
-      export namespace Capabilities {
-        export interface FinancialAddresses {
-          /**
-           * Can provision a bank-account like financial address (VBAN) to credit/debit a FinancialAccount.
-           */
-          bank_accounts?: FinancialAddresses.BankAccounts;
-        }
-
-        export interface HoldsCurrencies {
-          /**
-           * Can hold storage-type funds on Stripe in EUR.
-           */
-          eur?: HoldsCurrencies.Eur;
-
-          /**
-           * Can hold storage-type funds on Stripe in GBP.
-           */
-          gbp?: HoldsCurrencies.Gbp;
-
-          /**
-           * Can hold storage-type funds on Stripe in USD.
-           */
-          usd?: HoldsCurrencies.Usd;
-        }
-
-        export interface InboundTransfers {
-          /**
-           * Can pull funds into a FinancialAccount from an external bank account owned by the user.
-           */
-          bank_accounts?: InboundTransfers.BankAccounts;
-        }
-
-        export interface OutboundPayments {
-          /**
-           * Can send funds from a FinancialAccount to a bank account owned by a different entity.
-           */
-          bank_accounts?: OutboundPayments.BankAccounts;
-
-          /**
-           * Can send funds from a FinancialAccount to a debit card owned by a different entity.
-           */
-          cards?: OutboundPayments.Cards;
-
-          /**
-           * Can send funds from a FinancialAccount to a FinancialAccount owned by a different entity.
-           */
-          financial_accounts?: OutboundPayments.FinancialAccounts;
-        }
-
-        export interface OutboundTransfers {
-          /**
-           * Can send funds from a FinancialAccount to a bank account belonging to the same user.
-           */
-          bank_accounts?: OutboundTransfers.BankAccounts;
-
-          /**
-           * Can send funds from a FinancialAccount to another FinancialAccount belonging to the same user.
-           */
-          financial_accounts?: OutboundTransfers.FinancialAccounts;
-        }
-
-        export namespace FinancialAddresses {
-          export interface BankAccounts {
-            /**
-             * The status of the Capability.
-             */
-            status: BankAccounts.Status;
-
-            /**
-             * Additional details about the capability's status. This value is empty when `status` is `active`.
-             */
-            status_details: Array<BankAccounts.StatusDetail>;
-          }
-
-          export namespace BankAccounts {
-            export type Status =
-              | 'active'
-              | 'pending'
-              | 'restricted'
-              | 'unsupported';
-
-            export interface StatusDetail {
-              /**
-               * Machine-readable code explaining the reason for the Capability to be in its current status.
-               */
-              code: StatusDetail.Code;
-
-              /**
-               * Machine-readable code explaining how to make the Capability active.
-               */
-              resolution: StatusDetail.Resolution;
-            }
-
-            export namespace StatusDetail {
-              export type Code =
-                | 'determining_status'
-                | 'requirements_past_due'
-                | 'requirements_pending_verification'
-                | 'restricted_other'
-                | 'unsupported_business'
-                | 'unsupported_country'
-                | 'unsupported_entity_type';
-
-              export type Resolution =
-                | 'contact_stripe'
-                | 'no_resolution'
-                | 'provide_info';
-            }
-          }
-        }
-
-        export namespace HoldsCurrencies {
-          export interface Eur {
-            /**
-             * The status of the Capability.
-             */
-            status: Eur.Status;
-
-            /**
-             * Additional details about the capability's status. This value is empty when `status` is `active`.
-             */
-            status_details: Array<Eur.StatusDetail>;
-          }
-
-          export interface Gbp {
-            /**
-             * The status of the Capability.
-             */
-            status: Gbp.Status;
-
-            /**
-             * Additional details about the capability's status. This value is empty when `status` is `active`.
-             */
-            status_details: Array<Gbp.StatusDetail>;
-          }
-
-          export interface Usd {
-            /**
-             * The status of the Capability.
-             */
-            status: Usd.Status;
-
-            /**
-             * Additional details about the capability's status. This value is empty when `status` is `active`.
-             */
-            status_details: Array<Usd.StatusDetail>;
-          }
-
-          export namespace Eur {
-            export type Status =
-              | 'active'
-              | 'pending'
-              | 'restricted'
-              | 'unsupported';
-
-            export interface StatusDetail {
-              /**
-               * Machine-readable code explaining the reason for the Capability to be in its current status.
-               */
-              code: StatusDetail.Code;
-
-              /**
-               * Machine-readable code explaining how to make the Capability active.
-               */
-              resolution: StatusDetail.Resolution;
-            }
-
-            export namespace StatusDetail {
-              export type Code =
-                | 'determining_status'
-                | 'requirements_past_due'
-                | 'requirements_pending_verification'
-                | 'restricted_other'
-                | 'unsupported_business'
-                | 'unsupported_country'
-                | 'unsupported_entity_type';
-
-              export type Resolution =
-                | 'contact_stripe'
-                | 'no_resolution'
-                | 'provide_info';
-            }
-          }
-
-          export namespace Gbp {
-            export type Status =
-              | 'active'
-              | 'pending'
-              | 'restricted'
-              | 'unsupported';
-
-            export interface StatusDetail {
-              /**
-               * Machine-readable code explaining the reason for the Capability to be in its current status.
-               */
-              code: StatusDetail.Code;
-
-              /**
-               * Machine-readable code explaining how to make the Capability active.
-               */
-              resolution: StatusDetail.Resolution;
-            }
-
-            export namespace StatusDetail {
-              export type Code =
-                | 'determining_status'
-                | 'requirements_past_due'
-                | 'requirements_pending_verification'
-                | 'restricted_other'
-                | 'unsupported_business'
-                | 'unsupported_country'
-                | 'unsupported_entity_type';
-
-              export type Resolution =
-                | 'contact_stripe'
-                | 'no_resolution'
-                | 'provide_info';
-            }
-          }
-
-          export namespace Usd {
-            export type Status =
-              | 'active'
-              | 'pending'
-              | 'restricted'
-              | 'unsupported';
-
-            export interface StatusDetail {
-              /**
-               * Machine-readable code explaining the reason for the Capability to be in its current status.
-               */
-              code: StatusDetail.Code;
-
-              /**
-               * Machine-readable code explaining how to make the Capability active.
-               */
-              resolution: StatusDetail.Resolution;
-            }
-
-            export namespace StatusDetail {
-              export type Code =
-                | 'determining_status'
-                | 'requirements_past_due'
-                | 'requirements_pending_verification'
-                | 'restricted_other'
-                | 'unsupported_business'
-                | 'unsupported_country'
-                | 'unsupported_entity_type';
-
-              export type Resolution =
-                | 'contact_stripe'
-                | 'no_resolution'
-                | 'provide_info';
-            }
-          }
-        }
-
-        export namespace InboundTransfers {
-          export interface BankAccounts {
-            /**
-             * The status of the Capability.
-             */
-            status: BankAccounts.Status;
-
-            /**
-             * Additional details about the capability's status. This value is empty when `status` is `active`.
-             */
-            status_details: Array<BankAccounts.StatusDetail>;
-          }
-
-          export namespace BankAccounts {
-            export type Status =
-              | 'active'
-              | 'pending'
-              | 'restricted'
-              | 'unsupported';
-
-            export interface StatusDetail {
-              /**
-               * Machine-readable code explaining the reason for the Capability to be in its current status.
-               */
-              code: StatusDetail.Code;
-
-              /**
-               * Machine-readable code explaining how to make the Capability active.
-               */
-              resolution: StatusDetail.Resolution;
-            }
-
-            export namespace StatusDetail {
-              export type Code =
-                | 'determining_status'
-                | 'requirements_past_due'
-                | 'requirements_pending_verification'
-                | 'restricted_other'
-                | 'unsupported_business'
-                | 'unsupported_country'
-                | 'unsupported_entity_type';
-
-              export type Resolution =
-                | 'contact_stripe'
-                | 'no_resolution'
-                | 'provide_info';
-            }
-          }
-        }
-
-        export namespace OutboundPayments {
-          export interface BankAccounts {
-            /**
-             * The status of the Capability.
-             */
-            status: BankAccounts.Status;
-
-            /**
-             * Additional details about the capability's status. This value is empty when `status` is `active`.
-             */
-            status_details: Array<BankAccounts.StatusDetail>;
-          }
-
-          export interface Cards {
-            /**
-             * The status of the Capability.
-             */
-            status: Cards.Status;
-
-            /**
-             * Additional details about the capability's status. This value is empty when `status` is `active`.
-             */
-            status_details: Array<Cards.StatusDetail>;
-          }
-
-          export interface FinancialAccounts {
-            /**
-             * The status of the Capability.
-             */
-            status: FinancialAccounts.Status;
-
-            /**
-             * Additional details about the capability's status. This value is empty when `status` is `active`.
-             */
-            status_details: Array<FinancialAccounts.StatusDetail>;
-          }
-
-          export namespace BankAccounts {
-            export type Status =
-              | 'active'
-              | 'pending'
-              | 'restricted'
-              | 'unsupported';
-
-            export interface StatusDetail {
-              /**
-               * Machine-readable code explaining the reason for the Capability to be in its current status.
-               */
-              code: StatusDetail.Code;
-
-              /**
-               * Machine-readable code explaining how to make the Capability active.
-               */
-              resolution: StatusDetail.Resolution;
-            }
-
-            export namespace StatusDetail {
-              export type Code =
-                | 'determining_status'
-                | 'requirements_past_due'
-                | 'requirements_pending_verification'
-                | 'restricted_other'
-                | 'unsupported_business'
-                | 'unsupported_country'
-                | 'unsupported_entity_type';
-
-              export type Resolution =
-                | 'contact_stripe'
-                | 'no_resolution'
-                | 'provide_info';
-            }
-          }
-
-          export namespace Cards {
-            export type Status =
-              | 'active'
-              | 'pending'
-              | 'restricted'
-              | 'unsupported';
-
-            export interface StatusDetail {
-              /**
-               * Machine-readable code explaining the reason for the Capability to be in its current status.
-               */
-              code: StatusDetail.Code;
-
-              /**
-               * Machine-readable code explaining how to make the Capability active.
-               */
-              resolution: StatusDetail.Resolution;
-            }
-
-            export namespace StatusDetail {
-              export type Code =
-                | 'determining_status'
-                | 'requirements_past_due'
-                | 'requirements_pending_verification'
-                | 'restricted_other'
-                | 'unsupported_business'
-                | 'unsupported_country'
-                | 'unsupported_entity_type';
-
-              export type Resolution =
-                | 'contact_stripe'
-                | 'no_resolution'
-                | 'provide_info';
-            }
-          }
-
-          export namespace FinancialAccounts {
-            export type Status =
-              | 'active'
-              | 'pending'
-              | 'restricted'
-              | 'unsupported';
-
-            export interface StatusDetail {
-              /**
-               * Machine-readable code explaining the reason for the Capability to be in its current status.
-               */
-              code: StatusDetail.Code;
-
-              /**
-               * Machine-readable code explaining how to make the Capability active.
-               */
-              resolution: StatusDetail.Resolution;
-            }
-
-            export namespace StatusDetail {
-              export type Code =
-                | 'determining_status'
-                | 'requirements_past_due'
-                | 'requirements_pending_verification'
-                | 'restricted_other'
-                | 'unsupported_business'
-                | 'unsupported_country'
-                | 'unsupported_entity_type';
-
-              export type Resolution =
-                | 'contact_stripe'
-                | 'no_resolution'
-                | 'provide_info';
-            }
-          }
-        }
-
-        export namespace OutboundTransfers {
-          export interface BankAccounts {
-            /**
-             * The status of the Capability.
-             */
-            status: BankAccounts.Status;
-
-            /**
-             * Additional details about the capability's status. This value is empty when `status` is `active`.
-             */
-            status_details: Array<BankAccounts.StatusDetail>;
-          }
-
-          export interface FinancialAccounts {
-            /**
-             * The status of the Capability.
-             */
-            status: FinancialAccounts.Status;
-
-            /**
-             * Additional details about the capability's status. This value is empty when `status` is `active`.
-             */
-            status_details: Array<FinancialAccounts.StatusDetail>;
-          }
-
-          export namespace BankAccounts {
-            export type Status =
-              | 'active'
-              | 'pending'
-              | 'restricted'
-              | 'unsupported';
-
-            export interface StatusDetail {
-              /**
-               * Machine-readable code explaining the reason for the Capability to be in its current status.
-               */
-              code: StatusDetail.Code;
-
-              /**
-               * Machine-readable code explaining how to make the Capability active.
-               */
-              resolution: StatusDetail.Resolution;
-            }
-
-            export namespace StatusDetail {
-              export type Code =
-                | 'determining_status'
-                | 'requirements_past_due'
-                | 'requirements_pending_verification'
-                | 'restricted_other'
-                | 'unsupported_business'
-                | 'unsupported_country'
-                | 'unsupported_entity_type';
-
-              export type Resolution =
-                | 'contact_stripe'
-                | 'no_resolution'
-                | 'provide_info';
-            }
-          }
-
-          export namespace FinancialAccounts {
-            export type Status =
-              | 'active'
-              | 'pending'
-              | 'restricted'
-              | 'unsupported';
-
-            export interface StatusDetail {
-              /**
-               * Machine-readable code explaining the reason for the Capability to be in its current status.
-               */
-              code: StatusDetail.Code;
-
-              /**
-               * Machine-readable code explaining how to make the Capability active.
-               */
-              resolution: StatusDetail.Resolution;
-            }
-
-            export namespace StatusDetail {
-              export type Code =
-                | 'determining_status'
-                | 'requirements_past_due'
-                | 'requirements_pending_verification'
-                | 'restricted_other'
-                | 'unsupported_business'
-                | 'unsupported_country'
-                | 'unsupported_entity_type';
-
-              export type Resolution =
-                | 'contact_stripe'
-                | 'no_resolution'
-                | 'provide_info';
-            }
-          }
-        }
-      }
-    }
   }
 
   export namespace Defaults {
@@ -4552,7 +5056,7 @@ export namespace Account {
       fees_collector?: Responsibilities.FeesCollector;
 
       /**
-       * A value indicating responsibility for collecting requirements on this account.
+       * A value indicating the responsibility for losses on this account.
        */
       losses_collector?: Responsibilities.LossesCollector;
 
@@ -4808,6 +5312,12 @@ export namespace Account {
             | 'bank_accounts.wire'
             | 'blik_payments'
             | 'boleto_payments'
+            | 'business_storage.inbound.eur'
+            | 'business_storage.inbound.gbp'
+            | 'business_storage.inbound.usd'
+            | 'business_storage.outbound.eur'
+            | 'business_storage.outbound.gbp'
+            | 'business_storage.outbound.usd'
             | 'cards'
             | 'card_payments'
             | 'cartes_bancaires_payments'
@@ -4844,6 +5354,8 @@ export namespace Account {
             | 'paynow_payments'
             | 'pay_by_bank_payments'
             | 'promptpay_payments'
+            | 'received_credits.bank_accounts'
+            | 'received_debits.bank_accounts'
             | 'revolut_pay_payments'
             | 'samsung_pay_payments'
             | 'sepa_bank_transfer_payments'
@@ -4858,6 +5370,7 @@ export namespace Account {
           export type Configuration =
             | 'customer'
             | 'merchant'
+            | 'money_manager'
             | 'recipient'
             | 'storer';
 
@@ -5205,7 +5718,7 @@ export namespace Account {
         /**
          * Details on the Account's acceptance of Treasury-specific terms of service.
          */
-        storer?: TermsOfService.Storer;
+        money_manager?: TermsOfService.MoneyManager;
       }
 
       export namespace PersonsProvided {
@@ -5232,7 +5745,7 @@ export namespace Account {
           user_agent?: string;
         }
 
-        export interface Storer {
+        export interface MoneyManager {
           /**
            * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
            */
@@ -6579,6 +7092,12 @@ export namespace Account {
             | 'bank_accounts.wire'
             | 'blik_payments'
             | 'boleto_payments'
+            | 'business_storage.inbound.eur'
+            | 'business_storage.inbound.gbp'
+            | 'business_storage.inbound.usd'
+            | 'business_storage.outbound.eur'
+            | 'business_storage.outbound.gbp'
+            | 'business_storage.outbound.usd'
             | 'cards'
             | 'card_payments'
             | 'cartes_bancaires_payments'
@@ -6615,6 +7134,8 @@ export namespace Account {
             | 'paynow_payments'
             | 'pay_by_bank_payments'
             | 'promptpay_payments'
+            | 'received_credits.bank_accounts'
+            | 'received_debits.bank_accounts'
             | 'revolut_pay_payments'
             | 'samsung_pay_payments'
             | 'sepa_bank_transfer_payments'
@@ -6629,6 +7150,7 @@ export namespace Account {
           export type Configuration =
             | 'customer'
             | 'merchant'
+            | 'money_manager'
             | 'recipient'
             | 'storer';
 
@@ -6747,14 +7269,14 @@ export namespace V2 {
         merchant?: Configuration.Merchant;
 
         /**
+         * The Money Manager Configuration allows the Account to store and move funds using FinancialAccounts.
+         */
+        money_manager?: Configuration.MoneyManager;
+
+        /**
          * The Recipient Configuration allows the Account to receive funds. Utilize this configuration if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
          */
         recipient?: Configuration.Recipient;
-
-        /**
-         * The Storer Configuration allows the Account to store and move funds using stored-value FinancialAccounts.
-         */
-        storer?: Configuration.Storer;
       }
 
       export type Dashboard = 'express' | 'full' | 'none';
@@ -6817,7 +7339,7 @@ export namespace V2 {
         | 'configuration.customer'
         | 'configuration.merchant'
         | 'configuration.recipient'
-        | 'configuration.storer'
+        | 'configuration.money_manager'
         | 'defaults'
         | 'future_requirements'
         | 'identity'
@@ -6903,18 +7425,18 @@ export namespace V2 {
           support?: Merchant.Support;
         }
 
+        export interface MoneyManager {
+          /**
+           * Capabilities to request on the Money Manager Configuration.
+           */
+          capabilities?: MoneyManager.Capabilities;
+        }
+
         export interface Recipient {
           /**
            * Capabilities to be requested on the Recipient Configuration.
            */
           capabilities?: Recipient.Capabilities;
-        }
-
-        export interface Storer {
-          /**
-           * Capabilities to request on the Storer Configuration.
-           */
-          capabilities?: Storer.Capabilities;
         }
 
         export namespace Customer {
@@ -7277,6 +7799,11 @@ export namespace V2 {
              * Allow the merchant to process SEPA Direct Debit payments.
              */
             sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+            /**
+             * Allow the merchant to process Sunbit payments.
+             */
+            sunbit_payments?: Capabilities.SunbitPayments;
 
             /**
              * Allow the merchant to process Swish payments.
@@ -7647,6 +8174,13 @@ export namespace V2 {
               requested: boolean;
             }
 
+            export interface SunbitPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
             export interface SwishPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -7802,6 +8336,300 @@ export namespace V2 {
           }
         }
 
+        export namespace MoneyManager {
+          export interface Capabilities {
+            /**
+             * Can send or receive business storage-type funds on Stripe.
+             */
+            business_storage?: Capabilities.BusinessStorage;
+
+            /**
+             * Can pull funds from an external source, owned by yourself, to a FinancialAccount.
+             */
+            inbound_transfers?: Capabilities.InboundTransfers;
+
+            /**
+             * Can send funds from a FinancialAccount to a destination owned by someone else.
+             */
+            outbound_payments?: Capabilities.OutboundPayments;
+
+            /**
+             * Can send funds from a FinancialAccount to a destination owned by yourself.
+             */
+            outbound_transfers?: Capabilities.OutboundTransfers;
+
+            /**
+             * Can receive funds into a FinancialAccount.
+             */
+            received_credits?: Capabilities.ReceivedCredits;
+
+            /**
+             * Can receive debits to a FinancialAccount.
+             */
+            received_debits?: Capabilities.ReceivedDebits;
+          }
+
+          export namespace Capabilities {
+            export interface BusinessStorage {
+              /**
+               * Can receive business storage-type funds on Stripe.
+               */
+              inbound?: BusinessStorage.Inbound;
+
+              /**
+               * Can send business storage-type funds on Stripe.
+               */
+              outbound?: BusinessStorage.Outbound;
+            }
+
+            export interface InboundTransfers {
+              /**
+               * Can pull funds from an external bank account owned by yourself to a FinancialAccount.
+               */
+              bank_accounts?: InboundTransfers.BankAccounts;
+            }
+
+            export interface OutboundPayments {
+              /**
+               * Can send funds from a FinancialAccount to a bank account owned by someone else.
+               */
+              bank_accounts?: OutboundPayments.BankAccounts;
+
+              /**
+               * Can send funds from a FinancialAccount to a debit card owned by someone else.
+               */
+              cards?: OutboundPayments.Cards;
+
+              /**
+               * Can send funds from a FinancialAccount to another FinancialAccount owned by someone else.
+               */
+              financial_accounts?: OutboundPayments.FinancialAccounts;
+            }
+
+            export interface OutboundTransfers {
+              /**
+               * Can send funds from a FinancialAccount to a bank account owned by yourself.
+               */
+              bank_accounts?: OutboundTransfers.BankAccounts;
+
+              /**
+               * Can send funds from a FinancialAccount to another FinancialAccount owned by yourself.
+               */
+              financial_accounts?: OutboundTransfers.FinancialAccounts;
+            }
+
+            export interface ReceivedCredits {
+              /**
+               * Can receive funds on a bank-account-like financial address (VBAN) to credit a FinancialAccount.
+               */
+              bank_accounts?: ReceivedCredits.BankAccounts;
+            }
+
+            export interface ReceivedDebits {
+              /**
+               * Can receive debits to a FinancialAccount from a bank account.
+               */
+              bank_accounts?: ReceivedDebits.BankAccounts;
+            }
+
+            export namespace BusinessStorage {
+              export interface Inbound {
+                /**
+                 * Can receive business storage-type funds on Stripe in AUD.
+                 */
+                aud?: Inbound.Aud;
+
+                /**
+                 * Can receive business storage-type funds on Stripe in CAD.
+                 */
+                cad?: Inbound.Cad;
+
+                /**
+                 * Can receive business storage-type funds on Stripe in EUR.
+                 */
+                eur?: Inbound.Eur;
+
+                /**
+                 * Can receive business storage-type funds on Stripe in GBP.
+                 */
+                gbp?: Inbound.Gbp;
+
+                /**
+                 * Can receive business storage-type funds on Stripe in USD.
+                 */
+                usd?: Inbound.Usd;
+              }
+
+              export interface Outbound {
+                /**
+                 * Can send business storage-type funds on Stripe in AUD.
+                 */
+                aud?: Outbound.Aud;
+
+                /**
+                 * Can send business storage-type funds on Stripe in CAD.
+                 */
+                cad?: Outbound.Cad;
+
+                /**
+                 * Can send business storage-type funds on Stripe in EUR.
+                 */
+                eur?: Outbound.Eur;
+
+                /**
+                 * Can send business storage-type funds on Stripe in GBP.
+                 */
+                gbp?: Outbound.Gbp;
+
+                /**
+                 * Can send business storage-type funds on Stripe in USD.
+                 */
+                usd?: Outbound.Usd;
+              }
+
+              export namespace Inbound {
+                export interface Aud {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Cad {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Eur {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Gbp {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Usd {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+              }
+
+              export namespace Outbound {
+                export interface Aud {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Cad {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Eur {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Gbp {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Usd {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+              }
+            }
+
+            export namespace InboundTransfers {
+              export interface BankAccounts {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested: boolean;
+              }
+            }
+
+            export namespace OutboundPayments {
+              export interface BankAccounts {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested: boolean;
+              }
+
+              export interface Cards {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested: boolean;
+              }
+
+              export interface FinancialAccounts {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested: boolean;
+              }
+            }
+
+            export namespace OutboundTransfers {
+              export interface BankAccounts {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested: boolean;
+              }
+
+              export interface FinancialAccounts {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested: boolean;
+              }
+            }
+
+            export namespace ReceivedCredits {
+              export interface BankAccounts {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested: boolean;
+              }
+            }
+
+            export namespace ReceivedDebits {
+              export interface BankAccounts {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested: boolean;
+              }
+            }
+          }
+        }
+
         export namespace Recipient {
           export interface Capabilities {
             /**
@@ -7865,177 +8693,6 @@ export namespace V2 {
 
             export namespace StripeBalance {
               export interface StripeTransfers {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested: boolean;
-              }
-            }
-          }
-        }
-
-        export namespace Storer {
-          export interface Capabilities {
-            /**
-             * Can provision a financial address to credit/debit a FinancialAccount.
-             */
-            financial_addresses?: Capabilities.FinancialAddresses;
-
-            /**
-             * Can hold storage-type funds on Stripe.
-             */
-            holds_currencies?: Capabilities.HoldsCurrencies;
-
-            /**
-             * Can pull funds from an external source, owned by yourself, to a FinancialAccount.
-             */
-            inbound_transfers?: Capabilities.InboundTransfers;
-
-            /**
-             * Can send funds from a FinancialAccount to a destination owned by someone else.
-             */
-            outbound_payments?: Capabilities.OutboundPayments;
-
-            /**
-             * Can send funds from a FinancialAccount to a destination owned by yourself.
-             */
-            outbound_transfers?: Capabilities.OutboundTransfers;
-          }
-
-          export namespace Capabilities {
-            export interface FinancialAddresses {
-              /**
-               * Can provision a bank-account-like financial address (VBAN) to credit/debit a FinancialAccount.
-               */
-              bank_accounts?: FinancialAddresses.BankAccounts;
-            }
-
-            export interface HoldsCurrencies {
-              /**
-               * Can hold storage-type funds on Stripe in EUR.
-               */
-              eur?: HoldsCurrencies.Eur;
-
-              /**
-               * Can hold storage-type funds on Stripe in GBP.
-               */
-              gbp?: HoldsCurrencies.Gbp;
-
-              /**
-               * Can hold storage-type funds on Stripe in USD.
-               */
-              usd?: HoldsCurrencies.Usd;
-            }
-
-            export interface InboundTransfers {
-              /**
-               * Can pull funds from an external bank account owned by yourself to a FinancialAccount.
-               */
-              bank_accounts?: InboundTransfers.BankAccounts;
-            }
-
-            export interface OutboundPayments {
-              /**
-               * Can send funds from a FinancialAccount to a bank account owned by someone else.
-               */
-              bank_accounts?: OutboundPayments.BankAccounts;
-
-              /**
-               * Can send funds from a FinancialAccount to a debit card owned by someone else.
-               */
-              cards?: OutboundPayments.Cards;
-
-              /**
-               * Can send funds from a FinancialAccount to another FinancialAccount owned by someone else.
-               */
-              financial_accounts?: OutboundPayments.FinancialAccounts;
-            }
-
-            export interface OutboundTransfers {
-              /**
-               * Can send funds from a FinancialAccount to a bank account owned by yourself.
-               */
-              bank_accounts?: OutboundTransfers.BankAccounts;
-
-              /**
-               * Can send funds from a FinancialAccount to another FinancialAccount owned by yourself.
-               */
-              financial_accounts?: OutboundTransfers.FinancialAccounts;
-            }
-
-            export namespace FinancialAddresses {
-              export interface BankAccounts {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested: boolean;
-              }
-            }
-
-            export namespace HoldsCurrencies {
-              export interface Eur {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested: boolean;
-              }
-
-              export interface Gbp {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested: boolean;
-              }
-
-              export interface Usd {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested: boolean;
-              }
-            }
-
-            export namespace InboundTransfers {
-              export interface BankAccounts {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested: boolean;
-              }
-            }
-
-            export namespace OutboundPayments {
-              export interface BankAccounts {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested: boolean;
-              }
-
-              export interface Cards {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested: boolean;
-              }
-
-              export interface FinancialAccounts {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested: boolean;
-              }
-            }
-
-            export namespace OutboundTransfers {
-              export interface BankAccounts {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested: boolean;
-              }
-
-              export interface FinancialAccounts {
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
@@ -8439,7 +9096,7 @@ export namespace V2 {
             /**
              * Details on the Account's acceptance of Treasury-specific terms of service.
              */
-            storer?: TermsOfService.Storer;
+            money_manager?: TermsOfService.MoneyManager;
           }
 
           export namespace PersonsProvided {
@@ -8466,7 +9123,7 @@ export namespace V2 {
               user_agent?: string;
             }
 
-            export interface Storer {
+            export interface MoneyManager {
               /**
                * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
                */
@@ -9565,7 +10222,7 @@ export namespace V2 {
         | 'configuration.customer'
         | 'configuration.merchant'
         | 'configuration.recipient'
-        | 'configuration.storer'
+        | 'configuration.money_manager'
         | 'defaults'
         | 'future_requirements'
         | 'identity'
@@ -9640,14 +10297,14 @@ export namespace V2 {
         merchant?: Configuration.Merchant;
 
         /**
+         * The Money Manager Configuration allows the Account to store and move funds using FinancialAccounts.
+         */
+        money_manager?: Configuration.MoneyManager;
+
+        /**
          * The Recipient Configuration allows the Account to receive funds. Utilize this configuration if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
          */
         recipient?: Configuration.Recipient;
-
-        /**
-         * The Storer Configuration allows the Account to store and move funds using stored-value FinancialAccounts.
-         */
-        storer?: Configuration.Storer;
       }
 
       export type Dashboard = 'express' | 'full' | 'none';
@@ -9710,7 +10367,7 @@ export namespace V2 {
         | 'configuration.customer'
         | 'configuration.merchant'
         | 'configuration.recipient'
-        | 'configuration.storer'
+        | 'configuration.money_manager'
         | 'defaults'
         | 'future_requirements'
         | 'identity'
@@ -9806,6 +10463,18 @@ export namespace V2 {
           support?: Merchant.Support;
         }
 
+        export interface MoneyManager {
+          /**
+           * Represents the state of the configuration, and can be updated to deactivate or re-apply a configuration.
+           */
+          applied?: boolean;
+
+          /**
+           * Capabilities to request on the Money Manager Configuration.
+           */
+          capabilities?: MoneyManager.Capabilities;
+        }
+
         export interface Recipient {
           /**
            * Represents the state of the configuration, and can be updated to deactivate or re-apply a configuration.
@@ -9821,18 +10490,6 @@ export namespace V2 {
            * The payout method id to be used as a default outbound destination. This will allow the PayoutMethod to be omitted on OutboundPayments made through API or sending payouts via dashboard. Can also be explicitly set to `null` to clear the existing default outbound destination. For further details about creating an Outbound Destination, see [Collect recipient's payment details](https://docs.stripe.com/global-payouts-private-preview/quickstart?dashboard-or-api=api#collect-bank-account-details).
            */
           default_outbound_destination?: string;
-        }
-
-        export interface Storer {
-          /**
-           * Represents the state of the configuration, and can be updated to deactivate or re-apply a configuration.
-           */
-          applied?: boolean;
-
-          /**
-           * Capabilities to request on the Storer Configuration.
-           */
-          capabilities?: Storer.Capabilities;
         }
 
         export namespace Customer {
@@ -10209,6 +10866,11 @@ export namespace V2 {
             sepa_debit_payments?: Capabilities.SepaDebitPayments;
 
             /**
+             * Allow the merchant to process Sunbit payments.
+             */
+            sunbit_payments?: Capabilities.SunbitPayments;
+
+            /**
              * Allow the merchant to process Swish payments.
              */
             swish_payments?: Capabilities.SwishPayments;
@@ -10577,6 +11239,13 @@ export namespace V2 {
               requested?: boolean;
             }
 
+            export interface SunbitPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
             export interface SwishPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -10693,6 +11362,300 @@ export namespace V2 {
           }
         }
 
+        export namespace MoneyManager {
+          export interface Capabilities {
+            /**
+             * Can send or receive business storage-type funds on Stripe.
+             */
+            business_storage?: Capabilities.BusinessStorage;
+
+            /**
+             * Can pull funds from an external source, owned by yourself, to a FinancialAccount.
+             */
+            inbound_transfers?: Capabilities.InboundTransfers;
+
+            /**
+             * Can send funds from a FinancialAccount to a destination owned by someone else.
+             */
+            outbound_payments?: Capabilities.OutboundPayments;
+
+            /**
+             * Can send funds from a FinancialAccount to a destination owned by yourself.
+             */
+            outbound_transfers?: Capabilities.OutboundTransfers;
+
+            /**
+             * Can receive funds on a financial address to credit a FinancialAccount.
+             */
+            received_credits?: Capabilities.ReceivedCredits;
+
+            /**
+             * Can receive debits to a FinancialAccount.
+             */
+            received_debits?: Capabilities.ReceivedDebits;
+          }
+
+          export namespace Capabilities {
+            export interface BusinessStorage {
+              /**
+               * Can receive business storage-type funds on Stripe.
+               */
+              inbound?: BusinessStorage.Inbound;
+
+              /**
+               * Can send business storage-type funds on Stripe.
+               */
+              outbound?: BusinessStorage.Outbound;
+            }
+
+            export interface InboundTransfers {
+              /**
+               * Can pull funds from an external bank account owned by yourself to a FinancialAccount.
+               */
+              bank_accounts?: InboundTransfers.BankAccounts;
+            }
+
+            export interface OutboundPayments {
+              /**
+               * Can send funds from a FinancialAccount to a bank account owned by someone else.
+               */
+              bank_accounts?: OutboundPayments.BankAccounts;
+
+              /**
+               * Can send funds from a FinancialAccount to a debit card owned by someone else.
+               */
+              cards?: OutboundPayments.Cards;
+
+              /**
+               * Can send funds from a FinancialAccount to another FinancialAccount owned by someone else.
+               */
+              financial_accounts?: OutboundPayments.FinancialAccounts;
+            }
+
+            export interface OutboundTransfers {
+              /**
+               * Can send funds from a FinancialAccount to a bank account owned by yourself.
+               */
+              bank_accounts?: OutboundTransfers.BankAccounts;
+
+              /**
+               * Can send funds from a FinancialAccount to another FinancialAccount owned by yourself.
+               */
+              financial_accounts?: OutboundTransfers.FinancialAccounts;
+            }
+
+            export interface ReceivedCredits {
+              /**
+               * Can receive funds on a bank-account-like financial address (VBAN) to credit a FinancialAccount.
+               */
+              bank_accounts?: ReceivedCredits.BankAccounts;
+            }
+
+            export interface ReceivedDebits {
+              /**
+               * Can receive debits to a FinancialAccount from a bank account.
+               */
+              bank_accounts?: ReceivedDebits.BankAccounts;
+            }
+
+            export namespace BusinessStorage {
+              export interface Inbound {
+                /**
+                 * Can receive business storage-type funds on Stripe in AUD.
+                 */
+                aud?: Inbound.Aud;
+
+                /**
+                 * Can receive business storage-type funds on Stripe in CAD.
+                 */
+                cad?: Inbound.Cad;
+
+                /**
+                 * Can receive business storage-type funds on Stripe in EUR.
+                 */
+                eur?: Inbound.Eur;
+
+                /**
+                 * Can receive business storage-type funds on Stripe in GBP.
+                 */
+                gbp?: Inbound.Gbp;
+
+                /**
+                 * Can receive business storage-type funds on Stripe in USD.
+                 */
+                usd?: Inbound.Usd;
+              }
+
+              export interface Outbound {
+                /**
+                 * Can send business storage-type funds on Stripe in AUD.
+                 */
+                aud?: Outbound.Aud;
+
+                /**
+                 * Can send business storage-type funds on Stripe in CAD.
+                 */
+                cad?: Outbound.Cad;
+
+                /**
+                 * Can send business storage-type funds on Stripe in EUR.
+                 */
+                eur?: Outbound.Eur;
+
+                /**
+                 * Can send business storage-type funds on Stripe in GBP.
+                 */
+                gbp?: Outbound.Gbp;
+
+                /**
+                 * Can send business storage-type funds on Stripe in USD.
+                 */
+                usd?: Outbound.Usd;
+              }
+
+              export namespace Inbound {
+                export interface Aud {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Cad {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Eur {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Gbp {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Usd {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+              }
+
+              export namespace Outbound {
+                export interface Aud {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Cad {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Eur {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Gbp {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Usd {
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+              }
+            }
+
+            export namespace InboundTransfers {
+              export interface BankAccounts {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested?: boolean;
+              }
+            }
+
+            export namespace OutboundPayments {
+              export interface BankAccounts {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested?: boolean;
+              }
+
+              export interface Cards {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested?: boolean;
+              }
+
+              export interface FinancialAccounts {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested?: boolean;
+              }
+            }
+
+            export namespace OutboundTransfers {
+              export interface BankAccounts {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested?: boolean;
+              }
+
+              export interface FinancialAccounts {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested?: boolean;
+              }
+            }
+
+            export namespace ReceivedCredits {
+              export interface BankAccounts {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested?: boolean;
+              }
+            }
+
+            export namespace ReceivedDebits {
+              export interface BankAccounts {
+                /**
+                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                 */
+                requested?: boolean;
+              }
+            }
+          }
+        }
+
         export namespace Recipient {
           export interface Capabilities {
             /**
@@ -10756,177 +11719,6 @@ export namespace V2 {
 
             export namespace StripeBalance {
               export interface StripeTransfers {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested?: boolean;
-              }
-            }
-          }
-        }
-
-        export namespace Storer {
-          export interface Capabilities {
-            /**
-             * Can provision a financial address to credit/debit a FinancialAccount.
-             */
-            financial_addresses?: Capabilities.FinancialAddresses;
-
-            /**
-             * Can hold storage-type funds on Stripe.
-             */
-            holds_currencies?: Capabilities.HoldsCurrencies;
-
-            /**
-             * Can pull funds from an external source, owned by yourself, to a FinancialAccount.
-             */
-            inbound_transfers?: Capabilities.InboundTransfers;
-
-            /**
-             * Can send funds from a FinancialAccount to a destination owned by someone else.
-             */
-            outbound_payments?: Capabilities.OutboundPayments;
-
-            /**
-             * Can send funds from a FinancialAccount to a destination owned by yourself.
-             */
-            outbound_transfers?: Capabilities.OutboundTransfers;
-          }
-
-          export namespace Capabilities {
-            export interface FinancialAddresses {
-              /**
-               * Can provision a bank-account-like financial address (VBAN) to credit/debit a FinancialAccount.
-               */
-              bank_accounts?: FinancialAddresses.BankAccounts;
-            }
-
-            export interface HoldsCurrencies {
-              /**
-               * Can hold storage-type funds on Stripe in EUR.
-               */
-              eur?: HoldsCurrencies.Eur;
-
-              /**
-               * Can hold storage-type funds on Stripe in GBP.
-               */
-              gbp?: HoldsCurrencies.Gbp;
-
-              /**
-               * Can hold storage-type funds on Stripe in USD.
-               */
-              usd?: HoldsCurrencies.Usd;
-            }
-
-            export interface InboundTransfers {
-              /**
-               * Can pull funds from an external bank account owned by yourself to a FinancialAccount.
-               */
-              bank_accounts?: InboundTransfers.BankAccounts;
-            }
-
-            export interface OutboundPayments {
-              /**
-               * Can send funds from a FinancialAccount to a bank account owned by someone else.
-               */
-              bank_accounts?: OutboundPayments.BankAccounts;
-
-              /**
-               * Can send funds from a FinancialAccount to a debit card owned by someone else.
-               */
-              cards?: OutboundPayments.Cards;
-
-              /**
-               * Can send funds from a FinancialAccount to another FinancialAccount owned by someone else.
-               */
-              financial_accounts?: OutboundPayments.FinancialAccounts;
-            }
-
-            export interface OutboundTransfers {
-              /**
-               * Can send funds from a FinancialAccount to a bank account owned by yourself.
-               */
-              bank_accounts?: OutboundTransfers.BankAccounts;
-
-              /**
-               * Can send funds from a FinancialAccount to another FinancialAccount owned by yourself.
-               */
-              financial_accounts?: OutboundTransfers.FinancialAccounts;
-            }
-
-            export namespace FinancialAddresses {
-              export interface BankAccounts {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested?: boolean;
-              }
-            }
-
-            export namespace HoldsCurrencies {
-              export interface Eur {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested?: boolean;
-              }
-
-              export interface Gbp {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested?: boolean;
-              }
-
-              export interface Usd {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested?: boolean;
-              }
-            }
-
-            export namespace InboundTransfers {
-              export interface BankAccounts {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested?: boolean;
-              }
-            }
-
-            export namespace OutboundPayments {
-              export interface BankAccounts {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested?: boolean;
-              }
-
-              export interface Cards {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested?: boolean;
-              }
-
-              export interface FinancialAccounts {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested?: boolean;
-              }
-            }
-
-            export namespace OutboundTransfers {
-              export interface BankAccounts {
-                /**
-                 * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                 */
-                requested?: boolean;
-              }
-
-              export interface FinancialAccounts {
                 /**
                  * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                  */
@@ -11328,14 +12120,14 @@ export namespace V2 {
             account?: TermsOfService.Account;
 
             /**
-             * Details on the Account's acceptance of Crypto-storer-specific terms of service.
+             * Details on the Account's acceptance of Crypto-specific terms of service.
              */
-            crypto_storer?: TermsOfService.CryptoStorer;
+            crypto_money_manager?: TermsOfService.CryptoMoneyManager;
 
             /**
              * Details on the Account's acceptance of Treasury-specific terms of service.
              */
-            storer?: TermsOfService.Storer;
+            money_manager?: TermsOfService.MoneyManager;
           }
 
           export namespace PersonsProvided {
@@ -11362,7 +12154,7 @@ export namespace V2 {
               user_agent?: string;
             }
 
-            export interface CryptoStorer {
+            export interface CryptoMoneyManager {
               /**
                * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
                */
@@ -11379,7 +12171,7 @@ export namespace V2 {
               user_agent?: string;
             }
 
-            export interface Storer {
+            export interface MoneyManager {
               /**
                * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
                */
@@ -12262,7 +13054,7 @@ export namespace V2 {
         | 'customer'
         | 'merchant'
         | 'recipient'
-        | 'storer';
+        | 'money_manager';
     }
   }
 }
@@ -12280,7 +13072,7 @@ export namespace V2 {
         | 'customer'
         | 'merchant'
         | 'recipient'
-        | 'storer';
+        | 'money_manager';
     }
   }
 }

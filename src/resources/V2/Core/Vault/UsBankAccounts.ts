@@ -75,6 +75,7 @@ export class UsBankAccountResource extends StripeResource {
    * Archive a USBankAccount object. USBankAccount objects will not be automatically archived by Stripe.
    * Archived USBankAccount objects cannot be used as outbound destinations
    * and will not appear in the outbound destination list.
+   * @throws Stripe.CannotProceedError
    * @throws Stripe.ControlledByDashboardError
    */
   archive(

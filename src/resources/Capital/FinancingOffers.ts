@@ -89,6 +89,11 @@ export interface FinancingOffer {
   created: number;
 
   /**
+   * The type of disclaimer to use for a financing offer in user-facing surfaces. The corresponding disclaimer text to use for each disclaimer_variant value can be found in the [marketing docs](https://docs.stripe.com/capital/marketing).
+   */
+  disclaimer_variant?: FinancingOffer.DisclaimerVariant;
+
+  /**
    * Time at which the offer expires. Given in seconds since unix epoch.
    */
   expires_after: number;
@@ -168,6 +173,14 @@ export namespace FinancingOffer {
      */
     withhold_rate: number;
   }
+
+  export type DisclaimerVariant =
+    | 'celtic_us_loan'
+    | 'fundbox_au_financing'
+    | 'youlend_de_financing'
+    | 'youlend_fr_financing'
+    | 'youlend_uk_mca'
+    | 'youlend_us_mca';
 
   export type FinancingType = 'cash_advance' | 'flex_loan';
 

@@ -377,7 +377,7 @@ export namespace V2 {
             /**
              * Details on the Account's acceptance of Treasury-specific terms of service; IP, date, and User Agent are expanded by Stripe.
              */
-            storer?: TermsOfService.Storer;
+            money_manager?: TermsOfService.MoneyManager;
           }
 
           export namespace PersonsProvided {
@@ -394,7 +394,7 @@ export namespace V2 {
               shown_and_accepted?: boolean;
             }
 
-            export interface Storer {
+            export interface MoneyManager {
               /**
                * The boolean value indicating if the terms of service have been accepted.
                */
