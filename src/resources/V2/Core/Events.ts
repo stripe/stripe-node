@@ -84,7 +84,7 @@ export interface EventBase {
   /**
    * Before and after changes for the primary related object.
    */
-  changes?: V2.Core.Event.Changes;
+  changes?: Event.Changes;
 
   /**
    * Authentication context needed to fetch the event or related object.
@@ -104,7 +104,7 @@ export interface EventBase {
   /**
    * Reason for the event.
    */
-  reason?: V2.Core.Event.Reason;
+  reason?: Event.Reason;
 
   /**
    * For interop events, this is the snapshot event ID.
@@ -116,96 +116,92 @@ export interface EventBase {
    */
   type: string;
 }
-export namespace V2 {
-  export namespace Core {
-    export namespace Event {
-      export type Changes = {
-        [key: string]: unknown;
-      };
+export namespace Event {
+  export type Changes = {
+    [key: string]: unknown;
+  };
 
-      export interface Reason {
+  export interface Reason {
+    /**
+     * Information on the API request that instigated the event.
+     */
+    request?: Reason.Request;
+
+    /**
+     * Event reason type.
+     */
+    type: 'request';
+  }
+
+  export namespace Reason {
+    export interface Request {
+      /**
+       * The client details that made the request.
+       */
+      client?: Request.Client;
+
+      /**
+       * ID of the API request that caused the event.
+       */
+      id: string;
+
+      /**
+       * The idempotency key transmitted during the request.
+       */
+      idempotency_key: string;
+    }
+
+    export namespace Request {
+      export interface Client {
         /**
-         * Information on the API request that instigated the event.
+         * API key that triggered the event.
          */
-        request?: Reason.Request;
+        api_key?: Client.ApiKey;
 
         /**
-         * Event reason type.
+         * Dashboard user that triggered the event.
          */
-        type: 'request';
+        dashboard_user?: Client.DashboardUser;
+
+        /**
+         * Stripe action that triggered the event.
+         */
+        stripe_action?: Client.StripeAction;
+
+        /**
+         * The type of the client.
+         */
+        type: Client.Type;
       }
 
-      export namespace Reason {
-        export interface Request {
+      export namespace Client {
+        export interface ApiKey {
           /**
-           * The client details that made the request.
-           */
-          client?: Request.Client;
-
-          /**
-           * ID of the API request that caused the event.
+           * The ID of the API key.
            */
           id: string;
+        }
+
+        export interface DashboardUser {
+          /**
+           * The email of the dashboard user.
+           */
+          email: string;
 
           /**
-           * The idempotency key transmitted during the request.
+           * The IP address of the user.
            */
-          idempotency_key: string;
+          ip_address: string;
+
+          /**
+           * The machine identifier of the user.
+           */
+          machine_identifier: string;
         }
 
-        export namespace Request {
-          export interface Client {
-            /**
-             * API key that triggered the event.
-             */
-            api_key?: Client.ApiKey;
+        export interface StripeAction {}
 
-            /**
-             * Dashboard user that triggered the event.
-             */
-            dashboard_user?: Client.DashboardUser;
-
-            /**
-             * Stripe action that triggered the event.
-             */
-            stripe_action?: Client.StripeAction;
-
-            /**
-             * The type of the client.
-             */
-            type: Client.Type;
-          }
-
-          export namespace Client {
-            export interface ApiKey {
-              /**
-               * The ID of the API key.
-               */
-              id: string;
-            }
-
-            export interface DashboardUser {
-              /**
-               * The email of the dashboard user.
-               */
-              email: string;
-
-              /**
-               * The IP address of the user.
-               */
-              ip_address: string;
-
-              /**
-               * The machine identifier of the user.
-               */
-              machine_identifier: string;
-            }
-
-            export interface StripeAction {}
-
-            export type Type = 'api_key' | 'dashboard_user' | 'stripe_action';
-          }
-        }
+        export type Type = 'api_key' | 'dashboard_user' | 'stripe_action';
       }
     }
   }
@@ -563,10 +559,10 @@ export type Event =
   | V2CoreAccountIncludingConfigurationCustomerUpdatedEvent
   | V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent
   | V2CoreAccountIncludingConfigurationMerchantUpdatedEvent
+  | V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatusUpdatedEvent
+  | V2CoreAccountIncludingConfigurationMoneyManagerUpdatedEvent
   | V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent
   | V2CoreAccountIncludingConfigurationRecipientUpdatedEvent
-  | V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent
-  | V2CoreAccountIncludingConfigurationStorerUpdatedEvent
   | V2CoreAccountIncludingDefaultsUpdatedEvent
   | V2CoreAccountIncludingFutureRequirementsUpdatedEvent
   | V2CoreAccountIncludingIdentityUpdatedEvent
@@ -646,6 +642,9 @@ export type Event =
   | V2IamStripeAccessGrantRequestedEvent
   | V2IamStripeAccessGrantUpdatedEvent
   | V2MoneyManagementAdjustmentCreatedEvent
+  | V2MoneyManagementDebitDisputeFailedEvent
+  | V2MoneyManagementDebitDisputeSubmittedEvent
+  | V2MoneyManagementDebitDisputeSucceededEvent
   | V2MoneyManagementFinancialAccountCreatedEvent
   | V2MoneyManagementFinancialAccountUpdatedEvent
   | V2MoneyManagementFinancialAccountStatementCreatedEvent
@@ -663,12 +662,14 @@ export type Event =
   | V2MoneyManagementOutboundPaymentFailedEvent
   | V2MoneyManagementOutboundPaymentPostedEvent
   | V2MoneyManagementOutboundPaymentReturnedEvent
+  | V2MoneyManagementOutboundPaymentUnderReviewEvent
   | V2MoneyManagementOutboundPaymentUpdatedEvent
   | V2MoneyManagementOutboundTransferCanceledEvent
   | V2MoneyManagementOutboundTransferCreatedEvent
   | V2MoneyManagementOutboundTransferFailedEvent
   | V2MoneyManagementOutboundTransferPostedEvent
   | V2MoneyManagementOutboundTransferReturnedEvent
+  | V2MoneyManagementOutboundTransferUnderReviewEvent
   | V2MoneyManagementOutboundTransferUpdatedEvent
   | V2MoneyManagementPayoutMethodCreatedEvent
   | V2MoneyManagementPayoutMethodUpdatedEvent
@@ -972,10 +973,10 @@ export type EventNotification =
   | V2CoreAccountIncludingConfigurationCustomerUpdatedEventNotification
   | V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEventNotification
   | V2CoreAccountIncludingConfigurationMerchantUpdatedEventNotification
+  | V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatusUpdatedEventNotification
+  | V2CoreAccountIncludingConfigurationMoneyManagerUpdatedEventNotification
   | V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEventNotification
   | V2CoreAccountIncludingConfigurationRecipientUpdatedEventNotification
-  | V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEventNotification
-  | V2CoreAccountIncludingConfigurationStorerUpdatedEventNotification
   | V2CoreAccountIncludingDefaultsUpdatedEventNotification
   | V2CoreAccountIncludingFutureRequirementsUpdatedEventNotification
   | V2CoreAccountIncludingIdentityUpdatedEventNotification
@@ -1055,6 +1056,9 @@ export type EventNotification =
   | V2IamStripeAccessGrantRequestedEventNotification
   | V2IamStripeAccessGrantUpdatedEventNotification
   | V2MoneyManagementAdjustmentCreatedEventNotification
+  | V2MoneyManagementDebitDisputeFailedEventNotification
+  | V2MoneyManagementDebitDisputeSubmittedEventNotification
+  | V2MoneyManagementDebitDisputeSucceededEventNotification
   | V2MoneyManagementFinancialAccountCreatedEventNotification
   | V2MoneyManagementFinancialAccountUpdatedEventNotification
   | V2MoneyManagementFinancialAccountStatementCreatedEventNotification
@@ -1072,12 +1076,14 @@ export type EventNotification =
   | V2MoneyManagementOutboundPaymentFailedEventNotification
   | V2MoneyManagementOutboundPaymentPostedEventNotification
   | V2MoneyManagementOutboundPaymentReturnedEventNotification
+  | V2MoneyManagementOutboundPaymentUnderReviewEventNotification
   | V2MoneyManagementOutboundPaymentUpdatedEventNotification
   | V2MoneyManagementOutboundTransferCanceledEventNotification
   | V2MoneyManagementOutboundTransferCreatedEventNotification
   | V2MoneyManagementOutboundTransferFailedEventNotification
   | V2MoneyManagementOutboundTransferPostedEventNotification
   | V2MoneyManagementOutboundTransferReturnedEventNotification
+  | V2MoneyManagementOutboundTransferUnderReviewEventNotification
   | V2MoneyManagementOutboundTransferUpdatedEventNotification
   | V2MoneyManagementPayoutMethodCreatedEventNotification
   | V2MoneyManagementPayoutMethodUpdatedEventNotification
@@ -6687,6 +6693,7 @@ export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
       | 'samsung_pay_payments'
       | 'sepa_bank_transfer_payments'
       | 'sepa_debit_payments'
+      | 'sunbit_payments'
       | 'swish_payments'
       | 'twint_payments'
       | 'us_bank_transfer_payments'
@@ -6714,6 +6721,93 @@ export interface V2CoreAccountIncludingConfigurationMerchantUpdatedEventNotifica
   fetchRelatedObject(): Promise<Core.Account>;
   fetchEvent(): Promise<
     V2CoreAccountIncludingConfigurationMerchantUpdatedEvent
+  >;
+}
+
+/**
+ * Occurs when the status of an Account's money manager configuration capability is updated.
+ */
+export interface V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatusUpdatedEvent
+  extends EventBase {
+  type: 'v2.core.account[configuration.money_manager].capability_status_updated';
+  // Retrieves data specific to this event.
+  data: V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatusUpdatedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Account>;
+}
+export interface V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatusUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.account[configuration.money_manager].capability_status_updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Account>;
+  fetchEvent(): Promise<
+    V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatusUpdatedEvent
+  >;
+}
+
+export namespace V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatusUpdatedEvent {
+  export interface Data {
+    /**
+     * Open Enum. The capability which had its status updated.
+     */
+    updated_capability: Data.UpdatedCapability;
+  }
+
+  export namespace Data {
+    export type UpdatedCapability =
+      | 'business_storage.inbound.cad'
+      | 'business_storage.inbound.eur'
+      | 'business_storage.inbound.gbp'
+      | 'business_storage.inbound.usd'
+      | 'business_storage.inbound.usdc'
+      | 'business_storage.outbound.cad'
+      | 'business_storage.outbound.eur'
+      | 'business_storage.outbound.gbp'
+      | 'business_storage.outbound.usd'
+      | 'business_storage.outbound.usdc'
+      | 'consumer_storage.inbound.usd'
+      | 'consumer_storage.inbound.usdc'
+      | 'consumer_storage.outbound.usd'
+      | 'consumer_storage.outbound.usdc'
+      | 'inbound_transfers.bank_accounts'
+      | 'outbound_payments.bank_accounts'
+      | 'outbound_payments.cards'
+      | 'outbound_payments.crypto_wallets'
+      | 'outbound_payments.financial_accounts'
+      | 'outbound_payments.paper_checks'
+      | 'outbound_transfers.bank_accounts'
+      | 'outbound_transfers.crypto_wallets'
+      | 'outbound_transfers.financial_accounts'
+      | 'received_credits.bank_accounts'
+      | 'received_credits.crypto_wallets'
+      | 'received_debits.bank_accounts';
+  }
+}
+
+/**
+ * Occurs when a MoneyManager's configuration is updated.
+ */
+export interface V2CoreAccountIncludingConfigurationMoneyManagerUpdatedEvent
+  extends EventBase {
+  type: 'v2.core.account[configuration.money_manager].updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Account>;
+}
+export interface V2CoreAccountIncludingConfigurationMoneyManagerUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.account[configuration.money_manager].updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Account>;
+  fetchEvent(): Promise<
+    V2CoreAccountIncludingConfigurationMoneyManagerUpdatedEvent
   >;
 }
 
@@ -6752,8 +6846,18 @@ export namespace V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpd
 
   export namespace Data {
     export type UpdatedCapability =
+      | 'bank_accounts.ach'
+      | 'bank_accounts.becs'
+      | 'bank_accounts.eft'
+      | 'bank_accounts.fedwire'
+      | 'bank_accounts.fps'
       | 'bank_accounts.instant'
       | 'bank_accounts.local'
+      | 'bank_accounts.npp'
+      | 'bank_accounts.rtp'
+      | 'bank_accounts.sepa_credit'
+      | 'bank_accounts.sepa_instant'
+      | 'bank_accounts.swift'
       | 'bank_accounts.wire'
       | 'cards'
       | 'crypto_wallets_v2'
@@ -6785,81 +6889,6 @@ export interface V2CoreAccountIncludingConfigurationRecipientUpdatedEventNotific
   fetchEvent(): Promise<
     V2CoreAccountIncludingConfigurationRecipientUpdatedEvent
   >;
-}
-
-/**
- * Occurs when the status of an Account's storer configuration capability is updated.
- */
-export interface V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent
-  extends EventBase {
-  type: 'v2.core.account[configuration.storer].capability_status_updated';
-  // Retrieves data specific to this event.
-  data: V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent.Data;
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Core.Account>;
-}
-export interface V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEventNotification
-  extends EventNotificationBase {
-  type: 'v2.core.account[configuration.storer].capability_status_updated';
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Core.Account>;
-  fetchEvent(): Promise<
-    V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent
-  >;
-}
-
-export namespace V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent {
-  export interface Data {
-    /**
-     * Open Enum. The capability which had its status updated.
-     */
-    updated_capability: Data.UpdatedCapability;
-  }
-
-  export namespace Data {
-    export type UpdatedCapability =
-      | 'consumer.holds_currencies.usd'
-      | 'financial_addressses.bank_accounts'
-      | 'financial_addressses.crypto_wallets'
-      | 'holds_currencies.eur'
-      | 'holds_currencies.gbp'
-      | 'holds_currencies.usd'
-      | 'holds_currencies.usdc'
-      | 'inbound_transfers.bank_accounts'
-      | 'outbound_payments.bank_accounts'
-      | 'outbound_payments.cards'
-      | 'outbound_payments.crypto_wallets'
-      | 'outbound_payments.financial_accounts'
-      | 'outbound_payments.paper_checks'
-      | 'outbound_transfers.bank_accounts'
-      | 'outbound_transfers.crypto_wallets'
-      | 'outbound_transfers.financial_accounts';
-  }
-}
-
-/**
- * Occurs when a Storer's configuration is updated.
- */
-export interface V2CoreAccountIncludingConfigurationStorerUpdatedEvent
-  extends EventBase {
-  type: 'v2.core.account[configuration.storer].updated';
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Core.Account>;
-}
-export interface V2CoreAccountIncludingConfigurationStorerUpdatedEventNotification
-  extends EventNotificationBase {
-  type: 'v2.core.account[configuration.storer].updated';
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<Core.Account>;
-  fetchEvent(): Promise<V2CoreAccountIncludingConfigurationStorerUpdatedEvent>;
 }
 
 /**
@@ -6980,6 +7009,7 @@ export namespace V2CoreAccountLinkReturnedEvent {
     export type Configuration =
       | 'customer'
       | 'merchant'
+      | 'money_manager'
       | 'recipient'
       | 'storer';
 
@@ -10379,6 +10409,66 @@ export interface V2MoneyManagementAdjustmentCreatedEventNotification
 }
 
 /**
+ * Occurs when a DebitDispute fails.
+ */
+export interface V2MoneyManagementDebitDisputeFailedEvent extends EventBase {
+  type: 'v2.money_management.debit_dispute.failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.DebitDispute>;
+}
+export interface V2MoneyManagementDebitDisputeFailedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.debit_dispute.failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.DebitDispute>;
+  fetchEvent(): Promise<V2MoneyManagementDebitDisputeFailedEvent>;
+}
+
+/**
+ * Occurs when a DebitDispute is submitted.
+ */
+export interface V2MoneyManagementDebitDisputeSubmittedEvent extends EventBase {
+  type: 'v2.money_management.debit_dispute.submitted';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.DebitDispute>;
+}
+export interface V2MoneyManagementDebitDisputeSubmittedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.debit_dispute.submitted';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.DebitDispute>;
+  fetchEvent(): Promise<V2MoneyManagementDebitDisputeSubmittedEvent>;
+}
+
+/**
+ * Occurs when a DebitDispute succeeds.
+ */
+export interface V2MoneyManagementDebitDisputeSucceededEvent extends EventBase {
+  type: 'v2.money_management.debit_dispute.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.DebitDispute>;
+}
+export interface V2MoneyManagementDebitDisputeSucceededEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.debit_dispute.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.DebitDispute>;
+  fetchEvent(): Promise<V2MoneyManagementDebitDisputeSucceededEvent>;
+}
+
+/**
  * Occurs when a FinancialAccount is created.
  */
 export interface V2MoneyManagementFinancialAccountCreatedEvent
@@ -10782,6 +10872,27 @@ export interface V2MoneyManagementOutboundPaymentReturnedEventNotification
 }
 
 /**
+ * Occurs when an OutboundPayment is placed under review.
+ */
+export interface V2MoneyManagementOutboundPaymentUnderReviewEvent
+  extends EventBase {
+  type: 'v2.money_management.outbound_payment.under_review';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.OutboundPayment>;
+}
+export interface V2MoneyManagementOutboundPaymentUnderReviewEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.outbound_payment.under_review';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.OutboundPayment>;
+  fetchEvent(): Promise<V2MoneyManagementOutboundPaymentUnderReviewEvent>;
+}
+
+/**
  * Occurs when an OutboundPayment is updated.
  */
 export interface V2MoneyManagementOutboundPaymentUpdatedEvent
@@ -10905,6 +11016,27 @@ export interface V2MoneyManagementOutboundTransferReturnedEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<MoneyManagement.OutboundTransfer>;
   fetchEvent(): Promise<V2MoneyManagementOutboundTransferReturnedEvent>;
+}
+
+/**
+ * Occurs when an OutboundTransfer is placed under review.
+ */
+export interface V2MoneyManagementOutboundTransferUnderReviewEvent
+  extends EventBase {
+  type: 'v2.money_management.outbound_transfer.under_review';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.OutboundTransfer>;
+}
+export interface V2MoneyManagementOutboundTransferUnderReviewEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.outbound_transfer.under_review';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.OutboundTransfer>;
+  fetchEvent(): Promise<V2MoneyManagementOutboundTransferUnderReviewEvent>;
 }
 
 /**
@@ -12548,10 +12680,10 @@ export declare namespace Events {
     V2CoreAccountIncludingConfigurationCustomerUpdatedEvent,
     V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent,
     V2CoreAccountIncludingConfigurationMerchantUpdatedEvent,
+    V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatusUpdatedEvent,
+    V2CoreAccountIncludingConfigurationMoneyManagerUpdatedEvent,
     V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent,
     V2CoreAccountIncludingConfigurationRecipientUpdatedEvent,
-    V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent,
-    V2CoreAccountIncludingConfigurationStorerUpdatedEvent,
     V2CoreAccountIncludingDefaultsUpdatedEvent,
     V2CoreAccountIncludingFutureRequirementsUpdatedEvent,
     V2CoreAccountIncludingIdentityUpdatedEvent,
@@ -12631,6 +12763,9 @@ export declare namespace Events {
     V2IamStripeAccessGrantRequestedEvent,
     V2IamStripeAccessGrantUpdatedEvent,
     V2MoneyManagementAdjustmentCreatedEvent,
+    V2MoneyManagementDebitDisputeFailedEvent,
+    V2MoneyManagementDebitDisputeSubmittedEvent,
+    V2MoneyManagementDebitDisputeSucceededEvent,
     V2MoneyManagementFinancialAccountCreatedEvent,
     V2MoneyManagementFinancialAccountUpdatedEvent,
     V2MoneyManagementFinancialAccountStatementCreatedEvent,
@@ -12648,12 +12783,14 @@ export declare namespace Events {
     V2MoneyManagementOutboundPaymentFailedEvent,
     V2MoneyManagementOutboundPaymentPostedEvent,
     V2MoneyManagementOutboundPaymentReturnedEvent,
+    V2MoneyManagementOutboundPaymentUnderReviewEvent,
     V2MoneyManagementOutboundPaymentUpdatedEvent,
     V2MoneyManagementOutboundTransferCanceledEvent,
     V2MoneyManagementOutboundTransferCreatedEvent,
     V2MoneyManagementOutboundTransferFailedEvent,
     V2MoneyManagementOutboundTransferPostedEvent,
     V2MoneyManagementOutboundTransferReturnedEvent,
+    V2MoneyManagementOutboundTransferUnderReviewEvent,
     V2MoneyManagementOutboundTransferUpdatedEvent,
     V2MoneyManagementPayoutMethodCreatedEvent,
     V2MoneyManagementPayoutMethodUpdatedEvent,
@@ -12955,10 +13092,10 @@ export declare namespace Events {
     V2CoreAccountIncludingConfigurationCustomerUpdatedEventNotification,
     V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEventNotification,
     V2CoreAccountIncludingConfigurationMerchantUpdatedEventNotification,
+    V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatusUpdatedEventNotification,
+    V2CoreAccountIncludingConfigurationMoneyManagerUpdatedEventNotification,
     V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEventNotification,
     V2CoreAccountIncludingConfigurationRecipientUpdatedEventNotification,
-    V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEventNotification,
-    V2CoreAccountIncludingConfigurationStorerUpdatedEventNotification,
     V2CoreAccountIncludingDefaultsUpdatedEventNotification,
     V2CoreAccountIncludingFutureRequirementsUpdatedEventNotification,
     V2CoreAccountIncludingIdentityUpdatedEventNotification,
@@ -13038,6 +13175,9 @@ export declare namespace Events {
     V2IamStripeAccessGrantRequestedEventNotification,
     V2IamStripeAccessGrantUpdatedEventNotification,
     V2MoneyManagementAdjustmentCreatedEventNotification,
+    V2MoneyManagementDebitDisputeFailedEventNotification,
+    V2MoneyManagementDebitDisputeSubmittedEventNotification,
+    V2MoneyManagementDebitDisputeSucceededEventNotification,
     V2MoneyManagementFinancialAccountCreatedEventNotification,
     V2MoneyManagementFinancialAccountUpdatedEventNotification,
     V2MoneyManagementFinancialAccountStatementCreatedEventNotification,
@@ -13055,12 +13195,14 @@ export declare namespace Events {
     V2MoneyManagementOutboundPaymentFailedEventNotification,
     V2MoneyManagementOutboundPaymentPostedEventNotification,
     V2MoneyManagementOutboundPaymentReturnedEventNotification,
+    V2MoneyManagementOutboundPaymentUnderReviewEventNotification,
     V2MoneyManagementOutboundPaymentUpdatedEventNotification,
     V2MoneyManagementOutboundTransferCanceledEventNotification,
     V2MoneyManagementOutboundTransferCreatedEventNotification,
     V2MoneyManagementOutboundTransferFailedEventNotification,
     V2MoneyManagementOutboundTransferPostedEventNotification,
     V2MoneyManagementOutboundTransferReturnedEventNotification,
+    V2MoneyManagementOutboundTransferUnderReviewEventNotification,
     V2MoneyManagementOutboundTransferUpdatedEventNotification,
     V2MoneyManagementPayoutMethodCreatedEventNotification,
     V2MoneyManagementPayoutMethodUpdatedEventNotification,

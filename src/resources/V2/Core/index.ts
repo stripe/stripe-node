@@ -50,6 +50,7 @@ import {V2 as V2Namespace10, FeeBatch, FeeBatchResource} from './FeeBatches.js';
 import {V2 as V2Namespace11, FeeEntry, FeeEntryResource} from './FeeEntries.js';
 import {AccountPersonToken} from './AccountPersonTokens.js';
 import {AccountPerson} from './AccountPersons.js';
+import {Health} from './Health/index.js';
 import {Vault} from './Vault/index.js';
 
 export {Account} from './Accounts.js';
@@ -80,6 +81,7 @@ export class Core {
   eventDestinations: EventDestinationResource;
   feeBatches: FeeBatchResource;
   feeEntries: FeeEntryResource;
+  health: Health;
   vault: Vault;
 
   constructor(private readonly stripe: Stripe) {
@@ -95,6 +97,7 @@ export class Core {
     this.eventDestinations = new EventDestinationResource(stripe);
     this.feeBatches = new FeeBatchResource(stripe);
     this.feeEntries = new FeeEntryResource(stripe);
+    this.health = new Health(stripe);
     this.vault = new Vault(stripe);
   }
 }
@@ -150,5 +153,6 @@ export declare namespace Core {
   export {FeeEntry, FeeEntryResource};
   export {AccountPersonToken};
   export {AccountPerson};
+  export {Health};
   export {Vault};
 }

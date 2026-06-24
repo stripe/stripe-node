@@ -32,7 +32,7 @@ export interface SettlementAllocationIntentSplit {
   /**
    * Details about the Flow object that settled the split.
    */
-  flow?: V2.Payments.SettlementAllocationIntentSplit.Flow;
+  flow?: SettlementAllocationIntentSplit.Flow;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -52,48 +52,44 @@ export interface SettlementAllocationIntentSplit {
   /**
    * The status of the SettlementAllocationIntentSplit.
    */
-  status: V2.Payments.SettlementAllocationIntentSplit.Status;
+  status: SettlementAllocationIntentSplit.Status;
 
   /**
    * The type of the SettlementAllocationIntentSplit.
    */
-  type: V2.Payments.SettlementAllocationIntentSplit.Type;
+  type: SettlementAllocationIntentSplit.Type;
 }
-export namespace V2 {
-  export namespace Payments {
-    export namespace SettlementAllocationIntentSplit {
-      export interface Flow {
-        /**
-         * If applicable, the ID of the OutboundPayment that created this transaction.
-         */
-        outbound_payment?: string;
+export namespace SettlementAllocationIntentSplit {
+  export interface Flow {
+    /**
+     * If applicable, the ID of the OutboundPayment that created this transaction.
+     */
+    outbound_payment?: string;
 
-        /**
-         * If applicable, the ID of the OutboundTransfer that created this transaction.
-         */
-        outbound_transfer?: string;
+    /**
+     * If applicable, the ID of the OutboundTransfer that created this transaction.
+     */
+    outbound_transfer?: string;
 
-        /**
-         * If applicable, the ID of the ReceivedCredit that created this transaction.
-         */
-        received_credit?: string;
+    /**
+     * If applicable, the ID of the ReceivedCredit that created this transaction.
+     */
+    received_credit?: string;
 
-        /**
-         * Type of the flow linked to the transaction which settled the SettlementAllocationIntentSplit. The field matching this value will contain the ID of the flow.
-         */
-        type: Flow.Type;
-      }
+    /**
+     * Type of the flow linked to the transaction which settled the SettlementAllocationIntentSplit. The field matching this value will contain the ID of the flow.
+     */
+    type: Flow.Type;
+  }
 
-      export type Status = 'canceled' | 'pending' | 'settled';
+  export type Status = 'canceled' | 'pending' | 'settled';
 
-      export type Type = 'credit' | 'debit';
+  export type Type = 'credit' | 'debit';
 
-      export namespace Flow {
-        export type Type =
-          | 'outbound_payment'
-          | 'outbound_transfer'
-          | 'received_credit';
-      }
-    }
+  export namespace Flow {
+    export type Type =
+      | 'outbound_payment'
+      | 'outbound_transfer'
+      | 'received_credit';
   }
 }

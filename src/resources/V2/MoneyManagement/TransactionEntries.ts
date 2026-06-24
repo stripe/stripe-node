@@ -52,7 +52,7 @@ export interface TransactionEntry {
   /**
    * The delta to the FinancialAccount's balance.
    */
-  balance_impact: V2.MoneyManagement.TransactionEntry.BalanceImpact;
+  balance_impact: TransactionEntry.BalanceImpact;
 
   /**
    * Time at which the object was created.
@@ -77,291 +77,287 @@ export interface TransactionEntry {
   /**
    * Details copied from the transaction that this TransactionEntry belongs to.
    */
-  transaction_details: V2.MoneyManagement.TransactionEntry.TransactionDetails;
+  transaction_details: TransactionEntry.TransactionDetails;
 
   /**
    * The v1 Treasury transaction entry associated with this transaction entry.
    */
   treasury_transaction_entry?: string;
 }
-export namespace V2 {
-  export namespace MoneyManagement {
-    export namespace TransactionEntry {
-      export interface BalanceImpact {
-        /**
-         * Impact to the available balance.
-         */
-        available: V2Amount;
+export namespace TransactionEntry {
+  export interface BalanceImpact {
+    /**
+     * Impact to the available balance.
+     */
+    available: V2Amount;
 
-        /**
-         * Impact to the inbound_pending balance.
-         */
-        inbound_pending: V2Amount;
+    /**
+     * Impact to the inbound_pending balance.
+     */
+    inbound_pending: V2Amount;
 
-        /**
-         * Impact to the outbound_pending balance.
-         */
-        outbound_pending: V2Amount;
-      }
+    /**
+     * Impact to the outbound_pending balance.
+     */
+    outbound_pending: V2Amount;
+  }
 
-      export interface TransactionDetails {
-        /**
-         * Closed Enum for now, and will be turned into an Open Enum soon. A descriptive category used to classify the Transaction.
-         */
-        category: TransactionDetails.Category;
+  export interface TransactionDetails {
+    /**
+     * Closed Enum for now, and will be turned into an Open Enum soon. A descriptive category used to classify the Transaction.
+     */
+    category: TransactionDetails.Category;
 
-        /**
-         * Indicates the FinancialAccount affected by this Transaction.
-         */
-        financial_account: string;
+    /**
+     * Indicates the FinancialAccount affected by this Transaction.
+     */
+    financial_account: string;
 
-        /**
-         * Details about the Flow object that created the Transaction.
-         */
-        flow?: TransactionDetails.Flow;
-      }
+    /**
+     * Details about the Flow object that created the Transaction.
+     */
+    flow?: TransactionDetails.Flow;
+  }
 
-      export namespace TransactionDetails {
-        export type Category =
-          | 'adjustment'
-          | 'advance'
-          | 'anticipation_repayment'
-          | 'balance_transfer'
-          | 'climate_order_purchase'
-          | 'climate_order_refund'
-          | 'connect_collection_transfer'
-          | 'connect_reserved_funds'
-          | 'contribution'
-          | 'currency_conversion'
-          | 'debit_dispute'
-          | 'dispute'
-          | 'dispute_reversal'
-          | 'financing_paydown'
-          | 'financing_paydown_reversal'
-          | 'inbound_payment'
-          | 'inbound_payment_failure'
-          | 'inbound_transfer'
-          | 'inbound_transfer_reversal'
-          | 'india_mdr_processing_fee'
-          | 'issuing_dispute'
-          | 'issuing_dispute_fraud_liability_debit'
-          | 'issuing_dispute_provisional_credit'
-          | 'issuing_dispute_provisional_credit_reversal'
-          | 'minimum_balance_hold'
-          | 'network_cost'
-          | 'obligation'
-          | 'outbound_payment'
-          | 'outbound_payment_reversal'
-          | 'outbound_transfer'
-          | 'outbound_transfer_reversal'
-          | 'partial_capture_reversal'
-          | 'payment_method_passthrough_fee'
-          | 'payment_network_reserved_funds'
-          | 'platform_earning'
-          | 'platform_earning_refund'
-          | 'platform_fee'
-          | 'received_credit'
-          | 'received_credit_reversal'
-          | 'received_debit'
-          | 'received_debit_reversal'
-          | 'refund'
-          | 'refund_failure'
-          | 'risk_reserved_funds'
-          | 'stripe_balance_payment_debit'
-          | 'stripe_balance_payment_debit_reversal'
-          | 'stripe_fee'
-          | 'stripe_fee_tax'
-          | 'tax_fund'
-          | 'tax_withholding'
-          | 'transfer_reversal'
-          | 'unreconciled_customer_funds';
+  export namespace TransactionDetails {
+    export type Category =
+      | 'adjustment'
+      | 'advance'
+      | 'anticipation_repayment'
+      | 'balance_transfer'
+      | 'climate_order_purchase'
+      | 'climate_order_refund'
+      | 'connect_collection_transfer'
+      | 'connect_reserved_funds'
+      | 'contribution'
+      | 'currency_conversion'
+      | 'debit_dispute'
+      | 'dispute'
+      | 'dispute_reversal'
+      | 'financing_paydown'
+      | 'financing_paydown_reversal'
+      | 'inbound_payment'
+      | 'inbound_payment_failure'
+      | 'inbound_transfer'
+      | 'inbound_transfer_reversal'
+      | 'india_mdr_processing_fee'
+      | 'issuing_dispute'
+      | 'issuing_dispute_fraud_liability_debit'
+      | 'issuing_dispute_provisional_credit'
+      | 'issuing_dispute_provisional_credit_reversal'
+      | 'minimum_balance_hold'
+      | 'network_cost'
+      | 'obligation'
+      | 'outbound_payment'
+      | 'outbound_payment_reversal'
+      | 'outbound_transfer'
+      | 'outbound_transfer_reversal'
+      | 'partial_capture_reversal'
+      | 'payment_method_passthrough_fee'
+      | 'payment_network_reserved_funds'
+      | 'platform_earning'
+      | 'platform_earning_refund'
+      | 'platform_fee'
+      | 'received_credit'
+      | 'received_credit_reversal'
+      | 'received_debit'
+      | 'received_debit_reversal'
+      | 'refund'
+      | 'refund_failure'
+      | 'risk_reserved_funds'
+      | 'stripe_balance_payment_debit'
+      | 'stripe_balance_payment_debit_reversal'
+      | 'stripe_fee'
+      | 'stripe_fee_tax'
+      | 'tax_fund'
+      | 'tax_withholding'
+      | 'transfer_reversal'
+      | 'unreconciled_customer_funds';
 
-        export interface Flow {
-          /**
-           * If applicable, the ID of the Adjustment that created this Transaction.
-           */
-          adjustment?: string;
+    export interface Flow {
+      /**
+       * If applicable, the ID of the Adjustment that created this Transaction.
+       */
+      adjustment?: string;
 
-          /**
-           * If applicable, the ID of the Application Fee that created this Transaction.
-           */
-          application_fee?: string;
+      /**
+       * If applicable, the ID of the Application Fee that created this Transaction.
+       */
+      application_fee?: string;
 
-          /**
-           * If applicable, the ID of the Application Fee Refund that created this Transaction.
-           */
-          application_fee_refund?: string;
+      /**
+       * If applicable, the ID of the Application Fee Refund that created this Transaction.
+       */
+      application_fee_refund?: string;
 
-          /**
-           * If applicable, the ID of the Charge that created this Transaction.
-           */
-          charge?: string;
+      /**
+       * If applicable, the ID of the Charge that created this Transaction.
+       */
+      charge?: string;
 
-          /**
-           * In the future, this will be the ID of the currency conversion that created this Transaction. For now, this field is always null.
-           */
-          currency_conversion?: string;
+      /**
+       * In the future, this will be the ID of the currency conversion that created this Transaction. For now, this field is always null.
+       */
+      currency_conversion?: string;
 
-          /**
-           * If applicable, the ID of the DebitDispute that created this Transaction.
-           */
-          debit_dispute?: string;
+      /**
+       * If applicable, the ID of the DebitDispute that created this Transaction.
+       */
+      debit_dispute?: string;
 
-          /**
-           * If applicable, the ID of the Dispute that created this Transaction.
-           */
-          dispute?: string;
+      /**
+       * If applicable, the ID of the Dispute that created this Transaction.
+       */
+      dispute?: string;
 
-          /**
-           * If applicable, the ID of the FeeTransaction that created this Transaction.
-           */
-          fee_transaction?: string;
+      /**
+       * If applicable, the ID of the FeeTransaction that created this Transaction.
+       */
+      fee_transaction?: string;
 
-          /**
-           * If applicable, the ID of the InboundTransfer that created this Transaction.
-           */
-          inbound_transfer?: string;
+      /**
+       * If applicable, the ID of the InboundTransfer that created this Transaction.
+       */
+      inbound_transfer?: string;
 
-          /**
-           * If applicable, the ID of the OutboundPayment that created this Transaction.
-           */
-          outbound_payment?: string;
+      /**
+       * If applicable, the ID of the OutboundPayment that created this Transaction.
+       */
+      outbound_payment?: string;
 
-          /**
-           * If applicable, the ID of the OutboundTransfer that created this Transaction.
-           */
-          outbound_transfer?: string;
+      /**
+       * If applicable, the ID of the OutboundTransfer that created this Transaction.
+       */
+      outbound_transfer?: string;
 
-          /**
-           * If applicable, the ID of the Payout that created this Transaction.
-           */
-          payout?: string;
+      /**
+       * If applicable, the ID of the Payout that created this Transaction.
+       */
+      payout?: string;
 
-          /**
-           * If applicable, the ID of the ReceivedCredit that created this Transaction.
-           */
-          received_credit?: string;
+      /**
+       * If applicable, the ID of the ReceivedCredit that created this Transaction.
+       */
+      received_credit?: string;
 
-          /**
-           * If applicable, the ID of the ReceivedDebit that created this Transaction.
-           */
-          received_debit?: string;
+      /**
+       * If applicable, the ID of the ReceivedDebit that created this Transaction.
+       */
+      received_debit?: string;
 
-          /**
-           * If applicable, the ID of the Refund that created this Transaction.
-           */
-          refund?: string;
+      /**
+       * If applicable, the ID of the Refund that created this Transaction.
+       */
+      refund?: string;
 
-          /**
-           * If applicable, the ID of the Reserve Hold that created this Transaction.
-           */
-          reserve_hold?: string;
+      /**
+       * If applicable, the ID of the Reserve Hold that created this Transaction.
+       */
+      reserve_hold?: string;
 
-          /**
-           * If applicable, the ID of the Reserve Release that created this Transaction.
-           */
-          reserve_release?: string;
+      /**
+       * If applicable, the ID of the Reserve Release that created this Transaction.
+       */
+      reserve_release?: string;
 
-          /**
-           * If applicable, the ID of the TaxFund that created this Transaction.
-           */
-          tax_fund?: string;
+      /**
+       * If applicable, the ID of the TaxFund that created this Transaction.
+       */
+      tax_fund?: string;
 
-          /**
-           * If applicable, the ID of the Topup that created this Transaction.
-           */
-          topup?: string;
+      /**
+       * If applicable, the ID of the Topup that created this Transaction.
+       */
+      topup?: string;
 
-          /**
-           * If applicable, the ID of the Transfer that created this Transaction.
-           */
-          transfer?: string;
+      /**
+       * If applicable, the ID of the Transfer that created this Transaction.
+       */
+      transfer?: string;
 
-          /**
-           * If applicable, the ID of the Transfer Reversal that created this Transaction.
-           */
-          transfer_reversal?: string;
+      /**
+       * If applicable, the ID of the Transfer Reversal that created this Transaction.
+       */
+      transfer_reversal?: string;
 
-          /**
-           * If applicable, the ID of the Treasury CreditReversal that created this Transaction.
-           */
-          treasury_credit_reversal?: string;
+      /**
+       * If applicable, the ID of the Treasury CreditReversal that created this Transaction.
+       */
+      treasury_credit_reversal?: string;
 
-          /**
-           * If applicable, the ID of the Treasury DebitReversal that created this Transaction.
-           */
-          treasury_debit_reversal?: string;
+      /**
+       * If applicable, the ID of the Treasury DebitReversal that created this Transaction.
+       */
+      treasury_debit_reversal?: string;
 
-          /**
-           * If applicable, the ID of the Treasury InboundTransfer that created this Transaction.
-           */
-          treasury_inbound_transfer?: string;
+      /**
+       * If applicable, the ID of the Treasury InboundTransfer that created this Transaction.
+       */
+      treasury_inbound_transfer?: string;
 
-          /**
-           * If applicable, the ID of the Treasury IssuingAuthorization that created this Transaction.
-           */
-          treasury_issuing_authorization?: string;
+      /**
+       * If applicable, the ID of the Treasury IssuingAuthorization that created this Transaction.
+       */
+      treasury_issuing_authorization?: string;
 
-          /**
-           * If applicable, the ID of the Treasury OutboundPayment that created this Transaction.
-           */
-          treasury_outbound_payment?: string;
+      /**
+       * If applicable, the ID of the Treasury OutboundPayment that created this Transaction.
+       */
+      treasury_outbound_payment?: string;
 
-          /**
-           * If applicable, the ID of the Treasury OutboundTransfer that created this Transaction.
-           */
-          treasury_outbound_transfer?: string;
+      /**
+       * If applicable, the ID of the Treasury OutboundTransfer that created this Transaction.
+       */
+      treasury_outbound_transfer?: string;
 
-          /**
-           * If applicable, the ID of the Treasury ReceivedCredit that created this Transaction.
-           */
-          treasury_received_credit?: string;
+      /**
+       * If applicable, the ID of the Treasury ReceivedCredit that created this Transaction.
+       */
+      treasury_received_credit?: string;
 
-          /**
-           * If applicable, the ID of the Treasury ReceivedDebit that created this Transaction.
-           */
-          treasury_received_debit?: string;
+      /**
+       * If applicable, the ID of the Treasury ReceivedDebit that created this Transaction.
+       */
+      treasury_received_debit?: string;
 
-          /**
-           * Open Enum. Type of the flow that created the Transaction. The field matching this value will contain the ID of the flow.
-           */
-          type: Flow.Type;
-        }
+      /**
+       * Open Enum. Type of the flow that created the Transaction. The field matching this value will contain the ID of the flow.
+       */
+      type: Flow.Type;
+    }
 
-        export namespace Flow {
-          export type Type =
-            | 'adjustment'
-            | 'application_fee'
-            | 'application_fee_refund'
-            | 'charge'
-            | 'currency_conversion'
-            | 'debit_dispute'
-            | 'dispute'
-            | 'fee_transaction'
-            | 'inbound_transfer'
-            | 'outbound_payment'
-            | 'outbound_transfer'
-            | 'payout'
-            | 'received_credit'
-            | 'received_debit'
-            | 'refund'
-            | 'reserve_hold'
-            | 'reserve_release'
-            | 'tax_fund'
-            | 'topup'
-            | 'transfer'
-            | 'transfer_reversal'
-            | 'treasury_credit_reversal'
-            | 'treasury_debit_reversal'
-            | 'treasury_inbound_transfer'
-            | 'treasury_issuing_authorization'
-            | 'treasury_other'
-            | 'treasury_outbound_payment'
-            | 'treasury_outbound_transfer'
-            | 'treasury_received_credit'
-            | 'treasury_received_debit';
-        }
-      }
+    export namespace Flow {
+      export type Type =
+        | 'adjustment'
+        | 'application_fee'
+        | 'application_fee_refund'
+        | 'charge'
+        | 'currency_conversion'
+        | 'debit_dispute'
+        | 'dispute'
+        | 'fee_transaction'
+        | 'inbound_transfer'
+        | 'outbound_payment'
+        | 'outbound_transfer'
+        | 'payout'
+        | 'received_credit'
+        | 'received_debit'
+        | 'refund'
+        | 'reserve_hold'
+        | 'reserve_release'
+        | 'tax_fund'
+        | 'topup'
+        | 'transfer'
+        | 'transfer_reversal'
+        | 'treasury_credit_reversal'
+        | 'treasury_debit_reversal'
+        | 'treasury_inbound_transfer'
+        | 'treasury_issuing_authorization'
+        | 'treasury_other'
+        | 'treasury_outbound_payment'
+        | 'treasury_outbound_transfer'
+        | 'treasury_received_credit'
+        | 'treasury_received_debit';
     }
   }
 }

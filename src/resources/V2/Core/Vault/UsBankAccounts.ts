@@ -92,6 +92,7 @@ export class UsBankAccountResource extends StripeResource {
   }
   /**
    * Confirm microdeposits amounts or descriptor code that you have received from the Send Microdeposits request. Once you correctly confirm this, this US Bank Account will be verified and eligible to transfer funds with.
+   * @throws Stripe.ControlledByAlternateResourceError
    */
   confirmMicrodeposits(
     id: string,
@@ -109,6 +110,7 @@ export class UsBankAccountResource extends StripeResource {
   }
   /**
    * Send microdeposits in order to verify your US Bank Account so it is eligible to transfer funds. This will start the verification process and you must Confirm Microdeposits to successfully verify your US Bank Account.
+   * @throws Stripe.ControlledByAlternateResourceError
    */
   sendMicrodeposits(
     id: string,
@@ -139,7 +141,7 @@ export interface UsBankAccount {
   /**
    * The alternative reference for this payout method, if it's a projected payout method.
    */
-  alternative_reference?: V2.Core.Vault.UsBankAccount.AlternativeReference;
+  alternative_reference?: UsBankAccount.AlternativeReference;
 
   /**
    * Whether this USBankAccount object was archived.
@@ -149,7 +151,7 @@ export interface UsBankAccount {
   /**
    * Closed Enum. The type of bank account (checking or savings).
    */
-  bank_account_type: V2.Core.Vault.UsBankAccount.BankAccountType;
+  bank_account_type: UsBankAccount.BankAccountType;
 
   /**
    * The name of the bank this bank account belongs to. This field is populated automatically by Stripe based on the routing number.
@@ -194,71 +196,65 @@ export interface UsBankAccount {
   /**
    * The bank account verification details.
    */
-  verification: V2.Core.Vault.UsBankAccount.Verification;
+  verification: UsBankAccount.Verification;
 }
-export namespace V2 {
-  export namespace Core {
-    export namespace Vault {
-      export namespace UsBankAccount {
-        export interface AlternativeReference {
-          /**
-           * The ID of the alternative resource being referenced.
-           */
-          id: string;
+export namespace UsBankAccount {
+  export interface AlternativeReference {
+    /**
+     * The ID of the alternative resource being referenced.
+     */
+    id: string;
 
-          /**
-           * The type of the alternative reference (e.g., external_account for V1 external accounts).
-           */
-          type: AlternativeReference.Type;
-        }
+    /**
+     * The type of the alternative reference (e.g., external_account for V1 external accounts).
+     */
+    type: AlternativeReference.Type;
+  }
 
-        export type BankAccountType = 'checking' | 'savings';
+  export type BankAccountType = 'checking' | 'savings';
 
-        export interface Verification {
-          /**
-           * The microdeposit verification details if the status is awaiting verification.
-           */
-          microdeposit_verification_details?: Verification.MicrodepositVerificationDetails;
+  export interface Verification {
+    /**
+     * The microdeposit verification details if the status is awaiting verification.
+     */
+    microdeposit_verification_details?: Verification.MicrodepositVerificationDetails;
 
-          /**
-           * The bank account verification status.
-           */
-          status: Verification.Status;
-        }
+    /**
+     * The bank account verification status.
+     */
+    status: Verification.Status;
+  }
 
-        export namespace AlternativeReference {
-          export type Type = 'external_account' | 'payment_method';
-        }
+  export namespace AlternativeReference {
+    export type Type = 'external_account' | 'payment_method';
+  }
 
-        export namespace Verification {
-          export interface MicrodepositVerificationDetails {
-            /**
-             * Time when microdeposits will expire and have to be re-sent.
-             */
-            expires: string;
+  export namespace Verification {
+    export interface MicrodepositVerificationDetails {
+      /**
+       * Time when microdeposits will expire and have to be re-sent.
+       */
+      expires: string;
 
-            /**
-             * Microdeposit type can be amounts or descriptor_type.
-             */
-            microdeposit_type: MicrodepositVerificationDetails.MicrodepositType;
+      /**
+       * Microdeposit type can be amounts or descriptor_type.
+       */
+      microdeposit_type: MicrodepositVerificationDetails.MicrodepositType;
 
-            /**
-             * Time when microdeposits were sent.
-             */
-            sent: string;
-          }
+      /**
+       * Time when microdeposits were sent.
+       */
+      sent: string;
+    }
 
-          export type Status =
-            | 'awaiting_verification'
-            | 'unverified'
-            | 'verification_failed'
-            | 'verified';
+    export type Status =
+      | 'awaiting_verification'
+      | 'unverified'
+      | 'verification_failed'
+      | 'verified';
 
-          export namespace MicrodepositVerificationDetails {
-            export type MicrodepositType = 'amounts' | 'descriptor_code';
-          }
-        }
-      }
+    export namespace MicrodepositVerificationDetails {
+      export type MicrodepositType = 'amounts' | 'descriptor_code';
     }
   }
 }

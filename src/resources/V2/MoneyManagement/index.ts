@@ -53,40 +53,47 @@ import {
 } from './OutboundTransfers.js';
 import {
   V2 as V2Namespace10,
+  PayoutIntent,
+  PayoutIntentResource,
+} from './PayoutIntents.js';
+import {
+  V2 as V2Namespace11,
   PayoutMethod,
   PayoutMethodResource,
 } from './PayoutMethods.js';
 import {
-  V2 as V2Namespace11,
+  V2 as V2Namespace12,
   PayoutMethodsBankAccountSpec,
   PayoutMethodsBankAccountSpecResource,
 } from './PayoutMethodsBankAccountSpec.js';
 import {
-  V2 as V2Namespace12,
+  V2 as V2Namespace13,
   ReceivedCredit,
   ReceivedCreditResource,
 } from './ReceivedCredits.js';
 import {
-  V2 as V2Namespace13,
+  V2 as V2Namespace14,
   ReceivedDebit,
   ReceivedDebitResource,
 } from './ReceivedDebits.js';
 import {
-  V2 as V2Namespace14,
+  V2 as V2Namespace15,
   RecipientVerification,
   RecipientVerificationResource,
 } from './RecipientVerifications.js';
 import {
-  V2 as V2Namespace15,
+  V2 as V2Namespace16,
   Transaction,
   TransactionResource,
 } from './Transactions.js';
 import {
-  V2 as V2Namespace16,
+  V2 as V2Namespace17,
   TransactionEntry,
   TransactionEntryResource,
 } from './TransactionEntries.js';
+import {FinancialAddressDebitSimulation} from './FinancialAddressDebitSimulations.js';
 import {FinancialAccountStatement} from './FinancialAccountStatements.js';
+import {TestHelpers} from './TestHelpers/index.js';
 
 export {Adjustment} from './Adjustments.js';
 export {CurrencyConversion} from './CurrencyConversions.js';
@@ -98,6 +105,7 @@ export {OutboundPayment} from './OutboundPayments.js';
 export {OutboundPaymentQuote} from './OutboundPaymentQuotes.js';
 export {OutboundSetupIntent} from './OutboundSetupIntents.js';
 export {OutboundTransfer} from './OutboundTransfers.js';
+export {PayoutIntent} from './PayoutIntents.js';
 export {PayoutMethod} from './PayoutMethods.js';
 export {PayoutMethodsBankAccountSpec} from './PayoutMethodsBankAccountSpec.js';
 export {ReceivedCredit} from './ReceivedCredits.js';
@@ -105,6 +113,7 @@ export {ReceivedDebit} from './ReceivedDebits.js';
 export {RecipientVerification} from './RecipientVerifications.js';
 export {Transaction} from './Transactions.js';
 export {TransactionEntry} from './TransactionEntries.js';
+export {FinancialAddressDebitSimulation} from './FinancialAddressDebitSimulations.js';
 export {FinancialAccountStatement} from './FinancialAccountStatements.js';
 
 export class MoneyManagement {
@@ -118,6 +127,7 @@ export class MoneyManagement {
   outboundPaymentQuotes: OutboundPaymentQuoteResource;
   outboundSetupIntents: OutboundSetupIntentResource;
   outboundTransfers: OutboundTransferResource;
+  payoutIntents: PayoutIntentResource;
   payoutMethods: PayoutMethodResource;
   payoutMethodsBankAccountSpecs: PayoutMethodsBankAccountSpecResource;
   receivedCredits: ReceivedCreditResource;
@@ -125,6 +135,7 @@ export class MoneyManagement {
   recipientVerifications: RecipientVerificationResource;
   transactions: TransactionResource;
   transactionEntries: TransactionEntryResource;
+  testHelpers: TestHelpers;
 
   constructor(private readonly stripe: Stripe) {
     this.adjustments = new AdjustmentResource(stripe);
@@ -137,6 +148,7 @@ export class MoneyManagement {
     this.outboundPaymentQuotes = new OutboundPaymentQuoteResource(stripe);
     this.outboundSetupIntents = new OutboundSetupIntentResource(stripe);
     this.outboundTransfers = new OutboundTransferResource(stripe);
+    this.payoutIntents = new PayoutIntentResource(stripe);
     this.payoutMethods = new PayoutMethodResource(stripe);
     this.payoutMethodsBankAccountSpecs = new PayoutMethodsBankAccountSpecResource(
       stripe
@@ -146,6 +158,7 @@ export class MoneyManagement {
     this.recipientVerifications = new RecipientVerificationResource(stripe);
     this.transactions = new TransactionResource(stripe);
     this.transactionEntries = new TransactionEntryResource(stripe);
+    this.testHelpers = new TestHelpers(stripe);
   }
 }
 
@@ -194,28 +207,36 @@ export declare namespace MoneyManagement {
   export import OutboundTransferRetrieveParams = V2Namespace9.MoneyManagement.OutboundTransferRetrieveParams;
   export import OutboundTransferCancelParams = V2Namespace9.MoneyManagement.OutboundTransferCancelParams;
   export {OutboundTransfer, OutboundTransferResource};
-  export import PayoutMethodListParams = V2Namespace10.MoneyManagement.PayoutMethodListParams;
-  export import PayoutMethodRetrieveParams = V2Namespace10.MoneyManagement.PayoutMethodRetrieveParams;
-  export import PayoutMethodArchiveParams = V2Namespace10.MoneyManagement.PayoutMethodArchiveParams;
-  export import PayoutMethodUnarchiveParams = V2Namespace10.MoneyManagement.PayoutMethodUnarchiveParams;
+  export import PayoutIntentListParams = V2Namespace10.MoneyManagement.PayoutIntentListParams;
+  export import PayoutIntentCreateParams = V2Namespace10.MoneyManagement.PayoutIntentCreateParams;
+  export import PayoutIntentRetrieveParams = V2Namespace10.MoneyManagement.PayoutIntentRetrieveParams;
+  export import PayoutIntentUpdateParams = V2Namespace10.MoneyManagement.PayoutIntentUpdateParams;
+  export import PayoutIntentCancelParams = V2Namespace10.MoneyManagement.PayoutIntentCancelParams;
+  export {PayoutIntent, PayoutIntentResource};
+  export import PayoutMethodListParams = V2Namespace11.MoneyManagement.PayoutMethodListParams;
+  export import PayoutMethodRetrieveParams = V2Namespace11.MoneyManagement.PayoutMethodRetrieveParams;
+  export import PayoutMethodArchiveParams = V2Namespace11.MoneyManagement.PayoutMethodArchiveParams;
+  export import PayoutMethodUnarchiveParams = V2Namespace11.MoneyManagement.PayoutMethodUnarchiveParams;
   export {PayoutMethod, PayoutMethodResource};
-  export import PayoutMethodsBankAccountSpecRetrieveParams = V2Namespace11.MoneyManagement.PayoutMethodsBankAccountSpecRetrieveParams;
+  export import PayoutMethodsBankAccountSpecRetrieveParams = V2Namespace12.MoneyManagement.PayoutMethodsBankAccountSpecRetrieveParams;
   export {PayoutMethodsBankAccountSpec, PayoutMethodsBankAccountSpecResource};
-  export import ReceivedCreditListParams = V2Namespace12.MoneyManagement.ReceivedCreditListParams;
-  export import ReceivedCreditRetrieveParams = V2Namespace12.MoneyManagement.ReceivedCreditRetrieveParams;
+  export import ReceivedCreditListParams = V2Namespace13.MoneyManagement.ReceivedCreditListParams;
+  export import ReceivedCreditRetrieveParams = V2Namespace13.MoneyManagement.ReceivedCreditRetrieveParams;
   export {ReceivedCredit, ReceivedCreditResource};
-  export import ReceivedDebitListParams = V2Namespace13.MoneyManagement.ReceivedDebitListParams;
-  export import ReceivedDebitRetrieveParams = V2Namespace13.MoneyManagement.ReceivedDebitRetrieveParams;
+  export import ReceivedDebitListParams = V2Namespace14.MoneyManagement.ReceivedDebitListParams;
+  export import ReceivedDebitRetrieveParams = V2Namespace14.MoneyManagement.ReceivedDebitRetrieveParams;
   export {ReceivedDebit, ReceivedDebitResource};
-  export import RecipientVerificationCreateParams = V2Namespace14.MoneyManagement.RecipientVerificationCreateParams;
-  export import RecipientVerificationRetrieveParams = V2Namespace14.MoneyManagement.RecipientVerificationRetrieveParams;
-  export import RecipientVerificationAcknowledgeParams = V2Namespace14.MoneyManagement.RecipientVerificationAcknowledgeParams;
+  export import RecipientVerificationCreateParams = V2Namespace15.MoneyManagement.RecipientVerificationCreateParams;
+  export import RecipientVerificationRetrieveParams = V2Namespace15.MoneyManagement.RecipientVerificationRetrieveParams;
+  export import RecipientVerificationAcknowledgeParams = V2Namespace15.MoneyManagement.RecipientVerificationAcknowledgeParams;
   export {RecipientVerification, RecipientVerificationResource};
-  export import TransactionListParams = V2Namespace15.MoneyManagement.TransactionListParams;
-  export import TransactionRetrieveParams = V2Namespace15.MoneyManagement.TransactionRetrieveParams;
+  export import TransactionListParams = V2Namespace16.MoneyManagement.TransactionListParams;
+  export import TransactionRetrieveParams = V2Namespace16.MoneyManagement.TransactionRetrieveParams;
   export {Transaction, TransactionResource};
-  export import TransactionEntryListParams = V2Namespace16.MoneyManagement.TransactionEntryListParams;
-  export import TransactionEntryRetrieveParams = V2Namespace16.MoneyManagement.TransactionEntryRetrieveParams;
+  export import TransactionEntryListParams = V2Namespace17.MoneyManagement.TransactionEntryListParams;
+  export import TransactionEntryRetrieveParams = V2Namespace17.MoneyManagement.TransactionEntryRetrieveParams;
   export {TransactionEntry, TransactionEntryResource};
+  export {FinancialAddressDebitSimulation};
   export {FinancialAccountStatement};
+  export {TestHelpers};
 }

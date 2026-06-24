@@ -101,7 +101,7 @@ export interface ApprovalRequest {
   /**
    * The action that was requested.
    */
-  action: V2.Core.ApprovalRequest.Action;
+  action: ApprovalRequest.Action;
 
   /**
    * Time this ApprovalRequest was created.
@@ -131,307 +131,303 @@ export interface ApprovalRequest {
   /**
    * The requester of this ApprovalRequest.
    */
-  requested_by: V2.Core.ApprovalRequest.RequestedBy;
+  requested_by: ApprovalRequest.RequestedBy;
 
   /**
    * The review of this ApprovalRequest if it has been reviewed.
    */
-  review?: V2.Core.ApprovalRequest.Review;
+  review?: ApprovalRequest.Review;
 
   /**
    * The rule associated with this ApprovalRequest.
    */
-  rule?: V2.Core.ApprovalRequest.Rule;
+  rule?: ApprovalRequest.Rule;
 
   /**
    * The status of this ApprovalRequest.
    */
-  status: V2.Core.ApprovalRequest.Status;
+  status: ApprovalRequest.Status;
 
   /**
    * The details of the status of this ApprovalRequest.
    */
-  status_details?: V2.Core.ApprovalRequest.StatusDetails;
+  status_details?: ApprovalRequest.StatusDetails;
 
   /**
    * The transitions of the status of this ApprovalRequest.
    */
-  status_transitions?: V2.Core.ApprovalRequest.StatusTransitions;
+  status_transitions?: ApprovalRequest.StatusTransitions;
 }
-export namespace V2 {
-  export namespace Core {
-    export namespace ApprovalRequest {
-      export type Action =
-        | 'charge.create'
-        | 'dispute.close'
-        | 'inbound_transfers.money_management.create'
-        | 'invoice.create'
-        | 'outbound_payments.money_management.create'
-        | 'outbound_transfers.money_management.create'
-        | 'payment_intent.create'
-        | 'payment_intent.update'
-        | 'payout.create'
-        | 'price.update'
-        | 'refund.create'
-        | 'setup_intent.create'
-        | 'subscription.create'
-        | 'subscription.update'
-        | 'topup.create'
-        | 'transfer.create';
+export namespace ApprovalRequest {
+  export type Action =
+    | 'charge.create'
+    | 'dispute.close'
+    | 'inbound_transfers.money_management.create'
+    | 'invoice.create'
+    | 'outbound_payments.money_management.create'
+    | 'outbound_transfers.money_management.create'
+    | 'payment_intent.create'
+    | 'payment_intent.update'
+    | 'payout.create'
+    | 'price.update'
+    | 'refund.create'
+    | 'setup_intent.create'
+    | 'subscription.create'
+    | 'subscription.update'
+    | 'topup.create'
+    | 'transfer.create';
 
-      export interface RequestedBy {
+  export interface RequestedBy {
+    /**
+     * Stripe-defined identifier for the requester (e.g. a restricted API key token).
+     */
+    id: string;
+
+    /**
+     * Merchant-defined name for the requester.
+     */
+    name?: string;
+  }
+
+  export interface Review {
+    /**
+     * The reason provided by the reviewer.
+     */
+    reason?: string;
+
+    /**
+     * The result of the review.
+     */
+    result: Review.Result;
+
+    /**
+     * Timestamp when the review was performed.
+     */
+    reviewed_at: string;
+
+    /**
+     * The reviewer who performed the review.
+     */
+    reviewed_by: Review.ReviewedBy;
+  }
+
+  export interface Rule {
+    /**
+     * The name of the rule.
+     */
+    name: string;
+  }
+
+  export type Status =
+    | 'approved'
+    | 'canceled'
+    | 'execution_failed'
+    | 'execution_started'
+    | 'execution_succeeded'
+    | 'expired'
+    | 'failed'
+    | 'pending'
+    | 'rejected'
+    | 'requires_execution'
+    | 'requires_review'
+    | 'succeeded';
+
+  export interface StatusDetails {
+    /**
+     * Deprecated: use requires_execution status instead.
+     */
+    approved?: StatusDetails.Approved;
+
+    /**
+     * Deprecated: use canceled status instead.
+     */
+    canceled?: StatusDetails.Canceled;
+
+    /**
+     * Deprecated: use failed status instead.
+     */
+    execution_failed?: StatusDetails.ExecutionFailed;
+
+    /**
+     * Deprecated: use requires_execution status instead.
+     */
+    execution_started?: StatusDetails.ExecutionStarted;
+
+    /**
+     * Deprecated: use succeeded status instead.
+     */
+    execution_succeeded?: StatusDetails.ExecutionSucceeded;
+
+    /**
+     * Deprecated: use expired status instead.
+     */
+    expired?: StatusDetails.Expired;
+
+    /**
+     * Details when the approval request failed.
+     */
+    failed?: StatusDetails.Failed;
+
+    /**
+     * Deprecated: use requires_review status instead.
+     */
+    pending?: StatusDetails.Pending;
+
+    /**
+     * Deprecated: use rejected status instead.
+     */
+    rejected?: StatusDetails.Rejected;
+
+    /**
+     * Details when the approval request succeeded.
+     */
+    succeeded?: StatusDetails.Succeeded;
+  }
+
+  export interface StatusTransitions {
+    /**
+     * Timestamp when the approval request was canceled.
+     */
+    canceled_at?: string;
+
+    /**
+     * Timestamp when the approval request expired.
+     */
+    expired_at?: string;
+
+    /**
+     * Timestamp when the approval request failed.
+     */
+    failed_at?: string;
+
+    /**
+     * Timestamp when the approval request was rejected.
+     */
+    rejected_at?: string;
+
+    /**
+     * Timestamp when the approval request moved to requires_execution status.
+     */
+    requires_execution_at?: string;
+
+    /**
+     * Timestamp when the approval request succeeded.
+     */
+    succeeded_at?: string;
+  }
+
+  export namespace Review {
+    export type Result = 'approved' | 'rejected';
+
+    export interface ReviewedBy {
+      /**
+       * Stripe-defined identifier for the reviewer (e.g. a restricted API key token).
+       */
+      id: string;
+
+      /**
+       * Merchant-defined name for the reviewer.
+       */
+      name: string;
+    }
+  }
+
+  export namespace StatusDetails {
+    export interface Approved {
+      /**
+       * The reason provided when approving the request.
+       */
+      reason?: string;
+    }
+
+    export interface Canceled {}
+
+    export interface ExecutionFailed {
+      /**
+       * The error code for the failed execution.
+       */
+      code: string;
+
+      /**
+       * The error message for the failed execution.
+       */
+      message: string;
+
+      /**
+       * The error type for the failed execution.
+       */
+      type: string;
+    }
+
+    export interface ExecutionStarted {}
+
+    export interface ExecutionSucceeded {
+      /**
+       * The result of the successful execution.
+       */
+      result: ExecutionSucceeded.Result;
+    }
+
+    export interface Expired {}
+
+    export interface Failed {
+      /**
+       * The error code for the failed execution.
+       */
+      error_code: string;
+
+      /**
+       * The error message for the failed execution.
+       */
+      error_message: string;
+
+      /**
+       * The error type for the failed execution.
+       */
+      error_type: string;
+    }
+
+    export interface Pending {}
+
+    export interface Rejected {
+      /**
+       * The reason provided when rejecting the request.
+       */
+      reason?: string;
+    }
+
+    export interface Succeeded {
+      /**
+       * The result of the successful execution.
+       */
+      result: Succeeded.Result;
+    }
+
+    export namespace ExecutionSucceeded {
+      export interface Result {
         /**
-         * Stripe-defined identifier for the requester (e.g. a restricted API key token).
+         * The unique identifier of the executed object.
          */
         id: string;
 
         /**
-         * Merchant-defined name for the requester.
+         * The object type of the executed resource.
          */
-        name?: string;
+        object: string;
       }
+    }
 
-      export interface Review {
+    export namespace Succeeded {
+      export interface Result {
         /**
-         * The reason provided by the reviewer.
+         * The unique identifier of the executed object.
          */
-        reason?: string;
-
-        /**
-         * The result of the review.
-         */
-        result: Review.Result;
+        id: string;
 
         /**
-         * Timestamp when the review was performed.
+         * The object type of the executed resource.
          */
-        reviewed_at: string;
-
-        /**
-         * The reviewer who performed the review.
-         */
-        reviewed_by: Review.ReviewedBy;
-      }
-
-      export interface Rule {
-        /**
-         * The name of the rule.
-         */
-        name: string;
-      }
-
-      export type Status =
-        | 'approved'
-        | 'canceled'
-        | 'execution_failed'
-        | 'execution_started'
-        | 'execution_succeeded'
-        | 'expired'
-        | 'failed'
-        | 'pending'
-        | 'rejected'
-        | 'requires_execution'
-        | 'requires_review'
-        | 'succeeded';
-
-      export interface StatusDetails {
-        /**
-         * Deprecated: use requires_execution status instead.
-         */
-        approved?: StatusDetails.Approved;
-
-        /**
-         * Deprecated: use canceled status instead.
-         */
-        canceled?: StatusDetails.Canceled;
-
-        /**
-         * Deprecated: use failed status instead.
-         */
-        execution_failed?: StatusDetails.ExecutionFailed;
-
-        /**
-         * Deprecated: use requires_execution status instead.
-         */
-        execution_started?: StatusDetails.ExecutionStarted;
-
-        /**
-         * Deprecated: use succeeded status instead.
-         */
-        execution_succeeded?: StatusDetails.ExecutionSucceeded;
-
-        /**
-         * Deprecated: use expired status instead.
-         */
-        expired?: StatusDetails.Expired;
-
-        /**
-         * Details when the approval request failed.
-         */
-        failed?: StatusDetails.Failed;
-
-        /**
-         * Deprecated: use requires_review status instead.
-         */
-        pending?: StatusDetails.Pending;
-
-        /**
-         * Deprecated: use rejected status instead.
-         */
-        rejected?: StatusDetails.Rejected;
-
-        /**
-         * Details when the approval request succeeded.
-         */
-        succeeded?: StatusDetails.Succeeded;
-      }
-
-      export interface StatusTransitions {
-        /**
-         * Timestamp when the approval request was canceled.
-         */
-        canceled_at?: string;
-
-        /**
-         * Timestamp when the approval request expired.
-         */
-        expired_at?: string;
-
-        /**
-         * Timestamp when the approval request failed.
-         */
-        failed_at?: string;
-
-        /**
-         * Timestamp when the approval request was rejected.
-         */
-        rejected_at?: string;
-
-        /**
-         * Timestamp when the approval request moved to requires_execution status.
-         */
-        requires_execution_at?: string;
-
-        /**
-         * Timestamp when the approval request succeeded.
-         */
-        succeeded_at?: string;
-      }
-
-      export namespace Review {
-        export type Result = 'approved' | 'rejected';
-
-        export interface ReviewedBy {
-          /**
-           * Stripe-defined identifier for the reviewer (e.g. a restricted API key token).
-           */
-          id: string;
-
-          /**
-           * Merchant-defined name for the reviewer.
-           */
-          name: string;
-        }
-      }
-
-      export namespace StatusDetails {
-        export interface Approved {
-          /**
-           * The reason provided when approving the request.
-           */
-          reason?: string;
-        }
-
-        export interface Canceled {}
-
-        export interface ExecutionFailed {
-          /**
-           * The error code for the failed execution.
-           */
-          code: string;
-
-          /**
-           * The error message for the failed execution.
-           */
-          message: string;
-
-          /**
-           * The error type for the failed execution.
-           */
-          type: string;
-        }
-
-        export interface ExecutionStarted {}
-
-        export interface ExecutionSucceeded {
-          /**
-           * The result of the successful execution.
-           */
-          result: ExecutionSucceeded.Result;
-        }
-
-        export interface Expired {}
-
-        export interface Failed {
-          /**
-           * The error code for the failed execution.
-           */
-          error_code: string;
-
-          /**
-           * The error message for the failed execution.
-           */
-          error_message: string;
-
-          /**
-           * The error type for the failed execution.
-           */
-          error_type: string;
-        }
-
-        export interface Pending {}
-
-        export interface Rejected {
-          /**
-           * The reason provided when rejecting the request.
-           */
-          reason?: string;
-        }
-
-        export interface Succeeded {
-          /**
-           * The result of the successful execution.
-           */
-          result: Succeeded.Result;
-        }
-
-        export namespace ExecutionSucceeded {
-          export interface Result {
-            /**
-             * The unique identifier of the executed object.
-             */
-            id: string;
-
-            /**
-             * The object type of the executed resource.
-             */
-            object: string;
-          }
-        }
-
-        export namespace Succeeded {
-          export interface Result {
-            /**
-             * The unique identifier of the executed object.
-             */
-            id: string;
-
-            /**
-             * The object type of the executed resource.
-             */
-            object: string;
-          }
-        }
+        object: string;
       }
     }
   }

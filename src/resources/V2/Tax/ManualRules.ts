@@ -250,111 +250,107 @@ export interface ManualRule {
   /**
    * Location where the rule applies.
    */
-  location?: V2.Tax.ManualRule.Location;
+  location?: ManualRule.Location;
 
   /**
    * Products associated with the rule.
    */
-  products: Array<V2.Tax.ManualRule.Product>;
+  products: Array<ManualRule.Product>;
 
   /**
    * Tax rates to be applied.
    */
-  scheduled_tax_rates: Array<V2.Tax.ManualRule.ScheduledTaxRate>;
+  scheduled_tax_rates: Array<ManualRule.ScheduledTaxRate>;
 
   /**
    * The status of the ManualRule object.
    */
-  status: V2.Tax.ManualRule.Status;
+  status: ManualRule.Status;
 }
-export namespace V2 {
-  export namespace Tax {
-    export namespace ManualRule {
-      export interface Location {
-        /**
-         * Country ISO-3166.
-         */
-        country: string;
+export namespace ManualRule {
+  export interface Location {
+    /**
+     * Country ISO-3166.
+     */
+    country: string;
 
-        /**
-         * State ISO-3166.
-         */
-        state?: string;
-      }
+    /**
+     * State ISO-3166.
+     */
+    state?: string;
+  }
 
-      export interface Product {
-        /**
-         * The licensed item identifier.
-         */
-        licensed_item?: string;
+  export interface Product {
+    /**
+     * The licensed item identifier.
+     */
+    licensed_item?: string;
 
-        /**
-         * The metered item identifier.
-         */
-        metered_item?: string;
+    /**
+     * The metered item identifier.
+     */
+    metered_item?: string;
 
-        /**
-         * The tax code for the product.
-         */
-        tax_code?: string;
+    /**
+     * The tax code for the product.
+     */
+    tax_code?: string;
 
-        /**
-         * The type of the product.
-         */
-        type: Product.Type;
-      }
+    /**
+     * The type of the product.
+     */
+    type: Product.Type;
+  }
 
-      export interface ScheduledTaxRate {
-        /**
-         * The tax rates to be applied.
-         */
-        rates: Array<ScheduledTaxRate.Rate>;
+  export interface ScheduledTaxRate {
+    /**
+     * The tax rates to be applied.
+     */
+    rates: Array<ScheduledTaxRate.Rate>;
 
-        /**
-         * The start time for the tax rate.
-         */
-        starts_at?: string;
-      }
+    /**
+     * The start time for the tax rate.
+     */
+    starts_at?: string;
+  }
 
-      export type Status = 'active' | 'inactive';
+  export type Status = 'active' | 'inactive';
 
-      export namespace Product {
-        export type Type = 'licensed_item' | 'metered_item' | 'tax_code';
-      }
+  export namespace Product {
+    export type Type = 'licensed_item' | 'metered_item' | 'tax_code';
+  }
 
-      export namespace ScheduledTaxRate {
-        export interface Rate {
-          /**
-           * Country of the tax rate.
-           */
-          country?: string;
+  export namespace ScheduledTaxRate {
+    export interface Rate {
+      /**
+       * Country of the tax rate.
+       */
+      country?: string;
 
-          /**
-           * Description of the tax rate.
-           */
-          description?: string;
+      /**
+       * Description of the tax rate.
+       */
+      description?: string;
 
-          /**
-           * Display name of the tax rate as it will be shown on the invoice.
-           */
-          display_name: string;
+      /**
+       * Display name of the tax rate as it will be shown on the invoice.
+       */
+      display_name: string;
 
-          /**
-           * Jurisdiction of the tax rate should apply as it will be shown on the invoice.
-           */
-          jurisdiction?: string;
+      /**
+       * Jurisdiction of the tax rate should apply as it will be shown on the invoice.
+       */
+      jurisdiction?: string;
 
-          /**
-           * Percentage of the tax rate. Must be positive and maximum of 4 decimal points.
-           */
-          percentage: Decimal;
+      /**
+       * Percentage of the tax rate. Must be positive and maximum of 4 decimal points.
+       */
+      percentage: Decimal;
 
-          /**
-           * State of the tax rate.
-           */
-          state?: string;
-        }
-      }
+      /**
+       * State of the tax rate.
+       */
+      state?: string;
     }
   }
 }

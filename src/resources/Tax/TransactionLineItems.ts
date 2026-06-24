@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-import {Metadata, Address} from '../../shared.js';
+import {Metadata} from '../../shared.js';
 import {RequestOptions} from '../../lib.js';
 export interface TransactionLineItem {
   /**
@@ -34,11 +34,6 @@ export interface TransactionLineItem {
   metadata: Metadata | null;
 
   /**
-   * The address of the location where this line item's event or service takes place. Depending on the [tax code](https://docs.stripe.com/tax/tax-codes), providing a performance location is required, optional, or not supported. Use this to provide the address inline without pre-creating a [TaxLocation](https://docs.stripe.com/api/tax/location) object. Can't be used with `performance_location`.
-   */
-  performance_location_details?: Tax.TransactionLineItem.PerformanceLocationDetails | null;
-
-  /**
    * The ID of an existing [Product](https://docs.stripe.com/api/products/object).
    */
   product: string | null;
@@ -56,12 +51,12 @@ export interface TransactionLineItem {
   /**
    * If `type=reversal`, contains information about what was reversed.
    */
-  reversal: Tax.TransactionLineItem.Reversal | null;
+  reversal: TransactionLineItem.Reversal | null;
 
   /**
    * Specifies whether the `amount` includes taxes. If `tax_behavior=inclusive`, then the amount includes taxes.
    */
-  tax_behavior: Tax.TransactionLineItem.TaxBehavior;
+  tax_behavior: TransactionLineItem.TaxBehavior;
 
   /**
    * The [tax code](https://docs.stripe.com/tax/tax-categories) ID used for this resource.
@@ -71,23 +66,17 @@ export interface TransactionLineItem {
   /**
    * If `reversal`, this line item reverses an earlier transaction.
    */
-  type: Tax.TransactionLineItem.Type;
+  type: TransactionLineItem.Type;
 }
-export namespace Tax {
-  export namespace TransactionLineItem {
-    export interface PerformanceLocationDetails {
-      address: Address;
-    }
-
-    export interface Reversal {
-      /**
-       * The `id` of the line item to reverse in the original transaction.
-       */
-      original_line_item: string;
-    }
-
-    export type TaxBehavior = 'exclusive' | 'inclusive';
-
-    export type Type = 'reversal' | 'transaction';
+export namespace TransactionLineItem {
+  export interface Reversal {
+    /**
+     * The `id` of the line item to reverse in the original transaction.
+     */
+    original_line_item: string;
   }
+
+  export type TaxBehavior = 'exclusive' | 'inclusive';
+
+  export type Type = 'reversal' | 'transaction';
 }

@@ -10,7 +10,7 @@ import {
   Metadata,
   Address,
 } from '../shared.js';
-import {RequestOptions, Response} from '../lib.js';
+import {RequestOptions, Response, ApiSearchResultPromise} from '../lib.js';
 
 export class PaymentRecordResource extends StripeResource {
   /**
@@ -26,6 +26,26 @@ export class PaymentRecordResource extends StripeResource {
       `/v1/payment_records/${encodeURIComponent(id)}`,
       params,
       options
+    ) as any;
+  }
+  /**
+   * Search for PaymentRecords you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
+   * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
+   * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
+   * to an hour behind during outages. Search functionality is not available to merchants in India.
+   */
+  search(
+    params: PaymentRecordSearchParams,
+    options?: RequestOptions
+  ): ApiSearchResultPromise<PaymentRecord> {
+    return this._makeRequest(
+      'GET',
+      '/v1/payment_records/search',
+      params,
+      options,
+      {
+        methodType: 'search',
+      }
     ) as any;
   }
   /**
@@ -1261,6 +1281,16 @@ export namespace PaymentRecord {
        * The last four digits of the gift card number.
        */
       last4: string | null;
+
+      /**
+       * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
+       */
+      location?: string;
+
+      /**
+       * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
+       */
+      reader?: string;
 
       /**
        * The transaction ID from the gift card processor.
@@ -3735,11 +3765,6 @@ export namespace PaymentRecordReportPaymentAttemptInformationalParams {
 }
 export interface PaymentRecordReportRefundParams {
   /**
-   * The outcome of the reported refund.
-   */
-  outcome: PaymentRecordReportRefundParams.Outcome;
-
-  /**
    * Processor information for this refund.
    */
   processor_details: PaymentRecordReportRefundParams.ProcessorDetails;
@@ -3770,6 +3795,11 @@ export interface PaymentRecordReportRefundParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
+   * The outcome of the reported refund.
+   */
+  outcome?: PaymentRecordReportRefundParams.Outcome;
+
+  /**
    * A key to group refunds together.
    */
   refund_group?: string;
@@ -3780,8 +3810,6 @@ export interface PaymentRecordReportRefundParams {
   refunded?: PaymentRecordReportRefundParams.Refunded;
 }
 export namespace PaymentRecordReportRefundParams {
-  export type Outcome = 'failed' | 'refunded';
-
   export interface ProcessorDetails {
     /**
      * Information about the custom processor used to make this refund.
@@ -3818,6 +3846,8 @@ export namespace PaymentRecordReportRefundParams {
     failure_reason?: Failed.FailureReason;
   }
 
+  export type Outcome = 'failed' | 'refunded';
+
   export interface Refunded {
     /**
      * When the reported refund completed. Measured in seconds since the Unix epoch.
@@ -3844,4 +3874,25 @@ export namespace PaymentRecordReportRefundParams {
       refund_reference: string;
     }
   }
+}
+export interface PaymentRecordSearchParams {
+  /**
+   * The search query string. See [search query language](https://docs.stripe.com/search#search-query-language) and the list of supported [query fields for payment records](https://docs.stripe.com/search#query-fields-for-paymentrecords).
+   */
+  query: string;
+
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+
+  /**
+   * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+   */
+  limit?: number;
+
+  /**
+   * A cursor for pagination across multiple pages of results. Don't include this parameter on the first call. Use the next_page value returned in a previous response to request subsequent results.
+   */
+  page?: string;
 }

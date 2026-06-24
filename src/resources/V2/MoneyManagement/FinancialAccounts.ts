@@ -107,12 +107,12 @@ export interface FinancialAccount {
   /**
    * If this is a `accrued_fees` FinancialAccount, this hash include details specific to `accrued_fees` FinancialAccount.
    */
-  accrued_fees?: V2.MoneyManagement.FinancialAccount.AccruedFees;
+  accrued_fees?: FinancialAccount.AccruedFees;
 
   /**
    * Multi-currency balance of this FinancialAccount, split by availability state. Each balance is represented as a hash where the key is the three-letter ISO currency code, in lowercase, and the value is the amount for that currency.
    */
-  balance: V2.MoneyManagement.FinancialAccount.Balance;
+  balance: FinancialAccount.Balance;
 
   /**
    * Open Enum. Two-letter country code that represents the country where the LegalEntity associated with the FinancialAccount is based in.
@@ -138,7 +138,7 @@ export interface FinancialAccount {
    * If this is a managed FinancialAccount, `managed_by` indicates the product that created and manages this FinancialAccount. For managed FinancialAccounts,
    * creation of money management resources can only be orchestrated by the managing product.
    */
-  managed_by?: V2.MoneyManagement.FinancialAccount.ManagedBy;
+  managed_by?: FinancialAccount.ManagedBy;
 
   /**
    * Metadata associated with the FinancialAccount.
@@ -148,55 +148,180 @@ export interface FinancialAccount {
   /**
    * If this is a `multiprocessor_settlement` FinancialAccount, this hash includes details specific to `multiprocessor_settlement` FinancialAccounts.
    */
-  multiprocessor_settlement?: V2.MoneyManagement.FinancialAccount.MultiprocessorSettlement;
+  multiprocessor_settlement?: FinancialAccount.MultiprocessorSettlement;
 
   /**
    * If this is a `other` FinancialAccount, this hash indicates what the actual type is. Upgrade your API version to see it reflected in `type`.
    */
-  other?: V2.MoneyManagement.FinancialAccount.Other;
+  other?: FinancialAccount.Other;
 
   /**
    * If this is a `payments` FinancialAccount, this hash include details specific to `payments` FinancialAccount.
    */
-  payments?: V2.MoneyManagement.FinancialAccount.Payments;
+  payments?: FinancialAccount.Payments;
 
   /**
    * Closed Enum. An enum representing the status of the FinancialAccount. This indicates whether or not the FinancialAccount can be used for any money movement flows.
    */
-  status: V2.MoneyManagement.FinancialAccount.Status;
+  status: FinancialAccount.Status;
 
   /**
    * Additional details related to the status of the FinancialAccount.
    */
-  status_details?: V2.MoneyManagement.FinancialAccount.StatusDetails;
+  status_details?: FinancialAccount.StatusDetails;
 
   /**
    * If this is a `storage` FinancialAccount, this hash includes details specific to `storage` FinancialAccounts.
    */
-  storage?: V2.MoneyManagement.FinancialAccount.Storage;
+  storage?: FinancialAccount.Storage;
 
   /**
    * Type of the FinancialAccount. An additional hash is included on the FinancialAccount with a name matching this value.
    * It contains additional information specific to the FinancialAccount type.
    */
-  type: V2.MoneyManagement.FinancialAccount.Type;
+  type: FinancialAccount.Type;
 }
-export namespace V2 {
-  export namespace MoneyManagement {
-    export namespace FinancialAccount {
-      export interface AccruedFees {
-        /**
-         * The currencies enabled for fee accrual on this FinancialAccount.
-         */
-        currencies: Array<string>;
+export namespace FinancialAccount {
+  export interface AccruedFees {
+    /**
+     * The currencies enabled for fee accrual on this FinancialAccount.
+     */
+    currencies: Array<string>;
 
-        /**
-         * Direction of fee accrual for this FinancialAccount.
-         */
-        direction: AccruedFees.Direction;
-      }
+    /**
+     * Direction of fee accrual for this FinancialAccount.
+     */
+    direction: AccruedFees.Direction;
+  }
 
-      export interface Balance {
+  export interface Balance {
+    /**
+     * Balance that can be used for money movement.
+     */
+    available: {
+      [key: string]: V2Amount;
+    };
+
+    /**
+     * Balance of inbound funds that will later transition to the `available` balance.
+     */
+    inbound_pending: {
+      [key: string]: V2Amount;
+    };
+
+    /**
+     * Balance of funds that are being used for a pending outbound money movement.
+     */
+    outbound_pending: {
+      [key: string]: V2Amount;
+    };
+  }
+
+  export interface ManagedBy {
+    /**
+     * Enum describing the Stripe product that is managing this FinancialAccount.
+     */
+    type: 'multiprocessor_settlement';
+  }
+
+  export interface MultiprocessorSettlement {
+    /**
+     * Settlement currencies enabled for this FinancialAccount.
+     */
+    settlement_currencies: Array<string>;
+  }
+
+  export interface Other {
+    /**
+     * The type of the FinancialAccount, represented as a string. Upgrade your API version to see the type reflected in `financial_account.type`.
+     */
+    type: string;
+  }
+
+  export interface Payments {
+    /**
+     * The balance of the `payments` FinancialAccount is a mix of payment processing and stored value funds, and this field
+     * describes the breakdown between the two. The sum will match the balance of the FinancialAccount.
+     */
+    balance_by_funds_type?: Payments.BalanceByFundsType;
+
+    /**
+     * The currency that non-settlement currency payments will be converted to.
+     */
+    default_currency: string;
+
+    /**
+     * Settlement currencies enabled for this FinancialAccount. Payments in other currencies will be automatically converted to `default_currency`.
+     */
+    settlement_currencies: Array<string>;
+
+    /**
+     * Describes the available balance when it was projected.
+     */
+    starting_balance?: Payments.StartingBalance;
+  }
+
+  export type Status = 'closed' | 'open' | 'pending';
+
+  export interface StatusDetails {
+    /**
+     * Details related to the closed state of the FinancialAccount.
+     */
+    closed?: StatusDetails.Closed;
+  }
+
+  export interface Storage {
+    /**
+     * The usage type for funds in this FinancialAccount. Can be used to specify that the funds are for Consumer activity.
+     */
+    funds_usage_type?: Storage.FundsUsageType;
+
+    /**
+     * The currencies that this FinancialAccount can hold.
+     */
+    holds_currencies: Array<string>;
+  }
+
+  export type Type =
+    | 'accrued_fees'
+    | 'multiprocessor_settlement'
+    | 'other'
+    | 'payments'
+    | 'storage';
+
+  export namespace AccruedFees {
+    export type Direction = 'payable' | 'receivable';
+  }
+
+  export namespace Payments {
+    export interface BalanceByFundsType {
+      /**
+       * Payment processing funds are those that are received for goods or services and may only be used for payouts to self. These funds may be converted to stored value funds.
+       */
+      payment_processing: BalanceByFundsType.PaymentProcessing;
+
+      /**
+       * Stored value funds may be used for either payouts to self or payments to others.
+       */
+      stored_value: BalanceByFundsType.StoredValue;
+    }
+
+    export interface StartingBalance {
+      /**
+       * When the balance was projected.
+       */
+      at: string;
+
+      /**
+       * The available balance at the time when the balance was projected.
+       */
+      available: {
+        [key: string]: V2Amount;
+      };
+    }
+
+    export namespace BalanceByFundsType {
+      export interface PaymentProcessing {
         /**
          * Balance that can be used for money movement.
          */
@@ -219,195 +344,63 @@ export namespace V2 {
         };
       }
 
-      export interface ManagedBy {
+      export interface StoredValue {
         /**
-         * Enum describing the Stripe product that is managing this FinancialAccount.
+         * Balance that can be used for money movement.
          */
-        type: 'multiprocessor_settlement';
-      }
-
-      export interface MultiprocessorSettlement {
-        /**
-         * Settlement currencies enabled for this FinancialAccount.
-         */
-        settlement_currencies: Array<string>;
-      }
-
-      export interface Other {
-        /**
-         * The type of the FinancialAccount, represented as a string. Upgrade your API version to see the type reflected in `financial_account.type`.
-         */
-        type: string;
-      }
-
-      export interface Payments {
-        /**
-         * The balance of the `payments` FinancialAccount is a mix of payment processing and stored value funds, and this field
-         * describes the breakdown between the two. The sum will match the balance of the FinancialAccount.
-         */
-        balance_by_funds_type?: Payments.BalanceByFundsType;
+        available: {
+          [key: string]: V2Amount;
+        };
 
         /**
-         * The currency that non-settlement currency payments will be converted to.
+         * Balance of inbound funds that will later transition to the `available` balance.
          */
-        default_currency: string;
+        inbound_pending: {
+          [key: string]: V2Amount;
+        };
 
         /**
-         * Settlement currencies enabled for this FinancialAccount. Payments in other currencies will be automatically converted to `default_currency`.
+         * Balance of funds that are being used for a pending outbound money movement.
          */
-        settlement_currencies: Array<string>;
-
-        /**
-         * Describes the available balance when it was projected.
-         */
-        starting_balance?: Payments.StartingBalance;
-      }
-
-      export type Status = 'closed' | 'open' | 'pending';
-
-      export interface StatusDetails {
-        /**
-         * Details related to the closed state of the FinancialAccount.
-         */
-        closed?: StatusDetails.Closed;
-      }
-
-      export interface Storage {
-        /**
-         * The usage type for funds in this FinancialAccount. Can be used to specify that the funds are for Consumer activity.
-         */
-        funds_usage_type?: Storage.FundsUsageType;
-
-        /**
-         * The currencies that this FinancialAccount can hold.
-         */
-        holds_currencies: Array<string>;
-      }
-
-      export type Type =
-        | 'accrued_fees'
-        | 'multiprocessor_settlement'
-        | 'other'
-        | 'payments'
-        | 'storage';
-
-      export namespace AccruedFees {
-        export type Direction = 'payable' | 'receivable';
-      }
-
-      export namespace Payments {
-        export interface BalanceByFundsType {
-          /**
-           * Payment processing funds are those that are received for goods or services and may only be used for payouts to self. These funds may be converted to stored value funds.
-           */
-          payment_processing: BalanceByFundsType.PaymentProcessing;
-
-          /**
-           * Stored value funds may be used for either payouts to self or payments to others.
-           */
-          stored_value: BalanceByFundsType.StoredValue;
-        }
-
-        export interface StartingBalance {
-          /**
-           * When the balance was projected.
-           */
-          at: string;
-
-          /**
-           * The available balance at the time when the balance was projected.
-           */
-          available: {
-            [key: string]: V2Amount;
-          };
-        }
-
-        export namespace BalanceByFundsType {
-          export interface PaymentProcessing {
-            /**
-             * Balance that can be used for money movement.
-             */
-            available: {
-              [key: string]: V2Amount;
-            };
-
-            /**
-             * Balance of inbound funds that will later transition to the `available` balance.
-             */
-            inbound_pending: {
-              [key: string]: V2Amount;
-            };
-
-            /**
-             * Balance of funds that are being used for a pending outbound money movement.
-             */
-            outbound_pending: {
-              [key: string]: V2Amount;
-            };
-          }
-
-          export interface StoredValue {
-            /**
-             * Balance that can be used for money movement.
-             */
-            available: {
-              [key: string]: V2Amount;
-            };
-
-            /**
-             * Balance of inbound funds that will later transition to the `available` balance.
-             */
-            inbound_pending: {
-              [key: string]: V2Amount;
-            };
-
-            /**
-             * Balance of funds that are being used for a pending outbound money movement.
-             */
-            outbound_pending: {
-              [key: string]: V2Amount;
-            };
-          }
-        }
-      }
-
-      export namespace StatusDetails {
-        export interface Closed {
-          /**
-           * The forwarding settings for the closed FinancialAccount.
-           */
-          forwarding_settings?: Closed.ForwardingSettings;
-
-          /**
-           * The reason the FinancialAccount was closed.
-           */
-          reason: Closed.Reason;
-        }
-
-        export namespace Closed {
-          export interface ForwardingSettings {
-            /**
-             * The address to send forwarded payments to.
-             */
-            payment_method?: string;
-
-            /**
-             * The address to send forwarded payouts to.
-             */
-            payout_method?: string;
-          }
-
-          export type Reason =
-            | 'account_closed'
-            | 'closed_by_platform'
-            | 'other';
-        }
-      }
-
-      export namespace Storage {
-        export type FundsUsageType = 'business' | 'consumer';
+        outbound_pending: {
+          [key: string]: V2Amount;
+        };
       }
     }
+  }
+
+  export namespace StatusDetails {
+    export interface Closed {
+      /**
+       * The forwarding settings for the closed FinancialAccount.
+       */
+      forwarding_settings?: Closed.ForwardingSettings;
+
+      /**
+       * The reason the FinancialAccount was closed.
+       */
+      reason: Closed.Reason;
+    }
+
+    export namespace Closed {
+      export interface ForwardingSettings {
+        /**
+         * The address to send forwarded payments to.
+         */
+        payment_method?: string;
+
+        /**
+         * The address to send forwarded payouts to.
+         */
+        payout_method?: string;
+      }
+
+      export type Reason = 'account_closed' | 'closed_by_platform' | 'other';
+    }
+  }
+
+  export namespace Storage {
+    export type FundsUsageType = 'business' | 'consumer';
   }
 }
 export namespace V2 {
@@ -508,9 +501,9 @@ export namespace V2 {
       limit?: number;
 
       /**
-       * The status of the FinancialAccount to filter by. By default, closed FinancialAccounts are not returned.
+       * Filter for FinancialAccount `status`. By default, closed FinancialAccounts are not returned.
        */
-      status?: FinancialAccountListParams.Status;
+      statuses?: Array<FinancialAccountListParams.Status>;
 
       /**
        * Filter for FinancialAccount `type`. By default, FinancialAccounts of any `type` are returned.

@@ -355,17 +355,17 @@ export interface PricingPlanSubscription {
   /**
    * Details about why the subscription was canceled, if applicable. Includes system-generated reason.
    */
-  cancellation_details?: V2.Billing.PricingPlanSubscription.CancellationDetails;
+  cancellation_details?: PricingPlanSubscription.CancellationDetails;
 
   /**
    * Current collection status of this subscription.
    */
-  collection_status: V2.Billing.PricingPlanSubscription.CollectionStatus;
+  collection_status: PricingPlanSubscription.CollectionStatus;
 
   /**
    * Timestamps for collection status transitions.
    */
-  collection_status_transitions: V2.Billing.PricingPlanSubscription.CollectionStatusTransitions;
+  collection_status_transitions: PricingPlanSubscription.CollectionStatusTransitions;
 
   /**
    * Time at which the object was created.
@@ -375,7 +375,7 @@ export interface PricingPlanSubscription {
   /**
    * Details about Discounts applied to this subscription.
    */
-  discount_details?: Array<V2.Billing.PricingPlanSubscription.DiscountDetail>;
+  discount_details?: Array<PricingPlanSubscription.DiscountDetail>;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -396,7 +396,7 @@ export interface PricingPlanSubscription {
    * Pricing plan component details for the subscription, populated when pricing_plan_component_details is included.
    */
   pricing_plan_component_details?: Array<
-    V2.Billing.PricingPlanSubscription.PricingPlanComponentDetail
+    PricingPlanSubscription.PricingPlanComponentDetail
   >;
 
   /**
@@ -407,579 +407,571 @@ export interface PricingPlanSubscription {
   /**
    * Current servicing status of this subscription.
    */
-  servicing_status: V2.Billing.PricingPlanSubscription.ServicingStatus;
+  servicing_status: PricingPlanSubscription.ServicingStatus;
 
   /**
    * Timestamps for servicing status transitions.
    */
-  servicing_status_transitions: V2.Billing.PricingPlanSubscription.ServicingStatusTransitions;
+  servicing_status_transitions: PricingPlanSubscription.ServicingStatusTransitions;
 
   /**
    * The ID of the Test Clock of the associated Billing Cadence, if any.
    */
   test_clock?: string;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace PricingPlanSubscription {
-      export interface CancellationDetails {
+export namespace PricingPlanSubscription {
+  export interface CancellationDetails {
+    /**
+     * Additional comments about why the user canceled the subscription, if the subscription was canceled explicitly by the user.
+     */
+    comment?: string;
+
+    /**
+     * The customer submitted reason for why they canceled, if the subscription was canceled explicitly by the user.
+     */
+    feedback?: CancellationDetails.Feedback;
+
+    /**
+     * System-generated reason for cancellation.
+     */
+    reason?: 'cancellation_requested';
+  }
+
+  export type CollectionStatus =
+    | 'awaiting_customer_action'
+    | 'current'
+    | 'past_due'
+    | 'paused'
+    | 'unpaid';
+
+  export interface CollectionStatusTransitions {
+    /**
+     * When the collection status transitioned to awaiting customer action.
+     */
+    awaiting_customer_action_at?: string;
+
+    /**
+     * When the collection status transitioned to current.
+     */
+    current_at?: string;
+
+    /**
+     * When the collection status transitioned to past due.
+     */
+    past_due_at?: string;
+
+    /**
+     * When the collection status transitioned to paused.
+     */
+    paused_at?: string;
+
+    /**
+     * When the collection status transitioned to unpaid.
+     */
+    unpaid_at?: string;
+  }
+
+  export interface DiscountDetail {
+    /**
+     * The ID of the Discount.
+     */
+    discount: string;
+
+    /**
+     * The time at which the Discount ends, if applicable.
+     */
+    end?: string;
+
+    /**
+     * The ID of the PromotionCode, if applicable.
+     */
+    promotion_code?: string;
+
+    /**
+     * The source of the Discount.
+     */
+    source: DiscountDetail.Source;
+
+    /**
+     * The time at which the Discount starts.
+     */
+    start: string;
+  }
+
+  export interface PricingPlanComponentDetail {
+    /**
+     * License fee details, present when type is license_fee_details.
+     */
+    license_fee_details?: PricingPlanComponentDetail.LicenseFeeDetails;
+
+    /**
+     * The ID of the Pricing Plan Component.
+     */
+    pricing_plan_component: string;
+
+    /**
+     * Rate card details, present when type is rate_card_details.
+     */
+    rate_card_details?: PricingPlanComponentDetail.RateCardDetails;
+
+    /**
+     * Recurring credit grant details, present when type is recurring_credit_grant_details.
+     */
+    recurring_credit_grant_details?: PricingPlanComponentDetail.RecurringCreditGrantDetails;
+
+    /**
+     * The type of component details included.
+     */
+    type: PricingPlanComponentDetail.Type;
+  }
+
+  export type ServicingStatus = 'active' | 'canceled' | 'paused' | 'pending';
+
+  export interface ServicingStatusTransitions {
+    /**
+     * When the servicing status transitioned to activated.
+     */
+    activated_at?: string;
+
+    /**
+     * When the servicing status transitioned to canceled.
+     */
+    canceled_at?: string;
+
+    /**
+     * When the servicing status transitioned to paused.
+     */
+    paused_at?: string;
+
+    /**
+     * When the servicing is scheduled to transition to activate.
+     */
+    will_activate_at?: string;
+
+    /**
+     * When the servicing is scheduled to cancel.
+     */
+    will_cancel_at?: string;
+  }
+
+  export namespace CancellationDetails {
+    export type Feedback =
+      | 'customer_service'
+      | 'low_quality'
+      | 'missing_features'
+      | 'other'
+      | 'switched_service'
+      | 'too_complex'
+      | 'too_expensive'
+      | 'unused';
+  }
+
+  export namespace DiscountDetail {
+    export interface Source {
+      /**
+       * The ID of the Coupon.
+       */
+      coupon?: string;
+
+      /**
+       * Type of the Discount source.
+       */
+      type: 'coupon';
+    }
+  }
+
+  export namespace PricingPlanComponentDetail {
+    export interface LicenseFeeDetails {
+      /**
+       * Three-letter ISO currency code, in lowercase.
+       */
+      currency: string;
+
+      /**
+       * A customer-facing name for the license fee.
+       */
+      display_name: string;
+
+      /**
+       * The ID of the License Fee.
+       */
+      license_fee: string;
+
+      /**
+       * The ID of the License Fee Version.
+       */
+      license_fee_version: string;
+
+      /**
+       * Quantity of the license fee on the subscription.
+       */
+      quantity: number;
+
+      /**
+       * The service cycle configuration.
+       */
+      service_cycle: LicenseFeeDetails.ServiceCycle;
+
+      /**
+       * Defines whether the tiering price is graduated or volume-based.
+       */
+      tiering_mode?: LicenseFeeDetails.TieringMode;
+
+      /**
+       * Each element represents a pricing tier.
+       */
+      tiers: Array<LicenseFeeDetails.Tier>;
+
+      /**
+       * Apply a transformation to the reported usage or set quantity before computing the amount billed.
+       */
+      transform_quantity?: LicenseFeeDetails.TransformQuantity;
+
+      /**
+       * The per-unit amount to be charged, represented as a decimal string in minor currency units with at most 12 decimal places.
+       */
+      unit_amount?: string;
+
+      /**
+       * The unit label from the licensed item, used for display purposes (for example, "seat", "environment").
+       */
+      unit_label?: string;
+    }
+
+    export interface RateCardDetails {
+      /**
+       * Three-letter ISO currency code, in lowercase.
+       */
+      currency: string;
+
+      /**
+       * A customer-facing name for the rate card.
+       */
+      display_name: string;
+
+      /**
+       * The ID of the Rate Card.
+       */
+      rate_card: string;
+
+      /**
+       * The ID of the Rate Card Version.
+       */
+      rate_card_version: string;
+
+      /**
+       * The service cycle configuration.
+       */
+      service_cycle: RateCardDetails.ServiceCycle;
+
+      /**
+       * Whether the rates are inclusive or exclusive of tax.
+       */
+      tax_behavior: RateCardDetails.TaxBehavior;
+    }
+
+    export interface RecurringCreditGrantDetails {
+      /**
+       * Credit grant details, present when type is CREDIT_GRANT.
+       */
+      credit_grant_details?: RecurringCreditGrantDetails.CreditGrantDetails;
+
+      /**
+       * Credit grant per tenant details, present when type is CREDIT_GRANT_PER_TENANT.
+       */
+      credit_grant_per_tenant_details?: RecurringCreditGrantDetails.CreditGrantPerTenantDetails;
+
+      /**
+       * The ID of the Recurring Credit Grant.
+       */
+      recurring_credit_grant: string;
+
+      /**
+       * The service cycle configuration.
+       */
+      service_cycle: RecurringCreditGrantDetails.ServiceCycle;
+
+      /**
+       * The type of the recurring credit grant.
+       */
+      type: RecurringCreditGrantDetails.Type;
+    }
+
+    export type Type =
+      | 'license_fee_details'
+      | 'rate_card_details'
+      | 'recurring_credit_grant_details';
+
+    export namespace LicenseFeeDetails {
+      export interface ServiceCycle {
         /**
-         * Additional comments about why the user canceled the subscription, if the subscription was canceled explicitly by the user.
+         * The interval for assessing service.
          */
-        comment?: string;
+        interval: ServiceCycle.Interval;
 
         /**
-         * The customer submitted reason for why they canceled, if the subscription was canceled explicitly by the user.
+         * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"`
+         * to specify quarterly service.
          */
-        feedback?: CancellationDetails.Feedback;
-
-        /**
-         * System-generated reason for cancellation.
-         */
-        reason?: 'cancellation_requested';
+        interval_count: number;
       }
 
-      export type CollectionStatus =
-        | 'awaiting_customer_action'
-        | 'current'
-        | 'past_due'
-        | 'paused'
-        | 'unpaid';
+      export type TieringMode = 'graduated' | 'volume';
 
-      export interface CollectionStatusTransitions {
+      export interface Tier {
         /**
-         * When the collection status transitioned to awaiting customer action.
+         * Price for the entire tier, represented as a decimal string in minor currency units with at most 12 decimal places.
          */
-        awaiting_customer_action_at?: string;
+        flat_amount?: string;
 
         /**
-         * When the collection status transitioned to current.
+         * Per-unit price for units included in this tier, represented as a decimal string in minor currency units with at
+         * most 12 decimal places.
          */
-        current_at?: string;
+        unit_amount?: string;
 
         /**
-         * When the collection status transitioned to past due.
+         * Up to and including this quantity is contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
+         * be set.
          */
-        past_due_at?: string;
+        up_to_decimal?: Decimal;
 
         /**
-         * When the collection status transitioned to paused.
+         * No upper bound to this tier. Only one of `up_to_decimal` and `up_to_inf` may be set.
          */
-        paused_at?: string;
-
-        /**
-         * When the collection status transitioned to unpaid.
-         */
-        unpaid_at?: string;
+        up_to_inf?: 'inf';
       }
 
-      export interface DiscountDetail {
+      export interface TransformQuantity {
         /**
-         * The ID of the Discount.
+         * Divide usage by this number.
          */
-        discount: string;
+        divide_by: bigint;
 
         /**
-         * The time at which the Discount ends, if applicable.
+         * After division, round the result up or down.
          */
-        end?: string;
-
-        /**
-         * The ID of the PromotionCode, if applicable.
-         */
-        promotion_code?: string;
-
-        /**
-         * The source of the Discount.
-         */
-        source: DiscountDetail.Source;
-
-        /**
-         * The time at which the Discount starts.
-         */
-        start: string;
+        round: TransformQuantity.Round;
       }
 
-      export interface PricingPlanComponentDetail {
-        /**
-         * License fee details, present when type is license_fee_details.
-         */
-        license_fee_details?: PricingPlanComponentDetail.LicenseFeeDetails;
-
-        /**
-         * The ID of the Pricing Plan Component.
-         */
-        pricing_plan_component: string;
-
-        /**
-         * Rate card details, present when type is rate_card_details.
-         */
-        rate_card_details?: PricingPlanComponentDetail.RateCardDetails;
-
-        /**
-         * Recurring credit grant details, present when type is recurring_credit_grant_details.
-         */
-        recurring_credit_grant_details?: PricingPlanComponentDetail.RecurringCreditGrantDetails;
-
-        /**
-         * The type of component details included.
-         */
-        type: PricingPlanComponentDetail.Type;
+      export namespace ServiceCycle {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
       }
 
-      export type ServicingStatus =
-        | 'active'
-        | 'canceled'
-        | 'paused'
-        | 'pending';
+      export namespace TransformQuantity {
+        export type Round = 'down' | 'up';
+      }
+    }
 
-      export interface ServicingStatusTransitions {
+    export namespace RateCardDetails {
+      export interface ServiceCycle {
         /**
-         * When the servicing status transitioned to activated.
+         * The interval for assessing service.
          */
-        activated_at?: string;
-
-        /**
-         * When the servicing status transitioned to canceled.
-         */
-        canceled_at?: string;
+        interval: ServiceCycle.Interval;
 
         /**
-         * When the servicing status transitioned to paused.
+         * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"`
+         * to specify quarterly service.
          */
-        paused_at?: string;
-
-        /**
-         * When the servicing is scheduled to transition to activate.
-         */
-        will_activate_at?: string;
-
-        /**
-         * When the servicing is scheduled to cancel.
-         */
-        will_cancel_at?: string;
+        interval_count: number;
       }
 
-      export namespace CancellationDetails {
-        export type Feedback =
-          | 'customer_service'
-          | 'low_quality'
-          | 'missing_features'
-          | 'other'
-          | 'switched_service'
-          | 'too_complex'
-          | 'too_expensive'
-          | 'unused';
+      export type TaxBehavior = 'exclusive' | 'inclusive';
+
+      export namespace ServiceCycle {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+    }
+
+    export namespace RecurringCreditGrantDetails {
+      export interface CreditGrantDetails {
+        /**
+         * The amount of the credit grant.
+         */
+        amount: CreditGrantDetails.Amount;
+
+        /**
+         * Defines the scope where the credit grant is applicable.
+         */
+        applicability_config: CreditGrantDetails.ApplicabilityConfig;
+
+        /**
+         * The expiry configuration for the credit grant.
+         */
+        expiry_config: CreditGrantDetails.ExpiryConfig;
       }
 
-      export namespace DiscountDetail {
-        export interface Source {
+      export interface CreditGrantPerTenantDetails {
+        /**
+         * The amount of the credit grant.
+         */
+        amount: CreditGrantPerTenantDetails.Amount;
+
+        /**
+         * Defines the scope where the credit grant is applicable.
+         */
+        applicability_config: CreditGrantPerTenantDetails.ApplicabilityConfig;
+
+        /**
+         * The expiry configuration for the credit grant.
+         */
+        expiry_config: CreditGrantPerTenantDetails.ExpiryConfig;
+      }
+
+      export interface ServiceCycle {
+        /**
+         * The interval for assessing service.
+         */
+        interval: ServiceCycle.Interval;
+
+        /**
+         * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"`
+         * to specify quarterly service.
+         */
+        interval_count: number;
+      }
+
+      export type Type = 'credit_grant' | 'credit_grant_per_tenant';
+
+      export namespace CreditGrantDetails {
+        export interface Amount {
           /**
-           * The ID of the Coupon.
+           * The custom pricing unit amount of the credit grant. Required if `type` is `custom_pricing_unit`.
            */
-          coupon?: string;
+          custom_pricing_unit?: Amount.CustomPricingUnit;
 
           /**
-           * Type of the Discount source.
+           * The monetary amount of the credit grant. Required if `type` is `monetary`.
            */
-          type: 'coupon';
+          monetary?: V2Amount;
+
+          /**
+           * The type of the credit grant amount. We currently support `monetary` and `custom_pricing_unit` billing credits.
+           */
+          type: Amount.Type;
+        }
+
+        export interface ApplicabilityConfig {
+          /**
+           * The applicability scope of the credit grant.
+           */
+          scope: ApplicabilityConfig.Scope;
+        }
+
+        export interface ExpiryConfig {
+          /**
+           * The type of the expiry configuration. We currently support `end_of_service_period`.
+           */
+          type: 'end_of_service_period';
+        }
+
+        export namespace Amount {
+          export interface CustomPricingUnit {
+            /**
+             * The Custom Pricing Unit object.
+             */
+            custom_pricing_unit_details?: CustomPricingUnit;
+
+            /**
+             * The id of the custom pricing unit.
+             */
+            id: string;
+
+            /**
+             * The value of the credit grant, decimal value represented as a string.
+             */
+            value: Decimal;
+          }
+
+          export type Type = 'custom_pricing_unit' | 'monetary';
+        }
+
+        export namespace ApplicabilityConfig {
+          export interface Scope {
+            /**
+             * The billable items to apply the credit grant to.
+             */
+            billable_items?: Array<string>;
+
+            /**
+             * The price type that credit grants can apply to. Stripe supports the `metered` price type, which applies to metered prices and rate cards. Cannot be used in combination with `billable_items`.
+             */
+            price_type?: 'metered';
+          }
         }
       }
 
-      export namespace PricingPlanComponentDetail {
-        export interface LicenseFeeDetails {
+      export namespace CreditGrantPerTenantDetails {
+        export interface Amount {
           /**
-           * Three-letter ISO currency code, in lowercase.
+           * The custom pricing unit amount of the credit grant. Required if `type` is `custom_pricing_unit`.
            */
-          currency: string;
+          custom_pricing_unit?: Amount.CustomPricingUnit;
 
           /**
-           * A customer-facing name for the license fee.
+           * The monetary amount of the credit grant. Required if `type` is `monetary`.
            */
-          display_name: string;
+          monetary?: V2Amount;
 
           /**
-           * The ID of the License Fee.
+           * The type of the credit grant amount. We currently support `monetary` and `custom_pricing_unit` billing credits.
            */
-          license_fee: string;
-
-          /**
-           * The ID of the License Fee Version.
-           */
-          license_fee_version: string;
-
-          /**
-           * Quantity of the license fee on the subscription.
-           */
-          quantity: number;
-
-          /**
-           * The service cycle configuration.
-           */
-          service_cycle: LicenseFeeDetails.ServiceCycle;
-
-          /**
-           * Defines whether the tiering price is graduated or volume-based.
-           */
-          tiering_mode?: LicenseFeeDetails.TieringMode;
-
-          /**
-           * Each element represents a pricing tier.
-           */
-          tiers: Array<LicenseFeeDetails.Tier>;
-
-          /**
-           * Apply a transformation to the reported usage or set quantity before computing the amount billed.
-           */
-          transform_quantity?: LicenseFeeDetails.TransformQuantity;
-
-          /**
-           * The per-unit amount to be charged, represented as a decimal string in minor currency units with at most 12 decimal places.
-           */
-          unit_amount?: string;
-
-          /**
-           * The unit label from the licensed item, used for display purposes (for example, "seat", "environment").
-           */
-          unit_label?: string;
+          type: Amount.Type;
         }
 
-        export interface RateCardDetails {
+        export interface ApplicabilityConfig {
           /**
-           * Three-letter ISO currency code, in lowercase.
+           * The applicability scope of the credit grant.
            */
-          currency: string;
-
-          /**
-           * A customer-facing name for the rate card.
-           */
-          display_name: string;
-
-          /**
-           * The ID of the Rate Card.
-           */
-          rate_card: string;
-
-          /**
-           * The ID of the Rate Card Version.
-           */
-          rate_card_version: string;
-
-          /**
-           * The service cycle configuration.
-           */
-          service_cycle: RateCardDetails.ServiceCycle;
-
-          /**
-           * Whether the rates are inclusive or exclusive of tax.
-           */
-          tax_behavior: RateCardDetails.TaxBehavior;
+          scope: ApplicabilityConfig.Scope;
         }
 
-        export interface RecurringCreditGrantDetails {
+        export interface ExpiryConfig {
           /**
-           * Credit grant details, present when type is CREDIT_GRANT.
+           * The type of the expiry configuration. We currently support `end_of_service_period`.
            */
-          credit_grant_details?: RecurringCreditGrantDetails.CreditGrantDetails;
-
-          /**
-           * Credit grant per tenant details, present when type is CREDIT_GRANT_PER_TENANT.
-           */
-          credit_grant_per_tenant_details?: RecurringCreditGrantDetails.CreditGrantPerTenantDetails;
-
-          /**
-           * The ID of the Recurring Credit Grant.
-           */
-          recurring_credit_grant: string;
-
-          /**
-           * The service cycle configuration.
-           */
-          service_cycle: RecurringCreditGrantDetails.ServiceCycle;
-
-          /**
-           * The type of the recurring credit grant.
-           */
-          type: RecurringCreditGrantDetails.Type;
+          type: 'end_of_service_period';
         }
 
-        export type Type =
-          | 'license_fee_details'
-          | 'rate_card_details'
-          | 'recurring_credit_grant_details';
-
-        export namespace LicenseFeeDetails {
-          export interface ServiceCycle {
+        export namespace Amount {
+          export interface CustomPricingUnit {
             /**
-             * The interval for assessing service.
+             * The Custom Pricing Unit object.
              */
-            interval: ServiceCycle.Interval;
+            custom_pricing_unit_details?: CustomPricingUnit;
 
             /**
-             * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"`
-             * to specify quarterly service.
+             * The id of the custom pricing unit.
              */
-            interval_count: number;
+            id: string;
+
+            /**
+             * The value of the credit grant, decimal value represented as a string.
+             */
+            value: Decimal;
           }
 
-          export type TieringMode = 'graduated' | 'volume';
-
-          export interface Tier {
-            /**
-             * Price for the entire tier, represented as a decimal string in minor currency units with at most 12 decimal places.
-             */
-            flat_amount?: string;
-
-            /**
-             * Per-unit price for units included in this tier, represented as a decimal string in minor currency units with at
-             * most 12 decimal places.
-             */
-            unit_amount?: string;
-
-            /**
-             * Up to and including this quantity is contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
-             * be set.
-             */
-            up_to_decimal?: Decimal;
-
-            /**
-             * No upper bound to this tier. Only one of `up_to_decimal` and `up_to_inf` may be set.
-             */
-            up_to_inf?: 'inf';
-          }
-
-          export interface TransformQuantity {
-            /**
-             * Divide usage by this number.
-             */
-            divide_by: bigint;
-
-            /**
-             * After division, round the result up or down.
-             */
-            round: TransformQuantity.Round;
-          }
-
-          export namespace ServiceCycle {
-            export type Interval = 'day' | 'month' | 'week' | 'year';
-          }
-
-          export namespace TransformQuantity {
-            export type Round = 'down' | 'up';
-          }
+          export type Type = 'custom_pricing_unit' | 'monetary';
         }
 
-        export namespace RateCardDetails {
-          export interface ServiceCycle {
+        export namespace ApplicabilityConfig {
+          export interface Scope {
             /**
-             * The interval for assessing service.
+             * The billable items to apply the credit grant to.
              */
-            interval: ServiceCycle.Interval;
+            billable_items?: Array<string>;
 
             /**
-             * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"`
-             * to specify quarterly service.
+             * The price type that credit grants can apply to. Stripe supports the `metered` price type, which applies to metered prices and rate cards. Cannot be used in combination with `billable_items`.
              */
-            interval_count: number;
-          }
-
-          export type TaxBehavior = 'exclusive' | 'inclusive';
-
-          export namespace ServiceCycle {
-            export type Interval = 'day' | 'month' | 'week' | 'year';
+            price_type?: 'metered';
           }
         }
+      }
 
-        export namespace RecurringCreditGrantDetails {
-          export interface CreditGrantDetails {
-            /**
-             * The amount of the credit grant.
-             */
-            amount: CreditGrantDetails.Amount;
-
-            /**
-             * Defines the scope where the credit grant is applicable.
-             */
-            applicability_config: CreditGrantDetails.ApplicabilityConfig;
-
-            /**
-             * The expiry configuration for the credit grant.
-             */
-            expiry_config: CreditGrantDetails.ExpiryConfig;
-          }
-
-          export interface CreditGrantPerTenantDetails {
-            /**
-             * The amount of the credit grant.
-             */
-            amount: CreditGrantPerTenantDetails.Amount;
-
-            /**
-             * Defines the scope where the credit grant is applicable.
-             */
-            applicability_config: CreditGrantPerTenantDetails.ApplicabilityConfig;
-
-            /**
-             * The expiry configuration for the credit grant.
-             */
-            expiry_config: CreditGrantPerTenantDetails.ExpiryConfig;
-          }
-
-          export interface ServiceCycle {
-            /**
-             * The interval for assessing service.
-             */
-            interval: ServiceCycle.Interval;
-
-            /**
-             * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"`
-             * to specify quarterly service.
-             */
-            interval_count: number;
-          }
-
-          export type Type = 'credit_grant' | 'credit_grant_per_tenant';
-
-          export namespace CreditGrantDetails {
-            export interface Amount {
-              /**
-               * The custom pricing unit amount of the credit grant. Required if `type` is `custom_pricing_unit`.
-               */
-              custom_pricing_unit?: Amount.CustomPricingUnit;
-
-              /**
-               * The monetary amount of the credit grant. Required if `type` is `monetary`.
-               */
-              monetary?: V2Amount;
-
-              /**
-               * The type of the credit grant amount. We currently support `monetary` and `custom_pricing_unit` billing credits.
-               */
-              type: Amount.Type;
-            }
-
-            export interface ApplicabilityConfig {
-              /**
-               * The applicability scope of the credit grant.
-               */
-              scope: ApplicabilityConfig.Scope;
-            }
-
-            export interface ExpiryConfig {
-              /**
-               * The type of the expiry configuration. We currently support `end_of_service_period`.
-               */
-              type: 'end_of_service_period';
-            }
-
-            export namespace Amount {
-              export interface CustomPricingUnit {
-                /**
-                 * The Custom Pricing Unit object.
-                 */
-                custom_pricing_unit_details?: CustomPricingUnit;
-
-                /**
-                 * The id of the custom pricing unit.
-                 */
-                id: string;
-
-                /**
-                 * The value of the credit grant, decimal value represented as a string.
-                 */
-                value: Decimal;
-              }
-
-              export type Type = 'custom_pricing_unit' | 'monetary';
-            }
-
-            export namespace ApplicabilityConfig {
-              export interface Scope {
-                /**
-                 * The billable items to apply the credit grant to.
-                 */
-                billable_items?: Array<string>;
-
-                /**
-                 * The price type that credit grants can apply to. Stripe supports the `metered` price type, which applies to metered prices and rate cards. Cannot be used in combination with `billable_items`.
-                 */
-                price_type?: 'metered';
-              }
-            }
-          }
-
-          export namespace CreditGrantPerTenantDetails {
-            export interface Amount {
-              /**
-               * The custom pricing unit amount of the credit grant. Required if `type` is `custom_pricing_unit`.
-               */
-              custom_pricing_unit?: Amount.CustomPricingUnit;
-
-              /**
-               * The monetary amount of the credit grant. Required if `type` is `monetary`.
-               */
-              monetary?: V2Amount;
-
-              /**
-               * The type of the credit grant amount. We currently support `monetary` and `custom_pricing_unit` billing credits.
-               */
-              type: Amount.Type;
-            }
-
-            export interface ApplicabilityConfig {
-              /**
-               * The applicability scope of the credit grant.
-               */
-              scope: ApplicabilityConfig.Scope;
-            }
-
-            export interface ExpiryConfig {
-              /**
-               * The type of the expiry configuration. We currently support `end_of_service_period`.
-               */
-              type: 'end_of_service_period';
-            }
-
-            export namespace Amount {
-              export interface CustomPricingUnit {
-                /**
-                 * The Custom Pricing Unit object.
-                 */
-                custom_pricing_unit_details?: CustomPricingUnit;
-
-                /**
-                 * The id of the custom pricing unit.
-                 */
-                id: string;
-
-                /**
-                 * The value of the credit grant, decimal value represented as a string.
-                 */
-                value: Decimal;
-              }
-
-              export type Type = 'custom_pricing_unit' | 'monetary';
-            }
-
-            export namespace ApplicabilityConfig {
-              export interface Scope {
-                /**
-                 * The billable items to apply the credit grant to.
-                 */
-                billable_items?: Array<string>;
-
-                /**
-                 * The price type that credit grants can apply to. Stripe supports the `metered` price type, which applies to metered prices and rate cards. Cannot be used in combination with `billable_items`.
-                 */
-                price_type?: 'metered';
-              }
-            }
-          }
-
-          export namespace ServiceCycle {
-            export type Interval = 'day' | 'month' | 'week' | 'year';
-          }
-        }
+      export namespace ServiceCycle {
+        export type Interval = 'day' | 'month' | 'week' | 'year';
       }
     }
   }

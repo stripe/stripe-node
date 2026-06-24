@@ -160,7 +160,7 @@ export interface CreditBalanceTransaction {
   /**
    * Credit details for this credit balance transaction. Only present if type is `credit`.
    */
-  credit: Billing.CreditBalanceTransaction.Credit | null;
+  credit: CreditBalanceTransaction.Credit | null;
 
   /**
    * The credit grant associated with this credit balance transaction.
@@ -170,7 +170,7 @@ export interface CreditBalanceTransaction {
   /**
    * Debit details for this credit balance transaction. Only present if type is `debit`.
    */
-  debit: Billing.CreditBalanceTransaction.Debit | null;
+  debit: CreditBalanceTransaction.Debit | null;
 
   /**
    * The effective time of this credit balance transaction.
@@ -190,80 +190,114 @@ export interface CreditBalanceTransaction {
   /**
    * The type of credit balance transaction (credit or debit).
    */
-  type: Billing.CreditBalanceTransaction.Type | null;
+  type: CreditBalanceTransaction.Type | null;
 }
-export namespace Billing {
-  export namespace CreditBalanceTransaction {
-    export interface Credit {
-      amount: Credit.Amount;
+export namespace CreditBalanceTransaction {
+  export interface Credit {
+    amount: Credit.Amount;
+
+    /**
+     * Details of the invoice to which the reinstated credits were originally applied. Only present if `type` is `credits_application_invoice_voided`.
+     */
+    credits_application_invoice_voided: Credit.CreditsApplicationInvoiceVoided | null;
+
+    /**
+     * The type of credit transaction.
+     */
+    type: Credit.Type;
+  }
+
+  export interface Debit {
+    amount: Debit.Amount;
+
+    /**
+     * Details of how the billing credits were applied to an invoice. Only present if `type` is `credits_applied`.
+     */
+    credits_applied: Debit.CreditsApplied | null;
+
+    /**
+     * The type of debit transaction.
+     */
+    type: Debit.Type;
+  }
+
+  export type Type = 'credit' | 'debit';
+
+  export namespace Credit {
+    export interface Amount {
+      /**
+       * The custom pricing unit amount.
+       */
+      custom_pricing_unit?: Amount.CustomPricingUnit | null;
 
       /**
-       * Details of the invoice to which the reinstated credits were originally applied. Only present if `type` is `credits_application_invoice_voided`.
+       * The monetary amount.
        */
-      credits_application_invoice_voided: Credit.CreditsApplicationInvoiceVoided | null;
+      monetary: Amount.Monetary | null;
 
       /**
-       * The type of credit transaction.
+       * The type of this amount. We currently only support `monetary` billing credits.
        */
-      type: Credit.Type;
+      type: Amount.Type;
     }
 
-    export interface Debit {
-      amount: Debit.Amount;
+    export interface CreditsApplicationInvoiceVoided {
+      /**
+       * The invoice to which the reinstated billing credits were originally applied.
+       */
+      invoice: string | Invoice;
 
       /**
-       * Details of how the billing credits were applied to an invoice. Only present if `type` is `credits_applied`.
+       * The invoice line item to which the reinstated billing credits were originally applied.
        */
-      credits_applied: Debit.CreditsApplied | null;
-
-      /**
-       * The type of debit transaction.
-       */
-      type: Debit.Type;
+      invoice_line_item: string;
     }
 
-    export type Type = 'credit' | 'debit';
+    export type Type = 'credits_application_invoice_voided' | 'credits_granted';
 
-    export namespace Credit {
-      export interface Amount {
+    export namespace Amount {
+      export interface CustomPricingUnit {
         /**
-         * The custom pricing unit amount.
+         * The custom pricing unit object.
          */
-        custom_pricing_unit?: Amount.CustomPricingUnit | null;
-
-        /**
-         * The monetary amount.
-         */
-        monetary: Amount.Monetary | null;
+        custom_pricing_unit_details: CustomPricingUnit.CustomPricingUnitDetails | null;
 
         /**
-         * The type of this amount. We currently only support `monetary` billing credits.
+         * Unique identifier for the object.
          */
-        type: Amount.Type;
+        id: string;
+
+        /**
+         * A positive integer representing the amount.
+         */
+        value: Decimal;
       }
 
-      export interface CreditsApplicationInvoiceVoided {
+      export interface Monetary {
         /**
-         * The invoice to which the reinstated billing credits were originally applied.
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
-        invoice: string | Invoice;
+        currency: string;
 
         /**
-         * The invoice line item to which the reinstated billing credits were originally applied.
+         * A positive integer representing the amount.
          */
-        invoice_line_item: string;
+        value: number;
       }
 
-      export type Type =
-        | 'credits_application_invoice_voided'
-        | 'credits_granted';
+      export type Type = 'custom_pricing_unit' | 'monetary';
 
-      export namespace Amount {
-        export interface CustomPricingUnit {
+      export namespace CustomPricingUnit {
+        export interface CustomPricingUnitDetails {
           /**
-           * The custom pricing unit object.
+           * Time at which the object was created. Measured in seconds since the Unix epoch.
            */
-          custom_pricing_unit_details: CustomPricingUnit.CustomPricingUnitDetails | null;
+          created: number;
+
+          /**
+           * The name of the custom pricing unit.
+           */
+          display_name: string;
 
           /**
            * Unique identifier for the object.
@@ -271,102 +305,99 @@ export namespace Billing {
           id: string;
 
           /**
-           * A positive integer representing the amount.
+           * A lookup key for the custom pricing unit.
            */
-          value: Decimal;
-        }
-
-        export interface Monetary {
-          /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-           */
-          currency: string;
+          lookup_key: string | null;
 
           /**
-           * A positive integer representing the amount.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
-          value: number;
-        }
+          metadata: Metadata;
 
-        export type Type = 'custom_pricing_unit' | 'monetary';
-
-        export namespace CustomPricingUnit {
-          export interface CustomPricingUnitDetails {
-            /**
-             * Time at which the object was created. Measured in seconds since the Unix epoch.
-             */
-            created: number;
-
-            /**
-             * The name of the custom pricing unit.
-             */
-            display_name: string;
-
-            /**
-             * Unique identifier for the object.
-             */
-            id: string;
-
-            /**
-             * A lookup key for the custom pricing unit.
-             */
-            lookup_key: string | null;
-
-            /**
-             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-             */
-            metadata: Metadata;
-
-            /**
-             * The status of the custom pricing unit.
-             */
-            status: string;
-          }
+          /**
+           * The status of the custom pricing unit.
+           */
+          status: string;
         }
       }
     }
+  }
 
-    export namespace Debit {
-      export interface Amount {
+  export namespace Debit {
+    export interface Amount {
+      /**
+       * The custom pricing unit amount.
+       */
+      custom_pricing_unit?: Amount.CustomPricingUnit | null;
+
+      /**
+       * The monetary amount.
+       */
+      monetary: Amount.Monetary | null;
+
+      /**
+       * The type of this amount. We currently only support `monetary` billing credits.
+       */
+      type: Amount.Type;
+    }
+
+    export interface CreditsApplied {
+      /**
+       * The invoice to which the billing credits were applied.
+       */
+      invoice: string | Invoice;
+
+      /**
+       * The invoice line item to which the billing credits were applied.
+       */
+      invoice_line_item: string;
+    }
+
+    export type Type = 'credits_applied' | 'credits_expired' | 'credits_voided';
+
+    export namespace Amount {
+      export interface CustomPricingUnit {
         /**
-         * The custom pricing unit amount.
+         * The custom pricing unit object.
          */
-        custom_pricing_unit?: Amount.CustomPricingUnit | null;
+        custom_pricing_unit_details: CustomPricingUnit.CustomPricingUnitDetails | null;
 
         /**
-         * The monetary amount.
+         * Unique identifier for the object.
          */
-        monetary: Amount.Monetary | null;
+        id: string;
 
         /**
-         * The type of this amount. We currently only support `monetary` billing credits.
+         * A positive integer representing the amount.
          */
-        type: Amount.Type;
+        value: Decimal;
       }
 
-      export interface CreditsApplied {
+      export interface Monetary {
         /**
-         * The invoice to which the billing credits were applied.
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
-        invoice: string | Invoice;
+        currency: string;
 
         /**
-         * The invoice line item to which the billing credits were applied.
+         * A positive integer representing the amount.
          */
-        invoice_line_item: string;
+        value: number;
       }
 
-      export type Type =
-        | 'credits_applied'
-        | 'credits_expired'
-        | 'credits_voided';
+      export type Type = 'custom_pricing_unit' | 'monetary';
 
-      export namespace Amount {
-        export interface CustomPricingUnit {
+      export namespace CustomPricingUnit {
+        export interface CustomPricingUnitDetails {
           /**
-           * The custom pricing unit object.
+           * Time at which the object was created. Measured in seconds since the Unix epoch.
            */
-          custom_pricing_unit_details: CustomPricingUnit.CustomPricingUnitDetails | null;
+          created: number;
+
+          /**
+           * The name of the custom pricing unit.
+           */
+          display_name: string;
 
           /**
            * Unique identifier for the object.
@@ -374,57 +405,19 @@ export namespace Billing {
           id: string;
 
           /**
-           * A positive integer representing the amount.
+           * A lookup key for the custom pricing unit.
            */
-          value: Decimal;
-        }
-
-        export interface Monetary {
-          /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-           */
-          currency: string;
+          lookup_key: string | null;
 
           /**
-           * A positive integer representing the amount.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
-          value: number;
-        }
+          metadata: Metadata;
 
-        export type Type = 'custom_pricing_unit' | 'monetary';
-
-        export namespace CustomPricingUnit {
-          export interface CustomPricingUnitDetails {
-            /**
-             * Time at which the object was created. Measured in seconds since the Unix epoch.
-             */
-            created: number;
-
-            /**
-             * The name of the custom pricing unit.
-             */
-            display_name: string;
-
-            /**
-             * Unique identifier for the object.
-             */
-            id: string;
-
-            /**
-             * A lookup key for the custom pricing unit.
-             */
-            lookup_key: string | null;
-
-            /**
-             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-             */
-            metadata: Metadata;
-
-            /**
-             * The status of the custom pricing unit.
-             */
-            status: string;
-          }
+          /**
+           * The status of the custom pricing unit.
+           */
+          status: string;
         }
       }
     }

@@ -104,7 +104,7 @@ export interface OutboundPayment {
   /**
    * Delivery options to be used to send the OutboundPayment.
    */
-  delivery_options?: V2.MoneyManagement.OutboundPayment.DeliveryOptions;
+  delivery_options?: OutboundPayment.DeliveryOptions;
 
   /**
    * An arbitrary string attached to the OutboundPayment. Often useful for displaying to users.
@@ -120,7 +120,7 @@ export interface OutboundPayment {
   /**
    * The FinancialAccount that funds were pulled from.
    */
-  from: V2.MoneyManagement.OutboundPayment.From;
+  from: OutboundPayment.From;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -150,7 +150,7 @@ export interface OutboundPayment {
   /**
    * Details about the OutboundPayment notification settings for recipient.
    */
-  recipient_notification: V2.MoneyManagement.OutboundPayment.RecipientNotification;
+  recipient_notification: OutboundPayment.RecipientNotification;
 
   /**
    * The recipient verification id for this OutboundPayment. Only required for countries with regulatory mandates to verify recipient names before OutboundPayment creation.
@@ -168,313 +168,395 @@ export interface OutboundPayment {
    * The status changes to `posted` once the OutboundPayment has been "confirmed" and funds have left the account, or to `failed` or `canceled`.
    * If an OutboundPayment fails to arrive at its payout method, its status will change to `returned`.
    */
-  status: V2.MoneyManagement.OutboundPayment.Status;
+  status: OutboundPayment.Status;
 
   /**
-   * Status details for an OutboundPayment in a `failed` or `returned` state.
+   * Status details for an OutboundPayment in a `processing`, `failed`, or `returned` state.
    */
-  status_details?: V2.MoneyManagement.OutboundPayment.StatusDetails;
+  status_details?: OutboundPayment.StatusDetails;
 
   /**
    * Hash containing timestamps of when the object transitioned to a particular status.
    */
-  status_transitions?: V2.MoneyManagement.OutboundPayment.StatusTransitions;
+  status_transitions?: OutboundPayment.StatusTransitions;
 
   /**
    * To which payout method the OutboundPayment was sent.
    */
-  to: V2.MoneyManagement.OutboundPayment.To;
+  to: OutboundPayment.To;
 
   /**
    * A unique identifier that can be used to track this OutboundPayment with recipient bank. Banks might call this a "reference number" or something similar.
    */
-  trace_id: V2.MoneyManagement.OutboundPayment.TraceId;
+  trace_id: OutboundPayment.TraceId;
 
   /**
    * Information to track this OutboundPayment with the recipient bank.
    */
-  tracking_details?: V2.MoneyManagement.OutboundPayment.TrackingDetails;
+  tracking_details?: OutboundPayment.TrackingDetails;
 }
-export namespace V2 {
-  export namespace MoneyManagement {
-    export namespace OutboundPayment {
-      export interface DeliveryOptions {
+export namespace OutboundPayment {
+  export interface DeliveryOptions {
+    /**
+     * Open Enum. Method for bank account.
+     */
+    bank_account?: DeliveryOptions.BankAccount;
+
+    /**
+     * Delivery options for paper check.
+     */
+    paper_check?: DeliveryOptions.PaperCheck;
+
+    /**
+     * Open Enum. Speed of the payout.
+     */
+    speed?: DeliveryOptions.Speed;
+  }
+
+  export interface From {
+    /**
+     * The monetary amount debited from the sender, only set on responses.
+     */
+    debited: V2Amount;
+
+    /**
+     * The FinancialAccount that funds were pulled from.
+     */
+    financial_account: string;
+  }
+
+  export interface RecipientNotification {
+    /**
+     * Closed Enum. Configuration option to enable or disable notifications to recipients.
+     * Do not send notifications when setting is NONE. Default to account setting when setting is CONFIGURED or not set.
+     */
+    setting: RecipientNotification.Setting;
+  }
+
+  export type Status =
+    | 'canceled'
+    | 'failed'
+    | 'posted'
+    | 'processing'
+    | 'returned';
+
+  export interface StatusDetails {
+    /**
+     * The `failed` status reason.
+     */
+    failed?: StatusDetails.Failed;
+
+    /**
+     * The `processing` status details.
+     */
+    processing?: StatusDetails.Processing;
+
+    /**
+     * The `returned` status reason.
+     */
+    returned?: StatusDetails.Returned;
+  }
+
+  export interface StatusTransitions {
+    /**
+     * Timestamp describing when an OutboundPayment changed status to `canceled`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+     */
+    canceled_at?: string;
+
+    /**
+     * Timestamp describing when an OutboundPayment changed status to `failed`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+     */
+    failed_at?: string;
+
+    /**
+     * Timestamp describing when an OutboundPayment changed status to `posted`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+     */
+    posted_at?: string;
+
+    /**
+     * Timestamp describing when an OutboundPayment changed status to `returned`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+     */
+    returned_at?: string;
+  }
+
+  export interface To {
+    /**
+     * The monetary amount being credited to the destination.
+     */
+    credited: V2Amount;
+
+    /**
+     * The payout method which the OutboundPayment uses to send payout.
+     */
+    payout_method: string;
+
+    /**
+     * Payout method options for the OutboundPayment.
+     */
+    payout_method_options?: To.PayoutMethodOptions;
+
+    /**
+     * To which account the OutboundPayment is sent.
+     */
+    recipient: string;
+  }
+
+  export interface TraceId {
+    /**
+     * Possible values are `pending`, `supported`, and `unsupported`. Initially set to `pending`, it changes to
+     * `supported` when the recipient bank provides a trace ID, or `unsupported` if the recipient bank doesn't support it.
+     * Note that this status may not align with the OutboundPayment or OutboundTransfer status and can remain `pending`
+     * even after the payment or transfer is posted.
+     */
+    status: TraceId.Status;
+
+    /**
+     * The trace ID value if `trace_id.status` is `supported`, otherwise empty.
+     */
+    value?: string;
+  }
+
+  export interface TrackingDetails {
+    /**
+     * Paper check tracking details.
+     */
+    paper_check?: TrackingDetails.PaperCheck;
+  }
+
+  export namespace DeliveryOptions {
+    export type BankAccount = 'automatic' | 'local' | 'wire';
+
+    export interface PaperCheck {
+      /**
+       * The ID of a file to include as an attachment with the paper check.
+       */
+      attachment?: string;
+
+      /**
+       * Memo printed on the memo field of the check.
+       */
+      memo: string;
+
+      /**
+       * Open Enum. Shipping speed of the paper check.
+       */
+      shipping_speed: PaperCheck.ShippingSpeed;
+
+      /**
+       * Signature for the paper check.
+       */
+      signature: string;
+    }
+
+    export type Speed = 'instant' | 'next_business_day' | 'standard';
+
+    export namespace PaperCheck {
+      export type ShippingSpeed = 'priority' | 'standard';
+    }
+  }
+
+  export namespace RecipientNotification {
+    export type Setting = 'configured' | 'none';
+  }
+
+  export namespace StatusDetails {
+    export interface Failed {
+      /**
+       * Open Enum. The `failed` status reason.
+       */
+      reason: Failed.Reason;
+    }
+
+    export interface Processing {
+      /**
+       * Open Enum. The `processing` status reason.
+       */
+      reason: 'under_review';
+    }
+
+    export interface Returned {
+      /**
+       * Open Enum. The `returned` status reason.
+       */
+      reason: Returned.Reason;
+    }
+
+    export namespace Failed {
+      export type Reason =
+        | 'fx_rate_drift_exceeded_after_review'
+        | 'paper_check_attachment_too_large'
+        | 'paper_check_expired'
+        | 'paper_check_undeliverable'
+        | 'payout_method_amount_limit_exceeded'
+        | 'payout_method_declined'
+        | 'payout_method_does_not_exist'
+        | 'payout_method_expired'
+        | 'payout_method_unsupported'
+        | 'payout_method_usage_frequency_limit_exceeded'
+        | 'review_rejected'
+        | 'unknown_failure';
+    }
+
+    export namespace Returned {
+      export type Reason =
+        | 'payout_method_canceled_by_customer'
+        | 'payout_method_closed'
+        | 'payout_method_currency_unsupported'
+        | 'payout_method_does_not_exist'
+        | 'payout_method_holder_address_incorrect'
+        | 'payout_method_holder_details_incorrect'
+        | 'payout_method_holder_name_incorrect'
+        | 'payout_method_invalid_account_number'
+        | 'payout_method_restricted'
+        | 'recalled'
+        | 'unknown_failure';
+    }
+  }
+
+  export namespace To {
+    export interface PayoutMethodOptions {
+      /**
+       * Options for bank account payout methods.
+       */
+      bank_account?: PayoutMethodOptions.BankAccount;
+    }
+
+    export namespace PayoutMethodOptions {
+      export interface BankAccount {
         /**
-         * Open Enum. Method for bank account.
+         * Per-network configuration options.
          */
-        bank_account?: DeliveryOptions.BankAccount;
+        preferred_network_options?: BankAccount.PreferredNetworkOptions;
 
         /**
-         * Delivery options for paper check.
+         * The preferred networks to use for this OutboundPayment.
          */
-        paper_check?: DeliveryOptions.PaperCheck;
-
-        /**
-         * Open Enum. Speed of the payout.
-         */
-        speed?: DeliveryOptions.Speed;
+        preferred_networks: Array<BankAccount.PreferredNetwork>;
       }
 
-      export interface From {
-        /**
-         * The monetary amount debited from the sender, only set on responses.
-         */
-        debited: V2Amount;
-
-        /**
-         * The FinancialAccount that funds were pulled from.
-         */
-        financial_account: string;
-      }
-
-      export interface RecipientNotification {
-        /**
-         * Closed Enum. Configuration option to enable or disable notifications to recipients.
-         * Do not send notifications when setting is NONE. Default to account setting when setting is CONFIGURED or not set.
-         */
-        setting: RecipientNotification.Setting;
-      }
-
-      export type Status =
-        | 'canceled'
-        | 'failed'
-        | 'posted'
-        | 'processing'
-        | 'returned';
-
-      export interface StatusDetails {
-        /**
-         * The `failed` status reason.
-         */
-        failed?: StatusDetails.Failed;
-
-        /**
-         * The `returned` status reason.
-         */
-        returned?: StatusDetails.Returned;
-      }
-
-      export interface StatusTransitions {
-        /**
-         * Timestamp describing when an OutboundPayment changed status to `canceled`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-         */
-        canceled_at?: string;
-
-        /**
-         * Timestamp describing when an OutboundPayment changed status to `failed`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-         */
-        failed_at?: string;
-
-        /**
-         * Timestamp describing when an OutboundPayment changed status to `posted`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-         */
-        posted_at?: string;
-
-        /**
-         * Timestamp describing when an OutboundPayment changed status to `returned`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-         */
-        returned_at?: string;
-      }
-
-      export interface To {
-        /**
-         * The monetary amount being credited to the destination.
-         */
-        credited: V2Amount;
-
-        /**
-         * The payout method which the OutboundPayment uses to send payout.
-         */
-        payout_method: string;
-
-        /**
-         * To which account the OutboundPayment is sent.
-         */
-        recipient: string;
-      }
-
-      export interface TraceId {
-        /**
-         * Possible values are `pending`, `supported`, and `unsupported`. Initially set to `pending`, it changes to
-         * `supported` when the recipient bank provides a trace ID, or `unsupported` if the recipient bank doesn't support it.
-         * Note that this status may not align with the OutboundPayment or OutboundTransfer status and can remain `pending`
-         * even after the payment or transfer is posted.
-         */
-        status: TraceId.Status;
-
-        /**
-         * The trace ID value if `trace_id.status` is `supported`, otherwise empty.
-         */
-        value?: string;
-      }
-
-      export interface TrackingDetails {
-        /**
-         * Paper check tracking details.
-         */
-        paper_check?: TrackingDetails.PaperCheck;
-      }
-
-      export namespace DeliveryOptions {
-        export type BankAccount = 'automatic' | 'local' | 'wire';
-
-        export interface PaperCheck {
+      export namespace BankAccount {
+        export interface PreferredNetworkOptions {
           /**
-           * Memo printed on the memo field of the check.
+           * ACH-specific network options.
            */
-          memo: string;
-
-          /**
-           * Open Enum. Shipping speed of the paper check.
-           */
-          shipping_speed: PaperCheck.ShippingSpeed;
-
-          /**
-           * Signature for the paper check.
-           */
-          signature: string;
+          ach?: PreferredNetworkOptions.Ach;
         }
 
-        export type Speed = 'instant' | 'next_business_day' | 'standard';
+        export type PreferredNetwork =
+          | 'ach'
+          | 'becs'
+          | 'eft'
+          | 'fedwire'
+          | 'fps'
+          | 'npp'
+          | 'rtp'
+          | 'sepa_credit'
+          | 'sepa_instant'
+          | 'swift';
 
-        export namespace PaperCheck {
-          export type ShippingSpeed = 'priority' | 'standard';
-        }
-      }
-
-      export namespace RecipientNotification {
-        export type Setting = 'configured' | 'none';
-      }
-
-      export namespace StatusDetails {
-        export interface Failed {
-          /**
-           * Open Enum. The `failed` status reason.
-           */
-          reason: Failed.Reason;
-        }
-
-        export interface Returned {
-          /**
-           * Open Enum. The `returned` status reason.
-           */
-          reason: Returned.Reason;
-        }
-
-        export namespace Failed {
-          export type Reason =
-            | 'paper_check_attachment_too_large'
-            | 'paper_check_expired'
-            | 'paper_check_undeliverable'
-            | 'payout_method_amount_limit_exceeded'
-            | 'payout_method_declined'
-            | 'payout_method_does_not_exist'
-            | 'payout_method_expired'
-            | 'payout_method_unsupported'
-            | 'payout_method_usage_frequency_limit_exceeded'
-            | 'unknown_failure';
-        }
-
-        export namespace Returned {
-          export type Reason =
-            | 'payout_method_canceled_by_customer'
-            | 'payout_method_closed'
-            | 'payout_method_currency_unsupported'
-            | 'payout_method_does_not_exist'
-            | 'payout_method_holder_address_incorrect'
-            | 'payout_method_holder_details_incorrect'
-            | 'payout_method_holder_name_incorrect'
-            | 'payout_method_invalid_account_number'
-            | 'payout_method_restricted'
-            | 'recalled'
-            | 'unknown_failure';
-        }
-      }
-
-      export namespace TraceId {
-        export type Status = 'pending' | 'supported' | 'unsupported';
-      }
-
-      export namespace TrackingDetails {
-        export interface PaperCheck {
-          /**
-           * Open Enum. Carrier of the paper check.
-           */
-          carrier: PaperCheck.Carrier;
-
-          /**
-           * Check number.
-           */
-          check_number: string;
-
-          /**
-           * Postal code of the latest tracking update.
-           */
-          current_postal_code: string;
-
-          /**
-           * Mailing address of the paper check.
-           */
-          mailing_address: PaperCheck.MailingAddress;
-
-          /**
-           * Tracking number for the check.
-           */
-          tracking_number: string;
-
-          /**
-           * Open Enum. Tracking status of the paper check.
-           */
-          tracking_status: PaperCheck.TrackingStatus;
-
-          /**
-           * When the tracking details were last updated.
-           */
-          updated_at: string;
-        }
-
-        export namespace PaperCheck {
-          export type Carrier = 'fedex' | 'usps';
-
-          export interface MailingAddress {
+        export namespace PreferredNetworkOptions {
+          export interface Ach {
             /**
-             * City, district, suburb, town, or village.
+             * Open Enum. ACH submission timing.
              */
-            city?: string;
+            submission?: Ach.Submission;
 
             /**
-             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             * The transaction purpose for this ACH payment.
              */
-            country?: string;
-
-            /**
-             * Address line 1 (e.g., street, PO Box, or company name).
-             */
-            line1?: string;
-
-            /**
-             * Address line 2 (e.g., apartment, suite, unit, or building).
-             */
-            line2?: string;
-
-            /**
-             * ZIP or postal code.
-             */
-            postal_code?: string;
-
-            /**
-             * State, county, province, or region.
-             */
-            state?: string;
+            transaction_purpose?: 'payroll';
           }
 
-          export type TrackingStatus = 'delivered' | 'in_transit' | 'mailed';
+          export namespace Ach {
+            export type Submission = 'next_day' | 'same_day';
+          }
         }
       }
+    }
+  }
+
+  export namespace TraceId {
+    export type Status = 'pending' | 'supported' | 'unsupported';
+  }
+
+  export namespace TrackingDetails {
+    export interface PaperCheck {
+      /**
+       * Open Enum. Carrier of the paper check.
+       */
+      carrier: PaperCheck.Carrier;
+
+      /**
+       * Check number.
+       */
+      check_number: string;
+
+      /**
+       * Postal code of the latest tracking update.
+       */
+      current_postal_code: string;
+
+      /**
+       * Mailing address of the paper check.
+       */
+      mailing_address: PaperCheck.MailingAddress;
+
+      /**
+       * Tracking number for the check.
+       */
+      tracking_number: string;
+
+      /**
+       * Open Enum. Tracking status of the paper check.
+       */
+      tracking_status: PaperCheck.TrackingStatus;
+
+      /**
+       * When the tracking details were last updated.
+       */
+      updated_at: string;
+    }
+
+    export namespace PaperCheck {
+      export type Carrier = 'fedex' | 'usps';
+
+      export interface MailingAddress {
+        /**
+         * City, district, suburb, town, or village.
+         */
+        city?: string;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string;
+
+        /**
+         * Address line 1 (e.g., street, PO Box, or company name).
+         */
+        line1?: string;
+
+        /**
+         * Address line 2 (e.g., apartment, suite, unit, or building).
+         */
+        line2?: string;
+
+        /**
+         * ZIP or postal code.
+         */
+        postal_code?: string;
+
+        /**
+         * State, county, province, or region.
+         */
+        state?: string;
+      }
+
+      export type TrackingStatus = 'delivered' | 'in_transit' | 'mailed';
     }
   }
 }
@@ -515,6 +597,11 @@ export namespace V2 {
        * The quote for this OutboundPayment. Only required for countries with regulatory mandates to display fee estimates before OutboundPayment creation.
        */
       outbound_payment_quote?: string;
+
+      /**
+       * The PayoutIntent ID that triggered this OutboundPayment.
+       */
+      payout_intent?: string;
 
       /**
        * The purpose of the OutboundPayment.
@@ -568,6 +655,11 @@ export namespace V2 {
         payout_method?: string;
 
         /**
+         * Payout method options for the OutboundPayment.
+         */
+        payout_method_options?: To.PayoutMethodOptions;
+
+        /**
          * To which account the OutboundPayment is sent.
          */
         recipient: string;
@@ -603,6 +695,11 @@ export namespace V2 {
 
         export interface PaperCheck {
           /**
+           * The ID of a file to include as an attachment with the paper check.
+           */
+          attachment?: string;
+
+          /**
            * Memo printed on the memo field of the check.
            */
           memo?: string;
@@ -627,6 +724,68 @@ export namespace V2 {
 
       export namespace RecipientNotification {
         export type Setting = 'configured' | 'none';
+      }
+
+      export namespace To {
+        export interface PayoutMethodOptions {
+          /**
+           * Options for bank account payout methods.
+           */
+          bank_account?: PayoutMethodOptions.BankAccount;
+        }
+
+        export namespace PayoutMethodOptions {
+          export interface BankAccount {
+            /**
+             * Per-network configuration options.
+             */
+            preferred_network_options?: BankAccount.PreferredNetworkOptions;
+
+            /**
+             * The preferred networks to use for this OutboundPayment.
+             */
+            preferred_networks: Array<BankAccount.PreferredNetwork>;
+          }
+
+          export namespace BankAccount {
+            export interface PreferredNetworkOptions {
+              /**
+               * ACH-specific network options.
+               */
+              ach?: PreferredNetworkOptions.Ach;
+            }
+
+            export type PreferredNetwork =
+              | 'ach'
+              | 'becs'
+              | 'eft'
+              | 'fedwire'
+              | 'fps'
+              | 'npp'
+              | 'rtp'
+              | 'sepa_credit'
+              | 'sepa_instant'
+              | 'swift';
+
+            export namespace PreferredNetworkOptions {
+              export interface Ach {
+                /**
+                 * Open Enum. ACH submission timing.
+                 */
+                submission?: Ach.Submission;
+
+                /**
+                 * The transaction purpose for this ACH payment.
+                 */
+                transaction_purpose?: 'payroll';
+              }
+
+              export namespace Ach {
+                export type Submission = 'next_day' | 'same_day';
+              }
+            }
+          }
+        }
       }
     }
   }

@@ -209,12 +209,12 @@ export interface ServiceAction {
   /**
    * Details for the credit grant. Provided only if `type` is "credit_grant".
    */
-  credit_grant?: V2.Billing.ServiceAction.CreditGrant;
+  credit_grant?: ServiceAction.CreditGrant;
 
   /**
    * Details for the credit grant per tenant. Provided only if `type` is "credit_grant_per_tenant".
    */
-  credit_grant_per_tenant?: V2.Billing.ServiceAction.CreditGrantPerTenant;
+  credit_grant_per_tenant?: ServiceAction.CreditGrantPerTenant;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -229,7 +229,7 @@ export interface ServiceAction {
   /**
    * The interval for assessing service.
    */
-  service_interval: V2.Billing.ServiceAction.ServiceInterval;
+  service_interval: ServiceAction.ServiceInterval;
 
   /**
    * The length of the interval for assessing service.
@@ -239,217 +239,213 @@ export interface ServiceAction {
   /**
    * The type of the service action.
    */
-  type: V2.Billing.ServiceAction.Type;
+  type: ServiceAction.Type;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace ServiceAction {
-      export interface CreditGrant {
+export namespace ServiceAction {
+  export interface CreditGrant {
+    /**
+     * The amount of the credit grant.
+     */
+    amount: CreditGrant.Amount;
+
+    /**
+     * Defines the scope where the credit grant is applicable.
+     */
+    applicability_config: CreditGrant.ApplicabilityConfig;
+
+    /**
+     * The category of the credit grant.
+     */
+    category?: CreditGrant.Category;
+
+    /**
+     * The expiry configuration for the credit grant.
+     */
+    expiry_config: CreditGrant.ExpiryConfig;
+
+    /**
+     * A descriptive name shown in dashboard.
+     */
+    name: string;
+
+    /**
+     * The desired priority for applying this credit grant. If not specified, it will be set to the default value of 50. The highest priority is 0 and the lowest is 100.
+     */
+    priority?: number;
+  }
+
+  export interface CreditGrantPerTenant {
+    /**
+     * The amount of the credit grant.
+     */
+    amount: CreditGrantPerTenant.Amount;
+
+    /**
+     * Defines the scope where the credit grant is applicable.
+     */
+    applicability_config: CreditGrantPerTenant.ApplicabilityConfig;
+
+    /**
+     * The category of the credit grant.
+     */
+    category?: CreditGrantPerTenant.Category;
+
+    /**
+     * The expiry configuration for the credit grant.
+     */
+    expiry_config: CreditGrantPerTenant.ExpiryConfig;
+
+    /**
+     * Customer-facing name for the credit grant.
+     */
+    name: string;
+
+    /**
+     * The desired priority for applying this credit grant. If not specified, it will be set to the default value of 50. The highest priority is 0 and the lowest is 100.
+     */
+    priority?: number;
+  }
+
+  export type ServiceInterval = 'day' | 'month' | 'week' | 'year';
+
+  export type Type = 'credit_grant' | 'credit_grant_per_tenant';
+
+  export namespace CreditGrant {
+    export interface Amount {
+      /**
+       * The custom pricing unit amount of the credit grant. Required if `type` is `custom_pricing_unit`.
+       */
+      custom_pricing_unit?: Amount.CustomPricingUnit;
+
+      /**
+       * The monetary amount of the credit grant. Required if `type` is `monetary`.
+       */
+      monetary?: V2Amount;
+
+      /**
+       * The type of the credit grant amount. We currently support `monetary` and `custom_pricing_unit` billing credits.
+       */
+      type: Amount.Type;
+    }
+
+    export interface ApplicabilityConfig {
+      /**
+       * The applicability scope of the credit grant.
+       */
+      scope: ApplicabilityConfig.Scope;
+    }
+
+    export type Category = 'paid' | 'promotional';
+
+    export interface ExpiryConfig {
+      /**
+       * The type of the expiry configuration. We currently support `end_of_service_period`.
+       */
+      type: 'end_of_service_period';
+    }
+
+    export namespace Amount {
+      export interface CustomPricingUnit {
         /**
-         * The amount of the credit grant.
+         * The Custom Pricing Unit object.
          */
-        amount: CreditGrant.Amount;
+        custom_pricing_unit_details?: CustomPricingUnit;
 
         /**
-         * Defines the scope where the credit grant is applicable.
+         * The id of the custom pricing unit.
          */
-        applicability_config: CreditGrant.ApplicabilityConfig;
+        id: string;
 
         /**
-         * The category of the credit grant.
+         * The value of the credit grant, decimal value represented as a string.
          */
-        category?: CreditGrant.Category;
-
-        /**
-         * The expiry configuration for the credit grant.
-         */
-        expiry_config: CreditGrant.ExpiryConfig;
-
-        /**
-         * A descriptive name shown in dashboard.
-         */
-        name: string;
-
-        /**
-         * The desired priority for applying this credit grant. If not specified, it will be set to the default value of 50. The highest priority is 0 and the lowest is 100.
-         */
-        priority?: number;
+        value: Decimal;
       }
 
-      export interface CreditGrantPerTenant {
+      export type Type = 'custom_pricing_unit' | 'monetary';
+    }
+
+    export namespace ApplicabilityConfig {
+      export interface Scope {
         /**
-         * The amount of the credit grant.
+         * The billable items to apply the credit grant to.
          */
-        amount: CreditGrantPerTenant.Amount;
+        billable_items?: Array<string>;
 
         /**
-         * Defines the scope where the credit grant is applicable.
+         * The price type that credit grants can apply to. Stripe supports the `metered` price type, which applies to metered prices and rate cards. Cannot be used in combination with `billable_items`.
          */
-        applicability_config: CreditGrantPerTenant.ApplicabilityConfig;
+        price_type?: 'metered';
+      }
+    }
+  }
+
+  export namespace CreditGrantPerTenant {
+    export interface Amount {
+      /**
+       * The custom pricing unit amount of the credit grant. Required if `type` is `custom_pricing_unit`.
+       */
+      custom_pricing_unit?: Amount.CustomPricingUnit;
+
+      /**
+       * The monetary amount of the credit grant. Required if `type` is `monetary`.
+       */
+      monetary?: V2Amount;
+
+      /**
+       * The type of the credit grant amount. We currently support `monetary` and `custom_pricing_unit` billing credits.
+       */
+      type: Amount.Type;
+    }
+
+    export interface ApplicabilityConfig {
+      /**
+       * The applicability scope of the credit grant.
+       */
+      scope: ApplicabilityConfig.Scope;
+    }
+
+    export type Category = 'paid' | 'promotional';
+
+    export interface ExpiryConfig {
+      /**
+       * The type of the expiry configuration. We currently support `end_of_service_period`.
+       */
+      type: 'end_of_service_period';
+    }
+
+    export namespace Amount {
+      export interface CustomPricingUnit {
+        /**
+         * The Custom Pricing Unit object.
+         */
+        custom_pricing_unit_details?: CustomPricingUnit;
 
         /**
-         * The category of the credit grant.
+         * The id of the custom pricing unit.
          */
-        category?: CreditGrantPerTenant.Category;
+        id: string;
 
         /**
-         * The expiry configuration for the credit grant.
+         * The value of the credit grant, decimal value represented as a string.
          */
-        expiry_config: CreditGrantPerTenant.ExpiryConfig;
-
-        /**
-         * Customer-facing name for the credit grant.
-         */
-        name: string;
-
-        /**
-         * The desired priority for applying this credit grant. If not specified, it will be set to the default value of 50. The highest priority is 0 and the lowest is 100.
-         */
-        priority?: number;
+        value: Decimal;
       }
 
-      export type ServiceInterval = 'day' | 'month' | 'week' | 'year';
+      export type Type = 'custom_pricing_unit' | 'monetary';
+    }
 
-      export type Type = 'credit_grant' | 'credit_grant_per_tenant';
+    export namespace ApplicabilityConfig {
+      export interface Scope {
+        /**
+         * The billable items to apply the credit grant to.
+         */
+        billable_items?: Array<string>;
 
-      export namespace CreditGrant {
-        export interface Amount {
-          /**
-           * The custom pricing unit amount of the credit grant. Required if `type` is `custom_pricing_unit`.
-           */
-          custom_pricing_unit?: Amount.CustomPricingUnit;
-
-          /**
-           * The monetary amount of the credit grant. Required if `type` is `monetary`.
-           */
-          monetary?: V2Amount;
-
-          /**
-           * The type of the credit grant amount. We currently support `monetary` and `custom_pricing_unit` billing credits.
-           */
-          type: Amount.Type;
-        }
-
-        export interface ApplicabilityConfig {
-          /**
-           * The applicability scope of the credit grant.
-           */
-          scope: ApplicabilityConfig.Scope;
-        }
-
-        export type Category = 'paid' | 'promotional';
-
-        export interface ExpiryConfig {
-          /**
-           * The type of the expiry configuration. We currently support `end_of_service_period`.
-           */
-          type: 'end_of_service_period';
-        }
-
-        export namespace Amount {
-          export interface CustomPricingUnit {
-            /**
-             * The Custom Pricing Unit object.
-             */
-            custom_pricing_unit_details?: CustomPricingUnit;
-
-            /**
-             * The id of the custom pricing unit.
-             */
-            id: string;
-
-            /**
-             * The value of the credit grant, decimal value represented as a string.
-             */
-            value: Decimal;
-          }
-
-          export type Type = 'custom_pricing_unit' | 'monetary';
-        }
-
-        export namespace ApplicabilityConfig {
-          export interface Scope {
-            /**
-             * The billable items to apply the credit grant to.
-             */
-            billable_items?: Array<string>;
-
-            /**
-             * The price type that credit grants can apply to. Stripe supports the `metered` price type, which applies to metered prices and rate cards. Cannot be used in combination with `billable_items`.
-             */
-            price_type?: 'metered';
-          }
-        }
-      }
-
-      export namespace CreditGrantPerTenant {
-        export interface Amount {
-          /**
-           * The custom pricing unit amount of the credit grant. Required if `type` is `custom_pricing_unit`.
-           */
-          custom_pricing_unit?: Amount.CustomPricingUnit;
-
-          /**
-           * The monetary amount of the credit grant. Required if `type` is `monetary`.
-           */
-          monetary?: V2Amount;
-
-          /**
-           * The type of the credit grant amount. We currently support `monetary` and `custom_pricing_unit` billing credits.
-           */
-          type: Amount.Type;
-        }
-
-        export interface ApplicabilityConfig {
-          /**
-           * The applicability scope of the credit grant.
-           */
-          scope: ApplicabilityConfig.Scope;
-        }
-
-        export type Category = 'paid' | 'promotional';
-
-        export interface ExpiryConfig {
-          /**
-           * The type of the expiry configuration. We currently support `end_of_service_period`.
-           */
-          type: 'end_of_service_period';
-        }
-
-        export namespace Amount {
-          export interface CustomPricingUnit {
-            /**
-             * The Custom Pricing Unit object.
-             */
-            custom_pricing_unit_details?: CustomPricingUnit;
-
-            /**
-             * The id of the custom pricing unit.
-             */
-            id: string;
-
-            /**
-             * The value of the credit grant, decimal value represented as a string.
-             */
-            value: Decimal;
-          }
-
-          export type Type = 'custom_pricing_unit' | 'monetary';
-        }
-
-        export namespace ApplicabilityConfig {
-          export interface Scope {
-            /**
-             * The billable items to apply the credit grant to.
-             */
-            billable_items?: Array<string>;
-
-            /**
-             * The price type that credit grants can apply to. Stripe supports the `metered` price type, which applies to metered prices and rate cards. Cannot be used in combination with `billable_items`.
-             */
-            price_type?: 'metered';
-          }
-        }
+        /**
+         * The price type that credit grants can apply to. Stripe supports the `metered` price type, which applies to metered prices and rate cards. Cannot be used in combination with `billable_items`.
+         */
+        price_type?: 'metered';
       }
     }
   }

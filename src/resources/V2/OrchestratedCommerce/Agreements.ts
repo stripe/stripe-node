@@ -102,7 +102,7 @@ export interface Agreement {
   /**
    * The party that initiated the agreement.
    */
-  initiated_by: V2.OrchestratedCommerce.Agreement.InitiatedBy;
+  initiated_by: Agreement.InitiatedBy;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -112,78 +112,74 @@ export interface Agreement {
   /**
    * Details about the orchestrator.
    */
-  orchestrator_details: V2.OrchestratedCommerce.Agreement.OrchestratorDetails;
+  orchestrator_details: Agreement.OrchestratorDetails;
 
   /**
    * Details about the seller.
    */
-  seller_details: V2.OrchestratedCommerce.Agreement.SellerDetails;
+  seller_details: Agreement.SellerDetails;
 
   /**
    * The current status of the agreement.
    */
-  status: V2.OrchestratedCommerce.Agreement.Status;
+  status: Agreement.Status;
 
   /**
    * Timestamps of key status transitions for the agreement.
    */
-  status_transitions: V2.OrchestratedCommerce.Agreement.StatusTransitions;
+  status_transitions: Agreement.StatusTransitions;
 
   /**
    * The party that terminated the agreement, if applicable.
    */
-  terminated_by?: V2.OrchestratedCommerce.Agreement.TerminatedBy;
+  terminated_by?: Agreement.TerminatedBy;
 }
-export namespace V2 {
-  export namespace OrchestratedCommerce {
-    export namespace Agreement {
-      export type InitiatedBy = 'orchestrator' | 'seller';
+export namespace Agreement {
+  export type InitiatedBy = 'orchestrator' | 'seller';
 
-      export interface OrchestratorDetails {
-        /**
-         * The name of the orchestrator. This can be the name of the agent or the name of the business.
-         */
-        name: string;
+  export interface OrchestratorDetails {
+    /**
+     * The name of the orchestrator. This can be the name of the agent or the name of the business.
+     */
+    name: string;
 
-        /**
-         * The Network ID of the orchestrator.
-         */
-        network_business_profile: string;
-      }
-
-      export interface SellerDetails {
-        /**
-         * The Network ID of the seller.
-         */
-        network_business_profile: string;
-      }
-
-      export type Status =
-        | 'confirmed'
-        | 'initiated'
-        | 'partially_confirmed'
-        | 'terminated';
-
-      export interface StatusTransitions {
-        /**
-         * The time at which the orchestrator confirmed the agreement.
-         */
-        orchestrator_confirmed_at?: string;
-
-        /**
-         * The time at which the seller confirmed the agreement.
-         */
-        seller_confirmed_at?: string;
-
-        /**
-         * The time at which the agreement was terminated.
-         */
-        terminated_at?: string;
-      }
-
-      export type TerminatedBy = 'orchestrator' | 'seller';
-    }
+    /**
+     * The Network ID of the orchestrator.
+     */
+    network_business_profile: string;
   }
+
+  export interface SellerDetails {
+    /**
+     * The Network ID of the seller.
+     */
+    network_business_profile: string;
+  }
+
+  export type Status =
+    | 'confirmed'
+    | 'initiated'
+    | 'partially_confirmed'
+    | 'terminated';
+
+  export interface StatusTransitions {
+    /**
+     * The time at which the orchestrator confirmed the agreement.
+     */
+    orchestrator_confirmed_at?: string;
+
+    /**
+     * The time at which the seller confirmed the agreement.
+     */
+    seller_confirmed_at?: string;
+
+    /**
+     * The time at which the agreement was terminated.
+     */
+    terminated_at?: string;
+  }
+
+  export type TerminatedBy = 'orchestrator' | 'seller';
 }
 export namespace V2 {
   export namespace OrchestratedCommerce {

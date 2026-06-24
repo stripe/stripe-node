@@ -80,7 +80,7 @@ import {
   ServiceAction,
   ServiceActionResource,
 } from './ServiceActions.js';
-import {ContractLicensePricingQuantityChange} from './ContractLicensePricingQuantityChanges.js';
+import {ContractPricingLineQuantityChange} from './ContractPricingLineQuantityChanges.js';
 import {BillSettingVersion} from './BillSettingVersions.js';
 import {CadenceSpendModifier} from './CadenceSpendModifiers.js';
 import {CollectionSettingVersion} from './CollectionSettingVersions.js';
@@ -111,7 +111,7 @@ export {Profile} from './Profiles.js';
 export {RateCard} from './RateCards.js';
 export {RateCardSubscription} from './RateCardSubscriptions.js';
 export {ServiceAction} from './ServiceActions.js';
-export {ContractLicensePricingQuantityChange} from './ContractLicensePricingQuantityChanges.js';
+export {ContractPricingLineQuantityChange} from './ContractPricingLineQuantityChanges.js';
 export {BillSettingVersion} from './BillSettingVersions.js';
 export {CadenceSpendModifier} from './CadenceSpendModifiers.js';
 export {CollectionSettingVersion} from './CollectionSettingVersions.js';
@@ -188,6 +188,7 @@ export declare namespace Billing {
   export {CollectionSetting, CollectionSettingResource};
   export import ContractListParams = V2Namespace3.Billing.ContractListParams;
   export import ContractCreateParams = V2Namespace3.Billing.ContractCreateParams;
+  export import ContractDeleteParams = V2Namespace3.Billing.ContractDeleteParams;
   export import ContractRetrieveParams = V2Namespace3.Billing.ContractRetrieveParams;
   export import ContractUpdateParams = V2Namespace3.Billing.ContractUpdateParams;
   export import ContractActivateParams = V2Namespace3.Billing.ContractActivateParams;
@@ -263,7 +264,7 @@ export declare namespace Billing {
   export import ServiceActionRetrieveParams = V2Namespace19.Billing.ServiceActionRetrieveParams;
   export import ServiceActionUpdateParams = V2Namespace19.Billing.ServiceActionUpdateParams;
   export {ServiceAction, ServiceActionResource};
-  export {ContractLicensePricingQuantityChange};
+  export {ContractPricingLineQuantityChange};
   export {BillSettingVersion};
   export {CadenceSpendModifier};
   export {CollectionSettingVersion};

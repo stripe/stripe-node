@@ -96,6 +96,16 @@ export namespace AccountSession {
 
     financial_account_transactions: Components.FinancialAccountTransactions;
 
+    /**
+     * Configuration for the [financial accounts](https://docs.stripe.com/connect/supported-embedded-components/financial-accounts/) embedded component.
+     */
+    financial_accounts?: Components.FinancialAccounts | null;
+
+    /**
+     * Configuration for the [financial accounts transactions](https://docs.stripe.com/connect/supported-embedded-components/financial-accounts-transactions/) embedded component.
+     */
+    financial_accounts_transactions?: Components.FinancialAccountsTransactions | null;
+
     instant_payouts_promotion: Components.InstantPayoutsPromotion;
 
     issuing_card: Components.IssuingCard;
@@ -127,6 +137,11 @@ export namespace AccountSession {
     payouts: Components.Payouts;
 
     payouts_list: Components.PayoutsList;
+
+    /**
+     * Configuration for the [recipients list](https://docs.stripe.com/connect/supported-embedded-components/recipients-list/) embedded component.
+     */
+    recipients_list?: Components.RecipientsList | null;
 
     tax_registrations: Components.TaxRegistrations;
 
@@ -279,6 +294,24 @@ export namespace AccountSession {
       features: FinancialAccountTransactions.Features;
     }
 
+    export interface FinancialAccounts {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: FinancialAccounts.Features;
+    }
+
+    export interface FinancialAccountsTransactions {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: FinancialAccountsTransactions.Features;
+    }
+
     export interface InstantPayoutsPromotion {
       /**
        * Whether the embedded component is enabled.
@@ -394,6 +427,15 @@ export namespace AccountSession {
       enabled: boolean;
 
       features: PayoutsList.Features;
+    }
+
+    export interface RecipientsList {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: RecipientsList.Features;
     }
 
     export interface TaxRegistrations {
@@ -586,6 +628,69 @@ export namespace AccountSession {
 
     export namespace FinancialAccountRewards {
       export interface Features {}
+    }
+
+    export namespace FinancialAccounts {
+      export interface Features {
+        /**
+         * Whether to allow bill management features.
+         */
+        bill_management: boolean;
+
+        /**
+         * Whether to allow card management features.
+         */
+        card_management: boolean;
+
+        /**
+         * Whether Stripe user authentication is disabled. This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account. This is `false` by default.
+         */
+        disable_stripe_user_authentication: boolean;
+
+        /**
+         * Whether to allow payout schedule to be changed. Defaults to `true` when `controller.losses.payments` is set to `stripe` for the account, otherwise `false`.
+         */
+        edit_payout_schedule: boolean;
+
+        /**
+         * Whether to enable the send money feature that grants access to the v2 CreateOutboundPayment API.
+         */
+        send_money: boolean;
+      }
+    }
+
+    export namespace FinancialAccountsTransactions {
+      export interface Features {
+        /**
+         * Whether to allow capturing and cancelling payment intents. This is `true` by default.
+         */
+        capture_payments: boolean;
+
+        /**
+         * Whether to allow card management features.
+         */
+        card_management: boolean;
+
+        /**
+         * Whether to allow card spend dispute management features.
+         */
+        card_spend_dispute_management: boolean;
+
+        /**
+         * Whether connected accounts can manage destination charges that are created on behalf of them. This is `false` by default.
+         */
+        destination_on_behalf_of_charge_management: boolean;
+
+        /**
+         * Whether responding to disputes is enabled, including submitting evidence and accepting disputes. This is `true` by default.
+         */
+        dispute_management: boolean;
+
+        /**
+         * Whether sending refunds is enabled. This is `true` by default.
+         */
+        refund_management: boolean;
+      }
     }
 
     export namespace FinancialAccountTransactions {
@@ -799,6 +904,20 @@ export namespace AccountSession {
       export interface Features {}
     }
 
+    export namespace RecipientsList {
+      export interface Features {
+        /**
+         * Whether Stripe user authentication is disabled. This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account. This is `false` by default.
+         */
+        disable_stripe_user_authentication: boolean;
+
+        /**
+         * Whether to allow sending money.
+         */
+        send_money: boolean;
+      }
+    }
+
     export namespace TaxRegistrations {
       export interface Features {}
     }
@@ -920,6 +1039,16 @@ export namespace AccountSessionCreateParams {
     financial_account_transactions?: Components.FinancialAccountTransactions;
 
     /**
+     * Configuration for the [financial accounts](https://docs.stripe.com/connect/supported-embedded-components/financial-accounts/) embedded component.
+     */
+    financial_accounts?: Components.FinancialAccounts;
+
+    /**
+     * Configuration for the [financial accounts transactions](https://docs.stripe.com/connect/supported-embedded-components/financial-accounts-transactions/) embedded component.
+     */
+    financial_accounts_transactions?: Components.FinancialAccountsTransactions;
+
+    /**
      * Configuration for the [instant payouts promotion](https://docs.stripe.com/connect/supported-embedded-components/instant-payouts-promotion/) embedded component.
      */
     instant_payouts_promotion?: Components.InstantPayoutsPromotion;
@@ -988,6 +1117,11 @@ export namespace AccountSessionCreateParams {
      * Configuration for the [recipients](https://docs.stripe.com/connect/supported-embedded-components/recipients/) embedded component.
      */
     recipients?: Components.Recipients;
+
+    /**
+     * Configuration for the [recipients list](https://docs.stripe.com/connect/supported-embedded-components/recipients-list/) embedded component.
+     */
+    recipients_list?: Components.RecipientsList;
 
     /**
      * Configuration for the [reporting chart](https://docs.stripe.com/connect/supported-embedded-components/reporting-chart/) embedded component.
@@ -1225,6 +1359,14 @@ export namespace AccountSessionCreateParams {
       features?: FinancialAccountTransactions.Features;
     }
 
+    export interface FinancialAccounts {
+      features?: FinancialAccounts.Features;
+    }
+
+    export interface FinancialAccountsTransactions {
+      features?: FinancialAccountsTransactions.Features;
+    }
+
     export interface InstantPayoutsPromotion {
       /**
        * Whether the embedded component is enabled.
@@ -1388,6 +1530,10 @@ export namespace AccountSessionCreateParams {
       enabled: boolean;
 
       features?: Recipients.Features;
+    }
+
+    export interface RecipientsList {
+      features?: RecipientsList.Features;
     }
 
     export interface ReportingChart {
@@ -1623,6 +1769,14 @@ export namespace AccountSessionCreateParams {
       }
     }
 
+    export namespace FinancialAccounts {
+      export interface Features {}
+    }
+
+    export namespace FinancialAccountsTransactions {
+      export interface Features {}
+    }
+
     export namespace FinancialAccountTransactions {
       export interface Features {
         /**
@@ -1841,6 +1995,10 @@ export namespace AccountSessionCreateParams {
          */
         send_money?: boolean;
       }
+    }
+
+    export namespace RecipientsList {
+      export interface Features {}
     }
 
     export namespace ReportingChart {

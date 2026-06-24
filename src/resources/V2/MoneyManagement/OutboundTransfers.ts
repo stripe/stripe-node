@@ -104,7 +104,7 @@ export interface OutboundTransfer {
   /**
    * Delivery options to be used to send the OutboundTransfer.
    */
-  delivery_options?: V2.MoneyManagement.OutboundTransfer.DeliveryOptions;
+  delivery_options?: OutboundTransfer.DeliveryOptions;
 
   /**
    * An arbitrary string attached to the OutboundTransfer. Often useful for displaying to users.
@@ -120,7 +120,7 @@ export interface OutboundTransfer {
   /**
    * The FinancialAccount that funds were pulled from.
    */
-  from: V2.MoneyManagement.OutboundTransfer.From;
+  from: OutboundTransfer.From;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -153,172 +153,219 @@ export interface OutboundTransfer {
    * The status changes to `posted` once the OutboundTransfer has been "confirmed" and funds have left the account, or to `failed` or `canceled`.
    * If an OutboundTransfer fails to arrive at its payout method, its status will change to `returned`.
    */
-  status: V2.MoneyManagement.OutboundTransfer.Status;
+  status: OutboundTransfer.Status;
 
   /**
-   * Status details for an OutboundTransfer in a `failed` or `returned` state.
+   * Status details for an OutboundTransfer in a `processing`, `failed`, or `returned` state.
    */
-  status_details?: V2.MoneyManagement.OutboundTransfer.StatusDetails;
+  status_details?: OutboundTransfer.StatusDetails;
 
   /**
    * Hash containing timestamps of when the object transitioned to a particular status.
    */
-  status_transitions?: V2.MoneyManagement.OutboundTransfer.StatusTransitions;
+  status_transitions?: OutboundTransfer.StatusTransitions;
 
   /**
    * To which payout method the OutboundTransfer was sent.
    */
-  to: V2.MoneyManagement.OutboundTransfer.To;
+  to: OutboundTransfer.To;
 
   /**
    * A unique identifier that can be used to track this OutboundTransfer with recipient bank. Banks might call this a "reference number" or something similar.
    */
-  trace_id: V2.MoneyManagement.OutboundTransfer.TraceId;
+  trace_id: OutboundTransfer.TraceId;
 }
-export namespace V2 {
-  export namespace MoneyManagement {
-    export namespace OutboundTransfer {
-      export interface DeliveryOptions {
+export namespace OutboundTransfer {
+  export interface DeliveryOptions {
+    /**
+     * Open Enum. Method for bank account.
+     */
+    bank_account?: DeliveryOptions.BankAccount;
+  }
+
+  export interface From {
+    /**
+     * The monetary amount debited from the sender, only set on responses.
+     */
+    debited: V2Amount;
+
+    /**
+     * The FinancialAccount that funds were pulled from.
+     */
+    financial_account: string;
+  }
+
+  export type Status =
+    | 'canceled'
+    | 'failed'
+    | 'posted'
+    | 'processing'
+    | 'returned';
+
+  export interface StatusDetails {
+    /**
+     * The `failed` status reason.
+     */
+    failed?: StatusDetails.Failed;
+
+    /**
+     * The `processing` status details.
+     */
+    processing?: StatusDetails.Processing;
+
+    /**
+     * The `returned` status reason.
+     */
+    returned?: StatusDetails.Returned;
+  }
+
+  export interface StatusTransitions {
+    /**
+     * Timestamp describing when an OutboundTransfer changed status to `canceled`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+     */
+    canceled_at?: string;
+
+    /**
+     * Timestamp describing when an OutboundTransfer changed status to `failed`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+     */
+    failed_at?: string;
+
+    /**
+     * Timestamp describing when an OutboundTransfer changed status to `posted`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+     */
+    posted_at?: string;
+
+    /**
+     * Timestamp describing when an OutboundTransfer changed status to `returned`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+     */
+    returned_at?: string;
+  }
+
+  export interface To {
+    /**
+     * The monetary amount being credited to the destination.
+     */
+    credited: V2Amount;
+
+    /**
+     * The payout method which the OutboundTransfer uses to send payout.
+     */
+    payout_method: string;
+
+    /**
+     * Payout method options for the OutboundTransfer.
+     */
+    payout_method_options?: To.PayoutMethodOptions;
+  }
+
+  export interface TraceId {
+    /**
+     * Possible values are `pending`, `supported`, and `unsupported`. Initially set to `pending`, it changes to
+     * `supported` when the recipient bank provides a trace ID, or `unsupported` if the recipient bank doesn't support it.
+     * Note that this status may not align with the OutboundPayment or OutboundTransfer status and can remain `pending`
+     * even after the payment or transfer is posted.
+     */
+    status: TraceId.Status;
+
+    /**
+     * The trace ID value if `trace_id.status` is `supported`, otherwise empty.
+     */
+    value?: string;
+  }
+
+  export namespace DeliveryOptions {
+    export type BankAccount = 'automatic' | 'local' | 'wire';
+  }
+
+  export namespace StatusDetails {
+    export interface Failed {
+      /**
+       * Open Enum. The `failed` status reason.
+       */
+      reason: Failed.Reason;
+    }
+
+    export interface Processing {
+      /**
+       * Open Enum. The `processing` status reason.
+       */
+      reason: 'under_review';
+    }
+
+    export interface Returned {
+      /**
+       * Open Enum. The `returned` status reason.
+       */
+      reason: Returned.Reason;
+    }
+
+    export namespace Failed {
+      export type Reason =
+        | 'fx_rate_drift_exceeded_after_review'
+        | 'payout_method_amount_limit_exceeded'
+        | 'payout_method_declined'
+        | 'payout_method_does_not_exist'
+        | 'payout_method_expired'
+        | 'payout_method_unsupported'
+        | 'payout_method_usage_frequency_limit_exceeded'
+        | 'review_rejected'
+        | 'unknown_failure';
+    }
+
+    export namespace Returned {
+      export type Reason =
+        | 'payout_method_canceled_by_customer'
+        | 'payout_method_closed'
+        | 'payout_method_currency_unsupported'
+        | 'payout_method_does_not_exist'
+        | 'payout_method_holder_address_incorrect'
+        | 'payout_method_holder_details_incorrect'
+        | 'payout_method_holder_name_incorrect'
+        | 'payout_method_invalid_account_number'
+        | 'payout_method_restricted'
+        | 'recalled'
+        | 'unknown_failure';
+    }
+  }
+
+  export namespace To {
+    export interface PayoutMethodOptions {
+      /**
+       * Options for bank account payout methods.
+       */
+      bank_account?: PayoutMethodOptions.BankAccount;
+    }
+
+    export namespace PayoutMethodOptions {
+      export interface BankAccount {
         /**
-         * Open Enum. Method for bank account.
+         * The preferred networks to use for this OutboundTransfer.
          */
-        bank_account?: DeliveryOptions.BankAccount;
+        preferred_networks: Array<BankAccount.PreferredNetwork>;
       }
 
-      export interface From {
-        /**
-         * The monetary amount debited from the sender, only set on responses.
-         */
-        debited: V2Amount;
-
-        /**
-         * The FinancialAccount that funds were pulled from.
-         */
-        financial_account: string;
-      }
-
-      export type Status =
-        | 'canceled'
-        | 'failed'
-        | 'posted'
-        | 'processing'
-        | 'returned';
-
-      export interface StatusDetails {
-        /**
-         * The `failed` status reason.
-         */
-        failed?: StatusDetails.Failed;
-
-        /**
-         * The `returned` status reason.
-         */
-        returned?: StatusDetails.Returned;
-      }
-
-      export interface StatusTransitions {
-        /**
-         * Timestamp describing when an OutboundTransfer changed status to `canceled`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-         */
-        canceled_at?: string;
-
-        /**
-         * Timestamp describing when an OutboundTransfer changed status to `failed`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-         */
-        failed_at?: string;
-
-        /**
-         * Timestamp describing when an OutboundTransfer changed status to `posted`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-         */
-        posted_at?: string;
-
-        /**
-         * Timestamp describing when an OutboundTransfer changed status to `returned`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-         */
-        returned_at?: string;
-      }
-
-      export interface To {
-        /**
-         * The monetary amount being credited to the destination.
-         */
-        credited: V2Amount;
-
-        /**
-         * The payout method which the OutboundTransfer uses to send payout.
-         */
-        payout_method: string;
-      }
-
-      export interface TraceId {
-        /**
-         * Possible values are `pending`, `supported`, and `unsupported`. Initially set to `pending`, it changes to
-         * `supported` when the recipient bank provides a trace ID, or `unsupported` if the recipient bank doesn't support it.
-         * Note that this status may not align with the OutboundPayment or OutboundTransfer status and can remain `pending`
-         * even after the payment or transfer is posted.
-         */
-        status: TraceId.Status;
-
-        /**
-         * The trace ID value if `trace_id.status` is `supported`, otherwise empty.
-         */
-        value?: string;
-      }
-
-      export namespace DeliveryOptions {
-        export type BankAccount = 'automatic' | 'local' | 'wire';
-      }
-
-      export namespace StatusDetails {
-        export interface Failed {
-          /**
-           * Open Enum. The `failed` status reason.
-           */
-          reason: Failed.Reason;
-        }
-
-        export interface Returned {
-          /**
-           * Open Enum. The `returned` status reason.
-           */
-          reason: Returned.Reason;
-        }
-
-        export namespace Failed {
-          export type Reason =
-            | 'payout_method_amount_limit_exceeded'
-            | 'payout_method_declined'
-            | 'payout_method_does_not_exist'
-            | 'payout_method_expired'
-            | 'payout_method_unsupported'
-            | 'payout_method_usage_frequency_limit_exceeded'
-            | 'unknown_failure';
-        }
-
-        export namespace Returned {
-          export type Reason =
-            | 'payout_method_canceled_by_customer'
-            | 'payout_method_closed'
-            | 'payout_method_currency_unsupported'
-            | 'payout_method_does_not_exist'
-            | 'payout_method_holder_address_incorrect'
-            | 'payout_method_holder_details_incorrect'
-            | 'payout_method_holder_name_incorrect'
-            | 'payout_method_invalid_account_number'
-            | 'payout_method_restricted'
-            | 'recalled'
-            | 'unknown_failure';
-        }
-      }
-
-      export namespace TraceId {
-        export type Status = 'pending' | 'supported' | 'unsupported';
+      export namespace BankAccount {
+        export type PreferredNetwork =
+          | 'ach'
+          | 'becs'
+          | 'eft'
+          | 'fedwire'
+          | 'fps'
+          | 'npp'
+          | 'rtp'
+          | 'sepa_credit'
+          | 'sepa_instant'
+          | 'swift';
       }
     }
+  }
+
+  export namespace TraceId {
+    export type Status = 'pending' | 'supported' | 'unsupported';
   }
 }
 export namespace V2 {
@@ -394,6 +441,11 @@ export namespace V2 {
          * The payout method which the OutboundTransfer uses to send payout.
          */
         payout_method: string;
+
+        /**
+         * Payout method options for the OutboundTransfer.
+         */
+        payout_method_options?: To.PayoutMethodOptions;
       }
 
       export interface DeliveryOptions {
@@ -405,6 +457,38 @@ export namespace V2 {
 
       export namespace DeliveryOptions {
         export type BankAccount = 'automatic' | 'local' | 'wire';
+      }
+
+      export namespace To {
+        export interface PayoutMethodOptions {
+          /**
+           * Options for bank account payout methods.
+           */
+          bank_account?: PayoutMethodOptions.BankAccount;
+        }
+
+        export namespace PayoutMethodOptions {
+          export interface BankAccount {
+            /**
+             * The preferred networks to use for this OutboundTransfer.
+             */
+            preferred_networks: Array<BankAccount.PreferredNetwork>;
+          }
+
+          export namespace BankAccount {
+            export type PreferredNetwork =
+              | 'ach'
+              | 'becs'
+              | 'eft'
+              | 'fedwire'
+              | 'fps'
+              | 'npp'
+              | 'rtp'
+              | 'sepa_credit'
+              | 'sepa_instant'
+              | 'swift';
+          }
+        }
       }
     }
   }

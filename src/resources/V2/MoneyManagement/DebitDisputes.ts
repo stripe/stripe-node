@@ -71,7 +71,7 @@ export interface DebitDispute {
   /**
    * Details about the bank transfer dispute. Present if `type` field value is `bank_transfer`.
    */
-  bank_transfer?: V2.MoneyManagement.DebitDispute.BankTransfer;
+  bank_transfer?: DebitDispute.BankTransfer;
 
   /**
    * Time at which the DebitDispute was created.
@@ -97,79 +97,75 @@ export interface DebitDispute {
   /**
    * The status of the DebitDispute.
    */
-  status: V2.MoneyManagement.DebitDispute.Status;
+  status: DebitDispute.Status;
 
   /**
    * Detailed information about the status of the DebitDispute.
    */
-  status_details?: V2.MoneyManagement.DebitDispute.StatusDetails;
+  status_details?: DebitDispute.StatusDetails;
 
   /**
    * The time at which the DebitDispute transitioned to a particular status.
    */
-  status_transitions?: V2.MoneyManagement.DebitDispute.StatusTransitions;
+  status_transitions?: DebitDispute.StatusTransitions;
 
   /**
    * The type of the DebitDispute.
    */
   type: 'bank_transfer';
 }
-export namespace V2 {
-  export namespace MoneyManagement {
-    export namespace DebitDispute {
-      export interface BankTransfer {
-        /**
-         * The bank network the dispute was originated on.
-         */
-        network: 'ach';
+export namespace DebitDispute {
+  export interface BankTransfer {
+    /**
+     * The bank network the dispute was originated on.
+     */
+    network: 'ach';
 
-        /**
-         * The reason for the dispute.
-         */
-        reason?: BankTransfer.Reason;
+    /**
+     * The reason for the dispute.
+     */
+    reason?: BankTransfer.Reason;
 
-        /**
-         * The statement descriptor set by the originator of the debit.
-         */
-        statement_descriptor?: string;
-      }
+    /**
+     * The statement descriptor set by the originator of the debit.
+     */
+    statement_descriptor?: string;
+  }
 
-      export type Status = 'failed' | 'submitted' | 'succeeded';
+  export type Status = 'failed' | 'submitted' | 'succeeded';
 
-      export interface StatusDetails {
-        /**
-         * Information that elaborates on the `failed` status of a DebitDispute.
-         * It is only present when the DebitDispute status is `failed`.
-         */
-        failed: StatusDetails.Failed;
-      }
+  export interface StatusDetails {
+    /**
+     * Information that elaborates on the `failed` status of a DebitDispute.
+     * It is only present when the DebitDispute status is `failed`.
+     */
+    failed: StatusDetails.Failed;
+  }
 
-      export interface StatusTransitions {
-        /**
-         * The time when the DebitDispute was marked as `failed`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2026-04-23T13:22:18.123Z`.
-         */
-        failed_at?: string;
+  export interface StatusTransitions {
+    /**
+     * The time when the DebitDispute was marked as `failed`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2026-04-23T13:22:18.123Z`.
+     */
+    failed_at?: string;
 
-        /**
-         * The time when the DebitDispute was marked as `succeeded`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2026-04-23T13:22:18.123Z`.
-         */
-        succeeded_at?: string;
-      }
+    /**
+     * The time when the DebitDispute was marked as `succeeded`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2026-04-23T13:22:18.123Z`.
+     */
+    succeeded_at?: string;
+  }
 
-      export namespace BankTransfer {
-        export type Reason = 'incorrect_amount_or_date' | 'unauthorized';
-      }
+  export namespace BankTransfer {
+    export type Reason = 'incorrect_amount_or_date' | 'unauthorized';
+  }
 
-      export namespace StatusDetails {
-        export interface Failed {
-          /**
-           * The reason for the failure of the DebitDispute.
-           */
-          reason: 'unknown';
-        }
-      }
+  export namespace StatusDetails {
+    export interface Failed {
+      /**
+       * The reason for the failure of the DebitDispute.
+       */
+      reason: 'unknown';
     }
   }
 }

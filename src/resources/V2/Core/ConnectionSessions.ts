@@ -63,7 +63,7 @@ export interface ConnectionSession {
   /**
    * The Connection created by the ConnectionSession.
    */
-  connection?: V2.Core.ConnectionSession.Connection;
+  connection?: ConnectionSession.Connection;
 
   /**
    * Time at which the ConnectionSession was created.
@@ -80,21 +80,17 @@ export interface ConnectionSession {
    */
   requested_access?: Array<'payout_methods'>;
 }
-export namespace V2 {
-  export namespace Core {
-    export namespace ConnectionSession {
-      export interface Connection {
-        /**
-         * The access granted to the Account by the Connection.
-         */
-        granted_access?: Array<'payout_methods'>;
+export namespace ConnectionSession {
+  export interface Connection {
+    /**
+     * The access granted to the Account by the Connection.
+     */
+    granted_access?: Array<'payout_methods'>;
 
-        /**
-         * The type of the Connection.
-         */
-        type: 'link';
-      }
-    }
+    /**
+     * The type of the Connection.
+     */
+    type: 'link';
   }
 }
 export namespace V2 {

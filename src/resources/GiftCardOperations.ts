@@ -88,9 +88,19 @@ export interface GiftCardOperation {
   livemode: boolean;
 
   /**
+   * ID of the location that this transaction's reader is assigned to.
+   */
+  location?: string;
+
+  /**
    * The connected account whose credentials were used to perform this operation.
    */
   on_behalf_of: string | null;
+
+  /**
+   * ID of the reader this transaction was made on.
+   */
+  reader?: string;
 
   /**
    * Details about a gift card reload operation.

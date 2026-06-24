@@ -21,6 +21,23 @@ export class DisputeResource extends StripeResource {
     ) as any;
   }
   /**
+   * Test helper: overrides the grant_deadline and revocable_after timestamps on a test-mode Issuing dispute's provisional credit, allowing tests to simulate timer-driven status transitions without waiting for real regulatory deadlines to pass.
+   */
+  provisionalCredit(
+    id: string,
+    params?: TestHelpers.Issuing.DisputeProvisionalCreditParams,
+    options?: RequestOptions
+  ): Promise<Response<Dispute>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/test_helpers/issuing/disputes/${encodeURIComponent(
+        id
+      )}/provisional_credit`,
+      params,
+      options
+    ) as any;
+  }
+  /**
    * Test helper: populates network_lifecycle.dispute_response on a test-mode Visa Issuing Dispute using placeholder file tokens. Only supported for Visa disputes.
    */
   simulateNetworkLifecycleDisputeResponse(
@@ -88,6 +105,26 @@ export namespace TestHelpers {
 
     export namespace DisputeCloseParams {
       export type Status = 'lost' | 'won';
+    }
+  }
+}
+export namespace TestHelpers {
+  export namespace Issuing {
+    export interface DisputeProvisionalCreditParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Override the deadline by which the platform must grant a provisional credit to the consumer.
+       */
+      grant_deadline?: number;
+
+      /**
+       * Override the earliest time after which the platform may revoke the provisional credit.
+       */
+      revocable_after?: number;
     }
   }
 }

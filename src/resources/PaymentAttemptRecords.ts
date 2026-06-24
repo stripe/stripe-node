@@ -93,6 +93,23 @@ export class PaymentAttemptRecordResource extends StripeResource {
     ) as any;
   }
   /**
+   * Report that the specified Payment Attempt Record received an early fraud warning.
+   */
+  reportEarlyFraudWarning(
+    id: string,
+    params: PaymentAttemptRecordReportEarlyFraudWarningParams,
+    options?: RequestOptions
+  ): Promise<Response<PaymentAttemptRecord>> {
+    return this._makeRequest(
+      'POST',
+      `/v1/payment_attempt_records/${encodeURIComponent(
+        id
+      )}/report_early_fraud_warning`,
+      params,
+      options
+    ) as any;
+  }
+  /**
    * Report that the specified Payment Attempt Record failed.
    */
   reportFailed(
@@ -1268,6 +1285,16 @@ export namespace PaymentAttemptRecord {
        * The last four digits of the gift card number.
        */
       last4: string | null;
+
+      /**
+       * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
+       */
+      location?: string;
+
+      /**
+       * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
+       */
+      reader?: string;
 
       /**
        * The transaction ID from the gift card processor.
@@ -2985,6 +3012,34 @@ export interface PaymentAttemptRecordReportCanceledParams {
    */
   reason?: 'blocked_for_fraud';
 }
+export interface PaymentAttemptRecordReportEarlyFraudWarningParams {
+  /**
+   * The type of fraud reported in the early fraud warning.
+   */
+  fraud_type: PaymentAttemptRecordReportEarlyFraudWarningParams.FraudType;
+
+  /**
+   * The time at which the early fraud warning was received.
+   */
+  occurred_at: number;
+
+  /**
+   * Specifies which fields in the response should be expanded.
+   */
+  expand?: Array<string>;
+
+  /**
+   * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+   */
+  metadata?: Emptyable<MetadataParam>;
+}
+export namespace PaymentAttemptRecordReportEarlyFraudWarningParams {
+  export type FraudType =
+    | 'made_with_lost_card'
+    | 'made_with_stolen_card'
+    | 'other'
+    | 'unauthorized_use_of_card';
+}
 export interface PaymentAttemptRecordReportFailedParams {
   /**
    * Specifies which fields in the response should be expanded.
@@ -3221,11 +3276,6 @@ export namespace PaymentAttemptRecordReportInformationalParams {
 }
 export interface PaymentAttemptRecordReportRefundParams {
   /**
-   * The outcome of the reported refund.
-   */
-  outcome: PaymentAttemptRecordReportRefundParams.Outcome;
-
-  /**
    * Processor information for this refund.
    */
   processor_details: PaymentAttemptRecordReportRefundParams.ProcessorDetails;
@@ -3256,6 +3306,11 @@ export interface PaymentAttemptRecordReportRefundParams {
   metadata?: Emptyable<MetadataParam>;
 
   /**
+   * The outcome of the reported refund.
+   */
+  outcome?: PaymentAttemptRecordReportRefundParams.Outcome;
+
+  /**
    * A key to group refunds together.
    */
   refund_group?: string;
@@ -3266,8 +3321,6 @@ export interface PaymentAttemptRecordReportRefundParams {
   refunded?: PaymentAttemptRecordReportRefundParams.Refunded;
 }
 export namespace PaymentAttemptRecordReportRefundParams {
-  export type Outcome = 'failed' | 'refunded';
-
   export interface ProcessorDetails {
     /**
      * Information about the custom processor used to make this refund.
@@ -3303,6 +3356,8 @@ export namespace PaymentAttemptRecordReportRefundParams {
      */
     failure_reason?: Failed.FailureReason;
   }
+
+  export type Outcome = 'failed' | 'refunded';
 
   export interface Refunded {
     /**

@@ -69,7 +69,7 @@ export interface CreditBalanceSummary {
   /**
    * The billing credit balances. One entry per credit grant currency. If a customer only has credit grants in a single currency, then this will have a single balance entry.
    */
-  balances: Array<Billing.CreditBalanceSummary.Balance>;
+  balances: Array<CreditBalanceSummary.Balance>;
 
   /**
    * The customer the balance is for.
@@ -86,145 +86,100 @@ export interface CreditBalanceSummary {
    */
   livemode: boolean;
 }
-export namespace Billing {
-  export namespace CreditBalanceSummary {
-    export interface Balance {
-      available_balance: Balance.AvailableBalance;
+export namespace CreditBalanceSummary {
+  export interface Balance {
+    available_balance: Balance.AvailableBalance;
 
-      balance_update_details?: Balance.BalanceUpdateDetails;
+    balance_update_details?: Balance.BalanceUpdateDetails;
 
-      ledger_balance: Balance.LedgerBalance;
+    ledger_balance: Balance.LedgerBalance;
+  }
+
+  export namespace Balance {
+    export interface AvailableBalance {
+      /**
+       * The custom pricing unit amount.
+       */
+      custom_pricing_unit?: AvailableBalance.CustomPricingUnit | null;
+
+      /**
+       * The monetary amount.
+       */
+      monetary: AvailableBalance.Monetary | null;
+
+      /**
+       * The type of this amount. We currently only support `monetary` billing credits.
+       */
+      type: AvailableBalance.Type;
     }
 
-    export namespace Balance {
-      export interface AvailableBalance {
+    export interface BalanceUpdateDetails {
+      /**
+       * The details of the most recent meter event included in the balance update.
+       */
+      latest_meter_event: BalanceUpdateDetails.LatestMeterEvent | null;
+    }
+
+    export interface LedgerBalance {
+      /**
+       * The custom pricing unit amount.
+       */
+      custom_pricing_unit?: LedgerBalance.CustomPricingUnit | null;
+
+      /**
+       * The monetary amount.
+       */
+      monetary: LedgerBalance.Monetary | null;
+
+      /**
+       * The type of this amount. We currently only support `monetary` billing credits.
+       */
+      type: LedgerBalance.Type;
+    }
+
+    export namespace AvailableBalance {
+      export interface CustomPricingUnit {
         /**
-         * The custom pricing unit amount.
+         * The custom pricing unit object.
          */
-        custom_pricing_unit?: AvailableBalance.CustomPricingUnit | null;
+        custom_pricing_unit_details: CustomPricingUnit.CustomPricingUnitDetails | null;
 
         /**
-         * The monetary amount.
+         * Unique identifier for the object.
          */
-        monetary: AvailableBalance.Monetary | null;
+        id: string;
 
         /**
-         * The type of this amount. We currently only support `monetary` billing credits.
+         * A positive integer representing the amount.
          */
-        type: AvailableBalance.Type;
+        value: Decimal;
       }
 
-      export interface BalanceUpdateDetails {
+      export interface Monetary {
         /**
-         * The details of the most recent meter event included in the balance update.
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
-        latest_meter_event: BalanceUpdateDetails.LatestMeterEvent | null;
+        currency: string;
+
+        /**
+         * A positive integer representing the amount.
+         */
+        value: number;
       }
 
-      export interface LedgerBalance {
-        /**
-         * The custom pricing unit amount.
-         */
-        custom_pricing_unit?: LedgerBalance.CustomPricingUnit | null;
+      export type Type = 'custom_pricing_unit' | 'monetary';
 
-        /**
-         * The monetary amount.
-         */
-        monetary: LedgerBalance.Monetary | null;
-
-        /**
-         * The type of this amount. We currently only support `monetary` billing credits.
-         */
-        type: LedgerBalance.Type;
-      }
-
-      export namespace AvailableBalance {
-        export interface CustomPricingUnit {
-          /**
-           * The custom pricing unit object.
-           */
-          custom_pricing_unit_details: CustomPricingUnit.CustomPricingUnitDetails | null;
-
-          /**
-           * Unique identifier for the object.
-           */
-          id: string;
-
-          /**
-           * A positive integer representing the amount.
-           */
-          value: Decimal;
-        }
-
-        export interface Monetary {
-          /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-           */
-          currency: string;
-
-          /**
-           * A positive integer representing the amount.
-           */
-          value: number;
-        }
-
-        export type Type = 'custom_pricing_unit' | 'monetary';
-
-        export namespace CustomPricingUnit {
-          export interface CustomPricingUnitDetails {
-            /**
-             * Time at which the object was created. Measured in seconds since the Unix epoch.
-             */
-            created: number;
-
-            /**
-             * The name of the custom pricing unit.
-             */
-            display_name: string;
-
-            /**
-             * Unique identifier for the object.
-             */
-            id: string;
-
-            /**
-             * A lookup key for the custom pricing unit.
-             */
-            lookup_key: string | null;
-
-            /**
-             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-             */
-            metadata: Metadata;
-
-            /**
-             * The status of the custom pricing unit.
-             */
-            status: string;
-          }
-        }
-      }
-
-      export namespace BalanceUpdateDetails {
-        export interface LatestMeterEvent {
+      export namespace CustomPricingUnit {
+        export interface CustomPricingUnitDetails {
           /**
            * Time at which the object was created. Measured in seconds since the Unix epoch.
            */
-          created?: number;
+          created: number;
 
           /**
-           * Maximum event time across all meter events that were processed and included in the balance update. Measured in seconds since the Unix epoch.
+           * The name of the custom pricing unit.
            */
-          timestamp?: number;
-        }
-      }
-
-      export namespace LedgerBalance {
-        export interface CustomPricingUnit {
-          /**
-           * The custom pricing unit object.
-           */
-          custom_pricing_unit_details: CustomPricingUnit.CustomPricingUnitDetails | null;
+          display_name: string;
 
           /**
            * Unique identifier for the object.
@@ -232,57 +187,100 @@ export namespace Billing {
           id: string;
 
           /**
-           * A positive integer representing the amount.
+           * A lookup key for the custom pricing unit.
            */
-          value: Decimal;
-        }
-
-        export interface Monetary {
-          /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-           */
-          currency: string;
+          lookup_key: string | null;
 
           /**
-           * A positive integer representing the amount.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
-          value: number;
+          metadata: Metadata;
+
+          /**
+           * The status of the custom pricing unit.
+           */
+          status: string;
         }
+      }
+    }
 
-        export type Type = 'custom_pricing_unit' | 'monetary';
+    export namespace BalanceUpdateDetails {
+      export interface LatestMeterEvent {
+        /**
+         * Time at which the object was created. Measured in seconds since the Unix epoch.
+         */
+        created?: number;
 
-        export namespace CustomPricingUnit {
-          export interface CustomPricingUnitDetails {
-            /**
-             * Time at which the object was created. Measured in seconds since the Unix epoch.
-             */
-            created: number;
+        /**
+         * Maximum event time across all meter events that were processed and included in the balance update. Measured in seconds since the Unix epoch.
+         */
+        timestamp?: number;
+      }
+    }
 
-            /**
-             * The name of the custom pricing unit.
-             */
-            display_name: string;
+    export namespace LedgerBalance {
+      export interface CustomPricingUnit {
+        /**
+         * The custom pricing unit object.
+         */
+        custom_pricing_unit_details: CustomPricingUnit.CustomPricingUnitDetails | null;
 
-            /**
-             * Unique identifier for the object.
-             */
-            id: string;
+        /**
+         * Unique identifier for the object.
+         */
+        id: string;
 
-            /**
-             * A lookup key for the custom pricing unit.
-             */
-            lookup_key: string | null;
+        /**
+         * A positive integer representing the amount.
+         */
+        value: Decimal;
+      }
 
-            /**
-             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-             */
-            metadata: Metadata;
+      export interface Monetary {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
 
-            /**
-             * The status of the custom pricing unit.
-             */
-            status: string;
-          }
+        /**
+         * A positive integer representing the amount.
+         */
+        value: number;
+      }
+
+      export type Type = 'custom_pricing_unit' | 'monetary';
+
+      export namespace CustomPricingUnit {
+        export interface CustomPricingUnitDetails {
+          /**
+           * Time at which the object was created. Measured in seconds since the Unix epoch.
+           */
+          created: number;
+
+          /**
+           * The name of the custom pricing unit.
+           */
+          display_name: string;
+
+          /**
+           * Unique identifier for the object.
+           */
+          id: string;
+
+          /**
+           * A lookup key for the custom pricing unit.
+           */
+          lookup_key: string | null;
+
+          /**
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           */
+          metadata: Metadata;
+
+          /**
+           * The status of the custom pricing unit.
+           */
+          status: string;
         }
       }
     }

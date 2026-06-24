@@ -2,9 +2,9 @@
 
 import {StripeResource} from '../../../../StripeResource.js';
 import {RequestOptions} from '../../../../lib.js';
-import {QuantityChangeResource} from './LicensePricing/QuantityChanges.js';
+import {QuantityChangeResource} from './PricingLines/QuantityChanges.js';
 import {Stripe} from '../../../../stripe.core.js';
-export class LicensePricingResource extends StripeResource {
+export class PricingLineResource extends StripeResource {
   quantityChanges: QuantityChangeResource;
 
   constructor(private readonly stripe: Stripe) {
