@@ -286,6 +286,11 @@ export namespace ReceivedCredit {
 
     export interface UsBankAccount {
       /**
+       * The name of the account holder that sent the payment.
+       */
+      account_holder_name?: string;
+
+      /**
        * The bank name the transfer was received from.
        */
       bank_name?: string;

@@ -134,6 +134,11 @@ export interface Dispute {
   metadata: Metadata;
 
   /**
+   * Redaction status of this dispute. If the dispute is not redacted, this field will be null.
+   */
+  redaction?: Dispute.Redaction | null;
+
+  /**
    * Current status of the dispute.
    */
   status: Dispute.Status;
@@ -193,6 +198,13 @@ export namespace Dispute {
     | 'transaction_electronically_read'
     | 'transaction_qualifies_for_visa_easy_payment_service'
     | 'transaction_unattended';
+
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
+  }
 
   export type Status = 'expired' | 'lost' | 'submitted' | 'unsubmitted' | 'won';
 
@@ -452,6 +464,10 @@ export namespace Dispute {
     export namespace Other {
       export type ProductType = 'merchandise' | 'service';
     }
+  }
+
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
   }
 }
 export namespace Issuing {

@@ -267,11 +267,6 @@ export interface BatchJob {
   livemode: boolean;
 
   /**
-   * The maximum requests per second defined for the `batch_job`.
-   */
-  maximum_rps: number;
-
-  /**
    * The metadata of the `batch_job`.
    */
   metadata: Metadata;
@@ -605,20 +600,14 @@ export namespace V2 {
       endpoint: BatchJobCreateParams.Endpoint;
 
       /**
-       * The metadata of the `batch_job`.
-       */
-      metadata: MetadataParam;
-
-      /**
        * Allows the user to skip validation.
        */
       skip_validation: boolean;
 
       /**
-       * Optional field that allows the user to control how fast they want this batch job to run.
-       * Gives them a control over the number of webhooks they receive.
+       * The metadata of the `batch_job`.
        */
-      maximum_rps?: number;
+      metadata?: MetadataParam;
 
       /**
        * Notification suppression settings for the batch job.

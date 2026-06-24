@@ -1042,6 +1042,11 @@ export interface Authorization {
   pending_request: Authorization.PendingRequest | null;
 
   /**
+   * Redaction status of this authorization. If the authorization is not redacted, this field will be null.
+   */
+  redaction?: Authorization.Redaction | null;
+
+  /**
    * History of every time a `pending_request` authorization was approved/declined, either by you directly or by Stripe (e.g. based on your spending_controls). If the merchant changes the authorization by performing an incremental authorization, you can look at this field to see the previous requests for the authorization. This field can be helpful in determining why a given authorization was approved/declined.
    */
   request_history: Array<Authorization.RequestHistory>;
@@ -1275,6 +1280,13 @@ export namespace Authorization {
      * The card network's estimate of the likelihood that an authorization is fraudulent. Takes on values between 1 and 99.
      */
     network_risk_score: number | null;
+  }
+
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
   }
 
   export interface RequestHistory {
@@ -1529,6 +1541,10 @@ export namespace Authorization {
        */
       cashback_amount: number | null;
     }
+  }
+
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
   }
 
   export namespace RequestHistory {

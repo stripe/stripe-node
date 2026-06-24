@@ -442,7 +442,7 @@ export namespace VerificationSession {
   }
 
   export namespace Redaction {
-    export type Status = 'processing' | 'redacted';
+    export type Status = 'processing' | 'redacted' | 'validated';
   }
 
   export namespace VerifiedOutputs {

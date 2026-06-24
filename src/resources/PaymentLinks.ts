@@ -1688,6 +1688,9 @@ export interface PaymentLinkCreateParams {
    */
   payment_method_collection?: PaymentLinkCreateParams.PaymentMethodCollection;
 
+  /**
+   * Payment-method-specific configuration.
+   */
   payment_method_options?: PaymentLinkCreateParams.PaymentMethodOptions;
 
   /**

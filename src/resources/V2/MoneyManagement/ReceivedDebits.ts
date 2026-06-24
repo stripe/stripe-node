@@ -194,6 +194,7 @@ export namespace ReceivedDebit {
 
     export namespace Failed {
       export type Reason =
+        | 'capability_inactive'
         | 'financial_address_inactive'
         | 'insufficient_funds'
         | 'stripe_rejected';

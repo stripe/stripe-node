@@ -1112,6 +1112,11 @@ export interface Customer {
   preferred_locales?: Array<string> | null;
 
   /**
+   * Redaction status of this customer. If not null, this customer is associated to a redaction job.
+   */
+  redaction?: Customer.Redaction | null;
+
+  /**
    * Mailing and shipping address for the customer. Appears on invoices emailed to this customer.
    */
   shipping: Customer.Shipping | null;
@@ -1180,6 +1185,13 @@ export namespace Customer {
      * Default options for invoice PDF rendering for this customer.
      */
     rendering_options: InvoiceSettings.RenderingOptions | null;
+  }
+
+  export interface Redaction {
+    /**
+     * Indicates whether this object and its related objects have been redacted or not.
+     */
+    status: Redaction.Status;
   }
 
   export interface Shipping {
@@ -1254,6 +1266,10 @@ export namespace Customer {
        */
       template: string | null;
     }
+  }
+
+  export namespace Redaction {
+    export type Status = 'processing' | 'redacted' | 'validated';
   }
 
   export namespace Tax {
