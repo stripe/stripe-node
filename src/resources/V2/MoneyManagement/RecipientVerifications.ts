@@ -87,70 +87,66 @@ export interface RecipientVerification {
   /**
    * Closed Enum. Match level of the RecipientVerification: `match`, `close_match`, `no_match`, `unavailable`.
    */
-  match_result: V2.MoneyManagement.RecipientVerification.MatchResult;
+  match_result: RecipientVerification.MatchResult;
 
   /**
    * Details for the match result.
    */
-  match_result_details: V2.MoneyManagement.RecipientVerification.MatchResultDetails;
+  match_result_details: RecipientVerification.MatchResultDetails;
 
   /**
    * Closed Enum. Current status of the RecipientVerification: `verified`, `consumed`, `expired`, `awaiting_acknowledgement`, `acknowledged`.
    */
-  status: V2.MoneyManagement.RecipientVerification.Status;
+  status: RecipientVerification.Status;
 
   /**
    * Hash containing timestamps of when the object transitioned to a particular status.
    */
-  status_transitions?: V2.MoneyManagement.RecipientVerification.StatusTransitions;
+  status_transitions?: RecipientVerification.StatusTransitions;
 }
-export namespace V2 {
-  export namespace MoneyManagement {
-    export namespace RecipientVerification {
-      export type MatchResult =
-        | 'close_match'
-        | 'match'
-        | 'no_match'
-        | 'unavailable';
+export namespace RecipientVerification {
+  export type MatchResult =
+    | 'close_match'
+    | 'match'
+    | 'no_match'
+    | 'unavailable';
 
-      export interface MatchResultDetails {
-        /**
-         * The account name associated with the bank account as provided by the VoP provider, only present if there is a match or close match.
-         */
-        matched_name?: string;
+  export interface MatchResultDetails {
+    /**
+     * The account name associated with the bank account as provided by the VoP provider, only present if there is a match or close match.
+     */
+    matched_name?: string;
 
-        /**
-         * A message describing the match result.
-         */
-        message: string;
+    /**
+     * A message describing the match result.
+     */
+    message: string;
 
-        /**
-         * The name associated with the provided recipient.
-         */
-        provided_name: string;
-      }
+    /**
+     * The name associated with the provided recipient.
+     */
+    provided_name: string;
+  }
 
-      export type Status =
-        | 'acknowledged'
-        | 'awaiting_acknowledgement'
-        | 'consumed'
-        | 'expired'
-        | 'verified';
+  export type Status =
+    | 'acknowledged'
+    | 'awaiting_acknowledgement'
+    | 'consumed'
+    | 'expired'
+    | 'verified';
 
-      export interface StatusTransitions {
-        /**
-         * Timestamp describing when a RecipientVerification changed status to `acknowledged`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-         */
-        acknowledged_at?: string;
+  export interface StatusTransitions {
+    /**
+     * Timestamp describing when a RecipientVerification changed status to `acknowledged`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+     */
+    acknowledged_at?: string;
 
-        /**
-         * Timestamp describing when a RecipientVerification changed status to `consumed`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-         */
-        consumed_at?: string;
-      }
-    }
+    /**
+     * Timestamp describing when a RecipientVerification changed status to `consumed`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+     */
+    consumed_at?: string;
   }
 }
 export namespace V2 {

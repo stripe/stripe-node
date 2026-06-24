@@ -676,12 +676,12 @@ export interface Contract {
   /**
    * The billing cycle anchor for the contract.
    */
-  billing_cycle_anchor?: V2.Billing.Contract.BillingCycleAnchor;
+  billing_cycle_anchor?: Contract.BillingCycleAnchor;
 
   /**
    * The billing settings for the contract.
    */
-  billing_settings?: V2.Billing.Contract.BillingSettings;
+  billing_settings?: Contract.BillingSettings;
 
   /**
    * A unique user-provided contract number e.g. C-2026-0001.
@@ -716,507 +716,501 @@ export interface Contract {
   /**
    * The one-time fees of the contract. Only populated when `one_time_fees` is passed in the `include` parameter.
    */
-  one_time_fees?: V2.Billing.Contract.OneTimeFees;
+  one_time_fees?: Contract.OneTimeFees;
 
   /**
    * The pricing lines of the contract. Only populated when `pricing_lines` is passed in the `include` parameter.
    */
-  pricing_lines?: V2.Billing.Contract.PricingLines;
+  pricing_lines?: Contract.PricingLines;
 
   /**
    * The pricing overrides of the contract. Only populated when `pricing_overrides` is passed in the `include` parameter.
    */
-  pricing_overrides?: V2.Billing.Contract.PricingOverrides;
+  pricing_overrides?: Contract.PricingOverrides;
 
   /**
    * The current status of the contract.
    */
-  status: V2.Billing.Contract.Status;
+  status: Contract.Status;
 
   /**
    * Information about the contract status transitions.
    */
-  status_details: V2.Billing.Contract.StatusDetails;
+  status_details: Contract.StatusDetails;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace Contract {
-      export interface BillingCycleAnchor {
+export namespace Contract {
+  export interface BillingCycleAnchor {
+    /**
+     * The billing cycle anchor as a UTC timestamp.
+     */
+    timestamp: string;
+  }
+
+  export interface BillingSettings {
+    /**
+     * The bill settings details configures invoice and tax settings for the contract.
+     */
+    bill_settings_details?: BillingSettings.BillSettingsDetails;
+
+    /**
+     * The billing profile details configures who is charged for the contract.
+     */
+    billing_profile_details: BillingSettings.BillingProfileDetails;
+
+    /**
+     * The collection settings details configures how payments are collected on the contract.
+     */
+    collection_settings_details: BillingSettings.CollectionSettingsDetails;
+  }
+
+  export interface OneTimeFees {
+    /**
+     * The one-time fees for this page.
+     */
+    data: Array<OneTimeFees.Data>;
+  }
+
+  export interface PricingLines {
+    /**
+     * The pricing lines for this page.
+     */
+    data: Array<PricingLines.Data>;
+  }
+
+  export interface PricingOverrides {
+    /**
+     * The pricing overrides for this page.
+     */
+    data: Array<PricingOverrides.Data>;
+  }
+
+  export type Status = 'active' | 'canceled' | 'draft' | 'ended';
+
+  export interface StatusDetails {
+    /**
+     * Details of the active contract status.
+     */
+    active?: StatusDetails.Active;
+
+    /**
+     * Details of the canceled contract status.
+     */
+    canceled?: StatusDetails.Canceled;
+  }
+
+  export namespace BillingSettings {
+    export interface BillSettingsDetails {
+      /**
+       * Calculation settings.
+       */
+      calculation?: BillSettingsDetails.Calculation;
+
+      /**
+       * Invoice settings.
+       */
+      invoice?: BillSettingsDetails.Invoice;
+    }
+
+    export interface BillingProfileDetails {
+      /**
+       * The customer who pays for the contract invoice.
+       */
+      customer: string;
+
+      /**
+       * The default payment method for the contract.
+       */
+      default_payment_method?: string;
+    }
+
+    export interface CollectionSettingsDetails {
+      /**
+       * The collection method.
+       */
+      collection_method: CollectionSettingsDetails.CollectionMethod;
+
+      /**
+       * The payment method configuration.
+       */
+      payment_method_configuration?: string;
+    }
+
+    export namespace BillSettingsDetails {
+      export interface Calculation {
         /**
-         * The billing cycle anchor as a UTC timestamp.
+         * Tax calculation settings.
+         */
+        tax?: Calculation.Tax;
+      }
+
+      export interface Invoice {
+        /**
+         * The number of time units before the invoice is past due.
+         */
+        time_until_due?: Invoice.TimeUntilDue;
+      }
+
+      export namespace Calculation {
+        export interface Tax {
+          /**
+           * The type of tax calculation.
+           */
+          type: Tax.Type;
+        }
+
+        export namespace Tax {
+          export type Type = 'automatic' | 'manual';
+        }
+      }
+
+      export namespace Invoice {
+        export interface TimeUntilDue {
+          /**
+           * The interval unit.
+           */
+          interval: TimeUntilDue.Interval;
+
+          /**
+           * The number of intervals.
+           */
+          interval_count: number;
+        }
+
+        export namespace TimeUntilDue {
+          export type Interval = 'day' | 'month' | 'week' | 'year';
+        }
+      }
+    }
+
+    export namespace CollectionSettingsDetails {
+      export type CollectionMethod = 'charge_automatically' | 'send_invoice';
+    }
+  }
+
+  export namespace OneTimeFees {
+    export interface Data {
+      /**
+       * The amount billed for this fee.
+       */
+      amount: V2Amount;
+
+      /**
+       * When this fee will be billed. Always contains a concrete timestamp.
+       */
+      bill_at: Data.BillAt;
+
+      /**
+       * The ID of the one-time fee.
+       */
+      id: string;
+
+      /**
+       * The user-provided lookup key.
+       */
+      lookup_key?: string;
+
+      /**
+       * The ID of the v1 Product for this fee.
+       */
+      product: string;
+    }
+
+    export namespace Data {
+      export interface BillAt {
+        /**
+         * The timestamp at which the fee will be billed.
+         */
+        timestamp: string;
+      }
+    }
+  }
+
+  export namespace PricingLines {
+    export interface Data {
+      /**
+       * Resolved timestamp when the pricing line ends.
+       */
+      ends_at: Data.EndsAt;
+
+      /**
+       * The ID of the pricing line.
+       */
+      id: string;
+
+      /**
+       * The user-provided lookup key for the pricing line.
+       */
+      lookup_key?: string;
+
+      /**
+       * Set of key-value pairs that you can attach to an object.
+       */
+      metadata?: Metadata;
+
+      /**
+       * The pricing configuration for the pricing line.
+       */
+      pricing: Data.Pricing;
+
+      /**
+       * Resolved timestamp when the pricing line starts.
+       */
+      starts_at: Data.StartsAt;
+    }
+
+    export namespace Data {
+      export interface EndsAt {
+        /**
+         * The timestamp when the item ends.
          */
         timestamp: string;
       }
 
-      export interface BillingSettings {
+      export interface Pricing {
         /**
-         * The bill settings details configures invoice and tax settings for the contract.
+         * V1 price details. Present when `type` is `price`.
          */
-        bill_settings_details?: BillingSettings.BillSettingsDetails;
+        price_details?: Pricing.PriceDetails;
 
         /**
-         * The billing profile details configures who is charged for the contract.
+         * The type of pricing.
          */
-        billing_profile_details: BillingSettings.BillingProfileDetails;
-
-        /**
-         * The collection settings details configures how payments are collected on the contract.
-         */
-        collection_settings_details: BillingSettings.CollectionSettingsDetails;
+        type: 'price';
       }
 
-      export interface OneTimeFees {
+      export interface StartsAt {
         /**
-         * The one-time fees for this page.
+         * The timestamp when the item starts.
          */
-        data: Array<OneTimeFees.Data>;
+        timestamp: string;
       }
 
-      export interface PricingLines {
-        /**
-         * The pricing lines for this page.
-         */
-        data: Array<PricingLines.Data>;
-      }
-
-      export interface PricingOverrides {
-        /**
-         * The pricing overrides for this page.
-         */
-        data: Array<PricingOverrides.Data>;
-      }
-
-      export type Status = 'active' | 'canceled' | 'draft' | 'ended';
-
-      export interface StatusDetails {
-        /**
-         * Details of the active contract status.
-         */
-        active?: StatusDetails.Active;
-
-        /**
-         * Details of the canceled contract status.
-         */
-        canceled?: StatusDetails.Canceled;
-      }
-
-      export namespace BillingSettings {
-        export interface BillSettingsDetails {
+      export namespace Pricing {
+        export interface PriceDetails {
           /**
-           * Calculation settings.
+           * The current quantity on this pricing line.
            */
-          calculation?: BillSettingsDetails.Calculation;
+          current_quantity: Decimal;
 
           /**
-           * Invoice settings.
+           * The ID of the V1 price.
            */
-          invoice?: BillSettingsDetails.Invoice;
+          price: string;
+
+          /**
+           * The overwrite_price overrides embedded directly on this pricing line.
+           */
+          pricing_overrides?: PriceDetails.PricingOverrides;
         }
 
-        export interface BillingProfileDetails {
-          /**
-           * The customer who pays for the contract invoice.
-           */
-          customer: string;
-
-          /**
-           * The default payment method for the contract.
-           */
-          default_payment_method?: string;
-        }
-
-        export interface CollectionSettingsDetails {
-          /**
-           * The collection method.
-           */
-          collection_method: CollectionSettingsDetails.CollectionMethod;
-
-          /**
-           * The payment method configuration.
-           */
-          payment_method_configuration?: string;
-        }
-
-        export namespace BillSettingsDetails {
-          export interface Calculation {
+        export namespace PriceDetails {
+          export interface PricingOverrides {
             /**
-             * Tax calculation settings.
+             * The pricing line overrides.
              */
-            tax?: Calculation.Tax;
+            data: Array<PricingOverrides.Data>;
           }
 
-          export interface Invoice {
-            /**
-             * The number of time units before the invoice is past due.
-             */
-            time_until_due?: Invoice.TimeUntilDue;
-          }
-
-          export namespace Calculation {
-            export interface Tax {
+          export namespace PricingOverrides {
+            export interface Data {
               /**
-               * The type of tax calculation.
+               * Resolved timestamp when this override ends.
                */
-              type: Tax.Type;
+              ends_at: Data.EndsAt;
+
+              /**
+               * The user-provided lookup key for this override.
+               */
+              lookup_key?: string;
+
+              /**
+               * Details for an overwrite_price override.
+               */
+              overwrite_price?: Data.OverwritePrice;
+
+              /**
+               * The ID of the pricing line override.
+               */
+              pricing_override: string;
+
+              /**
+               * Resolved timestamp when this override starts.
+               */
+              starts_at: Data.StartsAt;
+
+              /**
+               * The type of override.
+               */
+              type: 'overwrite_price';
             }
 
-            export namespace Tax {
-              export type Type = 'automatic' | 'manual';
-            }
-          }
-
-          export namespace Invoice {
-            export interface TimeUntilDue {
-              /**
-               * The interval unit.
-               */
-              interval: TimeUntilDue.Interval;
-
-              /**
-               * The number of intervals.
-               */
-              interval_count: number;
-            }
-
-            export namespace TimeUntilDue {
-              export type Interval = 'day' | 'month' | 'week' | 'year';
-            }
-          }
-        }
-
-        export namespace CollectionSettingsDetails {
-          export type CollectionMethod =
-            | 'charge_automatically'
-            | 'send_invoice';
-        }
-      }
-
-      export namespace OneTimeFees {
-        export interface Data {
-          /**
-           * The amount billed for this fee.
-           */
-          amount: V2Amount;
-
-          /**
-           * When this fee will be billed. Always contains a concrete timestamp.
-           */
-          bill_at: Data.BillAt;
-
-          /**
-           * The ID of the one-time fee.
-           */
-          id: string;
-
-          /**
-           * The user-provided lookup key.
-           */
-          lookup_key?: string;
-
-          /**
-           * The ID of the v1 Product for this fee.
-           */
-          product: string;
-        }
-
-        export namespace Data {
-          export interface BillAt {
-            /**
-             * The timestamp at which the fee will be billed.
-             */
-            timestamp: string;
-          }
-        }
-      }
-
-      export namespace PricingLines {
-        export interface Data {
-          /**
-           * Resolved timestamp when the pricing line ends.
-           */
-          ends_at: Data.EndsAt;
-
-          /**
-           * The ID of the pricing line.
-           */
-          id: string;
-
-          /**
-           * The user-provided lookup key for the pricing line.
-           */
-          lookup_key?: string;
-
-          /**
-           * Set of key-value pairs that you can attach to an object.
-           */
-          metadata?: Metadata;
-
-          /**
-           * The pricing configuration for the pricing line.
-           */
-          pricing: Data.Pricing;
-
-          /**
-           * Resolved timestamp when the pricing line starts.
-           */
-          starts_at: Data.StartsAt;
-        }
-
-        export namespace Data {
-          export interface EndsAt {
-            /**
-             * The timestamp when the item ends.
-             */
-            timestamp: string;
-          }
-
-          export interface Pricing {
-            /**
-             * V1 price details. Present when `type` is `price`.
-             */
-            price_details?: Pricing.PriceDetails;
-
-            /**
-             * The type of pricing.
-             */
-            type: 'price';
-          }
-
-          export interface StartsAt {
-            /**
-             * The timestamp when the item starts.
-             */
-            timestamp: string;
-          }
-
-          export namespace Pricing {
-            export interface PriceDetails {
-              /**
-               * The current quantity on this pricing line.
-               */
-              current_quantity: Decimal;
-
-              /**
-               * The ID of the V1 price.
-               */
-              price: string;
-
-              /**
-               * The overwrite_price overrides embedded directly on this pricing line.
-               */
-              pricing_overrides?: PriceDetails.PricingOverrides;
-            }
-
-            export namespace PriceDetails {
-              export interface PricingOverrides {
+            export namespace Data {
+              export interface EndsAt {
                 /**
-                 * The pricing line overrides.
+                 * The timestamp when the item ends.
                  */
-                data: Array<PricingOverrides.Data>;
+                timestamp: string;
               }
 
-              export namespace PricingOverrides {
-                export interface Data {
+              export interface OverwritePrice {
+                /**
+                 * Defines whether the tiered price should be graduated or volume-based.
+                 */
+                tiering_mode?: OverwritePrice.TieringMode;
+
+                /**
+                 * Each element represents a pricing tier.
+                 */
+                tiers: Array<OverwritePrice.Tier>;
+
+                /**
+                 * The per-unit amount to be charged, represented as a decimal string in minor currency units.
+                 */
+                unit_amount?: string;
+              }
+
+              export interface StartsAt {
+                /**
+                 * The timestamp when the item starts.
+                 */
+                timestamp: string;
+              }
+
+              export namespace OverwritePrice {
+                export type TieringMode = 'graduated' | 'volume';
+
+                export interface Tier {
                   /**
-                   * Resolved timestamp when this override ends.
+                   * Price for the entire tier, represented as a decimal string in minor currency units.
                    */
-                  ends_at: Data.EndsAt;
+                  flat_amount?: string;
 
                   /**
-                   * The user-provided lookup key for this override.
+                   * Per-unit price for units included in this tier, represented as a decimal string in minor currency units.
                    */
-                  lookup_key?: string;
+                  unit_amount?: string;
 
                   /**
-                   * Details for an overwrite_price override.
+                   * Up to and including this quantity will be contained in the tier.
                    */
-                  overwrite_price?: Data.OverwritePrice;
+                  up_to_decimal?: Decimal;
 
                   /**
-                   * The ID of the pricing line override.
+                   * No upper bound to this tier.
                    */
-                  pricing_override: string;
-
-                  /**
-                   * Resolved timestamp when this override starts.
-                   */
-                  starts_at: Data.StartsAt;
-
-                  /**
-                   * The type of override.
-                   */
-                  type: 'overwrite_price';
-                }
-
-                export namespace Data {
-                  export interface EndsAt {
-                    /**
-                     * The timestamp when the item ends.
-                     */
-                    timestamp: string;
-                  }
-
-                  export interface OverwritePrice {
-                    /**
-                     * Defines whether the tiered price should be graduated or volume-based.
-                     */
-                    tiering_mode?: OverwritePrice.TieringMode;
-
-                    /**
-                     * Each element represents a pricing tier.
-                     */
-                    tiers: Array<OverwritePrice.Tier>;
-
-                    /**
-                     * The per-unit amount to be charged, represented as a decimal string in minor currency units.
-                     */
-                    unit_amount?: string;
-                  }
-
-                  export interface StartsAt {
-                    /**
-                     * The timestamp when the item starts.
-                     */
-                    timestamp: string;
-                  }
-
-                  export namespace OverwritePrice {
-                    export type TieringMode = 'graduated' | 'volume';
-
-                    export interface Tier {
-                      /**
-                       * Price for the entire tier, represented as a decimal string in minor currency units.
-                       */
-                      flat_amount?: string;
-
-                      /**
-                       * Per-unit price for units included in this tier, represented as a decimal string in minor currency units.
-                       */
-                      unit_amount?: string;
-
-                      /**
-                       * Up to and including this quantity will be contained in the tier.
-                       */
-                      up_to_decimal?: Decimal;
-
-                      /**
-                       * No upper bound to this tier.
-                       */
-                      up_to_inf?: 'inf';
-                    }
-                  }
+                  up_to_inf?: 'inf';
                 }
               }
             }
           }
         }
       }
+    }
+  }
 
-      export namespace PricingOverrides {
-        export interface Data {
-          /**
-           * Resolved timestamp when the pricing override ends.
-           */
-          ends_at: Data.EndsAt;
+  export namespace PricingOverrides {
+    export interface Data {
+      /**
+       * Resolved timestamp when the pricing override ends.
+       */
+      ends_at: Data.EndsAt;
 
-          /**
-           * The ID of the pricing override.
-           */
-          id: string;
+      /**
+       * The ID of the pricing override.
+       */
+      id: string;
 
-          /**
-           * The user-provided lookup key for the pricing override.
-           */
-          lookup_key?: string;
+      /**
+       * The user-provided lookup key for the pricing override.
+       */
+      lookup_key?: string;
 
-          /**
-           * Details for a multiplier override.
-           */
-          multiplier?: Data.Multiplier;
+      /**
+       * Details for a multiplier override.
+       */
+      multiplier?: Data.Multiplier;
 
-          /**
-           * The priority of this override relative to others. Lower number = higher priority.
-           */
-          priority: number;
+      /**
+       * The priority of this override relative to others. Lower number = higher priority.
+       */
+      priority: number;
 
-          /**
-           * Resolved timestamp when the pricing override starts.
-           */
-          starts_at: Data.StartsAt;
+      /**
+       * Resolved timestamp when the pricing override starts.
+       */
+      starts_at: Data.StartsAt;
 
-          /**
-           * The type of pricing override.
-           */
-          type: 'multiplier';
-        }
+      /**
+       * The type of pricing override.
+       */
+      type: 'multiplier';
+    }
 
-        export namespace Data {
-          export interface EndsAt {
-            /**
-             * The timestamp when the item ends.
-             */
-            timestamp: string;
-          }
-
-          export interface Multiplier {
-            /**
-             * Criteria determining which rates the multiplier applies to.
-             */
-            criteria: Array<Multiplier.Criterion>;
-
-            /**
-             * The multiplier factor, represented as a decimal string. e.g. "0.8" for a 20% reduction.
-             */
-            factor: string;
-          }
-
-          export interface StartsAt {
-            /**
-             * The timestamp when the item starts.
-             */
-            timestamp: string;
-          }
-
-          export namespace Multiplier {
-            export interface Criterion {
-              /**
-               * Filter by pricing line IDs.
-               */
-              pricing_line_ids?: Array<string>;
-
-              /**
-               * Filter by pricing line lookup keys.
-               */
-              pricing_line_lookup_keys?: Array<string>;
-
-              /**
-               * Whether to include or exclude items matching these criteria.
-               */
-              type: Criterion.Type;
-            }
-
-            export namespace Criterion {
-              export type Type = 'exclude' | 'include';
-            }
-          }
-        }
+    export namespace Data {
+      export interface EndsAt {
+        /**
+         * The timestamp when the item ends.
+         */
+        timestamp: string;
       }
 
-      export namespace StatusDetails {
-        export interface Active {
+      export interface Multiplier {
+        /**
+         * Criteria determining which rates the multiplier applies to.
+         */
+        criteria: Array<Multiplier.Criterion>;
+
+        /**
+         * The multiplier factor, represented as a decimal string. e.g. "0.8" for a 20% reduction.
+         */
+        factor: string;
+      }
+
+      export interface StartsAt {
+        /**
+         * The timestamp when the item starts.
+         */
+        timestamp: string;
+      }
+
+      export namespace Multiplier {
+        export interface Criterion {
           /**
-           * The timestamp when the contract was activated.
+           * Filter by pricing line IDs.
            */
-          activated_at: string;
+          pricing_line_ids?: Array<string>;
+
+          /**
+           * Filter by pricing line lookup keys.
+           */
+          pricing_line_lookup_keys?: Array<string>;
+
+          /**
+           * Whether to include or exclude items matching these criteria.
+           */
+          type: Criterion.Type;
         }
 
-        export interface Canceled {
-          /**
-           * The timestamp when the contract was canceled.
-           */
-          canceled_at: string;
+        export namespace Criterion {
+          export type Type = 'exclude' | 'include';
         }
       }
+    }
+  }
+
+  export namespace StatusDetails {
+    export interface Active {
+      /**
+       * The timestamp when the contract was activated.
+       */
+      activated_at: string;
+    }
+
+    export interface Canceled {
+      /**
+       * The timestamp when the contract was canceled.
+       */
+      canceled_at: string;
     }
   }
 }

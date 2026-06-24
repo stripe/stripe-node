@@ -48,7 +48,7 @@ export interface BusinessProfile {
   /**
    * Branding data for the business.
    */
-  branding?: V2.Network.BusinessProfile.Branding;
+  branding?: BusinessProfile.Branding;
 
   /**
    * The description of the business.
@@ -75,46 +75,42 @@ export interface BusinessProfile {
    */
   username: string;
 }
-export namespace V2 {
-  export namespace Network {
-    export namespace BusinessProfile {
-      export interface Branding {
-        /**
-         * URL of the icon for the business. The image will be square and at least 128px x 128px.
-         */
-        icon?: Branding.Icon;
+export namespace BusinessProfile {
+  export interface Branding {
+    /**
+     * URL of the icon for the business. The image will be square and at least 128px x 128px.
+     */
+    icon?: Branding.Icon;
 
-        /**
-         * URL of the logo for the business. The image will be at least 128px x 128px.
-         */
-        logo?: Branding.Logo;
+    /**
+     * URL of the logo for the business. The image will be at least 128px x 128px.
+     */
+    logo?: Branding.Logo;
 
-        /**
-         * A CSS hex color value representing the primary branding color for this business.
-         */
-        primary_color?: string;
+    /**
+     * A CSS hex color value representing the primary branding color for this business.
+     */
+    primary_color?: string;
 
-        /**
-         * A CSS hex color value representing the secondary branding color for this business.
-         */
-        secondary_color?: string;
-      }
+    /**
+     * A CSS hex color value representing the secondary branding color for this business.
+     */
+    secondary_color?: string;
+  }
 
-      export namespace Branding {
-        export interface Icon {
-          /**
-           * The URL of the image in its original size.
-           */
-          original: string;
-        }
+  export namespace Branding {
+    export interface Icon {
+      /**
+       * The URL of the image in its original size.
+       */
+      original: string;
+    }
 
-        export interface Logo {
-          /**
-           * The URL of the image in its original size.
-           */
-          original: string;
-        }
-      }
+    export interface Logo {
+      /**
+       * The URL of the image in its original size.
+       */
+      original: string;
     }
   }
 }

@@ -38,7 +38,7 @@ export interface AccountEvaluation {
   /**
    * Account data if this evaluation is for an account without an existing Stripe entity.
    */
-  account_data?: V2.Core.AccountEvaluation.AccountData;
+  account_data?: AccountEvaluation.AccountData;
 
   /**
    * Timestamp at which the evaluation was created.
@@ -55,63 +55,59 @@ export interface AccountEvaluation {
    */
   livemode: boolean;
 }
-export namespace V2 {
-  export namespace Core {
-    export namespace AccountEvaluation {
-      export interface AccountData {
+export namespace AccountEvaluation {
+  export interface AccountData {
+    /**
+     * Default account settings.
+     */
+    defaults?: AccountData.Defaults;
+
+    /**
+     * Identity data.
+     */
+    identity?: AccountData.Identity;
+  }
+
+  export namespace AccountData {
+    export interface Defaults {
+      /**
+       * Account profile data.
+       */
+      profile: Defaults.Profile;
+    }
+
+    export interface Identity {
+      /**
+       * Business details for identity data.
+       */
+      business_details: Identity.BusinessDetails;
+    }
+
+    export namespace Defaults {
+      export interface Profile {
         /**
-         * Default account settings.
+         * The business URL.
          */
-        defaults?: AccountData.Defaults;
+        business_url: string;
 
         /**
-         * Identity data.
+         * Doing business as (DBA) name.
          */
-        identity?: AccountData.Identity;
+        doing_business_as?: string;
+
+        /**
+         * Description of the account's product or service.
+         */
+        product_description?: string;
       }
+    }
 
-      export namespace AccountData {
-        export interface Defaults {
-          /**
-           * Account profile data.
-           */
-          profile: Defaults.Profile;
-        }
-
-        export interface Identity {
-          /**
-           * Business details for identity data.
-           */
-          business_details: Identity.BusinessDetails;
-        }
-
-        export namespace Defaults {
-          export interface Profile {
-            /**
-             * The business URL.
-             */
-            business_url: string;
-
-            /**
-             * Doing business as (DBA) name.
-             */
-            doing_business_as?: string;
-
-            /**
-             * Description of the account's product or service.
-             */
-            product_description?: string;
-          }
-        }
-
-        export namespace Identity {
-          export interface BusinessDetails {
-            /**
-             * Registered business name.
-             */
-            registered_name?: string;
-          }
-        }
+    export namespace Identity {
+      export interface BusinessDetails {
+        /**
+         * Registered business name.
+         */
+        registered_name?: string;
       }
     }
   }

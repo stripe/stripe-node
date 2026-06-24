@@ -88,7 +88,7 @@ export interface AccountSignal {
   /**
    * The account or customer this signal is associated with.
    */
-  account_details?: V2.Signals.AccountSignal.AccountDetails;
+  account_details?: AccountSignal.AccountDetails;
 
   /**
    * Timestamp at which the signal was created.
@@ -98,7 +98,7 @@ export interface AccountSignal {
   /**
    * Data for the fraudulent merchant signal. Present only when type is fraudulent_merchant.
    */
-  fraudulent_merchant?: V2.Signals.AccountSignal.FraudulentMerchant;
+  fraudulent_merchant?: AccountSignal.FraudulentMerchant;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -108,166 +108,162 @@ export interface AccountSignal {
   /**
    * Data for the merchant delinquency signal. Present only when type is merchant_delinquency.
    */
-  merchant_delinquency?: V2.Signals.AccountSignal.MerchantDelinquency;
+  merchant_delinquency?: AccountSignal.MerchantDelinquency;
 
   /**
    * The type of signal.
    */
-  type: V2.Signals.AccountSignal.Type;
+  type: AccountSignal.Type;
 }
-export namespace V2 {
-  export namespace Signals {
-    export namespace AccountSignal {
-      export interface AccountDetails {
-        /**
-         * The v2 account ID of the account.
-         */
-        account?: string;
+export namespace AccountSignal {
+  export interface AccountDetails {
+    /**
+     * The v2 account ID of the account.
+     */
+    account?: string;
 
-        /**
-         * The v1 customer ID of the account, for users not yet migrated to v2/accounts.
-         */
-        customer?: string;
-      }
+    /**
+     * The v1 customer ID of the account, for users not yet migrated to v2/accounts.
+     */
+    customer?: string;
+  }
 
-      export interface FraudulentMerchant {
-        /**
-         * Array of objects representing individual factors that contributed to the calculated probability. Absent when risk level is not_assessed or unknown,
-         * or when the user is not on a product tier that includes indicators.
-         */
-        indicators: Array<FraudulentMerchant.Indicator>;
+  export interface FraudulentMerchant {
+    /**
+     * Array of objects representing individual factors that contributed to the calculated probability. Absent when risk level is not_assessed or unknown,
+     * or when the user is not on a product tier that includes indicators.
+     */
+    indicators: Array<FraudulentMerchant.Indicator>;
 
-        /**
-         * The probability of the merchant being fraudulent. Can be between 0.00 and 100.00. Absent when risk level is not_assessed or unknown,
-         * or when the user is not on a product tier that includes numeric scores.
-         */
-        probability?: Decimal;
+    /**
+     * The probability of the merchant being fraudulent. Can be between 0.00 and 100.00. Absent when risk level is not_assessed or unknown,
+     * or when the user is not on a product tier that includes numeric scores.
+     */
+    probability?: Decimal;
 
-        /**
-         * Categorical assessment of the fraudulent merchant risk based on probability.
-         */
-        risk_level: FraudulentMerchant.RiskLevel;
-      }
+    /**
+     * Categorical assessment of the fraudulent merchant risk based on probability.
+     */
+    risk_level: FraudulentMerchant.RiskLevel;
+  }
 
-      export interface MerchantDelinquency {
-        /**
-         * Array of objects representing individual factors that contributed to the calculated probability of delinquency. Absent when risk level is not_assessed or unknown,
-         * or when the user is not on a product tier that includes indicators.
-         */
-        indicators: Array<MerchantDelinquency.Indicator>;
+  export interface MerchantDelinquency {
+    /**
+     * Array of objects representing individual factors that contributed to the calculated probability of delinquency. Absent when risk level is not_assessed or unknown,
+     * or when the user is not on a product tier that includes indicators.
+     */
+    indicators: Array<MerchantDelinquency.Indicator>;
 
-        /**
-         * The probability of delinquency. Can be between 0.00 and 100.00. Absent when risk level is not_assessed or unknown,
-         * or when the user is not on a product tier that includes numeric scores.
-         */
-        probability?: Decimal;
+    /**
+     * The probability of delinquency. Can be between 0.00 and 100.00. Absent when risk level is not_assessed or unknown,
+     * or when the user is not on a product tier that includes numeric scores.
+     */
+    probability?: Decimal;
 
-        /**
-         * Categorical assessment of the delinquency risk based on probability.
-         */
-        risk_level: MerchantDelinquency.RiskLevel;
-      }
+    /**
+     * Categorical assessment of the delinquency risk based on probability.
+     */
+    risk_level: MerchantDelinquency.RiskLevel;
+  }
 
-      export type Type = 'fraudulent_merchant' | 'merchant_delinquency';
+  export type Type = 'fraudulent_merchant' | 'merchant_delinquency';
 
-      export namespace FraudulentMerchant {
-        export interface Indicator {
-          /**
-           * A brief explanation of how this indicator contributed to the fraudulent merchant probability.
-           */
-          explanation: string;
+  export namespace FraudulentMerchant {
+    export interface Indicator {
+      /**
+       * A brief explanation of how this indicator contributed to the fraudulent merchant probability.
+       */
+      explanation: string;
 
-          /**
-           * The effect this indicator had on the overall risk level.
-           */
-          impact: Indicator.Impact;
+      /**
+       * The effect this indicator had on the overall risk level.
+       */
+      impact: Indicator.Impact;
 
-          /**
-           * The name of the specific indicator used in the risk assessment.
-           */
-          indicator: Indicator.Indicator;
-        }
+      /**
+       * The name of the specific indicator used in the risk assessment.
+       */
+      indicator: Indicator.Indicator;
+    }
 
-        export type RiskLevel =
-          | 'elevated'
-          | 'highest'
-          | 'low'
-          | 'normal'
-          | 'not_assessed'
-          | 'unknown';
+    export type RiskLevel =
+      | 'elevated'
+      | 'highest'
+      | 'low'
+      | 'normal'
+      | 'not_assessed'
+      | 'unknown';
 
-        export namespace Indicator {
-          export type Impact =
-            | 'decrease'
-            | 'neutral'
-            | 'slight_increase'
-            | 'strong_increase';
+    export namespace Indicator {
+      export type Impact =
+        | 'decrease'
+        | 'neutral'
+        | 'slight_increase'
+        | 'strong_increase';
 
-          export type Indicator =
-            | 'bank_account'
-            | 'business_information_and_account_activity'
-            | 'disputes'
-            | 'failures'
-            | 'geolocation'
-            | 'other'
-            | 'other_related_accounts'
-            | 'other_transaction_activity'
-            | 'owner_email';
-        }
-      }
+      export type Indicator =
+        | 'bank_account'
+        | 'business_information_and_account_activity'
+        | 'disputes'
+        | 'failures'
+        | 'geolocation'
+        | 'other'
+        | 'other_related_accounts'
+        | 'other_transaction_activity'
+        | 'owner_email';
+    }
+  }
 
-      export namespace MerchantDelinquency {
-        export interface Indicator {
-          /**
-           * A brief explanation of how this indicator contributed to the delinquency probability.
-           */
-          explanation: string;
+  export namespace MerchantDelinquency {
+    export interface Indicator {
+      /**
+       * A brief explanation of how this indicator contributed to the delinquency probability.
+       */
+      explanation: string;
 
-          /**
-           * The effect this indicator had on the overall risk level.
-           */
-          impact: Indicator.Impact;
+      /**
+       * The effect this indicator had on the overall risk level.
+       */
+      impact: Indicator.Impact;
 
-          /**
-           * The name of the specific indicator used in the risk assessment.
-           */
-          indicator: Indicator.Indicator;
-        }
+      /**
+       * The name of the specific indicator used in the risk assessment.
+       */
+      indicator: Indicator.Indicator;
+    }
 
-        export type RiskLevel =
-          | 'elevated'
-          | 'highest'
-          | 'low'
-          | 'normal'
-          | 'not_assessed'
-          | 'unknown';
+    export type RiskLevel =
+      | 'elevated'
+      | 'highest'
+      | 'low'
+      | 'normal'
+      | 'not_assessed'
+      | 'unknown';
 
-        export namespace Indicator {
-          export type Impact =
-            | 'decrease'
-            | 'neutral'
-            | 'slight_increase'
-            | 'strong_increase';
+    export namespace Indicator {
+      export type Impact =
+        | 'decrease'
+        | 'neutral'
+        | 'slight_increase'
+        | 'strong_increase';
 
-          export type Indicator =
-            | 'account_balance'
-            | 'aov'
-            | 'charge_concentration'
-            | 'disputes'
-            | 'dispute_window'
-            | 'exposure'
-            | 'firmographic'
-            | 'lifetime_metrics'
-            | 'other'
-            | 'payment_processing'
-            | 'payment_volume'
-            | 'payouts'
-            | 'refunds'
-            | 'related_accounts'
-            | 'tenure'
-            | 'transfers';
-        }
-      }
+      export type Indicator =
+        | 'account_balance'
+        | 'aov'
+        | 'charge_concentration'
+        | 'disputes'
+        | 'dispute_window'
+        | 'exposure'
+        | 'firmographic'
+        | 'lifetime_metrics'
+        | 'other'
+        | 'payment_processing'
+        | 'payment_volume'
+        | 'payouts'
+        | 'refunds'
+        | 'related_accounts'
+        | 'tenure'
+        | 'transfers';
     }
   }
 }

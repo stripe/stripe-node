@@ -73,7 +73,7 @@ export interface AccountEvaluation {
   /**
    * The list of events that were reported for this Account Evaluation object via the report API.
    */
-  events: Array<Radar.AccountEvaluation.Event> | null;
+  events: Array<AccountEvaluation.Event> | null;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -83,97 +83,95 @@ export interface AccountEvaluation {
   /**
    * A hash of signal objects providing Radar's evaluation for the lifecycle event.
    */
-  signals: Radar.AccountEvaluation.Signals | null;
+  signals: AccountEvaluation.Signals | null;
 
   /**
    * The type of evaluation returned, based on the user's request.
    */
   type: string;
 }
-export namespace Radar {
-  export namespace AccountEvaluation {
-    export interface Event {
-      /**
-       * Data about a failed login event.
-       */
-      login_failed?: Event.LoginFailed;
+export namespace AccountEvaluation {
+  export interface Event {
+    /**
+     * Data about a failed login event.
+     */
+    login_failed?: Event.LoginFailed;
 
-      /**
-       * Data about a succeeded login event.
-       */
-      login_succeeded?: Event.LoginSucceeded;
+    /**
+     * Data about a succeeded login event.
+     */
+    login_succeeded?: Event.LoginSucceeded;
 
-      /**
-       * Time at which the event occurred. Measured in seconds since the Unix epoch.
-       */
-      occurred_at: number;
+    /**
+     * Time at which the event occurred. Measured in seconds since the Unix epoch.
+     */
+    occurred_at: number;
 
-      /**
-       * Data about a failed registration event.
-       */
-      registration_failed?: Event.RegistrationFailed;
+    /**
+     * Data about a failed registration event.
+     */
+    registration_failed?: Event.RegistrationFailed;
 
-      /**
-       * Data about a succeeded registration event.
-       */
-      registration_succeeded?: Event.RegistrationSucceeded;
+    /**
+     * Data about a succeeded registration event.
+     */
+    registration_succeeded?: Event.RegistrationSucceeded;
 
+    /**
+     * The type of event that occurred.
+     */
+    type: string;
+  }
+
+  export interface Signals {
+    account_sharing?: Signals.AccountSharing;
+
+    multi_accounting?: Signals.MultiAccounting;
+  }
+
+  export namespace Event {
+    export interface LoginFailed {
       /**
-       * The type of event that occurred.
+       * The reason why this login failed.
        */
-      type: string;
+      reason: string;
     }
 
-    export interface Signals {
-      account_sharing?: Signals.AccountSharing;
-
-      multi_accounting?: Signals.MultiAccounting;
+    export interface LoginSucceeded {
+      /**
+       * The qualification for a login success.
+       */
+      qualification: string | null;
     }
 
-    export namespace Event {
-      export interface LoginFailed {
-        /**
-         * The reason why this login failed.
-         */
-        reason: string;
-      }
-
-      export interface LoginSucceeded {
-        /**
-         * The qualification for a login success.
-         */
-        qualification: string | null;
-      }
-
-      export interface RegistrationFailed {
-        /**
-         * The reason why this registration failed.
-         */
-        reason: string;
-      }
-
-      export interface RegistrationSucceeded {
-        /**
-         * The qualification for a registration success.
-         */
-        qualification: string | null;
-      }
+    export interface RegistrationFailed {
+      /**
+       * The reason why this registration failed.
+       */
+      reason: string;
     }
 
-    export namespace Signals {
-      export interface AccountSharing {
-        /**
-         * Score for this signal (float between 0.0-100.0).
-         */
-        score: number;
-      }
+    export interface RegistrationSucceeded {
+      /**
+       * The qualification for a registration success.
+       */
+      qualification: string | null;
+    }
+  }
 
-      export interface MultiAccounting {
-        /**
-         * Score for this signal (float between 0.0-100.0).
-         */
-        score: number;
-      }
+  export namespace Signals {
+    export interface AccountSharing {
+      /**
+       * Score for this signal (float between 0.0-100.0).
+       */
+      score: number;
+    }
+
+    export interface MultiAccounting {
+      /**
+       * Score for this signal (float between 0.0-100.0).
+       */
+      score: number;
     }
   }
 }

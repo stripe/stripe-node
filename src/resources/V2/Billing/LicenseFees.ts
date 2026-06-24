@@ -247,29 +247,29 @@ export interface LicenseFee {
   /**
    * The service cycle configuration for this License Fee.
    */
-  service_cycle: V2.Billing.LicenseFee.ServiceCycle;
+  service_cycle: LicenseFee.ServiceCycle;
 
   /**
    * The tax behavior for Stripe Tax — whether the license fee price includes or excludes tax.
    */
-  tax_behavior: V2.Billing.LicenseFee.TaxBehavior;
+  tax_behavior: LicenseFee.TaxBehavior;
 
   /**
    * Defines whether the tiering price is graduated or volume-based. In volume-based tiering, the maximum
    * quantity within a period determines the per-unit price. In graduated tiering, the pricing changes as the quantity
    * grows into new tiers. Can only be set if `tiers` is set.
    */
-  tiering_mode?: V2.Billing.LicenseFee.TieringMode;
+  tiering_mode?: LicenseFee.TieringMode;
 
   /**
    * Each element represents a pricing tier. Cannot be set if `unit_amount` is provided.
    */
-  tiers: Array<V2.Billing.LicenseFee.Tier>;
+  tiers: Array<LicenseFee.Tier>;
 
   /**
    * Apply a transformation to the reported usage or set quantity before computing the amount billed.
    */
-  transform_quantity?: V2.Billing.LicenseFee.TransformQuantity;
+  transform_quantity?: LicenseFee.TransformQuantity;
 
   /**
    * The per-unit amount to be charged, represented as a decimal string in minor currency units with at most 12 decimal
@@ -277,70 +277,66 @@ export interface LicenseFee {
    */
   unit_amount?: string;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace LicenseFee {
-      export interface ServiceCycle {
-        /**
-         * The interval for assessing service.
-         */
-        interval: ServiceCycle.Interval;
+export namespace LicenseFee {
+  export interface ServiceCycle {
+    /**
+     * The interval for assessing service.
+     */
+    interval: ServiceCycle.Interval;
 
-        /**
-         * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"`
-         * to specify quarterly service.
-         */
-        interval_count: number;
-      }
+    /**
+     * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"`
+     * to specify quarterly service.
+     */
+    interval_count: number;
+  }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive';
+  export type TaxBehavior = 'exclusive' | 'inclusive';
 
-      export type TieringMode = 'graduated' | 'volume';
+  export type TieringMode = 'graduated' | 'volume';
 
-      export interface Tier {
-        /**
-         * Price for the entire tier, represented as a decimal string in minor currency units with at most 12 decimal places.
-         */
-        flat_amount?: string;
+  export interface Tier {
+    /**
+     * Price for the entire tier, represented as a decimal string in minor currency units with at most 12 decimal places.
+     */
+    flat_amount?: string;
 
-        /**
-         * Per-unit price for units included in this tier, represented as a decimal string in minor currency units with at
-         * most 12 decimal places.
-         */
-        unit_amount?: string;
+    /**
+     * Per-unit price for units included in this tier, represented as a decimal string in minor currency units with at
+     * most 12 decimal places.
+     */
+    unit_amount?: string;
 
-        /**
-         * Up to and including this quantity is contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
-         * be set.
-         */
-        up_to_decimal?: Decimal;
+    /**
+     * Up to and including this quantity is contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
+     * be set.
+     */
+    up_to_decimal?: Decimal;
 
-        /**
-         * No upper bound to this tier. Only one of `up_to_decimal` and `up_to_inf` may be set.
-         */
-        up_to_inf?: 'inf';
-      }
+    /**
+     * No upper bound to this tier. Only one of `up_to_decimal` and `up_to_inf` may be set.
+     */
+    up_to_inf?: 'inf';
+  }
 
-      export interface TransformQuantity {
-        /**
-         * Divide usage by this number.
-         */
-        divide_by: bigint;
+  export interface TransformQuantity {
+    /**
+     * Divide usage by this number.
+     */
+    divide_by: bigint;
 
-        /**
-         * After division, round the result up or down.
-         */
-        round: TransformQuantity.Round;
-      }
+    /**
+     * After division, round the result up or down.
+     */
+    round: TransformQuantity.Round;
+  }
 
-      export namespace ServiceCycle {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
-      }
+  export namespace ServiceCycle {
+    export type Interval = 'day' | 'month' | 'week' | 'year';
+  }
 
-      export namespace TransformQuantity {
-        export type Round = 'down' | 'up';
-      }
-    }
+  export namespace TransformQuantity {
+    export type Round = 'down' | 'up';
   }
 }
 export namespace V2 {

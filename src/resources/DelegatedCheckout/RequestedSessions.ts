@@ -127,9 +127,7 @@ export interface RequestedSession {
   /**
    * Affiliate attribution data associated with this requested session.
    */
-  affiliate_attributions: Array<
-    DelegatedCheckout.RequestedSession.AffiliateAttribution
-  > | null;
+  affiliate_attributions: Array<RequestedSession.AffiliateAttribution> | null;
 
   /**
    * The subtotal amount of the requested session.
@@ -144,7 +142,7 @@ export interface RequestedSession {
   /**
    * The buyer consent options for this requested session, including marketing preferences.
    */
-  buyer_consents: DelegatedCheckout.RequestedSession.BuyerConsents | null;
+  buyer_consents: RequestedSession.BuyerConsents | null;
 
   /**
    * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -164,7 +162,7 @@ export interface RequestedSession {
   /**
    * The discounts applied to and rejected from this requested session.
    */
-  discounts?: DelegatedCheckout.RequestedSession.Discounts | null;
+  discounts?: RequestedSession.Discounts | null;
 
   /**
    * Time at which the requested session expires. Measured in seconds since the Unix epoch.
@@ -174,12 +172,12 @@ export interface RequestedSession {
   /**
    * The details of the fulfillment.
    */
-  fulfillment_details: DelegatedCheckout.RequestedSession.FulfillmentDetails | null;
+  fulfillment_details: RequestedSession.FulfillmentDetails | null;
 
   /**
    * The line items to be purchased.
    */
-  line_item_details: Array<DelegatedCheckout.RequestedSession.LineItemDetail>;
+  line_item_details: Array<RequestedSession.LineItemDetail>;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -194,7 +192,7 @@ export interface RequestedSession {
   /**
    * The details of the order.
    */
-  order_details: DelegatedCheckout.RequestedSession.OrderDetails | null;
+  order_details: RequestedSession.OrderDetails | null;
 
   /**
    * The payment method used for the requested session.
@@ -204,19 +202,19 @@ export interface RequestedSession {
   /**
    * The payment method options for this requested session.
    */
-  payment_method_options: DelegatedCheckout.RequestedSession.PaymentMethodOptions | null;
+  payment_method_options: RequestedSession.PaymentMethodOptions | null;
 
   /**
    * The preview of the payment method to be created when the requested session is confirmed.
    */
-  payment_method_preview: DelegatedCheckout.RequestedSession.PaymentMethodPreview | null;
+  payment_method_preview: RequestedSession.PaymentMethodPreview | null;
 
   /**
    * The risk details of the requested session.
    */
-  risk_details: DelegatedCheckout.RequestedSession.RiskDetails | null;
+  risk_details: RequestedSession.RiskDetails | null;
 
-  seller_details: DelegatedCheckout.RequestedSession.SellerDetails;
+  seller_details: RequestedSession.SellerDetails;
 
   /**
    * Whether or not the payment method should be saved for future use.
@@ -238,844 +236,842 @@ export interface RequestedSession {
   /**
    * The status of the requested session.
    */
-  status: DelegatedCheckout.RequestedSession.Status;
+  status: RequestedSession.Status;
 
-  total_details: DelegatedCheckout.RequestedSession.TotalDetails;
+  total_details: RequestedSession.TotalDetails;
 
   /**
    * Time at which the object was last updated. Measured in seconds since the Unix epoch.
    */
   updated_at: number;
 }
-export namespace DelegatedCheckout {
-  export namespace RequestedSession {
-    export interface AffiliateAttribution {
+export namespace RequestedSession {
+  export interface AffiliateAttribution {
+    /**
+     * Agent-scoped campaign identifier.
+     */
+    campaign_id: string | null;
+
+    /**
+     * Agent-scoped creative identifier.
+     */
+    creative_id: string | null;
+
+    /**
+     * Timestamp when the attribution token expires.
+     */
+    expires_at: number;
+
+    /**
+     * Agent-issued secret to validate the legitimacy of the source of this data.
+     */
+    identification_token: string;
+
+    /**
+     * Timestamp for when the attribution token was issued.
+     */
+    issued_at: number;
+
+    /**
+     * Identifier for the attribution agent / affiliate network namespace.
+     */
+    provider: string;
+
+    /**
+     * Agent-scoped affiliate/publisher identifier.
+     */
+    publisher_id: string | null;
+
+    /**
+     * Freeform key/value pairs for additional non-sensitive per-agent data.
+     */
+    shared_metadata: {
+      [key: string]: string;
+    } | null;
+
+    /**
+     * Context about where the attribution originated.
+     */
+    source: AffiliateAttribution.Source | null;
+
+    /**
+     * Agent-scoped sub-tracking identifier.
+     */
+    sub_id: string | null;
+
+    /**
+     * Whether this is the first or last touchpoint.
+     */
+    touchpoint: AffiliateAttribution.Touchpoint;
+  }
+
+  export interface BuyerConsents {
+    /**
+     * The marketing consent options.
+     */
+    marketing: BuyerConsents.Marketing | null;
+  }
+
+  export interface Discounts {
+    /**
+     * The list of successfully applied discounts.
+     */
+    applied: Array<Discounts.Applied> | null;
+
+    /**
+     * The list of discount codes that could not be applied.
+     */
+    invalid: Array<Discounts.Invalid> | null;
+  }
+
+  export interface FulfillmentDetails {
+    /**
+     * The fulfillment address.
+     */
+    address: Address | null;
+
+    /**
+     * The email address for the fulfillment details.
+     */
+    email: string | null;
+
+    /**
+     * The fulfillment options.
+     */
+    fulfillment_options: Array<FulfillmentDetails.FulfillmentOption> | null;
+
+    /**
+     * The name for the fulfillment details.
+     */
+    name: string | null;
+
+    /**
+     * The phone number for the fulfillment details.
+     */
+    phone: string | null;
+
+    /**
+     * The selected fulfillment option.
+     */
+    selected_fulfillment_option: FulfillmentDetails.SelectedFulfillmentOption | null;
+
+    /**
+     * Per-item fulfillment option overrides.
+     */
+    selected_fulfillment_option_overrides: Array<
+      FulfillmentDetails.SelectedFulfillmentOptionOverride
+    > | null;
+  }
+
+  export interface LineItemDetail {
+    /**
+     * The total discount for this line item. If no discount were applied, defaults to 0.
+     */
+    amount_discount: number;
+
+    /**
+     * The sale amount for this line item.
+     */
+    amount_sale?: number;
+
+    /**
+     * The total before any discounts or taxes are applied.
+     */
+    amount_subtotal: number;
+
+    /**
+     * The fulfillment type of the line item.
+     */
+    fulfillment_type: string;
+
+    /**
+     * The key of the line item.
+     */
+    key: string;
+
+    product_details?: LineItemDetail.ProductDetails;
+
+    /**
+     * The quantity of the line item.
+     */
+    quantity: number;
+
+    /**
+     * The SKU ID of the line item.
+     */
+    sku_id: string;
+
+    /**
+     * The per-unit amount of the item before any discounts or taxes are applied.
+     */
+    unit_amount: number;
+  }
+
+  export interface OrderDetails {
+    /**
+     * The seller's order identifier.
+     */
+    order_id: string | null;
+
+    /**
+     * The URL to the order status.
+     */
+    order_status_url: string | null;
+  }
+
+  export interface PaymentMethodOptions {
+    /**
+     * Card-specific payment method options.
+     */
+    card: PaymentMethodOptions.Card | null;
+
+    /**
+     * The computed displayable card brands.
+     */
+    displayable_card_brands: Array<
+      PaymentMethodOptions.DisplayableCardBrand
+    > | null;
+
+    /**
+     * The computed displayable payment method types.
+     */
+    displayable_payment_method_types: Array<
+      PaymentMethodOptions.DisplayablePaymentMethodType
+    > | null;
+
+    /**
+     * The payment method types excluded by the agent.
+     */
+    excluded_payment_method_types: Array<
+      PaymentMethodOptions.ExcludedPaymentMethodType
+    > | null;
+  }
+
+  export interface PaymentMethodPreview {
+    /**
+     * The billing details of the payment method.
+     */
+    billing_details: PaymentMethodPreview.BillingDetails | null;
+
+    /**
+     * The card details of the payment method.
+     */
+    card: PaymentMethodPreview.Card | null;
+
+    /**
+     * The type of the payment method.
+     */
+    type: string;
+  }
+
+  export interface RiskDetails {
+    /**
+     * The risk metadata for the client device.
+     */
+    client_device_metadata_details: RiskDetails.ClientDeviceMetadataDetails | null;
+  }
+
+  export interface SellerDetails {
+    /**
+     * The card brands supported by the seller.
+     */
+    card_brands: Array<SellerDetails.CardBrand> | null;
+
+    /**
+     * The marketplace seller details.
+     */
+    marketplace_seller_details: SellerDetails.MarketplaceSellerDetails | null;
+
+    /**
+     * The network profile of the seller.
+     */
+    network_profile: string | Profile;
+
+    /**
+     * The payment method types supported by the seller.
+     */
+    payment_method_types: Array<SellerDetails.PaymentMethodType> | null;
+
+    /**
+     * The URL to the seller's privacy notice.
+     */
+    privacy_notice_url: string | null;
+
+    /**
+     * The URL to the seller's return policy.
+     */
+    return_policy_url: string | null;
+
+    /**
+     * The URL to the seller's store policy.
+     */
+    store_policy_url: string | null;
+
+    /**
+     * The URL to the seller's terms of service.
+     */
+    terms_of_service_url: string | null;
+  }
+
+  export type Status = 'completed' | 'expired' | 'open' | 'requires_action';
+
+  export interface TotalDetails {
+    /**
+     * The amount of order-level discounts applied to the cart. The total discount amount for this session can be computed by summing the cart discount and the item discounts.
+     */
+    amount_cart_discount: number | null;
+
+    /**
+     * The total discount amount from discount codes across the session.
+     */
+    amount_discount?: number | null;
+
+    /**
+     * The amount fulfillment of the total details.
+     */
+    amount_fulfillment: number | null;
+
+    /**
+     * The amount of item-level discounts applied to the cart. The total discount amount for this session can be computed by summing the cart discount and the item discounts.
+     */
+    amount_items_discount: number | null;
+
+    /**
+     * The total sale amount across the session.
+     */
+    amount_sale?: number | null;
+
+    /**
+     * The amount tax of the total details.
+     */
+    amount_tax: number | null;
+
+    /**
+     * The applicable fees of the total details.
+     */
+    applicable_fees: Array<TotalDetails.ApplicableFee> | null;
+
+    /**
+     * The breakdown of discounts applied to the session.
+     */
+    breakdown?: TotalDetails.Breakdown | null;
+  }
+
+  export namespace AffiliateAttribution {
+    export interface Source {
       /**
-       * Agent-scoped campaign identifier.
+       * The platform of the attribution source.
        */
-      campaign_id: string | null;
+      platform: string | null;
 
       /**
-       * Agent-scoped creative identifier.
+       * The type of the attribution source.
        */
-      creative_id: string | null;
+      type: Source.Type;
 
       /**
-       * Timestamp when the attribution token expires.
+       * The URL of the attribution source.
        */
-      expires_at: number;
-
-      /**
-       * Agent-issued secret to validate the legitimacy of the source of this data.
-       */
-      identification_token: string;
-
-      /**
-       * Timestamp for when the attribution token was issued.
-       */
-      issued_at: number;
-
-      /**
-       * Identifier for the attribution agent / affiliate network namespace.
-       */
-      provider: string;
-
-      /**
-       * Agent-scoped affiliate/publisher identifier.
-       */
-      publisher_id: string | null;
-
-      /**
-       * Freeform key/value pairs for additional non-sensitive per-agent data.
-       */
-      shared_metadata: {
-        [key: string]: string;
-      } | null;
-
-      /**
-       * Context about where the attribution originated.
-       */
-      source: AffiliateAttribution.Source | null;
-
-      /**
-       * Agent-scoped sub-tracking identifier.
-       */
-      sub_id: string | null;
-
-      /**
-       * Whether this is the first or last touchpoint.
-       */
-      touchpoint: AffiliateAttribution.Touchpoint;
+      url: string | null;
     }
 
-    export interface BuyerConsents {
+    export type Touchpoint = 'first' | 'last';
+
+    export namespace Source {
+      export type Type = 'platform' | 'url';
+    }
+  }
+
+  export namespace BuyerConsents {
+    export interface Marketing {
       /**
-       * The marketing consent options.
+       * The buyer's marketing consent choices.
        */
-      marketing: BuyerConsents.Marketing | null;
+      consents: Array<Marketing.Consent> | null;
+
+      /**
+       * The available marketing consent options.
+       */
+      options: Array<Marketing.Option> | null;
     }
 
-    export interface Discounts {
-      /**
-       * The list of successfully applied discounts.
-       */
-      applied: Array<Discounts.Applied> | null;
+    export namespace Marketing {
+      export interface Consent {
+        /**
+         * The marketing consent channel.
+         */
+        channel: Consent.Channel;
 
-      /**
-       * The list of discount codes that could not be applied.
-       */
-      invalid: Array<Discounts.Invalid> | null;
+        /**
+         * The consent status. 'granted' means the buyer opted in, 'none' means they did not.
+         */
+        status: Consent.Status;
+      }
+
+      export interface Option {
+        /**
+         * The marketing channel type.
+         */
+        channel: Option.Channel;
+
+        /**
+         * The description of the marketing consent option.
+         */
+        description: string;
+
+        /**
+         * The privacy policy URL for this marketing channel.
+         */
+        privacy_policy_url: string;
+      }
+
+      export namespace Consent {
+        export type Channel = 'email' | 'sms';
+
+        export type Status = 'granted' | 'none';
+      }
+
+      export namespace Option {
+        export type Channel = 'email' | 'sms';
+      }
     }
+  }
 
-    export interface FulfillmentDetails {
+  export namespace Discounts {
+    export interface Applied {
       /**
-       * The fulfillment address.
+       * The amount off provided by this discount.
        */
-      address: Address | null;
+      amount_off: number | null;
 
       /**
-       * The email address for the fulfillment details.
+       * The discount code.
        */
-      email: string | null;
+      code: string;
 
       /**
-       * The fulfillment options.
+       * The currency of the discount amount.
        */
-      fulfillment_options: Array<FulfillmentDetails.FulfillmentOption> | null;
+      currency: string | null;
 
       /**
-       * The name for the fulfillment details.
-       */
-      name: string | null;
-
-      /**
-       * The phone number for the fulfillment details.
-       */
-      phone: string | null;
-
-      /**
-       * The selected fulfillment option.
-       */
-      selected_fulfillment_option: FulfillmentDetails.SelectedFulfillmentOption | null;
-
-      /**
-       * Per-item fulfillment option overrides.
-       */
-      selected_fulfillment_option_overrides: Array<
-        FulfillmentDetails.SelectedFulfillmentOptionOverride
-      > | null;
-    }
-
-    export interface LineItemDetail {
-      /**
-       * The total discount for this line item. If no discount were applied, defaults to 0.
-       */
-      amount_discount: number;
-
-      /**
-       * The sale amount for this line item.
-       */
-      amount_sale?: number;
-
-      /**
-       * The total before any discounts or taxes are applied.
-       */
-      amount_subtotal: number;
-
-      /**
-       * The fulfillment type of the line item.
-       */
-      fulfillment_type: string;
-
-      /**
-       * The key of the line item.
+       * The unique key of the applied discount.
        */
       key: string;
 
-      product_details?: LineItemDetail.ProductDetails;
+      /**
+       * The display name of the discount.
+       */
+      name: string;
 
       /**
-       * The quantity of the line item.
+       * The percentage off provided by this discount.
        */
-      quantity: number;
+      percent_off: number | null;
 
       /**
-       * The SKU ID of the line item.
+       * The type of discount.
        */
-      sku_id: string;
-
-      /**
-       * The per-unit amount of the item before any discounts or taxes are applied.
-       */
-      unit_amount: number;
+      type: Applied.Type;
     }
 
-    export interface OrderDetails {
+    export interface Invalid {
       /**
-       * The seller's order identifier.
+       * The discount code that was invalid.
        */
-      order_id: string | null;
+      code: string;
 
       /**
-       * The URL to the order status.
+       * The reason the discount code is invalid.
        */
-      order_status_url: string | null;
+      reason: string;
     }
 
-    export interface PaymentMethodOptions {
+    export namespace Applied {
+      export type Type = 'cart' | 'fulfillment';
+    }
+  }
+
+  export namespace FulfillmentDetails {
+    export interface FulfillmentOption {
       /**
-       * Card-specific payment method options.
+       * The digital fulfillment option.
        */
-      card: PaymentMethodOptions.Card | null;
+      digital: FulfillmentOption.Digital | null;
 
       /**
-       * The computed displayable card brands.
+       * The shipping option.
        */
-      displayable_card_brands: Array<
-        PaymentMethodOptions.DisplayableCardBrand
-      > | null;
+      shipping: FulfillmentOption.Shipping | null;
 
       /**
-       * The computed displayable payment method types.
+       * The type of the fulfillment option.
        */
-      displayable_payment_method_types: Array<
-        PaymentMethodOptions.DisplayablePaymentMethodType
-      > | null;
-
-      /**
-       * The payment method types excluded by the agent.
-       */
-      excluded_payment_method_types: Array<
-        PaymentMethodOptions.ExcludedPaymentMethodType
-      > | null;
+      type: FulfillmentOption.Type;
     }
 
-    export interface PaymentMethodPreview {
+    export interface SelectedFulfillmentOption {
       /**
-       * The billing details of the payment method.
+       * The digital fulfillment option.
        */
-      billing_details: PaymentMethodPreview.BillingDetails | null;
+      digital: SelectedFulfillmentOption.Digital | null;
 
       /**
-       * The card details of the payment method.
+       * The shipping option.
        */
-      card: PaymentMethodPreview.Card | null;
+      shipping: SelectedFulfillmentOption.Shipping | null;
 
       /**
-       * The type of the payment method.
+       * The type of the selected fulfillment option.
        */
-      type: string;
+      type: SelectedFulfillmentOption.Type;
     }
 
-    export interface RiskDetails {
+    export interface SelectedFulfillmentOptionOverride {
       /**
-       * The risk metadata for the client device.
+       * The digital fulfillment option.
        */
-      client_device_metadata_details: RiskDetails.ClientDeviceMetadataDetails | null;
+      digital: SelectedFulfillmentOptionOverride.Digital | null;
+
+      /**
+       * The line items this fulfillment option applies to.
+       */
+      line_item_keys: Array<string> | null;
+
+      /**
+       * The shipping option.
+       */
+      shipping: SelectedFulfillmentOptionOverride.Shipping | null;
+
+      /**
+       * The type of the selected fulfillment option.
+       */
+      type: SelectedFulfillmentOptionOverride.Type;
     }
 
-    export interface SellerDetails {
-      /**
-       * The card brands supported by the seller.
-       */
-      card_brands: Array<SellerDetails.CardBrand> | null;
-
-      /**
-       * The marketplace seller details.
-       */
-      marketplace_seller_details: SellerDetails.MarketplaceSellerDetails | null;
-
-      /**
-       * The network profile of the seller.
-       */
-      network_profile: string | Profile;
-
-      /**
-       * The payment method types supported by the seller.
-       */
-      payment_method_types: Array<SellerDetails.PaymentMethodType> | null;
-
-      /**
-       * The URL to the seller's privacy notice.
-       */
-      privacy_notice_url: string | null;
-
-      /**
-       * The URL to the seller's return policy.
-       */
-      return_policy_url: string | null;
-
-      /**
-       * The URL to the seller's store policy.
-       */
-      store_policy_url: string | null;
-
-      /**
-       * The URL to the seller's terms of service.
-       */
-      terms_of_service_url: string | null;
-    }
-
-    export type Status = 'completed' | 'expired' | 'open' | 'requires_action';
-
-    export interface TotalDetails {
-      /**
-       * The amount of order-level discounts applied to the cart. The total discount amount for this session can be computed by summing the cart discount and the item discounts.
-       */
-      amount_cart_discount: number | null;
-
-      /**
-       * The total discount amount from discount codes across the session.
-       */
-      amount_discount?: number | null;
-
-      /**
-       * The amount fulfillment of the total details.
-       */
-      amount_fulfillment: number | null;
-
-      /**
-       * The amount of item-level discounts applied to the cart. The total discount amount for this session can be computed by summing the cart discount and the item discounts.
-       */
-      amount_items_discount: number | null;
-
-      /**
-       * The total sale amount across the session.
-       */
-      amount_sale?: number | null;
-
-      /**
-       * The amount tax of the total details.
-       */
-      amount_tax: number | null;
-
-      /**
-       * The applicable fees of the total details.
-       */
-      applicable_fees: Array<TotalDetails.ApplicableFee> | null;
-
-      /**
-       * The breakdown of discounts applied to the session.
-       */
-      breakdown?: TotalDetails.Breakdown | null;
-    }
-
-    export namespace AffiliateAttribution {
-      export interface Source {
+    export namespace FulfillmentOption {
+      export interface Digital {
         /**
-         * The platform of the attribution source.
+         * The digital options.
          */
-        platform: string | null;
-
-        /**
-         * The type of the attribution source.
-         */
-        type: Source.Type;
-
-        /**
-         * The URL of the attribution source.
-         */
-        url: string | null;
+        digital_options: Array<Digital.DigitalOption> | null;
       }
 
-      export type Touchpoint = 'first' | 'last';
-
-      export namespace Source {
-        export type Type = 'platform' | 'url';
-      }
-    }
-
-    export namespace BuyerConsents {
-      export interface Marketing {
+      export interface Shipping {
         /**
-         * The buyer's marketing consent choices.
+         * The shipping options.
          */
-        consents: Array<Marketing.Consent> | null;
-
-        /**
-         * The available marketing consent options.
-         */
-        options: Array<Marketing.Option> | null;
+        shipping_options: Array<Shipping.ShippingOption> | null;
       }
 
-      export namespace Marketing {
-        export interface Consent {
+      export type Type = 'digital' | 'shipping';
+
+      export namespace Digital {
+        export interface DigitalOption {
           /**
-           * The marketing consent channel.
+           * The description of the digital fulfillment option.
            */
-          channel: Consent.Channel;
+          description: string | null;
 
           /**
-           * The consent status. 'granted' means the buyer opted in, 'none' means they did not.
+           * The digital amount of the digital fulfillment option.
            */
-          status: Consent.Status;
-        }
-
-        export interface Option {
-          /**
-           * The marketing channel type.
-           */
-          channel: Option.Channel;
+          digital_amount: number;
 
           /**
-           * The description of the marketing consent option.
-           */
-          description: string;
-
-          /**
-           * The privacy policy URL for this marketing channel.
-           */
-          privacy_policy_url: string;
-        }
-
-        export namespace Consent {
-          export type Channel = 'email' | 'sms';
-
-          export type Status = 'granted' | 'none';
-        }
-
-        export namespace Option {
-          export type Channel = 'email' | 'sms';
-        }
-      }
-    }
-
-    export namespace Discounts {
-      export interface Applied {
-        /**
-         * The amount off provided by this discount.
-         */
-        amount_off: number | null;
-
-        /**
-         * The discount code.
-         */
-        code: string;
-
-        /**
-         * The currency of the discount amount.
-         */
-        currency: string | null;
-
-        /**
-         * The unique key of the applied discount.
-         */
-        key: string;
-
-        /**
-         * The display name of the discount.
-         */
-        name: string;
-
-        /**
-         * The percentage off provided by this discount.
-         */
-        percent_off: number | null;
-
-        /**
-         * The type of discount.
-         */
-        type: Applied.Type;
-      }
-
-      export interface Invalid {
-        /**
-         * The discount code that was invalid.
-         */
-        code: string;
-
-        /**
-         * The reason the discount code is invalid.
-         */
-        reason: string;
-      }
-
-      export namespace Applied {
-        export type Type = 'cart' | 'fulfillment';
-      }
-    }
-
-    export namespace FulfillmentDetails {
-      export interface FulfillmentOption {
-        /**
-         * The digital fulfillment option.
-         */
-        digital: FulfillmentOption.Digital | null;
-
-        /**
-         * The shipping option.
-         */
-        shipping: FulfillmentOption.Shipping | null;
-
-        /**
-         * The type of the fulfillment option.
-         */
-        type: FulfillmentOption.Type;
-      }
-
-      export interface SelectedFulfillmentOption {
-        /**
-         * The digital fulfillment option.
-         */
-        digital: SelectedFulfillmentOption.Digital | null;
-
-        /**
-         * The shipping option.
-         */
-        shipping: SelectedFulfillmentOption.Shipping | null;
-
-        /**
-         * The type of the selected fulfillment option.
-         */
-        type: SelectedFulfillmentOption.Type;
-      }
-
-      export interface SelectedFulfillmentOptionOverride {
-        /**
-         * The digital fulfillment option.
-         */
-        digital: SelectedFulfillmentOptionOverride.Digital | null;
-
-        /**
-         * The line items this fulfillment option applies to.
-         */
-        line_item_keys: Array<string> | null;
-
-        /**
-         * The shipping option.
-         */
-        shipping: SelectedFulfillmentOptionOverride.Shipping | null;
-
-        /**
-         * The type of the selected fulfillment option.
-         */
-        type: SelectedFulfillmentOptionOverride.Type;
-      }
-
-      export namespace FulfillmentOption {
-        export interface Digital {
-          /**
-           * The digital options.
-           */
-          digital_options: Array<Digital.DigitalOption> | null;
-        }
-
-        export interface Shipping {
-          /**
-           * The shipping options.
-           */
-          shipping_options: Array<Shipping.ShippingOption> | null;
-        }
-
-        export type Type = 'digital' | 'shipping';
-
-        export namespace Digital {
-          export interface DigitalOption {
-            /**
-             * The description of the digital fulfillment option.
-             */
-            description: string | null;
-
-            /**
-             * The digital amount of the digital fulfillment option.
-             */
-            digital_amount: number;
-
-            /**
-             * The display name of the digital fulfillment option.
-             */
-            display_name: string;
-
-            /**
-             * The key of the digital fulfillment option.
-             */
-            key: string;
-
-            /**
-             * The line item keys associated with this digital fulfillment option.
-             */
-            line_item_keys: Array<string> | null;
-          }
-        }
-
-        export namespace Shipping {
-          export interface ShippingOption {
-            /**
-             * The description of the shipping option.
-             */
-            description: string | null;
-
-            /**
-             * The display name of the shipping option.
-             */
-            display_name: string;
-
-            /**
-             * The earliest delivery time of the shipping option.
-             */
-            earliest_delivery_time: number | null;
-
-            /**
-             * The key of the shipping option.
-             */
-            key: string;
-
-            /**
-             * The latest delivery time of the shipping option.
-             */
-            latest_delivery_time: number | null;
-
-            /**
-             * The line item keys associated with this shipping option.
-             */
-            line_item_keys: Array<string> | null;
-
-            /**
-             * The shipping amount of the shipping option.
-             */
-            shipping_amount: number;
-          }
-        }
-      }
-
-      export namespace SelectedFulfillmentOption {
-        export interface Digital {
-          /**
-           * The digital option.
-           */
-          digital_option: string | null;
-        }
-
-        export interface Shipping {
-          /**
-           * The shipping option.
-           */
-          shipping_option: string | null;
-        }
-
-        export type Type = 'digital' | 'shipping';
-      }
-
-      export namespace SelectedFulfillmentOptionOverride {
-        export interface Digital {
-          /**
-           * The digital option.
-           */
-          digital_option: string | null;
-        }
-
-        export interface Shipping {
-          /**
-           * The shipping option.
-           */
-          shipping_option: string | null;
-        }
-
-        export type Type = 'digital' | 'shipping';
-      }
-    }
-
-    export namespace LineItemDetail {
-      export interface ProductDetails {
-        /**
-         * Custom attributes for the product.
-         */
-        custom_attributes: Array<ProductDetails.CustomAttribute> | null;
-
-        /**
-         * The description of the product.
-         */
-        description: string | null;
-
-        /**
-         * Disclosures for the product.
-         */
-        disclosures: Array<ProductDetails.Disclosure> | null;
-
-        /**
-         * The images of the product.
-         */
-        images: Array<string> | null;
-
-        /**
-         * The title of the product.
-         */
-        title: string;
-      }
-
-      export namespace ProductDetails {
-        export interface CustomAttribute {
-          /**
-           * The display name of the custom attribute.
+           * The display name of the digital fulfillment option.
            */
           display_name: string;
 
           /**
-           * The value of the custom attribute.
+           * The key of the digital fulfillment option.
            */
-          value: string;
-        }
-
-        export interface Disclosure {
-          /**
-           * The content of the disclosure.
-           */
-          content: string;
+          key: string;
 
           /**
-           * The content type of the disclosure.
+           * The line item keys associated with this digital fulfillment option.
            */
-          content_type: Disclosure.ContentType;
+          line_item_keys: Array<string> | null;
+        }
+      }
+
+      export namespace Shipping {
+        export interface ShippingOption {
+          /**
+           * The description of the shipping option.
+           */
+          description: string | null;
 
           /**
-           * The type of disclosure.
+           * The display name of the shipping option.
            */
-          type: 'disclaimer';
+          display_name: string;
+
+          /**
+           * The earliest delivery time of the shipping option.
+           */
+          earliest_delivery_time: number | null;
+
+          /**
+           * The key of the shipping option.
+           */
+          key: string;
+
+          /**
+           * The latest delivery time of the shipping option.
+           */
+          latest_delivery_time: number | null;
+
+          /**
+           * The line item keys associated with this shipping option.
+           */
+          line_item_keys: Array<string> | null;
+
+          /**
+           * The shipping amount of the shipping option.
+           */
+          shipping_amount: number;
         }
-
-        export namespace Disclosure {
-          export type ContentType = 'link' | 'markdown' | 'plain';
-        }
       }
     }
 
-    export namespace PaymentMethodOptions {
-      export interface Card {
+    export namespace SelectedFulfillmentOption {
+      export interface Digital {
         /**
-         * The card brands blocked by the agent.
+         * The digital option.
          */
-        brands_blocked: Array<Card.BrandsBlocked> | null;
+        digital_option: string | null;
       }
 
-      export type DisplayableCardBrand =
-        | 'american_express'
-        | 'mastercard'
-        | 'visa';
-
-      export type DisplayablePaymentMethodType = 'affirm' | 'card' | 'klarna';
-
-      export type ExcludedPaymentMethodType = 'affirm' | 'card' | 'klarna';
-
-      export namespace Card {
-        export type BrandsBlocked = 'american_express' | 'mastercard' | 'visa';
+      export interface Shipping {
+        /**
+         * The shipping option.
+         */
+        shipping_option: string | null;
       }
+
+      export type Type = 'digital' | 'shipping';
     }
 
-    export namespace PaymentMethodPreview {
-      export interface BillingDetails {
+    export namespace SelectedFulfillmentOptionOverride {
+      export interface Digital {
         /**
-         * The billing address.
+         * The digital option.
          */
-        address: Address | null;
-
-        /**
-         * The email address for the billing details.
-         */
-        email: string | null;
-
-        /**
-         * The name for the billing details.
-         */
-        name: string | null;
-
-        /**
-         * The phone number for the billing details.
-         */
-        phone: string | null;
+        digital_option: string | null;
       }
 
-      export interface Card {
+      export interface Shipping {
         /**
-         * The expiry month of the card.
+         * The shipping option.
          */
-        exp_month: number;
+        shipping_option: string | null;
+      }
+
+      export type Type = 'digital' | 'shipping';
+    }
+  }
+
+  export namespace LineItemDetail {
+    export interface ProductDetails {
+      /**
+       * Custom attributes for the product.
+       */
+      custom_attributes: Array<ProductDetails.CustomAttribute> | null;
+
+      /**
+       * The description of the product.
+       */
+      description: string | null;
+
+      /**
+       * Disclosures for the product.
+       */
+      disclosures: Array<ProductDetails.Disclosure> | null;
+
+      /**
+       * The images of the product.
+       */
+      images: Array<string> | null;
+
+      /**
+       * The title of the product.
+       */
+      title: string;
+    }
+
+    export namespace ProductDetails {
+      export interface CustomAttribute {
+        /**
+         * The display name of the custom attribute.
+         */
+        display_name: string;
 
         /**
-         * The expiry year of the card.
+         * The value of the custom attribute.
          */
-        exp_year: number;
+        value: string;
+      }
+
+      export interface Disclosure {
+        /**
+         * The content of the disclosure.
+         */
+        content: string;
 
         /**
-         * The last 4 digits of the card number.
+         * The content type of the disclosure.
          */
-        last4: string;
+        content_type: Disclosure.ContentType;
+
+        /**
+         * The type of disclosure.
+         */
+        type: 'disclaimer';
+      }
+
+      export namespace Disclosure {
+        export type ContentType = 'link' | 'markdown' | 'plain';
       }
     }
+  }
 
-    export namespace RiskDetails {
-      export interface ClientDeviceMetadataDetails {
-        /**
-         * The radar session for the client device.
-         */
-        radar_session: string | null;
-
-        /**
-         * The referrer of the client device.
-         */
-        referrer: string | null;
-
-        /**
-         * The remote IP address of the client device.
-         */
-        remote_ip: string | null;
-
-        /**
-         * The time spent on the page by the client device.
-         */
-        time_on_page_ms: number | null;
-
-        /**
-         * The user agent of the client device.
-         */
-        user_agent: string | null;
-      }
+  export namespace PaymentMethodOptions {
+    export interface Card {
+      /**
+       * The card brands blocked by the agent.
+       */
+      brands_blocked: Array<Card.BrandsBlocked> | null;
     }
 
-    export namespace SellerDetails {
-      export type CardBrand = 'american_express' | 'mastercard' | 'visa';
+    export type DisplayableCardBrand =
+      | 'american_express'
+      | 'mastercard'
+      | 'visa';
 
-      export interface MarketplaceSellerDetails {}
+    export type DisplayablePaymentMethodType = 'affirm' | 'card' | 'klarna';
 
-      export type PaymentMethodType = 'affirm' | 'card' | 'klarna';
+    export type ExcludedPaymentMethodType = 'affirm' | 'card' | 'klarna';
+
+    export namespace Card {
+      export type BrandsBlocked = 'american_express' | 'mastercard' | 'visa';
+    }
+  }
+
+  export namespace PaymentMethodPreview {
+    export interface BillingDetails {
+      /**
+       * The billing address.
+       */
+      address: Address | null;
+
+      /**
+       * The email address for the billing details.
+       */
+      email: string | null;
+
+      /**
+       * The name for the billing details.
+       */
+      name: string | null;
+
+      /**
+       * The phone number for the billing details.
+       */
+      phone: string | null;
     }
 
-    export namespace TotalDetails {
-      export interface ApplicableFee {
+    export interface Card {
+      /**
+       * The expiry month of the card.
+       */
+      exp_month: number;
+
+      /**
+       * The expiry year of the card.
+       */
+      exp_year: number;
+
+      /**
+       * The last 4 digits of the card number.
+       */
+      last4: string;
+    }
+  }
+
+  export namespace RiskDetails {
+    export interface ClientDeviceMetadataDetails {
+      /**
+       * The radar session for the client device.
+       */
+      radar_session: string | null;
+
+      /**
+       * The referrer of the client device.
+       */
+      referrer: string | null;
+
+      /**
+       * The remote IP address of the client device.
+       */
+      remote_ip: string | null;
+
+      /**
+       * The time spent on the page by the client device.
+       */
+      time_on_page_ms: number | null;
+
+      /**
+       * The user agent of the client device.
+       */
+      user_agent: string | null;
+    }
+  }
+
+  export namespace SellerDetails {
+    export type CardBrand = 'american_express' | 'mastercard' | 'visa';
+
+    export interface MarketplaceSellerDetails {}
+
+    export type PaymentMethodType = 'affirm' | 'card' | 'klarna';
+  }
+
+  export namespace TotalDetails {
+    export interface ApplicableFee {
+      /**
+       * The amount of the applicable fee.
+       */
+      amount: number;
+
+      /**
+       * The description of the applicable fee.
+       */
+      description: string | null;
+
+      /**
+       * The display name of the applicable fee.
+       */
+      display_name: string;
+    }
+
+    export interface Breakdown {
+      /**
+       * The breakdown of discounts applied to the session.
+       */
+      discounts: Array<Breakdown.Discount> | null;
+    }
+
+    export namespace Breakdown {
+      export interface Discount {
         /**
-         * The amount of the applicable fee.
+         * The amount this discount contributed to the total discount.
          */
         amount: number;
 
         /**
-         * The description of the applicable fee.
+         * The key of the applied discount.
          */
-        description: string | null;
-
-        /**
-         * The display name of the applicable fee.
-         */
-        display_name: string;
-      }
-
-      export interface Breakdown {
-        /**
-         * The breakdown of discounts applied to the session.
-         */
-        discounts: Array<Breakdown.Discount> | null;
-      }
-
-      export namespace Breakdown {
-        export interface Discount {
-          /**
-           * The amount this discount contributed to the total discount.
-           */
-          amount: number;
-
-          /**
-           * The key of the applied discount.
-           */
-          key: string;
-        }
+        key: string;
       }
     }
   }

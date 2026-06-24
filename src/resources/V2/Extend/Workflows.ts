@@ -72,7 +72,7 @@ export interface Workflow {
   /**
    * Whether this Workflow is active, inactive, or in some other state. Only active Workflows may be invoked.
    */
-  status: V2.Extend.Workflow.Status;
+  status: Workflow.Status;
 
   /**
    * Workflow title.
@@ -82,48 +82,44 @@ export interface Workflow {
   /**
    * Under what conditions will this Workflow launch.
    */
-  triggers: Array<V2.Extend.Workflow.Trigger>;
+  triggers: Array<Workflow.Trigger>;
 }
-export namespace V2 {
-  export namespace Extend {
-    export namespace Workflow {
-      export type Status = 'active' | 'archived' | 'draft' | 'inactive';
+export namespace Workflow {
+  export type Status = 'active' | 'archived' | 'draft' | 'inactive';
 
-      export interface Trigger {
-        /**
-         * The Workflow can be launched when Stripe emits a certain event.
-         */
-        event_trigger?: Trigger.EventTrigger;
+  export interface Trigger {
+    /**
+     * The Workflow can be launched when Stripe emits a certain event.
+     */
+    event_trigger?: Trigger.EventTrigger;
 
-        /**
-         * The Workflow can be launched through a direct call, using either the Dashboard or the Stripe API.
-         */
-        manual?: Trigger.Manual;
+    /**
+     * The Workflow can be launched through a direct call, using either the Dashboard or the Stripe API.
+     */
+    manual?: Trigger.Manual;
 
-        /**
-         * Which type of trigger this is.
-         */
-        type: Trigger.Type;
-      }
+    /**
+     * Which type of trigger this is.
+     */
+    type: Trigger.Type;
+  }
 
-      export namespace Trigger {
-        export interface EventTrigger {
-          /**
-           * Specifies which accounts' events will trigger this Workflow.
-           */
-          events_from: Array<string>;
+  export namespace Trigger {
+    export interface EventTrigger {
+      /**
+       * Specifies which accounts' events will trigger this Workflow.
+       */
+      events_from: Array<string>;
 
-          /**
-           * The Stripe event type that will trigger this Workflow.
-           */
-          type: string;
-        }
-
-        export interface Manual {}
-
-        export type Type = 'event_trigger' | 'manual';
-      }
+      /**
+       * The Stripe event type that will trigger this Workflow.
+       */
+      type: string;
     }
+
+    export interface Manual {}
+
+    export type Type = 'event_trigger' | 'manual';
   }
 }
 export namespace V2 {

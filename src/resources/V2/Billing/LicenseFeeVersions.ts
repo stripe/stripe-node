@@ -33,17 +33,17 @@ export interface LicenseFeeVersion {
    * quantity within a period determines the per-unit price. In graduated tiering, the pricing changes as the quantity
    * grows into new tiers. Can only be set if `tiers` is set.
    */
-  tiering_mode?: V2.Billing.LicenseFeeVersion.TieringMode;
+  tiering_mode?: LicenseFeeVersion.TieringMode;
 
   /**
    * Each element represents a pricing tier. Cannot be set if `unit_amount` is provided.
    */
-  tiers: Array<V2.Billing.LicenseFeeVersion.Tier>;
+  tiers: Array<LicenseFeeVersion.Tier>;
 
   /**
    * Apply a transformation to the reported usage or set quantity before computing the amount billed.
    */
-  transform_quantity?: V2.Billing.LicenseFeeVersion.TransformQuantity;
+  transform_quantity?: LicenseFeeVersion.TransformQuantity;
 
   /**
    * The per-unit amount to be charged, represented as a decimal string in minor currency units with at most 12 decimal
@@ -51,50 +51,46 @@ export interface LicenseFeeVersion {
    */
   unit_amount?: string;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace LicenseFeeVersion {
-      export type TieringMode = 'graduated' | 'volume';
+export namespace LicenseFeeVersion {
+  export type TieringMode = 'graduated' | 'volume';
 
-      export interface Tier {
-        /**
-         * Price for the entire tier, represented as a decimal string in minor currency units with at most 12 decimal places.
-         */
-        flat_amount?: string;
+  export interface Tier {
+    /**
+     * Price for the entire tier, represented as a decimal string in minor currency units with at most 12 decimal places.
+     */
+    flat_amount?: string;
 
-        /**
-         * Per-unit price for units included in this tier, represented as a decimal string in minor currency units with at
-         * most 12 decimal places.
-         */
-        unit_amount?: string;
+    /**
+     * Per-unit price for units included in this tier, represented as a decimal string in minor currency units with at
+     * most 12 decimal places.
+     */
+    unit_amount?: string;
 
-        /**
-         * Up to and including this quantity is contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
-         * be set.
-         */
-        up_to_decimal?: Decimal;
+    /**
+     * Up to and including this quantity is contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
+     * be set.
+     */
+    up_to_decimal?: Decimal;
 
-        /**
-         * No upper bound to this tier. Only one of `up_to_decimal` and `up_to_inf` may be set.
-         */
-        up_to_inf?: 'inf';
-      }
+    /**
+     * No upper bound to this tier. Only one of `up_to_decimal` and `up_to_inf` may be set.
+     */
+    up_to_inf?: 'inf';
+  }
 
-      export interface TransformQuantity {
-        /**
-         * Divide usage by this number.
-         */
-        divide_by: bigint;
+  export interface TransformQuantity {
+    /**
+     * Divide usage by this number.
+     */
+    divide_by: bigint;
 
-        /**
-         * After division, round the result up or down.
-         */
-        round: TransformQuantity.Round;
-      }
+    /**
+     * After division, round the result up or down.
+     */
+    round: TransformQuantity.Round;
+  }
 
-      export namespace TransformQuantity {
-        export type Round = 'down' | 'up';
-      }
-    }
+  export namespace TransformQuantity {
+    export type Round = 'down' | 'up';
   }
 }

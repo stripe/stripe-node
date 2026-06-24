@@ -29,11 +29,13 @@ import {
 import {
   Radar as RadarNamespace5,
   ValueList,
+  DeletedValueList,
   ValueListResource,
 } from './ValueLists.js';
 import {
   Radar as RadarNamespace6,
   ValueListItem,
+  DeletedValueListItem,
   ValueListItemResource,
 } from './ValueListItems.js';
 
@@ -91,13 +93,13 @@ export declare namespace Radar {
   export import ValueListUpdateParams = RadarNamespace5.ValueListUpdateParams;
   export import ValueListListParams = RadarNamespace5.ValueListListParams;
   export import ValueListCreateParams = RadarNamespace5.ValueListCreateParams;
-  export import DeletedValueList = RadarNamespace5.DeletedValueList;
+  export {DeletedValueList};
   export {ValueList, ValueListResource};
   export import ValueListItemDeleteParams = RadarNamespace6.ValueListItemDeleteParams;
   export import ValueListItemRetrieveParams = RadarNamespace6.ValueListItemRetrieveParams;
   export import ValueListItemListParams = RadarNamespace6.ValueListItemListParams;
   export import ValueListItemCreateParams = RadarNamespace6.ValueListItemCreateParams;
   export import ValueListItemSerializeBatchCreateParams = RadarNamespace6.ValueListItemSerializeBatchCreateParams;
-  export import DeletedValueListItem = RadarNamespace6.DeletedValueListItem;
+  export {DeletedValueListItem};
   export {ValueListItem, ValueListItemResource};
 }

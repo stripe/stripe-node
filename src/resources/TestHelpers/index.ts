@@ -20,6 +20,7 @@ import {
 import {
   TestHelpers as TestHelpersNamespace4,
   TestClock,
+  DeletedTestClock,
   TestClockResource,
 } from './TestClocks.js';
 import {Capital} from './Capital/index.js';
@@ -62,7 +63,7 @@ export declare namespace TestHelpers {
   export import TestClockListParams = TestHelpersNamespace4.TestClockListParams;
   export import TestClockCreateParams = TestHelpersNamespace4.TestClockCreateParams;
   export import TestClockAdvanceParams = TestHelpersNamespace4.TestClockAdvanceParams;
-  export import DeletedTestClock = TestHelpersNamespace4.DeletedTestClock;
+  export {DeletedTestClock};
   export {TestClock, TestClockResource};
   export {Capital};
   export {Issuing};

@@ -63,7 +63,7 @@ export interface FinancingTransaction {
   /**
    * This is an object representing a transaction on a Capital financing offer.
    */
-  details: Capital.FinancingTransaction.Details;
+  details: FinancingTransaction.Details;
 
   /**
    * The Capital financing offer for this financing transaction.
@@ -85,82 +85,80 @@ export interface FinancingTransaction {
   /**
    * The type of the financing transaction.
    */
-  type: Capital.FinancingTransaction.Type;
+  type: FinancingTransaction.Type;
 
   /**
    * A human-friendly description of the financing transaction.
    */
   user_facing_description: string | null;
 }
-export namespace Capital {
-  export namespace FinancingTransaction {
-    export interface Details {
+export namespace FinancingTransaction {
+  export interface Details {
+    /**
+     * The advance amount being repaid, paid out, or reversed in minor units.
+     */
+    advance_amount: number;
+
+    /**
+     * The currency of the financing transaction.
+     */
+    currency: string;
+
+    /**
+     * The fee amount being repaid, paid out, or reversed in minor units.
+     */
+    fee_amount: number;
+
+    /**
+     * The linked payment for the transaction. This field only applies to financing transactions of type `paydown` and reason `automatic_withholding`.
+     */
+    linked_payment?: string;
+
+    /**
+     * The reason for the financing transaction (if applicable).
+     */
+    reason?: Details.Reason;
+
+    /**
+     * The reversed transaction. This field only applies to financing
+     * transactions of type `reversal`.
+     */
+    reversed_transaction?: string;
+
+    /**
+     * The advance and fee amount being repaid, paid out, or reversed in minor units.
+     */
+    total_amount: number;
+
+    /**
+     * This is an object representing a linked transaction on a Capital Financing Transaction.
+     */
+    transaction?: Details.Transaction;
+  }
+
+  export type Type = 'payment' | 'payout' | 'reversal';
+
+  export namespace Details {
+    export type Reason =
+      | 'automatic_withholding'
+      | 'automatic_withholding_refund'
+      | 'collection'
+      | 'collection_failure'
+      | 'financing_cancellation'
+      | 'refill'
+      | 'requested_by_user'
+      | 'user_initiated';
+
+    export interface Transaction {
       /**
-       * The advance amount being repaid, paid out, or reversed in minor units.
+       * The linked payment ID.
        */
-      advance_amount: number;
+      charge?: string;
 
       /**
-       * The currency of the financing transaction.
+       * The linked Treasury Financing Transaction ID.
        */
-      currency: string;
-
-      /**
-       * The fee amount being repaid, paid out, or reversed in minor units.
-       */
-      fee_amount: number;
-
-      /**
-       * The linked payment for the transaction. This field only applies to financing transactions of type `paydown` and reason `automatic_withholding`.
-       */
-      linked_payment?: string;
-
-      /**
-       * The reason for the financing transaction (if applicable).
-       */
-      reason?: Details.Reason;
-
-      /**
-       * The reversed transaction. This field only applies to financing
-       * transactions of type `reversal`.
-       */
-      reversed_transaction?: string;
-
-      /**
-       * The advance and fee amount being repaid, paid out, or reversed in minor units.
-       */
-      total_amount: number;
-
-      /**
-       * This is an object representing a linked transaction on a Capital Financing Transaction.
-       */
-      transaction?: Details.Transaction;
-    }
-
-    export type Type = 'payment' | 'payout' | 'reversal';
-
-    export namespace Details {
-      export type Reason =
-        | 'automatic_withholding'
-        | 'automatic_withholding_refund'
-        | 'collection'
-        | 'collection_failure'
-        | 'financing_cancellation'
-        | 'refill'
-        | 'requested_by_user'
-        | 'user_initiated';
-
-      export interface Transaction {
-        /**
-         * The linked payment ID.
-         */
-        charge?: string;
-
-        /**
-         * The linked Treasury Financing Transaction ID.
-         */
-        treasury_transaction?: string;
-      }
+      treasury_transaction?: string;
     }
   }
 }

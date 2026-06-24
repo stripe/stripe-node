@@ -122,12 +122,12 @@ export interface BlocklistEntry {
   /**
    * The current status of the BlocklistEntry.
    */
-  status: Identity.BlocklistEntry.Status;
+  status: BlocklistEntry.Status;
 
   /**
    * The type of BlocklistEntry.
    */
-  type: Identity.BlocklistEntry.Type;
+  type: BlocklistEntry.Type;
 
   /**
    * The verification report the BlocklistEntry was created from.
@@ -139,12 +139,10 @@ export interface BlocklistEntry {
    */
   verification_session: string | VerificationSession | null;
 }
-export namespace Identity {
-  export namespace BlocklistEntry {
-    export type Status = 'active' | 'disabled' | 'redacted';
+export namespace BlocklistEntry {
+  export type Status = 'active' | 'disabled' | 'redacted';
 
-    export type Type = 'document' | 'selfie';
-  }
+  export type Type = 'document' | 'selfie';
 }
 export namespace Identity {
   export interface BlocklistEntryCreateParams {

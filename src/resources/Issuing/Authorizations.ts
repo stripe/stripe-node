@@ -953,7 +953,7 @@ export interface Authorization {
   /**
    * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
    */
-  amount_details: Issuing.Authorization.AmountDetails | null;
+  amount_details: Authorization.AmountDetails | null;
 
   /**
    * Whether the authorization has been approved.
@@ -963,9 +963,9 @@ export interface Authorization {
   /**
    * How the card details were provided.
    */
-  authorization_method: Issuing.Authorization.AuthorizationMethod;
+  authorization_method: Authorization.AuthorizationMethod;
 
-  balance_response?: Issuing.Authorization.BalanceResponse;
+  balance_response?: Authorization.BalanceResponse;
 
   /**
    * List of balance transactions associated with this authorization.
@@ -980,7 +980,7 @@ export interface Authorization {
   /**
    * Whether the card was present at the point of sale for the authorization.
    */
-  card_presence: Issuing.Authorization.CardPresence | null;
+  card_presence: Authorization.CardPresence | null;
 
   /**
    * The cardholder to whom this authorization belongs.
@@ -995,7 +995,7 @@ export interface Authorization {
   /**
    * Array of onchain crypto transactions linked to this resource.
    */
-  crypto_transactions?: Array<Issuing.Authorization.CryptoTransaction> | null;
+  crypto_transactions?: Array<Authorization.CryptoTransaction> | null;
 
   /**
    * The currency of the cardholder. This currency can be different from the currency presented at authorization and the `merchant_currency` field on this authorization. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -1005,22 +1005,22 @@ export interface Authorization {
   /**
    * Enriched merchant data for this authorization.
    */
-  enriched_merchant_data?: Issuing.Authorization.EnrichedMerchantData | null;
+  enriched_merchant_data?: Authorization.EnrichedMerchantData | null;
 
   /**
    * Fleet-specific information for authorizations using Fleet cards.
    */
-  fleet: Issuing.Authorization.Fleet | null;
+  fleet: Authorization.Fleet | null;
 
   /**
    * Fraud challenges sent to the cardholder, if this authorization was declined for fraud risk reasons.
    */
-  fraud_challenges?: Array<Issuing.Authorization.FraudChallenge> | null;
+  fraud_challenges?: Array<Authorization.FraudChallenge> | null;
 
   /**
    * Information about fuel that was purchased with this transaction. Typically this information is received from the merchant after the authorization has been approved and the fuel dispensed.
    */
-  fuel: Issuing.Authorization.Fuel | null;
+  fuel: Authorization.Fuel | null;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -1037,7 +1037,7 @@ export interface Authorization {
    */
   merchant_currency: string;
 
-  merchant_data: Issuing.Authorization.MerchantData;
+  merchant_data: Authorization.MerchantData;
 
   /**
    * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -1047,29 +1047,29 @@ export interface Authorization {
   /**
    * Details about the authorization, such as identifiers, set by the card network.
    */
-  network_data: Issuing.Authorization.NetworkData | null;
+  network_data: Authorization.NetworkData | null;
 
   /**
    * The pending authorization request. This field will only be non-null during an `issuing_authorization.request` webhook.
    */
-  pending_request: Issuing.Authorization.PendingRequest | null;
+  pending_request: Authorization.PendingRequest | null;
 
   /**
    * History of every time a `pending_request` authorization was approved/declined, either by you directly or by Stripe (e.g. based on your spending_controls). If the merchant changes the authorization by performing an incremental authorization, you can look at this field to see the previous requests for the authorization. This field can be helpful in determining why a given authorization was approved/declined.
    */
-  request_history: Array<Issuing.Authorization.RequestHistory>;
+  request_history: Array<Authorization.RequestHistory>;
 
   /**
    * The current status of the authorization in its lifecycle.
    */
-  status: Issuing.Authorization.Status;
+  status: Authorization.Status;
 
   /**
    * [Token](https://docs.stripe.com/api/issuing/tokens/object) object used for this authorization. If a network token was not used for this authorization, this field will be null.
    */
   token?: string | Token | null;
 
-  token_details?: Issuing.Authorization.TokenDetails;
+  token_details?: Authorization.TokenDetails;
 
   /**
    * List of [transactions](https://docs.stripe.com/api/issuing/transactions) associated with this authorization.
@@ -1079,9 +1079,9 @@ export interface Authorization {
   /**
    * [Treasury](https://docs.stripe.com/api/treasury) details related to this authorization if it was created on a [FinancialAccount](https://docs.stripe.com/api/treasury/financial_accounts).
    */
-  treasury?: Issuing.Authorization.Treasury | null;
+  treasury?: Authorization.Treasury | null;
 
-  verification_data: Issuing.Authorization.VerificationData;
+  verification_data: Authorization.VerificationData;
 
   /**
    * Whether the authorization bypassed fraud risk checks because the cardholder has previously completed a fraud challenge on a similar high-risk authorization from the same merchant.
@@ -1093,8 +1093,1118 @@ export interface Authorization {
    */
   wallet: string | null;
 }
-export namespace Issuing {
-  export namespace Authorization {
+export namespace Authorization {
+  export interface AmountDetails {
+    /**
+     * The fee charged by the ATM for the cash withdrawal.
+     */
+    atm_fee: number | null;
+
+    /**
+     * The amount of cash requested by the cardholder.
+     */
+    cashback_amount: number | null;
+  }
+
+  export type AuthorizationMethod =
+    | 'chip'
+    | 'contactless'
+    | 'keyed_in'
+    | 'online'
+    | 'swipe';
+
+  export interface BalanceResponse {
+    /**
+     * The cardholder account type affected by this authorization.
+     */
+    account_type: BalanceResponse.AccountType;
+
+    /**
+     * The available balance or credit limit in the cardholder's account after the authorization, in the smallest currency unit.
+     */
+    available_balance: number;
+
+    /**
+     * The currency of the remaining balances in the cardholder's account after the authorization.
+     */
+    currency: string;
+
+    /**
+     * The current ledger balance or remaining credit amount in the cardholder's account after the authorization, in the smallest currency unit.
+     */
+    current_balance: number;
+  }
+
+  export type CardPresence = 'not_present' | 'present';
+
+  export interface CryptoTransaction {
+    /**
+     * The confirmed crypto transaction details when `type` is `crypto_transaction_confirmed`; otherwise null.
+     */
+    crypto_transaction_confirmed: CryptoTransaction.CryptoTransactionConfirmed | null;
+
+    /**
+     * The failed crypto transaction details when `type` is `crypto_transaction_failed`; otherwise null.
+     */
+    crypto_transaction_failed: CryptoTransaction.CryptoTransactionFailed | null;
+
+    /**
+     * The crypto transaction variant for this array entry.
+     */
+    type: string;
+  }
+
+  export interface EnrichedMerchantData {
+    /**
+     * Additional details about the seller (grocery store, e-commerce website, and so on) where the card authorization happened.
+     */
+    merchant: EnrichedMerchantData.Merchant | null;
+
+    /**
+     * An array of third parties involved in the card authorization, when applicable.
+     */
+    third_parties: Array<EnrichedMerchantData.ThirdParty> | null;
+  }
+
+  export interface Fleet {
+    /**
+     * Answers to prompts presented to the cardholder at the point of sale. Prompted fields vary depending on the configuration of your physical fleet cards. Typical points of sale support only numeric entry.
+     */
+    cardholder_prompt_data: Fleet.CardholderPromptData | null;
+
+    /**
+     * The type of purchase.
+     */
+    purchase_type: Fleet.PurchaseType | null;
+
+    /**
+     * More information about the total amount. Typically this information is received from the merchant after the authorization has been approved and the fuel dispensed. This information is not guaranteed to be accurate as some merchants may provide unreliable data.
+     */
+    reported_breakdown: Fleet.ReportedBreakdown | null;
+
+    /**
+     * The type of fuel service.
+     */
+    service_type: Fleet.ServiceType | null;
+  }
+
+  export interface FraudChallenge {
+    /**
+     * The method by which the fraud challenge was delivered to the cardholder.
+     */
+    channel: 'sms';
+
+    /**
+     * The status of the fraud challenge.
+     */
+    status: FraudChallenge.Status;
+
+    /**
+     * If the challenge is not deliverable, the reason why.
+     */
+    undeliverable_reason: FraudChallenge.UndeliverableReason | null;
+  }
+
+  export interface Fuel {
+    /**
+     * [Conexxus Payment System Product Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel product purchased.
+     */
+    industry_product_code: string | null;
+
+    /**
+     * The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12 decimal places.
+     */
+    quantity_decimal: Decimal | null;
+
+    /**
+     * The type of fuel that was purchased.
+     */
+    type: Fuel.Type | null;
+
+    /**
+     * The units for `quantity_decimal`.
+     */
+    unit: Fuel.Unit | null;
+
+    /**
+     * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
+     */
+    unit_cost_decimal: Decimal | null;
+  }
+
+  export interface MerchantData {
+    /**
+     * A categorization of the seller's type of business. See our [merchant categories guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
+     */
+    category: string;
+
+    /**
+     * The merchant category code for the seller's business
+     */
+    category_code: string;
+
+    /**
+     * City where the seller is located
+     */
+    city: string | null;
+
+    /**
+     * Country where the seller is located
+     */
+    country: string | null;
+
+    /**
+     * Name of the seller
+     */
+    name: string | null;
+
+    /**
+     * Identifier assigned to the seller by the card network. Different card networks may assign different network_id fields to the same merchant.
+     */
+    network_id: string;
+
+    /**
+     * The identifier of the payment facilitator (PayFac) that processed this authorization, as assigned by the card network. Null when the transaction was not processed through a PayFac.
+     */
+    payment_facilitator_id?: string | null;
+
+    /**
+     * Postal code where the seller is located
+     */
+    postal_code: string | null;
+
+    /**
+     * State where the seller is located
+     */
+    state: string | null;
+
+    /**
+     * The identifier of the sub-merchant involved in this authorization, as assigned by the payment facilitator. Null when the transaction was not processed through a PayFac or when no sub-merchant ID was provided.
+     */
+    sub_merchant_id?: string | null;
+
+    /**
+     * The seller's tax identification number. Currently populated for French merchants only.
+     */
+    tax_id: string | null;
+
+    /**
+     * An ID assigned by the seller to the location of the sale.
+     */
+    terminal_id: string | null;
+
+    /**
+     * URL provided by the merchant on a 3DS request
+     */
+    url: string | null;
+  }
+
+  export interface NetworkData {
+    /**
+     * Identifier assigned to the acquirer by the card network. Sometimes this value is not provided by the network; in this case, the value will be `null`.
+     */
+    acquiring_institution_id: string | null;
+
+    /**
+     * The System Trace Audit Number (STAN) is a 6-digit identifier assigned by the acquirer. Prefer `network_data.transaction_id` if present, unless you have special requirements.
+     */
+    system_trace_audit_number: string | null;
+
+    /**
+     * Unique identifier for the authorization assigned by the card network used to match subsequent messages, disputes, and transactions.
+     */
+    transaction_id: string | null;
+  }
+
+  export interface PendingRequest {
+    /**
+     * The additional amount Stripe will hold if the authorization is approved, in the card's [currency](https://docs.stripe.com/api#issuing_authorization_object-pending-request-currency) and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+     */
+    amount: number;
+
+    /**
+     * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+     */
+    amount_details: PendingRequest.AmountDetails | null;
+
+    /**
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency: string;
+
+    /**
+     * If set `true`, you may provide [amount](https://docs.stripe.com/api/issuing/authorizations/approve#approve_issuing_authorization-amount) to control how much to hold for the authorization.
+     */
+    is_amount_controllable: boolean;
+
+    /**
+     * The amount the merchant is requesting to be authorized in the `merchant_currency`. The amount is in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+     */
+    merchant_amount: number;
+
+    /**
+     * The local currency the merchant is requesting to authorize.
+     */
+    merchant_currency: string;
+
+    /**
+     * The card network's estimate of the likelihood that an authorization is fraudulent. Takes on values between 1 and 99.
+     */
+    network_risk_score: number | null;
+  }
+
+  export interface RequestHistory {
+    /**
+     * The `pending_request.amount` at the time of the request, presented in your card's currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). Stripe held this amount from your account to fund the authorization if the request was approved.
+     */
+    amount: number;
+
+    /**
+     * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+     */
+    amount_details: RequestHistory.AmountDetails | null;
+
+    /**
+     * Whether this request was approved.
+     */
+    approved: boolean;
+
+    /**
+     * A code created by Stripe which is shared with the merchant to validate the authorization. This field will be populated if the authorization message was approved. The code typically starts with the letter "S", followed by a six-digit number. For example, "S498162". Please note that the code is not guaranteed to be unique across authorizations.
+     */
+    authorization_code: string | null;
+
+    /**
+     * Time at which the object was created. Measured in seconds since the Unix epoch.
+     */
+    created: number;
+
+    /**
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency: string;
+
+    /**
+     * The `pending_request.merchant_amount` at the time of the request, presented in the `merchant_currency` and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+     */
+    merchant_amount: number;
+
+    /**
+     * The currency that was collected by the merchant and presented to the cardholder for the authorization. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    merchant_currency: string;
+
+    /**
+     * The card network's estimate of the likelihood that an authorization is fraudulent. Takes on values between 1 and 99.
+     */
+    network_risk_score: number | null;
+
+    /**
+     * When an authorization is approved or declined by you or by Stripe, this field provides additional detail on the reason for the outcome.
+     */
+    reason: RequestHistory.Reason;
+
+    /**
+     * If the `request_history.reason` is `webhook_error` because the direct webhook response is invalid (for example, parsing errors or missing parameters), we surface a more detailed error message via this field.
+     */
+    reason_message: string | null;
+
+    /**
+     * Time when the card network received an authorization request from the acquirer in UTC. Referred to by networks as transmission time.
+     */
+    requested_at: number | null;
+  }
+
+  export type Status = 'closed' | 'expired' | 'pending' | 'reversed';
+
+  export interface TokenDetails {
+    /**
+     * The card associated with this token.
+     */
+    card: string;
+
+    /**
+     * Time at which the object was created. Measured in seconds since the Unix epoch.
+     */
+    created: number;
+
+    /**
+     * The hashed ID derived from the device ID from the card network associated with the token.
+     */
+    device_fingerprint?: string;
+
+    network_data?: TokenDetails.NetworkData;
+
+    /**
+     * The decision made during token provisioning.
+     */
+    provisioning_decision?: TokenDetails.ProvisioningDecision | null;
+
+    /**
+     * The type of the token, indicating how it is used.
+     */
+    token_type?: TokenDetails.TokenType | null;
+  }
+
+  export interface Treasury {
+    /**
+     * The array of [ReceivedCredits](https://docs.stripe.com/api/treasury/received_credits) associated with this authorization
+     */
+    received_credits: Array<string>;
+
+    /**
+     * The array of [ReceivedDebits](https://docs.stripe.com/api/treasury/received_debits) associated with this authorization
+     */
+    received_debits: Array<string>;
+
+    /**
+     * The Treasury [Transaction](https://docs.stripe.com/api/treasury/transactions) associated with this authorization
+     */
+    transaction: string | null;
+  }
+
+  export interface VerificationData {
+    /**
+     * Whether the cardholder provided an address first line and if it matched the cardholder's `billing.address.line1`.
+     */
+    address_line1_check: VerificationData.AddressLine1Check;
+
+    /**
+     * Whether the cardholder provided a postal code and if it matched the cardholder's `billing.address.postal_code`.
+     */
+    address_postal_code_check: VerificationData.AddressPostalCodeCheck;
+
+    /**
+     * The exemption applied to this authorization.
+     */
+    authentication_exemption: VerificationData.AuthenticationExemption | null;
+
+    /**
+     * Whether the cardholder provided a CVC and if it matched Stripe's record.
+     */
+    cvc_check: VerificationData.CvcCheck;
+
+    /**
+     * Whether the cardholder provided an expiry date and if it matched Stripe's record.
+     */
+    expiry_check: VerificationData.ExpiryCheck;
+
+    /**
+     * The postal code submitted as part of the authorization used for postal code verification.
+     */
+    postal_code: string | null;
+
+    /**
+     * 3D Secure details.
+     */
+    three_d_secure: VerificationData.ThreeDSecure | null;
+  }
+
+  export namespace BalanceResponse {
+    export type AccountType =
+      | 'checking'
+      | 'credit'
+      | 'default'
+      | 'other'
+      | 'savings'
+      | 'universal';
+  }
+
+  export namespace CryptoTransaction {
+    export interface CryptoTransactionConfirmed {
+      /**
+       * The crypto amount for the confirmed transaction.
+       */
+      amount: string;
+
+      /**
+       * The upcharged MCC amount, if one was applied.
+       */
+      amount_mcc_upcharged: string | null;
+
+      /**
+       * The blockchain network for the confirmed transaction.
+       */
+      chain: string;
+
+      /**
+       * When the transaction was confirmed onchain.
+       */
+      confirmed_at: number;
+
+      /**
+       * The currency of the crypto transaction amount.
+       */
+      currency: string;
+
+      /**
+       * Fees associated with the transaction.
+       */
+      fees: Array<CryptoTransactionConfirmed.Fee>;
+
+      /**
+       * The source wallet address for the transaction.
+       */
+      from_address: string;
+
+      /**
+       * Memo metadata attached to the transaction, if present.
+       */
+      memo: string | null;
+
+      /**
+       * The destination wallet address for the transaction.
+       */
+      to_address: string;
+
+      /**
+       * The blockchain transaction hash.
+       */
+      transaction_hash: string;
+    }
+
+    export interface CryptoTransactionFailed {
+      /**
+       * The crypto amount for the failed transaction.
+       */
+      amount: string;
+
+      /**
+       * The upcharged MCC amount, if one was applied.
+       */
+      amount_mcc_upcharged: string | null;
+
+      /**
+       * The blockchain network for the failed transaction.
+       */
+      chain: string;
+
+      /**
+       * The currency of the crypto transaction amount.
+       */
+      currency: string;
+
+      /**
+       * When the transaction failed.
+       */
+      failed_at: number;
+
+      /**
+       * The reason the transaction failed.
+       */
+      failure_reason: string;
+
+      /**
+       * Fees associated with the transaction.
+       */
+      fees: Array<CryptoTransactionFailed.Fee>;
+
+      /**
+       * The source wallet address for the attempted transaction.
+       */
+      from_address: string;
+
+      /**
+       * Memo metadata attached to the transaction, if present.
+       */
+      memo: string | null;
+
+      /**
+       * The destination wallet address for the attempted transaction when one exists.
+       */
+      to_address: string | null;
+
+      /**
+       * The blockchain transaction hash when one exists.
+       */
+      transaction_hash: string | null;
+    }
+
+    export namespace CryptoTransactionConfirmed {
+      export interface Fee {
+        /**
+         * The fee amount.
+         */
+        amount: string;
+
+        /**
+         * The fee currency.
+         */
+        currency: string;
+
+        /**
+         * The fee type.
+         */
+        type: string;
+      }
+    }
+
+    export namespace CryptoTransactionFailed {
+      export interface Fee {
+        /**
+         * The fee amount.
+         */
+        amount: string;
+
+        /**
+         * The fee currency.
+         */
+        currency: string;
+
+        /**
+         * The fee type.
+         */
+        type: string;
+      }
+    }
+  }
+
+  export namespace EnrichedMerchantData {
+    export interface Merchant {
+      data_sources: Array<'spade'>;
+
+      industry: Merchant.Industry;
+
+      /**
+       * Location data of the seller.
+       */
+      location: Merchant.Location | null;
+
+      /**
+       * Image link to the seller's logo.
+       */
+      logo: string | null;
+
+      /**
+       * The name of the seller.
+       */
+      name: string | null;
+
+      /**
+       * Phone number of the seller.
+       */
+      phone: string | null;
+
+      /**
+       * If `spade` is a data source, this hash contains details provided by Spade.
+       */
+      spade: Merchant.Spade | null;
+
+      /**
+       * URL of the seller's website.
+       */
+      url: string | null;
+    }
+
+    export interface ThirdParty {
+      data_sources: Array<'spade'>;
+
+      /**
+       * Image link to the third party's logo.
+       */
+      logo: string | null;
+
+      /**
+       * Name of the third party.
+       */
+      name: string | null;
+
+      /**
+       * If `spade` is a data source, this hash contains details provided by Spade.
+       */
+      spade: ThirdParty.Spade | null;
+
+      /**
+       * Category of the third party.
+       */
+      type: ThirdParty.Type;
+    }
+
+    export namespace Merchant {
+      export interface Industry {
+        /**
+         * Most specific value of the seller's category.
+         */
+        id: Industry.Id;
+
+        /**
+         * Increasingly specific textual representations of the seller's category.
+         */
+        names: Array<string>;
+      }
+
+      export interface Location {
+        /**
+         * Address details of the seller.
+         */
+        address: Address | null;
+
+        /**
+         * Coordinates of the seller.
+         */
+        coordinates: Location.Coordinates | null;
+      }
+
+      export interface Spade {
+        /**
+         * Unified identifier for the seller.
+         */
+        counterparty_id: string | null;
+
+        /**
+         * Unified identifier for the seller's location.
+         */
+        location_id: string | null;
+      }
+
+      export namespace Industry {
+        export type Id =
+          | 'accessories'
+          | 'accounting_and_bookkeeping'
+          | 'acupuncture'
+          | 'administrative_services'
+          | 'adult_entertainment'
+          | 'adult_retail'
+          | 'advertising_and_marketing'
+          | 'advertising_technology'
+          | 'agricultural_technology'
+          | 'agriculture_and_forestry'
+          | 'airlines_and_aviation'
+          | 'alternative_medicine'
+          | 'alternative_rentals'
+          | 'anesthesiologists'
+          | 'antiques'
+          | 'aquatic_transportation'
+          | 'arcades_and_amusement_parks'
+          | 'art_dealers_and_galleries'
+          | 'arts_and_hobbies'
+          | 'atms'
+          | 'auctions'
+          | 'auto_parts_and_supplies'
+          | 'auto_smog_checks'
+          | 'auto_tires'
+          | 'auto_transmission'
+          | 'automotive_dealerships'
+          | 'automotive_retail'
+          | 'automotive_services'
+          | 'bakeries'
+          | 'banking_and_finance'
+          | 'bars'
+          | 'beauty_spas_and_salons'
+          | 'beer_wine_and_spirits'
+          | 'benefits'
+          | 'bicycles'
+          | 'billiards_and_pool'
+          | 'biotechnology'
+          | 'blood_banks_and_centers'
+          | 'boat_dealers'
+          | 'bookstores'
+          | 'bowling'
+          | 'breweries_distilleries_and_wineries'
+          | 'business_brokers_and_franchises'
+          | 'business_services'
+          | 'butchers'
+          | 'buy_now_pay_later'
+          | 'cafes'
+          | 'candy_shops'
+          | 'cannabis_dispensary'
+          | 'car_appraisers'
+          | 'car_wash_and_detail'
+          | 'cardiologists'
+          | 'cards_and_stationery'
+          | 'casinos_and_gambling'
+          | 'catering'
+          | 'charity'
+          | 'childcare'
+          | 'children_s_clothing'
+          | 'children_s_retail'
+          | 'chiropractors'
+          | 'circuses_and_carnivals'
+          | 'cleaning'
+          | 'clothing_and_accessories'
+          | 'clothing_services'
+          | 'commercial_supplies'
+          | 'communication_software'
+          | 'computers_and_electronics'
+          | 'construction_and_home_improvement'
+          | 'construction_supplies'
+          | 'contractors'
+          | 'convenience_stores'
+          | 'cosmetics'
+          | 'costumes'
+          | 'counseling_and_therapy'
+          | 'couriers'
+          | 'coworking_spaces'
+          | 'creative'
+          | 'creative_software'
+          | 'credit_reporting'
+          | 'crm'
+          | 'crowdfunding'
+          | 'cryptocurrency'
+          | 'dance_halls_and_saloons'
+          | 'delivery_services'
+          | 'dentists'
+          | 'department_stores'
+          | 'dermatologists'
+          | 'design_technology'
+          | 'developer_tools'
+          | 'digital_money_movement'
+          | 'discount_stores'
+          | 'education'
+          | 'educational_technology'
+          | 'electric_vehicle_charging'
+          | 'emergency_services'
+          | 'employment_services'
+          | 'enterprise_software'
+          | 'entertainment'
+          | 'ents'
+          | 'environmental_technology'
+          | 'equipment_rentals'
+          | 'events_and_event_planning'
+          | 'eyewear'
+          | 'fairgrounds_and_rodeos'
+          | 'family_medicine'
+          | 'fast_food'
+          | 'fertility'
+          | 'financial_management_software'
+          | 'financial_planning_and_investments'
+          | 'financial_technology'
+          | 'fishmongers'
+          | 'flea_markets'
+          | 'fleet'
+          | 'florists'
+          | 'food_and_drink'
+          | 'food_delivery_services'
+          | 'food_trucks'
+          | 'fuel_dealers'
+          | 'funeral_services'
+          | 'furniture'
+          | 'gas_stations'
+          | 'gastroenterologists'
+          | 'general_goods'
+          | 'general_surgery'
+          | 'gift_and_novelty'
+          | 'government'
+          | 'grocery_delivery_services'
+          | 'gyms_health_and_fitness_centers'
+          | 'hair_removal'
+          | 'hair_salons_and_barbers'
+          | 'hardware'
+          | 'hardware_and_home_improvement'
+          | 'hospitals_clinics_and_medical_centers'
+          | 'household_services'
+          | 'hr_platform'
+          | 'immigration'
+          | 'import_and_export'
+          | 'industrial_and_energy'
+          | 'inflight_internet_and_entertainment'
+          | 'insurance'
+          | 'internal_medicine'
+          | 'internet'
+          | 'jewelry_and_watches'
+          | 'landmarks'
+          | 'laundry_and_garment_services'
+          | 'lawn_and_garden'
+          | 'legal_services'
+          | 'legal_technology'
+          | 'lending'
+          | 'lingerie'
+          | 'lodging'
+          | 'luggage'
+          | 'maintenance_and_repair'
+          | 'manicures_and_pedicures'
+          | 'manufacturing'
+          | 'marina'
+          | 'marine_supplies'
+          | 'marketing_software'
+          | 'massage_clinics_and_therapists'
+          | 'media'
+          | 'medical_and_healthcare_services'
+          | 'medical_supplies_and_labs'
+          | 'men_s_clothing'
+          | 'mental_health_professionals'
+          | 'mobile_applications'
+          | 'motorcycle_moped_and_scooter_repair'
+          | 'museums'
+          | 'musical_instruments'
+          | 'neurologists'
+          | 'news_and_magazines'
+          | 'newsstands'
+          | 'nutritionists'
+          | 'obstetricians_and_gynecologists'
+          | 'office_supplies'
+          | 'oil_and_gas'
+          | 'oncologists'
+          | 'online_marketplace'
+          | 'ophthalmologists'
+          | 'optometrists'
+          | 'organizations'
+          | 'orthopedic_surgeons'
+          | 'other'
+          | 'outlets'
+          | 'packaging'
+          | 'paper'
+          | 'parking'
+          | 'parks_and_outdoors'
+          | 'party_centers'
+          | 'pathologists'
+          | 'pawn_shops'
+          | 'pediatricians'
+          | 'pet_grooming'
+          | 'pet_services'
+          | 'pets'
+          | 'pharmacies'
+          | 'photography'
+          | 'physical_therapy'
+          | 'piercings'
+          | 'plastic_surgeons'
+          | 'podiatrists'
+          | 'pregnancy_and_sexual_health'
+          | 'professional_services'
+          | 'property_management'
+          | 'psychiatrists'
+          | 'psychics_and_astrologers'
+          | 'psychologists'
+          | 'public_services'
+          | 'public_transportation'
+          | 'publishing_software'
+          | 'radiologists'
+          | 'rails'
+          | 'real_estate'
+          | 'recreation'
+          | 'religious'
+          | 'renewable_energy'
+          | 'respiratory'
+          | 'restaurants'
+          | 'retail'
+          | 'ride_shares'
+          | 'sales_enablement_software'
+          | 'security_and_privacy'
+          | 'security_and_safety'
+          | 'services'
+          | 'shipping_and_freight'
+          | 'shoes'
+          | 'skin_care'
+          | 'social_clubs'
+          | 'software'
+          | 'software_engineering'
+          | 'spas'
+          | 'specialist_physicans'
+          | 'specialty_clothing_and_accessories'
+          | 'specialty_foods'
+          | 'specialty_groceries'
+          | 'specialty_retail'
+          | 'sporting_goods'
+          | 'storage'
+          | 'streaming_services'
+          | 'supermarkets_and_grocery_stores'
+          | 'swimwear'
+          | 'tailors'
+          | 'tanning_salons'
+          | 'tattoos'
+          | 'taxes'
+          | 'taxi_and_limousines'
+          | 'technology'
+          | 'telecommunications'
+          | 'television'
+          | 'textiles'
+          | 'theater_and_cinema'
+          | 'tickets_and_reservations'
+          | 'tobacco_smoke_and_vape_shops'
+          | 'tolls_and_fees'
+          | 'tourist_information_and_services'
+          | 'towing_and_roadside_assistance'
+          | 'toy_stores'
+          | 'transportation'
+          | 'travel'
+          | 'travel_services'
+          | 'travel_software'
+          | 'urologists'
+          | 'utilities'
+          | 'vehicle_rentals'
+          | 'vending_machine'
+          | 'venues'
+          | 'veterinarians'
+          | 'video_games'
+          | 'vintage_and_thrift'
+          | 'warehouses_and_wholesale_stores'
+          | 'water_and_waste_management_services'
+          | 'web_infrastructure'
+          | 'wedding_and_bridal'
+          | 'women_s_clothing'
+          | 'zoos_and_aquariums';
+      }
+
+      export namespace Location {
+        export interface Coordinates {
+          /**
+           * Latitude of the seller's location.
+           */
+          latitude: number | null;
+
+          /**
+           * Longitude of the seller's location.
+           */
+          longitude: number | null;
+        }
+      }
+    }
+
+    export namespace ThirdParty {
+      export interface Spade {
+        /**
+         * Unified identifier for the third party.
+         */
+        third_party_id: string | null;
+      }
+
+      export type Type =
+        | 'buy_now_pay_later'
+        | 'delivery_service'
+        | 'marketplace'
+        | 'other'
+        | 'payment_processor'
+        | 'platform';
+    }
+  }
+
+  export namespace Fleet {
+    export interface CardholderPromptData {
+      /**
+       * [Deprecated] An alphanumeric ID, though typical point of sales only support numeric entry. The card program can be configured to prompt for a vehicle ID, driver ID, or generic ID.
+       * @deprecated
+       */
+      alphanumeric_id: string | null;
+
+      /**
+       * Driver ID.
+       */
+      driver_id: string | null;
+
+      /**
+       * Odometer reading.
+       */
+      odometer: number | null;
+
+      /**
+       * An alphanumeric ID. This field is used when a vehicle ID, driver ID, or generic ID is entered by the cardholder, but the merchant or card network did not specify the prompt type.
+       */
+      unspecified_id: string | null;
+
+      /**
+       * User ID.
+       */
+      user_id: string | null;
+
+      /**
+       * Vehicle number.
+       */
+      vehicle_number: string | null;
+    }
+
+    export type PurchaseType =
+      | 'fuel_and_non_fuel_purchase'
+      | 'fuel_purchase'
+      | 'non_fuel_purchase';
+
+    export interface ReportedBreakdown {
+      /**
+       * Breakdown of fuel portion of the purchase.
+       */
+      fuel: ReportedBreakdown.Fuel | null;
+
+      /**
+       * Breakdown of non-fuel portion of the purchase.
+       */
+      non_fuel: ReportedBreakdown.NonFuel | null;
+
+      /**
+       * Information about tax included in this transaction.
+       */
+      tax: ReportedBreakdown.Tax | null;
+    }
+
+    export type ServiceType =
+      | 'full_service'
+      | 'non_fuel_transaction'
+      | 'self_service';
+
+    export namespace ReportedBreakdown {
+      export interface Fuel {
+        /**
+         * Gross fuel amount that should equal Fuel Quantity multiplied by Fuel Unit Cost, inclusive of taxes.
+         */
+        gross_amount_decimal: Decimal | null;
+      }
+
+      export interface NonFuel {
+        /**
+         * Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
+         */
+        gross_amount_decimal: Decimal | null;
+      }
+
+      export interface Tax {
+        /**
+         * Amount of state or provincial Sales Tax included in the transaction amount. `null` if not reported by merchant or not subject to tax.
+         */
+        local_amount_decimal: Decimal | null;
+
+        /**
+         * Amount of national Sales Tax or VAT included in the transaction amount. `null` if not reported by merchant or not subject to tax.
+         */
+        national_amount_decimal: Decimal | null;
+      }
+    }
+  }
+
+  export namespace FraudChallenge {
+    export type Status =
+      | 'expired'
+      | 'pending'
+      | 'rejected'
+      | 'undeliverable'
+      | 'verified';
+
+    export type UndeliverableReason =
+      | 'no_phone_number'
+      | 'unsupported_phone_number';
+  }
+
+  export namespace Fuel {
+    export type Type =
+      | 'diesel'
+      | 'other'
+      | 'unleaded_plus'
+      | 'unleaded_regular'
+      | 'unleaded_super';
+
+    export type Unit =
+      | 'charging_minute'
+      | 'imperial_gallon'
+      | 'kilogram'
+      | 'kilowatt_hour'
+      | 'liter'
+      | 'other'
+      | 'pound'
+      | 'us_gallon';
+  }
+
+  export namespace PendingRequest {
+    export interface AmountDetails {
+      /**
+       * The fee charged by the ATM for the cash withdrawal.
+       */
+      atm_fee: number | null;
+
+      /**
+       * The amount of cash requested by the cardholder.
+       */
+      cashback_amount: number | null;
+    }
+  }
+
+  export namespace RequestHistory {
     export interface AmountDetails {
       /**
        * The fee charged by the ATM for the cash withdrawal.
@@ -1107,1542 +2217,424 @@ export namespace Issuing {
       cashback_amount: number | null;
     }
 
-    export type AuthorizationMethod =
-      | 'chip'
-      | 'contactless'
-      | 'keyed_in'
-      | 'online'
-      | 'swipe';
+    export type Reason =
+      | 'account_disabled'
+      | 'card_active'
+      | 'card_canceled'
+      | 'card_expired'
+      | 'card_inactive'
+      | 'cardholder_blocked'
+      | 'cardholder_inactive'
+      | 'cardholder_verification_required'
+      | 'insecure_authorization_method'
+      | 'insufficient_funds'
+      | 'network_fallback'
+      | 'not_allowed'
+      | 'pin_blocked'
+      | 'spending_controls'
+      | 'suspected_fraud'
+      | 'verification_failed'
+      | 'webhook_approved'
+      | 'webhook_declined'
+      | 'webhook_error'
+      | 'webhook_timeout';
+  }
 
-    export interface BalanceResponse {
-      /**
-       * The cardholder account type affected by this authorization.
-       */
-      account_type: BalanceResponse.AccountType;
-
-      /**
-       * The available balance or credit limit in the cardholder's account after the authorization, in the smallest currency unit.
-       */
-      available_balance: number;
-
-      /**
-       * The currency of the remaining balances in the cardholder's account after the authorization.
-       */
-      currency: string;
-
-      /**
-       * The current ledger balance or remaining credit amount in the cardholder's account after the authorization, in the smallest currency unit.
-       */
-      current_balance: number;
-    }
-
-    export type CardPresence = 'not_present' | 'present';
-
-    export interface CryptoTransaction {
-      /**
-       * The confirmed crypto transaction details when `type` is `crypto_transaction_confirmed`; otherwise null.
-       */
-      crypto_transaction_confirmed: CryptoTransaction.CryptoTransactionConfirmed | null;
-
-      /**
-       * The failed crypto transaction details when `type` is `crypto_transaction_failed`; otherwise null.
-       */
-      crypto_transaction_failed: CryptoTransaction.CryptoTransactionFailed | null;
-
-      /**
-       * The crypto transaction variant for this array entry.
-       */
-      type: string;
-    }
-
-    export interface EnrichedMerchantData {
-      /**
-       * Additional details about the seller (grocery store, e-commerce website, and so on) where the card authorization happened.
-       */
-      merchant: EnrichedMerchantData.Merchant | null;
-
-      /**
-       * An array of third parties involved in the card authorization, when applicable.
-       */
-      third_parties: Array<EnrichedMerchantData.ThirdParty> | null;
-    }
-
-    export interface Fleet {
-      /**
-       * Answers to prompts presented to the cardholder at the point of sale. Prompted fields vary depending on the configuration of your physical fleet cards. Typical points of sale support only numeric entry.
-       */
-      cardholder_prompt_data: Fleet.CardholderPromptData | null;
-
-      /**
-       * The type of purchase.
-       */
-      purchase_type: Fleet.PurchaseType | null;
-
-      /**
-       * More information about the total amount. Typically this information is received from the merchant after the authorization has been approved and the fuel dispensed. This information is not guaranteed to be accurate as some merchants may provide unreliable data.
-       */
-      reported_breakdown: Fleet.ReportedBreakdown | null;
-
-      /**
-       * The type of fuel service.
-       */
-      service_type: Fleet.ServiceType | null;
-    }
-
-    export interface FraudChallenge {
-      /**
-       * The method by which the fraud challenge was delivered to the cardholder.
-       */
-      channel: 'sms';
-
-      /**
-       * The status of the fraud challenge.
-       */
-      status: FraudChallenge.Status;
-
-      /**
-       * If the challenge is not deliverable, the reason why.
-       */
-      undeliverable_reason: FraudChallenge.UndeliverableReason | null;
-    }
-
-    export interface Fuel {
-      /**
-       * [Conexxus Payment System Product Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel product purchased.
-       */
-      industry_product_code: string | null;
-
-      /**
-       * The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12 decimal places.
-       */
-      quantity_decimal: Decimal | null;
-
-      /**
-       * The type of fuel that was purchased.
-       */
-      type: Fuel.Type | null;
-
-      /**
-       * The units for `quantity_decimal`.
-       */
-      unit: Fuel.Unit | null;
-
-      /**
-       * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
-       */
-      unit_cost_decimal: Decimal | null;
-    }
-
-    export interface MerchantData {
-      /**
-       * A categorization of the seller's type of business. See our [merchant categories guide](https://docs.stripe.com/issuing/merchant-categories) for a list of possible values.
-       */
-      category: string;
-
-      /**
-       * The merchant category code for the seller's business
-       */
-      category_code: string;
-
-      /**
-       * City where the seller is located
-       */
-      city: string | null;
-
-      /**
-       * Country where the seller is located
-       */
-      country: string | null;
-
-      /**
-       * Name of the seller
-       */
-      name: string | null;
-
-      /**
-       * Identifier assigned to the seller by the card network. Different card networks may assign different network_id fields to the same merchant.
-       */
-      network_id: string;
-
-      /**
-       * The identifier of the payment facilitator (PayFac) that processed this authorization, as assigned by the card network. Null when the transaction was not processed through a PayFac.
-       */
-      payment_facilitator_id?: string | null;
-
-      /**
-       * Postal code where the seller is located
-       */
-      postal_code: string | null;
-
-      /**
-       * State where the seller is located
-       */
-      state: string | null;
-
-      /**
-       * The identifier of the sub-merchant involved in this authorization, as assigned by the payment facilitator. Null when the transaction was not processed through a PayFac or when no sub-merchant ID was provided.
-       */
-      sub_merchant_id?: string | null;
-
-      /**
-       * The seller's tax identification number. Currently populated for French merchants only.
-       */
-      tax_id: string | null;
-
-      /**
-       * An ID assigned by the seller to the location of the sale.
-       */
-      terminal_id: string | null;
-
-      /**
-       * URL provided by the merchant on a 3DS request
-       */
-      url: string | null;
-    }
-
+  export namespace TokenDetails {
     export interface NetworkData {
-      /**
-       * Identifier assigned to the acquirer by the card network. Sometimes this value is not provided by the network; in this case, the value will be `null`.
-       */
-      acquiring_institution_id: string | null;
+      device?: NetworkData.Device;
+
+      mastercard?: NetworkData.Mastercard;
 
       /**
-       * The System Trace Audit Number (STAN) is a 6-digit identifier assigned by the acquirer. Prefer `network_data.transaction_id` if present, unless you have special requirements.
+       * The card network for this token.
        */
-      system_trace_audit_number: string | null;
+      type: NetworkData.Type;
 
-      /**
-       * Unique identifier for the authorization assigned by the card network used to match subsequent messages, disputes, and transactions.
-       */
-      transaction_id: string | null;
+      visa?: NetworkData.Visa;
+
+      wallet_provider?: NetworkData.WalletProvider;
     }
 
-    export interface PendingRequest {
-      /**
-       * The additional amount Stripe will hold if the authorization is approved, in the card's [currency](https://docs.stripe.com/api#issuing_authorization_object-pending-request-currency) and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
-       */
-      amount: number;
+    export type ProvisioningDecision =
+      | 'approve'
+      | 'approve_pending_id_and_v'
+      | 'decline';
 
-      /**
-       * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
-       */
-      amount_details: PendingRequest.AmountDetails | null;
+    export type TokenType =
+      | 'card_on_file'
+      | 'cloud_based'
+      | 'commerce_platform'
+      | 'commercial_virtual_account'
+      | 'secure_element'
+      | 'static_credential';
 
-      /**
-       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-       */
-      currency: string;
-
-      /**
-       * If set `true`, you may provide [amount](https://docs.stripe.com/api/issuing/authorizations/approve#approve_issuing_authorization-amount) to control how much to hold for the authorization.
-       */
-      is_amount_controllable: boolean;
-
-      /**
-       * The amount the merchant is requesting to be authorized in the `merchant_currency`. The amount is in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
-       */
-      merchant_amount: number;
-
-      /**
-       * The local currency the merchant is requesting to authorize.
-       */
-      merchant_currency: string;
-
-      /**
-       * The card network's estimate of the likelihood that an authorization is fraudulent. Takes on values between 1 and 99.
-       */
-      network_risk_score: number | null;
-    }
-
-    export interface RequestHistory {
-      /**
-       * The `pending_request.amount` at the time of the request, presented in your card's currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal). Stripe held this amount from your account to fund the authorization if the request was approved.
-       */
-      amount: number;
-
-      /**
-       * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
-       */
-      amount_details: RequestHistory.AmountDetails | null;
-
-      /**
-       * Whether this request was approved.
-       */
-      approved: boolean;
-
-      /**
-       * A code created by Stripe which is shared with the merchant to validate the authorization. This field will be populated if the authorization message was approved. The code typically starts with the letter "S", followed by a six-digit number. For example, "S498162". Please note that the code is not guaranteed to be unique across authorizations.
-       */
-      authorization_code: string | null;
-
-      /**
-       * Time at which the object was created. Measured in seconds since the Unix epoch.
-       */
-      created: number;
-
-      /**
-       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-       */
-      currency: string;
-
-      /**
-       * The `pending_request.merchant_amount` at the time of the request, presented in the `merchant_currency` and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
-       */
-      merchant_amount: number;
-
-      /**
-       * The currency that was collected by the merchant and presented to the cardholder for the authorization. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-       */
-      merchant_currency: string;
-
-      /**
-       * The card network's estimate of the likelihood that an authorization is fraudulent. Takes on values between 1 and 99.
-       */
-      network_risk_score: number | null;
-
-      /**
-       * When an authorization is approved or declined by you or by Stripe, this field provides additional detail on the reason for the outcome.
-       */
-      reason: RequestHistory.Reason;
-
-      /**
-       * If the `request_history.reason` is `webhook_error` because the direct webhook response is invalid (for example, parsing errors or missing parameters), we surface a more detailed error message via this field.
-       */
-      reason_message: string | null;
-
-      /**
-       * Time when the card network received an authorization request from the acquirer in UTC. Referred to by networks as transmission time.
-       */
-      requested_at: number | null;
-    }
-
-    export type Status = 'closed' | 'expired' | 'pending' | 'reversed';
-
-    export interface TokenDetails {
-      /**
-       * The card associated with this token.
-       */
-      card: string;
-
-      /**
-       * Time at which the object was created. Measured in seconds since the Unix epoch.
-       */
-      created: number;
-
-      /**
-       * The hashed ID derived from the device ID from the card network associated with the token.
-       */
-      device_fingerprint?: string;
-
-      network_data?: TokenDetails.NetworkData;
-
-      /**
-       * The decision made during token provisioning.
-       */
-      provisioning_decision?: TokenDetails.ProvisioningDecision | null;
-
-      /**
-       * The type of the token, indicating how it is used.
-       */
-      token_type?: TokenDetails.TokenType | null;
-    }
-
-    export interface Treasury {
-      /**
-       * The array of [ReceivedCredits](https://docs.stripe.com/api/treasury/received_credits) associated with this authorization
-       */
-      received_credits: Array<string>;
-
-      /**
-       * The array of [ReceivedDebits](https://docs.stripe.com/api/treasury/received_debits) associated with this authorization
-       */
-      received_debits: Array<string>;
-
-      /**
-       * The Treasury [Transaction](https://docs.stripe.com/api/treasury/transactions) associated with this authorization
-       */
-      transaction: string | null;
-    }
-
-    export interface VerificationData {
-      /**
-       * Whether the cardholder provided an address first line and if it matched the cardholder's `billing.address.line1`.
-       */
-      address_line1_check: VerificationData.AddressLine1Check;
-
-      /**
-       * Whether the cardholder provided a postal code and if it matched the cardholder's `billing.address.postal_code`.
-       */
-      address_postal_code_check: VerificationData.AddressPostalCodeCheck;
-
-      /**
-       * The exemption applied to this authorization.
-       */
-      authentication_exemption: VerificationData.AuthenticationExemption | null;
-
-      /**
-       * Whether the cardholder provided a CVC and if it matched Stripe's record.
-       */
-      cvc_check: VerificationData.CvcCheck;
-
-      /**
-       * Whether the cardholder provided an expiry date and if it matched Stripe's record.
-       */
-      expiry_check: VerificationData.ExpiryCheck;
-
-      /**
-       * The postal code submitted as part of the authorization used for postal code verification.
-       */
-      postal_code: string | null;
-
-      /**
-       * 3D Secure details.
-       */
-      three_d_secure: VerificationData.ThreeDSecure | null;
-    }
-
-    export namespace BalanceResponse {
-      export type AccountType =
-        | 'checking'
-        | 'credit'
-        | 'default'
-        | 'other'
-        | 'savings'
-        | 'universal';
-    }
-
-    export namespace CryptoTransaction {
-      export interface CryptoTransactionConfirmed {
+    export namespace NetworkData {
+      export interface Device {
         /**
-         * The crypto amount for the confirmed transaction.
+         * The IP address of the device at provisioning time.
          */
-        amount: string;
+        ip_address?: string;
 
         /**
-         * The upcharged MCC amount, if one was applied.
+         * The ISO 639-1 language code of the device associated with the tokenization request.
          */
-        amount_mcc_upcharged: string | null;
+        language?: Device.Language;
 
         /**
-         * The blockchain network for the confirmed transaction.
+         * The phone number of the device used for tokenization.
          */
-        chain: string;
-
-        /**
-         * When the transaction was confirmed onchain.
-         */
-        confirmed_at: number;
-
-        /**
-         * The currency of the crypto transaction amount.
-         */
-        currency: string;
-
-        /**
-         * Fees associated with the transaction.
-         */
-        fees: Array<CryptoTransactionConfirmed.Fee>;
-
-        /**
-         * The source wallet address for the transaction.
-         */
-        from_address: string;
-
-        /**
-         * Memo metadata attached to the transaction, if present.
-         */
-        memo: string | null;
-
-        /**
-         * The destination wallet address for the transaction.
-         */
-        to_address: string;
-
-        /**
-         * The blockchain transaction hash.
-         */
-        transaction_hash: string;
+        phone_number?: string;
       }
 
-      export interface CryptoTransactionFailed {
+      export interface Mastercard {
         /**
-         * The crypto amount for the failed transaction.
+         * A unique reference ID from the network to represent the card account number.
          */
-        amount: string;
+        card_reference_id?: string;
 
         /**
-         * The upcharged MCC amount, if one was applied.
+         * The network-unique identifier for the token.
          */
-        amount_mcc_upcharged: string | null;
+        token_reference_id: string;
 
         /**
-         * The blockchain network for the failed transaction.
+         * The ID of the entity requesting tokenization.
          */
-        chain: string;
-
-        /**
-         * The currency of the crypto transaction amount.
-         */
-        currency: string;
-
-        /**
-         * When the transaction failed.
-         */
-        failed_at: number;
-
-        /**
-         * The reason the transaction failed.
-         */
-        failure_reason: string;
-
-        /**
-         * Fees associated with the transaction.
-         */
-        fees: Array<CryptoTransactionFailed.Fee>;
-
-        /**
-         * The source wallet address for the attempted transaction.
-         */
-        from_address: string;
-
-        /**
-         * Memo metadata attached to the transaction, if present.
-         */
-        memo: string | null;
-
-        /**
-         * The destination wallet address for the attempted transaction when one exists.
-         */
-        to_address: string | null;
-
-        /**
-         * The blockchain transaction hash when one exists.
-         */
-        transaction_hash: string | null;
+        token_requestor_id: string;
       }
 
-      export namespace CryptoTransactionConfirmed {
-        export interface Fee {
-          /**
-           * The fee amount.
-           */
-          amount: string;
+      export type Type = 'mastercard' | 'visa';
 
-          /**
-           * The fee currency.
-           */
-          currency: string;
+      export interface Visa {
+        /**
+         * A unique reference ID from the network to represent the card account number.
+         */
+        card_reference_id?: string;
 
-          /**
-           * The fee type.
-           */
-          type: string;
-        }
+        /**
+         * The network's recommendation to Stripe for this token activation request.
+         */
+        token_decision_recommendation?: Visa.TokenDecisionRecommendation | null;
+
+        /**
+         * The network-unique identifier for the token.
+         */
+        token_reference_id: string;
+
+        /**
+         * The ID of the entity requesting tokenization.
+         */
+        token_requestor_id: string;
+
+        /**
+         * Degree of risk associated with the token between `01` and `99`, with higher number indicating higher risk. A `00` value indicates the token was not scored by Visa.
+         */
+        token_risk_score?: string;
       }
 
-      export namespace CryptoTransactionFailed {
-        export interface Fee {
-          /**
-           * The fee amount.
-           */
-          amount: string;
+      export interface WalletProvider {
+        /**
+         * An evaluation on the trustworthiness of the wallet account between 1 and 5. A higher score indicates more trustworthy.
+         */
+        account_trust_score?: number;
 
-          /**
-           * The fee currency.
-           */
-          currency: string;
+        /**
+         * The method used for tokenizing a card.
+         */
+        card_number_source?: WalletProvider.CardNumberSource;
 
-          /**
-           * The fee type.
-           */
-          type: string;
-        }
+        /**
+         * An evaluation on the trustworthiness of the device. A higher score indicates more trustworthy.
+         */
+        device_trust_score?: number;
+
+        /**
+         * The reasons for suggested tokenization given by the card network.
+         */
+        reason_codes?: Array<WalletProvider.ReasonCode>;
+
+        /**
+         * The recommendation on responding to the tokenization request.
+         */
+        suggested_decision?: WalletProvider.SuggestedDecision;
+      }
+
+      export namespace Device {
+        export type Language =
+          | 'aa'
+          | 'ab'
+          | 'ae'
+          | 'af'
+          | 'ak'
+          | 'am'
+          | 'an'
+          | 'ar'
+          | 'as'
+          | 'av'
+          | 'ay'
+          | 'az'
+          | 'ba'
+          | 'be'
+          | 'bg'
+          | 'bi'
+          | 'bm'
+          | 'bn'
+          | 'bo'
+          | 'br'
+          | 'bs'
+          | 'ca'
+          | 'ce'
+          | 'ch'
+          | 'co'
+          | 'cr'
+          | 'cs'
+          | 'cu'
+          | 'cv'
+          | 'cy'
+          | 'da'
+          | 'de'
+          | 'dv'
+          | 'dz'
+          | 'ee'
+          | 'el'
+          | 'en'
+          | 'eo'
+          | 'es'
+          | 'et'
+          | 'eu'
+          | 'fa'
+          | 'ff'
+          | 'fi'
+          | 'fj'
+          | 'fo'
+          | 'fr'
+          | 'fy'
+          | 'ga'
+          | 'gd'
+          | 'gl'
+          | 'gn'
+          | 'gu'
+          | 'gv'
+          | 'ha'
+          | 'he'
+          | 'hi'
+          | 'ho'
+          | 'hr'
+          | 'ht'
+          | 'hu'
+          | 'hy'
+          | 'hz'
+          | 'ia'
+          | 'id'
+          | 'ie'
+          | 'ig'
+          | 'ii'
+          | 'ik'
+          | 'io'
+          | 'is'
+          | 'it'
+          | 'iu'
+          | 'ja'
+          | 'jv'
+          | 'ka'
+          | 'kg'
+          | 'ki'
+          | 'kj'
+          | 'kk'
+          | 'kl'
+          | 'km'
+          | 'kn'
+          | 'ko'
+          | 'kr'
+          | 'ks'
+          | 'ku'
+          | 'kv'
+          | 'kw'
+          | 'ky'
+          | 'la'
+          | 'lb'
+          | 'lg'
+          | 'li'
+          | 'ln'
+          | 'lo'
+          | 'lt'
+          | 'lu'
+          | 'lv'
+          | 'mg'
+          | 'mh'
+          | 'mi'
+          | 'mk'
+          | 'ml'
+          | 'mn'
+          | 'mr'
+          | 'ms'
+          | 'mt'
+          | 'my'
+          | 'na'
+          | 'nb'
+          | 'nd'
+          | 'ne'
+          | 'ng'
+          | 'nl'
+          | 'nn'
+          | 'no'
+          | 'nr'
+          | 'nv'
+          | 'ny'
+          | 'oc'
+          | 'oj'
+          | 'om'
+          | 'or'
+          | 'os'
+          | 'pa'
+          | 'pi'
+          | 'pl'
+          | 'ps'
+          | 'pt'
+          | 'qu'
+          | 'rm'
+          | 'rn'
+          | 'ro'
+          | 'ru'
+          | 'rw'
+          | 'sa'
+          | 'sc'
+          | 'sd'
+          | 'se'
+          | 'sg'
+          | 'si'
+          | 'sk'
+          | 'sl'
+          | 'sm'
+          | 'sn'
+          | 'so'
+          | 'sq'
+          | 'sr'
+          | 'ss'
+          | 'st'
+          | 'su'
+          | 'sv'
+          | 'sw'
+          | 'ta'
+          | 'te'
+          | 'tg'
+          | 'th'
+          | 'ti'
+          | 'tk'
+          | 'tl'
+          | 'tn'
+          | 'to'
+          | 'tr'
+          | 'ts'
+          | 'tt'
+          | 'tw'
+          | 'ty'
+          | 'ug'
+          | 'uk'
+          | 'ur'
+          | 'uz'
+          | 've'
+          | 'vi'
+          | 'vo'
+          | 'wa'
+          | 'wo'
+          | 'xh'
+          | 'yi'
+          | 'yo'
+          | 'za'
+          | 'zh'
+          | 'zu';
+      }
+
+      export namespace Visa {
+        export type TokenDecisionRecommendation =
+          | 'approve'
+          | 'decline'
+          | 'recommend_id_and_v';
+      }
+
+      export namespace WalletProvider {
+        export type CardNumberSource = 'app' | 'manual' | 'on_file' | 'other';
+
+        export type ReasonCode =
+          | 'account_card_too_new'
+          | 'account_recently_changed'
+          | 'account_too_new'
+          | 'account_too_new_since_launch'
+          | 'additional_device'
+          | 'data_expired'
+          | 'defer_id_v_decision'
+          | 'device_recently_lost'
+          | 'good_activity_history'
+          | 'has_suspended_tokens'
+          | 'high_risk'
+          | 'inactive_account'
+          | 'long_account_tenure'
+          | 'low_account_score'
+          | 'low_device_score'
+          | 'low_phone_number_score'
+          | 'network_service_error'
+          | 'outside_home_territory'
+          | 'provisioning_cardholder_mismatch'
+          | 'provisioning_device_and_cardholder_mismatch'
+          | 'provisioning_device_mismatch'
+          | 'same_device_no_prior_authentication'
+          | 'same_device_successful_prior_authentication'
+          | 'software_update'
+          | 'suspicious_activity'
+          | 'too_many_different_cardholders'
+          | 'too_many_recent_attempts'
+          | 'too_many_recent_tokens';
+
+        export type SuggestedDecision = 'approve' | 'decline' | 'require_auth';
       }
     }
+  }
 
-    export namespace EnrichedMerchantData {
-      export interface Merchant {
-        data_sources: Array<'spade'>;
+  export namespace VerificationData {
+    export type AddressLine1Check = 'match' | 'mismatch' | 'not_provided';
 
-        industry: Merchant.Industry;
+    export type AddressPostalCodeCheck = 'match' | 'mismatch' | 'not_provided';
 
-        /**
-         * Location data of the seller.
-         */
-        location: Merchant.Location | null;
+    export interface AuthenticationExemption {
+      /**
+       * The entity that requested the exemption, either the acquiring merchant or the Issuing user.
+       */
+      claimed_by: AuthenticationExemption.ClaimedBy;
 
-        /**
-         * Image link to the seller's logo.
-         */
-        logo: string | null;
-
-        /**
-         * The name of the seller.
-         */
-        name: string | null;
-
-        /**
-         * Phone number of the seller.
-         */
-        phone: string | null;
-
-        /**
-         * If `spade` is a data source, this hash contains details provided by Spade.
-         */
-        spade: Merchant.Spade | null;
-
-        /**
-         * URL of the seller's website.
-         */
-        url: string | null;
-      }
-
-      export interface ThirdParty {
-        data_sources: Array<'spade'>;
-
-        /**
-         * Image link to the third party's logo.
-         */
-        logo: string | null;
-
-        /**
-         * Name of the third party.
-         */
-        name: string | null;
-
-        /**
-         * If `spade` is a data source, this hash contains details provided by Spade.
-         */
-        spade: ThirdParty.Spade | null;
-
-        /**
-         * Category of the third party.
-         */
-        type: ThirdParty.Type;
-      }
-
-      export namespace Merchant {
-        export interface Industry {
-          /**
-           * Most specific value of the seller's category.
-           */
-          id: Industry.Id;
-
-          /**
-           * Increasingly specific textual representations of the seller's category.
-           */
-          names: Array<string>;
-        }
-
-        export interface Location {
-          /**
-           * Address details of the seller.
-           */
-          address: Address | null;
-
-          /**
-           * Coordinates of the seller.
-           */
-          coordinates: Location.Coordinates | null;
-        }
-
-        export interface Spade {
-          /**
-           * Unified identifier for the seller.
-           */
-          counterparty_id: string | null;
-
-          /**
-           * Unified identifier for the seller's location.
-           */
-          location_id: string | null;
-        }
-
-        export namespace Industry {
-          export type Id =
-            | 'accessories'
-            | 'accounting_and_bookkeeping'
-            | 'acupuncture'
-            | 'administrative_services'
-            | 'adult_entertainment'
-            | 'adult_retail'
-            | 'advertising_and_marketing'
-            | 'advertising_technology'
-            | 'agricultural_technology'
-            | 'agriculture_and_forestry'
-            | 'airlines_and_aviation'
-            | 'alternative_medicine'
-            | 'alternative_rentals'
-            | 'anesthesiologists'
-            | 'antiques'
-            | 'aquatic_transportation'
-            | 'arcades_and_amusement_parks'
-            | 'art_dealers_and_galleries'
-            | 'arts_and_hobbies'
-            | 'atms'
-            | 'auctions'
-            | 'auto_parts_and_supplies'
-            | 'auto_smog_checks'
-            | 'auto_tires'
-            | 'auto_transmission'
-            | 'automotive_dealerships'
-            | 'automotive_retail'
-            | 'automotive_services'
-            | 'bakeries'
-            | 'banking_and_finance'
-            | 'bars'
-            | 'beauty_spas_and_salons'
-            | 'beer_wine_and_spirits'
-            | 'benefits'
-            | 'bicycles'
-            | 'billiards_and_pool'
-            | 'biotechnology'
-            | 'blood_banks_and_centers'
-            | 'boat_dealers'
-            | 'bookstores'
-            | 'bowling'
-            | 'breweries_distilleries_and_wineries'
-            | 'business_brokers_and_franchises'
-            | 'business_services'
-            | 'butchers'
-            | 'buy_now_pay_later'
-            | 'cafes'
-            | 'candy_shops'
-            | 'cannabis_dispensary'
-            | 'car_appraisers'
-            | 'car_wash_and_detail'
-            | 'cardiologists'
-            | 'cards_and_stationery'
-            | 'casinos_and_gambling'
-            | 'catering'
-            | 'charity'
-            | 'childcare'
-            | 'children_s_clothing'
-            | 'children_s_retail'
-            | 'chiropractors'
-            | 'circuses_and_carnivals'
-            | 'cleaning'
-            | 'clothing_and_accessories'
-            | 'clothing_services'
-            | 'commercial_supplies'
-            | 'communication_software'
-            | 'computers_and_electronics'
-            | 'construction_and_home_improvement'
-            | 'construction_supplies'
-            | 'contractors'
-            | 'convenience_stores'
-            | 'cosmetics'
-            | 'costumes'
-            | 'counseling_and_therapy'
-            | 'couriers'
-            | 'coworking_spaces'
-            | 'creative'
-            | 'creative_software'
-            | 'credit_reporting'
-            | 'crm'
-            | 'crowdfunding'
-            | 'cryptocurrency'
-            | 'dance_halls_and_saloons'
-            | 'delivery_services'
-            | 'dentists'
-            | 'department_stores'
-            | 'dermatologists'
-            | 'design_technology'
-            | 'developer_tools'
-            | 'digital_money_movement'
-            | 'discount_stores'
-            | 'education'
-            | 'educational_technology'
-            | 'electric_vehicle_charging'
-            | 'emergency_services'
-            | 'employment_services'
-            | 'enterprise_software'
-            | 'entertainment'
-            | 'ents'
-            | 'environmental_technology'
-            | 'equipment_rentals'
-            | 'events_and_event_planning'
-            | 'eyewear'
-            | 'fairgrounds_and_rodeos'
-            | 'family_medicine'
-            | 'fast_food'
-            | 'fertility'
-            | 'financial_management_software'
-            | 'financial_planning_and_investments'
-            | 'financial_technology'
-            | 'fishmongers'
-            | 'flea_markets'
-            | 'fleet'
-            | 'florists'
-            | 'food_and_drink'
-            | 'food_delivery_services'
-            | 'food_trucks'
-            | 'fuel_dealers'
-            | 'funeral_services'
-            | 'furniture'
-            | 'gas_stations'
-            | 'gastroenterologists'
-            | 'general_goods'
-            | 'general_surgery'
-            | 'gift_and_novelty'
-            | 'government'
-            | 'grocery_delivery_services'
-            | 'gyms_health_and_fitness_centers'
-            | 'hair_removal'
-            | 'hair_salons_and_barbers'
-            | 'hardware'
-            | 'hardware_and_home_improvement'
-            | 'hospitals_clinics_and_medical_centers'
-            | 'household_services'
-            | 'hr_platform'
-            | 'immigration'
-            | 'import_and_export'
-            | 'industrial_and_energy'
-            | 'inflight_internet_and_entertainment'
-            | 'insurance'
-            | 'internal_medicine'
-            | 'internet'
-            | 'jewelry_and_watches'
-            | 'landmarks'
-            | 'laundry_and_garment_services'
-            | 'lawn_and_garden'
-            | 'legal_services'
-            | 'legal_technology'
-            | 'lending'
-            | 'lingerie'
-            | 'lodging'
-            | 'luggage'
-            | 'maintenance_and_repair'
-            | 'manicures_and_pedicures'
-            | 'manufacturing'
-            | 'marina'
-            | 'marine_supplies'
-            | 'marketing_software'
-            | 'massage_clinics_and_therapists'
-            | 'media'
-            | 'medical_and_healthcare_services'
-            | 'medical_supplies_and_labs'
-            | 'men_s_clothing'
-            | 'mental_health_professionals'
-            | 'mobile_applications'
-            | 'motorcycle_moped_and_scooter_repair'
-            | 'museums'
-            | 'musical_instruments'
-            | 'neurologists'
-            | 'news_and_magazines'
-            | 'newsstands'
-            | 'nutritionists'
-            | 'obstetricians_and_gynecologists'
-            | 'office_supplies'
-            | 'oil_and_gas'
-            | 'oncologists'
-            | 'online_marketplace'
-            | 'ophthalmologists'
-            | 'optometrists'
-            | 'organizations'
-            | 'orthopedic_surgeons'
-            | 'other'
-            | 'outlets'
-            | 'packaging'
-            | 'paper'
-            | 'parking'
-            | 'parks_and_outdoors'
-            | 'party_centers'
-            | 'pathologists'
-            | 'pawn_shops'
-            | 'pediatricians'
-            | 'pet_grooming'
-            | 'pet_services'
-            | 'pets'
-            | 'pharmacies'
-            | 'photography'
-            | 'physical_therapy'
-            | 'piercings'
-            | 'plastic_surgeons'
-            | 'podiatrists'
-            | 'pregnancy_and_sexual_health'
-            | 'professional_services'
-            | 'property_management'
-            | 'psychiatrists'
-            | 'psychics_and_astrologers'
-            | 'psychologists'
-            | 'public_services'
-            | 'public_transportation'
-            | 'publishing_software'
-            | 'radiologists'
-            | 'rails'
-            | 'real_estate'
-            | 'recreation'
-            | 'religious'
-            | 'renewable_energy'
-            | 'respiratory'
-            | 'restaurants'
-            | 'retail'
-            | 'ride_shares'
-            | 'sales_enablement_software'
-            | 'security_and_privacy'
-            | 'security_and_safety'
-            | 'services'
-            | 'shipping_and_freight'
-            | 'shoes'
-            | 'skin_care'
-            | 'social_clubs'
-            | 'software'
-            | 'software_engineering'
-            | 'spas'
-            | 'specialist_physicans'
-            | 'specialty_clothing_and_accessories'
-            | 'specialty_foods'
-            | 'specialty_groceries'
-            | 'specialty_retail'
-            | 'sporting_goods'
-            | 'storage'
-            | 'streaming_services'
-            | 'supermarkets_and_grocery_stores'
-            | 'swimwear'
-            | 'tailors'
-            | 'tanning_salons'
-            | 'tattoos'
-            | 'taxes'
-            | 'taxi_and_limousines'
-            | 'technology'
-            | 'telecommunications'
-            | 'television'
-            | 'textiles'
-            | 'theater_and_cinema'
-            | 'tickets_and_reservations'
-            | 'tobacco_smoke_and_vape_shops'
-            | 'tolls_and_fees'
-            | 'tourist_information_and_services'
-            | 'towing_and_roadside_assistance'
-            | 'toy_stores'
-            | 'transportation'
-            | 'travel'
-            | 'travel_services'
-            | 'travel_software'
-            | 'urologists'
-            | 'utilities'
-            | 'vehicle_rentals'
-            | 'vending_machine'
-            | 'venues'
-            | 'veterinarians'
-            | 'video_games'
-            | 'vintage_and_thrift'
-            | 'warehouses_and_wholesale_stores'
-            | 'water_and_waste_management_services'
-            | 'web_infrastructure'
-            | 'wedding_and_bridal'
-            | 'women_s_clothing'
-            | 'zoos_and_aquariums';
-        }
-
-        export namespace Location {
-          export interface Coordinates {
-            /**
-             * Latitude of the seller's location.
-             */
-            latitude: number | null;
-
-            /**
-             * Longitude of the seller's location.
-             */
-            longitude: number | null;
-          }
-        }
-      }
-
-      export namespace ThirdParty {
-        export interface Spade {
-          /**
-           * Unified identifier for the third party.
-           */
-          third_party_id: string | null;
-        }
-
-        export type Type =
-          | 'buy_now_pay_later'
-          | 'delivery_service'
-          | 'marketplace'
-          | 'other'
-          | 'payment_processor'
-          | 'platform';
-      }
+      /**
+       * The specific exemption claimed for this authorization.
+       */
+      type: AuthenticationExemption.Type;
     }
 
-    export namespace Fleet {
-      export interface CardholderPromptData {
-        /**
-         * [Deprecated] An alphanumeric ID, though typical point of sales only support numeric entry. The card program can be configured to prompt for a vehicle ID, driver ID, or generic ID.
-         * @deprecated
-         */
-        alphanumeric_id: string | null;
+    export type CvcCheck = 'match' | 'mismatch' | 'not_provided';
 
-        /**
-         * Driver ID.
-         */
-        driver_id: string | null;
+    export type ExpiryCheck = 'match' | 'mismatch' | 'not_provided';
 
-        /**
-         * Odometer reading.
-         */
-        odometer: number | null;
-
-        /**
-         * An alphanumeric ID. This field is used when a vehicle ID, driver ID, or generic ID is entered by the cardholder, but the merchant or card network did not specify the prompt type.
-         */
-        unspecified_id: string | null;
-
-        /**
-         * User ID.
-         */
-        user_id: string | null;
-
-        /**
-         * Vehicle number.
-         */
-        vehicle_number: string | null;
-      }
-
-      export type PurchaseType =
-        | 'fuel_and_non_fuel_purchase'
-        | 'fuel_purchase'
-        | 'non_fuel_purchase';
-
-      export interface ReportedBreakdown {
-        /**
-         * Breakdown of fuel portion of the purchase.
-         */
-        fuel: ReportedBreakdown.Fuel | null;
-
-        /**
-         * Breakdown of non-fuel portion of the purchase.
-         */
-        non_fuel: ReportedBreakdown.NonFuel | null;
-
-        /**
-         * Information about tax included in this transaction.
-         */
-        tax: ReportedBreakdown.Tax | null;
-      }
-
-      export type ServiceType =
-        | 'full_service'
-        | 'non_fuel_transaction'
-        | 'self_service';
-
-      export namespace ReportedBreakdown {
-        export interface Fuel {
-          /**
-           * Gross fuel amount that should equal Fuel Quantity multiplied by Fuel Unit Cost, inclusive of taxes.
-           */
-          gross_amount_decimal: Decimal | null;
-        }
-
-        export interface NonFuel {
-          /**
-           * Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
-           */
-          gross_amount_decimal: Decimal | null;
-        }
-
-        export interface Tax {
-          /**
-           * Amount of state or provincial Sales Tax included in the transaction amount. `null` if not reported by merchant or not subject to tax.
-           */
-          local_amount_decimal: Decimal | null;
-
-          /**
-           * Amount of national Sales Tax or VAT included in the transaction amount. `null` if not reported by merchant or not subject to tax.
-           */
-          national_amount_decimal: Decimal | null;
-        }
-      }
+    export interface ThreeDSecure {
+      /**
+       * The outcome of the 3D Secure authentication request.
+       */
+      result: ThreeDSecure.Result;
     }
 
-    export namespace FraudChallenge {
-      export type Status =
-        | 'expired'
-        | 'pending'
-        | 'rejected'
-        | 'undeliverable'
-        | 'verified';
+    export namespace AuthenticationExemption {
+      export type ClaimedBy = 'acquirer' | 'issuer';
 
-      export type UndeliverableReason =
-        | 'no_phone_number'
-        | 'unsupported_phone_number';
-    }
-
-    export namespace Fuel {
       export type Type =
-        | 'diesel'
-        | 'other'
-        | 'unleaded_plus'
-        | 'unleaded_regular'
-        | 'unleaded_super';
-
-      export type Unit =
-        | 'charging_minute'
-        | 'imperial_gallon'
-        | 'kilogram'
-        | 'kilowatt_hour'
-        | 'liter'
-        | 'other'
-        | 'pound'
-        | 'us_gallon';
+        | 'low_value_transaction'
+        | 'transaction_risk_analysis'
+        | 'unknown';
     }
 
-    export namespace PendingRequest {
-      export interface AmountDetails {
-        /**
-         * The fee charged by the ATM for the cash withdrawal.
-         */
-        atm_fee: number | null;
-
-        /**
-         * The amount of cash requested by the cardholder.
-         */
-        cashback_amount: number | null;
-      }
-    }
-
-    export namespace RequestHistory {
-      export interface AmountDetails {
-        /**
-         * The fee charged by the ATM for the cash withdrawal.
-         */
-        atm_fee: number | null;
-
-        /**
-         * The amount of cash requested by the cardholder.
-         */
-        cashback_amount: number | null;
-      }
-
-      export type Reason =
-        | 'account_disabled'
-        | 'card_active'
-        | 'card_canceled'
-        | 'card_expired'
-        | 'card_inactive'
-        | 'cardholder_blocked'
-        | 'cardholder_inactive'
-        | 'cardholder_verification_required'
-        | 'insecure_authorization_method'
-        | 'insufficient_funds'
-        | 'network_fallback'
-        | 'not_allowed'
-        | 'pin_blocked'
-        | 'spending_controls'
-        | 'suspected_fraud'
-        | 'verification_failed'
-        | 'webhook_approved'
-        | 'webhook_declined'
-        | 'webhook_error'
-        | 'webhook_timeout';
-    }
-
-    export namespace TokenDetails {
-      export interface NetworkData {
-        device?: NetworkData.Device;
-
-        mastercard?: NetworkData.Mastercard;
-
-        /**
-         * The card network for this token.
-         */
-        type: NetworkData.Type;
-
-        visa?: NetworkData.Visa;
-
-        wallet_provider?: NetworkData.WalletProvider;
-      }
-
-      export type ProvisioningDecision =
-        | 'approve'
-        | 'approve_pending_id_and_v'
-        | 'decline';
-
-      export type TokenType =
-        | 'card_on_file'
-        | 'cloud_based'
-        | 'commerce_platform'
-        | 'commercial_virtual_account'
-        | 'secure_element'
-        | 'static_credential';
-
-      export namespace NetworkData {
-        export interface Device {
-          /**
-           * The IP address of the device at provisioning time.
-           */
-          ip_address?: string;
-
-          /**
-           * The ISO 639-1 language code of the device associated with the tokenization request.
-           */
-          language?: Device.Language;
-
-          /**
-           * The phone number of the device used for tokenization.
-           */
-          phone_number?: string;
-        }
-
-        export interface Mastercard {
-          /**
-           * A unique reference ID from the network to represent the card account number.
-           */
-          card_reference_id?: string;
-
-          /**
-           * The network-unique identifier for the token.
-           */
-          token_reference_id: string;
-
-          /**
-           * The ID of the entity requesting tokenization.
-           */
-          token_requestor_id: string;
-        }
-
-        export type Type = 'mastercard' | 'visa';
-
-        export interface Visa {
-          /**
-           * A unique reference ID from the network to represent the card account number.
-           */
-          card_reference_id?: string;
-
-          /**
-           * The network's recommendation to Stripe for this token activation request.
-           */
-          token_decision_recommendation?: Visa.TokenDecisionRecommendation | null;
-
-          /**
-           * The network-unique identifier for the token.
-           */
-          token_reference_id: string;
-
-          /**
-           * The ID of the entity requesting tokenization.
-           */
-          token_requestor_id: string;
-
-          /**
-           * Degree of risk associated with the token between `01` and `99`, with higher number indicating higher risk. A `00` value indicates the token was not scored by Visa.
-           */
-          token_risk_score?: string;
-        }
-
-        export interface WalletProvider {
-          /**
-           * An evaluation on the trustworthiness of the wallet account between 1 and 5. A higher score indicates more trustworthy.
-           */
-          account_trust_score?: number;
-
-          /**
-           * The method used for tokenizing a card.
-           */
-          card_number_source?: WalletProvider.CardNumberSource;
-
-          /**
-           * An evaluation on the trustworthiness of the device. A higher score indicates more trustworthy.
-           */
-          device_trust_score?: number;
-
-          /**
-           * The reasons for suggested tokenization given by the card network.
-           */
-          reason_codes?: Array<WalletProvider.ReasonCode>;
-
-          /**
-           * The recommendation on responding to the tokenization request.
-           */
-          suggested_decision?: WalletProvider.SuggestedDecision;
-        }
-
-        export namespace Device {
-          export type Language =
-            | 'aa'
-            | 'ab'
-            | 'ae'
-            | 'af'
-            | 'ak'
-            | 'am'
-            | 'an'
-            | 'ar'
-            | 'as'
-            | 'av'
-            | 'ay'
-            | 'az'
-            | 'ba'
-            | 'be'
-            | 'bg'
-            | 'bi'
-            | 'bm'
-            | 'bn'
-            | 'bo'
-            | 'br'
-            | 'bs'
-            | 'ca'
-            | 'ce'
-            | 'ch'
-            | 'co'
-            | 'cr'
-            | 'cs'
-            | 'cu'
-            | 'cv'
-            | 'cy'
-            | 'da'
-            | 'de'
-            | 'dv'
-            | 'dz'
-            | 'ee'
-            | 'el'
-            | 'en'
-            | 'eo'
-            | 'es'
-            | 'et'
-            | 'eu'
-            | 'fa'
-            | 'ff'
-            | 'fi'
-            | 'fj'
-            | 'fo'
-            | 'fr'
-            | 'fy'
-            | 'ga'
-            | 'gd'
-            | 'gl'
-            | 'gn'
-            | 'gu'
-            | 'gv'
-            | 'ha'
-            | 'he'
-            | 'hi'
-            | 'ho'
-            | 'hr'
-            | 'ht'
-            | 'hu'
-            | 'hy'
-            | 'hz'
-            | 'ia'
-            | 'id'
-            | 'ie'
-            | 'ig'
-            | 'ii'
-            | 'ik'
-            | 'io'
-            | 'is'
-            | 'it'
-            | 'iu'
-            | 'ja'
-            | 'jv'
-            | 'ka'
-            | 'kg'
-            | 'ki'
-            | 'kj'
-            | 'kk'
-            | 'kl'
-            | 'km'
-            | 'kn'
-            | 'ko'
-            | 'kr'
-            | 'ks'
-            | 'ku'
-            | 'kv'
-            | 'kw'
-            | 'ky'
-            | 'la'
-            | 'lb'
-            | 'lg'
-            | 'li'
-            | 'ln'
-            | 'lo'
-            | 'lt'
-            | 'lu'
-            | 'lv'
-            | 'mg'
-            | 'mh'
-            | 'mi'
-            | 'mk'
-            | 'ml'
-            | 'mn'
-            | 'mr'
-            | 'ms'
-            | 'mt'
-            | 'my'
-            | 'na'
-            | 'nb'
-            | 'nd'
-            | 'ne'
-            | 'ng'
-            | 'nl'
-            | 'nn'
-            | 'no'
-            | 'nr'
-            | 'nv'
-            | 'ny'
-            | 'oc'
-            | 'oj'
-            | 'om'
-            | 'or'
-            | 'os'
-            | 'pa'
-            | 'pi'
-            | 'pl'
-            | 'ps'
-            | 'pt'
-            | 'qu'
-            | 'rm'
-            | 'rn'
-            | 'ro'
-            | 'ru'
-            | 'rw'
-            | 'sa'
-            | 'sc'
-            | 'sd'
-            | 'se'
-            | 'sg'
-            | 'si'
-            | 'sk'
-            | 'sl'
-            | 'sm'
-            | 'sn'
-            | 'so'
-            | 'sq'
-            | 'sr'
-            | 'ss'
-            | 'st'
-            | 'su'
-            | 'sv'
-            | 'sw'
-            | 'ta'
-            | 'te'
-            | 'tg'
-            | 'th'
-            | 'ti'
-            | 'tk'
-            | 'tl'
-            | 'tn'
-            | 'to'
-            | 'tr'
-            | 'ts'
-            | 'tt'
-            | 'tw'
-            | 'ty'
-            | 'ug'
-            | 'uk'
-            | 'ur'
-            | 'uz'
-            | 've'
-            | 'vi'
-            | 'vo'
-            | 'wa'
-            | 'wo'
-            | 'xh'
-            | 'yi'
-            | 'yo'
-            | 'za'
-            | 'zh'
-            | 'zu';
-        }
-
-        export namespace Visa {
-          export type TokenDecisionRecommendation =
-            | 'approve'
-            | 'decline'
-            | 'recommend_id_and_v';
-        }
-
-        export namespace WalletProvider {
-          export type CardNumberSource = 'app' | 'manual' | 'on_file' | 'other';
-
-          export type ReasonCode =
-            | 'account_card_too_new'
-            | 'account_recently_changed'
-            | 'account_too_new'
-            | 'account_too_new_since_launch'
-            | 'additional_device'
-            | 'data_expired'
-            | 'defer_id_v_decision'
-            | 'device_recently_lost'
-            | 'good_activity_history'
-            | 'has_suspended_tokens'
-            | 'high_risk'
-            | 'inactive_account'
-            | 'long_account_tenure'
-            | 'low_account_score'
-            | 'low_device_score'
-            | 'low_phone_number_score'
-            | 'network_service_error'
-            | 'outside_home_territory'
-            | 'provisioning_cardholder_mismatch'
-            | 'provisioning_device_and_cardholder_mismatch'
-            | 'provisioning_device_mismatch'
-            | 'same_device_no_prior_authentication'
-            | 'same_device_successful_prior_authentication'
-            | 'software_update'
-            | 'suspicious_activity'
-            | 'too_many_different_cardholders'
-            | 'too_many_recent_attempts'
-            | 'too_many_recent_tokens';
-
-          export type SuggestedDecision =
-            | 'approve'
-            | 'decline'
-            | 'require_auth';
-        }
-      }
-    }
-
-    export namespace VerificationData {
-      export type AddressLine1Check = 'match' | 'mismatch' | 'not_provided';
-
-      export type AddressPostalCodeCheck =
-        | 'match'
-        | 'mismatch'
-        | 'not_provided';
-
-      export interface AuthenticationExemption {
-        /**
-         * The entity that requested the exemption, either the acquiring merchant or the Issuing user.
-         */
-        claimed_by: AuthenticationExemption.ClaimedBy;
-
-        /**
-         * The specific exemption claimed for this authorization.
-         */
-        type: AuthenticationExemption.Type;
-      }
-
-      export type CvcCheck = 'match' | 'mismatch' | 'not_provided';
-
-      export type ExpiryCheck = 'match' | 'mismatch' | 'not_provided';
-
-      export interface ThreeDSecure {
-        /**
-         * The outcome of the 3D Secure authentication request.
-         */
-        result: ThreeDSecure.Result;
-      }
-
-      export namespace AuthenticationExemption {
-        export type ClaimedBy = 'acquirer' | 'issuer';
-
-        export type Type =
-          | 'low_value_transaction'
-          | 'transaction_risk_analysis'
-          | 'unknown';
-      }
-
-      export namespace ThreeDSecure {
-        export type Result =
-          | 'attempt_acknowledged'
-          | 'authenticated'
-          | 'failed'
-          | 'required';
-      }
+    export namespace ThreeDSecure {
+      export type Result =
+        | 'attempt_acknowledged'
+        | 'authenticated'
+        | 'failed'
+        | 'required';
     }
   }
 }

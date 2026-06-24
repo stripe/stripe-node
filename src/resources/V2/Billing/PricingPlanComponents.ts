@@ -21,7 +21,7 @@ export interface PricingPlanComponent {
   /**
    * Details if this component is a License Fee.
    */
-  license_fee?: V2.Billing.PricingPlanComponent.LicenseFee;
+  license_fee?: PricingPlanComponent.LicenseFee;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -51,53 +51,49 @@ export interface PricingPlanComponent {
   /**
    * Details if this component is a Rate Card.
    */
-  rate_card?: V2.Billing.PricingPlanComponent.RateCard;
+  rate_card?: PricingPlanComponent.RateCard;
 
   /**
    * Details if this component is a Service Action.
    */
-  service_action?: V2.Billing.PricingPlanComponent.ServiceAction;
+  service_action?: PricingPlanComponent.ServiceAction;
 
   /**
    * The type of the PricingPlanComponent.
    */
-  type: V2.Billing.PricingPlanComponent.Type;
+  type: PricingPlanComponent.Type;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace PricingPlanComponent {
-      export interface LicenseFee {
-        /**
-         * The ID of the License Fee.
-         */
-        id: string;
+export namespace PricingPlanComponent {
+  export interface LicenseFee {
+    /**
+     * The ID of the License Fee.
+     */
+    id: string;
 
-        /**
-         * The ID of the License Fee Version. If not specified, defaults to 'latest'.
-         */
-        version?: string;
-      }
-
-      export interface RateCard {
-        /**
-         * The ID of the Rate Card.
-         */
-        id: string;
-
-        /**
-         * The ID of the Rate Card Version. If not specified, defaults to 'latest'.
-         */
-        version?: string;
-      }
-
-      export interface ServiceAction {
-        /**
-         * The ID of the service action.
-         */
-        id: string;
-      }
-
-      export type Type = 'license_fee' | 'rate_card' | 'service_action';
-    }
+    /**
+     * The ID of the License Fee Version. If not specified, defaults to 'latest'.
+     */
+    version?: string;
   }
+
+  export interface RateCard {
+    /**
+     * The ID of the Rate Card.
+     */
+    id: string;
+
+    /**
+     * The ID of the Rate Card Version. If not specified, defaults to 'latest'.
+     */
+    version?: string;
+  }
+
+  export interface ServiceAction {
+    /**
+     * The ID of the service action.
+     */
+    id: string;
+  }
+
+  export type Type = 'license_fee' | 'rate_card' | 'service_action';
 }

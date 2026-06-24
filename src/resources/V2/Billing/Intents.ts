@@ -150,7 +150,7 @@ export interface Intent {
   /**
    * Breakdown of the amount for this Billing Intent.
    */
-  amount_details: V2.Billing.Intent.AmountDetails;
+  amount_details: Intent.AmountDetails;
 
   /**
    * ID of an existing Cadence to use.
@@ -160,7 +160,7 @@ export interface Intent {
   /**
    * Data for creating a new Cadence.
    */
-  cadence_data?: V2.Billing.Intent.CadenceData;
+  cadence_data?: Intent.CadenceData;
 
   /**
    * Time at which the object was created.
@@ -180,346 +180,342 @@ export interface Intent {
   /**
    * Current status of the Billing Intent.
    */
-  status: V2.Billing.Intent.Status;
+  status: Intent.Status;
 
   /**
    * Timestamps for status transitions of the Billing Intent.
    */
-  status_transitions: V2.Billing.Intent.StatusTransitions;
+  status_transitions: Intent.StatusTransitions;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace Intent {
-      export interface AmountDetails {
-        /**
-         * Three-letter ISO currency code, in lowercase. Must be a supported currency.
-         */
-        currency: string;
+export namespace Intent {
+  export interface AmountDetails {
+    /**
+     * Three-letter ISO currency code, in lowercase. Must be a supported currency.
+     */
+    currency: string;
 
-        /**
-         * Amount of discount applied.
-         */
-        discount: string;
+    /**
+     * Amount of discount applied.
+     */
+    discount: string;
 
-        /**
-         * Amount of shipping charges.
-         */
-        shipping: string;
+    /**
+     * Amount of shipping charges.
+     */
+    shipping: string;
 
-        /**
-         * Subtotal amount before tax and discounts.
-         */
-        subtotal: string;
+    /**
+     * Subtotal amount before tax and discounts.
+     */
+    subtotal: string;
 
-        /**
-         * Amount of tax.
-         */
-        tax: string;
+    /**
+     * Amount of tax.
+     */
+    tax: string;
 
+    /**
+     * Total amount for the Billing Intent.
+     */
+    total: string;
+  }
+
+  export interface CadenceData {
+    /**
+     * The billing cycle configuration for this Cadence.
+     */
+    billing_cycle: CadenceData.BillingCycle;
+
+    /**
+     * Information about the payer for this Cadence.
+     */
+    payer: CadenceData.Payer;
+
+    /**
+     * Settings for creating the Cadence.
+     */
+    settings?: CadenceData.Settings;
+  }
+
+  export type Status = 'canceled' | 'committed' | 'draft' | 'reserved';
+
+  export interface StatusTransitions {
+    /**
+     * Time at which the Billing Intent was canceled.
+     */
+    canceled_at?: string;
+
+    /**
+     * Time at which the Billing Intent was committed.
+     */
+    committed_at?: string;
+
+    /**
+     * Time at which the Billing Intent was drafted.
+     */
+    drafted_at?: string;
+
+    /**
+     * Time at which the Billing Intent expires.
+     */
+    expires_at: string;
+
+    /**
+     * Time at which the Billing Intent was reserved.
+     */
+    reserved_at?: string;
+  }
+
+  export namespace CadenceData {
+    export interface BillingCycle {
+      /**
+       * Specific configuration for determining billing dates when type=day.
+       */
+      day?: BillingCycle.Day;
+
+      /**
+       * The number of intervals (specified in the interval attribute) between cadence billings. For example, type=month and interval_count=3 bills every 3 months.
+       */
+      interval_count: number;
+
+      /**
+       * Specific configuration for determining billing dates when type=month.
+       */
+      month?: BillingCycle.Month;
+
+      /**
+       * The frequency at which a cadence bills.
+       */
+      type: BillingCycle.Type;
+
+      /**
+       * Specific configuration for determining billing dates when type=week.
+       */
+      week?: BillingCycle.Week;
+
+      /**
+       * Specific configuration for determining billing dates when type=year.
+       */
+      year?: BillingCycle.Year;
+    }
+
+    export interface Payer {
+      /**
+       * The ID of the Billing Profile object which determines how a bill is paid.
+       */
+      billing_profile?: string;
+
+      /**
+       * Data for creating a new profile.
+       */
+      billing_profile_data?: Payer.BillingProfileData;
+    }
+
+    export interface Settings {
+      /**
+       * Settings that configure bills generation, which includes calculating totals, tax, and presenting invoices.
+       */
+      bill?: Settings.Bill;
+
+      /**
+       * Settings that configure and manage the behavior of collecting payments.
+       */
+      collection?: Settings.Collection;
+    }
+
+    export namespace BillingCycle {
+      export interface Day {
         /**
-         * Total amount for the Billing Intent.
+         * The time at which the billing cycle ends.
          */
-        total: string;
+        time: Day.Time;
       }
 
-      export interface CadenceData {
+      export interface Month {
         /**
-         * The billing cycle configuration for this Cadence.
+         * The day to anchor the billing on for a type="month" billing cycle from 1-31.
+         * If this number is greater than the number of days in the month being billed,
+         * this anchors to the last day of the month.
          */
-        billing_cycle: CadenceData.BillingCycle;
+        day_of_month: number;
 
         /**
-         * Information about the payer for this Cadence.
+         * The month to anchor the billing on for a type="month" billing cycle from
+         * 1-12. Occurrences are calculated from the month anchor.
          */
-        payer: CadenceData.Payer;
+        month_of_year?: number;
 
         /**
-         * Settings for creating the Cadence.
+         * The time at which the billing cycle ends.
          */
-        settings?: CadenceData.Settings;
+        time: Month.Time;
       }
 
-      export type Status = 'canceled' | 'committed' | 'draft' | 'reserved';
+      export type Type = 'day' | 'month' | 'week' | 'year';
 
-      export interface StatusTransitions {
+      export interface Week {
         /**
-         * Time at which the Billing Intent was canceled.
+         * The day of the week to bill the type=week billing cycle on.
+         * Numbered from 1-7 for Monday to Sunday respectively, based on the ISO-8601 week day numbering.
          */
-        canceled_at?: string;
-
-        /**
-         * Time at which the Billing Intent was committed.
-         */
-        committed_at?: string;
+        day_of_week: number;
 
         /**
-         * Time at which the Billing Intent was drafted.
+         * The time at which the billing cycle ends.
          */
-        drafted_at?: string;
-
-        /**
-         * Time at which the Billing Intent expires.
-         */
-        expires_at: string;
-
-        /**
-         * Time at which the Billing Intent was reserved.
-         */
-        reserved_at?: string;
+        time: Week.Time;
       }
 
-      export namespace CadenceData {
-        export interface BillingCycle {
+      export interface Year {
+        /**
+         * The day to anchor the billing on for a type="month" billing cycle from 1-31.
+         * If this number is greater than the number of days in the month being billed,
+         * this anchors to the last day of the month.
+         */
+        day_of_month: number;
+
+        /**
+         * The month to bill on from 1-12. If not provided, this defaults to the month the cadence was created.
+         */
+        month_of_year: number;
+
+        /**
+         * The time at which the billing cycle ends.
+         */
+        time: Year.Time;
+      }
+
+      export namespace Day {
+        export interface Time {
           /**
-           * Specific configuration for determining billing dates when type=day.
+           * The hour at which the billing cycle ends.
+           * This must be an integer between 0 and 23, inclusive.
+           * 0 represents midnight, and 23 represents 11 PM.
            */
-          day?: BillingCycle.Day;
+          hour: number;
 
           /**
-           * The number of intervals (specified in the interval attribute) between cadence billings. For example, type=month and interval_count=3 bills every 3 months.
+           * The minute at which the billing cycle ends.
+           * Must be an integer between 0 and 59, inclusive.
            */
-          interval_count: number;
+          minute: number;
 
           /**
-           * Specific configuration for determining billing dates when type=month.
+           * The second at which the billing cycle ends.
+           * Must be an integer between 0 and 59, inclusive.
            */
-          month?: BillingCycle.Month;
-
-          /**
-           * The frequency at which a cadence bills.
-           */
-          type: BillingCycle.Type;
-
-          /**
-           * Specific configuration for determining billing dates when type=week.
-           */
-          week?: BillingCycle.Week;
-
-          /**
-           * Specific configuration for determining billing dates when type=year.
-           */
-          year?: BillingCycle.Year;
+          second?: number;
         }
+      }
 
-        export interface Payer {
+      export namespace Month {
+        export interface Time {
           /**
-           * The ID of the Billing Profile object which determines how a bill is paid.
+           * The hour at which the billing cycle ends.
+           * This must be an integer between 0 and 23, inclusive.
+           * 0 represents midnight, and 23 represents 11 PM.
            */
-          billing_profile?: string;
-
-          /**
-           * Data for creating a new profile.
-           */
-          billing_profile_data?: Payer.BillingProfileData;
-        }
-
-        export interface Settings {
-          /**
-           * Settings that configure bills generation, which includes calculating totals, tax, and presenting invoices.
-           */
-          bill?: Settings.Bill;
+          hour: number;
 
           /**
-           * Settings that configure and manage the behavior of collecting payments.
+           * The minute at which the billing cycle ends.
+           * Must be an integer between 0 and 59, inclusive.
            */
-          collection?: Settings.Collection;
+          minute: number;
+
+          /**
+           * The second at which the billing cycle ends.
+           * Must be an integer between 0 and 59, inclusive.
+           */
+          second?: number;
         }
+      }
 
-        export namespace BillingCycle {
-          export interface Day {
-            /**
-             * The time at which the billing cycle ends.
-             */
-            time: Day.Time;
-          }
+      export namespace Week {
+        export interface Time {
+          /**
+           * The hour at which the billing cycle ends.
+           * This must be an integer between 0 and 23, inclusive.
+           * 0 represents midnight, and 23 represents 11 PM.
+           */
+          hour: number;
 
-          export interface Month {
-            /**
-             * The day to anchor the billing on for a type="month" billing cycle from 1-31.
-             * If this number is greater than the number of days in the month being billed,
-             * this anchors to the last day of the month.
-             */
-            day_of_month: number;
+          /**
+           * The minute at which the billing cycle ends.
+           * Must be an integer between 0 and 59, inclusive.
+           */
+          minute: number;
 
-            /**
-             * The month to anchor the billing on for a type="month" billing cycle from
-             * 1-12. Occurrences are calculated from the month anchor.
-             */
-            month_of_year?: number;
-
-            /**
-             * The time at which the billing cycle ends.
-             */
-            time: Month.Time;
-          }
-
-          export type Type = 'day' | 'month' | 'week' | 'year';
-
-          export interface Week {
-            /**
-             * The day of the week to bill the type=week billing cycle on.
-             * Numbered from 1-7 for Monday to Sunday respectively, based on the ISO-8601 week day numbering.
-             */
-            day_of_week: number;
-
-            /**
-             * The time at which the billing cycle ends.
-             */
-            time: Week.Time;
-          }
-
-          export interface Year {
-            /**
-             * The day to anchor the billing on for a type="month" billing cycle from 1-31.
-             * If this number is greater than the number of days in the month being billed,
-             * this anchors to the last day of the month.
-             */
-            day_of_month: number;
-
-            /**
-             * The month to bill on from 1-12. If not provided, this defaults to the month the cadence was created.
-             */
-            month_of_year: number;
-
-            /**
-             * The time at which the billing cycle ends.
-             */
-            time: Year.Time;
-          }
-
-          export namespace Day {
-            export interface Time {
-              /**
-               * The hour at which the billing cycle ends.
-               * This must be an integer between 0 and 23, inclusive.
-               * 0 represents midnight, and 23 represents 11 PM.
-               */
-              hour: number;
-
-              /**
-               * The minute at which the billing cycle ends.
-               * Must be an integer between 0 and 59, inclusive.
-               */
-              minute: number;
-
-              /**
-               * The second at which the billing cycle ends.
-               * Must be an integer between 0 and 59, inclusive.
-               */
-              second?: number;
-            }
-          }
-
-          export namespace Month {
-            export interface Time {
-              /**
-               * The hour at which the billing cycle ends.
-               * This must be an integer between 0 and 23, inclusive.
-               * 0 represents midnight, and 23 represents 11 PM.
-               */
-              hour: number;
-
-              /**
-               * The minute at which the billing cycle ends.
-               * Must be an integer between 0 and 59, inclusive.
-               */
-              minute: number;
-
-              /**
-               * The second at which the billing cycle ends.
-               * Must be an integer between 0 and 59, inclusive.
-               */
-              second?: number;
-            }
-          }
-
-          export namespace Week {
-            export interface Time {
-              /**
-               * The hour at which the billing cycle ends.
-               * This must be an integer between 0 and 23, inclusive.
-               * 0 represents midnight, and 23 represents 11 PM.
-               */
-              hour: number;
-
-              /**
-               * The minute at which the billing cycle ends.
-               * Must be an integer between 0 and 59, inclusive.
-               */
-              minute: number;
-
-              /**
-               * The second at which the billing cycle ends.
-               * Must be an integer between 0 and 59, inclusive.
-               */
-              second?: number;
-            }
-          }
-
-          export namespace Year {
-            export interface Time {
-              /**
-               * The hour at which the billing cycle ends.
-               * This must be an integer between 0 and 23, inclusive.
-               * 0 represents midnight, and 23 represents 11 PM.
-               */
-              hour: number;
-
-              /**
-               * The minute at which the billing cycle ends.
-               * Must be an integer between 0 and 59, inclusive.
-               */
-              minute: number;
-
-              /**
-               * The second at which the billing cycle ends.
-               * Must be an integer between 0 and 59, inclusive.
-               */
-              second?: number;
-            }
-          }
+          /**
+           * The second at which the billing cycle ends.
+           * Must be an integer between 0 and 59, inclusive.
+           */
+          second?: number;
         }
+      }
 
-        export namespace Payer {
-          export interface BillingProfileData {
-            /**
-             * The customer to associate with the profile.
-             */
-            customer: string;
+      export namespace Year {
+        export interface Time {
+          /**
+           * The hour at which the billing cycle ends.
+           * This must be an integer between 0 and 23, inclusive.
+           * 0 represents midnight, and 23 represents 11 PM.
+           */
+          hour: number;
 
-            /**
-             * The default payment method to use when billing this profile.
-             * If none is provided, the customer `default_payment_method` is used.
-             */
-            default_payment_method?: string;
-          }
+          /**
+           * The minute at which the billing cycle ends.
+           * Must be an integer between 0 and 59, inclusive.
+           */
+          minute: number;
+
+          /**
+           * The second at which the billing cycle ends.
+           * Must be an integer between 0 and 59, inclusive.
+           */
+          second?: number;
         }
+      }
+    }
 
-        export namespace Settings {
-          export interface Bill {
-            /**
-             * The ID of the referenced settings object.
-             */
-            id: string;
+    export namespace Payer {
+      export interface BillingProfileData {
+        /**
+         * The customer to associate with the profile.
+         */
+        customer: string;
 
-            /**
-             * Returns the Settings Version when the cadence is pinned to a specific version.
-             */
-            version?: string;
-          }
+        /**
+         * The default payment method to use when billing this profile.
+         * If none is provided, the customer `default_payment_method` is used.
+         */
+        default_payment_method?: string;
+      }
+    }
 
-          export interface Collection {
-            /**
-             * The ID of the referenced settings object.
-             */
-            id: string;
+    export namespace Settings {
+      export interface Bill {
+        /**
+         * The ID of the referenced settings object.
+         */
+        id: string;
 
-            /**
-             * Returns the Settings Version when the cadence is pinned to a specific version.
-             */
-            version?: string;
-          }
-        }
+        /**
+         * Returns the Settings Version when the cadence is pinned to a specific version.
+         */
+        version?: string;
+      }
+
+      export interface Collection {
+        /**
+         * The ID of the referenced settings object.
+         */
+        id: string;
+
+        /**
+         * Returns the Settings Version when the cadence is pinned to a specific version.
+         */
+        version?: string;
       }
     }
   }

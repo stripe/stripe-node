@@ -177,35 +177,31 @@ export interface RateCard {
    * This is similar to but distinct from billing interval; the service interval deals with the rate at which the
    * customer accumulates fees, while the billing interval in Cadence deals with the rate the customer is billed.
    */
-  service_cycle: V2.Billing.RateCard.ServiceCycle;
+  service_cycle: RateCard.ServiceCycle;
 
   /**
    * The tax behavior for Stripe Tax — whether the rate card price includes or excludes tax.
    */
-  tax_behavior: V2.Billing.RateCard.TaxBehavior;
+  tax_behavior: RateCard.TaxBehavior;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace RateCard {
-      export interface ServiceCycle {
-        /**
-         * The interval for assessing service.
-         */
-        interval: ServiceCycle.Interval;
+export namespace RateCard {
+  export interface ServiceCycle {
+    /**
+     * The interval for assessing service.
+     */
+    interval: ServiceCycle.Interval;
 
-        /**
-         * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"`
-         * to specify quarterly service.
-         */
-        interval_count: number;
-      }
+    /**
+     * The length of the interval for assessing service. For example, set this to 3 and `interval` to `"month"`
+     * to specify quarterly service.
+     */
+    interval_count: number;
+  }
 
-      export type TaxBehavior = 'exclusive' | 'inclusive';
+  export type TaxBehavior = 'exclusive' | 'inclusive';
 
-      export namespace ServiceCycle {
-        export type Interval = 'day' | 'month' | 'week' | 'year';
-      }
-    }
+  export namespace ServiceCycle {
+    export type Interval = 'day' | 'month' | 'week' | 'year';
   }
 }
 export namespace V2 {

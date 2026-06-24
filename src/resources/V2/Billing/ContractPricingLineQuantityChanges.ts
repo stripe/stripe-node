@@ -31,7 +31,7 @@ export interface ContractPricingLineQuantityChange {
   /**
    * The pricing configuration for the associated pricing line.
    */
-  pricing: V2.Billing.ContractPricingLineQuantityChange.Pricing;
+  pricing: ContractPricingLineQuantityChange.Pricing;
 
   /**
    * The ID of the pricing line associated with this quantity change.
@@ -43,20 +43,16 @@ export interface ContractPricingLineQuantityChange {
    */
   quantity: Decimal;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace ContractPricingLineQuantityChange {
-      export interface Pricing {
-        /**
-         * The ID of the V1 price. Present when `type` is `price`.
-         */
-        price?: string;
+export namespace ContractPricingLineQuantityChange {
+  export interface Pricing {
+    /**
+     * The ID of the V1 price. Present when `type` is `price`.
+     */
+    price?: string;
 
-        /**
-         * The type of pricing.
-         */
-        type: 'price';
-      }
-    }
+    /**
+     * The type of pricing.
+     */
+    type: 'price';
   }
 }

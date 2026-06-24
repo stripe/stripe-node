@@ -23,7 +23,7 @@ export interface RateCardRate {
   /**
    * The custom pricing unit that this rate binds to.
    */
-  custom_pricing_unit_amount?: V2.Billing.RateCardRate.CustomPricingUnitAmount;
+  custom_pricing_unit_amount?: RateCardRate.CustomPricingUnitAmount;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -56,17 +56,17 @@ export interface RateCardRate {
    * quantity within a period determines the per-unit price. In graduated tiering, the pricing changes as the quantity
    * grows into new tiers. Can only be set if `tiers` is set.
    */
-  tiering_mode?: V2.Billing.RateCardRate.TieringMode;
+  tiering_mode?: RateCardRate.TieringMode;
 
   /**
    * Each element represents a pricing tier. Cannot be set if `unit_amount` is provided.
    */
-  tiers: Array<V2.Billing.RateCardRate.Tier>;
+  tiers: Array<RateCardRate.Tier>;
 
   /**
    * Apply a transformation to the reported usage or set quantity before computing the amount billed.
    */
-  transform_quantity?: V2.Billing.RateCardRate.TransformQuantity;
+  transform_quantity?: RateCardRate.TransformQuantity;
 
   /**
    * The per-unit amount to be charged, represented as a decimal string in minor currency units with at most 12 decimal
@@ -74,67 +74,63 @@ export interface RateCardRate {
    */
   unit_amount?: string;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace RateCardRate {
-      export interface CustomPricingUnitAmount {
-        /**
-         * The Custom Pricing Unit object.
-         */
-        custom_pricing_unit_details?: CustomPricingUnit;
+export namespace RateCardRate {
+  export interface CustomPricingUnitAmount {
+    /**
+     * The Custom Pricing Unit object.
+     */
+    custom_pricing_unit_details?: CustomPricingUnit;
 
-        /**
-         * The id of the custom pricing unit.
-         */
-        id: string;
+    /**
+     * The id of the custom pricing unit.
+     */
+    id: string;
 
-        /**
-         * The unit value for the custom pricing unit, as a string.
-         */
-        value: string;
-      }
+    /**
+     * The unit value for the custom pricing unit, as a string.
+     */
+    value: string;
+  }
 
-      export type TieringMode = 'graduated' | 'volume';
+  export type TieringMode = 'graduated' | 'volume';
 
-      export interface Tier {
-        /**
-         * Price for the entire tier, represented as a decimal string in minor currency units with at most 12 decimal places.
-         */
-        flat_amount?: string;
+  export interface Tier {
+    /**
+     * Price for the entire tier, represented as a decimal string in minor currency units with at most 12 decimal places.
+     */
+    flat_amount?: string;
 
-        /**
-         * Per-unit price for units included in this tier, represented as a decimal string in minor currency units with at
-         * most 12 decimal places.
-         */
-        unit_amount?: string;
+    /**
+     * Per-unit price for units included in this tier, represented as a decimal string in minor currency units with at
+     * most 12 decimal places.
+     */
+    unit_amount?: string;
 
-        /**
-         * Up to and including this quantity is contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
-         * be set.
-         */
-        up_to_decimal?: Decimal;
+    /**
+     * Up to and including this quantity is contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
+     * be set.
+     */
+    up_to_decimal?: Decimal;
 
-        /**
-         * No upper bound to this tier. Only one of `up_to_decimal` and `up_to_inf` may be set.
-         */
-        up_to_inf?: 'inf';
-      }
+    /**
+     * No upper bound to this tier. Only one of `up_to_decimal` and `up_to_inf` may be set.
+     */
+    up_to_inf?: 'inf';
+  }
 
-      export interface TransformQuantity {
-        /**
-         * Divide usage by this number.
-         */
-        divide_by: bigint;
+  export interface TransformQuantity {
+    /**
+     * Divide usage by this number.
+     */
+    divide_by: bigint;
 
-        /**
-         * After division, round the result up or down.
-         */
-        round: TransformQuantity.Round;
-      }
+    /**
+     * After division, round the result up or down.
+     */
+    round: TransformQuantity.Round;
+  }
 
-      export namespace TransformQuantity {
-        export type Round = 'down' | 'up';
-      }
-    }
+  export namespace TransformQuantity {
+    export type Round = 'down' | 'up';
   }
 }

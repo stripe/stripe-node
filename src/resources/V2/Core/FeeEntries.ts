@@ -45,12 +45,12 @@ export interface FeeEntry {
   /**
    * The fee amount.
    */
-  amount: V2.Core.FeeEntry.Amount;
+  amount: FeeEntry.Amount;
 
   /**
    * The entity that assessed this fee.
    */
-  charged_by: V2.Core.FeeEntry.ChargedBy;
+  charged_by: FeeEntry.ChargedBy;
 
   /**
    * Timestamp of when this fee entry was created.
@@ -65,7 +65,7 @@ export interface FeeEntry {
   /**
    * The usage event that caused this fee to be assessed.
    */
-  incurred_by: V2.Core.FeeEntry.IncurredBy;
+  incurred_by: FeeEntry.IncurredBy;
 
   /**
    * Has the value `true` if the object exists in live mode, or `false` if in test mode.
@@ -75,136 +75,132 @@ export interface FeeEntry {
   /**
    * The reason this fee entry was created.
    */
-  reason: V2.Core.FeeEntry.Reason;
+  reason: FeeEntry.Reason;
 
   /**
    * The tax portion of the fee, if applicable.
    */
-  tax?: V2.Core.FeeEntry.Tax;
+  tax?: FeeEntry.Tax;
 
   /**
    * The category of this fee.
    */
-  type: V2.Core.FeeEntry.Type;
+  type: FeeEntry.Type;
 }
-export namespace V2 {
-  export namespace Core {
-    export namespace FeeEntry {
-      export interface Amount {
-        /**
-         * A lowercase alpha3 currency code like "usd"
-         * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
-         */
-        currency: string;
+export namespace FeeEntry {
+  export interface Amount {
+    /**
+     * A lowercase alpha3 currency code like "usd"
+     * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+     */
+    currency: string;
 
-        /**
-         * In major units like "1.23" for 1.23 USD
-         * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
-         */
-        value: string;
-      }
+    /**
+     * In major units like "1.23" for 1.23 USD
+     * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+     */
+    value: string;
+  }
 
-      export interface ChargedBy {
-        /**
-         * Details for a fee charged by a Connect application.
-         */
-        application?: ChargedBy.Application;
+  export interface ChargedBy {
+    /**
+     * Details for a fee charged by a Connect application.
+     */
+    application?: ChargedBy.Application;
 
-        /**
-         * Details for a fee charged by the payment network.
-         */
-        network?: ChargedBy.Network;
+    /**
+     * Details for a fee charged by the payment network.
+     */
+    network?: ChargedBy.Network;
 
-        /**
-         * Details for a fee charged by Stripe.
-         */
-        stripe?: ChargedBy.Stripe;
+    /**
+     * Details for a fee charged by Stripe.
+     */
+    stripe?: ChargedBy.Stripe;
 
-        /**
-         * The type of entity that charged this fee.
-         */
-        type: ChargedBy.Type;
-      }
+    /**
+     * The type of entity that charged this fee.
+     */
+    type: ChargedBy.Type;
+  }
 
-      export interface IncurredBy {
-        /**
-         * The account that incurred the usage (may differ from the billing account).
-         */
-        account?: string;
+  export interface IncurredBy {
+    /**
+     * The account that incurred the usage (may differ from the billing account).
+     */
+    account?: string;
 
-        /**
-         * Public API object id, e.g. ch_xxx.
-         */
-        id: string;
+    /**
+     * Public API object id, e.g. ch_xxx.
+     */
+    id: string;
 
-        /**
-         * Timestamp of when the usage event occurred.
-         */
-        occurred_at?: string;
+    /**
+     * Timestamp of when the usage event occurred.
+     */
+    occurred_at?: string;
 
-        /**
-         * Public API object type: "charge", "payment", "refund", "dispute", "payout", etc.
-         */
-        type: string;
-      }
+    /**
+     * Public API object type: "charge", "payment", "refund", "dispute", "payout", etc.
+     */
+    type: string;
+  }
 
-      export type Reason =
-        | 'other'
-        | 'processing_fee'
-        | 'refund'
-        | 'refund_failure'
-        | 'reprice'
-        | 'tier_true_up';
+  export type Reason =
+    | 'other'
+    | 'processing_fee'
+    | 'refund'
+    | 'refund_failure'
+    | 'reprice'
+    | 'tier_true_up';
 
-      export interface Tax {
-        /**
-         * The tax amount calculated for this fee.
-         */
-        amount: Tax.Amount;
-      }
+  export interface Tax {
+    /**
+     * The tax amount calculated for this fee.
+     */
+    amount: Tax.Amount;
+  }
 
-      export type Type = 'application_fee' | 'passthrough_fee' | 'stripe_fee';
+  export type Type = 'application_fee' | 'passthrough_fee' | 'stripe_fee';
 
-      export namespace ChargedBy {
-        export interface Application {
-          /**
-           * Human-readable product name, e.g. "Card payments - Stripe fee".
-           */
-          feature_name?: string;
-        }
+  export namespace ChargedBy {
+    export interface Application {
+      /**
+       * Human-readable product name, e.g. "Card payments - Stripe fee".
+       */
+      feature_name?: string;
+    }
 
-        export interface Network {
-          /**
-           * Human-readable product name, e.g. "Card payments - Stripe fee".
-           */
-          feature_name?: string;
-        }
+    export interface Network {
+      /**
+       * Human-readable product name, e.g. "Card payments - Stripe fee".
+       */
+      feature_name?: string;
+    }
 
-        export interface Stripe {
-          /**
-           * Human-readable product name, e.g. "Card payments - Stripe fee".
-           */
-          feature_name?: string;
-        }
+    export interface Stripe {
+      /**
+       * Human-readable product name, e.g. "Card payments - Stripe fee".
+       */
+      feature_name?: string;
+    }
 
-        export type Type = 'application' | 'network' | 'stripe';
-      }
+    export type Type = 'application' | 'network' | 'stripe';
+  }
 
-      export namespace Tax {
-        export interface Amount {
-          /**
-           * A lowercase alpha3 currency code like "usd"
-           * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
-           */
-          currency: string;
+  export namespace Tax {
+    export interface Amount {
+      /**
+       * A lowercase alpha3 currency code like "usd"
+       * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+       */
+      currency: string;
 
-          /**
-           * In major units like "1.23" for 1.23 USD
-           * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
-           */
-          value: string;
-        }
-      }
+      /**
+       * In major units like "1.23" for 1.23 USD
+       * For the taxonomy label choice, see SECURE_FRAMEWORKS-2849.
+       */
+      value: string;
     }
   }
 }

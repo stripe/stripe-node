@@ -77,7 +77,7 @@ export interface DisputeSettlementDetail {
   /**
    * The type of event corresponding to this dispute settlement detail, representing the stage in the dispute network lifecycle.
    */
-  event_type: Issuing.DisputeSettlementDetail.EventType;
+  event_type: DisputeSettlementDetail.EventType;
 
   /**
    * If the object exists in live mode, the value is `true`. If the object exists in test mode, the value is `false`.
@@ -87,30 +87,28 @@ export interface DisputeSettlementDetail {
   /**
    * The card network for this dispute settlement detail. One of ["visa", "mastercard", "maestro"]
    */
-  network: Issuing.DisputeSettlementDetail.Network;
+  network: DisputeSettlementDetail.Network;
 
   /**
    * Details about the transaction, such as processing dates, set by the card network.
    */
-  network_data: Issuing.DisputeSettlementDetail.NetworkData | null;
+  network_data: DisputeSettlementDetail.NetworkData | null;
 
   /**
    * The ID of the linked card network settlement.
    */
   settlement: string | null;
 }
-export namespace Issuing {
-  export namespace DisputeSettlementDetail {
-    export type EventType = 'filing' | 'loss' | 'representment' | 'win';
+export namespace DisputeSettlementDetail {
+  export type EventType = 'filing' | 'loss' | 'representment' | 'win';
 
-    export type Network = 'maestro' | 'mastercard' | 'visa';
+  export type Network = 'maestro' | 'mastercard' | 'visa';
 
-    export interface NetworkData {
-      /**
-       * The date the transaction was processed by the card network. This can be different from the date the seller recorded the transaction depending on when the acquirer submits the transaction to the network.
-       */
-      processing_date: string | null;
-    }
+  export interface NetworkData {
+    /**
+     * The date the transaction was processed by the card network. This can be different from the date the seller recorded the transaction depending on when the acquirer submits the transaction to the network.
+     */
+    processing_date: string | null;
   }
 }
 export namespace Issuing {

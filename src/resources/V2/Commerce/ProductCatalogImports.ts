@@ -21,7 +21,7 @@ export interface ProductCatalogImport {
   /**
    * The type of feed data being imported into the product catalog.
    */
-  feed_type: V2.Commerce.ProductCatalogImport.FeedType;
+  feed_type: ProductCatalogImport.FeedType;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -36,201 +36,194 @@ export interface ProductCatalogImport {
   /**
    * The import strategy for handling existing catalog data.
    */
-  mode: V2.Commerce.ProductCatalogImport.Mode;
+  mode: ProductCatalogImport.Mode;
 
   /**
    * The current status of this ProductCatalogImport.
    */
-  status: V2.Commerce.ProductCatalogImport.Status;
+  status: ProductCatalogImport.Status;
 
   /**
    * Details about the current import status.
    */
-  status_details?: V2.Commerce.ProductCatalogImport.StatusDetails;
+  status_details?: ProductCatalogImport.StatusDetails;
 }
-export namespace V2 {
-  export namespace Commerce {
-    export namespace ProductCatalogImport {
-      export type FeedType = 'inventory' | 'pricing' | 'product' | 'promotion';
+export namespace ProductCatalogImport {
+  export type FeedType = 'inventory' | 'pricing' | 'product' | 'promotion';
 
-      export type Mode = 'replace' | 'upsert';
+  export type Mode = 'replace' | 'upsert';
 
-      export type Status =
-        | 'awaiting_upload'
-        | 'failed'
-        | 'processing'
-        | 'succeeded'
-        | 'succeeded_with_errors';
+  export type Status =
+    | 'awaiting_upload'
+    | 'failed'
+    | 'processing'
+    | 'succeeded'
+    | 'succeeded_with_errors';
 
-      export interface StatusDetails {
+  export interface StatusDetails {
+    /**
+     * Details when the import is awaiting file upload.
+     */
+    awaiting_upload?: StatusDetails.AwaitingUpload;
+
+    /**
+     * Details when the import didn't complete.
+     */
+    failed?: StatusDetails.Failed;
+
+    /**
+     * Details when the import is processing.
+     */
+    processing?: StatusDetails.Processing;
+
+    /**
+     * Details when the import has succeeded.
+     */
+    succeeded?: StatusDetails.Succeeded;
+
+    /**
+     * Details when the import completed but some records failed to process.
+     */
+    succeeded_with_errors?: StatusDetails.SucceededWithErrors;
+  }
+
+  export namespace StatusDetails {
+    export interface AwaitingUpload {
+      /**
+       * The pre-signed URL information for uploading the catalog file.
+       */
+      upload_url: AwaitingUpload.UploadUrl;
+    }
+
+    export interface Failed {
+      /**
+       * The error code for this product catalog processing failure.
+       */
+      code: Failed.Code;
+
+      /**
+       * A message explaining why the import failed.
+       */
+      failure_message: string;
+
+      /**
+       * The error type for this product catalog processing failure.
+       */
+      type: Failed.Type;
+    }
+
+    export interface Processing {
+      /**
+       * The number of records that failed to process so far.
+       */
+      error_count: bigint;
+
+      /**
+       * The number of records processed so far.
+       */
+      success_count: bigint;
+    }
+
+    export interface Succeeded {
+      /**
+       * The total number of records processed.
+       */
+      success_count: bigint;
+    }
+
+    export interface SucceededWithErrors {
+      /**
+       * The total number of records that failed to process.
+       */
+      error_count: bigint;
+
+      /**
+       * A file containing details about all errors that occurred.
+       */
+      error_file: SucceededWithErrors.ErrorFile;
+
+      /**
+       * A sample of errors that occurred during processing.
+       */
+      samples: Array<SucceededWithErrors.Sample>;
+
+      /**
+       * The total number of records processed.
+       */
+      success_count: bigint;
+    }
+
+    export namespace AwaitingUpload {
+      export interface UploadUrl {
         /**
-         * Details when the import is awaiting file upload.
+         * The timestamp when the upload URL expires.
          */
-        awaiting_upload?: StatusDetails.AwaitingUpload;
+        expires_at: string;
 
         /**
-         * Details when the import didn't complete.
+         * The pre-signed URL for uploading the catalog file.
          */
-        failed?: StatusDetails.Failed;
+        url: string;
+      }
+    }
+
+    export namespace Failed {
+      export type Code = 'file_not_found' | 'internal_error' | 'invalid_file';
+
+      export type Type = 'cannot_proceed' | 'transient_failure';
+    }
+
+    export namespace SucceededWithErrors {
+      export interface ErrorFile {
+        /**
+         * The MIME type of the error file.
+         */
+        content_type: string;
 
         /**
-         * Details when the import is processing.
+         * The pre-signed URL information for downloading the error file.
          */
-        processing?: StatusDetails.Processing;
+        download_url: ErrorFile.DownloadUrl;
 
         /**
-         * Details when the import has succeeded.
+         * The size of the error file in bytes.
          */
-        succeeded?: StatusDetails.Succeeded;
-
-        /**
-         * Details when the import completed but some records failed to process.
-         */
-        succeeded_with_errors?: StatusDetails.SucceededWithErrors;
+        size: bigint;
       }
 
-      export namespace StatusDetails {
-        export interface AwaitingUpload {
-          /**
-           * The pre-signed URL information for uploading the catalog file.
-           */
-          upload_url: AwaitingUpload.UploadUrl;
-        }
+      export interface Sample {
+        /**
+         * A description of what went wrong with this record.
+         */
+        error_message: string;
 
-        export interface Failed {
-          /**
-           * The error code for this product catalog processing failure.
-           */
-          code: Failed.Code;
+        /**
+         * The name of the field that caused the error.
+         */
+        field: string;
 
-          /**
-           * A message explaining why the import failed.
-           */
-          failure_message: string;
+        /**
+         * The identifier of the record that failed to process.
+         */
+        id: string;
 
-          /**
-           * The error type for this product catalog processing failure.
-           */
-          type: Failed.Type;
-        }
+        /**
+         * The row number in the import file where the error occurred.
+         */
+        row: bigint;
+      }
 
-        export interface Processing {
+      export namespace ErrorFile {
+        export interface DownloadUrl {
           /**
-           * The number of records that failed to process so far.
+           * The timestamp when the download URL expires.
            */
-          error_count: bigint;
+          expires_at: string;
 
           /**
-           * The number of records processed so far.
+           * The pre-signed URL for downloading the error file.
            */
-          success_count: bigint;
-        }
-
-        export interface Succeeded {
-          /**
-           * The total number of records processed.
-           */
-          success_count: bigint;
-        }
-
-        export interface SucceededWithErrors {
-          /**
-           * The total number of records that failed to process.
-           */
-          error_count: bigint;
-
-          /**
-           * A file containing details about all errors that occurred.
-           */
-          error_file: SucceededWithErrors.ErrorFile;
-
-          /**
-           * A sample of errors that occurred during processing.
-           */
-          samples: Array<SucceededWithErrors.Sample>;
-
-          /**
-           * The total number of records processed.
-           */
-          success_count: bigint;
-        }
-
-        export namespace AwaitingUpload {
-          export interface UploadUrl {
-            /**
-             * The timestamp when the upload URL expires.
-             */
-            expires_at: string;
-
-            /**
-             * The pre-signed URL for uploading the catalog file.
-             */
-            url: string;
-          }
-        }
-
-        export namespace Failed {
-          export type Code =
-            | 'file_not_found'
-            | 'internal_error'
-            | 'invalid_file';
-
-          export type Type = 'cannot_proceed' | 'transient_failure';
-        }
-
-        export namespace SucceededWithErrors {
-          export interface ErrorFile {
-            /**
-             * The MIME type of the error file.
-             */
-            content_type: string;
-
-            /**
-             * The pre-signed URL information for downloading the error file.
-             */
-            download_url: ErrorFile.DownloadUrl;
-
-            /**
-             * The size of the error file in bytes.
-             */
-            size: bigint;
-          }
-
-          export interface Sample {
-            /**
-             * A description of what went wrong with this record.
-             */
-            error_message: string;
-
-            /**
-             * The name of the field that caused the error.
-             */
-            field: string;
-
-            /**
-             * The identifier of the record that failed to process.
-             */
-            id: string;
-
-            /**
-             * The row number in the import file where the error occurred.
-             */
-            row: bigint;
-          }
-
-          export namespace ErrorFile {
-            export interface DownloadUrl {
-              /**
-               * The timestamp when the download URL expires.
-               */
-              expires_at: string;
-
-              /**
-               * The pre-signed URL for downloading the error file.
-               */
-              url: string;
-            }
-          }
+          url: string;
         }
       }
     }

@@ -30,76 +30,72 @@ export interface CadenceSpendModifier {
   /**
    * Max invoice spend details. Present if type is `max_billing_period_spend`.
    */
-  max_billing_period_spend?: V2.Billing.CadenceSpendModifier.MaxBillingPeriodSpend;
+  max_billing_period_spend?: CadenceSpendModifier.MaxBillingPeriodSpend;
 
   /**
    * The type of the spend modifier.
    */
   type: 'max_billing_period_spend';
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace CadenceSpendModifier {
-      export interface MaxBillingPeriodSpend {
+export namespace CadenceSpendModifier {
+  export interface MaxBillingPeriodSpend {
+    /**
+     * The billing alert associated with the maximum spend threshold.
+     */
+    alert: string;
+
+    /**
+     * The maximum amount of invoice spend.
+     */
+    amount: MaxBillingPeriodSpend.Amount;
+
+    /**
+     * The configuration for the overage rate for the custom pricing unit.
+     */
+    custom_pricing_unit_overage_rate: MaxBillingPeriodSpend.CustomPricingUnitOverageRate;
+
+    /**
+     * The timestamp from which this spend modifier is effective.
+     */
+    effective_from: string;
+
+    /**
+     * The timestamp until which this spend modifier is effective. If not set, the modifier is effective indefinitely.
+     */
+    effective_until?: string;
+  }
+
+  export namespace MaxBillingPeriodSpend {
+    export interface Amount {
+      /**
+       * The custom pricing unit amount. Present if type is `custom_pricing_unit`.
+       */
+      custom_pricing_unit?: Amount.CustomPricingUnit;
+
+      /**
+       * The type of the spend modifier amount.
+       */
+      type: 'custom_pricing_unit';
+    }
+
+    export interface CustomPricingUnitOverageRate {
+      /**
+       * ID of the custom pricing unit overage rate.
+       */
+      id: string;
+    }
+
+    export namespace Amount {
+      export interface CustomPricingUnit {
         /**
-         * The billing alert associated with the maximum spend threshold.
+         * The id of the custom pricing unit.
          */
-        alert: string;
+        id?: string;
 
         /**
-         * The maximum amount of invoice spend.
+         * The decimal value of custom pricing units, represented as a string.
          */
-        amount: MaxBillingPeriodSpend.Amount;
-
-        /**
-         * The configuration for the overage rate for the custom pricing unit.
-         */
-        custom_pricing_unit_overage_rate: MaxBillingPeriodSpend.CustomPricingUnitOverageRate;
-
-        /**
-         * The timestamp from which this spend modifier is effective.
-         */
-        effective_from: string;
-
-        /**
-         * The timestamp until which this spend modifier is effective. If not set, the modifier is effective indefinitely.
-         */
-        effective_until?: string;
-      }
-
-      export namespace MaxBillingPeriodSpend {
-        export interface Amount {
-          /**
-           * The custom pricing unit amount. Present if type is `custom_pricing_unit`.
-           */
-          custom_pricing_unit?: Amount.CustomPricingUnit;
-
-          /**
-           * The type of the spend modifier amount.
-           */
-          type: 'custom_pricing_unit';
-        }
-
-        export interface CustomPricingUnitOverageRate {
-          /**
-           * ID of the custom pricing unit overage rate.
-           */
-          id: string;
-        }
-
-        export namespace Amount {
-          export interface CustomPricingUnit {
-            /**
-             * The id of the custom pricing unit.
-             */
-            id?: string;
-
-            /**
-             * The decimal value of custom pricing units, represented as a string.
-             */
-            value: string;
-          }
-        }
+        value: string;
       }
     }
   }

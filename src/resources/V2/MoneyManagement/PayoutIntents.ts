@@ -116,12 +116,12 @@ export interface PayoutIntent {
   /**
    * The FinancialAccount that funds are pulled from.
    */
-  from: V2.MoneyManagement.PayoutIntent.From;
+  from: PayoutIntent.From;
 
   /**
    * Details about the latest payout associated with this PayoutIntent.
    */
-  latest_payout: V2.MoneyManagement.PayoutIntent.LatestPayout;
+  latest_payout: PayoutIntent.LatestPayout;
 
   /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -136,17 +136,17 @@ export interface PayoutIntent {
   /**
    * Next action required for a PayoutIntent in the requires_action state. Populated when status is requires_action.
    */
-  next_action?: V2.MoneyManagement.PayoutIntent.NextAction;
+  next_action?: PayoutIntent.NextAction;
 
   /**
    * Details about the OutboundPayment notification settings for recipient. Only applicable to OutboundPayment.
    */
-  recipient_notification?: V2.MoneyManagement.PayoutIntent.RecipientNotification;
+  recipient_notification?: PayoutIntent.RecipientNotification;
 
   /**
    * Scheduling options for the payout. If this is nil, we assume immediate execution.
    */
-  schedule_options?: V2.MoneyManagement.PayoutIntent.ScheduleOptions;
+  schedule_options?: PayoutIntent.ScheduleOptions;
 
   /**
    * The description that appears on the receiving end for the payout (for example, on a bank statement).
@@ -156,235 +156,231 @@ export interface PayoutIntent {
   /**
    * Open Enum. Current status of the PayoutIntent: `pending`, `processing`, `posted`, `canceled`, `requires_action`.
    */
-  status: V2.MoneyManagement.PayoutIntent.Status;
+  status: PayoutIntent.Status;
 
   /**
    * Hash containing timestamps of when transitioned to a particular status.
    */
-  status_transitions?: V2.MoneyManagement.PayoutIntent.StatusTransitions;
+  status_transitions?: PayoutIntent.StatusTransitions;
 
   /**
    * To which payout method the payout is sent.
    */
-  to: V2.MoneyManagement.PayoutIntent.To;
+  to: PayoutIntent.To;
 }
-export namespace V2 {
-  export namespace MoneyManagement {
-    export namespace PayoutIntent {
-      export interface From {
+export namespace PayoutIntent {
+  export interface From {
+    /**
+     * The currency of the financial account.
+     */
+    currency: string;
+
+    /**
+     * The FinancialAccount that funds are pulled from.
+     */
+    financial_account: string;
+  }
+
+  export interface LatestPayout {
+    /**
+     * The ID of the OutboundPayment, if applicable.
+     */
+    outbound_payment?: string;
+
+    /**
+     * The ID of the OutboundTransfer, if applicable.
+     */
+    outbound_transfer?: string;
+
+    /**
+     * The type of payout.
+     */
+    type: LatestPayout.Type;
+  }
+
+  export interface NextAction {
+    /**
+     * Details about a failure that requires user action. Populated when type is handle_failure.
+     */
+    handle_failure?: NextAction.HandleFailure;
+
+    /**
+     * Open Enum. The type of next action required.
+     */
+    type: 'handle_failure';
+  }
+
+  export interface RecipientNotification {
+    /**
+     * Closed Enum. Configuration option to enable or disable notifications to recipients.
+     * Do not send notifications when setting is NONE. Default to account setting when setting is CONFIGURED or not set.
+     */
+    setting: RecipientNotification.Setting;
+  }
+
+  export interface ScheduleOptions {
+    /**
+     * The date when the payout should be executed, in YYYY-MM-DD format.
+     */
+    execute_on?: string;
+  }
+
+  export type Status =
+    | 'canceled'
+    | 'pending'
+    | 'posted'
+    | 'processing'
+    | 'requires_action';
+
+  export interface StatusTransitions {
+    /**
+     * Timestamp describing when a PayoutIntent changed status to `canceled`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+     */
+    canceled_at?: string;
+
+    /**
+     * Timestamp describing when a PayoutIntent changed status to `posted`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+     */
+    posted_at?: string;
+
+    /**
+     * Timestamp describing when a PayoutIntent changed status to `processing`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+     */
+    processing_at?: string;
+
+    /**
+     * Timestamp describing when a PayoutIntent changed status to `requires_action`.
+     * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+     */
+    requires_action_at?: string;
+  }
+
+  export interface To {
+    /**
+     * The currency to send to the recipient.
+     */
+    currency?: string;
+
+    /**
+     * The payout method ID. Optional for OutboundPayment if recipient has default payment method. Required for OutboundTransfer.
+     */
+    payout_method?: string;
+
+    /**
+     * Payout method options for the PayoutIntent.
+     */
+    payout_method_options?: To.PayoutMethodOptions;
+
+    /**
+     * The recipient ID. Only relevant for OutboundPayment.
+     */
+    recipient?: string;
+  }
+
+  export namespace LatestPayout {
+    export type Type = 'outbound_payment' | 'outbound_transfer';
+  }
+
+  export namespace NextAction {
+    export interface HandleFailure {
+      /**
+       * Open Enum. The reason for the failure.
+       */
+      failure_reason: HandleFailure.FailureReason;
+    }
+
+    export namespace HandleFailure {
+      export type FailureReason =
+        | 'account_not_configured_as_recipient'
+        | 'currency_not_supported_for_financial_account_balance'
+        | 'feature_not_active_for_recipient'
+        | 'fx_rate_drift_exceeded_after_review'
+        | 'insufficient_funds'
+        | 'payout_method_account_type_incorrect'
+        | 'payout_method_amount_limit_exceeded'
+        | 'payout_method_canceled_by_customer'
+        | 'payout_method_closed'
+        | 'payout_method_currency_unsupported'
+        | 'payout_method_declined'
+        | 'payout_method_does_not_exist'
+        | 'payout_method_expired'
+        | 'payout_method_holder_address_incorrect'
+        | 'payout_method_holder_details_incorrect'
+        | 'payout_method_holder_name_incorrect'
+        | 'payout_method_invalid_account_number'
+        | 'payout_method_restricted'
+        | 'payout_method_unsupported'
+        | 'payout_method_usage_frequency_limit_exceeded'
+        | 'recalled'
+        | 'review_rejected'
+        | 'to_destination_invalid'
+        | 'unknown_failure';
+    }
+  }
+
+  export namespace RecipientNotification {
+    export type Setting = 'configured' | 'none';
+  }
+
+  export namespace To {
+    export interface PayoutMethodOptions {
+      /**
+       * Options for bank account payout methods.
+       */
+      bank_account?: PayoutMethodOptions.BankAccount;
+    }
+
+    export namespace PayoutMethodOptions {
+      export interface BankAccount {
         /**
-         * The currency of the financial account.
+         * Per-network configuration options.
          */
-        currency: string;
+        preferred_network_options?: BankAccount.PreferredNetworkOptions;
 
         /**
-         * The FinancialAccount that funds are pulled from.
+         * The preferred networks to use for this PayoutIntent.
          */
-        financial_account: string;
+        preferred_networks: Array<BankAccount.PreferredNetwork>;
       }
 
-      export interface LatestPayout {
-        /**
-         * The ID of the OutboundPayment, if applicable.
-         */
-        outbound_payment?: string;
-
-        /**
-         * The ID of the OutboundTransfer, if applicable.
-         */
-        outbound_transfer?: string;
-
-        /**
-         * The type of payout.
-         */
-        type: LatestPayout.Type;
-      }
-
-      export interface NextAction {
-        /**
-         * Details about a failure that requires user action. Populated when type is handle_failure.
-         */
-        handle_failure?: NextAction.HandleFailure;
-
-        /**
-         * Open Enum. The type of next action required.
-         */
-        type: 'handle_failure';
-      }
-
-      export interface RecipientNotification {
-        /**
-         * Closed Enum. Configuration option to enable or disable notifications to recipients.
-         * Do not send notifications when setting is NONE. Default to account setting when setting is CONFIGURED or not set.
-         */
-        setting: RecipientNotification.Setting;
-      }
-
-      export interface ScheduleOptions {
-        /**
-         * The date when the payout should be executed, in YYYY-MM-DD format.
-         */
-        execute_on?: string;
-      }
-
-      export type Status =
-        | 'canceled'
-        | 'pending'
-        | 'posted'
-        | 'processing'
-        | 'requires_action';
-
-      export interface StatusTransitions {
-        /**
-         * Timestamp describing when a PayoutIntent changed status to `canceled`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-         */
-        canceled_at?: string;
-
-        /**
-         * Timestamp describing when a PayoutIntent changed status to `posted`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-         */
-        posted_at?: string;
-
-        /**
-         * Timestamp describing when a PayoutIntent changed status to `processing`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-         */
-        processing_at?: string;
-
-        /**
-         * Timestamp describing when a PayoutIntent changed status to `requires_action`.
-         * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-         */
-        requires_action_at?: string;
-      }
-
-      export interface To {
-        /**
-         * The currency to send to the recipient.
-         */
-        currency?: string;
-
-        /**
-         * The payout method ID. Optional for OutboundPayment if recipient has default payment method. Required for OutboundTransfer.
-         */
-        payout_method?: string;
-
-        /**
-         * Payout method options for the PayoutIntent.
-         */
-        payout_method_options?: To.PayoutMethodOptions;
-
-        /**
-         * The recipient ID. Only relevant for OutboundPayment.
-         */
-        recipient?: string;
-      }
-
-      export namespace LatestPayout {
-        export type Type = 'outbound_payment' | 'outbound_transfer';
-      }
-
-      export namespace NextAction {
-        export interface HandleFailure {
+      export namespace BankAccount {
+        export interface PreferredNetworkOptions {
           /**
-           * Open Enum. The reason for the failure.
+           * ACH-specific network options.
            */
-          failure_reason: HandleFailure.FailureReason;
+          ach?: PreferredNetworkOptions.Ach;
         }
 
-        export namespace HandleFailure {
-          export type FailureReason =
-            | 'account_not_configured_as_recipient'
-            | 'currency_not_supported_for_financial_account_balance'
-            | 'feature_not_active_for_recipient'
-            | 'fx_rate_drift_exceeded_after_review'
-            | 'insufficient_funds'
-            | 'payout_method_account_type_incorrect'
-            | 'payout_method_amount_limit_exceeded'
-            | 'payout_method_canceled_by_customer'
-            | 'payout_method_closed'
-            | 'payout_method_currency_unsupported'
-            | 'payout_method_declined'
-            | 'payout_method_does_not_exist'
-            | 'payout_method_expired'
-            | 'payout_method_holder_address_incorrect'
-            | 'payout_method_holder_details_incorrect'
-            | 'payout_method_holder_name_incorrect'
-            | 'payout_method_invalid_account_number'
-            | 'payout_method_restricted'
-            | 'payout_method_unsupported'
-            | 'payout_method_usage_frequency_limit_exceeded'
-            | 'recalled'
-            | 'review_rejected'
-            | 'to_destination_invalid'
-            | 'unknown_failure';
-        }
-      }
+        export type PreferredNetwork =
+          | 'ach'
+          | 'becs'
+          | 'eft'
+          | 'fedwire'
+          | 'fps'
+          | 'npp'
+          | 'rtp'
+          | 'sepa_credit'
+          | 'sepa_instant'
+          | 'swift';
 
-      export namespace RecipientNotification {
-        export type Setting = 'configured' | 'none';
-      }
-
-      export namespace To {
-        export interface PayoutMethodOptions {
-          /**
-           * Options for bank account payout methods.
-           */
-          bank_account?: PayoutMethodOptions.BankAccount;
-        }
-
-        export namespace PayoutMethodOptions {
-          export interface BankAccount {
+        export namespace PreferredNetworkOptions {
+          export interface Ach {
             /**
-             * Per-network configuration options.
+             * Open Enum. ACH submission timing.
              */
-            preferred_network_options?: BankAccount.PreferredNetworkOptions;
+            submission?: Ach.Submission;
 
             /**
-             * The preferred networks to use for this PayoutIntent.
+             * The transaction purpose for this ACH payment.
              */
-            preferred_networks: Array<BankAccount.PreferredNetwork>;
+            transaction_purpose?: 'payroll';
           }
 
-          export namespace BankAccount {
-            export interface PreferredNetworkOptions {
-              /**
-               * ACH-specific network options.
-               */
-              ach?: PreferredNetworkOptions.Ach;
-            }
-
-            export type PreferredNetwork =
-              | 'ach'
-              | 'becs'
-              | 'eft'
-              | 'fedwire'
-              | 'fps'
-              | 'npp'
-              | 'rtp'
-              | 'sepa_credit'
-              | 'sepa_instant'
-              | 'swift';
-
-            export namespace PreferredNetworkOptions {
-              export interface Ach {
-                /**
-                 * Open Enum. ACH submission timing.
-                 */
-                submission?: Ach.Submission;
-
-                /**
-                 * The transaction purpose for this ACH payment.
-                 */
-                transaction_purpose?: 'payroll';
-              }
-
-              export namespace Ach {
-                export type Submission = 'next_day' | 'same_day';
-              }
-            }
+          export namespace Ach {
+            export type Submission = 'next_day' | 'same_day';
           }
         }
       }

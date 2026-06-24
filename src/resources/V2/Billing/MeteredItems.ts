@@ -118,12 +118,12 @@ export interface MeteredItem {
   /**
    * Optional array of Meter segments to filter event dimension keys for billing.
    */
-  meter_segment_conditions: Array<V2.Billing.MeteredItem.MeterSegmentCondition>;
+  meter_segment_conditions: Array<MeteredItem.MeterSegmentCondition>;
 
   /**
    * Stripe Tax details.
    */
-  tax_details?: V2.Billing.MeteredItem.TaxDetails;
+  tax_details?: MeteredItem.TaxDetails;
 
   /**
    * The unit to use when displaying prices for this billable item in places like Checkout. For example, set this field
@@ -133,28 +133,24 @@ export interface MeteredItem {
    */
   unit_label?: string;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace MeteredItem {
-      export interface MeterSegmentCondition {
-        /**
-         * A Meter dimension.
-         */
-        dimension: string;
+export namespace MeteredItem {
+  export interface MeterSegmentCondition {
+    /**
+     * A Meter dimension.
+     */
+    dimension: string;
 
-        /**
-         * To count usage towards this metered item, the dimension must have this value.
-         */
-        value: string;
-      }
+    /**
+     * To count usage towards this metered item, the dimension must have this value.
+     */
+    value: string;
+  }
 
-      export interface TaxDetails {
-        /**
-         * Product tax code (PTC).
-         */
-        tax_code: string;
-      }
-    }
+  export interface TaxDetails {
+    /**
+     * Product tax code (PTC).
+     */
+    tax_code: string;
   }
 }
 export namespace V2 {

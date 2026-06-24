@@ -149,7 +149,7 @@ export interface Order {
    */
   amount_total: number;
 
-  beneficiary?: Climate.Order.Beneficiary;
+  beneficiary?: Order.Beneficiary;
 
   /**
    * Time at which the order was canceled. Measured in seconds since the Unix epoch.
@@ -159,7 +159,7 @@ export interface Order {
   /**
    * Reason for the cancellation of this order.
    */
-  cancellation_reason: Climate.Order.CancellationReason | null;
+  cancellation_reason: Order.CancellationReason | null;
 
   /**
    * For delivered orders, a URL to a delivery certificate for the order.
@@ -194,7 +194,7 @@ export interface Order {
   /**
    * Details about the delivery of carbon removal for this order.
    */
-  delivery_details: Array<Climate.Order.DeliveryDetail>;
+  delivery_details: Array<Order.DeliveryDetail>;
 
   /**
    * The year this order is expected to be delivered.
@@ -229,83 +229,81 @@ export interface Order {
   /**
    * The current status of this order.
    */
-  status: Climate.Order.Status;
+  status: Order.Status;
 }
-export namespace Climate {
-  export namespace Order {
-    export interface Beneficiary {
+export namespace Order {
+  export interface Beneficiary {
+    /**
+     * Publicly displayable name for the end beneficiary of carbon removal.
+     */
+    public_name: string;
+  }
+
+  export type CancellationReason =
+    | 'expired'
+    | 'product_unavailable'
+    | 'requested';
+
+  export interface DeliveryDetail {
+    /**
+     * Time at which the delivery occurred. Measured in seconds since the Unix epoch.
+     */
+    delivered_at: number;
+
+    /**
+     * Specific location of this delivery.
+     */
+    location: DeliveryDetail.Location | null;
+
+    /**
+     * Quantity of carbon removal supplied by this delivery.
+     */
+    metric_tons: string;
+
+    /**
+     * Once retired, a URL to the registry entry for the tons from this delivery.
+     */
+    registry_url: string | null;
+
+    /**
+     * A supplier of carbon removal.
+     */
+    supplier: Supplier;
+  }
+
+  export type Status =
+    | 'awaiting_funds'
+    | 'canceled'
+    | 'confirmed'
+    | 'delivered'
+    | 'open';
+
+  export namespace DeliveryDetail {
+    export interface Location {
       /**
-       * Publicly displayable name for the end beneficiary of carbon removal.
+       * The city where the supplier is located.
        */
-      public_name: string;
-    }
-
-    export type CancellationReason =
-      | 'expired'
-      | 'product_unavailable'
-      | 'requested';
-
-    export interface DeliveryDetail {
-      /**
-       * Time at which the delivery occurred. Measured in seconds since the Unix epoch.
-       */
-      delivered_at: number;
+      city: string | null;
 
       /**
-       * Specific location of this delivery.
+       * Two-letter ISO code representing the country where the supplier is located.
        */
-      location: DeliveryDetail.Location | null;
+      country: string;
 
       /**
-       * Quantity of carbon removal supplied by this delivery.
+       * The geographic latitude where the supplier is located.
        */
-      metric_tons: string;
+      latitude: number | null;
 
       /**
-       * Once retired, a URL to the registry entry for the tons from this delivery.
+       * The geographic longitude where the supplier is located.
        */
-      registry_url: string | null;
+      longitude: number | null;
 
       /**
-       * A supplier of carbon removal.
+       * The state/county/province/region where the supplier is located.
        */
-      supplier: Supplier;
-    }
-
-    export type Status =
-      | 'awaiting_funds'
-      | 'canceled'
-      | 'confirmed'
-      | 'delivered'
-      | 'open';
-
-    export namespace DeliveryDetail {
-      export interface Location {
-        /**
-         * The city where the supplier is located.
-         */
-        city: string | null;
-
-        /**
-         * Two-letter ISO code representing the country where the supplier is located.
-         */
-        country: string;
-
-        /**
-         * The geographic latitude where the supplier is located.
-         */
-        latitude: number | null;
-
-        /**
-         * The geographic longitude where the supplier is located.
-         */
-        longitude: number | null;
-
-        /**
-         * The state/county/province/region where the supplier is located.
-         */
-        region: string | null;
-      }
+      region: string | null;
     }
   }
 }

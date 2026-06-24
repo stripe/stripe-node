@@ -84,7 +84,7 @@ export interface EventBase {
   /**
    * Before and after changes for the primary related object.
    */
-  changes?: V2.Core.Event.Changes;
+  changes?: Event.Changes;
 
   /**
    * Authentication context needed to fetch the event or related object.
@@ -104,7 +104,7 @@ export interface EventBase {
   /**
    * Reason for the event.
    */
-  reason?: V2.Core.Event.Reason;
+  reason?: Event.Reason;
 
   /**
    * For interop events, this is the snapshot event ID.
@@ -116,96 +116,92 @@ export interface EventBase {
    */
   type: string;
 }
-export namespace V2 {
-  export namespace Core {
-    export namespace Event {
-      export type Changes = {
-        [key: string]: unknown;
-      };
+export namespace Event {
+  export type Changes = {
+    [key: string]: unknown;
+  };
 
-      export interface Reason {
+  export interface Reason {
+    /**
+     * Information on the API request that instigated the event.
+     */
+    request?: Reason.Request;
+
+    /**
+     * Event reason type.
+     */
+    type: 'request';
+  }
+
+  export namespace Reason {
+    export interface Request {
+      /**
+       * The client details that made the request.
+       */
+      client?: Request.Client;
+
+      /**
+       * ID of the API request that caused the event.
+       */
+      id: string;
+
+      /**
+       * The idempotency key transmitted during the request.
+       */
+      idempotency_key: string;
+    }
+
+    export namespace Request {
+      export interface Client {
         /**
-         * Information on the API request that instigated the event.
+         * API key that triggered the event.
          */
-        request?: Reason.Request;
+        api_key?: Client.ApiKey;
 
         /**
-         * Event reason type.
+         * Dashboard user that triggered the event.
          */
-        type: 'request';
+        dashboard_user?: Client.DashboardUser;
+
+        /**
+         * Stripe action that triggered the event.
+         */
+        stripe_action?: Client.StripeAction;
+
+        /**
+         * The type of the client.
+         */
+        type: Client.Type;
       }
 
-      export namespace Reason {
-        export interface Request {
+      export namespace Client {
+        export interface ApiKey {
           /**
-           * The client details that made the request.
-           */
-          client?: Request.Client;
-
-          /**
-           * ID of the API request that caused the event.
+           * The ID of the API key.
            */
           id: string;
+        }
+
+        export interface DashboardUser {
+          /**
+           * The email of the dashboard user.
+           */
+          email: string;
 
           /**
-           * The idempotency key transmitted during the request.
+           * The IP address of the user.
            */
-          idempotency_key: string;
+          ip_address: string;
+
+          /**
+           * The machine identifier of the user.
+           */
+          machine_identifier: string;
         }
 
-        export namespace Request {
-          export interface Client {
-            /**
-             * API key that triggered the event.
-             */
-            api_key?: Client.ApiKey;
+        export interface StripeAction {}
 
-            /**
-             * Dashboard user that triggered the event.
-             */
-            dashboard_user?: Client.DashboardUser;
-
-            /**
-             * Stripe action that triggered the event.
-             */
-            stripe_action?: Client.StripeAction;
-
-            /**
-             * The type of the client.
-             */
-            type: Client.Type;
-          }
-
-          export namespace Client {
-            export interface ApiKey {
-              /**
-               * The ID of the API key.
-               */
-              id: string;
-            }
-
-            export interface DashboardUser {
-              /**
-               * The email of the dashboard user.
-               */
-              email: string;
-
-              /**
-               * The IP address of the user.
-               */
-              ip_address: string;
-
-              /**
-               * The machine identifier of the user.
-               */
-              machine_identifier: string;
-            }
-
-            export interface StripeAction {}
-
-            export type Type = 'api_key' | 'dashboard_user' | 'stripe_action';
-          }
-        }
+        export type Type = 'api_key' | 'dashboard_user' | 'stripe_action';
       }
     }
   }

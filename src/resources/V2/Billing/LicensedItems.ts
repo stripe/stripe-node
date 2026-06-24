@@ -108,7 +108,7 @@ export interface LicensedItem {
   /**
    * Stripe Tax details.
    */
-  tax_details?: V2.Billing.LicensedItem.TaxDetails;
+  tax_details?: LicensedItem.TaxDetails;
 
   /**
    * The unit to use when displaying prices for this billable item in places like Checkout. For example, set this field
@@ -117,16 +117,12 @@ export interface LicensedItem {
    */
   unit_label?: string;
 }
-export namespace V2 {
-  export namespace Billing {
-    export namespace LicensedItem {
-      export interface TaxDetails {
-        /**
-         * Product tax code (PTC).
-         */
-        tax_code: string;
-      }
-    }
+export namespace LicensedItem {
+  export interface TaxDetails {
+    /**
+     * Product tax code (PTC).
+     */
+    tax_code: string;
   }
 }
 export namespace V2 {
