@@ -476,6 +476,23 @@ const oAuthAuthorizeUrlParams: Stripe.OAuthAuthorizeUrlParams = {};
 const oAuthDeauthorization: Stripe.OAuthDeauthorization = {stripe_user_id: ''};
 const oAuthDeauthorizeParams: Stripe.OAuthDeauthorizeParams = {};
 
+// Resource sub-types (companion namespace access)
+let priceRecurring: Stripe.Price.Recurring;
+let customerInvoiceSettings: Stripe.Customer.InvoiceSettings;
+let subscriptionBillingMode: Stripe.Subscription.BillingMode;
+
+// Deep resource sub-types (2+ levels)
+const billingModeType: Stripe.Subscription.BillingMode.Type = 'classic';
+
+// Nested resource sub-types (product namespace → resource → sub-type)
+let alertStatus: Stripe.Billing.Alert.Status;
+let terminalTipping: Stripe.Terminal.Configuration.Tipping;
+let appsSecretScope: Stripe.Apps.Secret.Scope;
+
+// Deep params sub-namespaces (2+ levels)
+let accountBizProfile: Stripe.AccountCreateParams.BusinessProfile;
+let accountBizRevenue: Stripe.AccountCreateParams.BusinessProfile.AnnualRevenue;
+
 // Access and type top level resources and nested resources
 const customerResource: Stripe.CustomerResource = new Stripe.CustomerResource(
   stripe

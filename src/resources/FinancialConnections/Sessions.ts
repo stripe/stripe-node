@@ -50,7 +50,7 @@ export interface Session {
   /**
    * The account holder for whom accounts are collected in this session.
    */
-  account_holder: FinancialConnections.Session.AccountHolder | null;
+  account_holder: Session.AccountHolder | null;
 
   /**
    * The accounts that were collected as part of this Session.
@@ -62,7 +62,7 @@ export interface Session {
    */
   client_secret: string | null;
 
-  filters?: FinancialConnections.Session.Filters;
+  filters?: Session.Filters;
 
   /**
    * Settings for the Hosted UI mode.
@@ -81,12 +81,12 @@ export interface Session {
   /**
    * Permissions requested for accounts collected during this session.
    */
-  permissions: Array<FinancialConnections.Session.Permission>;
+  permissions: Array<Session.Permission>;
 
   /**
    * Data features requested to be retrieved upon account creation.
    */
-  prefetch: Array<FinancialConnections.Session.Prefetch> | null;
+  prefetch: Array<Session.Prefetch> | null;
 
   relink_options?: FinancialConnections.Session.RelinkOptions;
 
@@ -114,32 +114,31 @@ export interface Session {
    */
   url?: string | null;
 }
-export namespace FinancialConnections {
-  export namespace Session {
-    export interface AccountHolder {
-      /**
-       * The ID of the Stripe account that this account belongs to. Only available when `account_holder.type` is `account`.
-       */
-      account?: string | Account;
+export namespace Session {
+  export interface AccountHolder {
+    /**
+     * The ID of the Stripe account that this account belongs to. Only available when `account_holder.type` is `account`.
+     */
+    account?: string | Account;
 
-      /**
-       * The ID for an Account representing a customer that this account belongs to. Only available when `account_holder.type` is `customer`.
-       */
-      customer?: string | Customer;
+    /**
+     * The ID for an Account representing a customer that this account belongs to. Only available when `account_holder.type` is `customer`.
+     */
+    customer?: string | Customer;
 
-      customer_account?: string;
+    customer_account?: string;
 
-      /**
-       * Type of account holder that this account belongs to.
-       */
-      type: AccountHolder.Type;
-    }
+    /**
+     * Type of account holder that this account belongs to.
+     */
+    type: AccountHolder.Type;
+  }
 
-    export interface Filters {
-      /**
-       * Restricts the Session to subcategories of accounts that can be linked. Valid subcategories are: `checking`, `savings`, `mortgage`, `line_of_credit`, `credit_card`.
-       */
-      account_subcategories: Array<Filters.AccountSubcategory> | null;
+  export interface Filters {
+    /**
+     * Restricts the Session to subcategories of accounts that can be linked. Valid subcategories are: `checking`, `savings`, `mortgage`, `line_of_credit`, `credit_card`.
+     */
+    account_subcategories: Array<Filters.AccountSubcategory> | null;
 
       /**
        * List of countries from which to filter accounts.
@@ -222,9 +221,9 @@ export namespace FinancialConnections {
 
     export type UiMode = 'hosted' | 'modal';
 
-    export namespace AccountHolder {
-      export type Type = 'account' | 'customer';
-    }
+  export namespace AccountHolder {
+    export type Type = 'account' | 'customer';
+  }
 
     export namespace Filters {
       export type AccountSubcategory =

@@ -13,7 +13,7 @@ export class ConfigurationResource extends StripeResource {
     id: string,
     params?: Terminal.ConfigurationDeleteParams,
     options?: RequestOptions
-  ): Promise<Response<Terminal.DeletedConfiguration>> {
+  ): Promise<Response<DeletedConfiguration>> {
     return this._makeRequest(
       'DELETE',
       `/v1/terminal/configurations/${encodeURIComponent(id)}`,
@@ -28,7 +28,7 @@ export class ConfigurationResource extends StripeResource {
     id: string,
     params?: Terminal.ConfigurationRetrieveParams,
     options?: RequestOptions
-  ): Promise<Response<Configuration | Terminal.DeletedConfiguration>> {
+  ): Promise<Response<Configuration | DeletedConfiguration>> {
     return this._makeRequest(
       'GET',
       `/v1/terminal/configurations/${encodeURIComponent(id)}`,
@@ -43,7 +43,7 @@ export class ConfigurationResource extends StripeResource {
     id: string,
     params?: Terminal.ConfigurationUpdateParams,
     options?: RequestOptions
-  ): Promise<Response<Configuration | Terminal.DeletedConfiguration>> {
+  ): Promise<Response<Configuration | DeletedConfiguration>> {
     return this._makeRequest(
       'POST',
       `/v1/terminal/configurations/${encodeURIComponent(id)}`,
@@ -94,11 +94,11 @@ export interface Configuration {
    */
   object: 'terminal.configuration';
 
-  bbpos_wisepad3?: Terminal.Configuration.BbposWisepad3;
+  bbpos_wisepad3?: Configuration.BbposWisepad3;
 
-  bbpos_wisepos_e?: Terminal.Configuration.BbposWiseposE;
+  bbpos_wisepos_e?: Configuration.BbposWiseposE;
 
-  cellular?: Terminal.Configuration.Cellular;
+  cellular?: Configuration.Cellular;
 
   /**
    * Always true for a deleted object
@@ -120,76 +120,80 @@ export interface Configuration {
    */
   name: string | null;
 
-  offline?: Terminal.Configuration.Offline;
+  offline?: Configuration.Offline;
 
   reader_security?: Terminal.Configuration.ReaderSecurity;
 
   reboot_window?: Terminal.Configuration.RebootWindow;
 
-  stripe_s700?: Terminal.Configuration.StripeS700;
+  stripe_s700?: Configuration.StripeS700;
 
-  stripe_s710?: Terminal.Configuration.StripeS710;
+  stripe_s710?: Configuration.StripeS710;
 
-  tipping?: Terminal.Configuration.Tipping;
+  tipping?: Configuration.Tipping;
 
-  verifone_m425?: Terminal.Configuration.VerifoneM425;
+  verifone_m425?: Configuration.VerifoneM425;
 
-  verifone_p400?: Terminal.Configuration.VerifoneP400;
+  verifone_p400?: Configuration.VerifoneP400;
 
-  verifone_p630?: Terminal.Configuration.VerifoneP630;
+  verifone_p630?: Configuration.VerifoneP630;
 
-  verifone_ux700?: Terminal.Configuration.VerifoneUx700;
+  verifone_ux700?: Configuration.VerifoneUx700;
 
-  verifone_v660p?: Terminal.Configuration.VerifoneV660p;
+  verifone_v660p?: Configuration.VerifoneV660p;
 
-  wifi?: Terminal.Configuration.Wifi;
+  wifi?: Configuration.Wifi;
 }
-export namespace Terminal {
-  export interface DeletedConfiguration {
-    /**
-     * Unique identifier for the object.
-     */
-    id: string;
+export interface DeletedConfiguration {
+  /**
+   * Unique identifier for the object.
+   */
+  id: string;
 
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'terminal.configuration';
+  /**
+   * String representing the object's type. Objects of the same type share the same value.
+   */
+  object: 'terminal.configuration';
 
+  /**
+   * Always true for a deleted object
+   */
+  deleted: true;
+}
+export namespace Configuration {
+  export interface BbposWisepad3 {
     /**
-     * Always true for a deleted object
+     * A File ID representing an image to display on the reader
      */
-    deleted: true;
+    splashscreen?: string | File;
   }
 
-  export namespace Configuration {
-    export interface BbposWisepad3 {
-      /**
-       * A File ID representing an image to display on the reader
-       */
-      splashscreen?: string | File;
-    }
+  export interface BbposWiseposE {
+    /**
+     * A File ID representing an image to display on the reader
+     */
+    splashscreen?: string | File;
+  }
 
-    export interface BbposWiseposE {
-      /**
-       * A File ID representing an image to display on the reader
-       */
-      splashscreen?: string | File;
-    }
+  export interface Cellular {
+    /**
+     * Whether a cellular-capable reader can connect to the internet over cellular.
+     */
+    enabled: boolean;
+  }
 
-    export interface Cellular {
-      /**
-       * Whether a cellular-capable reader can connect to the internet over cellular.
-       */
-      enabled: boolean;
-    }
+  export interface Offline {
+    /**
+     * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
+     */
+    enabled: boolean | null;
+  }
 
-    export interface Offline {
-      /**
-       * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
-       */
-      enabled: boolean | null;
-    }
+  export interface RebootWindow {
+    /**
+     * Integer between 0 to 23 that represents the end hour of the reboot time window. The value must be different than the start_hour.
+     */
+    end_hour: number;
 
     export interface ReaderSecurity {
       /**
@@ -200,548 +204,428 @@ export namespace Terminal {
 
     export interface RebootWindow {
       /**
-       * Integer between 0 to 23 that represents the end hour of the reboot time window. The value must be different than the start_hour.
+       * Fixed amounts displayed when collecting a tip
        */
-      end_hour: number;
+      fixed_amounts?: Array<number> | null;
 
       /**
-       * Integer between 0 to 23 that represents the start hour of the reboot time window.
+       * Percentages displayed when collecting a tip
        */
-      start_hour: number;
-    }
-
-    export interface StripeS700 {
-      /**
-       * A File ID representing an image to display on the reader
-       */
-      splashscreen?: string | File;
-    }
-
-    export interface StripeS710 {
-      /**
-       * A File ID representing an image to display on the reader
-       */
-      splashscreen?: string | File;
-    }
-
-    export interface Tipping {
-      aed?: Tipping.Aed;
-
-      aud?: Tipping.Aud;
-
-      cad?: Tipping.Cad;
-
-      chf?: Tipping.Chf;
-
-      czk?: Tipping.Czk;
-
-      dkk?: Tipping.Dkk;
-
-      eur?: Tipping.Eur;
-
-      gbp?: Tipping.Gbp;
-
-      gip?: Tipping.Gip;
-
-      hkd?: Tipping.Hkd;
-
-      huf?: Tipping.Huf;
-
-      jpy?: Tipping.Jpy;
-
-      mxn?: Tipping.Mxn;
-
-      myr?: Tipping.Myr;
-
-      nok?: Tipping.Nok;
-
-      nzd?: Tipping.Nzd;
-
-      pln?: Tipping.Pln;
-
-      ron?: Tipping.Ron;
-
-      sek?: Tipping.Sek;
-
-      sgd?: Tipping.Sgd;
-
-      usd?: Tipping.Usd;
-    }
-
-    export interface VerifoneM425 {
-      /**
-       * A File ID representing an image to display on the reader
-       */
-      splashscreen?: string | File;
-    }
-
-    export interface VerifoneP400 {
-      /**
-       * A File ID representing an image to display on the reader
-       */
-      splashscreen?: string | File;
-    }
-
-    export interface VerifoneP630 {
-      /**
-       * A File ID representing an image to display on the reader
-       */
-      splashscreen?: string | File;
-    }
-
-    export interface VerifoneUx700 {
-      /**
-       * A File ID representing an image to display on the reader
-       */
-      splashscreen?: string | File;
-    }
-
-    export interface VerifoneV660p {
-      /**
-       * A File ID representing an image to display on the reader
-       */
-      splashscreen?: string | File;
-    }
-
-    export interface Wifi {
-      enterprise_eap_peap?: Wifi.EnterpriseEapPeap;
-
-      enterprise_eap_tls?: Wifi.EnterpriseEapTls;
-
-      personal_psk?: Wifi.PersonalPsk;
+      percentages?: Array<number> | null;
 
       /**
-       * Security type of the WiFi network. The hash with the corresponding name contains the credentials for this security type.
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
        */
-      type: Wifi.Type;
+      smart_tip_threshold?: number;
     }
 
-    export namespace Tipping {
-      export interface Aed {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
+    export interface Aud {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
 
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
 
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Aud {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Cad {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Chf {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Czk {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Dkk {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Eur {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Gbp {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Gip {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Hkd {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Huf {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Jpy {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Mxn {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Myr {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Nok {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Nzd {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Pln {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Ron {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Sek {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Sgd {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
-
-      export interface Usd {
-        /**
-         * Fixed amounts displayed when collecting a tip
-         */
-        fixed_amounts?: Array<number> | null;
-
-        /**
-         * Percentages displayed when collecting a tip
-         */
-        percentages?: Array<number> | null;
-
-        /**
-         * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-         */
-        smart_tip_threshold?: number;
-      }
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
     }
 
-    export namespace Wifi {
-      export interface EnterpriseEapPeap {
-        /**
-         * A File ID representing a PEM file containing the server certificate
-         */
-        ca_certificate_file?: string;
+    export interface Cad {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
 
-        /**
-         * Password for connecting to the WiFi network
-         */
-        password: string;
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
 
-        /**
-         * Name of the WiFi network
-         */
-        ssid: string;
-
-        /**
-         * Username for connecting to the WiFi network
-         */
-        username: string;
-      }
-
-      export interface EnterpriseEapTls {
-        /**
-         * A File ID representing a PEM file containing the server certificate
-         */
-        ca_certificate_file?: string;
-
-        /**
-         * A File ID representing a PEM file containing the client certificate
-         */
-        client_certificate_file: string;
-
-        /**
-         * A File ID representing a PEM file containing the client RSA private key
-         */
-        private_key_file: string;
-
-        /**
-         * Password for the private key file
-         */
-        private_key_file_password?: string;
-
-        /**
-         * Name of the WiFi network
-         */
-        ssid: string;
-      }
-
-      export interface PersonalPsk {
-        /**
-         * Password for connecting to the WiFi network
-         */
-        password: string;
-
-        /**
-         * Name of the WiFi network
-         */
-        ssid: string;
-      }
-
-      export type Type =
-        | 'enterprise_eap_peap'
-        | 'enterprise_eap_tls'
-        | 'personal_psk';
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
     }
+
+    export interface Chf {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+
+    export interface Czk {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+
+    export interface Dkk {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+
+    export interface Eur {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+
+    export interface Gbp {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+
+    export interface Gip {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+
+    export interface Hkd {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+
+    export interface Huf {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+
+    export interface Jpy {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+
+    export interface Mxn {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+
+    export interface Myr {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+
+    export interface Nok {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+
+    export interface Nzd {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+
+    export interface Pln {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+
+    export interface Ron {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+
+    export interface Sek {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+
+    export interface Sgd {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+
+    export interface Usd {
+      /**
+       * Fixed amounts displayed when collecting a tip
+       */
+      fixed_amounts?: Array<number> | null;
+
+      /**
+       * Percentages displayed when collecting a tip
+       */
+      percentages?: Array<number> | null;
+
+      /**
+       * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+       */
+      smart_tip_threshold?: number;
+    }
+  }
+
+  export namespace Wifi {
+    export interface EnterpriseEapPeap {
+      /**
+       * A File ID representing a PEM file containing the server certificate
+       */
+      ca_certificate_file?: string;
+
+      /**
+       * Password for connecting to the WiFi network
+       */
+      password: string;
+
+      /**
+       * Name of the WiFi network
+       */
+      ssid: string;
+
+      /**
+       * Username for connecting to the WiFi network
+       */
+      username: string;
+    }
+
+    export interface EnterpriseEapTls {
+      /**
+       * A File ID representing a PEM file containing the server certificate
+       */
+      ca_certificate_file?: string;
+
+      /**
+       * A File ID representing a PEM file containing the client certificate
+       */
+      client_certificate_file: string;
+
+      /**
+       * A File ID representing a PEM file containing the client RSA private key
+       */
+      private_key_file: string;
+
+      /**
+       * Password for the private key file
+       */
+      private_key_file_password?: string;
+
+      /**
+       * Name of the WiFi network
+       */
+      ssid: string;
+    }
+
+    export interface PersonalPsk {
+      /**
+       * Password for connecting to the WiFi network
+       */
+      password: string;
+
+      /**
+       * Name of the WiFi network
+       */
+      ssid: string;
+    }
+
+    export type Type =
+      | 'enterprise_eap_peap'
+      | 'enterprise_eap_tls'
+      | 'personal_psk';
   }
 }
 export namespace Terminal {
